@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Award, Flame, Search, BookOpen, Layers, RotateCcw, Menu, X, Compass } from 'lucide-react';
+import { Sparkles, Award, Flame, Search, BookOpen, Layers, RotateCcw, Menu, X, Compass, CheckCircle2, Calendar, Trophy, Zap, Target } from 'lucide-react';
 import { UserProgress } from '../types';
 
 interface HeaderProps {
@@ -24,6 +24,7 @@ export const Header: React.FC<HeaderProps> = ({
   allModulesCompleted,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showStreakModal, setShowStreakModal] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 text-white">
@@ -65,11 +66,15 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* User Stats & Badges */}
           <div className="hidden sm:flex items-center gap-3">
-            {/* Streak */}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-xs font-semibold text-amber-400">
-              <Flame className="w-4 h-4 text-amber-500 fill-amber-500/20" />
-              <span>{progress.streakDays} Hari</span>
-            </div>
+            {/* Streak Button */}
+            <button
+              onClick={() => setShowStreakModal(true)}
+              title="Lihat Aturan Daily Streak"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs font-semibold text-amber-400 hover:bg-amber-500/20 transition-all cursor-pointer"
+            >
+              <Flame className="w-4 h-4 text-amber-500 fill-amber-500/20 animate-pulse" />
+              <span>{progress.streakDays} Hari Streak</span>
+            </button>
 
             {/* XP */}
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/60 border border-indigo-800/60 text-xs font-semibold text-indigo-300">
@@ -157,6 +162,81 @@ export const Header: React.FC<HeaderProps> = ({
               Klaim Sertifikat AI Navigator
             </button>
           )}
+        </div>
+      )}
+
+      {/* Gamification & Daily Streak Modal */}
+      {showStreakModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 space-y-6 shadow-2xl relative">
+            <button
+              onClick={() => setShowStreakModal(false)}
+              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-800 rounded-full transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Modal Header */}
+            <div className="flex items-center gap-3 border-b border-slate-800 pb-4">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
+                <Flame className="w-7 h-7 text-amber-500 fill-amber-500 animate-bounce" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                  Daily Streak & Gamifikasi
+                </h3>
+                <p className="text-xs text-amber-400 font-semibold">
+                  🔥 Streak Aktif: {progress.streakDays} Hari Berturut-turut
+                </p>
+              </div>
+            </div>
+
+            {/* Content Rules */}
+            <div className="space-y-4 text-xs text-slate-300">
+              <div className="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-2">
+                <h4 className="font-bold text-amber-300 text-sm flex items-center gap-2">
+                  <Calendar className="w-4 h-4" /> Logika & Aturan Daily Streak
+                </h4>
+                <ul className="space-y-1.5 list-disc list-inside text-slate-300 leading-relaxed">
+                  <li>Selesaikan minimal <strong>1 Kuis / Modul</strong> setiap hari sebelum pukul 24:00.</li>
+                  <li>Streak bertambah <strong>+1 Hari</strong> setiap kali Anda belajar di hari berturut-turut.</li>
+                  <li>Jika Anda tidak aktif selama 1 hari penuh, api streak akan <strong>terputus (reset ke 1)</strong>.</li>
+                </ul>
+              </div>
+
+              <div className="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-2">
+                <h4 className="font-bold text-indigo-300 text-sm flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-indigo-400" /> Perhitungan XP & Reward
+                </h4>
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  <div className="bg-slate-900 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between">
+                    <span>Modul Baru</span>
+                    <span className="font-bold text-emerald-400">+100 XP</span>
+                  </div>
+                  <div className="bg-slate-900 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between">
+                    <span>Ulang Modul</span>
+                    <span className="font-bold text-indigo-400">+20 XP</span>
+                  </div>
+                  <div className="bg-slate-900 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between">
+                    <span>Peti Mid-Journey</span>
+                    <span className="font-bold text-amber-400">+200 XP</span>
+                  </div>
+                  <div className="bg-slate-900 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between">
+                    <span>Sertifikat Akhir</span>
+                    <span className="font-bold text-purple-400">+500 XP</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Close Action */}
+            <button
+              onClick={() => setShowStreakModal(false)}
+              className="w-full py-3 bg-gradient-to-r from-amber-500 to-indigo-600 font-bold text-xs text-white rounded-xl shadow-lg hover:brightness-110 transition-all"
+            >
+              Mengerti & Lanjutkan Belajar!
+            </button>
+          </div>
         </div>
       )}
     </header>

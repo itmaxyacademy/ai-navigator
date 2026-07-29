@@ -19,6 +19,17 @@ const defaultProgress: UserProgress = {
   unlockedBadges: [],
 };
 
+const getTodayDateStr = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
+
+const getYesterdayDateStr = () => {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
+
 export default function App() {
   const [progress, setProgress] = useState<UserProgress>(() => {
     try {
@@ -36,6 +47,21 @@ export default function App() {
   const [selectedModuleId, setSelectedModuleId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [certificateOpen, setCertificateOpen] = useState(false);
+
+  // Validate Daily Streak status on app launch
+  useEffect(() => {
+    const today = getTodayDateStr();
+    const yesterday = getYesterdayDateStr();
+    if (progress.lastCompletedDate) {
+      if (progress.lastCompletedDate !== today && progress.lastCompletedDate !== yesterday) {
+        // User missed more than 1 day, streak resets to 1
+        setProgress((prev) => ({
+          ...prev,
+          streakDays: 1,
+        }));
+      }
+    }
+  }, []);
 
   // Save progress to local storage
   useEffect(() => {
@@ -70,10 +96,22 @@ export default function App() {
     const isAlreadyCompleted = progress.completedModules.includes(moduleId);
     const addedXp = isAlreadyCompleted ? 20 : 100;
 
+    const today = getTodayDateStr();
+    const yesterday = getYesterdayDateStr();
+
     setProgress((prev) => {
       const newCompleted = isAlreadyCompleted
         ? prev.completedModules
         : [...prev.completedModules, moduleId];
+
+      let newStreak = prev.streakDays;
+      if (prev.lastCompletedDate === yesterday) {
+        newStreak = prev.streakDays + 1;
+      } else if (!prev.lastCompletedDate) {
+        newStreak = 1;
+      } else if (prev.lastCompletedDate !== today && prev.lastCompletedDate !== yesterday) {
+        newStreak = 1;
+      }
 
       return {
         ...prev,
@@ -83,6 +121,8 @@ export default function App() {
           [moduleId]: Math.max(prev.moduleScores[moduleId] || 0, score),
         },
         xp: prev.xp + addedXp,
+        streakDays: newStreak,
+        lastCompletedDate: today,
       };
     });
   };

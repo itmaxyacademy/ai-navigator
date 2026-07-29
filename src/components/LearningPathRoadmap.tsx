@@ -113,6 +113,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
   const totalModules = modules.length;
   const progressPercent = Math.round((completedCount / totalModules) * 100);
 
+  const remainingModules = totalModules - completedCount;
+  const estimatedMinutes = remainingModules === 0 ? 0 : Math.ceil(remainingModules * 3.75);
+
   // Highest unlocked or currently active module
   const currentActiveModuleId = progress.currentModuleId || (
     modules.find(m => !progress.completedModules.includes(m.id))?.id || 1
@@ -160,7 +163,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
               </div>
               <div className="flex items-center gap-2 bg-slate-900/90 px-3.5 py-2 rounded-xl border border-slate-800 text-slate-300">
                 <Clock className="w-4 h-4 text-indigo-400" />
-                <span>Estimasi: <strong>~90 Menit</strong></span>
+                <span>Estimasi: <strong>~{estimatedMinutes} Menit</strong></span>
               </div>
               <div className="flex items-center gap-2 bg-slate-900/90 px-3.5 py-2 rounded-xl border border-slate-800 text-slate-300">
                 <Award className="w-4 h-4 text-emerald-400" />
