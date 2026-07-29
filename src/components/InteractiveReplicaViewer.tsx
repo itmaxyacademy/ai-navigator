@@ -1,0 +1,528 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Sparkles, Info, Send, Copy, Check, ChevronRight, RefreshCw,
+  Code2, Brain, Terminal, Eye, ExternalLink
+} from 'lucide-react';
+import { CourseModule, RCTFState } from '../types';
+import { ChatGPTReplica } from './ChatGPTReplica';
+import { ClaudeReplica } from './ClaudeReplica';
+import { GeminiReplica } from './GeminiReplica';
+import { PerplexityReplica } from './PerplexityReplica';
+import { CopilotReplica } from './CopilotReplica';
+import { MetaAIReplica } from './MetaAIReplica';
+import { DeepSeekReplica } from './DeepSeekReplica';
+import { GeminiNotebookReplica } from './GeminiNotebookReplica';
+import { GoogleFlowReplica } from './GoogleFlowReplica';
+import { LeonardoAIReplica } from './LeonardoAIReplica';
+import { GoogleStitchReplica } from './GoogleStitchReplica';
+import { StableDiffusionReplica } from './StableDiffusionReplica';
+import { OpenArtReplica } from './OpenArtReplica';
+import { CraiyonReplica } from './CraiyonReplica';
+import { ElevenLabsReplica } from './ElevenLabsReplica';
+import { SunoReplica } from './SunoReplica';
+import { GoogleAIStudioReplica } from './GoogleAIStudioReplica';
+import { TrebloReplica } from './TrebloReplica';
+import { FathomReplica } from './FathomReplica';
+import { GeminiGemsReplica } from './GeminiGemsReplica';
+import { MistralVibeReplica } from './MistralVibeReplica';
+import { ClaudeFeaturesReplica } from './ClaudeFeaturesReplica';
+import { KimiAiReplica } from './KimiAiReplica';
+
+interface InteractiveReplicaViewerProps {
+  module: CourseModule;
+  onAdvanceToQuiz: () => void;
+}
+
+export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> = ({
+  module,
+  onAdvanceToQuiz,
+}) => {
+  const replica = module.content.interactiveReplica;
+
+  // Helper to build 4-line RCTF prompt string
+  const buildRCTFPromptString = (r: RCTFState) => {
+    return `[ROLE]: ${r.role}\n[CONTEXT]: ${r.context}\n[TASK]: ${r.task}\n[FORMAT]: ${r.format}`;
+  };
+
+  // Special UI states per LLM
+  // Module 1 (RCTF)
+  const [rctf, setRctf] = useState<RCTFState>({
+    role: 'Pakar Komunikasi & Edukasi AI',
+    context: 'Untuk mahasiswa yang baru belajar AI',
+    task: 'Jelaskan cara kerja dasar LLM dalam 2 kalimat ringkas',
+    format: 'Poin-poin sederhana dengan analogi koki restoran',
+  });
+
+  // Prompt execution state
+  const [userPrompt, setUserPrompt] = useState<string>('');
+  const [currentResponse, setCurrentResponse] = useState<string>(replica.simulatedResponse);
+  const [isLoading, setIsLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  // Sync prompt on module change or initial load
+  useEffect(() => {
+    if (module.id === 1) {
+      setUserPrompt(buildRCTFPromptString(rctf));
+    } else {
+      setUserPrompt(replica.initialPrompt);
+    }
+    setCurrentResponse(replica.simulatedResponse);
+  }, [module.id]);
+
+  // Handler for RCTF input updates with real-time prompt sync
+  const handleRctfChange = (field: keyof RCTFState, value: string) => {
+    const updated = { ...rctf, [field]: value };
+    setRctf(updated);
+    if (module.id === 1) {
+      setUserPrompt(buildRCTFPromptString(updated));
+    }
+  };
+
+  // Module 3 (Claude Artifacts)
+  const [showArtifactPanel, setShowArtifactPanel] = useState(true);
+
+  // Module 6 (Copilot Styles)
+  const [copilotStyle, setCopilotStyle] = useState<'creative' | 'balanced' | 'precise'>('balanced');
+
+  // Module 8 (DeepSeek Reasoning)
+  const [showThoughtAccordion, setShowThoughtAccordion] = useState(true);
+
+  // Execute Prompt Handler (Offline Mode)
+  const handleExecutePrompt = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      if (module.id === 1) {
+        setCurrentResponse(
+          `[Respon Simulasi AI Prompt Terstruktur RCTF]\n\nHalo! Bertindak sebagai ${rctf.role || 'Asisten AI'}:\n\nBerdasarkan situasi (${rctf.context || 'Konteks Umum'}), berikut adalah solusi tugas "${rctf.task || 'Tugas Utama'}":\n\n1. **Poin Utama**: Large Language Model bekerja dengan memprediksi kata berikutnya paling logis berdasarkan ribuan data yang telah dipelajari.\n2. **Analogi Koki**: Bayangkan LLM seperti koki handal yang meracik masakan (jawaban) berdasarkan resep dan pesanan khusus (prompt) yang Anda berikan.\n\n(Hasil disusun rapi sesuai format: ${rctf.format || 'Poin-poin sederhana'})`
+        );
+      } else {
+        setCurrentResponse(
+          `[Respon Simulasi ${replica.llmName}]\n\nInstruksi "${userPrompt}" berhasil diproses secara instan!\n\nBerikut adalah respon terstruktur sesuai fitur utama ${replica.llmName}. Eksperimen dengan variasi kata kunci untuk melihat perubahan hasil.`
+        );
+      }
+      setIsLoading(false);
+    }, 300);
+  };
+
+  const handleCopyPrompt = () => {
+    navigator.clipboard.writeText(userPrompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="space-y-8">
+      {/* Top Banner Guide */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              Bagian 2 Dari 3
+            </span>
+            <span className="text-xs text-slate-400">Simulasi Tampilan & Panduan Fitur</span>
+          </div>
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            Tampilan Interaktif {replica.llmName}
+          </h2>
+          <p className="text-xs text-slate-300">
+            Pelajari panduan fitur utama dan coba simulasi instruksi secara interaktif di bawah ini.
+          </p>
+        </div>
+
+        <button
+          onClick={onAdvanceToQuiz}
+          className="shrink-0 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/20 flex items-center gap-2 transition-all"
+        >
+          Lanjut ke Kuis Modul <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Main Interactive Workspace Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left Column: Simulated Interface Replica (8 cols) */}
+        <div className="lg:col-span-8 space-y-4">
+          {module.id === 2 ? (
+            <ChatGPTReplica />
+          ) : module.id === 3 ? (
+            <ClaudeReplica />
+          ) : module.id === 4 ? (
+            <GeminiReplica />
+          ) : module.id === 5 ? (
+            <PerplexityReplica />
+          ) : module.id === 6 ? (
+            <CopilotReplica />
+          ) : module.id === 7 ? (
+            <MetaAIReplica />
+          ) : module.id === 8 || module.slug === 'deepseek' ? (
+            <DeepSeekReplica />
+          ) : module.id === 9 || module.slug === 'gemini-notebook' ? (
+            <GeminiNotebookReplica />
+          ) : module.id === 10 || module.slug === 'google-flow' ? (
+            <GoogleFlowReplica />
+          ) : module.id === 11 || module.slug === 'leonardo-ai' ? (
+            <LeonardoAIReplica />
+          ) : module.id === 12 || module.slug === 'google-stitch' ? (
+            <GoogleStitchReplica />
+          ) : module.id === 13 || module.slug === 'stable-diffusion' ? (
+            <StableDiffusionReplica />
+          ) : module.id === 14 || module.slug === 'openart' ? (
+            <OpenArtReplica />
+          ) : module.id === 15 || module.slug === 'craiyon' ? (
+            <CraiyonReplica />
+          ) : module.id === 16 || module.slug === 'elevenlabs' ? (
+            <ElevenLabsReplica />
+          ) : module.id === 17 || module.slug === 'suno' ? (
+            <SunoReplica />
+          ) : module.id === 18 || module.slug === 'google-ai-studio' ? (
+            <GoogleAIStudioReplica />
+          ) : module.id === 19 || module.slug === 'sonauto' || module.slug === 'treblo' ? (
+            <TrebloReplica />
+          ) : module.id === 20 || module.slug === 'fathom' ? (
+            <FathomReplica />
+          ) : module.id === 21 || module.slug === 'gemini-gems' ? (
+            <GeminiGemsReplica />
+          ) : module.id === 22 || module.slug === 'mistral-vibe' ? (
+            <MistralVibeReplica />
+          ) : module.id === 23 || module.slug === 'claude-features' ? (
+            <ClaudeFeaturesReplica />
+          ) : module.id === 24 || module.slug === 'kimi-ai' ? (
+            <KimiAiReplica />
+          ) : (
+            <div className="relative rounded-2xl border border-slate-800 bg-slate-950 overflow-hidden shadow-2xl">
+              {/* Top Bar Replica Header */}
+              <div className="bg-slate-900 border-b border-slate-800 px-4 py-3 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-rose-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 ml-2">
+                    <Terminal className="w-3.5 h-3.5 text-indigo-400" />
+                    {replica.llmName} Simulator
+                  </span>
+                </div>
+
+                <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-slate-800 text-amber-300 border border-slate-700">
+                  {replica.badgeText}
+                </span>
+              </div>
+
+            {/* Special Interactive Controls Section per Module */}
+            {module.id === 1 && (
+              <div className="p-4 bg-slate-900/90 border-b border-slate-800 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4" /> Formula RCTF Interactive Builder
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-mono">
+                    Edit parameter di bawah untuk memperbarui prompt
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <div>
+                    <label className="text-[10px] text-amber-400 font-semibold block mb-1">[R] ROLE (Peran):</label>
+                    <input
+                      type="text"
+                      value={rctf.role}
+                      onChange={(e) => handleRctfChange('role', e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white focus:border-amber-500 focus:outline-none transition-colors"
+                      placeholder="Peran AI..."
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] text-indigo-400 font-semibold block mb-1">[C] CONTEXT (Konteks):</label>
+                    <input
+                      type="text"
+                      value={rctf.context}
+                      onChange={(e) => handleRctfChange('context', e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white focus:border-indigo-500 focus:outline-none transition-colors"
+                      placeholder="Konteks situasi..."
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] text-emerald-400 font-semibold block mb-1">[T] TASK (Tugas Utama):</label>
+                    <input
+                      type="text"
+                      value={rctf.task}
+                      onChange={(e) => handleRctfChange('task', e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white focus:border-emerald-500 focus:outline-none transition-colors"
+                      placeholder="Tugas utama..."
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] text-purple-400 font-semibold block mb-1">[F] FORMAT (Format Result):</label>
+                    <input
+                      type="text"
+                      value={rctf.format}
+                      onChange={(e) => handleRctfChange('format', e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white focus:border-purple-500 focus:outline-none transition-colors"
+                      placeholder="Format output..."
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Special Controls: Claude Artifacts Toggle (Module 3) */}
+            {module.id === 3 && (
+              <div className="p-3 bg-amber-950/40 border-b border-amber-800/40 flex items-center justify-between text-xs">
+                <span className="text-amber-200 font-medium flex items-center gap-1.5">
+                  <Code2 className="w-4 h-4 text-amber-400" /> Mode Artifacts Active (Anthropic Jendela Terpisah)
+                </span>
+                <button
+                  onClick={() => setShowArtifactPanel(!showArtifactPanel)}
+                  className="px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs transition-colors"
+                >
+                  {showArtifactPanel ? 'Sembunyikan Panel' : 'Tampilkan Panel Preview'}
+                </button>
+              </div>
+            )}
+
+            {/* Special Controls: Copilot Styles (Module 6) */}
+            {module.id === 6 && (
+              <div className="p-3 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-xs">
+                <span className="text-slate-300 font-semibold">Pilih Conversation Style:</span>
+                <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800">
+                  <button
+                    onClick={() => setCopilotStyle('creative')}
+                    className={`px-2.5 py-1 rounded text-[11px] font-bold ${copilotStyle === 'creative' ? 'bg-pink-600 text-white' : 'text-slate-400'}`}
+                  >
+                    Creative
+                  </button>
+                  <button
+                    onClick={() => setCopilotStyle('balanced')}
+                    className={`px-2.5 py-1 rounded text-[11px] font-bold ${copilotStyle === 'balanced' ? 'bg-blue-600 text-white' : 'text-slate-400'}`}
+                  >
+                    Balanced
+                  </button>
+                  <button
+                    onClick={() => setCopilotStyle('precise')}
+                    className={`px-2.5 py-1 rounded text-[11px] font-bold ${copilotStyle === 'precise' ? 'bg-emerald-600 text-white' : 'text-slate-400'}`}
+                  >
+                    Precise
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Special Controls: DeepSeek Reasoning Thought Accordion (Module 8) */}
+            {module.id === 8 && (
+              <div className="p-3 bg-blue-950/50 border-b border-blue-800/50 flex items-center justify-between text-xs">
+                <span className="text-blue-300 font-bold flex items-center gap-1.5">
+                  <Brain className="w-4 h-4 text-blue-400" /> DeepSeek-R1 Thought Chain Mode
+                </span>
+                <button
+                  onClick={() => setShowThoughtAccordion(!showThoughtAccordion)}
+                  className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors"
+                >
+                  {showThoughtAccordion ? 'Tutup <thought>' : 'Buka <thought>'}
+                </button>
+              </div>
+            )}
+
+            {/* Main Interactive Chat Area */}
+            <div className="p-5 space-y-4 min-h-[360px] max-h-[480px] overflow-y-auto relative">
+              {/* User Prompt Bubble */}
+              <div className="flex justify-end">
+                <div className="bg-indigo-600 text-white rounded-2xl rounded-tr-none px-4 py-3 max-w-lg text-xs leading-relaxed shadow-md">
+                  <p className="font-semibold text-[10px] text-indigo-200 mb-1">
+                    {module.id === 1 ? 'Prompt RCTF Terstruktur:' : 'Pengguna:'}
+                  </p>
+                  <div className="whitespace-pre-wrap font-mono text-[11px] leading-relaxed">
+                    {userPrompt}
+                  </div>
+                </div>
+              </div>
+
+              {/* AI Thought Accordion for DeepSeek (Module 8) */}
+              {module.id === 8 && showThoughtAccordion && (
+                <div className="bg-slate-900 border border-blue-800/60 rounded-xl p-3 text-xs space-y-1">
+                  <div className="flex items-center justify-between text-blue-400 font-mono text-[11px] font-bold">
+                    <span className="flex items-center gap-1">
+                      <Brain className="w-3.5 h-3.5" /> &lt;thought&gt; (Proses Berpikir R1 - 4.2 Detik)
+                    </span>
+                    <span className="text-[10px] text-slate-400">MoE Activated</span>
+                  </div>
+                  <p className="text-slate-300 font-mono text-[11px] leading-relaxed italic bg-slate-950 p-2 rounded border border-slate-800">
+                    1. Menganalisis batasan teka-teki: Kotak Apel, Jeruk, dan Campuran. All labels are wrong.<br />
+                    2. Menguji pilihan kotak pertama: Jika membuka &apos;Campuran&apos;, isinya tidak mungkin campuran (karena label salah). Maka isinya 100% murni.<br />
+                    3. Menarik deduksi logis secara berantai untuk sisa 2 kotak lainnya...
+                  </p>
+                </div>
+              )}
+
+              {/* AI Response Bubble */}
+              <div className="flex justify-start">
+                <div className="bg-slate-900 border border-slate-800 text-slate-100 rounded-2xl rounded-tl-none px-4 py-3 max-w-xl text-xs leading-relaxed space-y-2 shadow-md">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
+                    <span className="font-bold text-amber-400 flex items-center gap-1">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      {replica.llmName} Output
+                    </span>
+                    <button
+                      onClick={handleCopyPrompt}
+                      className="text-slate-400 hover:text-white flex items-center gap-1 text-[10px]"
+                    >
+                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copied ? 'Tersalin' : 'Salin Prompt'}
+                    </button>
+                  </div>
+
+                  <div className="whitespace-pre-line text-slate-200">
+                    {currentResponse}
+                  </div>
+
+                  {/* Claude Artifacts Window Panel Mockup inside */}
+                  {module.id === 3 && showArtifactPanel && (
+                    <div className="mt-3 p-3 bg-slate-950 border border-amber-800/60 rounded-xl space-y-2">
+                      <div className="flex items-center justify-between text-amber-400 text-[11px] font-bold">
+                        <span className="flex items-center gap-1">
+                          <Eye className="w-3.5 h-3.5" /> Artifacts Preview: React Button Component
+                        </span>
+                        <span className="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800">
+                          Live Render
+                        </span>
+                      </div>
+                      <div className="p-4 bg-slate-900 rounded-lg text-center flex items-center justify-center">
+                        <button className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold rounded-xl shadow-lg hover:scale-105 active:scale-95 transition-all text-xs">
+                          ✨ Tombol Interaktif Claude
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Perplexity Citations Box (Module 5) */}
+                  {module.id === 5 && (
+                    <div className="mt-3 pt-2 border-t border-slate-800 space-y-1.5">
+                      <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider block">
+                        Rujukan Sitasi Real-time:
+                      </span>
+                      <div className="grid grid-cols-2 gap-2 text-[10px]">
+                        <a href="#cit1" className="p-2 bg-slate-950 hover:bg-slate-800 rounded border border-slate-800 text-slate-300 flex items-center gap-1">
+                          <ExternalLink className="w-3 h-3 text-cyan-400" /> [1] TechReport AI 2026
+                        </a>
+                        <a href="#cit2" className="p-2 bg-slate-950 hover:bg-slate-800 rounded border border-slate-800 text-slate-300 flex items-center gap-1">
+                          <ExternalLink className="w-3 h-3 text-cyan-400" /> [2] Statista Report
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Interactive Prompt Input Box */}
+            <div className="bg-slate-900 border-t border-slate-800 p-3 space-y-3">
+              {module.id === 1 ? (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-bold text-amber-300 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                      Hasil Prompt Box (Terupdate Otomatis 4 Baris):
+                    </label>
+                    <span className="text-[10px] text-slate-400 font-mono">
+                      Format Baris Terpisah [R, C, T, F]
+                    </span>
+                  </div>
+                  <textarea
+                    rows={4}
+                    value={userPrompt}
+                    onChange={(e) => setUserPrompt(e.target.value)}
+                    placeholder="Hasil prompt terstruktur..."
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-amber-200 leading-relaxed focus:outline-none focus:border-amber-500 resize-none selection:bg-amber-500 selection:text-slate-950"
+                  />
+                  <div className="flex items-center justify-between pt-1">
+                    <button
+                      onClick={handleCopyPrompt}
+                      className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg flex items-center gap-1.5 border border-slate-700 transition-colors"
+                    >
+                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copied ? 'Tersalin!' : 'Salin Prompt Box'}
+                    </button>
+                    <button
+                      onClick={handleExecutePrompt}
+                      disabled={isLoading}
+                      className="px-4 py-2 bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-400 hover:to-indigo-500 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 transition-all shadow-md shadow-amber-500/10"
+                    >
+                      {isLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+                      Proses Ke Simulator
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={userPrompt}
+                    onChange={(e) => setUserPrompt(e.target.value)}
+                    placeholder={`Tulis atau ubah instruksi untuk ${replica.llmName}...`}
+                    className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                  />
+                  <button
+                    onClick={handleExecutePrompt}
+                    disabled={isLoading}
+                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 transition-all shadow-md shadow-indigo-600/30 shrink-0"
+                  >
+                    {isLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+                    Kirim
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+          )}
+        </div>
+
+        {/* Right Column: Feature Breakdown Cards (4 cols) */}
+        <div className="lg:col-span-4 space-y-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h3 className="font-bold text-sm text-white flex items-center gap-2">
+                <Info className="w-4 h-4 text-amber-400" />
+                Panduan Fitur Platform
+              </h3>
+              <span className="text-[10px] text-slate-400 font-mono">
+                {replica.hotspots.length} Fitur Utama
+              </span>
+            </div>
+
+            {/* Feature Cards List */}
+            <div className="space-y-3 max-h-[460px] overflow-y-auto pr-1">
+              {replica.hotspots.map((hotspot) => (
+                <div
+                  key={hotspot.id}
+                  className="bg-slate-950 border border-slate-800 rounded-xl p-3.5 space-y-1.5 transition-all hover:border-slate-700"
+                >
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      {hotspot.title}
+                    </h4>
+                    {hotspot.tag && (
+                      <span className="text-[9px] font-semibold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        {hotspot.tag}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                    {hotspot.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Advance Button */}
+            <button
+              onClick={onAdvanceToQuiz}
+              className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all"
+            >
+              Saya Paham, Siap Uji Kuis Modul <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
