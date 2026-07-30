@@ -14,7 +14,7 @@ import { useTierAccess } from './hooks/useTierAccess';
 import { BADGES_LIST } from './lib/achievementsData';
 import { FloatingXpNotification, FloatingXpItem } from './components/FloatingXpNotification';
 import { getLocalDateString, getDaysDifference } from './lib/gamification';
-import { Compass, Heart } from 'lucide-react';
+import { Compass, Heart, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 import { fetchUserProfile, checkoutUpgrade } from './services/api';
@@ -56,6 +56,7 @@ export default function App() {
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [targetUpgradeModuleId, setTargetUpgradeModuleId] = useState<number | null>(null);
   const [capstoneModalOpen, setCapstoneModalOpen] = useState(false);
+  const [isAuthValidating, setIsAuthValidating] = useState<boolean>(true);
 
   // Theme State ('dark' | 'light')
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
@@ -110,8 +111,9 @@ export default function App() {
     fetchUserProfile(token).then((res) => {
       if (res.success && res.data) {
         const sub = res.data.subscription;
-        const userTier = (sub?.tier as 'free' | 'tier_1' | 'tier_2') || (sub?.is_paid ? 'tier_1' : 'free');
-        const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier_2' ? 29 : userTier === 'tier_1' ? 22 : 3);
+        const rawTier = sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
+        const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
+        const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
 
         setProgress((prev) => ({
           ...prev,
@@ -119,6 +121,7 @@ export default function App() {
           tier: userTier,
           maxAllowedModuleId: maxAllowed,
         }));
+        setIsAuthValidating(false);
       } else {
         // Invalid or expired token
         redirectToLogin();
@@ -534,6 +537,20 @@ export default function App() {
 
   const currentModule = MODULES_DATA.find((m) => m.id === selectedModuleId);
   const allModulesCompleted = progress.completedModules.length === MODULES_DATA.length;
+
+  if (isAuthValidating) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white p-4 font-sans">
+        <div className="w-12 h-12 rounded-2xl bg-[#ffb034]/20 border border-[#ffb034]/40 flex items-center justify-center mb-4 animate-pulse shadow-lg shadow-[#ffb034]/10">
+          <Sparkles className="w-6 h-6 text-[#ffb034]" />
+        </div>
+        <div className="flex items-center gap-2.5 text-xs font-bold text-slate-300">
+          <span className="w-4 h-4 border-2 border-[#ffb034] border-t-transparent rounded-full animate-spin" />
+          <span>Memverifikasi Sesi AI Navigator...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
