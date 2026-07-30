@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Award, X, Sparkles, CheckCircle2, Download, Compass, ShieldCheck, Mail, User, Crown, ExternalLink, BookOpen, Loader2 } from 'lucide-react';
+import { Award, X, Sparkles, CheckCircle2, Download, Printer, Compass, ShieldCheck, Mail, User, Crown, ExternalLink, BookOpen, Loader2 } from 'lucide-react';
 import { UserProgress } from '../types';
 import { issueCertificateApi } from '../services/api';
 import { MODULES_DATA } from '../data/modulesData';
@@ -21,13 +21,14 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   onSaveCertDetails,
   packages,
 }) => {
-  // Use progress.userName (from login) as a better default than hardcoded string
-  const actualUserName = progress?.certName || progress?.capstoneSubmission?.name || (progress as any)?.userName || '';
-  const actualUserEmail = progress?.certEmail || progress?.capstoneSubmission?.email || '';
+  // Prioritize logged-in user name from account over stored certName
+  const actualUserName = (progress as any)?.userName || progress?.capstoneSubmission?.name || progress?.certName || '';
+  const actualUserEmail = (progress as any)?.userEmail || progress?.capstoneSubmission?.email || progress?.certEmail || '';
 
-  const [userName, setUserName] = useState(actualUserName || 'Siswa AI Navigator');
-  const [userEmail, setUserEmail] = useState(actualUserEmail || 'siswa@ainavigator.id');
-  const [isVerified, setIsVerified] = useState(!!progress?.certRequested || !!progress?.certName);
+  const [userName, setUserName] = useState(actualUserName || '');
+  const [userEmail, setUserEmail] = useState(actualUserEmail || '');
+  // Always show verification input form first before displaying certificate as requested
+  const [isVerified, setIsVerified] = useState(false);
   const [certUuid, setCertUuid] = useState<string>('');
   const [certNumber, setCertNumber] = useState<string>('');
   const [verifyUrl, setVerifyUrl] = useState<string>('');
@@ -298,7 +299,37 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
           /* Official Certificate & Transcript View */
           <div className="space-y-5">
             {/* Action Bar */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-800 pb-4">
+            <style>{`
+              @media print {
+                body * {
+                  visibility: hidden !important;
+                }
+                #printable-certificate-area, #printable-certificate-area * {
+                  visibility: visible !important;
+                }
+                #printable-certificate-area {
+                  position: absolute !important;
+                  left: 0 !important;
+                  top: 0 !important;
+                  width: 100% !important;
+                  margin: 0 !important;
+                  padding: 0 !important;
+                  background: #ffffff !important;
+                }
+                .print\\:hidden {
+                  display: none !important;
+                }
+                .print\\:break-before-page {
+                  page-break-before: always !important;
+                  break-before: page !important;
+                }
+                @page {
+                  size: A4 landscape;
+                  margin: 0;
+                }
+              }
+            `}</style>
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-800 pb-4 print:hidden">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Sertifikat Terverifikasi
@@ -311,19 +342,30 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 </button>
               </div>
 
-              <button
-                onClick={handleDownloadPDF}
-                disabled={isDownloading}
-                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white font-black text-xs rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
-              >
-                {isDownloading ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Download className="w-4 h-4" />
-                )}
-                <span>{isDownloading ? 'Memproses PDF...' : 'Download Sertifikat PDF'}</span>
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => window.print()}
+                  className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-600/20 transition-all cursor-pointer"
+                >
+                  <Printer className="w-4 h-4" /> Cetak / PDF (Browser)
+                </button>
+
+                <button
+                  onClick={handleDownloadPDF}
+                  disabled={isDownloading}
+                  className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white font-black text-xs rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
+                >
+                  {isDownloading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Download className="w-4 h-4" />
+                  )}
+                  <span>{isDownloading ? 'Memproses...' : 'Download File PDF'}</span>
+                </button>
+              </div>
             </div>
+
+            <div id="printable-certificate-area" className="space-y-6">
 
             {/* ============ HALAMAN 1: SERTIFIKAT ============ */}
             <div
@@ -506,6 +548,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 700, fontSize: '8px' }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</span>
                 </div>
               </div>
+            </div>
             </div>
 
             {/* Verification Link */}
