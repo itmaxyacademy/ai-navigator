@@ -15,122 +15,53 @@ body, header, footer, div, button, section, nav, article {
   transition-timing-function: ease-in-out;
 }
 
-/* Light Theme Overrides for high contrast and accessibility */
+/* Light Theme Base Setup */
 html.light body {
   background-color: #f8fafc;
   color: #0f172a;
 }
 
-html.light .bg-slate-950 {
-  background-color: #f8fafc !important;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-html.light .bg-slate-900 {
-  background-color: #ffffff !important;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-html.light .bg-slate-900\/95 {
-  background-color: rgba(255, 255, 255, 0.95) !important;
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
 }
 
-html.light .bg-slate-900\/90 {
-  background-color: rgba(255, 255, 255, 0.9) !important;
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
 }
 
-html.light .bg-slate-900\/80 {
-  background-color: rgba(241, 245, 249, 0.85) !important;
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-html.light .bg-slate-900\/60 {
-  background-color: rgba(241, 245, 249, 0.7) !important;
+.animate-fadeIn {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-html.light .bg-slate-800 {
-  background-color: #f1f5f9 !important;
+/* Utility to hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
-html.light .bg-slate-800\/80 {
-  background-color: rgba(241, 245, 249, 0.9) !important;
-}
-
-html.light .bg-slate-800\/50 {
-  background-color: rgba(241, 245, 249, 0.6) !important;
-}
-
-html.light .border-slate-800 {
-  border-color: #e2e8f0 !important;
-}
-
-html.light .border-slate-700 {
-  border-color: #cbd5e1 !important;
-}
-
-html.light .text-white {
-  color: #0f172a !important;
-}
-
-html.light .text-slate-100 {
-  color: #0f172a !important;
-}
-
-html.light .text-slate-200 {
-  color: #1e293b !important;
-}
-
-html.light .text-slate-300 {
-  color: #334155 !important;
-}
-
-html.light .text-slate-400 {
-  color: #475569 !important;
-}
-
-html.light .text-slate-500 {
-  color: #64748b !important;
-}
-
-/* Modal overlays in light mode */
-html.light .bg-slate-950\/80 {
-  background-color: rgba(15, 23, 42, 0.5) !important;
-}
-
-/* Gradients text exception */
-html.light .bg-clip-text {
-  color: transparent !important;
-}
-
-/* Accent boxes in Light Mode */
-html.light .bg-indigo-950\/80,
-html.light .bg-indigo-950\/60,
-html.light .bg-indigo-950\/40,
-html.light .bg-indigo-950\/90 {
-  background-color: #eef2ff !important;
-  color: #3730a3 !important;
-}
-
-html.light .text-indigo-200,
-html.light .text-indigo-300 {
-  color: #4338ca !important;
-}
-
-html.light .bg-amber-950\/40,
-html.light .bg-amber-950\/60 {
-  background-color: #fffbeb !important;
-  color: #92400e !important;
-}
-
-html.light .text-amber-200,
-html.light .text-amber-300 {
-  color: #b45309 !important;
-}
-
-html.light .bg-emerald-950\/50,
-html.light .bg-emerald-950\/60 {
-  background-color: #ecfdf5 !important;
-  color: #065f46 !important;
-}
-
-html.light .text-emerald-200,
-html.light .text-emerald-300 {
-  color: #047857 !important;
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

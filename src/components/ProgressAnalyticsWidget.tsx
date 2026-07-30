@@ -85,23 +85,23 @@ export const ProgressAnalyticsWidget: React.FC<ProgressAnalyticsWidgetProps> = (
   const avgDailyMinutes = Math.round((totalPeriodMinutes / timeRangeDays) * 10) / 10;
 
   return (
-    <div className={`bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
+    <div className={`bg-white border-slate-200 text-slate-900 dark:bg-slate-900 dark:border-slate-800 dark:text-white border rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
       {/* Card Header */}
-      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="p-2.5 rounded-xl bg-indigo-950 border border-indigo-800 text-indigo-400 shrink-0">
-            <Activity className="w-5 h-5 text-indigo-400" />
+          <div className="p-2.5 rounded-xl bg-indigo-500/10 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 shrink-0">
+            <Activity className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm sm:text-base font-extrabold text-white tracking-tight break-words">
+              <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white tracking-tight break-words">
                 Analisis Progress Belajar
               </h3>
-              <span className="text-[10px] font-extrabold bg-indigo-950 text-indigo-300 border border-indigo-800 px-2 py-0.5 rounded-md uppercase tracking-wider shrink-0">
+              <span className="text-[10px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 px-2 py-0.5 rounded-md uppercase tracking-wider shrink-0">
                 Statistik
               </span>
             </div>
-            <p className="text-xs text-slate-400 truncate">
+            <p className="text-xs text-slate-600 dark:text-slate-400 truncate">
               Grafik aktivitas XP &amp; durasi belajar {timeRangeDays} hari terakhir
             </p>
           </div>
@@ -114,7 +114,7 @@ export const ProgressAnalyticsWidget: React.FC<ProgressAnalyticsWidgetProps> = (
             className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
               timeRangeDays === 14
                 ? 'bg-indigo-600 border-indigo-500 text-white'
-                : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             14 Hari
@@ -124,7 +124,7 @@ export const ProgressAnalyticsWidget: React.FC<ProgressAnalyticsWidgetProps> = (
             className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
               timeRangeDays === 30
                 ? 'bg-indigo-600 border-indigo-500 text-white'
-                : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             30 Hari
@@ -134,21 +134,21 @@ export const ProgressAnalyticsWidget: React.FC<ProgressAnalyticsWidgetProps> = (
 
       {/* KPI Stats Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
-        <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-xl space-y-0.5">
-          <span className="text-[10px] font-semibold text-slate-400 block">Total XP {timeRangeDays}d</span>
-          <span className="text-sm font-black text-indigo-300">+{totalPeriodXp} XP</span>
+        <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl space-y-0.5">
+          <span className="text-[10px] font-semibold text-slate-600 dark:text-slate-400 block">Total XP {timeRangeDays}d</span>
+          <span className="text-sm font-black text-indigo-600 dark:text-indigo-300">+{totalPeriodXp} XP</span>
         </div>
-        <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-xl space-y-0.5">
-          <span className="text-[10px] font-semibold text-slate-400 block">Total Durasi</span>
-          <span className="text-sm font-black text-slate-200">{totalPeriodMinutes} Menit</span>
+        <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl space-y-0.5">
+          <span className="text-[10px] font-semibold text-slate-600 dark:text-slate-400 block">Total Durasi</span>
+          <span className="text-sm font-black text-slate-900 dark:text-slate-200">{totalPeriodMinutes} Menit</span>
         </div>
-        <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-xl space-y-0.5">
-          <span className="text-[10px] font-semibold text-slate-400 block">Hari Aktif</span>
-          <span className="text-sm font-black text-emerald-400">{activeDaysCount} / {timeRangeDays} Hari</span>
+        <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl space-y-0.5">
+          <span className="text-[10px] font-semibold text-slate-600 dark:text-slate-400 block">Hari Aktif</span>
+          <span className="text-sm font-black text-emerald-600 dark:text-emerald-400">{activeDaysCount} / {timeRangeDays} Hari</span>
         </div>
-        <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-xl space-y-0.5">
-          <span className="text-[10px] font-semibold text-slate-400 block">Rata-rata/Hari</span>
-          <span className="text-sm font-black text-indigo-300">{avgDailyMinutes} Mins</span>
+        <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl space-y-0.5">
+          <span className="text-[10px] font-semibold text-slate-600 dark:text-slate-400 block">Rata-rata/Hari</span>
+          <span className="text-sm font-black text-indigo-600 dark:text-indigo-300">{avgDailyMinutes} Mins</span>
         </div>
       </div>
 

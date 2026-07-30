@@ -49,7 +49,11 @@ export const Header: React.FC<HeaderProps> = ({
   const userTier = progress.userTier || 'free';
 
   return (
-    <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 text-white">
+    <header className={`sticky top-0 z-40 backdrop-blur-md border-b transition-colors duration-200 ${
+      theme === 'light'
+        ? 'bg-white/95 border-slate-200 text-slate-900 shadow-sm'
+        : 'bg-slate-900/95 border-slate-800 text-white'
+    }`}>
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-2">
           {/* Logo */}
@@ -64,21 +68,27 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5 whitespace-nowrap">
-                <span className="font-extrabold text-base text-white tracking-tight">
+                <span className={`font-extrabold text-base tracking-tight ${
+                  theme === 'light' ? 'text-slate-900' : 'text-white'
+                }`}>
                   AI Navigator
                 </span>
                 <span className="px-1.5 py-0.5 text-[9px] font-bold bg-indigo-950 text-indigo-300 border border-indigo-800 rounded-full">
                   Pemula
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 hidden xl:block whitespace-nowrap">
+              <p className={`text-[10px] hidden xl:block whitespace-nowrap ${
+                theme === 'light' ? 'text-slate-600 font-semibold' : 'text-slate-400'
+              }`}>
                 Panduan Interaktif Pengenalan LLM
               </p>
             </div>
           </div>
 
           {/* Navigation Links Desktop */}
-          <nav className="hidden lg:flex items-center gap-1.5 bg-slate-950/60 p-1 rounded-xl border border-slate-800 shrink-0">
+          <nav className={`hidden lg:flex items-center gap-1.5 p-1 rounded-xl border shrink-0 ${
+            theme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-slate-950/60 border-slate-800'
+          }`}>
             <Tooltip
               content={
                 <div className="space-y-1">

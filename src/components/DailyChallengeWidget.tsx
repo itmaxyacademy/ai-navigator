@@ -187,24 +187,24 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
   };
 
   return (
-    <div className={`bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
+    <div className={`bg-white border-slate-200 text-slate-900 dark:bg-slate-900 dark:border-slate-800 dark:text-white border rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
       {/* Widget Header */}
-      <div className="relative z-10 space-y-2 border-b border-slate-800 pb-3">
+      <div className="relative z-10 space-y-2 border-b border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex items-start justify-between gap-2 flex-wrap">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="p-2 rounded-xl bg-indigo-950 border border-indigo-800/80 text-indigo-400 shrink-0">
-              <Flame className="w-4 h-4 text-indigo-400" />
+            <div className="p-2 rounded-xl bg-indigo-500/10 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800/80 text-indigo-600 dark:text-indigo-400 shrink-0">
+              <Flame className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="text-sm sm:text-base font-extrabold text-white tracking-tight whitespace-nowrap">
+                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white tracking-tight whitespace-nowrap">
                   Tantangan Kuis Harian
                 </h3>
-                <span className="text-[9px] font-extrabold bg-indigo-950 text-indigo-300 border border-indigo-800 px-1.5 py-0.5 rounded-md uppercase tracking-wider shrink-0">
+                <span className="text-[9px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 px-1.5 py-0.5 rounded-md uppercase tracking-wider shrink-0">
                   DAILY QUIZ
                 </span>
               </div>
-              <p className="text-xs text-slate-400 truncate font-medium">
+              <p className="text-xs text-slate-600 dark:text-slate-400 truncate font-medium">
                 {challengeSet.title}
               </p>
             </div>

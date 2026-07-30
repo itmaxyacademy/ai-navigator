@@ -129,21 +129,21 @@ export const SkillRadarChartWidget: React.FC<SkillRadarChartWidgetProps> = ({
   const activeRecModule = modules.find((m) => m.id === activeDomain.recommendationModuleId);
 
   return (
-    <div className={`bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
+    <div className={`bg-white border-slate-200 text-slate-900 dark:bg-slate-900 dark:border-slate-800 dark:text-white border rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
       {/* Header */}
-      <div className="relative z-10 flex items-center justify-between border-b border-slate-800 pb-3 gap-2">
+      <div className="relative z-10 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="p-2.5 rounded-xl bg-indigo-950 border border-indigo-800 text-indigo-400 shrink-0">
-            <Target className="w-5 h-5 text-indigo-400" />
+          <div className="p-2.5 rounded-xl bg-indigo-500/10 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 shrink-0">
+            <Target className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm font-extrabold text-white tracking-tight break-words">Radar Kompetensi AI</h3>
-              <span className="text-[10px] font-extrabold bg-indigo-950 text-indigo-300 border border-indigo-800 px-2 py-0.5 rounded-md uppercase tracking-wider shrink-0">
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight break-words">Radar Kompetensi AI</h3>
+              <span className="text-[10px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 px-2 py-0.5 rounded-md uppercase tracking-wider shrink-0">
                 Pemetaan Skill
               </span>
             </div>
-            <p className="text-xs text-slate-400 truncate">
+            <p className="text-xs text-slate-600 dark:text-slate-400 truncate">
               Evaluasi tingkat keahlian dalam 5 bidang utama LLM
             </p>
           </div>

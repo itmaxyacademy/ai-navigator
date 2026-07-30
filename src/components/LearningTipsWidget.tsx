@@ -104,24 +104,24 @@ export const LearningTipsWidget: React.FC<LearningTipsWidgetProps> = ({
   };
 
   return (
-    <div className={`bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
+    <div className={`bg-white border-slate-200 text-slate-900 dark:bg-slate-900 dark:border-slate-800 dark:text-white border rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
       {/* Widget Header */}
-      <div className="relative z-10 flex items-center justify-between gap-3 border-b border-slate-800 pb-3">
+      <div className="relative z-10 flex items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="p-2 rounded-xl bg-indigo-950 border border-indigo-800 text-indigo-400 shrink-0">
-            <Lightbulb className="w-4 h-4 text-indigo-400" />
+          <div className="p-2 rounded-xl bg-indigo-500/10 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 shrink-0">
+            <Lightbulb className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm font-extrabold text-white tracking-tight break-words">Tips Belajar AI</h3>
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight break-words">Tips Belajar AI</h3>
               {isDailyTip && (
-                <span className="text-[10px] font-extrabold bg-indigo-950 text-indigo-300 border border-indigo-800 px-2 py-0.5 rounded-md uppercase tracking-wider flex items-center gap-1 shrink-0">
-                  <Sparkles className="w-3 h-3 text-indigo-400" />
+                <span className="text-[10px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 px-2 py-0.5 rounded-md uppercase tracking-wider flex items-center gap-1 shrink-0">
+                  <Sparkles className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
                   Tip Hari Ini
                 </span>
               )}
             </div>
-            <p className="text-xs text-slate-400 truncate">Pahami konsep LLM &amp; rahasia formula prompt efektif</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400 truncate">Pahami konsep LLM &amp; rahasia formula prompt efektif</p>
           </div>
         </div>
 

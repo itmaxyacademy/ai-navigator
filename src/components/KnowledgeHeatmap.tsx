@@ -361,31 +361,31 @@ export const KnowledgeHeatmap: React.FC<KnowledgeHeatmapProps> = ({
   }, [filteredData, activeFilter]);
 
   return (
-    <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6 relative overflow-hidden">
+    <div className="bg-white border-slate-200 text-slate-900 dark:bg-slate-900/90 dark:border-slate-800 dark:text-white border rounded-3xl p-6 shadow-2xl space-y-6 relative overflow-hidden">
       {/* Background Decorative Glow */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-rose-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
       {/* Header Title Section */}
-      <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-semibold">
-            <BarChart3 className="w-3.5 h-3.5 text-rose-400" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-500/30 text-rose-600 dark:text-rose-300 text-xs font-semibold">
+            <BarChart3 className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400" />
             <span>Visualisasi D3.js Knowledge Analytics</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
             <span>Peta Kalor Penguasaan Materi</span>
-            <span className="text-xs font-mono font-bold bg-indigo-950 text-indigo-300 border border-indigo-700 px-2.5 py-0.5 rounded-full">
+            <span className="text-xs font-mono font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-700 px-2.5 py-0.5 rounded-full">
               D3 Heatmap
             </span>
           </h2>
-          <p className="text-slate-400 text-xs leading-relaxed max-w-xl">
+          <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed max-w-xl">
             Peta kalor interaktif memetakan modul yang sering dipelajari ulang atau yang memerlukan latihan ekstra berdasarkan perolehan skor kuis.
           </p>
         </div>
 
         {/* Legend Indicator */}
-        <div className="bg-slate-950/80 p-3 rounded-2xl border border-slate-800/80 text-xs space-y-2 shrink-0">
+        <div className="bg-slate-50 dark:bg-slate-950/80 p-3 rounded-2xl border border-slate-200 dark:border-slate-800/80 text-xs space-y-2 shrink-0">
           <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Skala Warna Penguasaan</div>
           <div className="flex items-center gap-2 text-[11px]">
             <div className="flex items-center gap-1">

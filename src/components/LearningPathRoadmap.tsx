@@ -505,9 +505,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
   };
 
   return (
-    <div className="space-y-8 pb-16 bg-[#0a0e1a] text-slate-100 min-h-screen p-3 sm:p-6 rounded-3xl font-sans">
+    <div className="space-y-8 pb-16 min-h-screen p-3 sm:p-6 rounded-3xl font-sans text-slate-900 dark:text-slate-100 bg-slate-100/60 dark:bg-[#0a0e1a]">
       {/* ---------------- TOP HERO BANNER ---------------- */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-[#0f172a] to-slate-950 border border-slate-800 p-6 sm:p-8 shadow-2xl">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-[#0f172a] to-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl text-white">
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
 
@@ -528,9 +528,10 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
             </div>
 
             <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-              AI Navigator — <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">Platform Pembelajaran LLM Interaktif untuk Pemula</span>
+              <span className="text-white font-extrabold">AI Navigator — </span>
+              <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">Platform Pembelajaran LLM Interaktif untuk Pemula</span>
             </h1>
-            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl font-medium">
+            <p className="text-slate-200 text-xs sm:text-sm leading-relaxed max-w-2xl font-medium">
               Kuasai 29 modul LLM modern dari dasar hingga mahir! Lewati setiap node zig-zag, dapatkan 3 bintang kuis, dan buka 7 Peti Karun Spesial dengan bonus tools AI eksklusif.
             </p>
 
