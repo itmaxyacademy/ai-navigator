@@ -153,9 +153,9 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
               <button
                 onClick={handleSubmitQuiz}
                 disabled={Object.keys(selectedAnswers).length < questions.length}
-                className="px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-40 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/30 flex items-center gap-2"
+                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/30 flex items-center gap-2 cursor-pointer disabled:cursor-not-allowed"
               >
-                Selesaikan Kuis & Kirim <Award className="w-4 h-4" />
+                Selesaikan Kuis &amp; Kirim <Award className="w-4 h-4" />
               </button>
             )}
           </div>
@@ -219,7 +219,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
           <div className="flex items-center justify-center gap-3 pt-4 border-t border-slate-800">
             <button
               onClick={handleRestart}
-              className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl flex items-center gap-2"
+              className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl flex items-center gap-2 cursor-pointer"
             >
               <RefreshCw className="w-4 h-4" /> Ulangi Kuis
             </button>
@@ -227,7 +227,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
             {onNextModule && (
               <button
                 onClick={onNextModule}
-                className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-600/30"
+                className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-600/30 cursor-pointer"
               >
                 Lanjut ke Modul Berikutnya <ArrowRight className="w-4 h-4" />
               </button>

@@ -358,11 +358,13 @@ export default function App() {
     setProgress((prev) => {
       const currentMinHistory = prev.dailyMinutesHistory || {};
       const currentTodayMins = currentMinHistory[todayStr] || 0;
+      // Cap at 180 minutes max daily to ensure fair learning progress and prevent spamming
+      if (currentTodayMins >= 180) return prev;
       return {
         ...prev,
         dailyMinutesHistory: {
           ...currentMinHistory,
-          [todayStr]: currentTodayMins + extraMins,
+          [todayStr]: Math.min(180, currentTodayMins + extraMins),
         },
       };
     });

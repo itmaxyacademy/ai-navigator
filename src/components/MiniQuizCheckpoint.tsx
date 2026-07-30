@@ -63,7 +63,7 @@ export const MiniQuizCheckpoint: React.FC<MiniQuizCheckpointProps> = ({
 
   if (isAlreadyCompleted) {
     return (
-      <div className="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-emerald-950/40 border border-emerald-500/40 rounded-3xl p-5 shadow-lg flex items-center justify-between gap-4">
+      <div className="bg-slate-900 border border-emerald-500/40 rounded-3xl p-5 shadow-lg flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 shrink-0">
             <CheckCircle2 className="w-5 h-5" />
@@ -92,7 +92,7 @@ export const MiniQuizCheckpoint: React.FC<MiniQuizCheckpointProps> = ({
   }
 
   return (
-    <div className="bg-gradient-to-r from-purple-950/60 via-indigo-950/70 to-slate-900 border-2 border-indigo-500/30 hover:border-indigo-500/50 rounded-3xl p-6 shadow-xl space-y-4 transition-all">
+    <div className="bg-slate-900 border-2 border-indigo-500/30 hover:border-indigo-500/50 rounded-3xl p-6 shadow-xl space-y-4 transition-all">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/20 pb-3">
         <div className="flex items-center gap-2.5">
