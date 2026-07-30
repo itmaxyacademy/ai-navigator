@@ -94,6 +94,13 @@ export async function saveCloudProgress(token: string, progress: Record<string, 
     delete cleanProgress.data;
     delete cleanProgress.message;
     delete cleanProgress.error;
+    delete cleanProgress.userTier;
+    delete cleanProgress.tier;
+    delete cleanProgress.maxAllowedModuleId;
+    delete cleanProgress.packageName;
+    delete cleanProgress.subscriptionExpiredAt;
+    delete cleanProgress.userName;
+    delete cleanProgress.userEmail;
 
     await fetchWithAuth(`${API_BASE}/progress`, {
       method: 'POST',

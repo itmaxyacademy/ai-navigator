@@ -118,7 +118,15 @@ export default function App() {
         const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
 
         // Load cloud-synced progress from database
-        const cloudData = (await loadCloudProgress(token)) as unknown as UserProgress | null;
+        const cloudDataRaw = (await loadCloudProgress(token)) as unknown as UserProgress | null;
+        const cloudData = cloudDataRaw ? { ...cloudDataRaw } : null;
+        if (cloudData) {
+          delete (cloudData as Record<string, unknown>).userTier;
+          delete (cloudData as Record<string, unknown>).tier;
+          delete (cloudData as Record<string, unknown>).maxAllowedModuleId;
+          delete (cloudData as Record<string, unknown>).packageName;
+          delete (cloudData as Record<string, unknown>).subscriptionExpiredAt;
+        }
 
         setProgress((prev) => {
           if (!cloudData) {
