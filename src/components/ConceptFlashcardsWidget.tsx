@@ -187,7 +187,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
             className={`px-3 py-1 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer border ${
               selectedCategory === cat
                 ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
-                : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             {cat}
@@ -207,8 +207,8 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
             onClick={() => !isDebounced && setIsFlipped(!isFlipped)}
             className={`w-full min-h-[250px] p-5 rounded-2xl border cursor-pointer select-none transition-all duration-300 relative flex flex-col justify-between shadow-lg ${
               isFlipped
-                ? 'bg-slate-950 border-indigo-600'
-                : 'bg-slate-950 border-slate-800 hover:border-slate-700'
+                ? 'bg-slate-900 dark:bg-slate-950 border-indigo-500 text-white'
+                : 'bg-slate-900 dark:bg-slate-950 border-slate-700 dark:border-slate-800 hover:border-indigo-500 text-white'
             }`}
           >
             {/* Card Header Tag */}
@@ -217,7 +217,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
                 <span className="font-mono font-bold text-indigo-300 bg-indigo-950 border border-indigo-800 px-2.5 py-0.5 rounded-full text-[10px] truncate">
                   {currentCard.category}
                 </span>
-                <span className="text-[10px] text-slate-400 bg-slate-900 border border-slate-800 px-2 py-0.5 rounded-full font-bold shrink-0">
+                <span className="text-[10px] text-slate-300 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-full font-bold shrink-0">
                   {currentCard.level}
                 </span>
               </div>

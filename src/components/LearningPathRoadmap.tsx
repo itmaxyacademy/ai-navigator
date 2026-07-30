@@ -1128,64 +1128,64 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
         {/* Sidebar Column */}
         <div className="lg:col-span-5 xl:col-span-4 space-y-6 lg:sticky lg:top-24">
           {/* Sidebar Tab Controls Header */}
-          <div className="grid grid-cols-5 gap-1 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl shadow-lg">
+          <div className="flex items-center gap-1 p-1.5 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-x-auto no-scrollbar">
             <button
               onClick={() => setSidebarTab('challenge')}
-              className={`flex items-center justify-center gap-1.5 py-2 px-1 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+              className={`flex-1 min-w-[72px] flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                 sidebarTab === 'challenge'
                   ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-800/50'
               }`}
             >
-              <Flame className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'challenge' ? 'text-slate-950 fill-slate-950' : 'text-amber-400'}`} />
+              <Flame className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'challenge' ? 'text-slate-950 fill-slate-950' : 'text-amber-500'}`} />
               <span>Tantangan</span>
             </button>
 
             <button
               onClick={() => setSidebarTab('flashcards')}
-              className={`flex items-center justify-center gap-1.5 py-2 px-1 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+              className={`flex-1 min-w-[65px] flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                 sidebarTab === 'flashcards'
                   ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-800/50'
               }`}
             >
-              <Layers className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'flashcards' ? 'text-slate-950' : 'text-amber-400'}`} />
+              <Layers className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'flashcards' ? 'text-slate-950' : 'text-amber-500'}`} />
               <span>Kartu</span>
             </button>
 
             <button
               onClick={() => setSidebarTab('skills')}
-              className={`flex items-center justify-center gap-1.5 py-2 px-1 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+              className={`flex-1 min-w-[65px] flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                 sidebarTab === 'skills'
                   ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-800/50'
               }`}
             >
-              <Compass className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'skills' ? 'text-slate-950' : 'text-amber-400'}`} />
+              <Compass className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'skills' ? 'text-slate-950' : 'text-amber-500'}`} />
               <span>Radar</span>
             </button>
 
             <button
               onClick={() => setSidebarTab('analytics')}
-              className={`flex items-center justify-center gap-1.5 py-2 px-1 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+              className={`flex-1 min-w-[68px] flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                 sidebarTab === 'analytics'
                   ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-800/50'
               }`}
             >
-              <Zap className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'analytics' ? 'text-slate-950' : 'text-amber-400'}`} />
+              <Zap className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'analytics' ? 'text-slate-950' : 'text-amber-500'}`} />
               <span>Analisis</span>
             </button>
 
             <button
               onClick={() => setSidebarTab('tips')}
-              className={`flex items-center justify-center gap-1.5 py-2 px-1 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+              className={`flex-1 min-w-[60px] flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                 sidebarTab === 'tips'
                   ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-800/50'
               }`}
             >
-              <BookOpen className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'tips' ? 'text-slate-950' : 'text-amber-400'}`} />
+              <BookOpen className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'tips' ? 'text-slate-950' : 'text-amber-500'}`} />
               <span>Tips</span>
             </button>
           </div>
