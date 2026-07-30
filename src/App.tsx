@@ -17,6 +17,8 @@ import { getLocalDateString, getDaysDifference } from './lib/gamification';
 import { Compass, Heart } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+import { fetchUserProfile, checkoutUpgrade } from './services/api';
+
 const STORAGE_KEY = 'ai_navigator_user_progress_v1';
 
 const defaultProgress: UserProgress = {
@@ -80,6 +82,33 @@ export default function App() {
       document.documentElement.classList.remove('light');
     }
   }, [theme]);
+
+  // Sync user profile & active tier subscription from API Gateway api.maxy.academy
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get('token');
+    const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
+
+    if (token) {
+      if (tokenFromUrl) {
+        localStorage.setItem('maxy_access_token', tokenFromUrl);
+      }
+      fetchUserProfile(token).then((res) => {
+        if (res.success && res.data) {
+          const sub = res.data.subscription;
+          const userTier = (sub?.tier as 'free' | 'tier_1' | 'tier_2') || (sub?.is_paid ? 'tier_1' : 'free');
+          const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier_2' ? 29 : userTier === 'tier_1' ? 22 : 3);
+
+          setProgress((prev) => ({
+            ...prev,
+            userTier,
+            tier: userTier,
+            maxAllowedModuleId: maxAllowed,
+          }));
+        }
+      });
+    }
+  }, []);
 
   const handleToggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
