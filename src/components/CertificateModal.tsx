@@ -334,49 +334,56 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             )}
 
             {/* HALAMAN 2: Transkrip Kurikulum Pembelajaran & Bobot 1 JP Per Modul */}
-            <div className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-8 text-left space-y-5 relative overflow-hidden shadow-2xl print:break-before-page">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-800 pb-3 gap-2">
-                <div>
-                  <h3 className="text-lg font-black text-amber-300 uppercase tracking-wider flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-amber-400" />
-                    TRANSKRIP KURIKULUM &amp; BEBAN BELAJAR (HALAMAN 2)
-                  </h3>
-                  <p className="text-[11px] text-slate-400 font-medium mt-0.5">
-                    Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
-                  </p>
+            <div className="bg-slate-950 border-4 border-amber-500/50 rounded-2xl p-6 sm:p-10 text-left space-y-6 relative overflow-hidden shadow-2xl print:break-before-page print:border-2 print:p-6">
+              {/* Header Official Transkrip */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b-2 border-amber-500/40 pb-4 gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-indigo-600 p-0.5 shadow-md">
+                    <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center text-amber-400">
+                      <BookOpen className="w-5 h-5" />
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-base sm:text-lg font-black text-amber-300 uppercase tracking-wider">
+                      TRANSKRIP KURIKULUM &amp; BEBAN BELAJAR
+                    </h3>
+                    <p className="text-[11px] text-slate-300 font-medium">
+                      Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
+                    </p>
+                  </div>
                 </div>
-                <div className="text-left sm:text-right">
-                  <span className="text-xs font-bold text-slate-200 block">{userName}</span>
-                  <span className="text-[10px] text-amber-400 font-mono block">{certNumber || 'AIN-2026-CERT'}</span>
+                <div className="text-left sm:text-right bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5 shrink-0">
+                  <span className="text-xs font-black text-white block">{userName || 'Siswa AI Navigator'}</span>
+                  <span className="text-[10px] text-amber-400 font-mono block">{certNumber || 'No. 0255/AIN/NAV/2026'}</span>
                 </div>
               </div>
 
               {/* Table Transkrip Modul */}
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto rounded-xl border border-slate-800 shadow-inner">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-slate-800 text-amber-400 font-bold uppercase text-[10px] tracking-wider bg-slate-900/80">
-                      <th className="py-2.5 px-2.5 text-center w-10">No</th>
-                      <th className="py-2.5 px-3 w-1/3">Judul Modul Pembelajaran</th>
-                      <th className="py-2.5 px-3">Deskripsi Singkat Subtitle</th>
-                      <th className="py-2.5 px-2 text-center w-16">Bobot</th>
-                      <th className="py-2.5 px-2 text-center w-20">Status</th>
+                    <tr className="border-b border-amber-500/30 text-amber-300 font-extrabold uppercase text-[11px] tracking-wider bg-slate-900/95">
+                      <th className="py-3 px-3 text-center w-12 border-r border-slate-800">No</th>
+                      <th className="py-3 px-4 w-5/12 border-r border-slate-800">Judul Modul Pembelajaran</th>
+                      <th className="py-3 px-4 border-r border-slate-800">Deskripsi Ringkas Subtitle</th>
+                      <th className="py-3 px-2 text-center w-20 border-r border-slate-800">Bobot</th>
+                      <th className="py-3 px-2 text-center w-24">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60 text-slate-200">
+                  <tbody className="divide-y divide-slate-800/80 text-slate-100 font-medium">
                     {displayModules.map((m, idx) => (
-                      <tr key={m.id} className="hover:bg-slate-900/50">
-                        <td className="py-2 px-2 font-mono text-slate-400 text-center">{idx + 1}</td>
-                        <td className="py-2 px-3 font-bold text-white">
+                      <tr key={m.id} className={idx % 2 === 0 ? 'bg-slate-950' : 'bg-slate-900/60'}>
+                        <td className="py-2.5 px-3 font-mono text-amber-400 font-bold text-center border-r border-slate-800">{idx + 1}</td>
+                        <td className="py-2.5 px-4 font-bold text-white border-r border-slate-800">
                           {m.title}
-                          {m.badge && <span className="block text-[10px] text-indigo-400 font-normal mt-0.5">{m.badge}</span>}
+                          {m.badge && <span className="block text-[10px] text-indigo-400 font-semibold mt-0.5">{m.badge}</span>}
                         </td>
-                        <td className="py-2 px-3 text-slate-300 text-[11px] leading-snug">
+                        <td className="py-2.5 px-4 text-slate-300 text-[11px] leading-snug border-r border-slate-800">
                           {m.subtitle}
                         </td>
-                        <td className="py-2 px-2 text-center font-bold text-amber-400">1 JP</td>
-                        <td className="py-2 px-2 text-center">
-                          <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
+                        <td className="py-2.5 px-2 text-center font-bold text-amber-300 border-r border-slate-800">1 JP</td>
+                        <td className="py-2.5 px-2 text-center">
+                          <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[10px] font-black tracking-wide">
                             LULUS
                           </span>
                         </td>
@@ -384,21 +391,24 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                     ))}
                   </tbody>
                   <tfoot>
-                    <tr className="border-t-2 border-slate-800 font-bold text-xs text-white bg-slate-900/90">
-                      <td colSpan={3} className="py-3 px-3 text-right text-slate-300">TOTAL BEBAN PELAJARAN:</td>
-                      <td className="py-3 px-2 text-center text-amber-400 font-extrabold text-sm">
+                    <tr className="border-t-2 border-amber-500/40 font-extrabold text-xs text-white bg-slate-900/95">
+                      <td colSpan={3} className="py-3 px-4 text-right text-slate-200 uppercase tracking-wider">TOTAL BEBAN KELULUSAN:</td>
+                      <td className="py-3 px-2 text-center text-amber-300 font-black text-sm border-x border-slate-800">
                         {displayModules.length} JP
                       </td>
-                      <td></td>
+                      <td className="py-3 px-2 text-center text-emerald-400 font-black">100%</td>
                     </tr>
                   </tfoot>
                 </table>
               </div>
 
-              {/* Footer Transkrip */}
-              <div className="pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-2">
-                <span>* 1 JP (Jam Pelajaran) setara dengan 45 menit kegiatan pembelajaran terstruktur.</span>
-                <span className="font-mono text-indigo-400">UUID Certify: {certUuid || 'AIN-2026-CERT-29M'}</span>
+              {/* Legal Note & Verification Footer */}
+              <div className="pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-3">
+                <span className="font-medium text-slate-300">* 1 JP (Jam Pelajaran) setara dengan 45 menit kegiatan pembelajaran terstruktur &amp; evaluasi mandiri.</span>
+                <div className="text-right font-mono">
+                  <span className="text-[10px] text-slate-500 block font-sans">Kode Verifikasi Sertifikat:</span>
+                  <strong className="text-amber-400 font-bold text-xs">{certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</strong>
+                </div>
               </div>
             </div>
           </div>
