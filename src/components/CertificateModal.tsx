@@ -388,11 +388,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       else if (obj.id === 'DATE') content = todayStr;
 
                       // Canvas editor (Fabric.js 850x600) stores top/left as pixel coords
-                      // of the bounding box top-left corner. Convert to %.
+                      const isCentered = obj.id === 'NAME' || obj.textAlign === 'center' || obj.originX === 'center';
                       const topPercent = ((obj.top || 0) / 600) * 100;
                       const leftPercent = ((obj.left || 0) / 850) * 100;
-                      // Scale font to match rendered container vs 850px canvas
-                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.75 : 16;
+                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.8 : 18;
 
                       return (
                         <div
@@ -401,11 +400,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                           style={{
                             top: `${topPercent}%`,
                             left: `${leftPercent}%`,
-                            fontSize: `${Math.max(9, scaledFontSize)}px`,
+                            transform: isCentered ? 'translateX(-50%)' : 'none',
+                            fontSize: `${Math.max(10, Math.round(scaledFontSize))}px`,
                             fontFamily: obj.fontFamily || 'Poppins, sans-serif',
-                            fontWeight: obj.fontWeight || 'normal',
-                            color: obj.fill || '#000000',
-                            textAlign: (obj.textAlign as any) || 'left',
+                            fontWeight: obj.fontWeight || 'bold',
+                            color: obj.fill || '#1e3a8a',
+                            textAlign: isCentered ? 'center' : ((obj.textAlign as any) || 'left'),
                             lineHeight: 1.2,
                           }}
                         >
