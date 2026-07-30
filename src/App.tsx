@@ -147,6 +147,7 @@ export default function App() {
 
           const mergedXp = Math.max(prev.xp || 0, cloudData.xp || 0);
           const mergedStreakDays = Math.max(prev.streakDays || 1, cloudData.streakDays || 1);
+          const mergedCurrentModuleId = cloudData.currentModuleId || prev.currentModuleId || 1;
 
           return {
             ...prev,
@@ -157,6 +158,9 @@ export default function App() {
             moduleScores: mergedModuleScores,
             xp: mergedXp,
             streakDays: mergedStreakDays,
+            currentModuleId: mergedCurrentModuleId,
+            certName: cloudData.certName || prev.certName || user?.name || undefined,
+            certEmail: cloudData.certEmail || prev.certEmail || user?.email || undefined,
             userTier,
             tier: userTier,
             maxAllowedModuleId: maxAllowed,
