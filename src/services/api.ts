@@ -1,21 +1,5 @@
 const API_BASE = (import.meta as unknown as { env?: { VITE_MAXY_API_URL?: string } }).env?.VITE_MAXY_API_URL || 'https://api.maxy.academy/api/v1';
 
-export async function fetchUserProfile(token: string) {
-  try {
-    const res = await fetch(`${API_BASE}/auth/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-    return await res.json();
-  } catch (err) {
-    console.error('API fetchUserProfile failed:', err);
-    return { success: false, message: 'Gagal mengambil profil user dari api.maxy.academy' };
-  }
-}
-
 export async function refreshAccessToken(): Promise<string | null> {
   try {
     const refreshToken = localStorage.getItem('maxy_refresh_token');
@@ -30,6 +14,9 @@ export async function refreshAccessToken(): Promise<string | null> {
     const data = await res.json();
     if (data.success && data.data?.access_token) {
       localStorage.setItem('maxy_access_token', data.data.access_token);
+      if (data.data.refresh_token) {
+        localStorage.setItem('maxy_refresh_token', data.data.refresh_token);
+      }
       return data.data.access_token;
     }
     return null;
@@ -39,14 +26,47 @@ export async function refreshAccessToken(): Promise<string | null> {
   }
 }
 
-export async function loadCloudProgress(token: string): Promise<Record<string, unknown> | null> {
+async function fetchWithAuth(url: string, options: RequestInit = {}): Promise<Response> {
+  let token = localStorage.getItem('maxy_access_token');
+  const headers = new Headers(options.headers || {});
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
+  options.headers = headers;
+
+  let res = await fetch(url, options);
+
+  if (res.status === 401) {
+    const newToken = await refreshAccessToken();
+    if (newToken) {
+      const retryHeaders = new Headers(options.headers || {});
+      retryHeaders.set('Authorization', `Bearer ${newToken}`);
+      options.headers = retryHeaders;
+      res = await fetch(url, options);
+    }
+  }
+
+  return res;
+}
+
+export async function fetchUserProfile(token?: string) {
   try {
-    const res = await fetch(`${API_BASE}/progress`, {
+    const res = await fetchWithAuth(`${API_BASE}/auth/me`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
+      headers: { 'Content-Type': 'application/json' },
+    });
+    return await res.json();
+  } catch (err) {
+    console.error('API fetchUserProfile failed:', err);
+    return { success: false, message: 'Gagal mengambil profil user dari api.maxy.academy' };
+  }
+}
+
+export async function loadCloudProgress(token?: string): Promise<Record<string, unknown> | null> {
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/progress`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
     });
     const data = await res.json();
     if (data.success && data.data) {
@@ -61,12 +81,9 @@ export async function loadCloudProgress(token: string): Promise<Record<string, u
 
 export async function saveCloudProgress(token: string, progress: Record<string, unknown>): Promise<void> {
   try {
-    await fetch(`${API_BASE}/progress`, {
+    await fetchWithAuth(`${API_BASE}/progress`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ progress }),
     });
   } catch (err) {
@@ -76,14 +93,9 @@ export async function saveCloudProgress(token: string, progress: Record<string, 
 
 export async function checkoutUpgrade(tier: 'tier_1' | 'tier_2') {
   try {
-    const token = localStorage.getItem('maxy_access_token');
-    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-    const res = await fetch(`${API_BASE}/payments/checkout`, {
+    const res = await fetchWithAuth(`${API_BASE}/payments/checkout`, {
       method: 'POST',
-      headers,
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         description: `Upgrade Paket ${tier === 'tier_1' ? 'Tier 1' : 'Tier 2'} AI Navigator`,
         redirect_url: 'https://navigator.maxy.academy/app',
@@ -95,3 +107,4 @@ export async function checkoutUpgrade(tier: 'tier_1' | 'tier_2') {
     return { success: false, message: 'Gagal membuat checkout upgrade' };
   }
 }
+

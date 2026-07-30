@@ -240,6 +240,35 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </Tooltip>
 
+            {/* User Profile Pill */}
+            {progress.userName && (
+              <Tooltip
+                content={
+                  <div className="space-y-1 text-left min-w-[180px]">
+                    <div className="font-bold text-indigo-300 text-xs">{progress.userName}</div>
+                    {progress.userEmail && (
+                      <p className="text-[10px] text-slate-300">{progress.userEmail}</p>
+                    )}
+                    <p className="text-[10px] text-emerald-400 font-semibold pt-1 border-t border-slate-700">
+                      ✓ Akun Terhubung ke API Maxy
+                    </p>
+                  </div>
+                }
+              >
+                <div
+                  className={`hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-extrabold transition-all shadow-sm ${
+                    theme === 'light'
+                      ? 'bg-slate-100 border-slate-200 text-slate-800'
+                      : 'bg-slate-900 border-slate-800 text-slate-200'
+                  }`}
+                >
+                  <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-indigo-500 to-amber-500 flex items-center justify-center text-[10px] font-black text-white shrink-0 uppercase shadow-inner">
+                    {progress.userName.charAt(0)}
+                  </div>
+                  <span className="truncate max-w-[120px]">{progress.userName}</span>
+                </div>
+              </Tooltip>
+            )}
 
             {/* Certificate Button (If All Modules Completed) */}
             {allModulesCompleted && (
@@ -343,6 +372,19 @@ export const Header: React.FC<HeaderProps> = ({
         <div className={`lg:hidden border-b px-4 py-4 space-y-3 ${
           theme === 'light' ? 'bg-white border-slate-200 text-slate-900' : 'bg-slate-900 border-slate-800 text-white'
         }`}>
+          {progress.userName && (
+            <div className="flex items-center gap-3 p-3 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-amber-500 flex items-center justify-center text-xs font-black text-white shrink-0 uppercase">
+                {progress.userName.charAt(0)}
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="text-xs font-extrabold truncate">{progress.userName}</span>
+                {progress.userEmail && (
+                  <span className="text-[10px] text-slate-400 truncate">{progress.userEmail}</span>
+                )}
+              </div>
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => {
