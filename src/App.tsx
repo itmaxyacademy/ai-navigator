@@ -17,7 +17,7 @@ import { getLocalDateString, getDaysDifference } from './lib/gamification';
 import { Compass, Heart, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-import { fetchUserProfile, checkoutUpgrade } from './services/api';
+import { fetchUserProfile, checkoutUpgrade, loadCloudProgress, saveCloudProgress } from './services/api';
 
 const STORAGE_KEY = 'ai_navigator_user_progress_v1';
 
@@ -108,7 +108,7 @@ export default function App() {
       localStorage.setItem('maxy_access_token', tokenFromUrl);
     }
 
-    fetchUserProfile(token).then((res) => {
+    fetchUserProfile(token).then(async (res) => {
       if (res.success && res.data) {
         const sub = res.data.subscription;
         const user = res.data.user;
@@ -116,16 +116,57 @@ export default function App() {
         const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
         const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
 
-        setProgress((prev) => ({
-          ...prev,
-          userTier,
-          tier: userTier,
-          maxAllowedModuleId: maxAllowed,
-          userName: user?.name || undefined,
-          userEmail: user?.email || undefined,
-          packageName: sub?.package_name || undefined,
-          subscriptionExpiredAt: sub?.expired_at || null,
-        }));
+        // Load cloud-synced progress from database
+        const cloudData = (await loadCloudProgress(token)) as unknown as UserProgress | null;
+
+        setProgress((prev) => {
+          if (!cloudData) {
+            return {
+              ...prev,
+              userTier,
+              tier: userTier,
+              maxAllowedModuleId: maxAllowed,
+              userName: user?.name || undefined,
+              userEmail: user?.email || undefined,
+              packageName: sub?.package_name || undefined,
+              subscriptionExpiredAt: sub?.expired_at || null,
+            };
+          }
+
+          // Merge cloud progress & local progress (union arrays, max XP/streak, merge scores)
+          const mergedCompletedModules = Array.from(
+            new Set([...(prev.completedModules || []), ...(cloudData.completedModules || [])])
+          );
+          const mergedUnlockedBadges = Array.from(
+            new Set([...(prev.unlockedBadges || []), ...(cloudData.unlockedBadges || [])])
+          );
+          const mergedCompletedCheckpoints = Array.from(
+            new Set([...(prev.completedCheckpoints || []), ...(cloudData.completedCheckpoints || [])])
+          );
+          const mergedModuleScores = { ...(cloudData.moduleScores || {}), ...(prev.moduleScores || {}) };
+
+          const mergedXp = Math.max(prev.xp || 0, cloudData.xp || 0);
+          const mergedStreakDays = Math.max(prev.streakDays || 1, cloudData.streakDays || 1);
+
+          return {
+            ...prev,
+            ...cloudData,
+            completedModules: mergedCompletedModules,
+            unlockedBadges: mergedUnlockedBadges,
+            completedCheckpoints: mergedCompletedCheckpoints,
+            moduleScores: mergedModuleScores,
+            xp: mergedXp,
+            streakDays: mergedStreakDays,
+            userTier,
+            tier: userTier,
+            maxAllowedModuleId: maxAllowed,
+            userName: user?.name || undefined,
+            userEmail: user?.email || undefined,
+            packageName: sub?.package_name || undefined,
+            subscriptionExpiredAt: sub?.expired_at || null,
+          };
+        });
+
         setIsAuthValidating(false);
       } else {
         // Invalid or expired token
@@ -224,14 +265,24 @@ export default function App() {
     progress.dailyMinutesHistory,
   ]);
 
-  // Save progress to local storage
+  // Save progress to local storage & sync to cloud database (debounced 2s)
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
     } catch (e) {
       console.error('Failed to save progress', e);
     }
-  }, [progress]);
+
+    if (isAuthValidating) return;
+    const token = localStorage.getItem('maxy_access_token');
+    if (!token) return;
+
+    const timer = setTimeout(() => {
+      saveCloudProgress(token, progress as unknown as Record<string, unknown>);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [progress, isAuthValidating]);
 
   // Handle module selection from roadmap
   const handleSelectModule = (moduleId: number) => {

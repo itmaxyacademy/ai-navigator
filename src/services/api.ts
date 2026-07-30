@@ -39,6 +39,41 @@ export async function refreshAccessToken(): Promise<string | null> {
   }
 }
 
+export async function loadCloudProgress(token: string): Promise<Record<string, unknown> | null> {
+  try {
+    const res = await fetch(`${API_BASE}/progress`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    const data = await res.json();
+    if (data.success && data.data) {
+      return data.data as Record<string, unknown>;
+    }
+    return null;
+  } catch (err) {
+    console.error('API loadCloudProgress failed:', err);
+    return null;
+  }
+}
+
+export async function saveCloudProgress(token: string, progress: Record<string, unknown>): Promise<void> {
+  try {
+    await fetch(`${API_BASE}/progress`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ progress }),
+    });
+  } catch (err) {
+    console.error('API saveCloudProgress failed:', err);
+  }
+}
+
 export async function checkoutUpgrade(tier: 'tier_1' | 'tier_2') {
   try {
     const token = localStorage.getItem('maxy_access_token');
