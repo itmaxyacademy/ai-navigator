@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Award, Flame, Search, BookOpen, Layers, RotateCcw, Menu, X, Compass, Trophy, Sun, Moon, Info, StickyNote, Lock, Crown, ShieldCheck } from 'lucide-react';
+import { Sparkles, Award, Flame, RotateCcw, Menu, X, Compass, Trophy, Sun, Moon, StickyNote, Lock, Crown, ShieldCheck } from 'lucide-react';
 import { UserProgress } from '../types';
 import { getUserLevelInfo } from '../lib/gamification';
 import { DailyGoalRing } from './DailyGoalRing';
@@ -33,15 +33,12 @@ export const Header: React.FC<HeaderProps> = ({
   onAddMinutes,
   onSelectTab,
   activeTab,
-  searchQuery,
-  onSearchChange,
   onResetProgress,
   onOpenCertificate,
   onOpenStreakModal,
   onOpenAchievements,
   onOpenNotes,
   onOpenUpgradeModal,
-  onOpenCapstoneModal,
   allModulesCompleted,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -54,188 +51,151 @@ export const Header: React.FC<HeaderProps> = ({
         ? 'bg-white/95 border-slate-200 text-slate-900 shadow-sm'
         : 'bg-slate-900/95 border-slate-800 text-white'
     }`}>
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-2">
-          {/* Logo */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 gap-3">
+          
+          {/* 1. BRAND LOGO */}
           <div
             onClick={() => onSelectTab('path')}
             className="flex items-center gap-2.5 cursor-pointer group shrink-0"
           >
-            <div className="w-9 h-9 rounded-xl bg-indigo-600 border border-indigo-500 p-0.5 shadow-md group-hover:scale-105 transition-transform shrink-0">
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                <Compass className="w-4 h-4 text-indigo-400 group-hover:rotate-45 transition-transform duration-300" />
-              </div>
+            <div className="w-9 h-9 rounded-xl bg-indigo-600 border border-indigo-500 p-0.5 shadow-md group-hover:scale-105 transition-transform shrink-0 flex items-center justify-center">
+              <Compass className="w-5 h-5 text-white group-hover:rotate-45 transition-transform duration-300" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5 whitespace-nowrap">
-                <span className={`font-extrabold text-base tracking-tight ${
+                <span className={`font-black text-base tracking-tight ${
                   theme === 'light' ? 'text-slate-900' : 'text-white'
                 }`}>
                   AI Navigator
                 </span>
-                <span className="px-1.5 py-0.5 text-[9px] font-bold bg-indigo-950 text-indigo-300 border border-indigo-800 rounded-full">
+                <span className={`px-1.5 py-0.5 text-[9px] font-bold rounded-full border ${
+                  theme === 'light'
+                    ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                    : 'bg-indigo-950 text-indigo-300 border-indigo-800'
+                }`}>
                   Pemula
                 </span>
               </div>
               <p className={`text-[10px] hidden xl:block whitespace-nowrap ${
-                theme === 'light' ? 'text-slate-600 font-semibold' : 'text-slate-400'
+                theme === 'light' ? 'text-slate-600 font-medium' : 'text-slate-400'
               }`}>
                 Panduan Interaktif Pengenalan LLM
               </p>
             </div>
           </div>
 
-          {/* Navigation Links Desktop */}
-          <nav className={`hidden lg:flex items-center gap-1.5 p-1 rounded-xl border shrink-0 ${
-            theme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-slate-950/60 border-slate-800'
+          {/* 2. CENTER NAVIGATION (Segmented Pill Bar) */}
+          <nav className={`hidden md:flex items-center gap-1 p-1 rounded-2xl border shrink-0 ${
+            theme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-slate-950/80 border-slate-800'
           }`}>
-            <Tooltip
-              content={
-                <div className="space-y-1">
-                  <div className="font-bold text-indigo-300 flex items-center gap-1">
-                    <Compass className="w-3.5 h-3.5" /> Peta Belajar (Digital Map)
-                  </div>
-                  <p className="text-[11px] text-slate-300">
-                    Alur pembelajaran terstruktur dari dasar LLM hingga model canggih.
-                  </p>
-                </div>
-              }
+            <button
+              onClick={() => onSelectTab('path')}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap ${
+                activeTab === 'path'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                  : theme === 'light'
+                  ? 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-900'
+              }`}
             >
-              <button
-                onClick={() => onSelectTab('path')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition-all cursor-pointer whitespace-nowrap"
-              >
-                <Compass className="w-3.5 h-3.5 text-indigo-200" />
-                <span>Peta Belajar</span>
-              </button>
-            </Tooltip>
+              <Compass className="w-3.5 h-3.5" />
+              <span>Peta Belajar</span>
+            </button>
 
             {onOpenNotes && (
-              <Tooltip
-                content={
-                  <div className="space-y-1">
-                    <div className="font-bold text-amber-300 flex items-center gap-1">
-                      <StickyNote className="w-3.5 h-3.5" /> Catatan Pribadi Saya
-                    </div>
-                    <p className="text-[11px] text-slate-300">
-                      Buka koleksi catatan ringkasan dan poin penting.
-                    </p>
-                  </div>
-                }
+              <button
+                onClick={onOpenNotes}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                  theme === 'light'
+                    ? 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-900'
+                }`}
               >
-                <button
-                  onClick={onOpenNotes}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700/80 transition-all cursor-pointer whitespace-nowrap"
-                >
-                  <StickyNote className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Catatan Saya</span>
-                </button>
-              </Tooltip>
+                <StickyNote className="w-3.5 h-3.5 text-amber-500" />
+                <span>Catatan</span>
+              </button>
+            )}
+
+            {onOpenAchievements && (
+              <button
+                onClick={onOpenAchievements}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                  theme === 'light'
+                    ? 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-900'
+                }`}
+              >
+                <Award className="w-3.5 h-3.5 text-purple-500" />
+                <span>Pencapaian</span>
+              </button>
             )}
           </nav>
 
-          {/* User Stats & Badges */}
-          <div className="hidden md:flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0">
-            {/* Circular Daily Learning Goal Ring */}
+          {/* 3. RIGHT SECTION (Grouped User Stats & Utilities) */}
+          <div className="hidden lg:flex items-center gap-2 sm:gap-2.5 shrink-0 pr-1 sm:pr-2">
+            
+            {/* Consolidated User Stats Pill (Target, Streak, Level & XP) */}
             <Tooltip
               content={
-                <div className="space-y-1">
-                  <div className="font-bold text-emerald-300 flex items-center gap-1">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Target Menit Harian
-                  </div>
-                  <p className="text-[11px] text-slate-300">
-                    Cincin progres melacak durasi belajar harian Anda.
-                  </p>
-                </div>
-              }
-            >
-              <DailyGoalRing
-                dailyGoalMinutes={progress.dailyGoalMinutes}
-                dailyMinutesHistory={progress.dailyMinutesHistory}
-                onUpdateGoal={onUpdateGoal}
-                onAddMinutes={onAddMinutes}
-              />
-            </Tooltip>
-
-            {/* Clickable Level Badge */}
-            <Tooltip
-              content={
-                <div className="space-y-1">
+                <div className="space-y-1 text-left">
                   <div className="font-bold text-amber-300 flex items-center gap-1">
-                    <Trophy className="w-3.5 h-3.5" /> Level Kepakaran AI
+                    <Trophy className="w-3.5 h-3.5" /> Status Belajar Anda
                   </div>
                   <p className="text-[11px] text-slate-300">
-                    Menunjukkan tingkatan keahlian Anda.
+                    Lvl {levelInfo.level} ({levelInfo.title}) • {progress.xp} XP • {progress.streakDays} Hari Streak
                   </p>
+                  <p className="text-[10px] text-slate-400">Klik untuk melihat detail pencapaian &amp; target harian.</p>
                 </div>
               }
             >
-              <button
+              <div
                 onClick={onOpenStreakModal}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-all hover:scale-105 cursor-pointer whitespace-nowrap shrink-0 ${levelInfo.badgeColor}`}
+                className={`flex items-center gap-2 px-3 py-1 rounded-2xl border text-xs font-bold transition-all cursor-pointer hover:scale-[1.02] shadow-sm ${
+                  theme === 'light'
+                    ? 'bg-slate-50 border-slate-200 text-slate-800'
+                    : 'bg-slate-950 border-slate-800 text-slate-200'
+                }`}
               >
-                <Trophy className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <span>Lvl {levelInfo.level}: {levelInfo.title}</span>
-              </button>
-            </Tooltip>
+                {/* Daily Goal Ring */}
+                <DailyGoalRing
+                  dailyGoalMinutes={progress.dailyGoalMinutes}
+                  dailyMinutesHistory={progress.dailyMinutesHistory}
+                  onUpdateGoal={onUpdateGoal}
+                  onAddMinutes={onAddMinutes}
+                />
 
-            {/* Clickable Streak Badge */}
-            <Tooltip
-              content={
-                <div className="space-y-1">
-                  <div className="font-bold text-amber-400 flex items-center gap-1">
-                    <Flame className="w-3.5 h-3.5" /> Rentetan Aktivitas (Streak)
-                  </div>
-                  <p className="text-[11px] text-slate-300">
-                    Berapa hari berturut-turut Anda aktif belajar.
-                  </p>
+                <div className="h-4 w-px bg-slate-300 dark:bg-slate-800" />
+
+                {/* Streak */}
+                <div className="flex items-center gap-1 text-amber-500 font-extrabold whitespace-nowrap">
+                  <Flame className="w-3.5 h-3.5 fill-amber-500/20" />
+                  <span>{progress.streakDays}d</span>
                 </div>
-              }
-            >
-              <button
-                onClick={onOpenStreakModal}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700/90 border border-amber-500/40 text-xs font-bold text-amber-400 transition-all hover:scale-105 cursor-pointer shadow-sm whitespace-nowrap shrink-0"
-              >
-                <Flame className="w-3.5 h-3.5 text-amber-500 fill-amber-500/20 shrink-0" />
-                <span>{progress.streakDays} Hari Streak</span>
-              </button>
-            </Tooltip>
 
-            {/* Clickable XP Badge */}
-            <Tooltip
-              content={
-                <div className="space-y-1">
-                  <div className="font-bold text-indigo-300 flex items-center gap-1">
-                    <Sparkles className="w-3.5 h-3.5 text-indigo-400" /> Experience Points (XP)
-                  </div>
-                  <p className="text-[11px] text-slate-300">
-                    Poin pengalaman yang didapatkan dari Kuis & Checkpoint.
-                  </p>
+                <div className="h-4 w-px bg-slate-300 dark:bg-slate-800" />
+
+                {/* Level & XP */}
+                <div className="flex items-center gap-1 text-indigo-600 dark:text-indigo-300 font-extrabold whitespace-nowrap">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Lvl {levelInfo.level} • {progress.xp}XP</span>
                 </div>
-              }
-            >
-              <button
-                onClick={onOpenStreakModal}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-indigo-950/80 hover:bg-indigo-900/80 border border-indigo-700/60 text-xs font-bold text-indigo-200 transition-all hover:scale-105 cursor-pointer shadow-sm whitespace-nowrap shrink-0"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
-                <span>{progress.xp} XP</span>
-              </button>
+              </div>
             </Tooltip>
 
-            {/* User Tier Status Badge */}
+            {/* Tier Access Badge */}
             <Tooltip
               content={
-                <div className="space-y-1">
+                <div className="space-y-1 text-left">
                   <div className="font-bold text-amber-300 flex items-center gap-1">
-                    <Crown className="w-3.5 h-3.5 text-amber-400" /> Status Keanggotaan Paket
+                    <Crown className="w-3.5 h-3.5 text-amber-400" /> Status Akses Paket
                   </div>
                   <p className="text-[11px] text-slate-300">
                     {userTier === 'free'
-                      ? 'Free Trial (Terbatas Modul 1 & 2). Klik untuk Upgrade ke Tier 1 / Tier 2.'
+                      ? 'Free Trial (Modul 1 & 2). Klik untuk membuka seluruh modul 1-29!'
                       : userTier === 'tier1'
-                      ? 'Tier 1 Aktif — Akses Penuh Seluruh Modul 1-29 & Sertifikat.'
-                      : 'Tier 2 VIP Master — Akses Penuh + Bimbingan Mentoring & Review.'}
+                      ? 'Tier 1 Aktif — Akses Penuh Seluruh Modul 1-29.'
+                      : 'Tier 2 VIP Master — Akses Penuh + Bimbingan.'}
                   </p>
                 </div>
               }
@@ -243,245 +203,163 @@ export const Header: React.FC<HeaderProps> = ({
               {userTier === 'free' ? (
                 <button
                   onClick={onOpenUpgradeModal}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-xs font-extrabold text-amber-300 transition-all hover:scale-105 cursor-pointer shadow-sm whitespace-nowrap shrink-0 animate-pulse"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all hover:scale-105 cursor-pointer shadow-md shadow-amber-500/20 whitespace-nowrap"
                 >
-                  <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span>Free Trial (1-2) • Upgrade</span>
+                  <Lock className="w-3.5 h-3.5 shrink-0" />
+                  <span>Free Trial • Upgrade</span>
                 </button>
               ) : userTier === 'tier1' ? (
                 <button
                   onClick={onOpenUpgradeModal}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-xs font-bold text-indigo-300 transition-all hover:scale-105 cursor-pointer shadow-sm whitespace-nowrap shrink-0"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs transition-all hover:scale-105 cursor-pointer shadow-md shadow-indigo-600/20 whitespace-nowrap"
                 >
-                  <ShieldCheck className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                  <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
                   <span>Tier 1 Full</span>
                 </button>
               ) : (
                 <button
                   onClick={onOpenUpgradeModal}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-slate-950 text-xs font-black transition-all hover:scale-105 cursor-pointer shadow-md shadow-amber-500/20 whitespace-nowrap shrink-0"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-slate-950 font-black text-xs transition-all hover:scale-105 cursor-pointer shadow-md shadow-amber-500/20 whitespace-nowrap"
                 >
                   <Crown className="w-3.5 h-3.5 fill-slate-950 shrink-0" />
-                  <span>Tier 2 VIP Master</span>
+                  <span>Tier 2 VIP</span>
                 </button>
               )}
             </Tooltip>
 
-            {/* Achievements Button */}
-            {onOpenAchievements && (
-              <Tooltip
-                content={
-                  <div className="space-y-1">
-                    <div className="font-bold text-amber-300 flex items-center gap-1">
-                      <Award className="w-3.5 h-3.5" /> Lencana & Achievements
-                    </div>
-                    <p className="text-[11px] text-slate-300">
-                      Lihat daftar lencana pencapaian Anda.
-                    </p>
-                  </div>
-                }
-              >
-                <button
-                  onClick={onOpenAchievements}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-purple-900/80 to-indigo-900/80 hover:from-purple-800 hover:to-indigo-800 border border-purple-500/40 text-xs font-bold text-purple-200 transition-all hover:scale-105 cursor-pointer shadow-sm whitespace-nowrap shrink-0"
-                >
-                  <Award className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span>Pencapaian</span>
-                </button>
-              </Tooltip>
-            )}
-
-            {/* Certificate Button */}
+            {/* Certificate Button (If All Modules Completed) */}
             {allModulesCompleted && (
-              <Tooltip
-                content={
-                  <div className="space-y-1">
-                    <div className="font-bold text-amber-300 flex items-center gap-1">
-                      <Award className="w-3.5 h-3.5" /> Sertifikat Kelulusan
-                    </div>
-                    <p className="text-[11px] text-slate-300">
-                      Klik untuk melihat sertifikat kelulusan resmi!
-                    </p>
-                  </div>
-                }
+              <button
+                onClick={onOpenCertificate}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-md transition-all cursor-pointer whitespace-nowrap"
               >
-                <button
-                  onClick={onOpenCertificate}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 hover:scale-105 transition-all cursor-pointer whitespace-nowrap shrink-0"
-                >
-                  <Award className="w-3.5 h-3.5 shrink-0" />
-                  <span>Sertifikat</span>
-                </button>
-              </Tooltip>
+                <Award className="w-3.5 h-3.5 shrink-0" />
+                <span>Sertifikat</span>
+              </button>
             )}
 
-            {/* Theme Toggle Button */}
+            {/* Icon Button: Theme Toggle */}
             <Tooltip
               content={
-                <div className="space-y-1">
-                  <div className="font-bold text-slate-200 flex items-center gap-1">
-                    <Sun className="w-3.5 h-3.5 text-amber-400" /> Mode Tampilan (Theme)
-                  </div>
-                  <p className="text-[11px] text-slate-300">
-                    Beralih antara Mode Gelap atau Mode Terang.
-                  </p>
+                <div className="space-y-0.5 text-center">
+                  <div className="font-bold text-xs">{theme === 'dark' ? 'Mode Terang' : 'Mode Gelap'}</div>
+                  <p className="text-[10px] text-slate-300">Klik untuk beralih tampilan</p>
                 </div>
               }
             >
               <button
                 onClick={onToggleTheme}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700/90 text-slate-200 border border-slate-700/60 transition-all hover:scale-105 cursor-pointer shadow-sm text-xs font-bold whitespace-nowrap shrink-0"
+                aria-label="Toggle Theme"
+                className={`p-2 rounded-xl border transition-all hover:scale-105 cursor-pointer ${
+                  theme === 'light'
+                    ? 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'
+                    : 'bg-slate-950 hover:bg-slate-800 border-slate-800 text-slate-200'
+                }`}
               >
                 {theme === 'dark' ? (
-                  <>
-                    <Sun className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                    <span className="hidden xl:inline">Mode Terang</span>
-                  </>
+                  <Sun className="w-4 h-4 text-amber-400" />
                 ) : (
-                  <>
-                    <Moon className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
-                    <span className="hidden xl:inline">Mode Gelap</span>
-                  </>
+                  <Moon className="w-4 h-4 text-indigo-600" />
                 )}
               </button>
             </Tooltip>
 
-            {/* Reset */}
+            {/* Icon Button: Reset Progress */}
             <Tooltip
               content={
-                <div className="space-y-1">
-                  <div className="font-bold text-rose-300 flex items-center gap-1">
-                    <RotateCcw className="w-3.5 h-3.5" /> Reset Progres Belajar
-                  </div>
-                  <p className="text-[11px] text-slate-300">
-                    Mengulang kembali perjalanan belajar Anda.
-                  </p>
+                <div className="space-y-0.5 text-center">
+                  <div className="font-bold text-xs text-rose-400">Reset Progres</div>
+                  <p className="text-[10px] text-slate-300">Reset data &amp; mulai dari awal</p>
                 </div>
               }
             >
               <button
                 onClick={onResetProgress}
-                className="p-2 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-xl transition-colors cursor-pointer shrink-0"
+                aria-label="Reset Progress"
+                className={`p-2 rounded-xl border transition-colors cursor-pointer ${
+                  theme === 'light'
+                    ? 'bg-slate-100 hover:bg-rose-50 border-slate-300 text-slate-500 hover:text-rose-600'
+                    : 'bg-slate-950 hover:bg-slate-800 border-slate-800 text-slate-400 hover:text-rose-400'
+                }`}
               >
-                <RotateCcw className="w-3.5 h-3.5" />
+                <RotateCcw className="w-4 h-4" />
               </button>
             </Tooltip>
+
           </div>
 
-          {/* Mobile Menu Trigger */}
+          {/* MOBILE MENU BUTTON */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-slate-300 hover:text-white rounded-lg hover:bg-slate-800 shrink-0"
+            className={`lg:hidden p-2 rounded-xl border shrink-0 ${
+              theme === 'light'
+                ? 'bg-slate-100 border-slate-200 text-slate-800'
+                : 'bg-slate-950 border-slate-800 text-slate-200'
+            }`}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* MOBILE DRAWER */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-slate-900 border-b border-slate-800 px-4 py-4 space-y-3">
-          <div className="pb-2 border-b border-slate-800">
+        <div className={`lg:hidden border-b px-4 py-4 space-y-3 ${
+          theme === 'light' ? 'bg-white border-slate-200 text-slate-900' : 'bg-slate-900 border-slate-800 text-white'
+        }`}>
+          <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => {
                 onSelectTab('path');
                 setMobileMenuOpen(false);
               }}
-              className="w-full p-2.5 rounded-lg text-xs font-bold text-center flex items-center justify-center gap-2 bg-indigo-600 text-white"
+              className="p-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 bg-indigo-600 text-white"
             >
               <Compass className="w-4 h-4" />
-              Peta Belajar (Digital Map Journey)
-            </button>
-          </div>
-
-          {/* Mobile Theme Toggle */}
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex-1">
-              <DailyGoalRing
-                dailyGoalMinutes={progress.dailyGoalMinutes}
-                dailyMinutesHistory={progress.dailyMinutesHistory}
-                onUpdateGoal={onUpdateGoal}
-                onAddMinutes={onAddMinutes}
-              />
-            </div>
-            <button
-              onClick={() => {
-                onToggleTheme();
-              }}
-              className="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700"
-            >
-              {theme === 'dark' ? (
-                <>
-                  <Sun className="w-4 h-4 text-amber-400" />
-                  <span>Mode Terang</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="w-4 h-4 text-indigo-400" />
-                  <span>Mode Gelap</span>
-                </>
-              )}
-            </button>
-          </div>
-
-          {/* Mobile Stats */}
-          <div className="flex items-center justify-between text-xs py-2 bg-slate-950 px-3 rounded-xl border border-slate-800">
-            <button
-              onClick={() => {
-                onOpenStreakModal();
-                setMobileMenuOpen(false);
-              }}
-              className="flex items-center gap-1 text-amber-400 font-bold"
-            >
-              <Flame className="w-4 h-4 text-amber-500" />
-              <span>🔥 {progress.streakDays} Hari</span>
+              Peta Belajar
             </button>
 
-            {onOpenAchievements && (
+            {onOpenNotes && (
               <button
                 onClick={() => {
-                  onOpenAchievements();
+                  onOpenNotes();
                   setMobileMenuOpen(false);
                 }}
-                className="flex items-center gap-1 text-purple-300 font-bold"
+                className={`p-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border ${
+                  theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-800 text-slate-200'
+                }`}
               >
-                <Award className="w-4 h-4 text-amber-400" />
-                <span>Lencana</span>
+                <StickyNote className="w-4 h-4 text-amber-500" />
+                Catatan Saya
               </button>
             )}
+          </div>
 
+          <div className="flex items-center justify-between gap-2 p-3 rounded-2xl border bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800">
+            <div className="flex items-center gap-2">
+              <Flame className="w-4 h-4 text-amber-500" />
+              <span className="text-xs font-extrabold">{progress.streakDays} Hari Streak</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-xs font-extrabold text-indigo-600 dark:text-indigo-400">{progress.xp} XP</span>
+            </div>
             <button
-              onClick={() => {
-                onOpenStreakModal();
-                setMobileMenuOpen(false);
-              }}
-              className="flex items-center gap-1 text-indigo-300 font-bold"
+              onClick={onToggleTheme}
+              className="p-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs font-bold"
             >
-              <Sparkles className="w-4 h-4 text-indigo-400" />
-              <span>{progress.xp} XP</span>
-            </button>
-
-            <button
-              onClick={() => {
-                onResetProgress();
-                setMobileMenuOpen(false);
-              }}
-              className="text-rose-400 hover:underline text-xs font-medium"
-            >
-              Reset
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-600" />}
             </button>
           </div>
 
-          {allModulesCompleted && (
+          {userTier === 'free' && (
             <button
               onClick={() => {
-                onOpenCertificate();
+                if (onOpenUpgradeModal) onOpenUpgradeModal();
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold rounded-lg text-xs flex items-center justify-center gap-2"
+              className="w-full p-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2"
             >
-              <Award className="w-4 h-4" />
-              Klaim Sertifikat AI Navigator
+              <Lock className="w-4 h-4" />
+              Upgrade ke Tier 1 / Tier 2
             </button>
           )}
         </div>
