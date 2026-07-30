@@ -93,6 +93,7 @@ export default function App() {
     const redirectToLogin = () => {
       localStorage.removeItem('maxy_access_token');
       localStorage.removeItem('maxy_refresh_token');
+      localStorage.removeItem(STORAGE_KEY);
       const targetOrigin = window.location.hostname.includes('maxy.academy')
         ? 'https://navigator.maxy.academy?login=true'
         : '/?login=true';
@@ -121,8 +122,9 @@ export default function App() {
 
         setProgress((prev) => {
           if (!cloudData) {
+            // New user without cloud data starts fresh with defaultProgress
             return {
-              ...prev,
+              ...defaultProgress,
               userTier,
               tier: userTier,
               maxAllowedModuleId: maxAllowed,
@@ -186,6 +188,7 @@ export default function App() {
   const handleLogout = () => {
     localStorage.removeItem('maxy_access_token');
     localStorage.removeItem('maxy_refresh_token');
+    localStorage.removeItem(STORAGE_KEY);
     const target = window.location.hostname.includes('maxy.academy')
       ? 'https://navigator.maxy.academy?login=true'
       : '/?login=true';
