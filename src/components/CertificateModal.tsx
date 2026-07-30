@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Award, X, Sparkles, CheckCircle2, Printer, Compass, ShieldCheck, Mail, User, Crown } from 'lucide-react';
+import { Award, X, Sparkles, CheckCircle2, Printer, Compass, ShieldCheck, Mail, User, Crown, ExternalLink } from 'lucide-react';
 import { UserProgress } from '../types';
+import { issueCertificateApi } from '../services/api';
 
 interface CertificateModalProps {
   isOpen: boolean;
@@ -22,6 +23,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     progress?.certEmail || progress?.capstoneSubmission?.email || 'siswa@ainavigator.id'
   );
   const [isVerified, setIsVerified] = useState(!!progress?.certRequested || !!progress?.certName);
+  const [certUuid, setCertUuid] = useState<string>('');
+  const [certNumber, setCertNumber] = useState<string>('');
+  const [verifyUrl, setVerifyUrl] = useState<string>('');
+  const [isIssuing, setIsIssuing] = useState<boolean>(false);
 
   if (!isOpen) return null;
 
@@ -31,15 +36,28 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     year: 'numeric',
   });
 
-  const handleVerifyCert = (e: React.FormEvent) => {
+  const handleVerifyCert = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userName.trim() || !userEmail.trim()) {
       alert('Mohon isi Nama Lengkap dan Email untuk verifikasi sertifikat!');
       return;
     }
-    setIsVerified(true);
-    if (onSaveCertDetails) {
-      onSaveCertDetails(userName.trim(), userEmail.trim());
+    setIsIssuing(true);
+    try {
+      const res = await issueCertificateApi(userName.trim(), userEmail.trim());
+      if (res.success && res.data) {
+        setCertUuid(res.data.uuid);
+        setCertNumber(res.data.certificate_number);
+        setVerifyUrl(res.data.verify_url);
+      }
+    } catch (err) {
+      console.error('Cert issuance error:', err);
+    } finally {
+      setIsIssuing(false);
+      setIsVerified(true);
+      if (onSaveCertDetails) {
+        onSaveCertDetails(userName.trim(), userEmail.trim());
+      }
     }
   };
 
@@ -116,10 +134,11 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
               <button
                 type="submit"
+                disabled={isIssuing}
                 className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/20 transition-all cursor-pointer flex items-center justify-center gap-2 mt-2"
               >
                 <ShieldCheck className="w-4 h-4" />
-                <span>Terbitkan Certificate of Completion</span>
+                <span>{isIssuing ? 'Menerbitkan Certify UUID...' : 'Terbitkan Certificate of Completion'}</span>
               </button>
             </form>
           </div>
@@ -217,14 +236,36 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               </div>
 
               {/* Signatures & Verification Info */}
-              <div className="pt-6 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 max-w-md mx-auto text-left">
+              <div className="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 max-w-lg mx-auto text-left gap-3">
                 <div>
                   <span className="block text-[10px] text-slate-500 font-bold">Tanggal Kelulusan:</span>
                   <strong className="text-slate-200">{todayStr}</strong>
+                  {certNumber && <span className="block text-[10px] text-slate-400 font-mono mt-0.5">{certNumber}</span>}
                 </div>
                 <div className="text-right">
-                  <span className="block text-[10px] text-slate-500 font-bold">ID Verifikasi Sertifikat:</span>
-                  <strong className="text-indigo-400 font-mono">AIN-2026-CERT-29M</strong>
+                  <span className="block text-[10px] text-slate-500 font-bold">UUID Certify Maxy:</span>
+                  <strong className="text-amber-400 font-mono text-[11px] block">{certUuid || 'AIN-2026-CERT-29M'}</strong>
+                  {verifyUrl ? (
+                    <a
+                      href={verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
+                    >
+                      <span>Verifikasi Keaslian Maxy Certify</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  ) : (
+                    <a
+                      href={`https://cms.maxy.academy/certificate/verify/${certUuid || 'AIN-2026-CERT-29M'}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
+                    >
+                      <span>Verifikasi Keaslian Maxy Certify</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

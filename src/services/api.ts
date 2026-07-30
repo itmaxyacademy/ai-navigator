@@ -144,3 +144,17 @@ export async function fetchAiNavigatorPackages() {
   }
 }
 
+export async function issueCertificateApi(name: string, email: string) {
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/certificates/issue`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email }),
+    });
+    return await res.json();
+  } catch (err) {
+    console.error('API issueCertificateApi failed:', err);
+    return { success: false, message: 'Gagal menerbitkan sertifikat' };
+  }
+}
+
