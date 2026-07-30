@@ -99,23 +99,48 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     if (!page1Ref.current || !page2Ref.current) return;
     setIsDownloading(true);
 
+    const p1 = page1Ref.current;
+    const p2 = page2Ref.current;
+
+    // Save original responsive screen styles
+    const origP1Width = p1.style.width;
+    const origP1Height = p1.style.height;
+    const origP2Width = p2.style.width;
+    const origP2Height = p2.style.height;
+
     const safeName = (userName || 'Siswa').replace(/[^a-zA-Z0-9]/g, '_');
 
     try {
+      // Force exact A4 Landscape resolution (1123px x 794px) during capture
+      p1.style.width = '1123px';
+      p1.style.height = '794px';
+      p2.style.width = '1123px';
+      p2.style.height = '794px';
+
       // 1. Primary Engine: html-to-image (DOM to JPEG Data URL, handles SVGs, CSS & fonts cleanly)
-      const imgData1 = await toJpeg(page1Ref.current, {
-        quality: 0.95,
+      const imgData1 = await toJpeg(p1, {
+        quality: 0.98,
         pixelRatio: 2,
         backgroundColor: '#ffffff',
         cacheBust: true,
+        width: 1123,
+        height: 794,
       });
 
-      const imgData2 = await toJpeg(page2Ref.current, {
-        quality: 0.95,
+      const imgData2 = await toJpeg(p2, {
+        quality: 0.98,
         pixelRatio: 2,
         backgroundColor: '#ffffff',
         cacheBust: true,
+        width: 1123,
+        height: 794,
       });
+
+      // Restore responsive screen styles immediately after capture
+      p1.style.width = origP1Width;
+      p1.style.height = origP1Height;
+      p2.style.width = origP2Width;
+      p2.style.height = origP2Height;
 
       const pdfWidth = 297;
       const pdfHeight = 210;
@@ -131,9 +156,15 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       pdf.save(`Sertifikat_AI_Navigator_${safeName}.pdf`);
     } catch (err) {
       console.warn('html-to-image PDF error, attempting html2canvas fallback:', err);
+      // Restore responsive styles
+      p1.style.width = origP1Width;
+      p1.style.height = origP1Height;
+      p2.style.width = origP2Width;
+      p2.style.height = origP2Height;
+
       try {
-        const canvas1 = await html2canvas(page1Ref.current, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false });
-        const canvas2 = await html2canvas(page2Ref.current, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false });
+        const canvas1 = await html2canvas(p1, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false });
+        const canvas2 = await html2canvas(p2, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false });
         const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
         pdf.addImage(canvas1.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 297, 210);
         pdf.addPage();
