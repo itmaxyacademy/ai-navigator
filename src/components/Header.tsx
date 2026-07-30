@@ -135,7 +135,15 @@ export const Header: React.FC<HeaderProps> = ({
           {/* 3. RIGHT SECTION (Grouped User Stats & Utilities) */}
           <div className="hidden lg:flex items-center gap-2 sm:gap-2.5 shrink-0 pr-1 sm:pr-2">
             
-            {/* Consolidated User Stats Pill (Target, Streak, Level & XP) */}
+            {/* Daily Goal Ring - standalone, no Tooltip wrapper to avoid glitch */}
+            <DailyGoalRing
+              dailyGoalMinutes={progress.dailyGoalMinutes}
+              dailyMinutesHistory={progress.dailyMinutesHistory}
+              onUpdateGoal={onUpdateGoal}
+              onAddMinutes={onAddMinutes}
+            />
+
+            {/* Streak & Level Stats Pill */}
             <Tooltip
               content={
                 <div className="space-y-1 text-left">
@@ -145,28 +153,18 @@ export const Header: React.FC<HeaderProps> = ({
                   <p className="text-[11px] text-slate-300">
                     Lvl {levelInfo.level} ({levelInfo.title}) • {progress.xp} XP • {progress.streakDays} Hari Streak
                   </p>
-                  <p className="text-[10px] text-slate-400">Klik untuk melihat detail pencapaian &amp; target harian.</p>
+                  <p className="text-[10px] text-slate-400">Klik untuk melihat detail pencapaian &amp; level.</p>
                 </div>
               }
             >
               <div
                 onClick={onOpenStreakModal}
-                className={`flex items-center gap-2 px-3 py-1 rounded-2xl border text-xs font-bold transition-all cursor-pointer hover:scale-[1.02] shadow-sm ${
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-2xl border text-xs font-bold transition-all cursor-pointer hover:scale-[1.02] shadow-sm ${
                   theme === 'light'
                     ? 'bg-slate-50 border-slate-200 text-slate-800'
                     : 'bg-slate-950 border-slate-800 text-slate-200'
                 }`}
               >
-                {/* Daily Goal Ring */}
-                <DailyGoalRing
-                  dailyGoalMinutes={progress.dailyGoalMinutes}
-                  dailyMinutesHistory={progress.dailyMinutesHistory}
-                  onUpdateGoal={onUpdateGoal}
-                  onAddMinutes={onAddMinutes}
-                />
-
-                <div className="h-4 w-px bg-slate-300 dark:bg-slate-800" />
-
                 {/* Streak */}
                 <div className="flex items-center gap-1 text-amber-500 font-extrabold whitespace-nowrap">
                   <Flame className="w-3.5 h-3.5 fill-amber-500/20" />
