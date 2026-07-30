@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Award, X, Sparkles, CheckCircle2, Printer, Compass, ShieldCheck, Mail, User, Crown, ExternalLink } from 'lucide-react';
+import { Award, X, Sparkles, CheckCircle2, Printer, Compass, ShieldCheck, Mail, User, Crown, ExternalLink, BookOpen } from 'lucide-react';
 import { UserProgress } from '../types';
 import { issueCertificateApi } from '../services/api';
+import { MODULES_DATA } from '../data/modulesData';
 
 interface CertificateModalProps {
   isOpen: boolean;
@@ -35,6 +36,9 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const userTier = progress.userTier || 'free';
   const tierKey = userTier === 'tier2' ? 'tier2' : 'tier1';
   const bgImage = packages?.[tierKey]?.certificate_bg_image;
+
+  const isTier1 = userTier === 'tier1' || userTier === 'free';
+  const displayModules = isTier1 ? MODULES_DATA.slice(0, 22) : MODULES_DATA;
 
   const todayStr = new Date().toLocaleDateString('id-ID', {
     day: 'numeric',
@@ -73,7 +77,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative animate-fadeIn my-8 text-white">
+      <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-4xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative animate-fadeIn my-8 text-white">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -94,7 +98,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 Verifikasi Identitas <span className="text-amber-400">Sertifikat</span>
               </h2>
               <p className="text-xs text-slate-300 font-medium max-w-md mx-auto">
-                Silakan isi dan periksa kembali Nama &amp; Email Anda. Data ini akan dicetak secara sah pada <strong>Certificate of Completion</strong>.
+                Silakan isi dan periksa kembali Nama &amp; Email Anda. Data ini akan dicetak secara sah pada <strong>Certificate of Completion &amp; Transkrip Kurikulum Modul</strong>.
               </p>
             </div>
 
@@ -142,17 +146,17 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/20 transition-all cursor-pointer flex items-center justify-center gap-2 mt-2"
               >
                 <ShieldCheck className="w-4 h-4" />
-                <span>{isIssuing ? 'Menerbitkan Certify UUID...' : 'Terbitkan Certificate of Completion'}</span>
+                <span>{isIssuing ? 'Menerbitkan Certify UUID...' : 'Terbitkan Certificate & Transkrip'}</span>
               </button>
             </form>
           </div>
         ) : (
-          /* Official Certificate Frame View */
+          /* Official Certificate & Transcript View */
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-800 pb-3 print:hidden">
               <div className="flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Verified Certificate
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Verified Certificate (2 Halaman)
                 </span>
                 <button
                   onClick={() => setIsVerified(false)}
@@ -167,12 +171,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   onClick={handlePrint}
                   className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-600/20 transition-all cursor-pointer"
                 >
-                  <Printer className="w-4 h-4" /> Cetak / PDF
+                  <Printer className="w-4 h-4" /> Cetak / PDF (Halaman 1 &amp; 2)
                 </button>
               </div>
             </div>
 
-            {/* Printable Certificate Frame */}
+            {/* HALAMAN 1: Printable Certificate Frame */}
             <div
               className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-10 text-center space-y-6 relative overflow-hidden shadow-2xl bg-cover bg-center"
               style={bgImage ? { backgroundImage: `url(${bgImage})` } : {}}
@@ -212,7 +216,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               </div>
 
               <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed font-medium">
-                Telah berhasil menyelesaikan seluruh <strong>29 Modul Pembelajaran AI Navigator</strong>, meliputi penguasaan Teknik Prompting RCTF, ChatGPT, Claude, Gemini, Perplexity, Copilot, Meta AI, DeepSeek, v0.dev, Bolt.new, dan Capstone Project.
+                Telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong>, meliputi penguasaan Teknik Prompting RCTF, ChatGPT, Claude, Gemini, Perplexity, Copilot, Meta AI, DeepSeek, v0.dev, Bolt.new, dan Capstone Project.
               </p>
 
               {/* Capstone Project Title if present */}
@@ -237,7 +241,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   </span>
                 ) : (
                   <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> 29 Modul Selesai ({progress.xp} XP)
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> {displayModules.length} Modul Selesai ({displayModules.length} JP)
                   </span>
                 )}
               </div>
@@ -274,6 +278,75 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                     </a>
                   )}
                 </div>
+              </div>
+            </div>
+
+            {/* HALAMAN 2: Transkrip Kurikulum Pembelajaran & Bobot 1 JP Per Modul */}
+            <div className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-8 text-left space-y-5 relative overflow-hidden shadow-2xl print:break-before-page">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-800 pb-3 gap-2">
+                <div>
+                  <h3 className="text-lg font-black text-amber-300 uppercase tracking-wider flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-amber-400" />
+                    TRANSKRIP KURIKULUM &amp; BEBAN BELAJAR (HALAMAN 2)
+                  </h3>
+                  <p className="text-[11px] text-slate-400 font-medium mt-0.5">
+                    Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
+                  </p>
+                </div>
+                <div className="text-left sm:text-right">
+                  <span className="text-xs font-bold text-slate-200 block">{userName}</span>
+                  <span className="text-[10px] text-amber-400 font-mono block">{certNumber || 'AIN-2026-CERT'}</span>
+                </div>
+              </div>
+
+              {/* Table Transkrip Modul */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b border-slate-800 text-amber-400 font-bold uppercase text-[10px] tracking-wider bg-slate-900/80">
+                      <th className="py-2.5 px-2.5 text-center w-10">No</th>
+                      <th className="py-2.5 px-3 w-1/3">Judul Modul Pembelajaran</th>
+                      <th className="py-2.5 px-3">Deskripsi Singkat Subtitle</th>
+                      <th className="py-2.5 px-2 text-center w-16">Bobot</th>
+                      <th className="py-2.5 px-2 text-center w-20">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800/60 text-slate-200">
+                    {displayModules.map((m, idx) => (
+                      <tr key={m.id} className="hover:bg-slate-900/50">
+                        <td className="py-2 px-2 font-mono text-slate-400 text-center">{idx + 1}</td>
+                        <td className="py-2 px-3 font-bold text-white">
+                          {m.title}
+                          {m.badge && <span className="block text-[10px] text-indigo-400 font-normal mt-0.5">{m.badge}</span>}
+                        </td>
+                        <td className="py-2 px-3 text-slate-300 text-[11px] leading-snug">
+                          {m.subtitle}
+                        </td>
+                        <td className="py-2 px-2 text-center font-bold text-amber-400">1 JP</td>
+                        <td className="py-2 px-2 text-center">
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
+                            LULUS
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr className="border-t-2 border-slate-800 font-bold text-xs text-white bg-slate-900/90">
+                      <td colSpan={3} className="py-3 px-3 text-right text-slate-300">TOTAL BEBAN PELAJARAN:</td>
+                      <td className="py-3 px-2 text-center text-amber-400 font-extrabold text-sm">
+                        {displayModules.length} JP
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+              {/* Footer Transkrip */}
+              <div className="pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-2">
+                <span>* 1 JP (Jam Pelajaran) setara dengan 45 menit kegiatan pembelajaran terstruktur.</span>
+                <span className="font-mono text-indigo-400">UUID Certify: {certUuid || 'AIN-2026-CERT-29M'}</span>
               </div>
             </div>
           </div>
