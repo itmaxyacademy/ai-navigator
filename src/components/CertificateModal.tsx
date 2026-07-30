@@ -8,6 +8,7 @@ interface CertificateModalProps {
   onClose: () => void;
   progress: UserProgress;
   onSaveCertDetails?: (name: string, email: string) => void;
+  packages?: Record<string, { price: number; fake_price: number; name?: string; certificate_bg_image?: string | null }>;
 }
 
 export const CertificateModal: React.FC<CertificateModalProps> = ({
@@ -15,6 +16,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   onClose,
   progress,
   onSaveCertDetails,
+  packages,
 }) => {
   const [userName, setUserName] = useState(
     progress?.certName || progress?.capstoneSubmission?.name || 'Siswa AI Navigator'
@@ -29,6 +31,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const [isIssuing, setIsIssuing] = useState<boolean>(false);
 
   if (!isOpen) return null;
+
+  const userTier = progress.userTier || 'free';
+  const tierKey = userTier === 'tier2' ? 'tier2' : 'tier1';
+  const bgImage = packages?.[tierKey]?.certificate_bg_image;
 
   const todayStr = new Date().toLocaleDateString('id-ID', {
     day: 'numeric',
@@ -64,8 +70,6 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const handlePrint = () => {
     window.print();
   };
-
-  const userTier = progress.userTier || 'free';
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
@@ -169,7 +173,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             </div>
 
             {/* Printable Certificate Frame */}
-            <div className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-10 text-center space-y-6 relative overflow-hidden shadow-2xl">
+            <div
+              className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-10 text-center space-y-6 relative overflow-hidden shadow-2xl bg-cover bg-center"
+              style={bgImage ? { backgroundImage: `url(${bgImage})` } : {}}
+            >
               {/* Decorative Blur Effect */}
               <div className="absolute top-0 left-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />

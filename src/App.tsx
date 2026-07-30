@@ -765,6 +765,7 @@ export default function App() {
         onClose={() => setCertificateOpen(false)}
         progress={progress}
         onSaveCertDetails={handleSaveCertDetails}
+        packages={cmsPackages}
       />
 
       {/* Streak & Gamification Modal */}
