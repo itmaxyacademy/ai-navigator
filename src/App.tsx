@@ -57,6 +57,8 @@ export default function App() {
   const [targetUpgradeModuleId, setTargetUpgradeModuleId] = useState<number | null>(null);
   const [capstoneModalOpen, setCapstoneModalOpen] = useState(false);
   const [isAuthValidating, setIsAuthValidating] = useState<boolean>(true);
+  const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
+  const [paymentLoadingTier, setPaymentLoadingTier] = useState<'tier1' | 'tier2' | null>(null);
 
   // Theme State ('dark' | 'light')
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
@@ -522,32 +524,27 @@ export default function App() {
     addFloatingXp(xpBonus, 'Checkpoint Mid-Module', 'xp_new');
   };
 
-  // Handle Tier Upgrade Selection
-  const handleUpgradeTier = (selectedTier: 'tier1' | 'tier2') => {
-    setProgress((prev) => ({
-      ...prev,
-      userTier: selectedTier,
-    }));
-    setUpgradeModalOpen(false);
-    addFloatingXp(
-      300,
-      `Berhasil Upgrade ke ${selectedTier === 'tier1' ? 'Tier 1 Full Access' : 'Tier 2 VIP Master'}!`,
-      'xp_graduation'
-    );
-    try {
-      confetti({
-        particleCount: 100,
-        spread: 90,
-        origin: { y: 0.5 },
-        colors: ['#f59e0b', '#6366f1', '#10b981', '#ec4899'],
-      });
-    } catch (e) {
-      // Ignore
-    }
+  // Handle Tier Upgrade Selection via Payment API Checkout (Xendit Invoice)
+  const handleUpgradeTier = async (selectedTier: 'tier1' | 'tier2') => {
+    setIsPaymentLoading(true);
+    setPaymentLoadingTier(selectedTier);
 
-    if (targetUpgradeModuleId) {
-      handleSelectModule(targetUpgradeModuleId);
-      setTargetUpgradeModuleId(null);
+    try {
+      const res = await checkoutUpgrade(selectedTier);
+      if (res.success && res.data) {
+        const invoiceUrl = res.data.invoice_url || res.data.payment_url;
+        if (invoiceUrl) {
+          window.location.href = invoiceUrl;
+          return;
+        }
+      }
+      alert(res.message || res.error || 'Gagal membuat halaman pembayaran. Silakan coba lagi.');
+    } catch (err) {
+      console.error('Payment checkout error:', err);
+      alert('Terjadi kesalahan saat menghubungkan ke payment gateway.');
+    } finally {
+      setIsPaymentLoading(false);
+      setPaymentLoadingTier(null);
     }
   };
 
@@ -709,6 +706,8 @@ export default function App() {
         currentTier={progress.userTier || 'free'}
         onSelectTier={handleUpgradeTier}
         targetModuleId={targetUpgradeModuleId}
+        isLoading={isPaymentLoading}
+        loadingTier={paymentLoadingTier}
       />
 
       {/* Capstone Project Submission Modal */}

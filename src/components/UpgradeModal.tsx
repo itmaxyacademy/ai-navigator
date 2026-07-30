@@ -9,6 +9,8 @@ interface UpgradeModalProps {
   onUpgradeTier?: (tier: 'tier1' | 'tier2') => void;
   onSelectTier?: (tier: 'tier1' | 'tier2') => void;
   targetModuleId?: number | null;
+  isLoading?: boolean;
+  loadingTier?: 'tier1' | 'tier2' | null;
 }
 
 export const UpgradeModal: React.FC<UpgradeModalProps> = ({
@@ -18,6 +20,8 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   onUpgradeTier,
   onSelectTier,
   targetModuleId,
+  isLoading = false,
+  loadingTier = null,
 }) => {
   if (!isOpen) return null;
 
@@ -189,14 +193,18 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
 
             <button
               onClick={() => handleSelect('tier1')}
-              disabled={currentTier === 'tier1'}
+              disabled={currentTier === 'tier1' || isLoading}
               className={`w-full py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                currentTier === 'tier1'
+                currentTier === 'tier1' || isLoading
                   ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-200 shadow-sm hover:scale-[1.02]'
               }`}
             >
-              <span>{currentTier === 'tier1' ? 'Tier 1 Aktif' : 'Pilih Tier 1 (Rp49.500)'}</span>
+              {loadingTier === 'tier1' ? (
+                <span>Memproses Pembayaran Xendit...</span>
+              ) : (
+                <span>{currentTier === 'tier1' ? 'Tier 1 Aktif' : 'Pilih Tier 1 (Rp49.500)'}</span>
+              )}
             </button>
           </div>
 
@@ -277,14 +285,18 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
 
             <button
               onClick={() => handleSelect('tier2')}
-              disabled={currentTier === 'tier2'}
+              disabled={currentTier === 'tier2' || isLoading}
               className={`w-full py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                currentTier === 'tier2'
+                currentTier === 'tier2' || isLoading
                   ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
                   : 'bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-xl shadow-amber-400/20 hover:scale-[1.02]'
               }`}
             >
-              <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : 'Pilih Tier 2 (Rp299.500)'}</span>
+              {loadingTier === 'tier2' ? (
+                <span>Memproses Pembayaran Xendit...</span>
+              ) : (
+                <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : 'Pilih Tier 2 (Rp299.500)'}</span>
+              )}
             </button>
           </div>
 
