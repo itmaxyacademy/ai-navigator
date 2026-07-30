@@ -36,6 +36,19 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const userTier = progress.userTier || 'free';
   const tierKey = userTier === 'tier2' ? 'tier2' : 'tier1';
   const bgImage = packages?.[tierKey]?.certificate_bg_image;
+  const templateDataRaw = (packages?.[tierKey] as any)?.certificate_template_data;
+
+  let templateObjects: Array<any> = [];
+  if (templateDataRaw) {
+    try {
+      const parsed = typeof templateDataRaw === 'string' ? JSON.parse(templateDataRaw) : templateDataRaw;
+      if (parsed && Array.isArray(parsed.objects)) {
+        templateObjects = parsed.objects;
+      }
+    } catch (e) {
+      console.error('Failed to parse template JSON:', e);
+    }
+  }
 
   const isTier1 = userTier === 'tier1' || userTier === 'free';
   const displayModules = isTier1 ? MODULES_DATA.slice(0, 22) : MODULES_DATA;
@@ -177,109 +190,148 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             </div>
 
             {/* HALAMAN 1: Printable Certificate Frame */}
-            <div
-              className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-10 text-center space-y-6 relative overflow-hidden shadow-2xl bg-cover bg-center"
-              style={bgImage ? { backgroundImage: `url(${bgImage})` } : {}}
-            >
-              {/* Decorative Blur Effect */}
-              <div className="absolute top-0 left-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
-              <div className="absolute bottom-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
+            {templateObjects.length > 0 && bgImage ? (
+              <div
+                className="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-cover bg-center border-4 border-amber-500/40 my-2"
+                style={{
+                  backgroundImage: `url(${bgImage})`,
+                  aspectRatio: '850 / 600',
+                }}
+              >
+                {templateObjects.map((obj: any, i: number) => {
+                  let content = obj.text || '';
+                  if (obj.id === 'NAME') content = userName || 'Siswa AI Navigator';
+                  else if (obj.id === 'UUID') content = certUuid ? `UUID: ${certUuid}` : 'UUID: f7ad0d5c-6528-4517-9074-70ee377a03fb';
+                  else if (obj.id === 'NO_SERTIF') content = certNumber || 'No. 0255/AIN/NAV/2026';
+                  else if (obj.id === 'DATE') content = todayStr;
 
-              {/* Header Badge */}
-              <div className="flex items-center justify-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-indigo-600 p-0.5 shadow-lg shadow-amber-500/20">
-                  <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-amber-400">
-                    <Compass className="w-6 h-6" />
+                  const topPercent = (obj.top / 600) * 100;
+                  const leftPercent = (obj.left / 850) * 100;
+
+                  return (
+                    <div
+                      key={i}
+                      className="absolute transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap pointer-events-none drop-shadow-md"
+                      style={{
+                        top: `${topPercent}%`,
+                        left: `${leftPercent}%`,
+                        fontSize: `${obj.fontSize ? Math.max(12, Math.round(obj.fontSize * 0.85)) : 20}px`,
+                        fontFamily: obj.fontFamily || 'Poppins',
+                        fontWeight: obj.fontWeight || 'normal',
+                        color: obj.fill || '#ffffff',
+                        textAlign: (obj.textAlign as any) || 'center',
+                      }}
+                    >
+                      {content}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div
+                className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-10 text-center space-y-6 relative overflow-hidden shadow-2xl bg-cover bg-center"
+                style={bgImage ? { backgroundImage: `url(${bgImage})` } : {}}
+              >
+                {/* Decorative Blur Effect */}
+                <div className="absolute top-0 left-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
+
+                {/* Header Badge */}
+                <div className="flex items-center justify-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-indigo-600 p-0.5 shadow-lg shadow-amber-500/20">
+                    <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-amber-400">
+                      <Compass className="w-6 h-6" />
+                    </div>
+                  </div>
+                  <div className="text-left">
+                    <span className="text-sm font-black text-white tracking-wider block">AI NAVIGATOR</span>
+                    <span className="text-[10px] text-amber-400 font-bold tracking-widest uppercase block">Akademi Pembelajaran LLM</span>
                   </div>
                 </div>
-                <div className="text-left">
-                  <span className="text-sm font-black text-white tracking-wider block">AI NAVIGATOR</span>
-                  <span className="text-[10px] text-amber-400 font-bold tracking-widest uppercase block">Akademi Pembelajaran LLM</span>
-                </div>
-              </div>
 
-              <div className="space-y-1">
-                <h2 className="text-xl sm:text-3xl font-black text-amber-300 uppercase tracking-widest">
-                  CERTIFICATE OF COMPLETION
-                </h2>
-                <p className="text-xs text-slate-400 font-medium">
-                  Sertifikat Kelulusan Resmi Pembelajaran Modul
+                <div className="space-y-1">
+                  <h2 className="text-xl sm:text-3xl font-black text-amber-300 uppercase tracking-widest">
+                    CERTIFICATE OF COMPLETION
+                  </h2>
+                  <p className="text-xs text-slate-400 font-medium">
+                    Sertifikat Kelulusan Resmi Pembelajaran Modul
+                  </p>
+                </div>
+
+                {/* Recipient Name */}
+                <div className="py-2 border-b-2 border-amber-500/40 max-w-md mx-auto">
+                  <h3 className="text-2xl sm:text-4xl font-black text-white bg-gradient-to-r from-white via-amber-200 to-indigo-200 bg-clip-text text-transparent">
+                    {userName || 'Siswa AI Navigator'}
+                  </h3>
+                  <p className="text-[11px] text-slate-400 font-mono mt-1">{userEmail}</p>
+                </div>
+
+                <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed font-medium">
+                  Telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong>, meliputi penguasaan Teknik Prompting RCTF, ChatGPT, Claude, Gemini, Perplexity, Copilot, Meta AI, DeepSeek, v0.dev, Bolt.new, dan Capstone Project.
                 </p>
-              </div>
 
-              {/* Recipient Name */}
-              <div className="py-2 border-b-2 border-amber-500/40 max-w-md mx-auto">
-                <h3 className="text-2xl sm:text-4xl font-black text-white bg-gradient-to-r from-white via-amber-200 to-indigo-200 bg-clip-text text-transparent">
-                  {userName || 'Siswa AI Navigator'}
-                </h3>
-                <p className="text-[11px] text-slate-400 font-mono mt-1">{userEmail}</p>
-              </div>
-
-              <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed font-medium">
-                Telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong>, meliputi penguasaan Teknik Prompting RCTF, ChatGPT, Claude, Gemini, Perplexity, Copilot, Meta AI, DeepSeek, v0.dev, Bolt.new, dan Capstone Project.
-              </p>
-
-              {/* Capstone Project Title if present */}
-              {progress.capstoneSubmission && (
-                <div className="p-3 bg-slate-900/90 border border-slate-800 rounded-xl max-w-md mx-auto text-xs space-y-1">
-                  <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider block">Judul Capstone Project:</span>
-                  <p className="text-slate-200 font-semibold italic">"{progress.capstoneSubmission.title}"</p>
-                </div>
-              )}
-
-              {/* Badges Earned */}
-              <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-                <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[11px] font-bold flex items-center gap-1">
-                  <Award className="w-3.5 h-3.5 text-amber-400" /> Master RCTF Prompting
-                </span>
-                <span className="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-[11px] font-bold flex items-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5 text-indigo-400" /> Multi-LLM Practitioner
-                </span>
-                {userTier === 'tier2' ? (
-                  <span className="px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black flex items-center gap-1">
-                    <Crown className="w-3.5 h-3.5 fill-slate-950" /> Tier 2 VIP Graduate
-                  </span>
-                ) : (
-                  <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> {displayModules.length} Modul Selesai ({displayModules.length} JP)
-                  </span>
+                {/* Capstone Project Title if present */}
+                {progress.capstoneSubmission && (
+                  <div className="p-3 bg-slate-900/90 border border-slate-800 rounded-xl max-w-md mx-auto text-xs space-y-1">
+                    <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider block">Judul Capstone Project:</span>
+                    <p className="text-slate-200 font-semibold italic">"{progress.capstoneSubmission.title}"</p>
+                  </div>
                 )}
-              </div>
 
-              {/* Signatures & Verification Info */}
-              <div className="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 max-w-lg mx-auto text-left gap-3">
-                <div>
-                  <span className="block text-[10px] text-slate-500 font-bold">Tanggal Kelulusan:</span>
-                  <strong className="text-slate-200">{todayStr}</strong>
-                  {certNumber && <span className="block text-[10px] text-slate-400 font-mono mt-0.5">{certNumber}</span>}
-                </div>
-                <div className="text-right">
-                  <span className="block text-[10px] text-slate-500 font-bold">UUID Certify Maxy:</span>
-                  <strong className="text-amber-400 font-mono text-[11px] block">{certUuid || 'AIN-2026-CERT-29M'}</strong>
-                  {verifyUrl ? (
-                    <a
-                      href={verifyUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
-                    >
-                      <span>Verifikasi Keaslian Maxy Certify</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
+                {/* Badges Earned */}
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+                  <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[11px] font-bold flex items-center gap-1">
+                    <Award className="w-3.5 h-3.5 text-amber-400" /> Master RCTF Prompting
+                  </span>
+                  <span className="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-[11px] font-bold flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5 text-indigo-400" /> Multi-LLM Practitioner
+                  </span>
+                  {userTier === 'tier2' ? (
+                    <span className="px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black flex items-center gap-1">
+                      <Crown className="w-3.5 h-3.5 fill-slate-950" /> Tier 2 VIP Graduate
+                    </span>
                   ) : (
-                    <a
-                      href={`https://cms.maxy.academy/certificate/verify/${certUuid || 'AIN-2026-CERT-29M'}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
-                    >
-                      <span>Verifikasi Keaslian Maxy Certify</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
+                    <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> {displayModules.length} Modul Selesai ({displayModules.length} JP)
+                    </span>
                   )}
                 </div>
+
+                {/* Signatures & Verification Info */}
+                <div className="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 max-w-lg mx-auto text-left gap-3">
+                  <div>
+                    <span className="block text-[10px] text-slate-500 font-bold">Tanggal Kelulusan:</span>
+                    <strong className="text-slate-200">{todayStr}</strong>
+                    {certNumber && <span className="block text-[10px] text-slate-400 font-mono mt-0.5">{certNumber}</span>}
+                  </div>
+                  <div className="text-right">
+                    <span className="block text-[10px] text-slate-500 font-bold">UUID Certify Maxy:</span>
+                    <strong className="text-amber-400 font-mono text-[11px] block">{certUuid || 'AIN-2026-CERT-29M'}</strong>
+                    {verifyUrl ? (
+                      <a
+                        href={verifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
+                      >
+                        <span>Verifikasi Keaslian Maxy Certify</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    ) : (
+                      <a
+                        href={`https://cms.maxy.academy/certificate/verify/${certUuid || 'AIN-2026-CERT-29M'}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
+                      >
+                        <span>Verifikasi Keaslian Maxy Certify</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* HALAMAN 2: Transkrip Kurikulum Pembelajaran & Bobot 1 JP Per Modul */}
             <div className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-8 text-left space-y-5 relative overflow-hidden shadow-2xl print:break-before-page">
