@@ -201,7 +201,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 {templateObjects.map((obj: any, i: number) => {
                   let content = obj.text || '';
                   if (obj.id === 'NAME') content = userName || 'Siswa AI Navigator';
-                  else if (obj.id === 'UUID') content = certUuid ? `UUID: ${certUuid}` : 'UUID: f7ad0d5c-6528-4517-9074-70ee377a03fb';
+                  else if (obj.id === 'UUID') content = certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb';
                   else if (obj.id === 'NO_SERTIF') content = certNumber || 'No. 0255/AIN/NAV/2026';
                   else if (obj.id === 'DATE') content = todayStr;
 
