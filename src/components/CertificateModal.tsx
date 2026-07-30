@@ -169,6 +169,37 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
         ) : (
           /* Official Certificate & Transcript View */
           <div className="space-y-6">
+            <style>{`
+              @media print {
+                body * {
+                  visibility: hidden !important;
+                }
+                #printable-certificate-area, #printable-certificate-area * {
+                  visibility: visible !important;
+                }
+                #printable-certificate-area {
+                  position: absolute !important;
+                  left: 0 !important;
+                  top: 0 !important;
+                  width: 100% !important;
+                  margin: 0 !important;
+                  padding: 0 !important;
+                  background: transparent !important;
+                }
+                .print\\:hidden {
+                  display: none !important;
+                }
+                .print\\:break-before-page {
+                  page-break-before: always !important;
+                  break-before: page !important;
+                }
+                @page {
+                  size: A4 landscape;
+                  margin: 0;
+                }
+              }
+            `}</style>
+
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-800 pb-3 print:hidden">
               <div className="flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold flex items-center gap-1">
@@ -192,257 +223,259 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               </div>
             </div>
 
-            {/* HALAMAN 1: Printable Certificate Frame */}
-            {bgImage ? (
-              <div
-                className="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-cover bg-center border-4 border-amber-500/40 my-2"
-                style={{
-                  backgroundImage: `url(${bgImage})`,
-                  aspectRatio: '850 / 600',
-                }}
-              >
-                {templateObjects.length > 0 ? (
-                  templateObjects.map((obj: any, i: number) => {
-                    let content = obj.text || '';
-                    if (obj.id === 'NAME') content = userName || 'Siswa AI Navigator';
-                    else if (obj.id === 'UUID') content = certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb';
-                    else if (obj.id === 'NO_SERTIF') content = certNumber || 'No. 0255/AIN/NAV/2026';
-                    else if (obj.id === 'DATE') content = todayStr;
+            <div id="printable-certificate-area" className="space-y-6">
+              {/* HALAMAN 1: Printable Certificate Frame */}
+              {bgImage ? (
+                <div
+                  className="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-cover bg-center border-4 border-amber-500/40 my-2"
+                  style={{
+                    backgroundImage: `url(${bgImage})`,
+                    aspectRatio: '850 / 600',
+                  }}
+                >
+                  {templateObjects.length > 0 ? (
+                    templateObjects.map((obj: any, i: number) => {
+                      let content = obj.text || '';
+                      if (obj.id === 'NAME') content = userName || 'Siswa AI Navigator';
+                      else if (obj.id === 'UUID') content = certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb';
+                      else if (obj.id === 'NO_SERTIF') content = certNumber || 'No. 0255/AIN/NAV/2026';
+                      else if (obj.id === 'DATE') content = todayStr;
 
-                    const topPercent = (obj.top / 600) * 100;
-                    const leftPercent = (obj.left / 850) * 100;
+                      const topPercent = (obj.top / 600) * 100;
+                      const leftPercent = (obj.left / 850) * 100;
 
-                    return (
-                      <div
-                        key={i}
-                        className="absolute transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap pointer-events-none drop-shadow-md"
-                        style={{
-                          top: `${topPercent}%`,
-                          left: `${leftPercent}%`,
-                          fontSize: `${obj.fontSize ? Math.max(12, Math.round(obj.fontSize * 0.85)) : 20}px`,
-                          fontFamily: obj.fontFamily || 'Poppins',
-                          fontWeight: obj.fontWeight || 'normal',
-                          color: obj.fill || '#ffffff',
-                          textAlign: (obj.textAlign as any) || 'center',
-                        }}
-                      >
-                        {content}
-                      </div>
-                    );
-                  })
-                ) : (
-                  <>
-                    <div className="absolute top-[42%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-                      <h3 className="text-2xl sm:text-4xl font-black text-amber-300 drop-shadow-lg">{userName || 'Siswa AI Navigator'}</h3>
-                    </div>
-                    <div className="absolute bottom-[10%] left-[8%] pointer-events-none text-xs text-slate-200 font-bold">
-                      {todayStr}
-                    </div>
-                    <div className="absolute bottom-[10%] right-[8%] pointer-events-none text-xs text-amber-300 font-mono font-bold">
-                      {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}
-                    </div>
-                  </>
-                )}
-              </div>
-            ) : (
-              <div
-                className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-10 text-center space-y-6 relative overflow-hidden shadow-2xl bg-cover bg-center"
-                style={bgImage ? { backgroundImage: `url(${bgImage})` } : {}}
-              >
-                {/* Decorative Blur Effect */}
-                <div className="absolute top-0 left-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
-                <div className="absolute bottom-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
-
-                {/* Header Badge */}
-                <div className="flex items-center justify-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-indigo-600 p-0.5 shadow-lg shadow-amber-500/20">
-                    <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-amber-400">
-                      <Compass className="w-6 h-6" />
-                    </div>
-                  </div>
-                  <div className="text-left">
-                    <span className="text-sm font-black text-white tracking-wider block">AI NAVIGATOR</span>
-                    <span className="text-[10px] text-amber-400 font-bold tracking-widest uppercase block">Akademi Pembelajaran LLM</span>
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <h2 className="text-xl sm:text-3xl font-black text-amber-300 uppercase tracking-widest">
-                    CERTIFICATE OF COMPLETION
-                  </h2>
-                  <p className="text-xs text-slate-400 font-medium">
-                    Sertifikat Kelulusan Resmi Pembelajaran Modul
-                  </p>
-                </div>
-
-                {/* Recipient Name */}
-                <div className="py-2 border-b-2 border-amber-500/40 max-w-md mx-auto">
-                  <h3 className="text-2xl sm:text-4xl font-black text-white bg-gradient-to-r from-white via-amber-200 to-indigo-200 bg-clip-text text-transparent">
-                    {userName || 'Siswa AI Navigator'}
-                  </h3>
-                  <p className="text-[11px] text-slate-400 font-mono mt-1">{userEmail}</p>
-                </div>
-
-                <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed font-medium">
-                  Telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong>, meliputi penguasaan Teknik Prompting RCTF, ChatGPT, Claude, Gemini, Perplexity, Copilot, Meta AI, DeepSeek, v0.dev, Bolt.new, dan Capstone Project.
-                </p>
-
-                {/* Capstone Project Title if present */}
-                {progress.capstoneSubmission && (
-                  <div className="p-3 bg-slate-900/90 border border-slate-800 rounded-xl max-w-md mx-auto text-xs space-y-1">
-                    <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider block">Judul Capstone Project:</span>
-                    <p className="text-slate-200 font-semibold italic">"{progress.capstoneSubmission.title}"</p>
-                  </div>
-                )}
-
-                {/* Badges Earned */}
-                <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-                  <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[11px] font-bold flex items-center gap-1">
-                    <Award className="w-3.5 h-3.5 text-amber-400" /> Master RCTF Prompting
-                  </span>
-                  <span className="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-[11px] font-bold flex items-center gap-1">
-                    <Sparkles className="w-3.5 h-3.5 text-indigo-400" /> Multi-LLM Practitioner
-                  </span>
-                  {userTier === 'tier2' ? (
-                    <span className="px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black flex items-center gap-1">
-                      <Crown className="w-3.5 h-3.5 fill-slate-950" /> Tier 2 VIP Graduate
-                    </span>
+                      return (
+                        <div
+                          key={i}
+                          className="absolute transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap pointer-events-none drop-shadow-md"
+                          style={{
+                            top: `${topPercent}%`,
+                            left: `${leftPercent}%`,
+                            fontSize: `${obj.fontSize ? Math.max(12, Math.round(obj.fontSize * 0.85)) : 20}px`,
+                            fontFamily: obj.fontFamily || 'Poppins',
+                            fontWeight: obj.fontWeight || 'normal',
+                            color: obj.fill || '#ffffff',
+                            textAlign: (obj.textAlign as any) || 'center',
+                          }}
+                        >
+                          {content}
+                        </div>
+                      );
+                    })
                   ) : (
-                    <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> {displayModules.length} Modul Selesai ({displayModules.length} JP)
-                    </span>
+                    <>
+                      <div className="absolute top-[42%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+                        <h3 className="text-2xl sm:text-4xl font-black text-amber-300 drop-shadow-lg">{userName || 'Siswa AI Navigator'}</h3>
+                      </div>
+                      <div className="absolute bottom-[10%] left-[8%] pointer-events-none text-xs text-slate-200 font-bold">
+                        {todayStr}
+                      </div>
+                      <div className="absolute bottom-[10%] right-[8%] pointer-events-none text-xs text-amber-300 font-mono font-bold">
+                        {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}
+                      </div>
+                    </>
                   )}
                 </div>
+              ) : (
+                <div
+                  className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-10 text-center space-y-6 relative overflow-hidden shadow-2xl bg-cover bg-center"
+                  style={bgImage ? { backgroundImage: `url(${bgImage})` } : {}}
+                >
+                  {/* Decorative Blur Effect */}
+                  <div className="absolute top-0 left-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
+                  <div className="absolute bottom-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
 
-                {/* Signatures & Verification Info */}
-                <div className="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 max-w-lg mx-auto text-left gap-3">
-                  <div>
-                    <span className="block text-[10px] text-slate-500 font-bold">Tanggal Kelulusan:</span>
-                    <strong className="text-slate-200">{todayStr}</strong>
-                    {certNumber && <span className="block text-[10px] text-slate-400 font-mono mt-0.5">{certNumber}</span>}
-                  </div>
-                  <div className="text-right">
-                    <span className="block text-[10px] text-slate-500 font-bold">UUID Certify Maxy:</span>
-                    <strong className="text-amber-400 font-mono text-[11px] block">{certUuid || 'AIN-2026-CERT-29M'}</strong>
-                    {verifyUrl ? (
-                      <a
-                        href={verifyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
-                      >
-                        <span>Verifikasi Keaslian Maxy Certify</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    ) : (
-                      <a
-                        href={`https://cms.maxy.academy/certificate/verify/${certUuid || 'AIN-2026-CERT-29M'}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
-                      >
-                        <span>Verifikasi Keaslian Maxy Certify</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* HALAMAN 2: Transkrip Kurikulum Pembelajaran & Bobot 1 JP Per Modul (Aspect Ratio 850 / 600 - A4 Landscape) */}
-            <div
-              className="bg-slate-950 border-4 border-amber-500/50 rounded-2xl p-4 sm:p-6 text-left space-y-3 relative overflow-hidden shadow-2xl print:break-before-page print:border-2 print:p-4 my-2"
-              style={{ aspectRatio: '850 / 600' }}
-            >
-              {/* Header Official Transkrip */}
-              <div className="flex items-center justify-between border-b-2 border-amber-500/40 pb-2 gap-2">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-indigo-600 p-0.5 shadow-md shrink-0">
-                    <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center text-amber-400">
-                      <BookOpen className="w-4 h-4" />
+                  {/* Header Badge */}
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-indigo-600 p-0.5 shadow-lg shadow-amber-500/20">
+                      <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-amber-400">
+                        <Compass className="w-6 h-6" />
+                      </div>
+                    </div>
+                    <div className="text-left">
+                      <span className="text-sm font-black text-white tracking-wider block">AI NAVIGATOR</span>
+                      <span className="text-[10px] text-amber-400 font-bold tracking-widest uppercase block">Akademi Pembelajaran LLM</span>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-wider">
-                      TRANSKRIP KURIKULUM &amp; BEBAN BELAJAR (HALAMAN 2)
-                    </h3>
-                    <p className="text-[10px] text-slate-300 font-medium leading-none mt-0.5">
-                      Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
+
+                  <div className="space-y-1">
+                    <h2 className="text-xl sm:text-3xl font-black text-amber-300 uppercase tracking-widest">
+                      CERTIFICATE OF COMPLETION
+                    </h2>
+                    <p className="text-xs text-slate-400 font-medium">
+                      Sertifikat Kelulusan Resmi Pembelajaran Modul
                     </p>
                   </div>
-                </div>
-                <div className="text-right bg-slate-900/90 border border-slate-800 rounded-xl px-2.5 py-1 shrink-0">
-                  <span className="text-[11px] font-black text-white block leading-tight">{userName || 'Siswa AI Navigator'}</span>
-                  <span className="text-[9px] text-amber-400 font-mono block leading-none">{certNumber || 'No. 0255/AIN/NAV/2026'}</span>
-                </div>
-              </div>
 
-              {/* 2-Column Table Layout to fit inside 850/600 A4 Landscape */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 h-[calc(100%-85px)] overflow-y-auto print:overflow-visible">
-                {/* Column 1 */}
-                <div className="rounded-lg border border-slate-800 overflow-hidden bg-slate-900/40">
-                  <table className="w-full text-left text-[10px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-amber-500/30 text-amber-300 font-extrabold uppercase tracking-wider bg-slate-900">
-                        <th className="py-1 px-1.5 text-center w-6 border-r border-slate-800">No</th>
-                        <th className="py-1 px-2 font-bold">Judul Modul Pembelajaran</th>
-                        <th className="py-1 px-1.5 text-center w-10 border-l border-slate-800">Bobot</th>
-                        <th className="py-1 px-1.5 text-center w-12 border-l border-slate-800">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800/80 text-slate-100">
-                      {leftModules.map((m, idx) => (
-                        <tr key={m.id} className={idx % 2 === 0 ? 'bg-slate-950/90' : 'bg-slate-900/50'}>
-                          <td className="py-0.5 px-1 font-mono text-amber-400 font-bold text-center border-r border-slate-800">{idx + 1}</td>
-                          <td className="py-0.5 px-2 font-bold text-white leading-tight">
-                            {m.title}
-                            <span className="block text-[8.5px] text-slate-400 font-normal leading-none mt-0.5 truncate max-w-[200px]">{m.subtitle}</span>
-                          </td>
-                          <td className="py-0.5 px-1 text-center font-bold text-amber-300 border-l border-slate-800">1 JP</td>
-                          <td className="py-0.5 px-1 text-center border-l border-slate-800">
-                            <span className="px-1 py-0.2 bg-emerald-500/20 text-emerald-300 text-[8.5px] font-black rounded">LULUS</span>
-                          </td>
+                  {/* Recipient Name */}
+                  <div className="py-2 border-b-2 border-amber-500/40 max-w-md mx-auto">
+                    <h3 className="text-2xl sm:text-4xl font-black text-white bg-gradient-to-r from-white via-amber-200 to-indigo-200 bg-clip-text text-transparent">
+                      {userName || 'Siswa AI Navigator'}
+                    </h3>
+                    <p className="text-[11px] text-slate-400 font-mono mt-1">{userEmail}</p>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed font-medium">
+                    Telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong>, meliputi penguasaan Teknik Prompting RCTF, ChatGPT, Claude, Gemini, Perplexity, Copilot, Meta AI, DeepSeek, v0.dev, Bolt.new, dan Capstone Project.
+                  </p>
+
+                  {/* Capstone Project Title if present */}
+                  {progress.capstoneSubmission && (
+                    <div className="p-3 bg-slate-900/90 border border-slate-800 rounded-xl max-w-md mx-auto text-xs space-y-1">
+                      <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider block">Judul Capstone Project:</span>
+                      <p className="text-slate-200 font-semibold italic">"{progress.capstoneSubmission.title}"</p>
+                    </div>
+                  )}
+
+                  {/* Badges Earned */}
+                  <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+                    <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[11px] font-bold flex items-center gap-1">
+                      <Award className="w-3.5 h-3.5 text-amber-400" /> Master RCTF Prompting
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-[11px] font-bold flex items-center gap-1">
+                      <Sparkles className="w-3.5 h-3.5 text-indigo-400" /> Multi-LLM Practitioner
+                    </span>
+                    {userTier === 'tier2' ? (
+                      <span className="px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black flex items-center gap-1">
+                        <Crown className="w-3.5 h-3.5 fill-slate-950" /> Tier 2 VIP Graduate
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold flex items-center gap-1">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> {displayModules.length} Modul Selesai ({displayModules.length} JP)
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Signatures & Verification Info */}
+                  <div className="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 max-w-lg mx-auto text-left gap-3">
+                    <div>
+                      <span className="block text-[10px] text-slate-500 font-bold">Tanggal Kelulusan:</span>
+                      <strong className="text-slate-200">{todayStr}</strong>
+                      {certNumber && <span className="block text-[10px] text-slate-400 font-mono mt-0.5">{certNumber}</span>}
+                    </div>
+                    <div className="text-right">
+                      <span className="block text-[10px] text-slate-500 font-bold">UUID Certify Maxy:</span>
+                      <strong className="text-amber-400 font-mono text-[11px] block">{certUuid || 'AIN-2026-CERT-29M'}</strong>
+                      {verifyUrl ? (
+                        <a
+                          href={verifyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
+                        >
+                          <span>Verifikasi Keaslian Maxy Certify</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      ) : (
+                        <a
+                          href={`https://cms.maxy.academy/certificate/verify/${certUuid || 'AIN-2026-CERT-29M'}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
+                        >
+                          <span>Verifikasi Keaslian Maxy Certify</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* HALAMAN 2: Transkrip Kurikulum Pembelajaran & Bobot 1 JP Per Modul (Aspect Ratio 850 / 600 - A4 Landscape - Matching White Paper Certificate) */}
+              <div
+                className="bg-white text-slate-900 border-4 border-amber-500 rounded-2xl p-4 sm:p-6 text-left space-y-3 relative overflow-hidden shadow-2xl print:break-before-page print:border-2 print:p-4 my-2"
+                style={{ aspectRatio: '850 / 600' }}
+              >
+                {/* Header Official Transkrip - Matching Halaman 1 */}
+                <div className="flex items-center justify-between border-b-2 border-amber-500 pb-2.5 gap-2 bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 p-4 rounded-t-xl text-white">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-blue-400 p-0.5 shadow-md shrink-0">
+                      <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center text-amber-400">
+                        <BookOpen className="w-4 h-4" />
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-wider">
+                        TRANSKRIP KURIKULUM &amp; BEBAN BELAJAR (HALAMAN 2)
+                      </h3>
+                      <p className="text-[10px] text-slate-300 font-medium leading-none mt-0.5">
+                        Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right bg-slate-900/90 border border-amber-500/40 rounded-xl px-3 py-1 shrink-0">
+                    <span className="text-[11px] font-black text-white block leading-tight">{userName || 'Siswa AI Navigator'}</span>
+                    <span className="text-[9px] text-amber-400 font-mono block leading-none">{certNumber || 'No. 0255/AIN/NAV/2026'}</span>
+                  </div>
+                </div>
+
+                {/* 2-Column Table Layout to fit inside 850/600 A4 Landscape */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 h-[calc(100%-90px)] overflow-y-auto print:overflow-visible">
+                  {/* Column 1 */}
+                  <div className="rounded-lg border border-slate-300 overflow-hidden bg-slate-50">
+                    <table className="w-full text-left text-[10px] border-collapse">
+                      <thead>
+                        <tr className="border-b border-slate-300 text-slate-900 font-extrabold uppercase tracking-wider bg-slate-200">
+                          <th className="py-1 px-1.5 text-center w-6 border-r border-slate-300">No</th>
+                          <th className="py-1 px-2 font-bold text-slate-900">Judul Modul Pembelajaran</th>
+                          <th className="py-1 px-1.5 text-center w-10 border-l border-slate-300">Bobot</th>
+                          <th className="py-1 px-1.5 text-center w-12 border-l border-slate-300">Status</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody className="divide-y divide-slate-200 text-slate-900 font-medium">
+                        {leftModules.map((m, idx) => (
+                          <tr key={m.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-slate-100/70'}>
+                            <td className="py-0.5 px-1 font-mono text-slate-700 font-bold text-center border-r border-slate-200">{idx + 1}</td>
+                            <td className="py-0.5 px-2 font-bold text-slate-900 leading-tight">
+                              {m.title}
+                              <span className="block text-[8.5px] text-slate-600 font-normal leading-none mt-0.5 truncate max-w-[200px]">{m.subtitle}</span>
+                            </td>
+                            <td className="py-0.5 px-1 text-center font-bold text-blue-700 border-l border-slate-200">1 JP</td>
+                            <td className="py-0.5 px-1 text-center border-l border-slate-200">
+                              <span className="px-1.5 py-0.2 bg-emerald-100 text-emerald-800 border border-emerald-300 text-[8.5px] font-black rounded">LULUS</span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
 
-                {/* Column 2 */}
-                <div className="rounded-lg border border-slate-800 overflow-hidden bg-slate-900/40">
-                  <table className="w-full text-left text-[10px] border-collapse">
-                    <thead>
-                      <tr className="border-b border-amber-500/30 text-amber-300 font-extrabold uppercase tracking-wider bg-slate-900">
-                        <th className="py-1 px-1.5 text-center w-6 border-r border-slate-800">No</th>
-                        <th className="py-1 px-2 font-bold">Judul Modul Pembelajaran</th>
-                        <th className="py-1 px-1.5 text-center w-10 border-l border-slate-800">Bobot</th>
-                        <th className="py-1 px-1.5 text-center w-12 border-l border-slate-800">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800/80 text-slate-100">
-                      {rightModules.map((m, idx) => (
-                        <tr key={m.id} className={idx % 2 === 0 ? 'bg-slate-950/90' : 'bg-slate-900/50'}>
-                          <td className="py-0.5 px-1 font-mono text-amber-400 font-bold text-center border-r border-slate-800">{leftModules.length + idx + 1}</td>
-                          <td className="py-0.5 px-2 font-bold text-white leading-tight">
-                            {m.title}
-                            <span className="block text-[8.5px] text-slate-400 font-normal leading-none mt-0.5 truncate max-w-[200px]">{m.subtitle}</span>
-                          </td>
-                          <td className="py-0.5 px-1 text-center font-bold text-amber-300 border-l border-slate-800">1 JP</td>
-                          <td className="py-0.5 px-1 text-center border-l border-slate-800">
-                            <span className="px-1 py-0.2 bg-emerald-500/20 text-emerald-300 text-[8.5px] font-black rounded">LULUS</span>
-                          </td>
+                  {/* Column 2 */}
+                  <div className="rounded-lg border border-slate-300 overflow-hidden bg-slate-50">
+                    <table className="w-full text-left text-[10px] border-collapse">
+                      <thead>
+                        <tr className="border-b border-slate-300 text-slate-900 font-extrabold uppercase tracking-wider bg-slate-200">
+                          <th className="py-1 px-1.5 text-center w-6 border-r border-slate-300">No</th>
+                          <th className="py-1 px-2 font-bold text-slate-900">Judul Modul Pembelajaran</th>
+                          <th className="py-1 px-1.5 text-center w-10 border-l border-slate-300">Bobot</th>
+                          <th className="py-1 px-1.5 text-center w-12 border-l border-slate-300">Status</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="divide-y divide-slate-200 text-slate-900 font-medium">
+                        {rightModules.map((m, idx) => (
+                          <tr key={m.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-slate-100/70'}>
+                            <td className="py-0.5 px-1 font-mono text-slate-700 font-bold text-center border-r border-slate-200">{leftModules.length + idx + 1}</td>
+                            <td className="py-0.5 px-2 font-bold text-slate-900 leading-tight">
+                              {m.title}
+                              <span className="block text-[8.5px] text-slate-600 font-normal leading-none mt-0.5 truncate max-w-[200px]">{m.subtitle}</span>
+                            </td>
+                            <td className="py-0.5 px-1 text-center font-bold text-blue-700 border-l border-slate-200">1 JP</td>
+                            <td className="py-0.5 px-1 text-center border-l border-slate-200">
+                              <span className="px-1.5 py-0.2 bg-emerald-100 text-emerald-800 border border-emerald-300 text-[8.5px] font-black rounded">LULUS</span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
 
-              {/* Footer Transkrip */}
-              <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[9.5px] text-slate-400">
-                <span>* Total Beban: <strong>{displayModules.length} JP</strong> (1 JP = 45 Menit Pembelajaran Terstruktur &amp; Evaluasi).</span>
-                <span className="font-mono text-amber-400">UUID Certify: <strong>{certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</strong></span>
+                {/* Footer Transkrip */}
+                <div className="pt-2 border-t border-slate-300 flex items-center justify-between text-[9.5px] text-slate-600">
+                  <span>* Total Beban: <strong>{displayModules.length} JP</strong> (1 JP = 45 Menit Pembelajaran Terstruktur &amp; Evaluasi).</span>
+                  <span className="font-mono text-blue-900 font-bold">UUID Certify: <strong>{certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</strong></span>
+                </div>
               </div>
             </div>
           </div>
