@@ -144,7 +144,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       const canvas1 = await html2canvas(page1El, {
         scale: 2,
         useCORS: true,
-        allowTaint: true,
+        allowTaint: false,
         backgroundColor: '#ffffff',
         logging: false,
       });
@@ -158,7 +158,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       const canvas2 = await html2canvas(page2Ref.current, {
         scale: 2,
         useCORS: true,
-        allowTaint: true,
+        allowTaint: false,
         backgroundColor: '#ffffff',
         logging: false,
       });
@@ -182,24 +182,8 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       pdf.save(`Sertifikat_AI_Navigator_${safeName}.pdf`);
     } catch (err) {
       console.error('PDF download error:', err);
-      // Fallback: download as PNG images
-      try {
-        const pages = [page1Ref.current, page2Ref.current];
-        for (let idx = 0; idx < pages.length; idx++) {
-          const el = pages[idx];
-          if (!el) continue;
-          const c = await html2canvas(el, { scale: 2, allowTaint: true, backgroundColor: '#ffffff', logging: false });
-          const link = document.createElement('a');
-          link.download = `Sertifikat_${idx === 0 ? 'Hal1' : 'Transkrip'}_${userName.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
-          link.href = c.toDataURL('image/png');
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
-      } catch (fallbackErr) {
-        console.error('Fallback download also failed:', fallbackErr);
-        alert('Gagal mengunduh. Silakan screenshot sertifikat secara manual.');
-      }
+      // Seamless Fallback: Trigger native browser PDF print save dialog
+      window.print();
     } finally {
       setIsDownloading(false);
     }
@@ -367,11 +351,19 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               {bgImage ? (
                 <div
                   data-cert-bg
-                  className="relative w-full h-full bg-cover bg-center bg-no-repeat"
+                  className="relative w-full h-full bg-cover bg-center bg-no-repeat overflow-hidden"
                   style={{ backgroundImage: `url(${bgImage})` }}
                 >
+                  <img
+                    src={bgImage}
+                    crossOrigin="anonymous"
+                    alt="Certificate Template Background"
+                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                  />
                   {templateObjects.length > 0 ? (
                     templateObjects.map((obj: any, i: number) => {
+                      if (obj.text === 'UID') return null; // Skip stray duplicate label
+
                       let content = obj.text || '';
                       if (obj.id === 'NAME') content = userName || 'Siswa AI Navigator';
                       else if (obj.id === 'UUID') content = certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb';
@@ -379,33 +371,38 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       else if (obj.id === 'DATE') content = todayStr;
 
                       // Canvas editor (Fabric.js 850x600) stores top/left as pixel coords
-                      let isCentered = obj.id === 'NAME' || obj.textAlign === 'center' || obj.originX === 'center';
+                      let isCentered = obj.id === 'NAME' || obj.id === 'UUID' || obj.textAlign === 'center' || obj.originX === 'center';
                       let topPercent = ((obj.top || 0) / 600) * 100;
                       let leftPercent = ((obj.left || 0) / 850) * 100;
 
                       if (obj.id === 'NAME') {
-                        // Always center recipient name horizontally at exactly 50% width of the certificate
                         leftPercent = 50;
                         isCentered = true;
                         if (!obj.top || (obj.top >= 160 && obj.top <= 280)) {
-                          topPercent = 41; // Perfect vertical height above purple line
+                          topPercent = 41;
+                        }
+                      } else if (obj.id === 'UUID') {
+                        leftPercent = 50;
+                        isCentered = true;
+                        if (!obj.top || obj.top >= 450) {
+                          topPercent = 91.5;
                         }
                       }
 
-                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.85 : 20;
+                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.85 : (obj.id === 'UUID' ? 12 : 20);
 
                       return (
                         <div
                           key={i}
-                          className="absolute whitespace-nowrap pointer-events-none"
+                          className="absolute whitespace-nowrap pointer-events-none z-10"
                           style={{
                             top: `${topPercent}%`,
                             left: `${leftPercent}%`,
                             transform: isCentered ? 'translateX(-50%)' : 'none',
-                            fontSize: `${Math.max(12, Math.round(scaledFontSize))}px`,
-                            fontFamily: obj.fontFamily || 'Poppins, sans-serif',
+                            fontSize: `${Math.max(10, Math.round(scaledFontSize))}px`,
+                            fontFamily: obj.fontFamily || (obj.id === 'UUID' ? 'Courier New, monospace' : 'Poppins, sans-serif'),
                             fontWeight: obj.fontWeight || 'bold',
-                            color: obj.fill || '#d97706',
+                            color: obj.fill || (obj.id === 'NAME' ? '#d97706' : '#1e293b'),
                             textAlign: isCentered ? 'center' : ((obj.textAlign as any) || 'left'),
                             lineHeight: 1.2,
                           }}
