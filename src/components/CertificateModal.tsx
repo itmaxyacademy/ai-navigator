@@ -371,11 +371,20 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       else if (obj.id === 'DATE') content = todayStr;
 
                       // Canvas editor (Fabric.js 850x600) stores top/left as pixel coords
-                      // Convert directly to % matching CMS Canvas Editor positioning 100%
-                      const topPercent = ((obj.top || 0) / 600) * 100;
-                      const leftPercent = ((obj.left || 0) / 850) * 100;
-                      const isCentered = obj.textAlign === 'center' || obj.originX === 'center' || obj.id === 'NAME';
-                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.85 : 18;
+                      let isCentered = obj.textAlign === 'center' || obj.originX === 'center';
+                      let topPercent = ((obj.top || 0) / 600) * 100;
+                      let leftPercent = ((obj.left || 0) / 850) * 100;
+
+                      // Keep the exact name position that was previously perfect
+                      if (obj.id === 'NAME') {
+                        leftPercent = 47.5;
+                        isCentered = true;
+                        if (!obj.top || (obj.top >= 160 && obj.top <= 280)) {
+                          topPercent = 41;
+                        }
+                      }
+
+                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.85 : (obj.id === 'NAME' ? 20 : 12);
 
                       return (
                         <div
