@@ -190,7 +190,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             </div>
 
             {/* HALAMAN 1: Printable Certificate Frame */}
-            {templateObjects.length > 0 && bgImage ? (
+            {bgImage ? (
               <div
                 className="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-cover bg-center border-4 border-amber-500/40 my-2"
                 style={{
@@ -198,34 +198,48 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   aspectRatio: '850 / 600',
                 }}
               >
-                {templateObjects.map((obj: any, i: number) => {
-                  let content = obj.text || '';
-                  if (obj.id === 'NAME') content = userName || 'Siswa AI Navigator';
-                  else if (obj.id === 'UUID') content = certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb';
-                  else if (obj.id === 'NO_SERTIF') content = certNumber || 'No. 0255/AIN/NAV/2026';
-                  else if (obj.id === 'DATE') content = todayStr;
+                {templateObjects.length > 0 ? (
+                  templateObjects.map((obj: any, i: number) => {
+                    let content = obj.text || '';
+                    if (obj.id === 'NAME') content = userName || 'Siswa AI Navigator';
+                    else if (obj.id === 'UUID') content = certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb';
+                    else if (obj.id === 'NO_SERTIF') content = certNumber || 'No. 0255/AIN/NAV/2026';
+                    else if (obj.id === 'DATE') content = todayStr;
 
-                  const topPercent = (obj.top / 600) * 100;
-                  const leftPercent = (obj.left / 850) * 100;
+                    const topPercent = (obj.top / 600) * 100;
+                    const leftPercent = (obj.left / 850) * 100;
 
-                  return (
-                    <div
-                      key={i}
-                      className="absolute transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap pointer-events-none drop-shadow-md"
-                      style={{
-                        top: `${topPercent}%`,
-                        left: `${leftPercent}%`,
-                        fontSize: `${obj.fontSize ? Math.max(12, Math.round(obj.fontSize * 0.85)) : 20}px`,
-                        fontFamily: obj.fontFamily || 'Poppins',
-                        fontWeight: obj.fontWeight || 'normal',
-                        color: obj.fill || '#ffffff',
-                        textAlign: (obj.textAlign as any) || 'center',
-                      }}
-                    >
-                      {content}
+                    return (
+                      <div
+                        key={i}
+                        className="absolute transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap pointer-events-none drop-shadow-md"
+                        style={{
+                          top: `${topPercent}%`,
+                          left: `${leftPercent}%`,
+                          fontSize: `${obj.fontSize ? Math.max(12, Math.round(obj.fontSize * 0.85)) : 20}px`,
+                          fontFamily: obj.fontFamily || 'Poppins',
+                          fontWeight: obj.fontWeight || 'normal',
+                          color: obj.fill || '#ffffff',
+                          textAlign: (obj.textAlign as any) || 'center',
+                        }}
+                      >
+                        {content}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <>
+                    <div className="absolute top-[42%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+                      <h3 className="text-2xl sm:text-4xl font-black text-amber-300 drop-shadow-lg">{userName || 'Siswa AI Navigator'}</h3>
                     </div>
-                  );
-                })}
+                    <div className="absolute bottom-[10%] left-[8%] pointer-events-none text-xs text-slate-200 font-bold">
+                      {todayStr}
+                    </div>
+                    <div className="absolute bottom-[10%] right-[8%] pointer-events-none text-xs text-amber-300 font-mono font-bold">
+                      {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
               <div
