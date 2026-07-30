@@ -118,7 +118,7 @@ export default function App() {
     const getLandingUrl = () => {
       if (typeof window === 'undefined') return 'https://ainavigator.maxy.academy?login=true';
       const host = window.location.hostname;
-      if (host === 'ai.maxy.academy') return 'https://ainavigator.maxy.academy?login=true';
+      if (host === 'ai.maxy.academy' || host === 'ainavigator.maxy.academy' || host.includes('maxy.academy')) return 'https://ainavigator.maxy.academy?login=true';
       return `${window.location.origin}/?login=true`;
     };
 
@@ -227,7 +227,7 @@ export default function App() {
     localStorage.removeItem('maxy_refresh_token');
     localStorage.removeItem(STORAGE_KEY);
     const host = window.location.hostname;
-    const target = host === 'ai.maxy.academy'
+    const target = (host === 'ai.maxy.academy' || host === 'ainavigator.maxy.academy' || host.includes('maxy.academy'))
       ? 'https://ainavigator.maxy.academy?login=true'
       : `${window.location.origin}/?login=true`;
     window.location.href = target;
