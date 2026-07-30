@@ -570,7 +570,9 @@ export default function App() {
       <CapstoneModal
         isOpen={capstoneModalOpen}
         onClose={() => setCapstoneModalOpen(false)}
+        progress={progress}
         onSubmit={handleSubmitCapstone}
+        onSubmitCapstone={handleSubmitCapstone}
         initialName={progress.certName || ''}
         initialEmail={progress.certEmail || ''}
       />

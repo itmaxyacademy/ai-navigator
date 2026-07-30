@@ -5,22 +5,33 @@ import { UserProgress, CapstoneSubmission } from '../types';
 interface CapstoneModalProps {
   isOpen: boolean;
   onClose: () => void;
-  progress: UserProgress;
-  onSubmitCapstone: (submission: CapstoneSubmission) => void;
+  progress?: UserProgress;
+  onSubmit?: (submission: CapstoneSubmission) => void;
+  onSubmitCapstone?: (submission: CapstoneSubmission) => void;
+  initialName?: string;
+  initialEmail?: string;
 }
 
 export const CapstoneModal: React.FC<CapstoneModalProps> = ({
   isOpen,
   onClose,
   progress,
+  onSubmit,
   onSubmitCapstone,
+  initialName = '',
+  initialEmail = '',
 }) => {
-  const [name, setName] = useState(progress.capstoneSubmission?.name || progress.certName || 'Siswa AI Navigator');
-  const [email, setEmail] = useState(progress.capstoneSubmission?.email || progress.certEmail || 'siswa@ainavigator.id');
-  const [title, setTitle] = useState(
-    progress.capstoneSubmission?.title || 'Otomasi Workflow Pemasaran & Konten Berbasis RCTF & Multi-LLM'
+  const submitHandler = onSubmitCapstone || onSubmit || (() => {});
+  const [name, setName] = useState(
+    progress?.capstoneSubmission?.name || progress?.certName || initialName || 'Siswa AI Navigator'
   );
-  const [submitted, setSubmitted] = useState(!!progress.capstoneSubmission);
+  const [email, setEmail] = useState(
+    progress?.capstoneSubmission?.email || progress?.certEmail || initialEmail || 'siswa@ainavigator.id'
+  );
+  const [title, setTitle] = useState(
+    progress?.capstoneSubmission?.title || 'Otomasi Workflow Pemasaran & Konten Berbasis RCTF & Multi-LLM'
+  );
+  const [submitted, setSubmitted] = useState(!!progress?.capstoneSubmission);
 
   if (!isOpen) return null;
 
@@ -43,7 +54,7 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
     };
 
     setSubmitted(true);
-    onSubmitCapstone(submission);
+    submitHandler(submission);
   };
 
   return (

@@ -859,7 +859,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <h3 className="text-base font-extrabold text-white">Gem Saya</h3>
-                  <Info className="w-4 h-4 text-slate-500 cursor-pointer" title="Daftar asisten AI kustom yang Anda buat" />
+                  <span title="Daftar asisten AI kustom yang Anda buat"><Info className="w-4 h-4 text-slate-500 cursor-pointer" /></span>
                 </div>
 
                 {/* + Gem Baru Button */}
@@ -1046,7 +1046,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-bold text-slate-300 flex items-center space-x-1">
                       <span>Petunjuk (System Instructions)</span>
-                      <Info className="w-3.5 h-3.5 text-slate-500" title="System instruction utama yang mengatur peran dan format jawaban Gem" />
+                      <span title="System instruction utama yang mengatur peran dan format jawaban Gem"><Info className="w-3.5 h-3.5 text-slate-500" /></span>
                     </label>
 
                     {/* Instruction Toolbar */}

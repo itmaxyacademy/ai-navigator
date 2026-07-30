@@ -779,7 +779,7 @@ export const SunoReplica: React.FC = () => {
 
             {/* Main Generate Button */}
             <button
-              onClick={handleGenerateSong}
+              onClick={() => handleGenerateSong()}
               disabled={isGenerating}
               className="w-full py-3 bg-gradient-to-r from-pink-600 via-rose-500 to-orange-500 hover:from-pink-500 hover:to-orange-400 text-white font-black text-xs rounded-2xl shadow-xl shadow-pink-600/30 transition-all active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
             >

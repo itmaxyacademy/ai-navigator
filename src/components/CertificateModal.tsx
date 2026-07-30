@@ -16,12 +16,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   onSaveCertDetails,
 }) => {
   const [userName, setUserName] = useState(
-    progress.certName || progress.capstoneSubmission?.name || 'Siswa AI Navigator'
+    progress?.certName || progress?.capstoneSubmission?.name || 'Siswa AI Navigator'
   );
   const [userEmail, setUserEmail] = useState(
-    progress.certEmail || progress.capstoneSubmission?.email || 'siswa@ainavigator.id'
+    progress?.certEmail || progress?.capstoneSubmission?.email || 'siswa@ainavigator.id'
   );
-  const [isVerified, setIsVerified] = useState(!!progress.certRequested || !!progress.certName);
+  const [isVerified, setIsVerified] = useState(!!progress?.certRequested || !!progress?.certName);
 
   if (!isOpen) return null;
 
