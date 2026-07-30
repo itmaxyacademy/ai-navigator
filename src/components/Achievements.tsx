@@ -79,22 +79,22 @@ export const Achievements: React.FC<AchievementsProps> = ({
   const content = (
     <div className="space-y-6 text-slate-100">
       {/* Top Banner / Summary */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-amber-600/30 via-indigo-900/60 to-purple-950/60 border border-amber-500/30 p-6 shadow-xl">
-        {/* Animated Background Glow */}
-        <div className="absolute -top-12 -right-12 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
+      <div className="relative overflow-hidden rounded-3xl bg-slate-950 border border-slate-800 p-6 shadow-xl">
+        {/* Background Glow */}
+        <div className="absolute -top-12 -right-12 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pr-8">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-amber-500/20 border-2 border-amber-400/50 flex items-center justify-center shrink-0 shadow-lg shadow-amber-500/20 relative group">
-              <Trophy className="w-8 h-8 text-amber-400 animate-bounce" style={{ animationDuration: '3s' }} />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-slate-900 animate-ping" />
+            <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center shrink-0 shadow-lg relative group">
+              <Trophy className="w-8 h-8 text-amber-400" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-slate-900" />
             </div>
 
             <div>
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-400/20 text-amber-300 border border-amber-400/30">
-                  Lencana & Milestones
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                  Lencana &amp; Milestones
                 </span>
                 <span className="text-xs text-slate-300 font-medium">
                   {unlockedCount} dari {totalCount} Lencana Terbuka
@@ -110,14 +110,14 @@ export const Achievements: React.FC<AchievementsProps> = ({
           </div>
 
           {/* Overall Progress Gauge */}
-          <div className="w-full md:w-auto bg-slate-950/70 border border-slate-800 rounded-2xl p-4 min-w-[200px] space-y-2">
+          <div className="w-full md:w-auto bg-slate-900 border border-slate-800 rounded-2xl p-4 min-w-[200px] space-y-2">
             <div className="flex items-center justify-between text-xs font-bold">
               <span className="text-slate-400">Total Progres</span>
               <span className="text-amber-400 font-extrabold">{overallPercent}%</span>
             </div>
             <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden p-0.5 border border-slate-700">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-amber-500 via-indigo-500 to-emerald-400 transition-all duration-700 shadow-md shadow-amber-500/30"
+                className="h-full rounded-full bg-indigo-500 transition-all duration-700 shadow-md"
                 style={{ width: `${overallPercent}%` }}
               />
             </div>
@@ -398,7 +398,7 @@ export const Achievements: React.FC<AchievementsProps> = ({
           {onClose && (
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white rounded-full bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
+              className="absolute top-4 right-4 z-30 p-2 text-slate-300 hover:text-white rounded-full bg-slate-800/90 hover:bg-slate-700 transition-colors cursor-pointer border border-slate-700/80 shadow-md"
             >
               <X className="w-5 h-5" />
             </button>

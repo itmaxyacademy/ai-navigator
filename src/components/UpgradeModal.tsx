@@ -49,7 +49,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
           </div>
 
           <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-white">
-            Upgrade Akses Pembelajaran <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">AI Navigator</span>
+            Upgrade Akses Pembelajaran <span className="text-amber-400">AI Navigator</span>
           </h2>
 
           <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
@@ -134,13 +134,13 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
           </div>
 
           {/* TIER 2 CARD (RECOMMENDED / VIP) */}
-          <div className={`relative bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
+          <div className={`relative bg-slate-950 border rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
             currentTier === 'tier2'
               ? 'border-amber-400 ring-2 ring-amber-400/50 shadow-2xl shadow-amber-500/20'
               : 'border-amber-500/50 hover:border-amber-400 shadow-xl'
           }`}>
             {/* Recommended Tag */}
-            <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 font-black text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
+            <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-black text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
               <Crown className="w-3.5 h-3.5 fill-slate-950" /> POPULER &amp; VIP
             </div>
 
@@ -198,7 +198,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               className={`w-full py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 currentTier === 'tier2'
                   ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 shadow-xl shadow-amber-500/30 hover:scale-[1.02]'
+                  : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-xl shadow-amber-500/30 hover:scale-[1.02]'
               }`}
             >
               <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : 'Upgrade ke Tier 2 (VIP)'}</span>

@@ -40,7 +40,7 @@ export const StreakModal: React.FC<StreakModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Banner */}
-        <div className="relative bg-gradient-to-r from-amber-600 via-indigo-900 to-slate-900 p-6 border-b border-slate-800">
+        <div className="relative bg-slate-900 p-6 border-b border-slate-800">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 p-2 text-slate-300 hover:text-white rounded-full bg-slate-950/40 hover:bg-slate-950/80 transition-colors"
@@ -124,7 +124,7 @@ export const StreakModal: React.FC<StreakModalProps> = ({
               </div>
               <div className="w-full bg-slate-800 rounded-full h-3 overflow-hidden p-0.5">
                 <div
-                  className="bg-gradient-to-r from-indigo-500 via-purple-500 to-amber-400 h-full rounded-full transition-all duration-500"
+                  className="bg-indigo-500 h-full rounded-full transition-all duration-500"
                   style={{ width: `${levelInfo.progressPercent}%` }}
                 />
               </div>

@@ -41,7 +41,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
   return (
     <div className="space-y-8 animate-fadeIn">
       {/* Top Banner Header */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl">
+      <div className="relative overflow-hidden rounded-3xl bg-slate-900 border border-slate-800 p-6 sm:p-8 shadow-2xl">
         <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl -z-10" />
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
@@ -59,7 +59,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
 
           <button
             onClick={onAdvanceToQuiz}
-            className="shrink-0 px-5 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs flex items-center gap-2.5 shadow-lg shadow-indigo-600/25 transition-all hover:scale-105"
+            className="shrink-0 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-2.5 shadow-lg shadow-indigo-600/25 transition-all hover:scale-105"
           >
             <span>Lanjut ke Kuis Akhir</span>
             <ArrowRight className="w-4 h-4" />
@@ -161,7 +161,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
               </div>
 
               {/* Pro Tip Callout Box */}
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-950/30 via-slate-900 to-slate-900 border border-amber-800/40 flex items-start gap-3">
+              <div className="p-4 rounded-2xl bg-slate-900 border border-amber-800/40 flex items-start gap-3">
                 <Lightbulb className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                 <div className="space-y-0.5 text-xs">
                   <span className="font-bold text-amber-300">Pro Tip Pakar: </span>
@@ -185,7 +185,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
       )}
 
       {/* Bottom CTA to Quiz */}
-      <div className="p-6 rounded-3xl bg-gradient-to-r from-indigo-950/80 via-slate-900 to-purple-950/80 border border-indigo-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="p-6 rounded-3xl bg-slate-900 border border-indigo-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="space-y-1 text-center sm:text-left">
           <h4 className="text-base font-bold text-white">Sudah Menguasai Teknik Prompting {guide.llmName}?</h4>
           <p className="text-xs text-slate-300">Uji pemahaman Anda melalui kuis interaktif untuk mendapatkan skor & badge!</p>
