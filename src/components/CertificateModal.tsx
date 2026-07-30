@@ -93,35 +93,74 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     }
   };
 
+  // Helper: convert an image URL to a data URL (avoids CORS taint in html2canvas)
+  const imageToDataUrl = (url: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0);
+          resolve(canvas.toDataURL('image/png'));
+        } else {
+          reject(new Error('Canvas context unavailable'));
+        }
+      };
+      img.onerror = () => reject(new Error('Image load failed: ' + url));
+      // Add cache buster to bypass CORS cache
+      img.src = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
+    });
+  };
+
   const handleDownloadPDF = async () => {
     if (!page1Ref.current || !page2Ref.current) return;
     setIsDownloading(true);
 
     try {
-      const captureOptions = {
-        scale: 2,
-        useCORS: true,
-        allowTaint: false,
-        backgroundColor: '#ffffff',
-        logging: false,
-        imageTimeout: 15000,
-        onclone: (doc: Document) => {
-          // Ensure all images in cloned doc use crossorigin
-          const images = doc.querySelectorAll('img');
-          images.forEach((img) => {
-            img.crossOrigin = 'anonymous';
-          });
-        },
-      };
+      // Pre-convert background image to data URL to avoid CORS taint
+      let bgDataUrl: string | null = null;
+      if (bgImage) {
+        try {
+          bgDataUrl = await imageToDataUrl(bgImage);
+        } catch (e) {
+          console.warn('Could not pre-load bg image as data URL:', e);
+        }
+      }
+
+      // Temporarily swap background-image to data URL for html2canvas
+      const page1El = page1Ref.current;
+      const bgDiv = page1El.querySelector('[data-cert-bg]') as HTMLElement | null;
+      const originalBg = bgDiv?.style.backgroundImage || '';
+      if (bgDiv && bgDataUrl) {
+        bgDiv.style.backgroundImage = `url(${bgDataUrl})`;
+      }
 
       // Capture Page 1
-      const canvas1 = await html2canvas(page1Ref.current, {
-        ...captureOptions,
-        backgroundColor: null,
+      const canvas1 = await html2canvas(page1El, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
       });
 
+      // Restore original background
+      if (bgDiv) {
+        bgDiv.style.backgroundImage = originalBg;
+      }
+
       // Capture Page 2
-      const canvas2 = await html2canvas(page2Ref.current, captureOptions);
+      const canvas2 = await html2canvas(page2Ref.current, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+      });
 
       // A4 Landscape dimensions in mm
       const pdfWidth = 297;
@@ -142,21 +181,19 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       pdf.save(`Sertifikat_AI_Navigator_${safeName}.pdf`);
     } catch (err) {
       console.error('PDF download error:', err);
-      // Fallback: try downloading just page images
+      // Fallback: download as PNG images
       try {
-        if (page1Ref.current) {
-          const c = await html2canvas(page1Ref.current, { scale: 2, useCORS: true, allowTaint: true, logging: false });
+        const pages = [page1Ref.current, page2Ref.current];
+        for (let idx = 0; idx < pages.length; idx++) {
+          const el = pages[idx];
+          if (!el) continue;
+          const c = await html2canvas(el, { scale: 2, allowTaint: true, backgroundColor: '#ffffff', logging: false });
           const link = document.createElement('a');
-          link.download = `Sertifikat_Halaman1_${userName.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+          link.download = `Sertifikat_${idx === 0 ? 'Hal1' : 'Transkrip'}_${userName.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
           link.href = c.toDataURL('image/png');
+          document.body.appendChild(link);
           link.click();
-        }
-        if (page2Ref.current) {
-          const c = await html2canvas(page2Ref.current, { scale: 2, backgroundColor: '#ffffff', logging: false });
-          const link = document.createElement('a');
-          link.download = `Transkrip_Halaman2_${userName.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
-          link.href = c.toDataURL('image/png');
-          link.click();
+          document.body.removeChild(link);
         }
       } catch (fallbackErr) {
         console.error('Fallback download also failed:', fallbackErr);
@@ -296,6 +333,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             >
               {bgImage ? (
                 <div
+                  data-cert-bg
                   className="relative w-full h-full bg-cover bg-center bg-no-repeat"
                   style={{ backgroundImage: `url(${bgImage})` }}
                 >
@@ -307,10 +345,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       else if (obj.id === 'NO_SERTIF') content = certNumber || 'No. 0255/AIN/NAV/2026';
                       else if (obj.id === 'DATE') content = todayStr;
 
-                      // Canvas editor stores top/left as pixel coordinates on 850x600 canvas
-                      // Convert to percentage for responsive positioning
+                      // Canvas editor (Fabric.js 850x600) stores top/left as pixel coords
+                      // of the bounding box top-left corner. Convert to %.
                       const topPercent = ((obj.top || 0) / 600) * 100;
                       const leftPercent = ((obj.left || 0) / 850) * 100;
+                      // Scale font to match rendered container vs 850px canvas
+                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.75 : 16;
 
                       return (
                         <div
@@ -319,11 +359,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                           style={{
                             top: `${topPercent}%`,
                             left: `${leftPercent}%`,
-                            fontSize: `${obj.fontSize ? Math.max(10, Math.round(obj.fontSize * 0.85)) : 18}px`,
+                            fontSize: `${Math.max(9, scaledFontSize)}px`,
                             fontFamily: obj.fontFamily || 'Poppins, sans-serif',
                             fontWeight: obj.fontWeight || 'normal',
                             color: obj.fill || '#000000',
                             textAlign: (obj.textAlign as any) || 'left',
+                            lineHeight: 1.2,
                           }}
                         >
                           {content}
