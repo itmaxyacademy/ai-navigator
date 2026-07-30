@@ -115,12 +115,18 @@ export default function App() {
     const tokenFromUrl = urlParams.get('token');
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
 
+    const getLandingUrl = () => {
+      if (typeof window === 'undefined') return 'https://ainavigator.maxy.academy?login=true';
+      const host = window.location.hostname;
+      if (host === 'ai.maxy.academy') return 'https://ainavigator.maxy.academy?login=true';
+      return `${window.location.origin}/?login=true`;
+    };
+
     const redirectToLogin = () => {
       localStorage.removeItem('maxy_access_token');
       localStorage.removeItem('maxy_refresh_token');
       localStorage.removeItem(STORAGE_KEY);
-      const targetOrigin = `${window.location.origin}/?login=true`;
-      window.location.href = targetOrigin;
+      window.location.href = getLandingUrl();
     };
 
     if (!token) {
@@ -220,7 +226,10 @@ export default function App() {
     localStorage.removeItem('maxy_access_token');
     localStorage.removeItem('maxy_refresh_token');
     localStorage.removeItem(STORAGE_KEY);
-    const target = `${window.location.origin}/?login=true`;
+    const host = window.location.hostname;
+    const target = host === 'ai.maxy.academy'
+      ? 'https://ainavigator.maxy.academy?login=true'
+      : `${window.location.origin}/?login=true`;
     window.location.href = target;
   };
 
