@@ -529,10 +529,18 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
               </button>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-              <span className="text-white font-extrabold">AI Navigator — </span>
-              <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">Platform Pembelajaran LLM Interaktif untuk Pemula</span>
-            </h1>
+            <div className="flex items-center gap-3 pt-1">
+              <img
+                src="/logo-maxy.png"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://cms.maxy.academy/uploads/LogoMaxy.png'; }}
+                alt="Maxy Academy Logo"
+                className="h-10 sm:h-12 w-auto object-contain shrink-0"
+              />
+              <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                <span className="text-white font-extrabold">AI Navigator — </span>
+                <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">Platform Pembelajaran LLM Interaktif</span>
+              </h1>
+            </div>
             <p className="text-slate-200 text-xs sm:text-sm leading-relaxed max-w-2xl font-medium">
               Kuasai 29 modul LLM modern dari dasar hingga mahir! Lewati setiap node zig-zag, dapatkan 3 bintang kuis, dan buka 7 Peti Karun Spesial dengan bonus tools AI eksklusif.
             </p>
