@@ -61,9 +61,12 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onSelectTab('path')}
             className="flex items-center gap-2.5 cursor-pointer group shrink-0"
           >
-            <div className="w-9 h-9 rounded-xl bg-indigo-600 border border-indigo-500 p-0.5 shadow-md group-hover:scale-105 transition-transform shrink-0 flex items-center justify-center">
-              <Compass className="w-5 h-5 text-white group-hover:rotate-45 transition-transform duration-300" />
-            </div>
+            <img
+              src="/logo-maxy.png"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://cms.maxy.academy/uploads/LogoMaxy.png'; }}
+              alt="Maxy Academy Logo"
+              className="h-8 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform"
+            />
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <span className={`font-black text-base tracking-tight ${
@@ -79,11 +82,9 @@ export const Header: React.FC<HeaderProps> = ({
                   Pemula
                 </span>
               </div>
-              <p className={`text-[10px] hidden xl:block whitespace-nowrap ${
-                theme === 'light' ? 'text-slate-600 font-medium' : 'text-slate-400'
-              }`}>
-                Panduan Interaktif Pengenalan LLM
-              </p>
+              <span className="text-[10px] text-slate-400 font-medium tracking-wide">
+                Maxy Academy
+              </span>
             </div>
           </div>
 

@@ -801,10 +801,15 @@ export default function App() {
       {/* Footer */}
       <footer className="bg-slate-900 border-t border-slate-800 text-xs text-slate-400 py-6 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-          <div className="flex items-center gap-2">
-            <Compass className="w-4 h-4 text-indigo-400" />
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/logo-maxy.png"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://cms.maxy.academy/uploads/LogoMaxy.png'; }}
+              alt="Maxy Academy Logo"
+              className="h-6 w-auto object-contain"
+            />
             <span className="font-bold text-slate-200">AI Navigator</span>
-            <span>— Platform Pembelajaran LLM Interaktif untuk Pemula</span>
+            <span>— Platform Pembelajaran LLM Interaktif Maxy Academy</span>
           </div>
 
           <div className="flex items-center gap-1 text-slate-500 text-[11px]">

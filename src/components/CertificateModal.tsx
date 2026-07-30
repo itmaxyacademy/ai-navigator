@@ -434,10 +434,15 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   <div className="absolute inset-3.5 border border-amber-300/30 rounded pointer-events-none" />
 
                   {/* Top decorative line */}
-                  <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-2">
-                    <div className="w-16 h-[1px] bg-amber-400" />
-                    <Compass className="w-5 h-5 text-amber-500" />
-                    <div className="w-16 h-[1px] bg-amber-400" />
+                  <div className="absolute top-5 left-1/2 -translate-x-1/2 flex items-center gap-3">
+                    <div className="w-12 h-[1px] bg-amber-400" />
+                    <img
+                      src="https://cms.maxy.academy/uploads/LogoMaxy.png"
+                      crossOrigin="anonymous"
+                      alt="Maxy Academy Logo"
+                      className="h-7 w-auto object-contain"
+                    />
+                    <div className="w-12 h-[1px] bg-amber-400" />
                   </div>
 
                   <div className="space-y-1 mt-4">
@@ -485,9 +490,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 {/* Header */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '2.5px solid #1e3a5f', marginBottom: '14px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <div style={{ width: '36px', height: '36px', backgroundColor: '#1e3a5f', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <BookOpen style={{ width: '20px', height: '20px', color: '#ffffff' }} />
-                    </div>
+                    <img
+                      src="https://cms.maxy.academy/uploads/LogoMaxyBgWhite.png"
+                      crossOrigin="anonymous"
+                      alt="Maxy Academy Logo"
+                      style={{ height: '34px', width: 'auto', objectFit: 'contain' }}
+                    />
                     <div>
                       <div style={{ fontSize: '16px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                         Transkrip Kurikulum Modul Pembelajaran (Bagian 1)
@@ -539,9 +547,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   {/* Header */}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '2.5px solid #1e3a5f', marginBottom: '14px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ width: '36px', height: '36px', backgroundColor: '#1e3a5f', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <BookOpen style={{ width: '20px', height: '20px', color: '#ffffff' }} />
-                      </div>
+                    <img
+                      src="https://cms.maxy.academy/uploads/LogoMaxyBgWhite.png"
+                      crossOrigin="anonymous"
+                      alt="Maxy Academy Logo"
+                      style={{ height: '34px', width: 'auto', objectFit: 'contain' }}
+                    />
                       <div>
                         <div style={{ fontSize: '16px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                           Transkrip Kurikulum Modul Pembelajaran (Bagian 2)
@@ -608,9 +619,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   {/* Header */}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '2.5px solid #1e3a5f', marginBottom: '14px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ width: '36px', height: '36px', backgroundColor: '#1e3a5f', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <BookOpen style={{ width: '20px', height: '20px', color: '#ffffff' }} />
-                      </div>
+                    <img
+                      src="https://cms.maxy.academy/uploads/LogoMaxyBgWhite.png"
+                      crossOrigin="anonymous"
+                      alt="Maxy Academy Logo"
+                      style={{ height: '34px', width: 'auto', objectFit: 'contain' }}
+                    />
                       <div>
                         <div style={{ fontSize: '16px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                           Transkrip Kurikulum Modul Pembelajaran (Bagian 3)
