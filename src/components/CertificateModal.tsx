@@ -21,12 +21,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   onSaveCertDetails,
   packages,
 }) => {
-  const [userName, setUserName] = useState(
-    progress?.certName || progress?.capstoneSubmission?.name || 'Siswa AI Navigator'
-  );
-  const [userEmail, setUserEmail] = useState(
-    progress?.certEmail || progress?.capstoneSubmission?.email || 'siswa@ainavigator.id'
-  );
+  // Use progress.userName (from login) as a better default than hardcoded string
+  const actualUserName = progress?.certName || progress?.capstoneSubmission?.name || (progress as any)?.userName || '';
+  const actualUserEmail = progress?.certEmail || progress?.capstoneSubmission?.email || '';
+
+  const [userName, setUserName] = useState(actualUserName || 'Siswa AI Navigator');
+  const [userEmail, setUserEmail] = useState(actualUserEmail || 'siswa@ainavigator.id');
   const [isVerified, setIsVerified] = useState(!!progress?.certRequested || !!progress?.certName);
   const [certUuid, setCertUuid] = useState<string>('');
   const [certNumber, setCertNumber] = useState<string>('');
@@ -98,23 +98,30 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     setIsDownloading(true);
 
     try {
-      // Capture Page 1
-      const canvas1 = await html2canvas(page1Ref.current, {
+      const captureOptions = {
         scale: 2,
         useCORS: true,
-        allowTaint: true,
-        backgroundColor: null,
+        allowTaint: false,
+        backgroundColor: '#ffffff',
         logging: false,
+        imageTimeout: 15000,
+        onclone: (doc: Document) => {
+          // Ensure all images in cloned doc use crossorigin
+          const images = doc.querySelectorAll('img');
+          images.forEach((img) => {
+            img.crossOrigin = 'anonymous';
+          });
+        },
+      };
+
+      // Capture Page 1
+      const canvas1 = await html2canvas(page1Ref.current, {
+        ...captureOptions,
+        backgroundColor: null,
       });
 
       // Capture Page 2
-      const canvas2 = await html2canvas(page2Ref.current, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-      });
+      const canvas2 = await html2canvas(page2Ref.current, captureOptions);
 
       // A4 Landscape dimensions in mm
       const pdfWidth = 297;
@@ -123,19 +130,38 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
 
       // Page 1
-      const img1 = canvas1.toDataURL('image/png');
-      pdf.addImage(img1, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      const img1 = canvas1.toDataURL('image/jpeg', 0.95);
+      pdf.addImage(img1, 'JPEG', 0, 0, pdfWidth, pdfHeight);
 
       // Page 2
       pdf.addPage();
-      const img2 = canvas2.toDataURL('image/png');
-      pdf.addImage(img2, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      const img2 = canvas2.toDataURL('image/jpeg', 0.95);
+      pdf.addImage(img2, 'JPEG', 0, 0, pdfWidth, pdfHeight);
 
       const safeName = (userName || 'certificate').replace(/[^a-zA-Z0-9]/g, '_');
       pdf.save(`Sertifikat_AI_Navigator_${safeName}.pdf`);
     } catch (err) {
       console.error('PDF download error:', err);
-      alert('Gagal mengunduh PDF. Silakan coba lagi.');
+      // Fallback: try downloading just page images
+      try {
+        if (page1Ref.current) {
+          const c = await html2canvas(page1Ref.current, { scale: 2, useCORS: true, allowTaint: true, logging: false });
+          const link = document.createElement('a');
+          link.download = `Sertifikat_Halaman1_${userName.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+          link.href = c.toDataURL('image/png');
+          link.click();
+        }
+        if (page2Ref.current) {
+          const c = await html2canvas(page2Ref.current, { scale: 2, backgroundColor: '#ffffff', logging: false });
+          const link = document.createElement('a');
+          link.download = `Transkrip_Halaman2_${userName.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+          link.href = c.toDataURL('image/png');
+          link.click();
+        }
+      } catch (fallbackErr) {
+        console.error('Fallback download also failed:', fallbackErr);
+        alert('Gagal mengunduh. Silakan screenshot sertifikat secara manual.');
+      }
     } finally {
       setIsDownloading(false);
     }
@@ -143,26 +169,26 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
   // Helper: render a single module row for the transcript table
   const renderModuleRow = (m: (typeof MODULES_DATA)[0], globalIdx: number, localIdx: number) => (
-    <tr key={m.id} className={localIdx % 2 === 0 ? 'bg-white' : 'bg-blue-50/40'}>
-      <td className="py-[3px] px-2 font-mono text-slate-500 font-bold text-center border-r border-slate-200 text-[9px]">{globalIdx}</td>
-      <td className="py-[3px] px-2 font-semibold text-slate-800 text-[9px] leading-tight">
+    <tr key={m.id} style={{ backgroundColor: localIdx % 2 === 0 ? '#ffffff' : '#f0f4ff' }}>
+      <td style={{ padding: '3px 6px', fontFamily: 'monospace', color: '#64748b', fontWeight: 700, textAlign: 'center', borderRight: '1px solid #e2e8f0', fontSize: '9px' }}>{globalIdx}</td>
+      <td style={{ padding: '3px 6px', fontWeight: 600, color: '#1e293b', fontSize: '9px', lineHeight: 1.3 }}>
         {m.title}
-        <span className="block text-[7.5px] text-slate-400 font-normal leading-none mt-0.5">{m.subtitle}</span>
+        <span style={{ display: 'block', fontSize: '7.5px', color: '#94a3b8', fontWeight: 400, lineHeight: 1, marginTop: '2px' }}>{m.subtitle}</span>
       </td>
-      <td className="py-[3px] px-1.5 text-center font-bold text-blue-700 border-l border-slate-200 text-[9px]">1 JP</td>
-      <td className="py-[3px] px-1.5 text-center border-l border-slate-200">
-        <span className="px-1.5 py-[1px] bg-emerald-50 text-emerald-700 border border-emerald-200 text-[7.5px] font-black rounded">LULUS</span>
+      <td style={{ padding: '3px 5px', textAlign: 'center', fontWeight: 700, color: '#1d4ed8', borderLeft: '1px solid #e2e8f0', fontSize: '9px' }}>1 JP</td>
+      <td style={{ padding: '3px 5px', textAlign: 'center', borderLeft: '1px solid #e2e8f0' }}>
+        <span style={{ padding: '1px 6px', backgroundColor: '#ecfdf5', color: '#047857', border: '1px solid #a7f3d0', fontSize: '7.5px', fontWeight: 900, borderRadius: '3px' }}>LULUS</span>
       </td>
     </tr>
   );
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-start justify-center p-4 overflow-y-auto">
       <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-4xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative animate-fadeIn my-8 text-white">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2.5 text-slate-400 hover:text-white rounded-full bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-2.5 text-slate-400 hover:text-white rounded-full bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer z-10"
         >
           <X className="w-5 h-5" />
         </button>
@@ -258,7 +284,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 ) : (
                   <Download className="w-4 h-4" />
                 )}
-                <span>{isDownloading ? 'Memproses PDF...' : 'Download Sertifikat PDF (2 Halaman)'}</span>
+                <span>{isDownloading ? 'Memproses PDF...' : 'Download Sertifikat PDF'}</span>
               </button>
             </div>
 
@@ -281,21 +307,23 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       else if (obj.id === 'NO_SERTIF') content = certNumber || 'No. 0255/AIN/NAV/2026';
                       else if (obj.id === 'DATE') content = todayStr;
 
-                      const topPercent = (obj.top / 600) * 100;
-                      const leftPercent = (obj.left / 850) * 100;
+                      // Canvas editor stores top/left as pixel coordinates on 850x600 canvas
+                      // Convert to percentage for responsive positioning
+                      const topPercent = ((obj.top || 0) / 600) * 100;
+                      const leftPercent = ((obj.left || 0) / 850) * 100;
 
                       return (
                         <div
                           key={i}
-                          className="absolute transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap pointer-events-none"
+                          className="absolute whitespace-nowrap pointer-events-none"
                           style={{
                             top: `${topPercent}%`,
                             left: `${leftPercent}%`,
-                            fontSize: `${obj.fontSize ? Math.max(12, Math.round(obj.fontSize * 0.85)) : 20}px`,
-                            fontFamily: obj.fontFamily || 'Poppins',
+                            fontSize: `${obj.fontSize ? Math.max(10, Math.round(obj.fontSize * 0.85)) : 18}px`,
+                            fontFamily: obj.fontFamily || 'Poppins, sans-serif',
                             fontWeight: obj.fontWeight || 'normal',
-                            color: obj.fill || '#ffffff',
-                            textAlign: (obj.textAlign as any) || 'center',
+                            color: obj.fill || '#000000',
+                            textAlign: (obj.textAlign as any) || 'left',
                           }}
                         >
                           {content}
@@ -305,13 +333,13 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   ) : (
                     <>
                       <div className="absolute top-[42%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-                        <h3 className="text-2xl sm:text-4xl font-black text-amber-300 drop-shadow-lg">{userName || 'Siswa AI Navigator'}</h3>
+                        <h3 className="text-2xl sm:text-4xl font-black text-blue-800 drop-shadow-sm">{userName || 'Siswa AI Navigator'}</h3>
                       </div>
                       <div className="absolute bottom-[10%] left-[8%] pointer-events-none text-xs text-slate-700 font-bold">
                         {todayStr}
                       </div>
                       <div className="absolute bottom-[10%] right-[8%] pointer-events-none text-xs text-blue-800 font-mono font-bold">
-                        {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}
+                        {certUuid || ''}
                       </div>
                     </>
                   )}
@@ -357,7 +385,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       {certNumber && <p className="text-[9px] text-slate-400 font-mono mt-0.5">{certNumber}</p>}
                     </div>
                     <div className="text-right">
-                      <p className="text-[9px] text-slate-400 font-mono">{certUuid || 'AIN-2026-CERT'}</p>
+                      <p className="text-[9px] text-slate-400 font-mono">{certUuid || ''}</p>
                       <p className="text-[10px] text-amber-600 font-bold mt-0.5">CTO & Founder, Maxy Academy</p>
                     </div>
                   </div>
@@ -366,44 +394,45 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             </div>
 
             {/* ============ HALAMAN 2: TRANSKRIP ============ */}
+            {/* Use inline styles for html2canvas compatibility */}
             <div
               ref={page2Ref}
-              className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-700 bg-white"
-              style={{ aspectRatio: '850 / 600' }}
+              className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-700"
+              style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
             >
-              <div className="w-full h-full flex flex-col p-5">
+              <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '20px' }}>
                 {/* Header */}
-                <div className="flex items-center justify-between pb-3 border-b-2 border-blue-800 mb-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 bg-blue-800 rounded-lg flex items-center justify-center">
-                      <BookOpen className="w-4 h-4 text-white" />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '2px solid #1e3a5f', marginBottom: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ width: '32px', height: '32px', backgroundColor: '#1e3a5f', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <BookOpen style={{ width: '16px', height: '16px', color: '#ffffff' }} />
                     </div>
                     <div>
-                      <h3 className="text-sm font-black text-blue-900 uppercase tracking-wider">
-                        Transkrip Kurikulum &amp; Beban Belajar
-                      </h3>
-                      <p className="text-[9px] text-slate-500 font-medium leading-none mt-0.5">
+                      <div style={{ fontSize: '13px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        Transkrip Kurikulum & Beban Belajar
+                      </div>
+                      <div style={{ fontSize: '9px', color: '#64748b', marginTop: '2px' }}>
                         Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
-                      </p>
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <span className="text-[10px] font-black text-blue-900 block leading-tight">{userName || 'Siswa AI Navigator'}</span>
-                    <span className="text-[8px] text-slate-500 font-mono block leading-none">{certNumber || 'No. 0255/AIN/NAV/2026'}</span>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '10px', fontWeight: 900, color: '#1e3a5f' }}>{userName || 'Siswa AI Navigator'}</div>
+                    <div style={{ fontSize: '8px', color: '#64748b', fontFamily: 'monospace' }}>{certNumber || 'No. 0255/AIN/NAV/2026'}</div>
                   </div>
                 </div>
 
                 {/* 2-Column Table */}
-                <div className="grid grid-cols-2 gap-3 flex-1 min-h-0 overflow-hidden">
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', flex: 1, minHeight: 0, overflow: 'hidden' }}>
                   {/* Column 1 */}
-                  <div className="border border-slate-200 rounded-lg overflow-hidden">
-                    <table className="w-full text-left border-collapse">
+                  <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden' }}>
+                    <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
                       <thead>
-                        <tr className="bg-blue-800 text-white text-[8px] font-bold uppercase tracking-wider">
-                          <th className="py-1.5 px-2 text-center w-6 border-r border-blue-700">No</th>
-                          <th className="py-1.5 px-2">Judul Modul</th>
-                          <th className="py-1.5 px-1.5 text-center w-10 border-l border-blue-700">Bobot</th>
-                          <th className="py-1.5 px-1.5 text-center w-12 border-l border-blue-700">Status</th>
+                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '8px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <th style={{ padding: '5px 6px', textAlign: 'center', width: '24px', borderRight: '1px solid #2d4a6f' }}>No</th>
+                          <th style={{ padding: '5px 6px' }}>Judul Modul</th>
+                          <th style={{ padding: '5px 5px', textAlign: 'center', width: '36px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
+                          <th style={{ padding: '5px 5px', textAlign: 'center', width: '44px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -413,14 +442,14 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   </div>
 
                   {/* Column 2 */}
-                  <div className="border border-slate-200 rounded-lg overflow-hidden">
-                    <table className="w-full text-left border-collapse">
+                  <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden' }}>
+                    <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
                       <thead>
-                        <tr className="bg-blue-800 text-white text-[8px] font-bold uppercase tracking-wider">
-                          <th className="py-1.5 px-2 text-center w-6 border-r border-blue-700">No</th>
-                          <th className="py-1.5 px-2">Judul Modul</th>
-                          <th className="py-1.5 px-1.5 text-center w-10 border-l border-blue-700">Bobot</th>
-                          <th className="py-1.5 px-1.5 text-center w-12 border-l border-blue-700">Status</th>
+                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '8px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <th style={{ padding: '5px 6px', textAlign: 'center', width: '24px', borderRight: '1px solid #2d4a6f' }}>No</th>
+                          <th style={{ padding: '5px 6px' }}>Judul Modul</th>
+                          <th style={{ padding: '5px 5px', textAlign: 'center', width: '36px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
+                          <th style={{ padding: '5px 5px', textAlign: 'center', width: '44px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -431,9 +460,9 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 </div>
 
                 {/* Footer */}
-                <div className="pt-2.5 mt-2.5 border-t border-slate-200 flex items-center justify-between text-[8.5px] text-slate-500">
-                  <span>Total Beban: <strong className="text-blue-900">{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur)</span>
-                  <span className="font-mono text-blue-900 font-bold text-[8px]">UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</span>
+                <div style={{ paddingTop: '8px', marginTop: '8px', borderTop: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '8.5px', color: '#64748b' }}>
+                  <span>Total Beban: <strong style={{ color: '#1e3a5f' }}>{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur)</span>
+                  <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 700, fontSize: '8px' }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</span>
                 </div>
               </div>
             </div>
