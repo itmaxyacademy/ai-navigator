@@ -108,57 +108,19 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     const p3 = page3Ref.current;
     const p4 = page4Ref.current;
 
-    // Save original responsive screen styles
-    const origP1Width = p1.style.width;
-    const origP1Height = p1.style.height;
-    const origP2Width = p2.style.width;
-    const origP2Height = p2.style.height;
-    const origP3Width = p3 ? p3.style.width : '';
-    const origP3Height = p3 ? p3.style.height : '';
-    const origP4Width = p4 ? p4.style.width : '';
-    const origP4Height = p4 ? p4.style.height : '';
-
     const safeName = (userName || 'Siswa').replace(/[^a-zA-Z0-9]/g, '_');
 
     try {
-      // Force exact A4 Landscape resolution (1123px x 794px) during capture
-      p1.style.width = '1123px';
-      p1.style.height = '794px';
-      p2.style.width = '1123px';
-      p2.style.height = '794px';
-      if (p3) {
-        p3.style.width = '1123px';
-        p3.style.height = '794px';
-      }
-      if (p4) {
-        p4.style.width = '1123px';
-        p4.style.height = '794px';
-      }
-
-      // Capture pages at high DPI
-      const imgData1 = await toJpeg(p1, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true, width: 1123, height: 794 });
-      const imgData2 = await toJpeg(p2, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true, width: 1123, height: 794 });
+      // Capture pages at 2x high resolution without modifying DOM styles (prevents preview flickering)
+      const imgData1 = await toJpeg(p1, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true });
+      const imgData2 = await toJpeg(p2, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true });
       let imgData3: string | null = null;
       if (p3) {
-        imgData3 = await toJpeg(p3, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true, width: 1123, height: 794 });
+        imgData3 = await toJpeg(p3, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true });
       }
       let imgData4: string | null = null;
       if (p4) {
-        imgData4 = await toJpeg(p4, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true, width: 1123, height: 794 });
-      }
-
-      // Restore responsive styles
-      p1.style.width = origP1Width;
-      p1.style.height = origP1Height;
-      p2.style.width = origP2Width;
-      p2.style.height = origP2Height;
-      if (p3) {
-        p3.style.width = origP3Width;
-        p3.style.height = origP3Height;
-      }
-      if (p4) {
-        p4.style.width = origP4Width;
-        p4.style.height = origP4Height;
+        imgData4 = await toJpeg(p4, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true });
       }
 
       const pdfWidth = 297;
@@ -187,11 +149,6 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       pdf.save(`Sertifikat_AI_Navigator_${safeName}.pdf`);
     } catch (err) {
       console.warn('html-to-image PDF error, attempting html2canvas fallback:', err);
-      p1.style.width = origP1Width;
-      p1.style.height = origP1Height;
-      p2.style.width = origP2Width;
-      p2.style.height = origP2Height;
-
       try {
         const canvas1 = await html2canvas(p1, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false });
         const canvas2 = await html2canvas(p2, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false });
