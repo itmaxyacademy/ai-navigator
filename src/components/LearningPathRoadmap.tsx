@@ -419,9 +419,11 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
   // Ref to active module node for auto-scroll
   const activeNodeRef = useRef<HTMLDivElement | null>(null);
 
+  const isTier1User = userTier === 'tier1' || userTier === 'free';
+  const tierTargetModules = isTier1User ? 22 : modules.length;
   const completedCount = progress.completedModules.length;
-  const totalModules = modules.length;
-  const progressPercent = Math.round((completedCount / totalModules) * 100);
+  const totalModules = tierTargetModules;
+  const progressPercent = Math.min(100, Math.round((completedCount / totalModules) * 100));
 
   const timeCalc = calculateRemainingTimeMinutes(progress.completedModules, modules);
   const levelInfo = getUserLevelInfo(progress.xp);
