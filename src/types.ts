@@ -87,6 +87,10 @@ export interface CapstoneSubmission {
 
 export interface UserProgress {
   userTier?: UserTier; // 'free' (Free Trial), 'tier1' (Full Modul 1-29), 'tier2' (VIP Master)
+  userName?: string;   // Display name from API session
+  userEmail?: string;  // Email from API session
+  packageName?: string; // e.g. 'Free Plan', 'Tier 1 - AI Practitioner', 'Tier 2 - VIP Master'
+  subscriptionExpiredAt?: string | null; // ISO date string or null if no expiry
   completedModules: number[]; // Module IDs
   moduleScores: Record<number, number>; // moduleId -> score out of questions length
   currentModuleId: number;
