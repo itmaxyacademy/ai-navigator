@@ -83,31 +83,47 @@ export default function App() {
     }
   }, [theme]);
 
-  // Sync user profile & active tier subscription from API Gateway api.maxy.academy
+  // Auth Guard: Sync user profile & active tier subscription from API Gateway api.maxy.academy
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
 
-    if (token) {
-      if (tokenFromUrl) {
-        localStorage.setItem('maxy_access_token', tokenFromUrl);
-      }
-      fetchUserProfile(token).then((res) => {
-        if (res.success && res.data) {
-          const sub = res.data.subscription;
-          const userTier = (sub?.tier as 'free' | 'tier_1' | 'tier_2') || (sub?.is_paid ? 'tier_1' : 'free');
-          const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier_2' ? 29 : userTier === 'tier_1' ? 22 : 3);
+    const redirectToLogin = () => {
+      localStorage.removeItem('maxy_access_token');
+      localStorage.removeItem('maxy_refresh_token');
+      const targetOrigin = window.location.hostname.includes('maxy.academy')
+        ? 'https://navigator.maxy.academy?login=true'
+        : '/?login=true';
+      window.location.href = targetOrigin;
+    };
 
-          setProgress((prev) => ({
-            ...prev,
-            userTier,
-            tier: userTier,
-            maxAllowedModuleId: maxAllowed,
-          }));
-        }
-      });
+    if (!token) {
+      redirectToLogin();
+      return;
     }
+
+    if (tokenFromUrl) {
+      localStorage.setItem('maxy_access_token', tokenFromUrl);
+    }
+
+    fetchUserProfile(token).then((res) => {
+      if (res.success && res.data) {
+        const sub = res.data.subscription;
+        const userTier = (sub?.tier as 'free' | 'tier_1' | 'tier_2') || (sub?.is_paid ? 'tier_1' : 'free');
+        const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier_2' ? 29 : userTier === 'tier_1' ? 22 : 3);
+
+        setProgress((prev) => ({
+          ...prev,
+          userTier,
+          tier: userTier,
+          maxAllowedModuleId: maxAllowed,
+        }));
+      } else {
+        // Invalid or expired token
+        redirectToLogin();
+      }
+    });
   }, []);
 
   const handleToggleTheme = () => {
