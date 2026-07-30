@@ -11,6 +11,7 @@ interface UpgradeModalProps {
   targetModuleId?: number | null;
   isLoading?: boolean;
   loadingTier?: 'tier1' | 'tier2' | null;
+  packages?: Record<string, { price: number; fake_price: number; name?: string }>;
 }
 
 export const UpgradeModal: React.FC<UpgradeModalProps> = ({
@@ -22,8 +23,15 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   targetModuleId,
   isLoading = false,
   loadingTier = null,
+  packages,
 }) => {
   if (!isOpen) return null;
+
+  const tier1Price = packages?.tier1?.price ? `Rp ${packages.tier1.price.toLocaleString('id-ID')}` : 'Rp 49.500';
+  const tier1FakePrice = packages?.tier1?.fake_price ? `Rp ${packages.tier1.fake_price.toLocaleString('id-ID')}` : 'Rp 125.000';
+
+  const tier2Price = packages?.tier2?.price ? `Rp ${packages.tier2.price.toLocaleString('id-ID')}` : 'Rp 299.500';
+  const tier2FakePrice = packages?.tier2?.fake_price ? `Rp ${packages.tier2.fake_price.toLocaleString('id-ID')}` : 'Rp 750.000';
 
   const handleSelect = (tier: 'tier1' | 'tier2') => {
     if (onSelectTier) onSelectTier(tier);
@@ -161,9 +169,9 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               </div>
 
               <div className="py-3 border-y border-slate-100 flex flex-col">
-                <div className="text-2xl sm:text-3xl font-black text-slate-900">Rp 49.500</div>
+                <div className="text-2xl sm:text-3xl font-black text-slate-900">{tier1Price}</div>
                 <div className="text-xs text-slate-400 font-medium line-through mt-0.5">
-                  Normal: Rp 125.000
+                  Normal: {tier1FakePrice}
                 </div>
               </div>
 
@@ -203,7 +211,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               {loadingTier === 'tier1' ? (
                 <span>Memproses Pembayaran Xendit...</span>
               ) : (
-                <span>{currentTier === 'tier1' ? 'Tier 1 Aktif' : 'Pilih Tier 1 (Rp49.500)'}</span>
+                <span>{currentTier === 'tier1' ? 'Tier 1 Aktif' : `Pilih Tier 1 (${tier1Price})`}</span>
               )}
             </button>
           </div>
@@ -239,8 +247,8 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               </div>
 
               <div className="py-3 border-y border-slate-800 flex items-baseline gap-2">
-                <span className="text-2xl sm:text-3xl font-black text-amber-400">Rp 299.500</span>
-                <span className="text-xs text-slate-400 font-medium line-through">Rp 750.000</span>
+                <span className="text-2xl sm:text-3xl font-black text-amber-400">{tier2Price}</span>
+                <span className="text-xs text-slate-400 font-medium line-through">{tier2FakePrice}</span>
               </div>
 
               <ul className="space-y-2.5 text-xs text-slate-200 font-medium">
@@ -295,7 +303,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               {loadingTier === 'tier2' ? (
                 <span>Memproses Pembayaran Xendit...</span>
               ) : (
-                <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : 'Pilih Tier 2 (Rp299.500)'}</span>
+                <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : `Pilih Tier 2 (${tier2Price})`}</span>
               )}
             </button>
           </div>

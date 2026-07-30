@@ -134,3 +134,13 @@ export async function checkoutUpgrade(tier: 'tier1' | 'tier2' | 'tier_1' | 'tier
   }
 }
 
+export async function fetchAiNavigatorPackages() {
+  try {
+    const res = await fetch(`${API_BASE}/packages/ai-navigator`);
+    return await res.json();
+  } catch (err) {
+    console.error('API fetchAiNavigatorPackages failed:', err);
+    return { success: false };
+  }
+}
+

@@ -17,7 +17,7 @@ import { getLocalDateString, getDaysDifference } from './lib/gamification';
 import { Compass, Heart, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-import { fetchUserProfile, checkoutUpgrade, loadCloudProgress, saveCloudProgress } from './services/api';
+import { fetchUserProfile, checkoutUpgrade, loadCloudProgress, saveCloudProgress, fetchAiNavigatorPackages } from './services/api';
 
 const STORAGE_KEY = 'ai_navigator_user_progress_v1';
 
@@ -73,6 +73,15 @@ export default function App() {
   const [isAuthValidating, setIsAuthValidating] = useState<boolean>(true);
   const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
   const [paymentLoadingTier, setPaymentLoadingTier] = useState<'tier1' | 'tier2' | null>(null);
+  const [cmsPackages, setCmsPackages] = useState<Record<string, { price: number; fake_price: number; name?: string }>>({});
+
+  useEffect(() => {
+    fetchAiNavigatorPackages().then((res) => {
+      if (res.success && res.data) {
+        setCmsPackages(res.data);
+      }
+    });
+  }, []);
 
   // Theme State ('dark' | 'light')
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
@@ -736,6 +745,7 @@ export default function App() {
         targetModuleId={targetUpgradeModuleId}
         isLoading={isPaymentLoading}
         loadingTier={paymentLoadingTier}
+        packages={cmsPackages}
       />
 
       {/* Capstone Project Submission Modal */}
