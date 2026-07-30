@@ -1,19 +1,23 @@
 import { UserTier } from '../types';
 
-export function useTierAccess(userTier: UserTier = 'free') {
+export function useTierAccess(userTier: UserTier = 'free', maxAllowedModuleId?: number) {
+  const effectiveMaxModule = maxAllowedModuleId || (
+    userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3
+  );
+
   /**
    * Checks if a given module is accessible based on the user's tier.
-   * - Modules 1 & 2 are accessible to everyone (Free Trial).
-   * - Modules 3 through 29 require Tier 1 or Tier 2 membership.
+   * - Free Trial: Modules 1 to 3
+   * - Tier 1: Modules 1 to 22
+   * - Tier 2 VIP: Modules 1 to 29 (All Modules)
    */
   const canAccessModule = (moduleId: number): boolean => {
-    if (moduleId <= 2) return true;
-    return userTier === 'tier1' || userTier === 'tier2';
+    return moduleId <= effectiveMaxModule;
   };
 
   /**
    * Helper function that checks access for a module.
-   * If locked for Free Trial, triggers the upgrade modal callback and returns false.
+   * If locked for current tier, triggers the upgrade modal callback and returns false.
    * Returns true if accessible.
    */
   const checkAndAccessModule = (
@@ -31,10 +35,11 @@ export function useTierAccess(userTier: UserTier = 'free') {
 
   return {
     userTier,
+    effectiveMaxModule,
     isFree: userTier === 'free',
     isTier1: userTier === 'tier1',
     isTier2: userTier === 'tier2',
-    hasFullAccess: userTier === 'tier1' || userTier === 'tier2',
+    hasFullAccess: userTier === 'tier2',
     canAccessModule,
     checkAndAccessModule,
   };

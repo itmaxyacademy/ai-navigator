@@ -44,7 +44,7 @@ export default function App() {
     return defaultProgress;
   });
 
-  const { canAccessModule } = useTierAccess(progress.userTier);
+  const { canAccessModule } = useTierAccess(progress.userTier, progress.maxAllowedModuleId);
 
   const [activeTab, setActiveTab] = useState<'path' | 'module'>('path');
   const [selectedModuleId, setSelectedModuleId] = useState<number | null>(null);
