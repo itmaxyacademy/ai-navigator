@@ -53,11 +53,11 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const isTier1 = userTier === 'tier1' || userTier === 'free';
   const displayModules = isTier1 ? MODULES_DATA.slice(0, 22) : MODULES_DATA;
 
-  const todayStr = new Date().toLocaleDateString('id-ID', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
+  const now = new Date();
+  const monthName = now.toLocaleDateString('id-ID', { month: 'long' });
+  const dayNum = now.getDate();
+  const yearNum = now.getFullYear();
+  const todayStr = `Jakarta, ${monthName} ${dayNum}, ${yearNum}`;
 
   const handleVerifyCert = async (e: React.FormEvent) => {
     e.preventDefault();
