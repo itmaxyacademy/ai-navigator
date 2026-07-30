@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lock, Sparkles, Check, Zap, Crown, ShieldCheck, X, Star, ArrowRight } from 'lucide-react';
+import { Lock, Sparkles, Check, X, ArrowRight } from 'lucide-react';
 import { UserTier } from '../types';
 
 interface UpgradeModalProps {
@@ -28,7 +28,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div className="relative bg-slate-900 border border-slate-800 rounded-3xl max-w-4xl w-full p-6 sm:p-8 space-y-6 shadow-2xl my-8 text-white animate-fadeIn">
+      <div className="relative bg-slate-900 border border-slate-800 rounded-3xl max-w-6xl w-full p-6 sm:p-8 space-y-6 shadow-2xl my-8 text-white animate-fadeIn">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -59,62 +59,130 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               </>
             ) : (
               <>
-                Tingkatkan akun Anda ke <strong className="text-amber-400">Tier 1</strong> atau <strong className="text-amber-400">Tier 2</strong> untuk membuka akses penuh ke seluruh 29 modul, sertifikat resmi, dan bimbingan VIP.
+                Status Anda saat ini adalah <strong className="text-amber-400">Free Trial</strong>. Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
               </>
             )}
           </p>
         </div>
 
-        {/* Pricing & Tier Options */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-          {/* TIER 1 CARD */}
-          <div className={`relative bg-slate-950/80 border rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
-            currentTier === 'tier1'
-              ? 'border-indigo-500 ring-2 ring-indigo-500/40 shadow-xl'
-              : 'border-slate-800 hover:border-slate-700'
+        {/* Pricing & Tier Options (3-Column Layout from Foto Pertama) */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2 items-stretch">
+
+          {/* CARD 1: FREE TRIAL / STARTER */}
+          <div className={`relative bg-white text-slate-900 border-2 rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
+            currentTier === 'free'
+              ? 'border-emerald-500 ring-2 ring-emerald-500/40 shadow-xl'
+              : 'border-emerald-500/60 hover:border-emerald-500 shadow-md'
           }`}>
+            {/* Top Badge: PROMO SOFT LAUNCHING */}
+            <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-emerald-500 text-white font-black text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5" /> PROMO SOFT LAUNCHING
+            </div>
+
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-[11px] font-extrabold uppercase tracking-wider">
-                  Tier 1 — Akses Penuh
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-emerald-600 font-extrabold text-[11px] uppercase tracking-wider">
+                  FREE TRIAL
                 </span>
-                {currentTier === 'tier1' && (
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">
-                    Paket Anda
-                  </span>
-                )}
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold">
+                  3 HARI
+                </span>
               </div>
 
               <div>
-                <h3 className="text-xl font-black text-white">Modul 1 s/d Modul 29</h3>
-                <p className="text-xs text-slate-400 mt-0.5 font-medium">Buka seluruh modul kurikulum LLM</p>
+                <h3 className="text-xl font-black text-slate-900">Free Trial / Starter</h3>
+                <p className="text-xs text-slate-500 mt-1 font-medium leading-relaxed">
+                  Promo Soft Launching - Akses Uji Coba 3 Hari Modul Dasar &amp; Pengenalan AI Navigator
+                </p>
               </div>
 
-              <div className="py-2 border-y border-slate-800/80 flex items-baseline gap-1.5">
-                <span className="text-2xl sm:text-3xl font-black text-white">Rp 149.000</span>
-                <span className="text-xs text-slate-400 font-medium">/ akses selamanya</span>
+              <div className="py-3 border-y border-slate-100 flex flex-col">
+                <div className="text-2xl sm:text-3xl font-black text-slate-900">Gratis (Rp 0)</div>
+                <span className="text-xs text-slate-500 font-medium mt-0.5">Akses Coba Tanpa Komitmen</span>
               </div>
 
-              <ul className="space-y-2.5 text-xs text-slate-300 font-medium">
+              <ul className="space-y-2.5 text-xs text-slate-700 font-medium">
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Akses Penuh ke seluruh <strong className="text-white">Modul 1 - 29</strong></span>
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Akses 3 Hari Modul Pengenalan AI &amp; Prompting</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Bebas Buka Semua 7 Peti Harta Karun &amp; Bonus Tools AI</span>
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Latihan Simulasi Prompt Engineering</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Simulator Interactive Replica (ChatGPT, Claude, Gemini, dll.)</span>
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Pratinjau Kuis Pilihan Ganda</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Sertifikat Resmi <strong className="text-amber-300">Certificate of Completion</strong></span>
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Akses Komunitas Komunitas Belajar</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Submission Capstone Project Portofolio</span>
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Bisa Upgrade ke Tier 1 / Tier 2 Kapan Saja</span>
+                </li>
+              </ul>
+            </div>
+
+            <button
+              onClick={onClose}
+              className="w-full py-3.5 rounded-2xl font-black text-xs bg-slate-900 hover:bg-slate-800 text-white shadow-md transition-all cursor-pointer hover:scale-[1.02]"
+            >
+              Coba Gratis (3 Hari)
+            </button>
+          </div>
+
+          {/* CARD 2: TIER 1: SELF-PACED BASIC */}
+          <div className={`relative bg-white text-slate-900 border rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
+            currentTier === 'tier1'
+              ? 'border-amber-500 ring-2 ring-amber-500/40 shadow-xl'
+              : 'border-slate-200 hover:border-slate-300 shadow-md'
+          }`}>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-amber-600 font-extrabold text-[11px] uppercase tracking-wider">
+                  BASIC TIER
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[11px] font-bold">
+                  21 JP
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-black text-slate-900">Tier 1: Self-Paced Basic</h3>
+                <p className="text-xs text-slate-500 mt-1 font-medium leading-relaxed">
+                  21 Hari Pembelajaran Mandiri + Sertifikat Completion (21 JP)
+                </p>
+              </div>
+
+              <div className="py-3 border-y border-slate-100 flex flex-col">
+                <div className="text-2xl sm:text-3xl font-black text-slate-900">Rp 49.500</div>
+                <div className="text-xs text-slate-400 font-medium line-through mt-0.5">
+                  Normal: Rp 125.000
+                </div>
+              </div>
+
+              <ul className="space-y-2.5 text-xs text-slate-700 font-medium">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Akses 21 Hari Modul Interaktif Self-Paced</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Kuis Pilihan Ganda &amp; Evaluasi Otomatis</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Certificate of Completion (21 Jam Pelajaran / JP)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Akses Komunitas Belajar AI Navigator</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <span>Bisa Di-upsell ke Tier 2 kapan saja</span>
                 </li>
               </ul>
             </div>
@@ -124,70 +192,85 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               disabled={currentTier === 'tier1'}
               className={`w-full py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 currentTier === 'tier1'
-                  ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                  : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 hover:scale-[1.02]'
+                  ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-200 shadow-sm hover:scale-[1.02]'
               }`}
             >
-              <span>{currentTier === 'tier1' ? 'Tier 1 Aktif' : 'Pilih Tier 1 (Rp 149k)'}</span>
-              {currentTier !== 'tier1' && <ArrowRight className="w-4 h-4" />}
+              <span>{currentTier === 'tier1' ? 'Tier 1 Aktif' : 'Pilih Tier 1 (Rp49.500)'}</span>
             </button>
           </div>
 
-          {/* TIER 2 CARD (RECOMMENDED / VIP) */}
-          <div className={`relative bg-slate-950 border rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
+          {/* CARD 3: TIER 2: FULL MENTORING & CAAI™ CERTIFICATION */}
+          <div className={`relative bg-slate-950 text-white border-2 rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
             currentTier === 'tier2'
               ? 'border-amber-400 ring-2 ring-amber-400/50 shadow-2xl shadow-amber-500/20'
-              : 'border-amber-500/50 hover:border-amber-400 shadow-xl'
+              : 'border-amber-500/60 hover:border-amber-400 shadow-xl'
           }`}>
             {/* Recommended Tag */}
             <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-black text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
-              <Crown className="w-3.5 h-3.5 fill-slate-950" /> POPULER &amp; VIP
+              RECOMMENDED CERTIFICATION
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-extrabold uppercase tracking-wider">
-                  Tier 2 — VIP Master
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-amber-400 font-extrabold text-[11px] uppercase tracking-wider">
+                  PRO CAAI™ TIER
                 </span>
-                {currentTier === 'tier2' && (
-                  <span className="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-black">
-                    Paket Anda
-                  </span>
-                )}
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/30 text-[11px] font-bold">
+                  28 JP
+                </span>
               </div>
 
               <div>
-                <h3 className="text-xl font-black text-amber-300 flex items-center gap-1.5">
-                  Full Akses + Fitur Upselling VIP
+                <h3 className="text-xl font-black text-white leading-tight">
+                  Tier 2: Full Mentoring &amp; CAAI™ Certification
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5 font-medium">Bimbingan intensif &amp; review portofolio personal</p>
+                <p className="text-xs text-slate-300 mt-1 font-medium leading-relaxed">
+                  28 Hari (21 Hari Self-Paced + 7 Hari Mentoring) + Sertifikat CAAI™ Level 1 (28 JP)
+                </p>
               </div>
 
-              <div className="py-2 border-y border-slate-800/80 flex items-baseline gap-1.5">
-                <span className="text-2xl sm:text-3xl font-black text-amber-400">Rp 299.000</span>
-                <span className="text-xs text-slate-400 font-medium">/ akses selamanya</span>
+              <div className="py-3 border-y border-slate-800 flex items-baseline gap-2">
+                <span className="text-2xl sm:text-3xl font-black text-amber-400">Rp 299.500</span>
+                <span className="text-xs text-slate-400 font-medium line-through">Rp 750.000</span>
               </div>
 
-              <ul className="space-y-2.5 text-xs text-slate-300 font-medium">
-                <li className="flex items-start gap-2 text-amber-200 font-bold">
-                  <Star className="w-4 h-4 text-amber-400 fill-amber-400 shrink-0 mt-0.5" />
-                  <span>Semua Fitur Tier 1 (Modul 1 - 29 + Sertifikat)</span>
+              <ul className="space-y-2.5 text-xs text-slate-200 font-medium">
+                <li className="flex items-start gap-2">
+                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 text-amber-400" />
+                  </div>
+                  <span>Semua Akses Tier 1 (21 Hari Modul Self-Paced)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Zap className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <span><strong className="text-amber-300">Sesi Mentoring 1-on-1</strong> dengan AI Specialist (45 Menit)</span>
+                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 text-amber-400" />
+                  </div>
+                  <span>7 Hari Sesi Live Mentoring di ai.maxy.academy</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <span><strong className="text-amber-300">Personal Review &amp; Feedback</strong> untuk Capstone Project</span>
+                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 text-amber-400" />
+                  </div>
+                  <span>Bimbingan 1-on-1 Penyusunan Capstone Project</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <span><strong className="text-amber-300">Prioritas Verifikasi</strong> &amp; Sertifikat Digital Cetak High-Res</span>
+                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 text-amber-400" />
+                  </div>
+                  <span>Wajib Submit Project &amp; Review dari Mentor</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Crown className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <span>Bundel 500+ Template Advanced Prompt RCTF &amp; Masterclass AI Webcast</span>
+                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 text-amber-400" />
+                  </div>
+                  <span>Sertifikat Resmi CAAI™ Level 1 (28 JP) terhubung Accredify</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 text-amber-400" />
+                  </div>
+                  <span>Digital Badge LinkedIn &amp; Verifikasi Kriptografis</span>
                 </li>
               </ul>
             </div>
@@ -198,13 +281,13 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               className={`w-full py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 currentTier === 'tier2'
                   ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                  : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-xl shadow-amber-500/30 hover:scale-[1.02]'
+                  : 'bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-xl shadow-amber-400/20 hover:scale-[1.02]'
               }`}
             >
-              <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : 'Upgrade ke Tier 2 (VIP)'}</span>
-              {currentTier !== 'tier2' && <Crown className="w-4 h-4 fill-current" />}
+              <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : 'Pilih Tier 2 (Rp299.500)'}</span>
             </button>
           </div>
+
         </div>
 
         {/* Footer Note */}
@@ -223,3 +306,4 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
     </div>
   );
 };
+
