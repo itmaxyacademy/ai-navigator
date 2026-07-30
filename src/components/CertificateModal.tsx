@@ -5,6 +5,7 @@ import { issueCertificateApi } from '../services/api';
 import { MODULES_DATA } from '../data/modulesData';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { toJpeg } from 'html-to-image';
 
 interface CertificateModalProps {
   isOpen: boolean;
@@ -94,96 +95,54 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     }
   };
 
-  // Helper: convert an image URL to a data URL (avoids CORS taint in html2canvas)
-  const imageToDataUrl = (url: string): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(img, 0, 0);
-          resolve(canvas.toDataURL('image/png'));
-        } else {
-          reject(new Error('Canvas context unavailable'));
-        }
-      };
-      img.onerror = () => reject(new Error('Image load failed: ' + url));
-      // Add cache buster to bypass CORS cache
-      img.src = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
-    });
-  };
-
   const handleDownloadPDF = async () => {
     if (!page1Ref.current || !page2Ref.current) return;
     setIsDownloading(true);
 
+    const safeName = (userName || 'Siswa').replace(/[^a-zA-Z0-9]/g, '_');
+
     try {
-      // Pre-convert background image to data URL to avoid CORS taint
-      let bgDataUrl: string | null = null;
-      if (bgImage) {
-        try {
-          bgDataUrl = await imageToDataUrl(bgImage);
-        } catch (e) {
-          console.warn('Could not pre-load bg image as data URL:', e);
-        }
-      }
-
-      // Temporarily swap background-image to data URL for html2canvas
-      const page1El = page1Ref.current;
-      const bgDiv = page1El.querySelector('[data-cert-bg]') as HTMLElement | null;
-      const originalBg = bgDiv?.style.backgroundImage || '';
-      if (bgDiv && bgDataUrl) {
-        bgDiv.style.backgroundImage = `url(${bgDataUrl})`;
-      }
-
-      // Capture Page 1
-      const canvas1 = await html2canvas(page1El, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: false,
+      // 1. Primary Engine: html-to-image (DOM to JPEG Data URL, handles SVGs, CSS & fonts cleanly)
+      const imgData1 = await toJpeg(page1Ref.current, {
+        quality: 0.95,
+        pixelRatio: 2,
         backgroundColor: '#ffffff',
-        logging: false,
+        cacheBust: true,
       });
 
-      // Restore original background
-      if (bgDiv) {
-        bgDiv.style.backgroundImage = originalBg;
-      }
-
-      // Capture Page 2
-      const canvas2 = await html2canvas(page2Ref.current, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: false,
+      const imgData2 = await toJpeg(page2Ref.current, {
+        quality: 0.95,
+        pixelRatio: 2,
         backgroundColor: '#ffffff',
-        logging: false,
+        cacheBust: true,
       });
 
-      // A4 Landscape dimensions in mm
       const pdfWidth = 297;
       const pdfHeight = 210;
-
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
 
-      // Page 1
-      const img1 = canvas1.toDataURL('image/jpeg', 0.95);
-      pdf.addImage(img1, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+      // Page 1: Certificate
+      pdf.addImage(imgData1, 'JPEG', 0, 0, pdfWidth, pdfHeight);
 
-      // Page 2
+      // Page 2: Transcript
       pdf.addPage();
-      const img2 = canvas2.toDataURL('image/jpeg', 0.95);
-      pdf.addImage(img2, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+      pdf.addImage(imgData2, 'JPEG', 0, 0, pdfWidth, pdfHeight);
 
-      const safeName = (userName || 'certificate').replace(/[^a-zA-Z0-9]/g, '_');
       pdf.save(`Sertifikat_AI_Navigator_${safeName}.pdf`);
     } catch (err) {
-      console.error('PDF download error:', err);
-      // Seamless Fallback: Trigger native browser PDF print save dialog
-      window.print();
+      console.warn('html-to-image PDF error, attempting html2canvas fallback:', err);
+      try {
+        const canvas1 = await html2canvas(page1Ref.current, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false });
+        const canvas2 = await html2canvas(page2Ref.current, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false });
+        const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+        pdf.addImage(canvas1.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 297, 210);
+        pdf.addPage();
+        pdf.addImage(canvas2.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, 297, 210);
+        pdf.save(`Sertifikat_AI_Navigator_${safeName}.pdf`);
+      } catch (fallbackErr) {
+        console.error('All client PDF engines failed, triggering print dialog:', fallbackErr);
+        window.print();
+      }
     } finally {
       setIsDownloading(false);
     }
