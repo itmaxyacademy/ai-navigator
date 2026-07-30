@@ -531,14 +531,20 @@ export default function App() {
 
     try {
       const res = await checkoutUpgrade(selectedTier);
-      if (res.success && res.data) {
-        const invoiceUrl = res.data.invoice_url || res.data.payment_url;
-        if (invoiceUrl) {
-          window.location.href = invoiceUrl;
-          return;
-        }
+      const invoiceUrl =
+        res?.data?.payment_url ||
+        res?.data?.invoice_url ||
+        res?.data?.data?.payment_url ||
+        res?.data?.data?.invoice_url ||
+        res?.payment_url ||
+        res?.invoice_url;
+
+      if (invoiceUrl) {
+        window.location.href = invoiceUrl;
+        return;
       }
-      alert(res.message || res.error || 'Gagal membuat halaman pembayaran. Silakan coba lagi.');
+
+      alert(res?.message || res?.error || 'Gagal membuat halaman pembayaran. Silakan coba lagi.');
     } catch (err) {
       console.error('Payment checkout error:', err);
       alert('Terjadi kesalahan saat menghubungkan ke payment gateway.');
