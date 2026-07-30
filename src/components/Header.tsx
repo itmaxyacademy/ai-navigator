@@ -198,7 +198,7 @@ export const Header: React.FC<HeaderProps> = ({
                   )}
                   <div className="border-t border-slate-700 pt-1 mt-1">
                     <p className="text-[11px] text-slate-300 font-medium">
-                      📦 {progress.packageName || (userTier === 'free' ? 'Free Plan' : userTier === 'tier1' ? 'Tier 1 Plan' : 'Tier 2 VIP')}
+                      📦 {(!progress.packageName || progress.packageName.trim().startsWith('{')) ? (userTier === 'free' ? 'Free Plan' : userTier === 'tier1' ? 'Tier 1 Plan' : 'Tier 2 VIP') : progress.packageName}
                     </p>
                     {progress.subscriptionExpiredAt ? (
                       <p className="text-[10px] text-emerald-400 mt-0.5">

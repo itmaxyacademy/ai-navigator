@@ -68,9 +68,17 @@ export async function loadCloudProgress(token?: string): Promise<Record<string, 
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
-    const data = await res.json();
-    if (data.success && data.data) {
-      return data.data as Record<string, unknown>;
+    const result = await res.json();
+    if (result.success && result.data) {
+      let progressObj = result.data as Record<string, unknown>;
+      while (progressObj && typeof progressObj === 'object' && 'data' in progressObj && progressObj.data && typeof progressObj.data === 'object') {
+        progressObj = progressObj.data as Record<string, unknown>;
+      }
+      delete progressObj.success;
+      delete progressObj.data;
+      delete progressObj.message;
+      delete progressObj.error;
+      return progressObj;
     }
     return null;
   } catch (err) {
@@ -81,10 +89,16 @@ export async function loadCloudProgress(token?: string): Promise<Record<string, 
 
 export async function saveCloudProgress(token: string, progress: Record<string, unknown>): Promise<void> {
   try {
+    const cleanProgress = { ...progress };
+    delete cleanProgress.success;
+    delete cleanProgress.data;
+    delete cleanProgress.message;
+    delete cleanProgress.error;
+
     await fetchWithAuth(`${API_BASE}/progress`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ progress }),
+      body: JSON.stringify({ progress: cleanProgress }),
     });
   } catch (err) {
     console.error('API saveCloudProgress failed:', err);
