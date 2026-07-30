@@ -97,6 +97,9 @@ export async function saveCloudProgress(token: string, progress: Record<string, 
     delete cleanProgress.userTier;
     delete cleanProgress.tier;
     delete cleanProgress.maxAllowedModuleId;
+    delete cleanProgress.paidTiers;
+    delete cleanProgress.hasTier1;
+    delete cleanProgress.hasTier2;
     delete cleanProgress.packageName;
     delete cleanProgress.subscriptionExpiredAt;
     delete cleanProgress.userName;

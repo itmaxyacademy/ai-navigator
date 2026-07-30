@@ -143,9 +143,12 @@ export default function App() {
       if (res.success && res.data) {
         const sub = res.data.subscription;
         const user = res.data.user;
-        const rawTier = sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
+        const rawTier = sub?.active_tier || sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
         const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
         const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
+        const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
+        const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
+        const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
 
         // Load cloud-synced progress from database
         const cloudDataRaw = (await loadCloudProgress(token)) as unknown as UserProgress | null;
@@ -154,6 +157,9 @@ export default function App() {
           delete (cloudData as Record<string, unknown>).userTier;
           delete (cloudData as Record<string, unknown>).tier;
           delete (cloudData as Record<string, unknown>).maxAllowedModuleId;
+          delete (cloudData as Record<string, unknown>).paidTiers;
+          delete (cloudData as Record<string, unknown>).hasTier1;
+          delete (cloudData as Record<string, unknown>).hasTier2;
           delete (cloudData as Record<string, unknown>).packageName;
           delete (cloudData as Record<string, unknown>).subscriptionExpiredAt;
         }
@@ -166,6 +172,9 @@ export default function App() {
               userTier,
               tier: userTier,
               maxAllowedModuleId: maxAllowed,
+              paidTiers,
+              hasTier1,
+              hasTier2,
               userName: user?.name || undefined,
               userEmail: user?.email || undefined,
               packageName: sub?.package_name || undefined,
@@ -204,6 +213,9 @@ export default function App() {
             userTier,
             tier: userTier,
             maxAllowedModuleId: maxAllowed,
+            paidTiers,
+            hasTier1,
+            hasTier2,
             userName: user?.name || undefined,
             userEmail: user?.email || undefined,
             packageName: sub?.package_name || undefined,

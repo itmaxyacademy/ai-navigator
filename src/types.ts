@@ -86,8 +86,11 @@ export interface CapstoneSubmission {
 }
 
 export interface UserProgress {
-  userTier?: UserTier; // 'free' (Free Trial), 'tier1' (Full Modul 1-29), 'tier2' (VIP Master)
+  userTier?: UserTier; // 'free' (Free Trial), 'tier1' (Modul 1-22), 'tier2' (VIP Master Modul 1-29)
   maxAllowedModuleId?: number; // e.g. 3 for free, 22 for tier1, 29 for tier2
+  paidTiers?: UserTier[]; // List of owned tiers e.g. ['tier1', 'tier2']
+  hasTier1?: boolean;
+  hasTier2?: boolean;
   userName?: string;   // Display name from API session
   userEmail?: string;  // Email from API session
   packageName?: string; // e.g. 'Free Plan', 'Tier 1 - AI Practitioner', 'Tier 2 - VIP Master'
