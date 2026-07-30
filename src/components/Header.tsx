@@ -187,37 +187,28 @@ export const Header: React.FC<HeaderProps> = ({
             <Tooltip
               content={
                 <div className="space-y-1.5 text-left min-w-[200px]">
-                  {/* User Identity */}
-                  <div className="font-bold text-white text-xs flex items-center gap-1.5">
-                    <span className="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-[10px] font-black shrink-0">
-                      {(progress.userName || 'U').charAt(0).toUpperCase()}
-                    </span>
-                    <span className="truncate">{progress.userName || 'Pengguna'}</span>
+                  <div className="font-bold text-amber-300 flex items-center gap-1">
+                    <Crown className="w-3.5 h-3.5 text-amber-400" /> Status Akses Paket
                   </div>
-                  {progress.userEmail && (
-                    <p className="text-[10px] text-slate-400 pl-7">{progress.userEmail}</p>
+                  {progress.userName && (
+                    <p className="text-[11px] text-white font-semibold">{progress.userName}</p>
                   )}
-                  <div className="border-t border-slate-700 pt-1.5 mt-1">
-                    <div className="font-bold text-amber-300 flex items-center gap-1 text-[11px]">
-                      <Crown className="w-3 h-3 text-amber-400" />
-                      {progress.packageName || (userTier === 'tier2' ? 'VIP Master' : userTier === 'tier1' ? 'AI Practitioner' : 'Free Plan')}
-                    </div>
-                    <p className="text-[10px] text-slate-300 mt-0.5">
-                      {userTier === 'free'
-                        ? 'Free Trial — Akses Modul 1 & 2. Upgrade untuk membuka semua!'
-                        : userTier === 'tier1'
-                        ? 'Tier 1 Aktif — Akses Penuh Seluruh Modul 1-29.'
-                        : 'Tier 2 VIP Master — Akses Penuh + Bimbingan Eksklusif.'}
+                  {progress.userEmail && (
+                    <p className="text-[10px] text-slate-400">{progress.userEmail}</p>
+                  )}
+                  <div className="border-t border-slate-700 pt-1 mt-1">
+                    <p className="text-[11px] text-slate-300 font-medium">
+                      📦 {progress.packageName || (userTier === 'free' ? 'Free Plan' : userTier === 'tier1' ? 'Tier 1 Plan' : 'Tier 2 VIP')}
                     </p>
                     {progress.subscriptionExpiredAt ? (
-                      <p className="text-[10px] text-slate-400 mt-0.5">
-                        Berlaku hingga: <span className="text-emerald-400 font-semibold">
-                          {new Date(progress.subscriptionExpiredAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
-                        </span>
+                      <p className="text-[10px] text-emerald-400 mt-0.5">
+                        ✅ Aktif s/d {new Date(progress.subscriptionExpiredAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
                       </p>
                     ) : userTier !== 'free' ? (
-                      <p className="text-[10px] text-emerald-400 mt-0.5">✓ Akses Seumur Hidup</p>
-                    ) : null}
+                      <p className="text-[10px] text-emerald-400 mt-0.5">✅ Akses Aktif</p>
+                    ) : (
+                      <p className="text-[10px] text-amber-400 mt-0.5">⚡ Free Trial (Modul 1-3)</p>
+                    )}
                   </div>
                 </div>
               }
@@ -248,6 +239,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
               )}
             </Tooltip>
+
 
             {/* Certificate Button (If All Modules Completed) */}
             {allModulesCompleted && (

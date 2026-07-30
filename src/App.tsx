@@ -17,7 +17,7 @@ import { getLocalDateString, getDaysDifference } from './lib/gamification';
 import { Compass, Heart, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-import { fetchUserProfile, refreshAccessToken, checkoutUpgrade } from './services/api';
+import { fetchUserProfile, checkoutUpgrade } from './services/api';
 
 const STORAGE_KEY = 'ai_navigator_user_progress_v1';
 
@@ -88,7 +88,6 @@ export default function App() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
-    const refreshTokenParam = urlParams.get('refresh_token');
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
 
     const redirectToLogin = () => {
@@ -108,11 +107,8 @@ export default function App() {
     if (tokenFromUrl) {
       localStorage.setItem('maxy_access_token', tokenFromUrl);
     }
-    if (refreshTokenParam) {
-      localStorage.setItem('maxy_refresh_token', refreshTokenParam);
-    }
 
-    const applySession = (res: { success: boolean; data?: { user?: { name?: string; email?: string }; subscription?: { tier?: string; is_paid?: boolean; max_allowed_module_id?: number; package_name?: string; expired_at?: string | null; expired_days?: number } } }) => {
+    fetchUserProfile(token).then((res) => {
       if (res.success && res.data) {
         const sub = res.data.subscription;
         const user = res.data.user;
@@ -125,42 +121,17 @@ export default function App() {
           userTier,
           tier: userTier,
           maxAllowedModuleId: maxAllowed,
-          userName: user?.name || prev.userName,
-          userEmail: user?.email || prev.userEmail,
-          packageName: sub?.package_name || (userTier === 'tier2' ? 'VIP Master' : userTier === 'tier1' ? 'AI Practitioner' : 'Free Plan'),
-          subscriptionExpiredAt: sub?.expired_at ?? null,
+          userName: user?.name || undefined,
+          userEmail: user?.email || undefined,
+          packageName: sub?.package_name || undefined,
+          subscriptionExpiredAt: sub?.expired_at || null,
         }));
         setIsAuthValidating(false);
-        return true;
-      }
-      return false;
-    };
-
-    fetchUserProfile(token).then(async (res) => {
-      if (!applySession(res)) {
-        // Try auto-refresh before giving up
-        const newToken = await refreshAccessToken();
-        if (newToken) {
-          const retryRes = await fetchUserProfile(newToken);
-          if (!applySession(retryRes)) {
-            redirectToLogin();
-          }
-        } else {
-          redirectToLogin();
-        }
-      }
-    });
-
-    // Auto-refresh access token every 12 minutes (JWT_ACCESS_TTL is 15 min)
-    const refreshInterval = setInterval(async () => {
-      const newToken = await refreshAccessToken();
-      if (!newToken) {
-        clearInterval(refreshInterval);
+      } else {
+        // Invalid or expired token
         redirectToLogin();
       }
-    }, 12 * 60 * 1000);
-
-    return () => clearInterval(refreshInterval);
+    });
   }, []);
 
   const handleToggleTheme = () => {
