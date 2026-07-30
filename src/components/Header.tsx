@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Award, Flame, RotateCcw, Menu, X, Compass, Trophy, Sun, Moon, StickyNote, Lock, Crown, ShieldCheck } from 'lucide-react';
+import { Sparkles, Award, Flame, RotateCcw, Menu, X, Compass, Trophy, Sun, Moon, StickyNote, Lock, Crown, ShieldCheck, LogOut } from 'lucide-react';
 import { UserProgress } from '../types';
 import { getUserLevelInfo } from '../lib/gamification';
 import { DailyGoalRing } from './DailyGoalRing';
@@ -16,6 +16,7 @@ interface HeaderProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
   onResetProgress: () => void;
+  onLogout: () => void;
   onOpenCertificate: () => void;
   onOpenStreakModal: () => void;
   onOpenAchievements?: () => void;
@@ -34,6 +35,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectTab,
   activeTab,
   onResetProgress,
+  onLogout,
   onOpenCertificate,
   onOpenStreakModal,
   onOpenAchievements,
@@ -281,6 +283,28 @@ export const Header: React.FC<HeaderProps> = ({
                 }`}
               >
                 <RotateCcw className="w-4 h-4" />
+              </button>
+            </Tooltip>
+
+            {/* Icon Button: Logout */}
+            <Tooltip
+              content={
+                <div className="space-y-0.5 text-center">
+                  <div className="font-bold text-xs text-rose-400">Keluar</div>
+                  <p className="text-[10px] text-slate-300">Logout dari AI Navigator</p>
+                </div>
+              }
+            >
+              <button
+                onClick={onLogout}
+                aria-label="Logout"
+                className={`p-2 rounded-xl border transition-colors cursor-pointer ${
+                  theme === 'light'
+                    ? 'bg-slate-100 hover:bg-rose-50 border-slate-300 text-slate-500 hover:text-rose-600'
+                    : 'bg-slate-950 hover:bg-slate-800 border-slate-800 text-slate-400 hover:text-rose-400'
+                }`}
+              >
+                <LogOut className="w-4 h-4" />
               </button>
             </Tooltip>
 

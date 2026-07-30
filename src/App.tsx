@@ -133,6 +133,15 @@ export default function App() {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('maxy_access_token');
+    localStorage.removeItem('maxy_refresh_token');
+    const target = window.location.hostname.includes('maxy.academy')
+      ? 'https://navigator.maxy.academy?login=true'
+      : '/?login=true';
+    window.location.href = target;
+  };
+
   // Floating XP Notifications State
   const [floatingXpItems, setFloatingXpItems] = useState<FloatingXpItem[]>([]);
 
@@ -573,6 +582,7 @@ export default function App() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onResetProgress={handleResetProgress}
+        onLogout={handleLogout}
         onOpenCertificate={() => setCertificateOpen(true)}
         onOpenStreakModal={() => setStreakModalOpen(true)}
         onOpenAchievements={() => setAchievementsOpen(true)}
