@@ -99,6 +99,42 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     }
   };
 
+  // Off-screen clone capture helper: completely prevents visible preview flicker or expansion
+  const captureOffscreenNode = async (el: HTMLElement): Promise<string> => {
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'fixed';
+    wrapper.style.left = '-9999px';
+    wrapper.style.top = '-9999px';
+    wrapper.style.width = '1123px';
+    wrapper.style.height = '794px';
+    wrapper.style.zIndex = '-9999';
+    wrapper.style.overflow = 'hidden';
+    wrapper.style.backgroundColor = '#ffffff';
+
+    const cloned = el.cloneNode(true) as HTMLElement;
+    cloned.style.width = '1123px';
+    cloned.style.height = '794px';
+    cloned.style.margin = '0';
+    cloned.style.borderRadius = '0';
+    cloned.style.border = 'none';
+
+    wrapper.appendChild(cloned);
+    document.body.appendChild(wrapper);
+
+    try {
+      const dataUrl = await toJpeg(cloned, {
+        quality: 0.98,
+        pixelRatio: 2,
+        backgroundColor: '#ffffff',
+      });
+      return dataUrl;
+    } finally {
+      if (document.body.contains(wrapper)) {
+        document.body.removeChild(wrapper);
+      }
+    }
+  };
+
   const handleDownloadPDF = async () => {
     if (!page1Ref.current || !page2Ref.current) return;
     setIsDownloading(true);
@@ -111,16 +147,16 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     const safeName = (userName || 'Siswa').replace(/[^a-zA-Z0-9]/g, '_');
 
     try {
-      // Capture pages at 2x high resolution without modifying DOM styles (prevents preview flickering)
-      const imgData1 = await toJpeg(p1, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true });
-      const imgData2 = await toJpeg(p2, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true });
+      // Capture off-screen clones so the visible preview on screen NEVER flickers or expands
+      const imgData1 = await captureOffscreenNode(p1);
+      const imgData2 = await captureOffscreenNode(p2);
       let imgData3: string | null = null;
       if (p3) {
-        imgData3 = await toJpeg(p3, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true });
+        imgData3 = await captureOffscreenNode(p3);
       }
       let imgData4: string | null = null;
       if (p4) {
-        imgData4 = await toJpeg(p4, { quality: 0.98, pixelRatio: 2, backgroundColor: '#ffffff', cacheBust: true });
+        imgData4 = await captureOffscreenNode(p4);
       }
 
       const pdfWidth = 297;
