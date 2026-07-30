@@ -373,16 +373,16 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       // Canvas editor (Fabric.js 850x600) stores top/left as pixel coords
                       let isCentered = obj.id === 'NAME' || obj.id === 'UUID' || obj.textAlign === 'center' || obj.originX === 'center';
                       let topPercent = ((obj.top || 0) / 600) * 100;
-                      let leftPercent = ((obj.left || 0) / 850) * 100;
+                      let leftPercent = Math.max(0, ((obj.left || 0) / 850) * 100 - 2);
 
                       if (obj.id === 'NAME') {
-                        leftPercent = 50;
+                        leftPercent = 47.5;
                         isCentered = true;
                         if (!obj.top || (obj.top >= 160 && obj.top <= 280)) {
                           topPercent = 41;
                         }
                       } else if (obj.id === 'UUID') {
-                        leftPercent = 50;
+                        leftPercent = 48;
                         isCentered = true;
                         if (!obj.top || obj.top >= 450) {
                           topPercent = 91.5;
