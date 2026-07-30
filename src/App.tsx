@@ -123,6 +123,7 @@ export default function App() {
     };
 
     const redirectToLogin = () => {
+      setIsAuthValidating(false);
       localStorage.removeItem('maxy_access_token');
       localStorage.removeItem('maxy_refresh_token');
       localStorage.removeItem(STORAGE_KEY);
@@ -659,11 +660,15 @@ export default function App() {
 
   if (isAuthValidating) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white p-4 font-sans">
+      <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
+        theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-950 text-white'
+      }`}>
         <div className="w-12 h-12 rounded-2xl bg-[#ffb034]/20 border border-[#ffb034]/40 flex items-center justify-center mb-4 animate-pulse shadow-lg shadow-[#ffb034]/10">
           <Sparkles className="w-6 h-6 text-[#ffb034]" />
         </div>
-        <div className="flex items-center gap-2.5 text-xs font-bold text-slate-300">
+        <div className={`flex items-center gap-2.5 text-xs font-bold ${
+          theme === 'light' ? 'text-slate-600' : 'text-slate-300'
+        }`}>
           <span className="w-4 h-4 border-2 border-[#ffb034] border-t-transparent rounded-full animate-spin" />
           <span>Memverifikasi Sesi AI Navigator...</span>
         </div>
