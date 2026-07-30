@@ -124,7 +124,7 @@ export async function checkoutUpgrade(tier: 'tier1' | 'tier2' | 'tier_1' | 'tier
       body: JSON.stringify({
         amount: finalAmount,
         description,
-        redirect_url: 'https://navigator.maxy.academy/app',
+        redirect_url: typeof window !== 'undefined' ? `${window.location.origin}/app` : 'https://ainavigator.maxy.academy/app',
       }),
     });
     return await res.json();

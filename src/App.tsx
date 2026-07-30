@@ -119,9 +119,7 @@ export default function App() {
       localStorage.removeItem('maxy_access_token');
       localStorage.removeItem('maxy_refresh_token');
       localStorage.removeItem(STORAGE_KEY);
-      const targetOrigin = window.location.hostname.includes('maxy.academy')
-        ? 'https://navigator.maxy.academy?login=true'
-        : '/?login=true';
+      const targetOrigin = `${window.location.origin}/?login=true`;
       window.location.href = targetOrigin;
     };
 
@@ -222,9 +220,7 @@ export default function App() {
     localStorage.removeItem('maxy_access_token');
     localStorage.removeItem('maxy_refresh_token');
     localStorage.removeItem(STORAGE_KEY);
-    const target = window.location.hostname.includes('maxy.academy')
-      ? 'https://navigator.maxy.academy?login=true'
-      : '/?login=true';
+    const target = `${window.location.origin}/?login=true`;
     window.location.href = target;
   };
 
