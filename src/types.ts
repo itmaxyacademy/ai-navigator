@@ -87,6 +87,7 @@ export interface CapstoneSubmission {
 
 export interface UserProgress {
   userTier?: UserTier; // 'free' (Free Trial), 'tier1' (Full Modul 1-29), 'tier2' (VIP Master)
+  maxAllowedModuleId?: number; // e.g. 3 for free, 22 for tier1, 29 for tier2
   userName?: string;   // Display name from API session
   userEmail?: string;  // Email from API session
   packageName?: string; // e.g. 'Free Plan', 'Tier 1 - AI Practitioner', 'Tier 2 - VIP Master'

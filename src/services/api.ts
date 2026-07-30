@@ -112,13 +112,18 @@ export async function saveCloudProgress(token: string, progress: Record<string, 
   }
 }
 
-export async function checkoutUpgrade(tier: 'tier_1' | 'tier_2') {
+export async function checkoutUpgrade(tier: 'tier1' | 'tier2' | 'tier_1' | 'tier_2', amount?: number) {
   try {
+    const isTier1 = tier === 'tier1' || tier === 'tier_1';
+    const finalAmount = amount || (isTier1 ? 49500 : 299500);
+    const description = `Upgrade Paket ${isTier1 ? 'Tier 1' : 'Tier 2'} AI Navigator`;
+
     const res = await fetchWithAuth(`${API_BASE}/payments/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        description: `Upgrade Paket ${tier === 'tier_1' ? 'Tier 1' : 'Tier 2'} AI Navigator`,
+        amount: finalAmount,
+        description,
         redirect_url: 'https://navigator.maxy.academy/app',
       }),
     });

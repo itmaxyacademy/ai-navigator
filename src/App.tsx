@@ -36,7 +36,21 @@ export default function App() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        delete parsed.userTier;
+        delete parsed.tier;
+        delete parsed.maxAllowedModuleId;
+        delete parsed.packageName;
+        delete parsed.subscriptionExpiredAt;
+        delete parsed.userName;
+        delete parsed.userEmail;
+        return {
+          ...defaultProgress,
+          ...parsed,
+          userTier: 'free',
+          tier: 'free',
+          maxAllowedModuleId: 3,
+        };
       }
     } catch (e) {
       console.error('Failed to load progress', e);
@@ -285,7 +299,15 @@ export default function App() {
   // Save progress to local storage & sync to cloud database (debounced 2s)
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      const cleanLocal = { ...progress } as Record<string, unknown>;
+      delete cleanLocal.userTier;
+      delete cleanLocal.tier;
+      delete cleanLocal.maxAllowedModuleId;
+      delete cleanLocal.packageName;
+      delete cleanLocal.subscriptionExpiredAt;
+      delete cleanLocal.userName;
+      delete cleanLocal.userEmail;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanLocal));
     } catch (e) {
       console.error('Failed to save progress', e);
     }
