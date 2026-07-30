@@ -321,21 +321,26 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   />
                   {templateObjects.length > 0 ? (
                     templateObjects.map((obj: any, i: number) => {
-                      if (obj.text === 'UID') return null; // Skip stray duplicate label
+                      if (obj.text === 'UID' || obj.text === 'uid') return null; // Skip stray duplicate label
+
+                      const isUuidObj = obj.id === 'UUID' || (typeof obj.text === 'string' && (obj.text.includes('f7ad0d5c') || obj.text.includes('1a1d2a89') || obj.text.toLowerCase().includes('uuid')));
+                      const isNameObj = obj.id === 'NAME' || (typeof obj.text === 'string' && obj.text.includes('Nama Siswa'));
+                      const isCertNumObj = obj.id === 'NO_SERTIF' || (typeof obj.text === 'string' && obj.text.includes('No. 0255'));
+                      const isDateObj = obj.id === 'DATE' || (typeof obj.text === 'string' && obj.text.includes('Jakarta,'));
 
                       let content = obj.text || '';
-                      if (obj.id === 'NAME') content = userName || 'Siswa AI Navigator';
-                      else if (obj.id === 'UUID') content = certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb';
-                      else if (obj.id === 'NO_SERTIF') content = certNumber || 'No. 0255/AIN/NAV/2026';
-                      else if (obj.id === 'DATE') content = todayStr;
+                      if (isNameObj) content = userName || 'Siswa AI Navigator';
+                      else if (isUuidObj) content = certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb';
+                      else if (isCertNumObj) content = certNumber || 'No. 0255/AIN/NAV/2026';
+                      else if (isDateObj) content = todayStr;
 
                       // Canvas editor (Fabric.js 850x600) stores top/left as pixel coords
                       let isCentered = obj.textAlign === 'center' || obj.originX === 'center';
                       let topPercent = ((obj.top || 0) / 600) * 100;
                       let leftPercent = ((obj.left || 0) / 850) * 100;
 
-                      // Keep the exact name position that was previously perfect
-                      if (obj.id === 'NAME') {
+                      // Keep the exact recipient name position that was previously perfect
+                      if (isNameObj) {
                         leftPercent = 47.5;
                         isCentered = true;
                         if (!obj.top || (obj.top >= 160 && obj.top <= 280)) {
@@ -343,7 +348,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                         }
                       }
 
-                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.85 : (obj.id === 'NAME' ? 20 : 12);
+                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.85 : (isNameObj ? 20 : (isUuidObj ? 11 : 14));
 
                       return (
                         <div
@@ -354,9 +359,9 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                             left: `${leftPercent}%`,
                             transform: isCentered ? 'translateX(-50%)' : 'none',
                             fontSize: `${Math.max(10, Math.round(scaledFontSize))}px`,
-                            fontFamily: obj.fontFamily || (obj.id === 'UUID' ? 'Courier New, monospace' : 'Poppins, sans-serif'),
-                            fontWeight: obj.fontWeight || 'bold',
-                            color: obj.fill || (obj.id === 'NAME' ? '#d97706' : '#1e293b'),
+                            fontFamily: obj.fontFamily || (isUuidObj ? 'Courier New, monospace' : 'Poppins, sans-serif'),
+                            fontWeight: obj.fontWeight || (isNameObj ? 'bold' : 'normal'),
+                            color: obj.fill || (isNameObj ? '#d97706' : (isUuidObj ? '#3b82f6' : '#1e293b')),
                             textAlign: isCentered ? 'center' : ((obj.textAlign as any) || 'left'),
                             lineHeight: 1.2,
                           }}
