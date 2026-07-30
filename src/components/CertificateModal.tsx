@@ -370,9 +370,9 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       let topPercent = ((obj.top || 0) / 600) * 100;
                       let leftPercent = ((obj.left || 0) / 850) * 100;
 
-                      // Keep the exact recipient name position that was previously perfect
+                      // Keep the recipient name position aligned perfectly
                       if (isNameObj) {
-                        leftPercent = 47.5;
+                        leftPercent = 49.5;
                         isCentered = true;
                         if (!obj.top || (obj.top >= 160 && obj.top <= 280)) {
                           topPercent = 41;
