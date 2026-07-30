@@ -388,10 +388,20 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       else if (obj.id === 'DATE') content = todayStr;
 
                       // Canvas editor (Fabric.js 850x600) stores top/left as pixel coords
-                      const isCentered = obj.id === 'NAME' || obj.textAlign === 'center' || obj.originX === 'center';
-                      const topPercent = ((obj.top || 0) / 600) * 100;
-                      const leftPercent = ((obj.left || 0) / 850) * 100;
-                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.8 : 18;
+                      let isCentered = obj.id === 'NAME' || obj.textAlign === 'center' || obj.originX === 'center';
+                      let topPercent = ((obj.top || 0) / 600) * 100;
+                      let leftPercent = ((obj.left || 0) / 850) * 100;
+
+                      if (obj.id === 'NAME') {
+                        // Always center recipient name horizontally at exactly 50% width of the certificate
+                        leftPercent = 50;
+                        isCentered = true;
+                        if (!obj.top || (obj.top >= 160 && obj.top <= 280)) {
+                          topPercent = 41; // Perfect vertical height above purple line
+                        }
+                      }
+
+                      const scaledFontSize = obj.fontSize ? obj.fontSize * 0.85 : 20;
 
                       return (
                         <div
@@ -401,10 +411,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                             top: `${topPercent}%`,
                             left: `${leftPercent}%`,
                             transform: isCentered ? 'translateX(-50%)' : 'none',
-                            fontSize: `${Math.max(10, Math.round(scaledFontSize))}px`,
+                            fontSize: `${Math.max(12, Math.round(scaledFontSize))}px`,
                             fontFamily: obj.fontFamily || 'Poppins, sans-serif',
                             fontWeight: obj.fontWeight || 'bold',
-                            color: obj.fill || '#1e3a8a',
+                            color: obj.fill || '#d97706',
                             textAlign: isCentered ? 'center' : ((obj.textAlign as any) || 'left'),
                             lineHeight: 1.2,
                           }}
