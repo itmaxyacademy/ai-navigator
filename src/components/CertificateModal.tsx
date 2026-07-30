@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Award, X, Sparkles, CheckCircle2, Printer, Compass, ShieldCheck, Mail, User, Crown, ExternalLink, BookOpen } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Award, X, Sparkles, CheckCircle2, Download, Compass, ShieldCheck, Mail, User, Crown, ExternalLink, BookOpen, Loader2 } from 'lucide-react';
 import { UserProgress } from '../types';
 import { issueCertificateApi } from '../services/api';
 import { MODULES_DATA } from '../data/modulesData';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 interface CertificateModalProps {
   isOpen: boolean;
@@ -30,6 +32,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const [certNumber, setCertNumber] = useState<string>('');
   const [verifyUrl, setVerifyUrl] = useState<string>('');
   const [isIssuing, setIsIssuing] = useState<boolean>(false);
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
+
+  const page1Ref = useRef<HTMLDivElement>(null);
+  const page2Ref = useRef<HTMLDivElement>(null);
 
   if (!isOpen) return null;
 
@@ -87,9 +93,68 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     }
   };
 
-  const handlePrint = () => {
-    window.print();
+  const handleDownloadPDF = async () => {
+    if (!page1Ref.current || !page2Ref.current) return;
+    setIsDownloading(true);
+
+    try {
+      // Capture Page 1
+      const canvas1 = await html2canvas(page1Ref.current, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        logging: false,
+      });
+
+      // Capture Page 2
+      const canvas2 = await html2canvas(page2Ref.current, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+      });
+
+      // A4 Landscape dimensions in mm
+      const pdfWidth = 297;
+      const pdfHeight = 210;
+
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+
+      // Page 1
+      const img1 = canvas1.toDataURL('image/png');
+      pdf.addImage(img1, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+      // Page 2
+      pdf.addPage();
+      const img2 = canvas2.toDataURL('image/png');
+      pdf.addImage(img2, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+      const safeName = (userName || 'certificate').replace(/[^a-zA-Z0-9]/g, '_');
+      pdf.save(`Sertifikat_AI_Navigator_${safeName}.pdf`);
+    } catch (err) {
+      console.error('PDF download error:', err);
+      alert('Gagal mengunduh PDF. Silakan coba lagi.');
+    } finally {
+      setIsDownloading(false);
+    }
   };
+
+  // Helper: render a single module row for the transcript table
+  const renderModuleRow = (m: (typeof MODULES_DATA)[0], globalIdx: number, localIdx: number) => (
+    <tr key={m.id} className={localIdx % 2 === 0 ? 'bg-white' : 'bg-blue-50/40'}>
+      <td className="py-[3px] px-2 font-mono text-slate-500 font-bold text-center border-r border-slate-200 text-[9px]">{globalIdx}</td>
+      <td className="py-[3px] px-2 font-semibold text-slate-800 text-[9px] leading-tight">
+        {m.title}
+        <span className="block text-[7.5px] text-slate-400 font-normal leading-none mt-0.5">{m.subtitle}</span>
+      </td>
+      <td className="py-[3px] px-1.5 text-center font-bold text-blue-700 border-l border-slate-200 text-[9px]">1 JP</td>
+      <td className="py-[3px] px-1.5 text-center border-l border-slate-200">
+        <span className="px-1.5 py-[1px] bg-emerald-50 text-emerald-700 border border-emerald-200 text-[7.5px] font-black rounded">LULUS</span>
+      </td>
+    </tr>
+  );
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
@@ -97,7 +162,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2.5 text-slate-400 hover:text-white rounded-full bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer print:hidden"
+          className="absolute top-4 right-4 p-2.5 text-slate-400 hover:text-white rounded-full bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
@@ -168,42 +233,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
           </div>
         ) : (
           /* Official Certificate & Transcript View */
-          <div className="space-y-6">
-            <style>{`
-              @media print {
-                body * {
-                  visibility: hidden !important;
-                }
-                #printable-certificate-area, #printable-certificate-area * {
-                  visibility: visible !important;
-                }
-                #printable-certificate-area {
-                  position: absolute !important;
-                  left: 0 !important;
-                  top: 0 !important;
-                  width: 100% !important;
-                  margin: 0 !important;
-                  padding: 0 !important;
-                  background: transparent !important;
-                }
-                .print\\:hidden {
-                  display: none !important;
-                }
-                .print\\:break-before-page {
-                  page-break-before: always !important;
-                  break-before: page !important;
-                }
-                @page {
-                  size: A4 landscape;
-                  margin: 0;
-                }
-              }
-            `}</style>
-
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-800 pb-3 print:hidden">
-              <div className="flex items-center gap-2">
+          <div className="space-y-5">
+            {/* Action Bar */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-800 pb-4">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Verified Certificate (2 Halaman)
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Sertifikat Terverifikasi
                 </span>
                 <button
                   onClick={() => setIsVerified(false)}
@@ -213,25 +248,30 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 </button>
               </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handlePrint}
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-600/20 transition-all cursor-pointer"
-                >
-                  <Printer className="w-4 h-4" /> Cetak / PDF (Halaman 1 &amp; 2)
-                </button>
-              </div>
+              <button
+                onClick={handleDownloadPDF}
+                disabled={isDownloading}
+                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white font-black text-xs rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
+              >
+                {isDownloading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Download className="w-4 h-4" />
+                )}
+                <span>{isDownloading ? 'Memproses PDF...' : 'Download Sertifikat PDF (2 Halaman)'}</span>
+              </button>
             </div>
 
-            <div id="printable-certificate-area" className="space-y-6">
-              {/* HALAMAN 1: Printable Certificate Frame */}
+            {/* ============ HALAMAN 1: SERTIFIKAT ============ */}
+            <div
+              ref={page1Ref}
+              className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-700"
+              style={{ aspectRatio: '850 / 600' }}
+            >
               {bgImage ? (
                 <div
-                  className="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-cover bg-center border-4 border-amber-500/40 my-2"
-                  style={{
-                    backgroundImage: `url(${bgImage})`,
-                    aspectRatio: '850 / 600',
-                  }}
+                  className="relative w-full h-full bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url(${bgImage})` }}
                 >
                   {templateObjects.length > 0 ? (
                     templateObjects.map((obj: any, i: number) => {
@@ -247,7 +287,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       return (
                         <div
                           key={i}
-                          className="absolute transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap pointer-events-none drop-shadow-md"
+                          className="absolute transform -translate-x-1/2 -translate-y-1/2 whitespace-nowrap pointer-events-none"
                           style={{
                             top: `${topPercent}%`,
                             left: `${leftPercent}%`,
@@ -267,217 +307,151 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       <div className="absolute top-[42%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
                         <h3 className="text-2xl sm:text-4xl font-black text-amber-300 drop-shadow-lg">{userName || 'Siswa AI Navigator'}</h3>
                       </div>
-                      <div className="absolute bottom-[10%] left-[8%] pointer-events-none text-xs text-slate-200 font-bold">
+                      <div className="absolute bottom-[10%] left-[8%] pointer-events-none text-xs text-slate-700 font-bold">
                         {todayStr}
                       </div>
-                      <div className="absolute bottom-[10%] right-[8%] pointer-events-none text-xs text-amber-300 font-mono font-bold">
+                      <div className="absolute bottom-[10%] right-[8%] pointer-events-none text-xs text-blue-800 font-mono font-bold">
                         {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}
                       </div>
                     </>
                   )}
                 </div>
               ) : (
-                <div
-                  className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-500/40 rounded-2xl p-6 sm:p-10 text-center space-y-6 relative overflow-hidden shadow-2xl bg-cover bg-center"
-                  style={bgImage ? { backgroundImage: `url(${bgImage})` } : {}}
-                >
-                  {/* Decorative Blur Effect */}
-                  <div className="absolute top-0 left-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
-                  <div className="absolute bottom-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
+                /* Fallback: Digital Certificate */
+                <div className="w-full h-full bg-white relative flex flex-col items-center justify-center p-8 text-center">
+                  {/* Gold border accent */}
+                  <div className="absolute inset-2 border-2 border-amber-400/60 rounded-lg pointer-events-none" />
+                  <div className="absolute inset-3.5 border border-amber-300/30 rounded pointer-events-none" />
 
-                  {/* Header Badge */}
-                  <div className="flex items-center justify-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-indigo-600 p-0.5 shadow-lg shadow-amber-500/20">
-                      <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-amber-400">
-                        <Compass className="w-6 h-6" />
-                      </div>
-                    </div>
-                    <div className="text-left">
-                      <span className="text-sm font-black text-white tracking-wider block">AI NAVIGATOR</span>
-                      <span className="text-[10px] text-amber-400 font-bold tracking-widest uppercase block">Akademi Pembelajaran LLM</span>
-                    </div>
+                  {/* Top decorative line */}
+                  <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-2">
+                    <div className="w-16 h-[1px] bg-amber-400" />
+                    <Compass className="w-5 h-5 text-amber-500" />
+                    <div className="w-16 h-[1px] bg-amber-400" />
                   </div>
 
-                  <div className="space-y-1">
-                    <h2 className="text-xl sm:text-3xl font-black text-amber-300 uppercase tracking-widest">
-                      CERTIFICATE OF COMPLETION
+                  <div className="space-y-1 mt-4">
+                    <span className="text-[10px] text-slate-400 font-bold tracking-[0.3em] uppercase block">Maxy Academy — AI Navigator Program</span>
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-800 tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+                      CERTIFICATE
                     </h2>
-                    <p className="text-xs text-slate-400 font-medium">
-                      Sertifikat Kelulusan Resmi Pembelajaran Modul
-                    </p>
+                    <p className="text-sm text-slate-500 font-medium italic">Of Completion</p>
                   </div>
 
-                  {/* Recipient Name */}
-                  <div className="py-2 border-b-2 border-amber-500/40 max-w-md mx-auto">
-                    <h3 className="text-2xl sm:text-4xl font-black text-white bg-gradient-to-r from-white via-amber-200 to-indigo-200 bg-clip-text text-transparent">
+                  <p className="text-xs text-slate-500 mt-3">This certificate is proudly presented to:</p>
+
+                  <div className="mt-2 pb-1.5 border-b-2 border-amber-400/50 px-8">
+                    <h3 className="text-xl sm:text-3xl font-black text-blue-800" style={{ fontFamily: 'Georgia, serif' }}>
                       {userName || 'Siswa AI Navigator'}
                     </h3>
-                    <p className="text-[11px] text-slate-400 font-mono mt-1">{userEmail}</p>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto leading-relaxed font-medium">
-                    Telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong>, meliputi penguasaan Teknik Prompting RCTF, ChatGPT, Claude, Gemini, Perplexity, Copilot, Meta AI, DeepSeek, v0.dev, Bolt.new, dan Capstone Project.
+                  <p className="text-[10px] text-slate-500 max-w-sm mx-auto leading-relaxed mt-3">
+                    telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong> dengan predikat <strong className="text-emerald-700">LULUS</strong>.
                   </p>
 
-                  {/* Capstone Project Title if present */}
-                  {progress.capstoneSubmission && (
-                    <div className="p-3 bg-slate-900/90 border border-slate-800 rounded-xl max-w-md mx-auto text-xs space-y-1">
-                      <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider block">Judul Capstone Project:</span>
-                      <p className="text-slate-200 font-semibold italic">"{progress.capstoneSubmission.title}"</p>
-                    </div>
-                  )}
-
-                  {/* Badges Earned */}
-                  <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-                    <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-[11px] font-bold flex items-center gap-1">
-                      <Award className="w-3.5 h-3.5 text-amber-400" /> Master RCTF Prompting
-                    </span>
-                    <span className="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-[11px] font-bold flex items-center gap-1">
-                      <Sparkles className="w-3.5 h-3.5 text-indigo-400" /> Multi-LLM Practitioner
-                    </span>
-                    {userTier === 'tier2' ? (
-                      <span className="px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black flex items-center gap-1">
-                        <Crown className="w-3.5 h-3.5 fill-slate-950" /> Tier 2 VIP Graduate
-                      </span>
-                    ) : (
-                      <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold flex items-center gap-1">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> {displayModules.length} Modul Selesai ({displayModules.length} JP)
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Signatures & Verification Info */}
-                  <div className="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 max-w-lg mx-auto text-left gap-3">
-                    <div>
-                      <span className="block text-[10px] text-slate-500 font-bold">Tanggal Kelulusan:</span>
-                      <strong className="text-slate-200">{todayStr}</strong>
-                      {certNumber && <span className="block text-[10px] text-slate-400 font-mono mt-0.5">{certNumber}</span>}
+                  {/* Bottom section */}
+                  <div className="flex items-end justify-between w-full max-w-md mt-auto pt-4">
+                    <div className="text-left">
+                      <p className="text-[10px] text-slate-500">{todayStr}</p>
+                      {certNumber && <p className="text-[9px] text-slate-400 font-mono mt-0.5">{certNumber}</p>}
                     </div>
                     <div className="text-right">
-                      <span className="block text-[10px] text-slate-500 font-bold">UUID Certify Maxy:</span>
-                      <strong className="text-amber-400 font-mono text-[11px] block">{certUuid || 'AIN-2026-CERT-29M'}</strong>
-                      {verifyUrl ? (
-                        <a
-                          href={verifyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
-                        >
-                          <span>Verifikasi Keaslian Maxy Certify</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      ) : (
-                        <a
-                          href={`https://cms.maxy.academy/certificate/verify/${certUuid || 'AIN-2026-CERT-29M'}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 mt-1 cursor-pointer print:hidden"
-                        >
-                          <span>Verifikasi Keaslian Maxy Certify</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
+                      <p className="text-[9px] text-slate-400 font-mono">{certUuid || 'AIN-2026-CERT'}</p>
+                      <p className="text-[10px] text-amber-600 font-bold mt-0.5">CTO & Founder, Maxy Academy</p>
                     </div>
                   </div>
                 </div>
               )}
+            </div>
 
-              {/* HALAMAN 2: Transkrip Kurikulum Pembelajaran & Bobot 1 JP Per Modul (Aspect Ratio 850 / 600 - A4 Landscape - Matching White Paper Certificate) */}
-              <div
-                className="bg-white text-slate-900 border-4 border-amber-500 rounded-2xl p-4 sm:p-6 text-left space-y-3 relative overflow-hidden shadow-2xl print:break-before-page print:border-2 print:p-4 my-2"
-                style={{ aspectRatio: '850 / 600' }}
-              >
-                {/* Header Official Transkrip - Matching Halaman 1 */}
-                <div className="flex items-center justify-between border-b-2 border-amber-500 pb-2.5 gap-2 bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 p-4 rounded-t-xl text-white">
+            {/* ============ HALAMAN 2: TRANSKRIP ============ */}
+            <div
+              ref={page2Ref}
+              className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-700 bg-white"
+              style={{ aspectRatio: '850 / 600' }}
+            >
+              <div className="w-full h-full flex flex-col p-5">
+                {/* Header */}
+                <div className="flex items-center justify-between pb-3 border-b-2 border-blue-800 mb-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-400 to-blue-400 p-0.5 shadow-md shrink-0">
-                      <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center text-amber-400">
-                        <BookOpen className="w-4 h-4" />
-                      </div>
+                    <div className="w-8 h-8 bg-blue-800 rounded-lg flex items-center justify-center">
+                      <BookOpen className="w-4 h-4 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-wider">
-                        TRANSKRIP KURIKULUM &amp; BEBAN BELAJAR (HALAMAN 2)
+                      <h3 className="text-sm font-black text-blue-900 uppercase tracking-wider">
+                        Transkrip Kurikulum &amp; Beban Belajar
                       </h3>
-                      <p className="text-[10px] text-slate-300 font-medium leading-none mt-0.5">
+                      <p className="text-[9px] text-slate-500 font-medium leading-none mt-0.5">
                         Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
                       </p>
                     </div>
                   </div>
-                  <div className="text-right bg-slate-900/90 border border-amber-500/40 rounded-xl px-3 py-1 shrink-0">
-                    <span className="text-[11px] font-black text-white block leading-tight">{userName || 'Siswa AI Navigator'}</span>
-                    <span className="text-[9px] text-amber-400 font-mono block leading-none">{certNumber || 'No. 0255/AIN/NAV/2026'}</span>
+                  <div className="text-right">
+                    <span className="text-[10px] font-black text-blue-900 block leading-tight">{userName || 'Siswa AI Navigator'}</span>
+                    <span className="text-[8px] text-slate-500 font-mono block leading-none">{certNumber || 'No. 0255/AIN/NAV/2026'}</span>
                   </div>
                 </div>
 
-                {/* 2-Column Table Layout to fit inside 850/600 A4 Landscape */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 h-[calc(100%-90px)] overflow-y-auto print:overflow-visible">
+                {/* 2-Column Table */}
+                <div className="grid grid-cols-2 gap-3 flex-1 min-h-0 overflow-hidden">
                   {/* Column 1 */}
-                  <div className="rounded-lg border border-slate-300 overflow-hidden bg-slate-50">
-                    <table className="w-full text-left text-[10px] border-collapse">
+                  <div className="border border-slate-200 rounded-lg overflow-hidden">
+                    <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="border-b border-slate-300 text-slate-900 font-extrabold uppercase tracking-wider bg-slate-200">
-                          <th className="py-1 px-1.5 text-center w-6 border-r border-slate-300">No</th>
-                          <th className="py-1 px-2 font-bold text-slate-900">Judul Modul Pembelajaran</th>
-                          <th className="py-1 px-1.5 text-center w-10 border-l border-slate-300">Bobot</th>
-                          <th className="py-1 px-1.5 text-center w-12 border-l border-slate-300">Status</th>
+                        <tr className="bg-blue-800 text-white text-[8px] font-bold uppercase tracking-wider">
+                          <th className="py-1.5 px-2 text-center w-6 border-r border-blue-700">No</th>
+                          <th className="py-1.5 px-2">Judul Modul</th>
+                          <th className="py-1.5 px-1.5 text-center w-10 border-l border-blue-700">Bobot</th>
+                          <th className="py-1.5 px-1.5 text-center w-12 border-l border-blue-700">Status</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-200 text-slate-900 font-medium">
-                        {leftModules.map((m, idx) => (
-                          <tr key={m.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-slate-100/70'}>
-                            <td className="py-0.5 px-1 font-mono text-slate-700 font-bold text-center border-r border-slate-200">{idx + 1}</td>
-                            <td className="py-0.5 px-2 font-bold text-slate-900 leading-tight">
-                              {m.title}
-                              <span className="block text-[8.5px] text-slate-600 font-normal leading-none mt-0.5 truncate max-w-[200px]">{m.subtitle}</span>
-                            </td>
-                            <td className="py-0.5 px-1 text-center font-bold text-blue-700 border-l border-slate-200">1 JP</td>
-                            <td className="py-0.5 px-1 text-center border-l border-slate-200">
-                              <span className="px-1.5 py-0.2 bg-emerald-100 text-emerald-800 border border-emerald-300 text-[8.5px] font-black rounded">LULUS</span>
-                            </td>
-                          </tr>
-                        ))}
+                      <tbody>
+                        {leftModules.map((m, idx) => renderModuleRow(m, idx + 1, idx))}
                       </tbody>
                     </table>
                   </div>
 
                   {/* Column 2 */}
-                  <div className="rounded-lg border border-slate-300 overflow-hidden bg-slate-50">
-                    <table className="w-full text-left text-[10px] border-collapse">
+                  <div className="border border-slate-200 rounded-lg overflow-hidden">
+                    <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="border-b border-slate-300 text-slate-900 font-extrabold uppercase tracking-wider bg-slate-200">
-                          <th className="py-1 px-1.5 text-center w-6 border-r border-slate-300">No</th>
-                          <th className="py-1 px-2 font-bold text-slate-900">Judul Modul Pembelajaran</th>
-                          <th className="py-1 px-1.5 text-center w-10 border-l border-slate-300">Bobot</th>
-                          <th className="py-1 px-1.5 text-center w-12 border-l border-slate-300">Status</th>
+                        <tr className="bg-blue-800 text-white text-[8px] font-bold uppercase tracking-wider">
+                          <th className="py-1.5 px-2 text-center w-6 border-r border-blue-700">No</th>
+                          <th className="py-1.5 px-2">Judul Modul</th>
+                          <th className="py-1.5 px-1.5 text-center w-10 border-l border-blue-700">Bobot</th>
+                          <th className="py-1.5 px-1.5 text-center w-12 border-l border-blue-700">Status</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-200 text-slate-900 font-medium">
-                        {rightModules.map((m, idx) => (
-                          <tr key={m.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-slate-100/70'}>
-                            <td className="py-0.5 px-1 font-mono text-slate-700 font-bold text-center border-r border-slate-200">{leftModules.length + idx + 1}</td>
-                            <td className="py-0.5 px-2 font-bold text-slate-900 leading-tight">
-                              {m.title}
-                              <span className="block text-[8.5px] text-slate-600 font-normal leading-none mt-0.5 truncate max-w-[200px]">{m.subtitle}</span>
-                            </td>
-                            <td className="py-0.5 px-1 text-center font-bold text-blue-700 border-l border-slate-200">1 JP</td>
-                            <td className="py-0.5 px-1 text-center border-l border-slate-200">
-                              <span className="px-1.5 py-0.2 bg-emerald-100 text-emerald-800 border border-emerald-300 text-[8.5px] font-black rounded">LULUS</span>
-                            </td>
-                          </tr>
-                        ))}
+                      <tbody>
+                        {rightModules.map((m, idx) => renderModuleRow(m, leftModules.length + idx + 1, idx))}
                       </tbody>
                     </table>
                   </div>
                 </div>
 
-                {/* Footer Transkrip */}
-                <div className="pt-2 border-t border-slate-300 flex items-center justify-between text-[9.5px] text-slate-600">
-                  <span>* Total Beban: <strong>{displayModules.length} JP</strong> (1 JP = 45 Menit Pembelajaran Terstruktur &amp; Evaluasi).</span>
-                  <span className="font-mono text-blue-900 font-bold">UUID Certify: <strong>{certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</strong></span>
+                {/* Footer */}
+                <div className="pt-2.5 mt-2.5 border-t border-slate-200 flex items-center justify-between text-[8.5px] text-slate-500">
+                  <span>Total Beban: <strong className="text-blue-900">{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur)</span>
+                  <span className="font-mono text-blue-900 font-bold text-[8px]">UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</span>
                 </div>
               </div>
             </div>
+
+            {/* Verification Link */}
+            {(verifyUrl || certUuid) && (
+              <div className="text-center pt-2">
+                <a
+                  href={verifyUrl || `https://cms.maxy.academy/certificate/verify/${certUuid}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 cursor-pointer"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  <span>Verifikasi Keaslian Sertifikat</span>
+                </a>
+              </div>
+            )}
           </div>
         )}
       </div>

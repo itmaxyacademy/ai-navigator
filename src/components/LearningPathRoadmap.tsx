@@ -665,40 +665,44 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
             const requiredModulesCount = userTier === 'tier2' ? 29 : 22;
             const isFullyCompleted = completedCount >= requiredModulesCount;
             return (
-              <div className="w-full p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/80 to-slate-900 border border-amber-500/50 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4 animate-fadeIn">
-                <div className="flex items-center gap-3.5 text-left">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 shrink-0 font-black shadow-lg shadow-amber-500/30">
-                    <Award className="w-6 h-6" />
-                  </div>
-                  <div className="space-y-0.5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                        Pengecekan Status Sertifikasi ({userTier === 'tier2' ? 'Tier 2 VIP' : 'Tier 1 Basic'})
-                      </span>
-                      <span className="text-xs font-bold text-emerald-400">
-                        {completedCount}/{requiredModulesCount} Modul Selesai ({completedCount} JP)
-                      </span>
+              <div className="w-full p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/60 border border-slate-700 shadow-xl flex flex-col gap-4 animate-fadeIn">
+                {/* Top row: badge + progress */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 shrink-0 shadow-md">
+                      <Award className="w-5 h-5" />
                     </div>
-                    <h3 className="text-base font-extrabold text-white">
-                      {isFullyCompleted
-                        ? `🎉 100% Modul Pembelajaran Selesai! Siap Terbitkan Certificate of Completion (${requiredModulesCount} JP)`
-                        : `Progres Modul: Anda Telah Menyelesaikan ${completedCount} dari ${requiredModulesCount} Modul`}
-                    </h3>
-                    <p className="text-xs text-slate-300 font-medium">
-                      {isFullyCompleted
-                        ? 'Klik tombol di samping untuk verifikasi nama/email dan mengklaim sertifikat & transkrip resmi 2 halaman.'
-                        : `Selesaikan ${requiredModulesCount - completedCount} modul lagi hingga Modul ${requiredModulesCount} untuk membuka tombol Request Sertifikasi.`}
-                    </p>
+                    <div>
+                      <span className="text-[10px] font-bold uppercase text-amber-400 tracking-wide">
+                        Status Sertifikasi • {userTier === 'tier2' ? 'Tier 2 VIP' : 'Tier 1 Basic'}
+                      </span>
+                      <h3 className="text-sm font-extrabold text-white leading-snug">
+                        {isFullyCompleted
+                          ? `🎉 ${requiredModulesCount}/${requiredModulesCount} Modul Selesai — Siap Terbitkan Sertifikat!`
+                          : `${completedCount}/${requiredModulesCount} Modul Selesai`}
+                      </h3>
+                    </div>
                   </div>
+                  <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full whitespace-nowrap">
+                    {completedCount} / {requiredModulesCount} JP
+                  </span>
                 </div>
 
-                <div className="flex items-center gap-2.5 shrink-0 w-full md:w-auto">
+                {/* Description text */}
+                <p className="text-xs text-slate-400 font-medium leading-relaxed -mt-1">
+                  {isFullyCompleted
+                    ? 'Klik tombol di bawah untuk verifikasi nama/email dan mengunduh sertifikat & transkrip resmi dalam format PDF.'
+                    : `Selesaikan ${requiredModulesCount - completedCount} modul lagi untuk membuka akses sertifikat kelulusan.`}
+                </p>
+
+                {/* Action buttons */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   {isFullyCompleted ? (
                     <>
                       {userTier === 'tier2' && onOpenCapstoneModal && (
                         <button
                           onClick={onOpenCapstoneModal}
-                          className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer w-full md:w-auto"
+                          className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
                         >
                           <FileText className="w-4 h-4" />
                           <span>1. Isi Capstone Form</span>
@@ -707,19 +711,19 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                       {onOpenCertificateModal && (
                         <button
                           onClick={onOpenCertificateModal}
-                          className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer w-full md:w-auto"
+                          className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
                         >
                           <Award className="w-4 h-4" />
-                          <span>Request Sertifikat &amp; Transkrip</span>
+                          <span>Download Sertifikat & Transkrip</span>
                         </button>
                       )}
                     </>
                   ) : (
                     <button
                       onClick={() => {
-                        alert(`Pengecekan Status: Anda telah menyelesaikan ${completedCount}/${requiredModulesCount} modul. Selesaikan hingga Modul ${requiredModulesCount} (100%) untuk mengklaim Certificate of Completion!`);
+                        alert(`Anda telah menyelesaikan ${completedCount}/${requiredModulesCount} modul. Selesaikan hingga ${requiredModulesCount} modul (100%) untuk mengklaim sertifikat.`);
                       }}
-                      className="px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer w-full md:w-auto"
+                      className="px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
                     >
                       <ShieldCheck className="w-4 h-4 text-amber-400" />
                       <span>Status Check ({completedCount}/{requiredModulesCount})</span>
