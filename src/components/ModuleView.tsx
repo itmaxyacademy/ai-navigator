@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CourseModule, UserProgress } from '../types';
 import { ModuleOverview } from './ModuleOverview';
 import { InteractiveReplicaViewer } from './InteractiveReplicaViewer';
 import { PromptingGuideSection } from './PromptingGuideSection';
 import { QuizComponent } from './QuizComponent';
+import { PersonalNotes } from './PersonalNotes';
+import { FocusTimerWidget } from './FocusTimerWidget';
 import { ArrowLeft, BookOpen, Monitor, HelpCircle, CheckCircle2, Sparkles } from 'lucide-react';
 
 interface ModuleViewProps {
@@ -13,6 +15,8 @@ interface ModuleViewProps {
   onSectionChange: (section: 'overview' | 'replica' | 'prompting' | 'quiz') => void;
   onQuizComplete: (moduleId: number, score: number) => void;
   onNextModule?: () => void;
+  onCompleteCheckpoint?: (checkpointId: string, xpBonus: number) => void;
+  onAwardFocusXp?: (minutesCompleted: number, xpReward: number) => void;
 }
 
 export const ModuleView: React.FC<ModuleViewProps> = ({
@@ -22,17 +26,33 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
   onSectionChange,
   onQuizComplete,
   onNextModule,
+  onCompleteCheckpoint,
+  onAwardFocusXp,
 }) => {
   const activeSection = progress.activeSection || 'overview';
   const isCompleted = progress.completedModules.includes(module.id);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6 pb-12 relative">
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs shadow-2xl border border-indigo-400 flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4">
+          <Sparkles className="w-4 h-4 text-amber-300" />
+          <span>{toastMessage}</span>
+        </div>
+      )}
+
       {/* Top Header Navigation */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-4 rounded-2xl">
         <button
           onClick={onBackToPath}
-          className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-2 transition-all"
+          className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" /> Kembali ke Peta Jalan
         </button>
@@ -41,7 +61,7 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
         <div className="flex items-center gap-1 bg-slate-950 p-1.5 rounded-xl border border-slate-800/80 w-full sm:w-auto overflow-x-auto">
           <button
             onClick={() => onSectionChange('overview')}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
               activeSection === 'overview'
                 ? 'bg-indigo-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-slate-200'
@@ -53,7 +73,7 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
 
           <button
             onClick={() => onSectionChange('replica')}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
               activeSection === 'replica'
                 ? 'bg-indigo-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-slate-200'
@@ -65,7 +85,7 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
 
           <button
             onClick={() => onSectionChange('prompting')}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
               activeSection === 'prompting'
                 ? 'bg-indigo-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-slate-200'
@@ -77,7 +97,7 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
 
           <button
             onClick={() => onSectionChange('quiz')}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
               activeSection === 'quiz'
                 ? 'bg-purple-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-slate-200'
@@ -90,12 +110,25 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
         </div>
       </div>
 
+      {/* Focus Timer Pomodoro Widget */}
+      <FocusTimerWidget
+        moduleTitle={module.title}
+        onCompleteFocusBlock={(minutes, xp) => {
+          if (onAwardFocusXp) {
+            onAwardFocusXp(minutes, xp);
+          }
+          showToast(`Hebat! Sesi Focus ${minutes} Menit Selesai (+${xp} XP)`);
+        }}
+      />
+
       {/* Active Section Content */}
-      <div className="animate-fadeIn">
+      <div className="animate-fadeIn space-y-6">
         {activeSection === 'overview' && (
           <ModuleOverview
             module={module}
             onAdvanceToReplica={() => onSectionChange('replica')}
+            completedCheckpoints={progress.completedCheckpoints}
+            onCompleteCheckpoint={onCompleteCheckpoint}
           />
         )}
 
@@ -103,6 +136,8 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
           <InteractiveReplicaViewer
             module={module}
             onAdvanceToQuiz={() => onSectionChange('prompting')}
+            completedCheckpoints={progress.completedCheckpoints}
+            onCompleteCheckpoint={onCompleteCheckpoint}
           />
         )}
 
@@ -110,6 +145,8 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
           <PromptingGuideSection
             module={module}
             onAdvanceToQuiz={() => onSectionChange('quiz')}
+            completedCheckpoints={progress.completedCheckpoints}
+            onCompleteCheckpoint={onCompleteCheckpoint}
           />
         )}
 
@@ -120,6 +157,9 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
             onNextModule={onNextModule}
           />
         )}
+
+        {/* Personal Notes Section for the Current Module */}
+        <PersonalNotes module={module} onShowToast={showToast} />
       </div>
     </div>
   );

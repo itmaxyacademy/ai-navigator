@@ -3,7 +3,7 @@ import {
   Pencil, Palette, Sparkles, Image as ImageIcon, Search, Lock, User,
   Globe, Shield, ChevronDown, Plus, Download, RefreshCw, X, Menu,
   Layers, Settings, HelpCircle, Flame, ArrowUp, LayoutGrid, Clock,
-  Folder, Home, Frame, Scissors, Check, Info, Smartphone, Monitor
+  Folder, Home, Frame, Scissors, Check, Info, Smartphone, Monitor, AlertTriangle
 } from 'lucide-react';
 
 interface InfoModalData {
@@ -14,6 +14,54 @@ interface InfoModalData {
   keyFeatures: string[];
   howToUse: string;
 }
+
+interface GeneratedImageItem {
+  id: string;
+  url: string;
+  prompt: string;
+  style: string;
+  timestamp: string;
+  provider?: string;
+}
+
+const INSPIRATIONS_DATA = [
+  {
+    id: 'insp-1',
+    prompt: 'A cute fox with a red hat in a fairytale autumn forest',
+    style: 'Art Style',
+    url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 'insp-2',
+    prompt: 'Alien monster vs green giant in apocalyptic thunderstorm city',
+    style: 'Cinematic 8K',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 'insp-3',
+    prompt: 'Wise alien master riding a custom chopper motorcycle in desert sunset',
+    style: 'Photorealistic',
+    url: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 'insp-4',
+    prompt: 'CTO Maxy Academy coding in cafe with snow background',
+    style: 'Digital Art',
+    url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 'insp-5',
+    prompt: 'Futuristic cyberpunk neon city with flying vehicles and rainy glass reflections',
+    style: 'Cyberpunk',
+    url: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 'insp-6',
+    prompt: 'Minimalist vector logo for Maxy Academy tech startup with glowing gradients',
+    style: 'Logo Design',
+    url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
+  },
+];
 
 export const CraiyonReplica: React.FC = () => {
   // Device Mode State: 'desktop' | 'mobile'
@@ -46,8 +94,21 @@ export const CraiyonReplica: React.FC = () => {
   // Privacy State (Public / Private)
   const [isPublic, setIsPublic] = useState<boolean>(true);
 
-  // Generating State
+  // Generating & Error Handling State
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [generationError, setGenerationError] = useState<string | null>(null);
+
+  // Toast Notification State
+  const [toastNotice, setToastNotice] = useState<string | null>(null);
+
+  // Current Generated Result
+  const [generatedResult, setGeneratedResult] = useState<GeneratedImageItem | null>(null);
+
+  // Recents History Array State
+  const [recents, setRecents] = useState<GeneratedImageItem[]>([]);
+
+  // Search Filter for Inspirations/Recents
+  const [searchFilter, setSearchFilter] = useState<string>('');
 
   // Active Modal Popup State
   const [activeModalKey, setActiveModalKey] = useState<string | null>(null);
@@ -60,8 +121,8 @@ export const CraiyonReplica: React.FC = () => {
       badge: 'Core Engine',
       description: 'Fitur utama Craiyon untuk menghasilkan berbagai macam ilustrasi, lukisan digital, karya seni fotorealistis, dan gambar visual dari instruksi teks bebas.',
       keyFeatures: [
-        'Generasi 9 variasi gambar sekaligus secara paralel',
-        'Algoritma VQGAN+CLIP dan pemodelan AI generasi terbaru',
+        'Generasi gambar menggunakan Gemini / Imagen AI API',
+        'Algoritma neural network pemrosesan bahasa alami modern',
         'Fleksibilitas gaya tanpa batasan topik'
       ],
       howToUse: 'Pilih opsi "Image", ketik deskripsi visual pada kotak prompt, lalu klik tombol panah oranye untuk merender.'
@@ -88,7 +149,7 @@ export const CraiyonReplica: React.FC = () => {
         'Pencahayaan dramatis gaya Makoto Shinkai',
         'Pengenalan ekspresi mata dan gestur karakter anime'
       ],
-      howToUse: 'Klik "Anime", tulis deskripsi adegan atau karakter yang Anda inginkan, dan dapatkan 9 gambar bergaya anime secara instan.'
+      howToUse: 'Klik "Anime", tulis deskripsi adegan atau karakter yang Anda inginkan, dan dapatkan gambar bergaya anime secara instan.'
     },
     'image-suite-tattoo': {
       title: 'Tattoo Design Generator',
@@ -178,7 +239,7 @@ export const CraiyonReplica: React.FC = () => {
       title: 'Generation History (Riwayat Prompt)',
       category: 'Account & Assets',
       badge: 'Activity Log',
-      description: 'Catatan kronologis semua percobaan prompt dan hasil generasi 9-grid gambar yang pernah Anda hasilkan di Craiyon.',
+      description: 'Catatan kronologis semua percobaan prompt dan hasil generasi gambar yang pernah Anda hasilkan di Craiyon.',
       keyFeatures: [
         'Pencatatan tanggal, jam, dan variasi prompt',
         'Kemampuan memuat kembali prompt lama hanya dengan satu klik',
@@ -290,7 +351,7 @@ export const CraiyonReplica: React.FC = () => {
       description: 'Tombol eksekusi utama berwarna oranye dengan ikon panah melingkar/ke atas yang memicu pengolahan prompt oleh kluster AI Craiyon.',
       keyFeatures: [
         'Mengirimkan seluruh instruksi teks, gaya, dan aturan terlarang ke mesin AI',
-        'Memproses generasi 9 variasi gambar unik dalam satu siklus',
+        'Memproses generasi gambar resolusi tinggi via Gemini / Imagen API',
         'Umpan balik indikator pemrosesan waktu nyata (real-time progress bar)'
       ],
       howToUse: 'Setelah memasukkan prompt dan mengatur opsi, klik tombol lingkaran oranye besar ini untuk memulai pembuatan seni visual.'
@@ -303,7 +364,7 @@ export const CraiyonReplica: React.FC = () => {
       keyFeatures: [
         'Inspirasi beragam gaya seni dari jutaan pengguna Craiyon',
         'Memuat teks prompt asli yang dapat dipelajari dan ditiru',
-        'Pembaruan tren gambar AI terpopuler setiap hari'
+        'Klik pada kartu contoh untuk menyalin teks prompt langsung ke input'
       ],
       howToUse: 'Klik tab "Inspirations" di bawah kotak prompt untuk menjelajahi galeri karya terbaik komunitas.'
     },
@@ -317,7 +378,7 @@ export const CraiyonReplica: React.FC = () => {
         'Perbandingan antar percobaan generasi terbaru secara langsung',
         'Unduh dan bagikan karya secara cepat'
       ],
-      howToUse: 'Klik tab "Recents" untuk meninjau kembali 9-grid gambar hasil kreasi Anda sebelumnya.'
+      howToUse: 'Klik tab "Recents" untuk meninjau kembali gambar hasil kreasi Anda sebelumnya.'
     },
     'search-images': {
       title: 'Search for Images Bar',
@@ -339,7 +400,7 @@ export const CraiyonReplica: React.FC = () => {
       keyFeatures: [
         'Navigasi sentuh intuitif untuk smartphone',
         'Akses lengkap ke Image Suite, Studio, dan Pengaturan Akun',
-        'Sesuai dengan screenshot acuan Craiyon versi mobile'
+        'Sesuai dengan acuan Craiyon versi mobile'
       ],
       howToUse: 'Tekan ikon tiga garis (hamburger) di sudut kanan atas pada tampilan Mobile untuk membuka atau menutup drawer ini.'
     }
@@ -349,15 +410,99 @@ export const CraiyonReplica: React.FC = () => {
     setActiveModalKey(key);
   };
 
-  const handleSimulatedGenerate = () => {
+  // Real AI Image Generation Handler
+  const handleGenerate = async () => {
+    if (!promptText.trim()) return;
+
     setIsGenerating(true);
-    setTimeout(() => {
+    setGenerationError(null);
+
+    try {
+      const response = await fetch('/api/generate-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: promptText,
+          style: stylePreset,
+          aspectRatio: aspectRatio === 'auto' ? '1:1' : aspectRatio,
+          excludedWords: showExcludedInput ? excludedWords : '',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Gagal membuat gambar dari API.');
+      }
+
+      if (data.imageUrl) {
+        const newResult: GeneratedImageItem = {
+          id: Date.now().toString(),
+          url: data.imageUrl,
+          prompt: promptText,
+          style: stylePreset,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          provider: data.provider,
+        };
+
+        setGeneratedResult(newResult);
+        setRecents((prev) => [newResult, ...prev]);
+
+        if (data.warning) {
+          setToastNotice(data.warning);
+          setTimeout(() => setToastNotice(null), 4000);
+        } else {
+          setToastNotice('Gambar AI berhasil dibuat!');
+          setTimeout(() => setToastNotice(null), 3000);
+        }
+      } else {
+        throw new Error('API tidak mengembalikan URL gambar yang valid.');
+      }
+    } catch (err: any) {
+      console.error('Craiyon generator error:', err);
+      setGenerationError(
+        err.message || 'Terjadi kesalahan tidak terduga saat memanggil API AI Image Generator.'
+      );
+    } finally {
       setIsGenerating(false);
-    }, 1500);
+    }
   };
+
+  // Inspiration Prompt Copy Handler
+  const handleSelectInspiration = (inspirationPrompt: string) => {
+    setPromptText(inspirationPrompt);
+    setToastNotice('Teks contoh disalin ke input! Klik tombol Generate oranye untuk merender.');
+    setTimeout(() => setToastNotice(null), 3500);
+  };
+
+  // Filtered Inspirations / Recents
+  const filteredInspirations = INSPIRATIONS_DATA.filter(
+    (item) =>
+      item.prompt.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      item.style.toLowerCase().includes(searchFilter.toLowerCase())
+  );
+
+  const filteredRecents = recents.filter(
+    (item) =>
+      item.prompt.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      item.style.toLowerCase().includes(searchFilter.toLowerCase())
+  );
 
   return (
     <div className="relative rounded-2xl border border-slate-800 bg-[#0d0f17] text-slate-100 overflow-hidden shadow-2xl font-sans">
+      {/* Toast Notice Bar */}
+      {toastNotice && (
+        <div className="absolute top-14 left-1/2 -translate-x-1/2 z-40 bg-gradient-to-r from-orange-500 to-amber-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-2xl border border-white/20 flex items-center gap-2 animate-bounce">
+          <Sparkles className="w-4 h-4 text-amber-200" />
+          <span>{toastNotice}</span>
+          <button onClick={() => setToastNotice(null)} className="ml-2 hover:opacity-80">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+
       {/* Top Device & Control Bar */}
       <div className="bg-[#131622] border-b border-[#212536] px-4 py-2.5 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -570,11 +715,14 @@ export const CraiyonReplica: React.FC = () => {
                     <span>My images</span>
                   </button>
                   <button
-                    onClick={() => openModal('menu-history')}
+                    onClick={() => {
+                      setActiveTab('recents');
+                      openModal('menu-history');
+                    }}
                     className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg hover:text-white hover:bg-[#181b2a]"
                   >
                     <Clock className="w-3 h-3" />
-                    <span>History</span>
+                    <span>History ({recents.length})</span>
                   </button>
                   <button
                     onClick={() => openModal('menu-settings')}
@@ -688,7 +836,7 @@ export const CraiyonReplica: React.FC = () => {
                     <span>{isPublic ? 'Public' : 'Private (Pro)'}</span>
                   </button>
 
-                  {/* Style Auto */}
+                  {/* Style Preset Selector */}
                   <button
                     onClick={() => {
                       const styles: ('auto' | 'art' | 'drawing' | 'photo')[] = ['auto', 'art', 'drawing', 'photo'];
@@ -735,16 +883,13 @@ export const CraiyonReplica: React.FC = () => {
 
                 {/* Orange Generate Action Button */}
                 <button
-                  onClick={() => {
-                    handleSimulatedGenerate();
-                    openModal('control-generate');
-                  }}
+                  onClick={handleGenerate}
                   disabled={isGenerating}
-                  className="w-11 h-11 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white flex items-center justify-center shadow-lg shadow-orange-500/30 transition-transform active:scale-90 disabled:opacity-50"
-                  title="Generate Images"
+                  className="w-11 h-11 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white flex items-center justify-center shadow-lg shadow-orange-500/30 transition-transform active:scale-90 disabled:opacity-50 cursor-pointer"
+                  title="Generate AI Image"
                 >
                   {isGenerating ? (
-                    <RefreshCw className="w-5 h-5 animate-spin" />
+                    <RefreshCw className="w-5 h-5 animate-spin text-white" />
                   ) : (
                     <ArrowUp className="w-5 h-5 font-bold stroke-[3]" />
                   )}
@@ -752,123 +897,243 @@ export const CraiyonReplica: React.FC = () => {
               </div>
             </div>
 
+            {/* Error Message Display Banner */}
+            {generationError && (
+              <div className="max-w-2xl mx-auto bg-rose-950/80 border border-rose-500/60 p-4 rounded-2xl flex items-start gap-3 text-xs text-rose-200 shadow-xl animate-in fade-in">
+                <AlertTriangle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+                <div className="space-y-1 flex-1">
+                  <h4 className="font-bold text-rose-300">Gagal Menggenerasi Gambar</h4>
+                  <p className="leading-relaxed">{generationError}</p>
+                </div>
+                <button
+                  onClick={handleGenerate}
+                  className="px-3 py-1 bg-rose-800 hover:bg-rose-700 text-white font-bold rounded-lg shrink-0 transition-colors cursor-pointer"
+                >
+                  Coba Lagi
+                </button>
+              </div>
+            )}
+
+            {/* Loading Indicator Overlay */}
+            {isGenerating && (
+              <div className="max-w-2xl mx-auto bg-[#131625]/90 border border-orange-500/40 p-8 rounded-3xl text-center space-y-4 shadow-2xl animate-pulse">
+                <div className="w-16 h-16 mx-auto rounded-full bg-orange-500/20 border-2 border-orange-400 flex items-center justify-center text-orange-400 shadow-lg shadow-orange-500/20">
+                  <RefreshCw className="w-8 h-8 animate-spin" />
+                </div>
+                <div>
+                  <h3 className="text-base font-extrabold text-white">Memproses Generasi Gambar AI...</h3>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Sedang menghubungkan ke model Imagen API dengan prompt: <span className="text-orange-300 italic">"{promptText}"</span>
+                  </p>
+                </div>
+                <div className="w-48 mx-auto bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div className="bg-gradient-to-r from-orange-500 to-amber-400 h-full w-full animate-pulse" />
+                </div>
+              </div>
+            )}
+
+            {/* Newly Generated Result Card Preview or Initial Friendly Placeholder */}
+            {generatedResult && !isGenerating ? (
+              <div className="max-w-2xl mx-auto bg-[#131625] border border-orange-500/60 rounded-3xl p-4 space-y-3 shadow-2xl animate-in fade-in zoom-in-95">
+                <div className="flex items-center justify-between text-xs font-bold border-b border-[#22273d] pb-2">
+                  <span className="text-orange-400 flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4" /> Hasil Generasi AI Terbaru
+                  </span>
+                  <span className="text-slate-400 font-mono text-[10px]">{generatedResult.timestamp}</span>
+                </div>
+
+                <div className="relative group rounded-2xl overflow-hidden border border-[#23283e] bg-black">
+                  <img
+                    src={generatedResult.url}
+                    alt={generatedResult.prompt}
+                    referrerPolicy="no-referrer"
+                    className="w-full max-h-[450px] object-contain mx-auto"
+                  />
+                  <a
+                    href={generatedResult.url}
+                    download="craiyon-ai-image.jpg"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="absolute bottom-3 right-3 p-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl shadow-lg flex items-center gap-1.5 text-xs font-bold transition-all hover:scale-105"
+                  >
+                    <Download className="w-4 h-4" /> Unduh Gambar
+                  </a>
+                </div>
+
+                <div className="flex items-center justify-between text-xs text-slate-300 pt-1">
+                  <p className="font-semibold text-white line-clamp-2 italic">
+                    "{generatedResult.prompt}"
+                  </p>
+                  <span className="px-2.5 py-1 bg-indigo-950 text-indigo-300 rounded-lg text-[10px] font-bold border border-indigo-700 shrink-0 ml-2">
+                    Style: {generatedResult.style}
+                  </span>
+                </div>
+              </div>
+            ) : !isGenerating && (
+              /* Friendly Initial Placeholder Box */
+              <div className="max-w-2xl mx-auto bg-gradient-to-b from-[#131625] to-[#0f111c] border border-[#23283e] hover:border-orange-500/30 rounded-3xl p-6 text-center space-y-4 shadow-xl transition-all">
+                <div className="relative w-20 h-20 mx-auto flex items-center justify-center">
+                  <div className="absolute inset-0 bg-orange-500/10 rounded-full blur-xl animate-pulse" />
+                  <div className="w-16 h-16 rounded-2xl bg-[#181c2e] border border-orange-500/40 flex items-center justify-center text-orange-400 shadow-lg shadow-orange-500/10">
+                    <Sparkles className="w-8 h-8 text-orange-400" />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5 max-w-md mx-auto">
+                  <h3 className="text-base font-bold text-white flex items-center justify-center gap-2">
+                    <span>Siap Menggenerasi Gambar Pertama?</span>
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Ketik deskripsi visual di dalam kotak prompt di atas atau klik salah satu ide contoh di bawah, lalu tekan tombol <span className="text-orange-400 font-semibold">Generate</span> untuk memulai lukisan AI.
+                  </p>
+                </div>
+
+                {/* Quick Inspiration Badges */}
+                <div className="pt-2 flex flex-wrap items-center justify-center gap-2 text-[11px]">
+                  <span className="text-slate-500 font-medium">💡 Coba prompt cepat:</span>
+                  <button
+                    onClick={() => handleSelectInspiration('A cute fox with a red hat in a fairytale autumn forest')}
+                    className="px-3 py-1 bg-[#1a1e30] hover:bg-[#252b45] text-slate-300 hover:text-white rounded-full border border-[#2a304b] transition-colors cursor-pointer"
+                  >
+                    🦊 Cutest Fox in Hat
+                  </button>
+                  <button
+                    onClick={() => handleSelectInspiration('Futuristic cyberpunk neon city with flying vehicles')}
+                    className="px-3 py-1 bg-[#1a1e30] hover:bg-[#252b45] text-slate-300 hover:text-white rounded-full border border-[#2a304b] transition-colors cursor-pointer"
+                  >
+                    🌃 Cyberpunk City
+                  </button>
+                  <button
+                    onClick={() => handleSelectInspiration('CTO Maxy Academy coding in cafe with snow background')}
+                    className="px-3 py-1 bg-[#1a1e30] hover:bg-[#252b45] text-slate-300 hover:text-white rounded-full border border-[#2a304b] transition-colors cursor-pointer"
+                  >
+                    💻 Maxy Academy CTO
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Inspirations & Recents Bar */}
-            <div className="max-w-4xl mx-auto flex items-center justify-between gap-4 pt-2">
+            <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2">
               <div className="flex items-center gap-2 bg-[#111320] border border-[#1f2336] p-1 rounded-2xl">
                 <button
                   onClick={() => {
                     setActiveTab('inspirations');
                     openModal('tab-inspirations');
                   }}
-                  className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     activeTab === 'inspirations'
                       ? 'bg-[#1e2338] text-white shadow-md'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  Inspirations
+                  Inspirations ({INSPIRATIONS_DATA.length})
                 </button>
                 <button
                   onClick={() => {
                     setActiveTab('recents');
                     openModal('tab-recents');
                   }}
-                  className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     activeTab === 'recents'
                       ? 'bg-[#1e2338] text-white shadow-md'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  Recents
+                  Recents ({recents.length})
                 </button>
               </div>
 
               {/* Search Bar */}
-              <div
-                onClick={() => openModal('search-images')}
-                className="relative max-w-xs w-full cursor-pointer"
-              >
+              <div className="relative max-w-xs w-full">
                 <input
                   type="text"
-                  placeholder="Search for images..."
-                  readOnly
-                  className="w-full bg-[#111320] border border-[#1f2336] rounded-2xl pl-3 pr-8 py-2 text-xs text-white placeholder-slate-500 focus:outline-none cursor-pointer"
+                  value={searchFilter}
+                  onChange={(e) => setSearchFilter(e.target.value)}
+                  placeholder="Cari prompt / gaya..."
+                  className="w-full bg-[#111320] border border-[#1f2336] rounded-2xl pl-3 pr-8 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500/50"
                 />
                 <Search className="w-3.5 h-3.5 text-slate-400 absolute right-3 top-2.5" />
               </div>
             </div>
 
-            {/* Simulated Image Grid Gallery */}
-            <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-              {/* Card 1 */}
-              <div className="group relative rounded-2xl overflow-hidden border border-[#22273d] bg-[#121524] shadow-lg hover:border-orange-500/50 transition-all cursor-pointer">
-                <img
-                  src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
-                  alt="A cute fox with a red hat"
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end">
-                  <p className="text-xs font-semibold text-white line-clamp-2">
-                    A cute fox with a red hat in a fairytale autumn forest
-                  </p>
-                  <span className="text-[10px] text-orange-400 mt-1">Prompt: Art Style</span>
-                </div>
-              </div>
-
-              {/* Card 2 */}
-              <div className="group relative rounded-2xl overflow-hidden border border-[#22273d] bg-[#121524] shadow-lg hover:border-orange-500/50 transition-all cursor-pointer">
-                <img
-                  src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80"
-                  alt="Alien vs Hulk fantasy duel"
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end">
-                  <p className="text-xs font-semibold text-white line-clamp-2">
-                    Alien monster vs green giant in apocalyptic thunderstorm city
-                  </p>
-                  <span className="text-[10px] text-emerald-400 mt-1">Prompt: Cinematic 8K</span>
-                </div>
-              </div>
-
-              {/* Card 3 */}
-              <div className="group relative rounded-2xl overflow-hidden border border-[#22273d] bg-[#121524] shadow-lg hover:border-orange-500/50 transition-all cursor-pointer">
-                <img
-                  src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=600&q=80"
-                  alt="Yoda riding a motorcycle in desert"
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end">
-                  <p className="text-xs font-semibold text-white line-clamp-2">
-                    Wise alien master riding a custom chopper motorcycle in desert sunset
-                  </p>
-                  <span className="text-[10px] text-amber-400 mt-1">Prompt: Photorealistic</span>
-                </div>
-              </div>
-
-              {/* Card 4 (Maxy Academy Scene matching Screenshot 2) */}
-              <div className="group relative rounded-2xl overflow-hidden border border-[#22273d] bg-[#121524] shadow-lg hover:border-orange-500/50 transition-all cursor-pointer">
-                <img
-                  src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80"
-                  alt="CTO Maxy Academy coding in cafe with snow background"
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 p-3 flex flex-col justify-end">
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs font-semibold text-white line-clamp-2">
-                      CTO Maxy Academy coding in cafe with snow background
-                    </p>
-                    <div className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center shrink-0">
-                      <Pencil className="w-3 h-3 text-white fill-white" />
+            {/* Content Gallery (Inspirations or Recents Tab) */}
+            {activeTab === 'inspirations' ? (
+              <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                {filteredInspirations.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => handleSelectInspiration(item.prompt)}
+                    className="group relative rounded-2xl overflow-hidden border border-[#22273d] bg-[#121524] shadow-lg hover:border-orange-500/60 transition-all cursor-pointer hover:scale-[1.02]"
+                    title="Klik untuk menyalin contoh prompt ini"
+                  >
+                    <img
+                      src={item.url}
+                      alt={item.prompt}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end">
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs font-semibold text-white line-clamp-2">
+                          {item.prompt}
+                        </p>
+                        <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center shrink-0 ml-2 group-hover:scale-110 transition-transform">
+                          <Plus className="w-3.5 h-3.5 text-white" />
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between mt-1 text-[10px]">
+                        <span className="text-orange-400 font-semibold">{item.style}</span>
+                        <span className="text-slate-400">Gunakan Prompt Ini</span>
+                      </div>
                     </div>
                   </div>
-                  <span className="text-[10px] text-indigo-300 mt-1 font-mono">#cafe scene #snow #code</span>
-                </div>
+                ))}
               </div>
-            </div>
+            ) : (
+              /* Recents Tab Grid */
+              <div className="max-w-5xl mx-auto space-y-4 pt-2">
+                {recents.length === 0 ? (
+                  <div className="text-center py-12 bg-[#121524] border border-[#22273d] rounded-3xl p-6 space-y-3">
+                    <Clock className="w-10 h-10 text-slate-500 mx-auto" />
+                    <h3 className="text-sm font-bold text-slate-300">Belum Ada Riwayat Gambar</h3>
+                    <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                      Ketikkan instruksi pada kotak prompt di atas, lalu klik tombol Generate oranye untuk menyimpan hasil karya Anda di sini.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {filteredRecents.map((item) => (
+                      <div
+                        key={item.id}
+                        onClick={() => handleSelectInspiration(item.prompt)}
+                        className="group relative rounded-2xl overflow-hidden border border-[#22273d] bg-[#121524] shadow-lg hover:border-orange-500/60 transition-all cursor-pointer"
+                      >
+                        <img
+                          src={item.url}
+                          alt={item.prompt}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-3 flex flex-col justify-end">
+                          <p className="text-xs font-semibold text-white line-clamp-2">
+                            "{item.prompt}"
+                          </p>
+                          <div className="flex items-center justify-between text-[10px] text-slate-400 mt-1">
+                            <span className="text-amber-400 font-bold">{item.style}</span>
+                            <span>{item.timestamp}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </main>
         </div>
       ) : (
-        /* ================= MOBILE VIEW (Screenshot 2 & 3) ================= */
+        /* ================= MOBILE VIEW ================= */
         <div className="relative min-h-[640px] bg-[#0b0d14] text-slate-100 p-4 space-y-5 max-w-sm mx-auto border-x border-[#1a1e2d] shadow-2xl">
           {/* Mobile Header Bar */}
           <div className="flex items-center justify-between pb-3 border-b border-[#1c2030]">
@@ -910,12 +1175,15 @@ export const CraiyonReplica: React.FC = () => {
             </p>
           </div>
 
-          {/* Mobile Prompt Box (Screenshot 2 exact replica) */}
+          {/* Mobile Prompt Box */}
           <div className="bg-[#131625] border border-[#23283e] rounded-3xl p-4 space-y-3 shadow-xl relative">
             <div className="relative">
-              <div className="text-xs text-white leading-relaxed font-medium min-h-[50px] pr-8">
-                <span className="underline underline-offset-4 decoration-slate-400">make</span> an image about CTO <span className="font-bold text-orange-400">Maxy Academy</span> coding in the cafe with <span className="underline underline-offset-4 decoration-slate-400">snow</span> background
-              </div>
+              <textarea
+                value={promptText}
+                onChange={(e) => setPromptText(e.target.value)}
+                placeholder="A cute fox with a red hat..."
+                className="w-full bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none resize-none min-h-[55px] pr-8 font-medium"
+              />
               <button
                 onClick={() => openModal('control-uploadref')}
                 className="absolute top-0 right-0 p-2 bg-[#1d2238] rounded-xl text-slate-300 border border-[#2f375a]"
@@ -926,7 +1194,7 @@ export const CraiyonReplica: React.FC = () => {
 
             {/* Mobile Bottom Controls Row */}
             <div className="flex items-center justify-between pt-2 border-t border-[#1c2033] text-[11px]">
-              <div className="flex items-center gap-1.5 text-slate-300">
+              <div className="flex items-center gap-1 text-slate-300">
                 <button
                   onClick={() => openModal('control-public')}
                   className="flex items-center gap-1 px-2 py-1 bg-[#1a1e30] rounded-lg border border-[#2a304a]"
@@ -950,27 +1218,16 @@ export const CraiyonReplica: React.FC = () => {
                   <Frame className="w-3 h-3 text-cyan-400" />
                   <span>Auto</span>
                 </button>
-
-                <button
-                  onClick={() => openModal('control-excluded')}
-                  className="flex items-center gap-1 px-2 py-1 bg-[#1a1e30] rounded-lg border border-[#2a304a]"
-                >
-                  <X className="w-3 h-3 text-rose-400" />
-                  <span>Exc</span>
-                </button>
               </div>
 
               {/* Mobile Orange Button */}
               <button
-                onClick={() => {
-                  handleSimulatedGenerate();
-                  openModal('control-generate');
-                }}
+                onClick={handleGenerate}
                 disabled={isGenerating}
-                className="w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center shadow-lg shadow-orange-500/40 shrink-0"
+                className="w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center shadow-lg shadow-orange-500/40 shrink-0 cursor-pointer disabled:opacity-50"
               >
                 {isGenerating ? (
-                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <RefreshCw className="w-4 h-4 animate-spin text-white" />
                 ) : (
                   <ArrowUp className="w-4 h-4 font-bold stroke-[3]" />
                 )}
@@ -978,64 +1235,60 @@ export const CraiyonReplica: React.FC = () => {
             </div>
           </div>
 
-          {/* Generated Result Card (Matching Screenshot 2) */}
-          <div className="space-y-3 pt-1">
-            <div className="relative rounded-2xl overflow-hidden border border-[#23283e] bg-[#131625] shadow-lg">
-              <img
-                src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80"
-                alt="CTO Maxy Academy coding in cafe with snow background"
-                className="w-full h-56 object-cover"
-              />
-              <div className="absolute bottom-2 right-2 w-6 h-6 rounded-md bg-orange-500 flex items-center justify-center shadow-md">
-                <Pencil className="w-3.5 h-3.5 text-white fill-white" />
-              </div>
-            </div>
-
-            {/* Tags Pills */}
-            <div className="flex items-center justify-between text-xs">
-              <div className="flex items-center gap-1.5 overflow-x-auto">
-                <span className="px-3 py-1 bg-[#181b29] border border-[#272d42] rounded-full text-slate-300 font-medium">
-                  #cafe scene
-                </span>
-                <span className="px-3 py-1 bg-[#181b29] border border-[#272d42] rounded-full text-slate-300 font-medium">
-                  #coffee shop
-                </span>
-                <span className="px-3 py-1 bg-[#181b29] border border-[#272d42] rounded-full text-slate-300 font-medium">
-                  #cafe
-                </span>
-              </div>
-              <button onClick={() => openModal('search-images')} className="p-2 text-slate-400 hover:text-white">
-                <Search className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Grid Below */}
-            <div className="grid grid-cols-2 gap-2 pt-2">
-              <div className="rounded-xl overflow-hidden border border-[#23283e] bg-[#131625] h-32 relative">
+          {/* Generated Result Card in Mobile View */}
+          {generatedResult && (
+            <div className="space-y-3 pt-1 animate-in fade-in">
+              <div className="relative rounded-2xl overflow-hidden border border-orange-500/50 bg-[#131625] shadow-lg">
                 <img
-                  src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=400&q=80"
-                  alt="Programmer setup"
-                  className="w-full h-full object-cover"
+                  src={generatedResult.url}
+                  alt={generatedResult.prompt}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-56 object-cover"
                 />
-                <div className="absolute bottom-1 right-1 w-5 h-5 rounded bg-orange-500 flex items-center justify-center">
-                  <Pencil className="w-3 h-3 text-white fill-white" />
-                </div>
+                <a
+                  href={generatedResult.url}
+                  download="craiyon-ai-image.jpg"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="absolute bottom-2 right-2 p-2 rounded-lg bg-orange-500 text-white shadow-md hover:bg-orange-600 flex items-center gap-1 text-[10px] font-bold"
+                >
+                  <Download className="w-3.5 h-3.5" /> Unduh
+                </a>
               </div>
+              <p className="text-xs text-slate-300 italic font-medium leading-tight">
+                "{generatedResult.prompt}"
+              </p>
+            </div>
+          )}
 
-              <div className="rounded-xl overflow-hidden border border-[#23283e] bg-[#131625] h-32 relative">
-                <img
-                  src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80"
-                  alt="Cafe view"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute bottom-1 right-1 w-5 h-5 rounded bg-orange-500 flex items-center justify-center">
-                  <Pencil className="w-3 h-3 text-white fill-white" />
+          {/* Mobile Recents / Inspirations Quick Tab */}
+          <div className="space-y-2 pt-2">
+            <div className="flex items-center justify-between text-xs font-bold border-b border-[#22273d] pb-2">
+              <span className="text-slate-300">Inspirasi Komunitas</span>
+              <span className="text-orange-400 text-[10px]">Klik gambar untuk salin</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {INSPIRATIONS_DATA.slice(0, 4).map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => handleSelectInspiration(item.prompt)}
+                  className="rounded-xl overflow-hidden border border-[#23283e] bg-[#131625] h-28 relative cursor-pointer group"
+                >
+                  <img
+                    src={item.url}
+                    alt={item.prompt}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent p-1.5 flex flex-col justify-end">
+                    <p className="text-[10px] text-white font-medium line-clamp-1">{item.prompt}</p>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* MOBILE DRAWER OVERLAY (Exact match for Screenshot 3) */}
+          {/* MOBILE DRAWER OVERLAY */}
           {isMobileDrawerOpen && (
             <div className="absolute inset-0 z-50 bg-[#090b11]/95 backdrop-blur-md p-5 flex flex-col justify-between overflow-y-auto animate-in fade-in duration-200">
               <div className="space-y-6">
@@ -1221,7 +1474,7 @@ export const CraiyonReplica: React.FC = () => {
               </div>
               <button
                 onClick={() => setActiveModalKey(null)}
-                className="p-1.5 rounded-full bg-[#1e2338] text-slate-400 hover:text-white transition-colors"
+                className="p-1.5 rounded-full bg-[#1e2338] text-slate-400 hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1267,7 +1520,7 @@ export const CraiyonReplica: React.FC = () => {
             {/* Close Button */}
             <button
               onClick={() => setActiveModalKey(null)}
-              className="w-full py-2 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-bold text-xs rounded-xl shadow-md transition-all"
+              className="w-full py-2 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer"
             >
               Tutup Penjelasan
             </button>

@@ -76,7 +76,17 @@ export interface CourseModule {
   content: ModuleSectionContent;
 }
 
+export type UserTier = 'free' | 'tier1' | 'tier2';
+
+export interface CapstoneSubmission {
+  name: string;
+  email: string;
+  title: string;
+  submittedAt: string;
+}
+
 export interface UserProgress {
+  userTier?: UserTier; // 'free' (Free Trial), 'tier1' (Full Modul 1-29), 'tier2' (VIP Master)
   completedModules: number[]; // Module IDs
   moduleScores: Record<number, number>; // moduleId -> score out of questions length
   currentModuleId: number;
@@ -85,6 +95,15 @@ export interface UserProgress {
   streakDays: number;
   unlockedBadges: string[];
   lastCompletedDate?: string;
+  dailyXpHistory?: Record<string, number>;
+  dailyGoalMinutes?: number; // e.g. 15 minutes default
+  dailyMinutesHistory?: Record<string, number>; // dateStr -> minutes learned today
+  completedCheckpoints?: string[]; // IDs of mini-quiz checkpoints completed
+  moduleRevisits?: Record<number, number>; // moduleId -> count of times revisited/practiced
+  certName?: string;
+  certEmail?: string;
+  certRequested?: boolean;
+  capstoneSubmission?: CapstoneSubmission;
 }
 
 export interface RCTFState {

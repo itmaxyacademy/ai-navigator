@@ -26,6 +26,10 @@ export const SunoReplica: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [mobileTab, setMobileTab] = useState<'create' | 'workspace'>('create');
 
+  // Credits & Error State
+  const [credits, setCredits] = useState<number>(50);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   // Dashboard Form Mode: 'simple' vs 'custom'
   const [mode, setMode] = useState<'simple' | 'custom'>('simple');
   const [isInstrumental, setIsInstrumental] = useState<boolean>(false);
@@ -88,6 +92,19 @@ export const SunoReplica: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [songProgress, setSongProgress] = useState<number>(30);
 
+  // Simulated player playback progress timer
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+    if (isPlaying) {
+      timer = setInterval(() => {
+        setSongProgress((prev) => (prev >= 100 ? 0 : prev + 1));
+      }, 500);
+    }
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isPlaying]);
+
   // Modal Info & Toast State
   const [activeModalKey, setActiveModalKey] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -114,46 +131,89 @@ export const SunoReplica: React.FC = () => {
     } else {
       setSimplePrompt(randomChoice);
     }
+    if (errorMessage) setErrorMessage(null);
     showToast('💡 Prompt acak berhasil dimasukkan!');
   };
 
   // Auto Generate Lyrics Handler for Custom Mode
   const handleAutoGenerateLyrics = () => {
     setCustomLyrics(
-      `[Intro - Upbeat Synth]\n\n[Verse 1]\nDi kelas Maxy Academy kita belajar bersama\nMenguasai prompt engineering dan logika masa depan\nTak ada kata menyerah dalam setiap tantangan!\n\n[Pre-Chorus]\nKetiak algoritma berpadu dengan imajinasi\n\n[Chorus]\nFly high, raih prestasi bersama Maxy AI!\nLagu ini bukti karya tanpa batas!\n\n[Outro - Fade Out]`
+      `[Intro - Upbeat Synth]\n\n[Verse 1]\nDi kelas Maxy Academy kita belajar bersama\nMenguasai prompt engineering dan logika masa depan\nTak ada kata menyerah dalam setiap tantangan!\n\n[Pre-Chorus]\nKetika algoritma berpadu dengan imajinasi\n\n[Chorus]\nFly high, raih prestasi bersama Maxy AI!\nLagu ini bukti karya tanpa batas!\n\n[Outro - Fade Out]`
     );
+    if (errorMessage) setErrorMessage(null);
     showToast('✨ Lirik otomatis berhasil digenerasi oleh AI!');
   };
 
   // Trigger Song Generation Handler
-  const handleGenerateSong = () => {
+  const handleGenerateSong = async (promptOverride?: string) => {
+    const promptToUse = promptOverride !== undefined ? promptOverride : (mode === 'simple' ? simplePrompt : customLyrics);
+
+    if (mode === 'simple' && (!promptToUse || !promptToUse.trim())) {
+      setErrorMessage('Deskripsi lagu tidak boleh kosong! Silakan ketik naskah atau gunakan tombol Acak.');
+      showToast('❌ Deskripsi lagu kosong!');
+      return;
+    }
+
+    if (mode === 'custom' && (!customLyrics.trim() && !customStyle.trim() && !customTitle.trim())) {
+      setErrorMessage('Mohon isi minimal salah satu bidang (Lirik, Gaya, atau Judul Lagu)!');
+      showToast('❌ Form Lanjutan kosong!');
+      return;
+    }
+
+    if (credits < 2) {
+      setErrorMessage('Kredit Anda tidak mencukupi! Anda memerlukan minimal 2 kredit per generasi lagu.');
+      showToast('❌ Kredit tidak mencukupi!');
+      return;
+    }
+
+    setErrorMessage(null);
     setIsGenerating(true);
-    showToast('🚀 Memproses generasi lagu AI Suno v4.5...');
+    showToast('🚀 Memproses generasi 2 versi lagu AI Suno v4.5...');
 
-    setTimeout(() => {
-      setIsGenerating(false);
-      const newSongTitle = mode === 'custom' && customTitle.trim() ? customTitle : `Lagu Maxy AI #${generatedSongs.length + 1}`;
-      const newSongStyle = mode === 'custom' ? customStyle : 'Upbeat EDM & Lofi Fusion';
+    try {
+      const res = await fetch('/api/generate-song', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: promptToUse,
+          mode,
+          isInstrumental,
+          customLyrics,
+          customStyle,
+          customTitle,
+        }),
+      });
 
-      const newSong: SongItem = {
-        id: `song-${Date.now()}`,
-        title: newSongTitle,
-        style: newSongStyle,
-        duration: '2:32',
-        isInstrumental: mode === 'simple' ? isInstrumental : false,
-        lyrics: mode === 'simple'
-          ? (isInstrumental ? '(Instrumental Track)' : `[Verse]\n${simplePrompt}\n\n[Chorus]\nMaxy Academy AI Song Generation!`)
-          : customLyrics,
+      const data = await res.json();
+      const newVersions: SongItem[] = (data.versions || []).map((v: any, idx: number) => ({
+        id: `song-${Date.now()}-${idx}`,
+        title: v.title || `Lagu Maxy AI #${generatedSongs.length + idx + 1}`,
+        style: v.style || 'Upbeat EDM & Lofi Fusion',
+        duration: v.duration || '2:40',
+        isInstrumental: Boolean(v.isInstrumental),
+        lyrics: v.lyrics || '(Instrumental Track)',
         createdAt: 'Baru saja',
-        waveform: Array.from({ length: 24 }, () => Math.floor(Math.random() * 60) + 35),
-      };
+        waveform: v.waveform || Array.from({ length: 24 }, () => Math.floor(Math.random() * 60) + 35),
+      }));
 
-      setGeneratedSongs([newSong, ...generatedSongs]);
-      setActiveSongId(newSong.id);
+      const newCredits = Math.max(0, credits - 2);
+      setCredits(newCredits);
+      setGeneratedSongs((prev) => [...newVersions, ...prev]);
+
+      if (newVersions.length > 0) {
+        setActiveSongId(newVersions[0].id);
+      }
       setIsPlaying(true);
+      setSongProgress(5);
       setCurrentStage('dashboard');
-      showToast(`🎉 Lagu "${newSongTitle}" berhasil dibuat dan siap diputar!`);
-    }, 1800);
+      showToast(`🎉 2 Versi lagu berhasil dibuat! Sisa kredit: ${newCredits}`);
+    } catch (err: any) {
+      console.error('Song generation error:', err);
+      setErrorMessage('Terjadi kesalahan saat memproses lagu.');
+      showToast('❌ Gagal membuat lagu.');
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   // Handle Play/Pause Toggle
@@ -340,10 +400,10 @@ export const SunoReplica: React.FC = () => {
                 <button
                   onClick={() => {
                     setSimplePrompt(landingPrompt);
-                    handleGenerateSong();
+                    handleGenerateSong(landingPrompt);
                   }}
                   disabled={isGenerating}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-pink-600 via-rose-500 to-orange-500 hover:from-pink-500 hover:to-orange-400 text-white font-extrabold text-xs rounded-xl shadow-lg shadow-pink-600/30 transition-all active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-pink-600 via-rose-500 to-orange-500 hover:from-pink-500 hover:to-orange-400 text-white font-extrabold text-xs rounded-xl shadow-lg shadow-pink-600/30 transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
                 >
                   {isGenerating ? (
                     <>
@@ -463,7 +523,7 @@ export const SunoReplica: React.FC = () => {
                 </div>
                 <div className="flex-1 overflow-hidden">
                   <h4 className="text-xs font-bold text-white truncate">wahyudi_maxy_academy</h4>
-                  <p className="text-[10px] text-pink-400 font-semibold">Paket Gratis (50 Kredit)</p>
+                  <p className="text-[10px] text-pink-400 font-semibold">Paket Gratis ({credits} Kredit)</p>
                 </div>
               </div>
 
@@ -589,6 +649,22 @@ export const SunoReplica: React.FC = () => {
               </button>
             </div>
 
+            {/* Error Alert Box */}
+            {errorMessage && (
+              <div className="bg-red-500/10 border border-red-500/40 rounded-2xl p-3 flex items-center justify-between gap-3 text-xs text-red-300 animate-in fade-in">
+                <div className="flex items-center gap-2">
+                  <X className="w-4 h-4 text-red-400 shrink-0" />
+                  <span>{errorMessage}</span>
+                </div>
+                <button
+                  onClick={() => setErrorMessage(null)}
+                  className="text-red-400 hover:text-white shrink-0 cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+
             {/* FORM SIMPLE MODE */}
             {mode === 'simple' ? (
               <div className="space-y-4 animate-in fade-in duration-200">
@@ -601,7 +677,10 @@ export const SunoReplica: React.FC = () => {
                   </label>
                   <textarea
                     value={simplePrompt}
-                    onChange={(e) => setSimplePrompt(e.target.value)}
+                    onChange={(e) => {
+                      setSimplePrompt(e.target.value);
+                      if (errorMessage) setErrorMessage(null);
+                    }}
                     placeholder="Mis. lagu upbeat tentang belajar AI di Maxy Academy..."
                     className="w-full bg-[#080a10] border border-[#20263a] rounded-2xl p-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-pink-500 min-h-[120px] resize-none leading-relaxed"
                   />
@@ -642,7 +721,10 @@ export const SunoReplica: React.FC = () => {
                   </div>
                   <textarea
                     value={customLyrics}
-                    onChange={(e) => setCustomLyrics(e.target.value)}
+                    onChange={(e) => {
+                      setCustomLyrics(e.target.value);
+                      if (errorMessage) setErrorMessage(null);
+                    }}
                     placeholder="Tuliskan lirik lagu Anda di sini (gunakan tag [Verse], [Chorus])..."
                     className="w-full bg-[#080a10] border border-[#20263a] rounded-2xl p-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-pink-500 min-h-[130px] font-mono leading-relaxed"
                   />
@@ -654,7 +736,10 @@ export const SunoReplica: React.FC = () => {
                   <input
                     type="text"
                     value={customStyle}
-                    onChange={(e) => setCustomStyle(e.target.value)}
+                    onChange={(e) => {
+                      setCustomStyle(e.target.value);
+                      if (errorMessage) setErrorMessage(null);
+                    }}
                     placeholder="Mis. Indie Pop, 120 bpm, synthwave, male vocal..."
                     className="w-full bg-[#080a10] border border-[#20263a] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-pink-500 font-mono"
                   />
@@ -663,7 +748,10 @@ export const SunoReplica: React.FC = () => {
                     {['Indie Pop', 'Synthwave', 'Lofi Chill', 'Orchestral', '128 BPM'].map((tag) => (
                       <button
                         key={tag}
-                        onClick={() => setCustomStyle((prev) => `${prev}, ${tag}`)}
+                        onClick={() => {
+                          setCustomStyle((prev) => `${prev}, ${tag}`);
+                          if (errorMessage) setErrorMessage(null);
+                        }}
                         className="px-2 py-0.5 bg-[#161a28] hover:bg-[#22293e] text-slate-300 text-[10px] rounded-md border border-[#242c43]"
                       >
                         +{tag}
@@ -678,7 +766,10 @@ export const SunoReplica: React.FC = () => {
                   <input
                     type="text"
                     value={customTitle}
-                    onChange={(e) => setCustomTitle(e.target.value)}
+                    onChange={(e) => {
+                      setCustomTitle(e.target.value);
+                      if (errorMessage) setErrorMessage(null);
+                    }}
                     placeholder="Judul lagu..."
                     className="w-full bg-[#080a10] border border-[#20263a] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-pink-500"
                   />
@@ -850,11 +941,14 @@ export const SunoReplica: React.FC = () => {
 
                   <div className="flex-1 space-y-1">
                     <div className="flex justify-between text-[11px] text-slate-300 font-mono">
-                      <span>0:45</span>
+                      <span>0:{Math.min(59, Math.floor(songProgress * 1.5)).toString().padStart(2, '0')}</span>
                       <span>{activeSong.duration}</span>
                     </div>
                     <div className="h-2 bg-[#1c2234] rounded-full overflow-hidden">
-                      <div className={`h-full bg-gradient-to-r from-pink-500 to-orange-500 transition-all ${isPlaying ? 'w-2/5 animate-pulse' : 'w-1/4'}`} />
+                      <div
+                        className="h-full bg-gradient-to-r from-pink-500 to-orange-500 transition-all duration-300"
+                        style={{ width: `${songProgress}%` }}
+                      />
                     </div>
                   </div>
                 </div>

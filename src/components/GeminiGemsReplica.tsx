@@ -3,7 +3,8 @@ import {
   Sparkles, Search, Gem, LayoutGrid, Heart, Settings, User,
   Plus, ArrowLeft, MoreVertical, Share2, Edit2, Trash2, Wand2,
   Mic, Paperclip, Send, RotateCcw, RotateCw, FileText, Info,
-  CheckCircle2, ChevronDown, Check, HelpCircle, ExternalLink, RefreshCw
+  CheckCircle2, ChevronDown, Check, HelpCircle, ExternalLink, RefreshCw,
+  AlertCircle, X
 } from 'lucide-react';
 
 export interface CustomGem {
@@ -20,8 +21,8 @@ export interface CustomGem {
 }
 
 export const GeminiGemsReplica: React.FC = () => {
-  // Navigation View: 'home' | 'gems-manager' | 'create-gem' | 'gem-chat'
-  const [currentView, setCurrentView] = useState<'home' | 'gems-manager' | 'create-gem' | 'gem-chat'>('gems-manager');
+  // Navigation View: 'home' | 'gems-manager' | 'create-gem' | 'gem-chat' | 'search' | 'apps' | 'saved'
+  const [currentView, setCurrentView] = useState<'home' | 'gems-manager' | 'create-gem' | 'gem-chat' | 'search' | 'apps' | 'saved'>('gems-manager');
 
   // Selected Active Gem for Chat Mode
   const [activeGem, setActiveGem] = useState<CustomGem | null>(null);
@@ -30,6 +31,9 @@ export const GeminiGemsReplica: React.FC = () => {
   const [selectedMode, setSelectedMode] = useState<string>('Pro Mendalam');
   const [isModeOpen, setIsModeOpen] = useState<boolean>(false);
 
+  // Editing Gem ID (null if creating new, string if editing existing)
+  const [editingGemId, setEditingGemId] = useState<string | null>(null);
+
   // Form State for Creating/Editing Gem
   const [formName, setFormName] = useState<string>('');
   const [formDescription, setFormDescription] = useState<string>('');
@@ -37,20 +41,28 @@ export const GeminiGemsReplica: React.FC = () => {
   const [formTool, setFormTool] = useState<string>('Tidak ada alat default');
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  // Chat State in Home or Gem Chat
+  // Chat State & Per-Gem Chat History
   const [chatInput, setChatInput] = useState<string>('');
   const [chatMessages, setChatMessages] = useState<{ sender: 'user' | 'gemini'; text: string; label?: string }[]>([]);
+  const [gemHistories, setGemHistories] = useState<Record<string, { sender: 'user' | 'gemini'; text: string; label?: string }[]>>({});
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [chatError, setChatError] = useState<string | null>(null);
+
+  // Three-dots dropdown state
+  const [activeDropdownGemId, setActiveDropdownGemId] = useState<string | null>(null);
+
+  // Search Query
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Toast message
   const [toast, setToast] = useState<string | null>(null);
 
   const showToastMsg = (msg: string) => {
     setToast(msg);
-    setTimeout(() => setToast(null), 2500);
+    setTimeout(() => setToast(null), 2800);
   };
 
-  // Mock List of Gems
+  // Mock List of Custom User Gems
   const [myGems, setMyGems] = useState<CustomGem[]>([
     {
       id: 'gem-1',
@@ -95,8 +107,8 @@ Selalu jawab dengan struktur bullet points yang rapi dan profesional.`,
     {
       id: 'labs-1',
       name: 'Recipe Genie',
-      description: 'Transform your fridge leftovers into delicious, quick meals.',
-      instructions: 'You are Recipe Genie...',
+      description: 'Transform your fridge leftovers into delicious, quick meals with step-by-step cooking steps.',
+      instructions: 'You are Recipe Genie by Google Labs. Provide creative, delicious, easy-to-follow recipes using the input ingredients.',
       defaultTool: 'None',
       iconBg: 'bg-amber-900',
       initial: '🍳',
@@ -105,8 +117,8 @@ Selalu jawab dengan struktur bullet points yang rapi dan profesional.`,
     {
       id: 'labs-2',
       name: 'Marketing Maven',
-      description: 'Brainstorms with you on content strategy, branding, and copy.',
-      instructions: 'You are Marketing Maven...',
+      description: 'Brainstorms with you on content strategy, branding, copy, and growth campaigns.',
+      instructions: 'You are Marketing Maven by Google Labs. Generate actionable marketing strategies, engaging social headlines, and growth hacks.',
       defaultTool: 'None',
       iconBg: 'bg-blue-900',
       initial: '📈',
@@ -115,8 +127,8 @@ Selalu jawab dengan struktur bullet points yang rapi dan profesional.`,
     {
       id: 'labs-3',
       name: 'Claymation Explainer',
-      description: 'Turn any complex topic into an animated claymation infographic concept.',
-      instructions: 'You are Claymation Explainer...',
+      description: 'Turn any complex topic into an animated claymation infographic concept and script.',
+      instructions: 'You are Claymation Explainer by Google Labs. Break down complex tech topics into fun, visual claymation storyboard concepts.',
       defaultTool: 'None',
       iconBg: 'bg-teal-900',
       initial: '🎨',
@@ -125,8 +137,8 @@ Selalu jawab dengan struktur bullet points yang rapi dan profesional.`,
     {
       id: 'labs-4',
       name: 'Learning with YouTube',
-      description: 'Turn your YouTube video into an interactive quiz to help you learn.',
-      instructions: 'You are Learning Assistant...',
+      description: 'Turn your YouTube video or educational topic into an interactive quiz to help you learn.',
+      instructions: 'You are Learning Assistant. Generate interactive quizzes, key takeaways, and study notes.',
       defaultTool: 'Google Search',
       iconBg: 'bg-red-900',
       initial: '▶️',
@@ -140,7 +152,7 @@ Selalu jawab dengan struktur bullet points yang rapi dan profesional.`,
       id: 'goog-1',
       name: 'Storybook',
       description: 'Buat buku bergambar kustom, untuk anak-anak maupun dewasa, berdasarkan topik favorit Anda.',
-      instructions: 'You are Storybook Creator...',
+      instructions: 'You are Storybook Creator by Google. Craft engaging, imaginative story chapters with visual image prompts.',
       defaultTool: 'None',
       iconBg: 'bg-cyan-900',
       initial: '📖',
@@ -151,7 +163,7 @@ Selalu jawab dengan struktur bullet points yang rapi dan profesional.`,
       id: 'goog-2',
       name: 'Pencari ide',
       description: 'Temukan inspirasi dengan mudah. Dapatkan ide seru untuk acara, hadiah, proyek bisnis, dan strategi.',
-      instructions: 'You are Idea Generator...',
+      instructions: 'You are Idea Generator. Provide out-of-the-box creative ideas for events, business projects, and strategies.',
       defaultTool: 'None',
       iconBg: 'bg-amber-800',
       initial: '💡',
@@ -161,7 +173,7 @@ Selalu jawab dengan struktur bullet points yang rapi dan profesional.`,
       id: 'goog-3',
       name: 'Konsultan karier',
       description: 'Wujudkan potensi karier Anda. Dapatkan rencana terperinci untuk mengasah keterampilan profesi.',
-      instructions: 'You are Career Coach...',
+      instructions: 'You are Career Coach by Google. Provide career path recommendations, resume tips, and interview guidance.',
       defaultTool: 'None',
       iconBg: 'bg-purple-800',
       initial: '💼',
@@ -171,7 +183,7 @@ Selalu jawab dengan struktur bullet points yang rapi dan profesional.`,
       id: 'goog-4',
       name: 'Partner coding',
       description: 'Tingkatkan keterampilan coding Anda. Dapatkan bantuan debugging, struktur logika, dan algoritma.',
-      instructions: 'You are Coding Partner...',
+      instructions: 'You are Coding Partner. Help debug code, explain algorithms, and write efficient TypeScript and Python scripts.',
       defaultTool: 'Python Code Interpreter',
       iconBg: 'bg-blue-800',
       initial: '💻',
@@ -191,112 +203,257 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
     } else {
       setFormInstructions(prev => `${prev}\n\n[Sistem Peningkat Instruksi]: Selalu sertakan ringkasan eksekutif dan langkah konkret di setiap akhir jawaban.`);
     }
-    showToastMsg('Petunjuk diperbaiki secara otomatis oleh AI Magic!');
+    showToastMsg('✨ Petunjuk diperbaiki secara otomatis oleh AI Magic!');
   };
 
-  // Handle Save Gem
+  // Open Create Form for New Gem
+  const handleOpenCreateForm = () => {
+    setEditingGemId(null);
+    setFormName('');
+    setFormDescription('');
+    setFormInstructions('');
+    setFormTool('Tidak ada alat default');
+    setCurrentView('create-gem');
+    showToastMsg('Membuka Form Pembuatan Gem Baru');
+  };
+
+  // Open Edit Form for Existing Gem
+  const handleEditGem = (gem: CustomGem, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveDropdownGemId(null);
+    setEditingGemId(gem.id);
+    setFormName(gem.name);
+    setFormDescription(gem.description);
+    setFormInstructions(gem.instructions);
+    setFormTool(gem.defaultTool || 'Tidak ada alat default');
+    setCurrentView('create-gem');
+    showToastMsg(`✏️ Mengedit Gem "${gem.name}"`);
+  };
+
+  // Delete Gem
+  const handleDeleteGem = (gemId: string, gemName: string, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveDropdownGemId(null);
+    setMyGems(prev => prev.filter(g => g.id !== gemId));
+    if (activeGem?.id === gemId) {
+      setActiveGem(null);
+      setCurrentView('gems-manager');
+    }
+    showToastMsg(`🗑️ Gem "${gemName}" berhasil dihapus.`);
+  };
+
+  // Share / Copy Gem ID or Link
+  const handleShareGem = (gem: CustomGem, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActiveDropdownGemId(null);
+    const gemLink = `https://ai.studio/gems/${gem.id}`;
+    navigator.clipboard?.writeText(gemLink);
+    showToastMsg(`📋 Link Gem "${gem.name}" berhasil disalin ke clipboard!`);
+  };
+
+  // Handle Save Gem (Create or Update)
   const handleSaveGem = () => {
     if (!formName.trim()) {
-      showToastMsg('Nama Gem wajib diisi!');
+      showToastMsg('❌ Nama Gem wajib diisi!');
       return;
     }
 
     setIsSaving(true);
     setTimeout(() => {
-      const newGem: CustomGem = {
-        id: `gem-${Date.now()}`,
-        name: formName,
-        description: formDescription || 'Gem kustom buatan pengguna untuk alur kerja spesifik.',
-        instructions: formInstructions || 'Kamu adalah asisten AI yang membantu tugas harian.',
-        defaultTool: formTool,
-        iconBg: 'bg-indigo-600',
-        initial: formName.charAt(0).toUpperCase(),
-        category: 'my-gems'
-      };
+      if (editingGemId) {
+        // Update existing Gem
+        setMyGems(prev => prev.map(g => {
+          if (g.id === editingGemId) {
+            return {
+              ...g,
+              name: formName.trim(),
+              description: formDescription.trim() || 'Gem kustom buatan pengguna untuk alur kerja spesifik.',
+              instructions: formInstructions.trim() || 'Kamu adalah asisten AI yang membantu tugas harian.',
+              defaultTool: formTool,
+              initial: formName.trim().charAt(0).toUpperCase()
+            };
+          }
+          return g;
+        }));
 
-      setMyGems(prev => [newGem, ...prev]);
-      setIsSaving(false);
-      showToastMsg(`Gem "${formName}" berhasil disimpan!`);
-      
-      // Auto open chat with newly created Gem
-      setActiveGem(newGem);
-      setChatMessages([
-        {
-          sender: 'gemini',
-          text: `Halo Wahyudi! Sistem ${newGem.name} sudah aktif dan siap digunakan.\n\nSesuai instruksi kustom, saya siap membantu tugas Anda dengan alur kerja yang sudah ditentukan. Silakan ajukan pertanyaan atau instruksi awal!`,
-          label: `${newGem.name} • Gem Kustom`
+        const updatedGem = {
+          id: editingGemId,
+          name: formName.trim(),
+          description: formDescription.trim() || 'Gem kustom buatan pengguna.',
+          instructions: formInstructions.trim() || 'Kamu adalah asisten AI.',
+          defaultTool: formTool,
+          iconBg: 'bg-indigo-600',
+          initial: formName.trim().charAt(0).toUpperCase(),
+          category: 'my-gems' as const
+        };
+
+        if (activeGem?.id === editingGemId) {
+          setActiveGem(updatedGem);
         }
-      ]);
-      setCurrentView('gem-chat');
 
-      // Reset form
+        setIsSaving(false);
+        showToastMsg(`✅ Gem "${formName}" berhasil diperbarui!`);
+        setCurrentView('gems-manager');
+      } else {
+        // Create new Gem
+        const newGem: CustomGem = {
+          id: `gem-${Date.now()}`,
+          name: formName.trim(),
+          description: formDescription.trim() || 'Gem kustom buatan pengguna untuk alur kerja spesifik.',
+          instructions: formInstructions.trim() || 'Kamu adalah asisten AI yang membantu tugas harian.',
+          defaultTool: formTool,
+          iconBg: 'bg-indigo-600',
+          initial: formName.trim().charAt(0).toUpperCase(),
+          category: 'my-gems'
+        };
+
+        setMyGems(prev => [newGem, ...prev]);
+        setIsSaving(false);
+        showToastMsg(`✨ Gem "${formName}" berhasil dibuat!`);
+
+        // Initialize Chat & Auto Open Chat with New Gem
+        const initialWelcome = [
+          {
+            sender: 'gemini' as const,
+            text: `Halo Wahyudi! Sistem ${newGem.name} sudah aktif dan siap digunakan.\n\nSesuai Petunjuk Kustom (System Instruction):\n"${newGem.instructions}"\n\nSilakan ajukan pertanyaan atau instruksi awal Anda!`,
+            label: `${newGem.name} • Gem Kustom`
+          }
+        ];
+        setGemHistories(prev => ({ ...prev, [newGem.id]: initialWelcome }));
+        setActiveGem(newGem);
+        setChatMessages(initialWelcome);
+        setCurrentView('gem-chat');
+      }
+
+      // Reset form fields
+      setEditingGemId(null);
       setFormName('');
       setFormDescription('');
       setFormInstructions('');
-    }, 1000);
+    }, 600);
   };
 
   // Open Chat with Selected Gem
   const handleOpenGemChat = (gem: CustomGem) => {
     setActiveGem(gem);
-    setChatMessages([
-      {
-        sender: 'gemini',
-        text: `Halo Wahyudi! Sistem ${gem.name} sudah aktif dan siap digunakan.\n\nUntuk mempermudah proses kerja di Maxy Academy, saya dapat memproses tugas berdasarkan alur berikut:\n\n• Analysis Otomatis: Mengekstrak informasi inti dan poin kritis.\n• Scoring Relevansi: Menilai kriteria secara objektif.\n• Komparasi & Rekomendasi: Menyajikan perbandingan terstruktur.\n• Action Items: Merumuskan draf langkah konkret lanjutan.\n\nSilakan masukkan instruksi atau data awal Anda!`,
-        label: `${gem.name} • Gem Kustom`
-      }
-    ]);
+    setChatError(null);
+
+    // Load existing history or set default welcome message
+    if (gemHistories[gem.id] && gemHistories[gem.id].length > 0) {
+      setChatMessages(gemHistories[gem.id]);
+    } else {
+      const defaultWelcome = [
+        {
+          sender: 'gemini' as const,
+          text: `Halo Wahyudi! Saya ${gem.name}.\n\nSaya telah dikonfigurasi dengan petunjuk khusus:\n"${gem.instructions}"\n\nBagaimana saya dapat membantu tugas Anda hari ini di Maxy Academy?`,
+          label: `${gem.name} • Gem ${gem.category === 'my-gems' ? 'Kustom' : 'System'}`
+        }
+      ];
+      setGemHistories(prev => ({ ...prev, [gem.id]: defaultWelcome }));
+      setChatMessages(defaultWelcome);
+    }
+
     setCurrentView('gem-chat');
-    showToastMsg(`Membuka chat dengan ${gem.name}`);
+    showToastMsg(`💬 Membuka ruang chat dengan ${gem.name}`);
   };
 
-  // Handle Send Chat Prompt
-  const handleSendPrompt = () => {
+  // Handle Send Chat Prompt with Gemini API Call
+  const handleSendPrompt = async () => {
     if (!chatInput.trim()) return;
 
-    const userText = chatInput;
+    const userText = chatInput.trim();
     setChatInput('');
+    setChatError(null);
 
-    const newMsgList = [...chatMessages, { sender: 'user' as const, text: userText }];
-    setChatMessages(newMsgList);
+    const userMsg = { sender: 'user' as const, text: userText };
+    const updatedMessages = [...chatMessages, userMsg];
+    setChatMessages(updatedMessages);
+
+    if (activeGem) {
+      setGemHistories(prev => ({ ...prev, [activeGem.id]: updatedMessages }));
+    }
+
     setIsGenerating(true);
 
-    setTimeout(() => {
-      let aiResponseText = '';
+    try {
+      const res = await fetch('/api/gemini-gems-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: userText,
+          gemName: activeGem ? activeGem.name : 'Gemini AI',
+          gemDescription: activeGem ? activeGem.description : '',
+          systemInstruction: activeGem ? activeGem.instructions : 'Kamu adalah Gemini AI.',
+          history: updatedMessages,
+          mode: selectedMode,
+        }),
+      });
 
-      if (activeGem) {
-        aiResponseText = `[${activeGem.name}] Menerima prompt: "${userText}"\n\nBerdasarkan Petunjuk System Instruction Gem (${activeGem.name}):\n\n1. Screening Otomatis: Mengekstrak data kualifikasi dari input Anda.\n2. Scoring Relevansi: Tingkat kesesuaian dengan standar Maxy Academy mencapai 92% (Sangat Sesuai).\n3. Komparasi Kandidat / Aset: Memenuhi kriteria kompetensi teknis dan alur kerja kustom.\n4. Panduan Tindak Lanjut: Direkomendasikan untuk melanjutkan ke tahap wawancara / eksekusi berikutnya.\n\nApakah ada detail tambahan yang ingin disesuaikan?`;
-      } else {
-        aiResponseText = `Saya Gemini (${selectedMode}). Menjawab: "${userText}"\n\nSebagai model AI serbaguna, saya dapat membantu Anda menganalisis data, menulis draf, atau menjawab pertanyaan umum. Untuk alur kerja berulang dengan instruksi tetap, coba buat Gem Custom di Gem Manager!`;
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Terjadi kesalahan pada Gemini AI server.');
       }
 
-      setChatMessages(prev => [
-        ...prev,
-        {
-          sender: 'gemini',
-          text: aiResponseText,
-          label: activeGem ? `${activeGem.name} • Gem Kustom` : 'Gemini AI'
-        }
-      ]);
+      const data = await res.json();
+      const aiResponseText = data.text || 'Tidak ada respons dari Gemini AI.';
+
+      const aiMsg = {
+        sender: 'gemini' as const,
+        text: aiResponseText,
+        label: activeGem ? `${activeGem.name} • Gem ${activeGem.category === 'my-gems' ? 'Kustom' : 'System'}` : `Gemini AI (${selectedMode})`
+      };
+
+      const finalMessages = [...updatedMessages, aiMsg];
+      setChatMessages(finalMessages);
+
+      if (activeGem) {
+        setGemHistories(prev => ({ ...prev, [activeGem.id]: finalMessages }));
+      }
+    } catch (err: any) {
+      console.error('Gemini Gems chat error:', err);
+      setChatError(err.message || 'Gagal mengirim pesan ke Gemini AI.');
+
+      // Fallback response for offline or server error
+      const fallbackMsg = {
+        sender: 'gemini' as const,
+        text: activeGem
+          ? `[${activeGem.name}] Menerima prompt: "${userText}"\n\nBerdasarkan Petunjuk System Instruction Gem (${activeGem.name}):\n1. Analisis Otomatis: Mengekstrak data kualifikasi dari input Anda.\n2. Scoring Relevansi: Tingkat kesesuaian mencapai 92% (Sangat Sesuai).\n3. Rekomendasi: Direkomendasikan untuk melanjutkan ke langkah eksekusi berikutnya.\n\n*(Simulasi respons Gem kustom)*`
+          : `Saya Gemini (${selectedMode}). Menjawab: "${userText}"\n\nSebagai model AI serbaguna, saya dapat membantu Anda menganalisis data, menulis draf, atau menjawab pertanyaan umum.`,
+        label: activeGem ? `${activeGem.name} • Gem Kustom` : `Gemini AI`
+      };
+
+      const finalFallback = [...updatedMessages, fallbackMsg];
+      setChatMessages(finalFallback);
+
+      if (activeGem) {
+        setGemHistories(prev => ({ ...prev, [activeGem.id]: finalFallback }));
+      }
+    } finally {
       setIsGenerating(false);
-    }, 1200);
+    }
   };
+
+  // Filtered Gems for Search View
+  const allGemsList = [...myGems, ...labsGems, ...googleGems];
+  const filteredGems = searchQuery.trim()
+    ? allGemsList.filter(g => g.name.toLowerCase().includes(searchQuery.toLowerCase()) || g.description.toLowerCase().includes(searchQuery.toLowerCase()))
+    : allGemsList;
 
   return (
     <div className="w-full min-h-[750px] bg-[#0f1013] text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-800 flex flex-col md:flex-row relative shadow-2xl">
       {/* Global Toast Notification */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-blue-600 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-2xl border border-blue-400 flex items-center space-x-2 animate-bounce">
+        <div className="fixed bottom-6 right-6 z-50 bg-blue-600 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-2xl border border-blue-400 flex items-center space-x-2 animate-in fade-in">
           <Sparkles className="w-4 h-4 text-blue-200" />
           <span>{toast}</span>
         </div>
       )}
 
-      {/* LEFT SIDEBAR (Gemini Style) */}
+      {/* LEFT SIDEBAR (Gemini Style Navigation) */}
       <aside className="w-full md:w-16 lg:w-60 bg-[#14161c] border-r border-slate-800/80 p-3 flex flex-row md:flex-col justify-between shrink-0 z-20">
         <div className="flex md:flex-col space-x-2 md:space-x-0 md:space-y-4 items-center md:items-start w-full">
           {/* Gemini Logo Header */}
-          <div className="flex items-center space-x-3 px-2 py-1">
+          <div className="flex items-center space-x-3 px-2 py-1 cursor-pointer" onClick={() => setCurrentView('gems-manager')}>
             <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-500 via-indigo-500 to-amber-400 flex items-center justify-center shadow-md">
               <Sparkles className="w-4 h-4 text-white fill-current" />
             </div>
@@ -322,8 +479,11 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
           {/* Search Button */}
           <button
-            onClick={() => showToastMsg('Fitur Search: Mencari percakapan atau Gem tertentu')}
-            className="w-full flex items-center space-x-3 p-2.5 rounded-xl text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 transition-all"
+            onClick={() => {
+              setCurrentView('search');
+              showToastMsg('Search: Mencari Gem kustom atau bawaan');
+            }}
+            className={`w-full flex items-center space-x-3 p-2.5 rounded-xl transition-all ${currentView === 'search' ? 'bg-slate-800 text-blue-400 font-bold' : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'}`}
             title="Search"
           >
             <Search className="w-4 h-4 shrink-0" />
@@ -345,8 +505,11 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
           {/* Apps Button */}
           <button
-            onClick={() => showToastMsg('Integrasi Aplikasi Google Workspace (Drive, Docs, Sheets)')}
-            className="w-full flex items-center space-x-3 p-2.5 rounded-xl text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 transition-all"
+            onClick={() => {
+              setCurrentView('apps');
+              showToastMsg('Google Workspace Extensions & Apps');
+            }}
+            className={`w-full flex items-center space-x-3 p-2.5 rounded-xl transition-all ${currentView === 'apps' ? 'bg-slate-800 text-blue-400 font-bold' : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'}`}
             title="Apps"
           >
             <LayoutGrid className="w-4 h-4 shrink-0" />
@@ -355,8 +518,11 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
           {/* Saved / Heart Button */}
           <button
-            onClick={() => showToastMsg('Saved: Menyimpan percakapan atau respons penting')}
-            className="w-full flex items-center space-x-3 p-2.5 rounded-xl text-slate-400 hover:bg-slate-800/60 hover:text-slate-200 transition-all"
+            onClick={() => {
+              setCurrentView('saved');
+              showToastMsg('Item Disimpan & Percakapan Favorit');
+            }}
+            className={`w-full flex items-center space-x-3 p-2.5 rounded-xl transition-all ${currentView === 'saved' ? 'bg-slate-800 text-blue-400 font-bold' : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'}`}
             title="Disimpan"
           >
             <Heart className="w-4 h-4 shrink-0" />
@@ -396,7 +562,6 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
         {currentView === 'home' && (
           <div className="flex-1 flex flex-col items-center justify-center p-6 text-center relative overflow-y-auto">
             <div className="max-w-xl w-full space-y-6">
-              {/* Central Personal Greeting */}
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
                 Halo Wahyudi, apa yang Anda pikirkan?
               </h1>
@@ -484,7 +649,118 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
           </div>
         )}
 
-        {/* VIEW 2: GEM MANAGER ("Halaman Gems") */}
+        {/* VIEW 2: SEARCH VIEW */}
+        {currentView === 'search' && (
+          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6 bg-[#0c0d11]">
+            <div className="max-w-2xl mx-auto space-y-4">
+              <h2 className="text-lg font-extrabold text-white flex items-center space-x-2">
+                <Search className="w-5 h-5 text-blue-400" />
+                <span>Pencarian Gem Studio</span>
+              </h2>
+
+              <div className="relative">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Cari Gem berdasarkan nama atau deskripsi..."
+                  className="w-full bg-[#161822] border border-slate-700/80 rounded-xl py-2.5 pl-10 pr-4 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div className="space-y-3 pt-2">
+                <span className="text-xs font-bold text-slate-400">Hasil Pencarian ({filteredGems.length} Gem):</span>
+                {filteredGems.length === 0 ? (
+                  <div className="p-8 text-center text-xs text-slate-500 bg-[#14161f] border border-slate-800 rounded-2xl">
+                    Tidak ada Gem yang cocok dengan pencarian "{searchQuery}".
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {filteredGems.map(gem => (
+                      <div
+                        key={gem.id}
+                        onClick={() => handleOpenGemChat(gem)}
+                        className="bg-[#14161f] border border-slate-800 hover:border-blue-500/60 p-3.5 rounded-xl cursor-pointer group transition-all shadow-md flex items-start space-x-3"
+                      >
+                        <div className={`w-9 h-9 rounded-xl ${gem.iconBg} flex items-center justify-center text-white font-bold text-sm shrink-0`}>
+                          {gem.initial}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-xs font-bold text-slate-200 group-hover:text-blue-300 truncate">{gem.name}</h4>
+                          <p className="text-[11px] text-slate-400 line-clamp-2 mt-0.5">{gem.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* VIEW 3: APPS INTEGRATION VIEW */}
+        {currentView === 'apps' && (
+          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6 bg-[#0c0d11]">
+            <div className="max-w-2xl mx-auto space-y-4">
+              <h2 className="text-lg font-extrabold text-white flex items-center space-x-2">
+                <LayoutGrid className="w-5 h-5 text-blue-400" />
+                <span>Google Workspace Extension Apps</span>
+              </h2>
+              <p className="text-xs text-slate-400">Integrasikan Gem AI Anda secara langsung dengan aplikasi produktivitas Google Workspace.</p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {[
+                  { name: 'Google Docs', desc: 'Sintesis draf & ringkasan dokumen otomatis', icon: '📄', active: true },
+                  { name: 'Google Sheets', desc: 'Analisis tabel & rumus komputasi data', icon: '📊', active: true },
+                  { name: 'Google Drive', desc: 'Pencarian berkas & basis pengetahuan', icon: '📁', active: true },
+                  { name: 'Google Calendar', desc: 'Jadwal otomatis & pengingat tenggat', icon: '📅', active: false }
+                ].map((app, idx) => (
+                  <div key={idx} className="bg-[#14161f] border border-slate-800 p-4 rounded-2xl flex items-center justify-between shadow-md">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">{app.icon}</span>
+                      <div>
+                        <h4 className="text-xs font-bold text-white">{app.name}</h4>
+                        <p className="text-[10px] text-slate-400">{app.desc}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => showToastMsg(`Toggle koneksi ${app.name}`)}
+                      className={`text-[10px] font-bold px-2.5 py-1 rounded-lg border ${app.active ? 'bg-emerald-950 text-emerald-300 border-emerald-800' : 'bg-slate-800 text-slate-400 border-slate-700'}`}
+                    >
+                      {app.active ? 'Aktif' : 'Sambungkan'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* VIEW 4: SAVED VIEW */}
+        {currentView === 'saved' && (
+          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6 bg-[#0c0d11]">
+            <div className="max-w-2xl mx-auto space-y-4">
+              <h2 className="text-lg font-extrabold text-white flex items-center space-x-2">
+                <Heart className="w-5 h-5 text-rose-400 fill-current" />
+                <span>Saved Items & Favorite Conversations</span>
+              </h2>
+              <p className="text-xs text-slate-400">Simpan percakapan penting dan respons analisis Gem untuk referensi tim Maxy Academy.</p>
+
+              <div className="space-y-3">
+                <div className="bg-[#14161f] border border-slate-800 p-4 rounded-2xl space-y-2">
+                  <div className="flex items-center justify-between text-xs text-blue-400 font-bold">
+                    <span>Maxy Recruitment Screener AI</span>
+                    <span className="text-slate-500 font-normal">Disimpan kemarin</span>
+                  </div>
+                  <p className="text-xs text-slate-200">"Tabel komparasi 3 kandidat Fullstack AI Engineer: Kandidat A direkomendasikan dengan skor 94%."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* VIEW 5: GEM MANAGER ("Halaman Gems") */}
         {currentView === 'gems-manager' && (
           <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-8 bg-[#0c0d11]">
             {/* Promo Banner: Google Labs */}
@@ -588,10 +864,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
                 {/* + Gem Baru Button */}
                 <button
-                  onClick={() => {
-                    setCurrentView('create-gem');
-                    showToastMsg('Membuka Form Pembuatan Gem Baru');
-                  }}
+                  onClick={handleOpenCreateForm}
                   className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center space-x-1.5 shadow-md transition-all transform hover:scale-105"
                 >
                   <Plus className="w-4 h-4" />
@@ -604,7 +877,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                 {myGems.map(gem => (
                   <div
                     key={gem.id}
-                    className="bg-[#14161f] border border-slate-800 hover:border-blue-500/60 p-3.5 rounded-2xl flex items-center justify-between transition-all group shadow-md"
+                    className="bg-[#14161f] border border-slate-800 hover:border-blue-500/60 p-3.5 rounded-2xl flex items-center justify-between transition-all group shadow-md relative"
                   >
                     <div
                       onClick={() => handleOpenGemChat(gem)}
@@ -624,26 +897,59 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                     </div>
 
                     {/* Action Icons */}
-                    <div className="flex items-center space-x-2 shrink-0 ml-3 text-slate-400">
-                      <button onClick={() => showToastMsg(`Bagikan Gem "${gem.name}"`)} className="p-1.5 hover:text-blue-400 hover:bg-slate-800 rounded-lg">
+                    <div className="flex items-center space-x-2 shrink-0 ml-3 text-slate-400 relative">
+                      <button
+                        onClick={(e) => handleShareGem(gem, e)}
+                        className="p-1.5 hover:text-blue-400 hover:bg-slate-800 rounded-lg transition-colors"
+                        title="Bagikan Link Gem"
+                      >
                         <Share2 className="w-4 h-4" />
                       </button>
                       <button 
-                        onClick={() => {
-                          setFormName(gem.name);
-                          setFormDescription(gem.description);
-                          setFormInstructions(gem.instructions);
-                          setFormTool(gem.defaultTool);
-                          setCurrentView('create-gem');
-                          showToastMsg(`Edit Gem "${gem.name}"`);
-                        }}
-                        className="p-1.5 hover:text-blue-400 hover:bg-slate-800 rounded-lg"
+                        onClick={(e) => handleEditGem(gem, e)}
+                        className="p-1.5 hover:text-blue-400 hover:bg-slate-800 rounded-lg transition-colors"
+                        title="Edit Gem"
                       >
                         <Edit2 className="w-4 h-4" />
                       </button>
-                      <button onClick={() => showToastMsg('Menu Lainnya')} className="p-1.5 hover:text-slate-200 hover:bg-slate-800 rounded-lg">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveDropdownGemId(activeDropdownGemId === gem.id ? null : gem.id);
+                        }}
+                        className="p-1.5 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-colors"
+                        title="Menu Lainnya (⋮)"
+                      >
                         <MoreVertical className="w-4 h-4" />
                       </button>
+
+                      {/* Three-dots Menu Dropdown */}
+                      {activeDropdownGemId === gem.id && (
+                        <div className="absolute right-0 top-10 w-44 bg-[#1a1d28] border border-slate-700 rounded-xl shadow-2xl p-1 z-30 space-y-0.5 text-xs animate-in fade-in">
+                          <button
+                            onClick={(e) => handleEditGem(gem, e)}
+                            className="w-full text-left px-3 py-2 hover:bg-blue-600/30 rounded-lg text-slate-200 flex items-center space-x-2"
+                          >
+                            <Edit2 className="w-3.5 h-3.5 text-blue-400" />
+                            <span>Edit Gem</span>
+                          </button>
+                          <button
+                            onClick={(e) => handleShareGem(gem, e)}
+                            className="w-full text-left px-3 py-2 hover:bg-blue-600/30 rounded-lg text-slate-200 flex items-center space-x-2"
+                          >
+                            <Share2 className="w-3.5 h-3.5 text-cyan-400" />
+                            <span>Bagikan ID Gem</span>
+                          </button>
+                          <hr className="border-slate-800 my-1" />
+                          <button
+                            onClick={(e) => handleDeleteGem(gem.id, gem.name, e)}
+                            className="w-full text-left px-3 py-2 hover:bg-rose-600/30 rounded-lg text-rose-300 flex items-center space-x-2"
+                          >
+                            <Trash2 className="w-3.5 h-3.5 text-rose-400" />
+                            <span>Hapus Gem</span>
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -677,7 +983,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
           </div>
         )}
 
-        {/* VIEW 3: FORM "GEM BARU" (Creating / Editing Gem) */}
+        {/* VIEW 6: FORM "GEM BARU" (Creating / Editing Gem) */}
         {currentView === 'create-gem' && (
           <div className="flex-1 flex flex-col bg-[#0d0e12] overflow-hidden">
             {/* Top Bar Header */}
@@ -694,7 +1000,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                 </button>
                 <h2 className="text-sm sm:text-base font-extrabold text-white flex items-center space-x-2">
                   <Gem className="w-4 h-4 text-blue-400" />
-                  <span>Gem Baru</span>
+                  <span>{editingGemId ? 'Edit Gem' : 'Gem Baru'}</span>
                 </h2>
               </div>
 
@@ -713,7 +1019,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
               <div className="lg:col-span-7 p-4 sm:p-6 overflow-y-auto space-y-5 border-r border-slate-800">
                 {/* Field: Nama */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300 block">Nama</label>
+                  <label className="text-xs font-bold text-slate-300 block">Nama Gem</label>
                   <input
                     type="text"
                     value={formName}
@@ -725,7 +1031,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
                 {/* Field: Deskripsi */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-300 block">Deskripsi</label>
+                  <label className="text-xs font-bold text-slate-300 block">Deskripsi Singkat</label>
                   <textarea
                     value={formDescription}
                     onChange={(e) => setFormDescription(e.target.value)}
@@ -739,7 +1045,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-bold text-slate-300 flex items-center space-x-1">
-                      <span>Petunjuk</span>
+                      <span>Petunjuk (System Instructions)</span>
                       <Info className="w-3.5 h-3.5 text-slate-500" title="System instruction utama yang mengatur peran dan format jawaban Gem" />
                     </label>
 
@@ -799,14 +1105,14 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                 </div>
 
                 <p className="text-[10px] text-slate-500 pt-2 border-t border-slate-800">
-                  Gemini dapat membuat kesalahan, jadi periksa kembali responsnya. Gem kustom Anda juga akan terlihat di Gemini untuk Workspace. Buat Gem dengan bijak.
+                  Gemini dapat membuat kesalahan, jadi periksa kembali responsnya. Gem kustom Anda juga akan terlihat di Gemini untuk Workspace.
                 </p>
               </div>
 
               {/* RIGHT REAL-TIME PREVIEW PANEL (Cols 5) */}
               <div className="lg:col-span-5 bg-[#0a0b0e] p-4 sm:p-6 flex flex-col justify-between overflow-y-auto">
                 <div className="space-y-4">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Pratinjau</h3>
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Pratinjau Modul Gem</h3>
 
                   {!formName.trim() ? (
                     <div className="h-64 flex flex-col items-center justify-center text-center p-6 border border-slate-800 rounded-2xl bg-[#12141c]">
@@ -840,7 +1146,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                 {/* Simulated Input Field Preview */}
                 <div className="pt-4 opacity-70">
                   <div className="bg-[#161822] border border-slate-800 rounded-xl p-2.5 flex items-center justify-between text-xs text-slate-500">
-                    <span>Minta Gemini...</span>
+                    <span>Minta {formName || 'Gemini'}...</span>
                     <Send className="w-3.5 h-3.5" />
                   </div>
                 </div>
@@ -849,7 +1155,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
           </div>
         )}
 
-        {/* VIEW 4: CHAT USING CUSTOM GEM */}
+        {/* VIEW 7: CHAT USING CUSTOM GEM */}
         {currentView === 'gem-chat' && activeGem && (
           <div className="flex-1 flex flex-col bg-[#0b0c0f] overflow-hidden">
             {/* Header Identity Label */}
@@ -871,11 +1177,24 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                   setCurrentView('gems-manager');
                   showToastMsg('Kembali ke Gem Manager');
                 }}
-                className="text-xs text-slate-400 hover:text-white bg-slate-800 px-3 py-1 rounded-lg"
+                className="text-xs text-slate-400 hover:text-white bg-slate-800 px-3 py-1 rounded-lg transition-colors"
               >
                 Ganti Gem
               </button>
             </div>
+
+            {/* Error Alert Message Box */}
+            {chatError && (
+              <div className="mx-4 mt-3 bg-rose-950/80 border border-rose-800 p-3 rounded-xl text-xs text-rose-200 flex items-center justify-between gap-2 animate-in fade-in">
+                <div className="flex items-center space-x-2">
+                  <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                  <span>{chatError}</span>
+                </div>
+                <button onClick={() => setChatError(null)} className="p-1 hover:text-white">
+                  <X className="w-3.5 h-3.5 text-rose-300" />
+                </button>
+              </div>
+            )}
 
             {/* Chat History Container */}
             <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 max-w-3xl w-full mx-auto">
@@ -896,8 +1215,8 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
               {isGenerating && (
                 <div className="flex items-center space-x-2 text-xs text-blue-400 animate-pulse p-3 bg-[#141620] rounded-xl border border-slate-800">
-                  <Sparkles className="w-4 h-4 animate-spin" />
-                  <span>{activeGem.name} sedang memproses berdasarkan Petunjuk System Instruction...</span>
+                  <Sparkles className="w-4 h-4 animate-spin shrink-0" />
+                  <span>{activeGem.name} sedang memproses jawaban berdasarkan System Instruction...</span>
                 </div>
               )}
             </div>
@@ -930,7 +1249,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                     </button>
                     <button
                       onClick={handleSendPrompt}
-                      disabled={!chatInput.trim()}
+                      disabled={!chatInput.trim() || isGenerating}
                       className="p-1.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white rounded-lg transition-colors"
                     >
                       <Send className="w-3.5 h-3.5" />
@@ -945,3 +1264,4 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
     </div>
   );
 };
+

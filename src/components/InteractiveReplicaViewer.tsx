@@ -27,17 +27,29 @@ import { GeminiGemsReplica } from './GeminiGemsReplica';
 import { MistralVibeReplica } from './MistralVibeReplica';
 import { ClaudeFeaturesReplica } from './ClaudeFeaturesReplica';
 import { KimiAiReplica } from './KimiAiReplica';
+import { LumoReplica } from './LumoReplica';
+import { LovableReplica } from './LovableReplica';
+import { GammaReplica } from './GammaReplica';
+import { ManusReplica } from './ManusReplica';
+import { NotionAiReplica } from './NotionAiReplica';
+import { MiniQuizCheckpoint } from './MiniQuizCheckpoint';
+import { getSectionCheckpointQuestion } from '../lib/miniQuizData';
 
 interface InteractiveReplicaViewerProps {
   module: CourseModule;
   onAdvanceToQuiz: () => void;
+  completedCheckpoints?: string[];
+  onCompleteCheckpoint?: (checkpointId: string, xpBonus: number) => void;
 }
 
 export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> = ({
   module,
   onAdvanceToQuiz,
+  completedCheckpoints,
+  onCompleteCheckpoint,
 }) => {
   const replica = module.content.interactiveReplica;
+  const replicaQuestion = getSectionCheckpointQuestion(module, 'replica');
 
   // Helper to build 4-line RCTF prompt string
   const buildRCTFPromptString = (r: RCTFState) => {
@@ -187,6 +199,16 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
             <ClaudeFeaturesReplica />
           ) : module.id === 24 || module.slug === 'kimi-ai' ? (
             <KimiAiReplica />
+          ) : module.id === 25 || module.slug === 'lumo-ai' || module.slug === 'lumo' || (replica?.llmName && replica.llmName.toLowerCase().includes('lumo')) ? (
+            <LumoReplica />
+          ) : module.id === 26 || module.slug === 'lovable' || module.slug === 'lovable-ai' || (replica?.llmName && replica.llmName.toLowerCase().includes('lovable')) ? (
+            <LovableReplica />
+          ) : module.id === 27 || module.slug === 'gamma' || module.slug === 'gamma-ai' || (replica?.llmName && replica.llmName.toLowerCase().includes('gamma')) ? (
+            <GammaReplica />
+          ) : module.id === 28 || module.slug === 'manus' || module.slug === 'manus-ai' || (replica?.llmName && replica.llmName.toLowerCase().includes('manus')) ? (
+            <ManusReplica />
+          ) : module.id === 29 || module.slug === 'notion' || module.slug === 'notion-ai' || (replica?.llmName && replica.llmName.toLowerCase().includes('notion')) ? (
+            <NotionAiReplica />
           ) : (
             <div className="relative rounded-2xl border border-slate-800 bg-slate-950 overflow-hidden shadow-2xl">
               {/* Top Bar Replica Header */}
@@ -512,6 +534,19 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                 </div>
               ))}
             </div>
+
+            {/* Mid-Module Checkpoint */}
+            {onCompleteCheckpoint && (
+              <div className="pt-2">
+                <MiniQuizCheckpoint
+                  checkpointId={replicaQuestion.id}
+                  title={replicaQuestion.title}
+                  question={replicaQuestion}
+                  completedCheckpoints={completedCheckpoints}
+                  onCompleteCheckpoint={onCompleteCheckpoint}
+                />
+              </div>
+            )}
 
             {/* Advance Button */}
             <button

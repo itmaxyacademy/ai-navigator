@@ -4382,6 +4382,456 @@ A heroic cybernetic student warrior mascot for Maxy Academy, wearing futuristic 
       ],
     },
   },
+  {
+    id: 25,
+    slug: 'lumo-ai',
+    title: 'Lumo AI Simulator (Proton)',
+    subtitle: 'Kuasai Asisten AI Berfokus Privasi Zero-Knowledge',
+    icon: 'Shield',
+    badge: 'Privacy-Centric AI',
+    estimatedMinutes: 12,
+    content: {
+      overview: {
+        tagline: 'Asisten AI dengan enkripsi dan perlindungan data tingkat tinggi dari Proton',
+        description: 'Lumo AI buatan Proton dirancang khusus untuk memastikan percakapan, file, dan data pengguna tidak direkam, tidak dilacak, dan tidak pernah digunakan untuk melatih model publik.',
+        developer: 'Proton AG (Swiss)',
+        releaseYear: '2025 - Sekarang',
+        keyAdvantages: [
+          {
+            title: 'Zero-Knowledge Privacy',
+            description: 'Enkripsi ketat dari ujung ke ujung sehingga tidak ada pihak ketiga yang dapat mengintip percakapan Anda.',
+            icon: 'Lock',
+          },
+          {
+            title: 'Lumo 2.0 Max Model',
+            description: 'Kemampuan penalaran tinggi setara model flagship dengan respons cepat dan beretika.',
+            icon: 'Sparkles',
+          },
+          {
+            title: 'Incognito Mode & Workspace Projects',
+            description: 'Dukungan mode incognito tanpa histori dan ruang kerja proyek terenkripsi.',
+            icon: 'Glasses',
+          },
+          {
+            title: 'Integrasi Tools Privasi',
+            description: 'Akses Web Search terproteksi dan Code Interpreter tanpa jejak server.',
+            icon: 'Sliders',
+          },
+        ],
+        bestFor: [
+          'Analisis dokumen rahasia dan draf hukum privat',
+          'Audit kode sensitif tanpa risiko data leak ke server eksternal',
+          'Pencarian informasi tanpa profil iklan atau penelusuran identitas',
+        ],
+        uniqueCapabilities: [
+          'Mematuhi standar hukum perlindungan data terketat Swiss (FADP & GDPR)',
+          'Toggle privasi instan untuk mengisolasi sesi percakapan',
+          'Generasi gambar Lumo Vision tanpa hak milik iklan',
+        ],
+      },
+      interactiveReplica: {
+        llmName: 'Lumo AI Simulator',
+        badgeText: 'Zero-Knowledge AI',
+        themeColor: 'from-purple-600 to-indigo-700',
+        initialPrompt: 'Jelaskan bagaimana Lumo AI menjaga kerahasiaan data pengguna.',
+        simulatedResponse: 'Halo! Lumo AI melindungi privasi Anda melalui arsitektur zero-knowledge. Setiap pesan diproses secara aman tanpa rekam jejak server atau pelacakan identitas.',
+        hotspots: [],
+      },
+      promptingGuide: {
+        llmName: 'Lumo AI',
+        summary: 'Panduan memaksimalkan fitur privasi zero-knowledge dan alat kerja terenkripsi di Lumo AI.',
+        bestPractices: [
+          'Gunakan mode Incognito untuk obrolan satu kali tanpa menyimpan riwayat di sidebar.',
+          'Manfaatkan fitur Projects untuk mengelompokkan dokumen rahasia.',
+          'Aktifkan tools Web Search jika membutuhkan data terkini tanpa jejak pelacakan.',
+        ],
+        tips: [
+          {
+            title: 'Draf Dokumen Privasi',
+            featureName: 'Chat Input',
+            badge: 'Privacy Drafting',
+            promptExample: 'Buatkan draf perjanjian kerahasiaan (NDA) standar perusahaan secara ringkas.',
+            explanation: 'Sebutkan kebutuhan spesifik untuk menghasilkan dokumen terstruktur.',
+            proTip: 'Aktifkan mode Incognito jika tidak ingin draf NDA disimpan ke riwayat sidebar.',
+          },
+        ],
+      },
+      quiz: [
+        {
+          id: 'q25-1',
+          question: 'Apakah keunggulan utama dari Lumo AI buatan Proton?',
+          options: [
+            'Menjual data pengguna ke pengiklan.',
+            'Menerapkan arsitektur zero-knowledge untuk menjamin kerahasiaan dan privasi data pengguna.',
+            'Tidak bisa menjawab pertanyaan Bahasa Indonesia.',
+            'Hanya dapat dibuka melalui televisi.',
+          ],
+          correctAnswer: 1,
+          explanation: 'Lumo AI fokus pada privasi zero-knowledge sehingga data pengguna tidak dilacak atau dijual.',
+        },
+      ],
+    },
+  },
+  {
+    id: 26,
+    slug: 'lovable',
+    title: 'Lovable AI Simulator',
+    subtitle: 'Kuasai Pembuatan Web & Landing Page Instan Berbasis Teks',
+    icon: 'Sparkles',
+    badge: 'AI Web Builder',
+    estimatedMinutes: 12,
+    content: {
+      overview: {
+        tagline: 'Platform AI web builder untuk membangun halaman web dari deskripsi percakapan',
+        description: 'Lovable memungkinkan siapa saja membuat aplikasi web, halaman arahan (landing page), dan komponen antarmuka yang siap pakai hanya dengan memberikan deskripsi teks sederhana.',
+        developer: 'Lovable AI',
+        releaseYear: '2024 - Sekarang',
+        keyAdvantages: [
+          {
+            title: 'Full-Stack Code Generation',
+            description: 'Menghasilkan komponen React & Tailwind CSS bersih yang langsung dapat di-deploy.',
+            icon: 'Code',
+          },
+          {
+            title: 'Dual Mode: Bangun vs Chat',
+            description: 'Mode Bangun untuk pembuatan kode otomatis, dan Mode Chat untuk pematangan konsep UI/UX.',
+            icon: 'Sliders',
+          },
+          {
+            title: 'Live Interactive Workspace',
+            description: 'Pratinjau langsung responsif di berbagai ukuran perangkat (desktop, tablet, seluler).',
+            icon: 'Eye',
+          },
+          {
+            title: 'Integrasi Ekosistem AI',
+            description: 'Dapat diakses langsung dari alur kerja ChatGPT dan Claude melalui plugin terintegrasi.',
+            icon: 'Sparkles',
+          },
+        ],
+        bestFor: [
+          'Pembuatan halaman arahan (landing page) produk atau layanan baru',
+          'Prototipe cepat antarmuka aplikasi web untuk pengujian pengguna',
+          'Generasi komponen UI berbasis React dan Tailwind CSS',
+        ],
+        uniqueCapabilities: [
+          'Mengonversi ide verbal menjadi kode JSX dan stylesheet secara instan',
+          'Dukungan pratinjau real-time dengan pengaturan rasio perangkat',
+          'Konversi ucapan ke teks untuk input prompt tangan bebas',
+        ],
+      },
+      interactiveReplica: {
+        llmName: 'Lovable Simulator',
+        badgeText: 'AI Web Builder',
+        themeColor: 'from-pink-600 via-purple-600 to-indigo-700',
+        initialPrompt: 'Minta Lovable membuat halaman arahan untuk platform SaaS...',
+        simulatedResponse: 'Halo! Lovable AI siap membantu Anda membangun aplikasi web dan halaman arahan secara instan.',
+        hotspots: [],
+      },
+      promptingGuide: {
+        llmName: 'Lovable AI',
+        summary: 'Panduan menyusun prompt efektif untuk menghasilkan antarmuka web modern dengan Lovable.',
+        bestPractices: [
+          'Sebutkan jenis produk, target audiens, dan skema warna utama dalam prompt.',
+          'Gunakan Mode Bangun jika ingin mendapatkan kode lengkap, atau Mode Chat untuk merancang konsep.',
+          'Gunakan pratinjau responsif untuk menguji tampilan seluler dan tablet.',
+        ],
+        tips: [
+          {
+            title: 'Prompt Landing Page SaaS',
+            featureName: 'Prompt Input',
+            badge: 'Landing Page',
+            promptExample: 'Buatkan halaman arahan untuk aplikasi manajemen tugas tim dengan hero section, 3 kartu fitur utama, dan tombol panggil aksi.',
+            explanation: 'Sebutkan elemen struktural halaman untuk hasil yang lebih lengkap.',
+            proTip: 'Sertakan gaya visual seperti "tema gelap dengan aksen ungu" untuk hasil visual lebih spesifik.',
+          },
+        ],
+      },
+      quiz: [
+        {
+          id: 'q26-1',
+          question: 'Apakah fungsi utama dari Mode Bangun di Lovable AI?',
+          options: [
+            'Menghapus semua file di komputer pengguna.',
+            'Menghasilkan kode React + Tailwind CSS yang siap pakai dari deskripsi teks.',
+            'Merekam video layar secara otomatis.',
+            'Hanya dapat mengirim email.',
+          ],
+          correctAnswer: 1,
+          explanation: 'Mode Bangun fokus pada generasi kode aplikasi web dan halaman arahan secara instan.',
+        },
+      ],
+    },
+  },
+  {
+    id: 27,
+    slug: 'gamma',
+    title: 'Pengenalan Gamma AI',
+    subtitle: 'Mitra Desain AI untuk Presentasi, Dokumen, & Halaman Web',
+    icon: 'Presentation',
+    badge: 'AI Design & Presentation',
+    estimatedMinutes: 12,
+    content: {
+      overview: {
+        tagline: 'Ubah ide, catatan, dan dokumen menjadi presentasi & halaman interaktif secara instan',
+        description: 'Gamma adalah platform desain AI terkemuka yang membantu pengguna membuat presentasi, dokumen, dan halaman web dari deskripsi singkat atau catatan rapat.',
+        developer: 'Gamma App',
+        releaseYear: '2023 - Sekarang',
+        keyAdvantages: [
+          {
+            title: 'Gamma Agent Multimoduk',
+            description: 'Menganalisis ide, melakukan riset, mengutip sumber, dan membentuk narasi terstruktur.',
+            icon: 'Sparkles',
+          },
+          {
+            title: 'Impor & Konversi Catatan',
+            description: 'Mengubah notula rapat, file PDF, atau draf teks menjadi slide berdesain profesional.',
+            icon: 'FileText',
+          },
+          {
+            title: 'Penyuntingan Berbasis Agent',
+            description: 'Revisi slide, ubah tata letak, atau atur skema warna melalui percakapan alami.',
+            icon: 'Sliders',
+          },
+          {
+            title: 'Ekspor & Bagikan Instan',
+            description: 'Bagikan sebagai tautan interaktif, dokumen PDF, atau slide PowerPoint.',
+            icon: 'Share2',
+          },
+        ],
+        bestFor: [
+          'Membuat presentasi bisnis, perkuliahan, dan laporan eksekutif',
+          'Mengubah catatan rapat menjadi slide langkah kerja terstruktur',
+          'Pembuatan dokumen dan halaman arahan interaktif cepat',
+        ],
+        uniqueCapabilities: [
+          'Agent cerdas yang dapat meminta bahan sumber jika belum dilampirkan',
+          'Generasi tata letak visual otomatis tanpa membuang waktu mengatur margin',
+          'Revisi kontekstual berbasis percakapan',
+        ],
+      },
+      interactiveReplica: {
+        llmName: 'Gamma AI Simulator',
+        badgeText: 'AI Design Agent',
+        themeColor: 'from-blue-700 via-indigo-600 to-[#0e44b8]',
+        initialPrompt: 'Ubah catatan rapat saya menjadi presentasi ringkas...',
+        simulatedResponse: 'Halo! Gamma Agent siap merancang presentasi, dokumen, dan konten visual untuk Anda.',
+        hotspots: [],
+      },
+      promptingGuide: {
+        llmName: 'Gamma AI',
+        summary: 'Panduan menyusun prompt efektif untuk Gamma Agent.',
+        bestPractices: [
+          'Lampirkan catatan atau pilih opsi use case agar hasil sesuai dengan konteks.',
+          'Gunakan kalimat yang menyebutkan tujuan utama presentasi dan audiens sasaran.',
+          'Manfaatkan fitur revisi berbasis chat untuk menyempurnakan slide.',
+        ],
+        tips: [
+          {
+            title: 'Prompt Presentasi Rapat',
+            featureName: 'Buat dengan Agent',
+            badge: 'Presentasi',
+            promptExample: 'Ubah catatan rapat saya menjadi presentasi ringkas. Buatlah tim saya menyelaraskan langkah dan pemilik berikutnya.',
+            explanation: 'Sebutkan hasil akhir yang diinginkan agar Agent menyusun narasi aksi yang jelas.',
+            proTip: 'Lampirkan file catatan rapat agar Agent dapat mengutip detail secara akurat.',
+          },
+        ],
+      },
+      quiz: [
+        {
+          id: 'q27-1',
+          question: 'Bagaimana perilaku Gamma Agent jika user meminta presentasi dari catatan rapat tetapi belum melampirkan catatan tersebut?',
+          options: [
+            'Menolak dan keluar dari aplikasi secara paksa.',
+            'Secara sopan meminta pengguna menempelkan catatan atau mengunggah file terlebih dahulu.',
+            'Membuat gambar acak tanpa teks.',
+            'Menghapus dokumen lama pengguna.',
+          ],
+          correctAnswer: 1,
+          explanation: 'Gamma Agent dilatih untuk mendeteksi konteks dan meminta bahan sumber terlebih dahulu agar narasi presentasi tepat sasaran.',
+        },
+      ],
+    },
+  },
+  {
+    id: 28,
+    slug: 'manus',
+    title: 'Pengenalan Manus AI',
+    subtitle: 'AI Agent Otonom untuk Tugas Kompleks & Eksekusi Bertahap',
+    icon: 'Bot',
+    badge: 'Autonomous AI Agent',
+    estimatedMinutes: 15,
+    content: {
+      overview: {
+        tagline: 'Mengeksekusi tugas kompleks secara otonom melalui perencanaan dan alur kerja bertahap',
+        description: 'Manus adalah AI agent otonom generasi baru yang dikembangkan untuk menyelesaikan tugas-tugas kompleks secara mandiri — mulai dari pembuatan slide, aplikasi web, desain UI/UX, game, hingga analisis data.',
+        developer: 'Manus (bagian dari Meta)',
+        releaseYear: '2025 - Sekarang',
+        keyAdvantages: [
+          {
+            title: 'Eksekusi Otonom Bertahap',
+            description: 'Menganalisis, menyusun rencana, dan mengeksekusi langkah demi langkah secara mandiri.',
+            icon: 'Terminal',
+          },
+          {
+            title: 'Multitask Capabilities',
+            description: 'Mampu membuat slide presentasi, aplikasi web, game, hingga analisis data eksekutif.',
+            icon: 'Layout',
+          },
+          {
+            title: 'Dukungan Lampiran Konteks',
+            description: 'Menerima file dokumen, spreadsheet, dan spesifikasi proyek sebagai konteks tugas.',
+            icon: 'Paperclip',
+          },
+          {
+            title: 'Workspace Kolaboratif',
+            description: 'Panel log langkah eksekusi real-time dan kanvas hasil akhir yang dapat langsung dipakai.',
+            icon: 'Code2',
+          },
+        ],
+        bestFor: [
+          'Membuat kerangka aplikasi web dan game HTML5 secara cepat',
+          'Penyusunan outline slide presentasi dan materi rapat',
+          'Otomatisasi alur kerja dan penyusunan laporan komprehensif',
+        ],
+        uniqueCapabilities: [
+          'Log langkah eksekusi progresif yang transparan saat agent bekerja',
+          'Sistem prompt template cepat untuk berbagai mode tugas',
+          'Umpan balik revisi berulang langsung di area workspace',
+        ],
+      },
+      interactiveReplica: {
+        llmName: 'Manus AI Simulator',
+        badgeText: 'Autonomous Agent',
+        themeColor: 'from-slate-900 via-purple-900 to-indigo-950',
+        initialPrompt: 'Assign a task or ask anything',
+        simulatedResponse: 'Halo! Saya Manus, AI agent otonom yang siap menyelesaikan tugas kompleks Anda.',
+        hotspots: [],
+      },
+      promptingGuide: {
+        llmName: 'Manus AI',
+        summary: 'Panduan menugaskan instruksi efektif kepada Manus Agent.',
+        bestPractices: [
+          'Gunakan quick action chip atau tentukan kategori tugas dengan jelas.',
+          'Sertakan file lampiran jika memerlukan analisis data atau materi spesifik.',
+          'Gunakan fitur follow-up prompt di workspace untuk melakukan revisi bertahap.',
+        ],
+        tips: [
+          {
+            title: 'Prompt Pembuatan Website',
+            featureName: 'Build Website',
+            badge: 'Web App',
+            promptExample: 'Buatkan aplikasi web interaktif React + Tailwind CSS untuk platform pembelajaran AI',
+            explanation: 'Sebutkan teknologi dan fungsi utama yang diinginkan agar agent menghasilkan kerangka kode yang tepat.',
+            proTip: 'Manus akan menampilkan kerangka kode siap pakai di panel workspace kanan.',
+          },
+        ],
+      },
+      quiz: [
+        {
+          id: 'q28-1',
+          question: 'Apa keunggulan utama dari Manus AI sebagai AI Agent otonom?',
+          options: [
+            'Hanya bisa menjawab pertanyaan singkat tanpa hasil.',
+            'Mampu merencanakan dan mengeksekusi tugas kompleks secara bertahap melalui log transparan.',
+            'Menghapus semua file di perangkat pengguna.',
+            'Hanya dapat digunakan untuk mengirim pesan SMS.',
+          ],
+          correctAnswer: 1,
+          explanation: 'Manus membedakan dirinya dengan kemampuan perencanaan otonom dan eksekusi bertahap untuk tugas-tugas berat seperti coding, presentasi, dan analisis.',
+        },
+      ],
+    },
+  },
+  {
+    id: 29,
+    slug: 'notion-ai',
+    title: 'Pengenalan Notion AI',
+    subtitle: 'AI Workspace Assistant untuk Database, Penulisan & Analisis Dokumen',
+    icon: 'Sparkles',
+    badge: 'Workspace AI Assistant',
+    estimatedMinutes: 15,
+    content: {
+      overview: {
+        tagline: 'Satu alat serbaguna untuk pencarian, pembuatan, analisis, dan obrolan di dalam Notion',
+        description: 'Notion AI terintegrasi langsung ke dalam ruang kerja Notion untuk membantu Anda membangun database, menyempurnakan tulisan dokumen, dan menjawab pertanyaan langsung dari knowledge base tim.',
+        developer: 'Notion Labs, Inc.',
+        releaseYear: '2023 - Sekarang',
+        keyAdvantages: [
+          {
+            title: 'Modal Workspace Builder',
+            description: 'Membuat halaman, database, dan alur kerja otomatis dari deskripsi sederhana.',
+            icon: 'Layout',
+          },
+          {
+            title: 'Inline Text Editor',
+            description: 'Memperbaiki, memanjang, memendekkan, dan menyederhanakan tulisan langsung di editor.',
+            icon: 'Edit3',
+          },
+          {
+            title: 'Unified Search & Chat',
+            description: 'Menjawab pertanyaan berdasarkan data Notion, Slack, Google Drive, dan dokumen internal.',
+            icon: 'Search',
+          },
+          {
+            title: 'Multi-model Intelligence',
+            description: 'Didukung oleh model AI canggih seperti Gemini, GPT-4, dan Claude.',
+            icon: 'Sparkles',
+          },
+        ],
+        bestFor: [
+          'Membuat skema database tim pemasaran, proyek, dan pipeline penjualan',
+          'Penyuntingan dan penyempurnaan dokumen draf dengan Inline AI',
+          'Pencarian pengetahuan terintegrasi dan analisis wawasan dokumen',
+        ],
+        uniqueCapabilities: [
+          'Modal "What do you want to build today?" dengan quick action chips',
+          'Menu popup "Ask AI to edit or generate..." dengan opsi Accept/Reject/Try again',
+          'Modul fitur serbaguna Search, Generate, Analyze, dan Chat dalam satu tempat',
+        ],
+      },
+      interactiveReplica: {
+        llmName: 'Notion AI Simulator',
+        badgeText: 'Workspace AI',
+        themeColor: 'from-slate-900 via-blue-900 to-indigo-950',
+        initialPrompt: 'What do you want to build today?',
+        simulatedResponse: 'Halo! Saya Notion AI, siap membantu Anda membangun database dan mengedit dokumen.',
+        hotspots: [],
+      },
+      promptingGuide: {
+        llmName: 'Notion AI',
+        summary: 'Panduan memaksimalkan Notion AI untuk membangun halaman dan mengedit teks.',
+        bestPractices: [
+          'Sebutkan kolom dan informasi yang ingin Anda sertakan saat meminta pembuatan database.',
+          'Gunakan Inline Editor menu untuk perbaikan cepat seperti Improve writing atau Simplify language.',
+          'Gunakan fitur Search & Chat untuk mengekstrak ringkasan dari dokumen internal.',
+        ],
+        tips: [
+          {
+            title: 'Prompt Pembuatan Database Tim',
+            featureName: 'Modal Builder',
+            badge: 'Database',
+            promptExample: 'Create a database for all marketing team members with birthday, office location, and hobbies',
+            explanation: 'Sebutkan entitas dan kolom spesifik agar Notion AI menghasilkan skema tabel yang siap digunakan.',
+            proTip: 'Hasil generate dapat langsung disalin atau diubah tampilannya ke Board/Gallery view.',
+          },
+        ],
+      },
+      quiz: [
+        {
+          id: 'q29-1',
+          question: 'Fungsi utama dari Inline AI Editor pada Notion AI adalah...',
+          options: [
+            'Menghapus seluruh file dari komputer.',
+            'Memperbaiki, memanjang, memendekkan, dan menyempurnakan teks pilihan secara kontekstual.',
+            'Mematikan koneksi internet.',
+            'Hanya dapat mengubah ukuran font menjadi merah.',
+          ],
+          correctAnswer: 1,
+          explanation: 'Inline AI Editor memungkinkan pengguna memperbaiki tulisan langsung di halaman dengan opsi Improve writing, Fix spelling, Change tone, dsb.',
+        },
+      ],
+    },
+  },
 ];
 
 

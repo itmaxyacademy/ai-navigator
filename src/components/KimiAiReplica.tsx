@@ -5,124 +5,391 @@ import {
   X, Plus, FileSpreadsheet, Presentation, Layers, Bot, Sliders, HardDrive,
   Folder, Laptop, Compass, Database, Check, ExternalLink, HelpCircle,
   Terminal, Smartphone, Cloud, Cpu, Clock, Wrench, Share2, Shield,
-  ChevronDown, MessageSquare, Globe, User, Gift
+  ChevronDown, MessageSquare, Globe, User, Gift, Send, AlertCircle
 } from 'lucide-react';
 
+interface ChatMessage {
+  sender: 'user' | 'kimi';
+  text: string;
+}
+
+interface ChatThread {
+  id: string;
+  title: string;
+  messages: ChatMessage[];
+}
+
+interface WorkTask {
+  id: string;
+  name: string;
+  status: 'completed' | 'in_progress' | 'pending';
+  steps?: string[];
+  result?: string;
+}
+
 export const KimiAiReplica: React.FC = () => {
-  // Active Stage: 'chat' | 'work' | 'code' | 'claw'
+  // Global Active Stage: 'chat' | 'work' | 'code' | 'claw'
   const [activeStage, setActiveStage] = useState<'chat' | 'work' | 'code' | 'claw'>('chat');
 
-  // Stage 1 Chat State
-  const [chatInput, setChatInput] = useState('');
-  const [chatMode, setChatMode] = useState<'Instan' | 'Tinggi'>('Tinggi');
-  const [showModeDropdown, setShowModeDropdown] = useState(false);
-  const [selectedProject, setSelectedProject] = useState('Pilih proyek');
-  const [showProjectDropdown, setShowProjectDropdown] = useState(false);
-  const [collapsedNav, setCollapsedNav] = useState(false);
+  // Global State
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
 
-  // Stage 2 Work State
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  // =========================================================
+  // TAHAP 1: CHAT UTAMA STATE
+  // =========================================================
+  const [chatInput, setChatInput] = useState<string>('');
+  const [chatMode, setChatMode] = useState<'Instan' | 'Tinggi'>('Tinggi');
+  const [showModeDropdown, setShowModeDropdown] = useState<boolean>(false);
+  const [selectedProject, setSelectedProject] = useState<string>('Pilih proyek');
+  const [showProjectDropdown, setShowProjectDropdown] = useState<boolean>(false);
+  const [collapsedNav, setCollapsedNav] = useState<boolean>(false);
+  const [activeFeatureChip, setActiveFeatureChip] = useState<string | null>(null);
+
+  const [chatThreads, setChatThreads] = useState<ChatThread[]>([
+    {
+      id: 'th-1',
+      title: 'Analisis Kurikulum AI Maxy',
+      messages: [
+        { sender: 'user', text: 'Analisis struktur kurikulum AI Engineering Maxy Academy' },
+        { sender: 'kimi', text: 'Struktur kurikulum AI Maxy Academy dirancang dengan rasio 70% praktik hands-on dan 30% teori dasar. Mencakup Prompt Engineering, LLM Integration, RAG Architecture, dan Multi-Agent Systems.' }
+      ]
+    },
+    {
+      id: 'th-2',
+      title: 'Ringkasan Laporan AI 2026',
+      messages: [
+        { sender: 'user', text: 'Ringkas tren agentic AI tahun 2026' },
+        { sender: 'kimi', text: 'Tren Agentic AI 2026 didominasi oleh autonomous task execution, WebBridge local file access, dan multi-agent swarms yang bekerja secara paralel tanpa intervensi manual berlebih.' }
+      ]
+    }
+  ]);
+
+  const [activeThreadId, setActiveThreadId] = useState<string | null>('th-1');
+  const [activeMessages, setActiveMessages] = useState<ChatMessage[]>([
+    { sender: 'user', text: 'Analisis struktur kurikulum AI Engineering Maxy Academy' },
+    { sender: 'kimi', text: 'Struktur kurikulum AI Maxy Academy dirancang dengan rasio 70% praktik hands-on dan 30% teori dasar. Mencakup Prompt Engineering, LLM Integration, RAG Architecture, dan Multi-Agent Systems.' }
+  ]);
+
+  // Start New Chat
+  const handleStartNewChat = () => {
+    setActiveThreadId(null);
+    setActiveMessages([]);
+    setChatInput('');
+    setActiveFeatureChip(null);
+    showToast('Obrolan Baru Dimulai (Memori Bersih)');
+  };
+
+  // Select Existing Thread
+  const handleSelectThread = (thread: ChatThread) => {
+    setActiveThreadId(thread.id);
+    setActiveMessages(thread.messages);
+    showToast(`Membuka obrolan: "${thread.title}"`);
+  };
+
+  // Send Main Chat Message
+  const handleSendMainChat = async (overrideText?: string) => {
+    const textToSend = overrideText || chatInput;
+    if (!textToSend.trim() || isLoading) return;
+
+    setErrorMessage(null);
+    const userMsg: ChatMessage = { sender: 'user', text: textToSend };
+    setActiveMessages(prev => [...prev, userMsg]);
+    if (!overrideText) setChatInput('');
+    setIsLoading(true);
+
+    try {
+      const res = await fetch('/api/kimi-ai-studio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stage: 'chat',
+          prompt: textToSend,
+          mode: chatMode,
+          project: selectedProject,
+          feature: activeFeatureChip
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Gagal terhubung ke Kimi API');
+
+      const kimiMsg: ChatMessage = { sender: 'kimi', text: data.text };
+      setActiveMessages(prev => [...prev, kimiMsg]);
+
+      // Update or create chat thread in sidebar
+      if (!activeThreadId) {
+        const newId = `th-${Date.now()}`;
+        const newThread: ChatThread = {
+          id: newId,
+          title: data.titleSummary || textToSend.substring(0, 20) + '...',
+          messages: [userMsg, kimiMsg]
+        };
+        setChatThreads(prev => [newThread, ...prev]);
+        setActiveThreadId(newId);
+      } else {
+        setChatThreads(prev => prev.map(t => t.id === activeThreadId ? { ...t, messages: [...t.messages, userMsg, kimiMsg] } : t));
+      }
+
+    } catch (err: any) {
+      console.error("Error Kimi Chat:", err);
+      setErrorMessage(err.message || "Gagal mengirim pesan Kimi Chat.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // =========================================================
+  // TAHAP 2: KIMI WORK STATE
+  // =========================================================
   const [workTab, setWorkTab] = useState<'Work' | 'Chat'>('Work');
   const [workMode, setWorkMode] = useState<'Ask' | 'Agent' | 'Agent Swarm'>('Agent');
-  const [workInput, setWorkInput] = useState(
+  const [workInput, setWorkInput] = useState<string>(
     'Open the browser and help me search for the latest AI industry trend report. Extract the key information from the first 3 pages and organize it into an Excel to ~/Documents/MaxyWorkspace'
   );
-  const [tasks, setTasks] = useState<{ id: string; name: string; status: 'in_progress' | 'pending' | 'completed' }[]>([
-    { id: 't1', name: 'Kreasi Widget Dashboard Maxy', status: 'completed' },
-    { id: 't2', name: 'Organisasi Materi Kurikulum AI', status: 'in_progress' },
+
+  const [tasks, setTasks] = useState<WorkTask[]>([
+    { id: 't1', name: 'Kreasi Widget Dashboard Maxy', status: 'completed', steps: ['Membaca modul dashboard', 'Generate komponen React', 'Validasi linting'], result: 'Widget berhasil dibuat di /components/DashboardWidget.tsx' },
+    { id: 't2', name: 'Organisasi Materi Kurikulum AI', status: 'in_progress', steps: ['Memindai folder kurikulum', 'Mengkategorikan tugas', 'Menyusun dokumen ringkasan'], result: 'Proses penyusunan 65%...' },
     { id: 't3', name: 'Panduan Pembuatan PPT Automatis', status: 'pending' },
     { id: 't4', name: 'Cara Memulai Vibecoding dengan Kimi', status: 'pending' },
   ]);
-  const [isWorkRunning, setIsWorkRunning] = useState(false);
+  const [isWorkRunning, setIsWorkRunning] = useState<boolean>(false);
+  const [activeTaskResult, setActiveTaskResult] = useState<string | null>(null);
 
-  // Stage 3 Code State
+  // Run Kimi Work Task
+  const handleRunWorkTask = async () => {
+    if (!workInput.trim() || isWorkRunning) return;
+
+    setErrorMessage(null);
+    setIsWorkRunning(true);
+    setActiveTaskResult(null);
+
+    const taskId = `t-${Date.now()}`;
+    const taskName = workInput.length > 35 ? workInput.substring(0, 35) + '...' : workInput;
+
+    // Add task as in_progress
+    const newTask: WorkTask = {
+      id: taskId,
+      name: taskName,
+      status: 'in_progress',
+      steps: ['Analisis instruksi tugas...', 'Menghubungkan WebBridge ke workspace local...']
+    };
+    setTasks(prev => [newTask, ...prev]);
+
+    try {
+      const res = await fetch('/api/kimi-ai-studio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stage: 'work',
+          prompt: workInput,
+          workTab,
+          workMode,
+          project: selectedProject
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Gagal memproses tugas Kimi Work');
+
+      // Update task status to completed after short delay simulation
+      setTimeout(() => {
+        setTasks(prev => prev.map(t => t.id === taskId ? {
+          ...t,
+          status: 'completed',
+          steps: data.steps || ['Instruksi diproses', 'Eksekusi selesai'],
+          result: data.content || 'Tugas Kimi Work berhasil diselesaikan!'
+        } : t));
+
+        setActiveTaskResult(data.content || 'Tugas selesai secara otonom.');
+        setIsWorkRunning(false);
+        showToast(`Tugas "${taskName}" Selesai Dikerjakan Agen!`);
+      }, 1500);
+
+    } catch (err: any) {
+      console.error("Error Kimi Work:", err);
+      setErrorMessage(err.message || "Gagal mengeksekusi tugas Kimi Work.");
+      setTasks(prev => prev.map(t => t.id === taskId ? { ...t, status: 'pending' } : t));
+      setIsWorkRunning(false);
+    }
+  };
+
+  // Reset form for New Task
+  const handleNewWorkTask = () => {
+    setWorkInput('');
+    setActiveTaskResult(null);
+    showToast('Form tugas baru siap diisi');
+  };
+
+  // =========================================================
+  // TAHAP 3: KIMI CODE STATE
+  // =========================================================
   const [codeTab, setCodeTab] = useState<'terminal' | 'ide'>('terminal');
-  const [cliOutput, setCliOutput] = useState<string[]>([]);
-  const [isTypingCli, setIsTypingCli] = useState(false);
+  const [cliOutput, setCliOutput] = useState<string[]>([
+    `moonshot@KimiCode 🚀 welcome`,
+    `==================================================`,
+    `Kimi Code CLI (Model K2.7 Code) Ready`,
+    `Ketik perintah di bawah atau klik tombol perintah contoh.`
+  ]);
+  const [cliInput, setCliInput] = useState<string>('');
+  const [isTypingCli, setIsTypingCli] = useState<boolean>(false);
 
-  // Stage 4 Claw State
+  // IDE State
+  const [ideCodeInput, setIdeCodeInput] = useState<string>(
+    `import React from 'react';\n\nexport const MaxyApp = () => {\n  // Kimi Code AI auto-completion active\n  return <div>Maxy Academy Kimi Code IDE</div>;\n};`
+  );
+  const [ideExplanation, setIdeExplanation] = useState<string | null>(null);
+
+  // Run CLI Command via API
+  const handleCliCommand = async (cmdToRun?: string) => {
+    const cmd = cmdToRun || cliInput;
+    if (!cmd.trim() || isTypingCli) return;
+
+    setErrorMessage(null);
+    setIsTypingCli(true);
+    setCliOutput(prev => [...prev, `moonshot@KimiCode 🚀 ${cmd}`]);
+    if (!cmdToRun) setCliInput('');
+
+    try {
+      const res = await fetch('/api/kimi-ai-studio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stage: 'code',
+          command: cmd,
+          type: 'cli'
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Gagal mengeksekusi command CLI');
+
+      setCliOutput(prev => [...prev, data.output || `✓ Command '${cmd}' executed.`]);
+    } catch (err: any) {
+      console.error("Error Kimi Code CLI:", err);
+      setCliOutput(prev => [...prev, `ERROR: ${err.message || 'Execution failed'}`]);
+      setErrorMessage(err.message || "Gagal mengeksekusi komando terminal.");
+    } finally {
+      setIsTypingCli(false);
+    }
+  };
+
+  // Run / Explain Code in IDE
+  const handleRunIdeCode = async () => {
+    if (!ideCodeInput.trim() || isLoading) return;
+
+    setErrorMessage(null);
+    setIsLoading(true);
+    setIdeExplanation(null);
+
+    try {
+      const res = await fetch('/api/kimi-ai-studio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stage: 'code',
+          code: ideCodeInput,
+          type: 'ide'
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Gagal memproses kode di IDE');
+
+      setIdeExplanation(data.output || 'Kode berhasil dieksekusi tanpa error sintaks.');
+      showToast('Kimi Code IDE: Analisis Kode Selesai!');
+    } catch (err: any) {
+      console.error("Error Kimi IDE:", err);
+      setErrorMessage(err.message || "Gagal memproses kode.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // =========================================================
+  // TAHAP 4: KIMI CLAW STATE
+  // =========================================================
   const [selectedDeployOption, setSelectedDeployOption] = useState<'cloud' | 'desktop' | 'android' | null>(null);
   const [deployingStatus, setDeployingStatus] = useState<string | null>(null);
+  const [isDeploying, setIsDeploying] = useState<boolean>(false);
+  const [openClawDeployedUrl, setOpenClawDeployedUrl] = useState<string | null>(null);
 
-  // Global Toast
-  const [toast, setToast] = useState<string | null>(null);
-  const showToast = (msg: string) => {
-    setToast(msg);
-    setTimeout(() => setToast(null), 2500);
-  };
-
-  // Run Work Agent Task
-  const handleRunWorkTask = () => {
-    if (!workInput.trim()) return;
-    setIsWorkRunning(true);
-    showToast('Agen Kimi Work mulai menjalankan tugas...');
-
-    const newTaskName = workInput.length > 35 ? workInput.substring(0, 35) + '...' : workInput;
-
-    setTimeout(() => {
-      setTasks(prev => [
-        { id: Date.now().toString(), name: newTaskName, status: 'in_progress' },
-        ...prev
-      ]);
-      setIsWorkRunning(false);
-      showToast('Tugas baru berhasil ditambahkan ke antrean Kimi Work!');
-    }, 1200);
-  };
-
-  // Run CLI Command
-  const handleCliCommand = (cmd: string) => {
-    if (isTypingCli) return;
-    setIsTypingCli(true);
-
-    let responseLines: string[] = [];
-    if (cmd === 'introduce yourself') {
-      responseLines = [
-        `moonshot@KimiCode 🚀 introduce yourself`,
-        `Model: K2.7 Code`,
-        `--------------------------------------------------`,
-        `• Halo! Saya Kimi Code CLI, asisten AI koding khusus dari Moonshot AI.`,
-        `• Kapabilitas Utama Saya:`,
-        `  1. Software Development - Menulis, refactoring, dan debugging kode.`,
-        `  2. Codebase Analysis - Memahami proyek skala besar dan struktur repositori.`,
-        `  3. Technical Tasks - Menjalankan automasi command terminal & pengolahan file.`,
-        `  4. Research - Pencarian dokumentasi teknis dan sintesis sintaks terbaru.`
-      ];
-    } else if (cmd === 'npm run build') {
-      responseLines = [
-        `moonshot@KimiCode 🚀 npm run build`,
-        `> maxy-academy-applet@1.0.0 build`,
-        `> vite build && esbuild server.ts --bundle`,
-        `✓ 142 modules transformed.`,
-        `dist/index.html                     0.45 kB`,
-        `dist/assets/index-Dk91k2s.js       342.12 kB`,
-        `✓ Build completed in 1.24s successfully!`
-      ];
-    } else {
-      responseLines = [
-        `moonshot@KimiCode 🚀 ${cmd}`,
-        `Menjalankan analisis untuk komando '${cmd}'...`,
-        `[Kimi Code K2.7] Tugas selesai tanpa kendala sintaks.`
-      ];
-    }
-
-    setCliOutput(prev => [...prev, ...responseLines]);
-    setTimeout(() => {
-      setIsTypingCli(false);
-    }, 500);
-  };
+  // OpenClaw Chat State
+  const [clawChatInput, setClawChatInput] = useState<string>('');
+  const [clawMessages, setClawMessages] = useState<ChatMessage[]>([
+    { sender: 'kimi', text: 'Halo! Saya OpenClaw (Kimi K2.6 Thinking). Saya aktif 24/7 dan memiliki memori jangka panjang untuk membantu tugas harian Anda.' }
+  ]);
 
   // Deploy Claw Action
   const handleDeployClaw = (type: 'cloud' | 'desktop' | 'android') => {
     setSelectedDeployOption(type);
-    const labelMap = {
-      cloud: 'Server Cloud 24/7',
-      desktop: 'Aplikasi Desktop Komputer',
-      android: 'Perangkat Mobile Android'
-    };
-    setDeployingStatus(`Menyiapkan deployment OpenClaw di ${labelMap[type]}...`);
-    setTimeout(() => {
-      setDeployingStatus(`OpenClaw Berhasil Dideploy di ${labelMap[type]}!`);
-      showToast(`Agent OpenClaw Aktif di ${labelMap[type]}`);
-    }, 1800);
+    setIsDeploying(true);
+
+    if (type === 'cloud') {
+      setDeployingStatus('Memulai kontainer cloud OpenClaw 24/7...');
+      setTimeout(() => {
+        setIsDeploying(false);
+        const dummyUrl = `https://openclaw.cloud/agent-maxy-${Math.floor(100 + Math.random() * 900)}`;
+        setOpenClawDeployedUrl(dummyUrl);
+        setDeployingStatus(`OpenClaw Berhasil Dideploy! URL Akses: ${dummyUrl}`);
+        showToast('OpenClaw Berhasil Dideploy ke Cloud!');
+      }, 1800);
+    } else if (type === 'desktop') {
+      setDeployingStatus('Menyiapkan paket installer Desktop (.exe / .dmg)...');
+      setTimeout(() => {
+        setIsDeploying(false);
+        setDeployingStatus('Unduhan aplikasi desktop dimulai (simulasi installer KimiClaw_Setup.dmg)');
+        showToast('Unduhan Aplikasi Desktop Dimulai (Simulasi)');
+      }, 1500);
+    } else {
+      setDeployingStatus('Membuat APK installer Android Kimi Claw...');
+      setTimeout(() => {
+        setIsDeploying(false);
+        setDeployingStatus('Unduhan APK Android dimulai (simulasi KimiClaw_Mobile.apk)');
+        showToast('Unduhan APK Android Dimulai (Simulasi)');
+      }, 1500);
+    }
+  };
+
+  // Send OpenClaw Chat Message via Gemini API
+  const handleSendClawChat = async () => {
+    if (!clawChatInput.trim() || isLoading) return;
+
+    setErrorMessage(null);
+    const userMsg: ChatMessage = { sender: 'user', text: clawChatInput };
+    setClawMessages(prev => [...prev, userMsg]);
+    const promptToSend = clawChatInput;
+    setClawChatInput('');
+    setIsLoading(true);
+
+    try {
+      const res = await fetch('/api/kimi-ai-studio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          stage: 'claw',
+          prompt: promptToSend
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Gagal mengirim pesan ke OpenClaw');
+
+      const clawMsg: ChatMessage = { sender: 'kimi', text: data.text };
+      setClawMessages(prev => [...prev, clawMsg]);
+    } catch (err: any) {
+      console.error("Error OpenClaw Chat:", err);
+      setErrorMessage(err.message || "Gagal terhubung ke OpenClaw.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -133,10 +400,11 @@ export const KimiAiReplica: React.FC = () => {
           <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center font-extrabold text-white text-xs shadow-lg">
             K
           </div>
-          <span className="font-extrabold text-slate-200">Kimi AI Studio</span>
-          <span className="text-slate-500 hidden sm:inline">| Kimi Work, Code, Claw & Scheduled Tasks</span>
+          <span className="font-extrabold text-slate-200">Kimi AI Studio Simulator</span>
+          <span className="text-slate-500 hidden sm:inline">| Work, Code CLI, OpenClaw & Thinking Engine</span>
         </div>
 
+        {/* Stage Switcher Buttons */}
         <div className="flex items-center space-x-1 bg-[#0a0a0c] p-1 rounded-xl border border-slate-800">
           <button
             onClick={() => setActiveStage('chat')}
@@ -165,7 +433,7 @@ export const KimiAiReplica: React.FC = () => {
         </div>
       </div>
 
-      {/* Global Toast */}
+      {/* Global Toast Banner */}
       {toast && (
         <div className="fixed bottom-6 right-6 z-50 bg-indigo-600 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-2xl border border-indigo-400 flex items-center space-x-2 animate-bounce">
           <Sparkles className="w-4 h-4 text-indigo-200" />
@@ -173,7 +441,22 @@ export const KimiAiReplica: React.FC = () => {
         </div>
       )}
 
+      {/* Global Error Banner */}
+      {errorMessage && (
+        <div className="bg-rose-900/80 border-b border-rose-700 text-rose-200 text-xs px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <AlertCircle className="w-4 h-4 text-rose-300" />
+            <span>{errorMessage}</span>
+          </div>
+          <button onClick={() => setErrorMessage(null)} className="hover:text-white font-bold">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* ========================================================= */}
       {/* TAHAP 1: HALAMAN UTAMA KIMI (CHAT) */}
+      {/* ========================================================= */}
       {activeStage === 'chat' && (
         <div className="flex-1 flex flex-col md:flex-row bg-[#121216] overflow-hidden">
           {/* Sidebar Left */}
@@ -198,8 +481,8 @@ export const KimiAiReplica: React.FC = () => {
 
               {/* Obrolan Baru Button */}
               <button
-                onClick={() => showToast('Obrolan Baru Dimulai')}
-                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-[#1d1d24] hover:bg-[#252530] text-slate-100 font-bold border border-slate-700/60 shadow-sm transition-all"
+                onClick={handleStartNewChat}
+                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-[#1d1d24] hover:bg-[#252530] text-slate-100 font-bold border border-slate-700/60 shadow-sm transition-all text-xs"
               >
                 <div className="flex items-center space-x-2">
                   <Plus className="w-4 h-4 text-indigo-400" />
@@ -212,12 +495,27 @@ export const KimiAiReplica: React.FC = () => {
                 )}
               </button>
 
-              {/* Navigation Menu */}
+              {/* Chat Threads (Recent Chat History List) */}
+              {!collapsedNav && chatThreads.length > 0 && (
+                <div className="space-y-1">
+                  <div className="text-[10px] font-bold text-slate-500 uppercase px-1">Riwayat Obrolan</div>
+                  {chatThreads.map((thread) => (
+                    <div
+                      key={thread.id}
+                      onClick={() => handleSelectThread(thread)}
+                      className={`p-2 rounded-lg cursor-pointer truncate text-[11px] transition-colors ${activeThreadId === thread.id ? 'bg-indigo-950/80 text-indigo-300 font-bold border border-indigo-800/60' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}`}
+                    >
+                      💬 {thread.title}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Navigation Menu Feature Chips */}
               {!collapsedNav && (
-                <div className="space-y-1 font-semibold text-xs text-slate-300">
+                <div className="space-y-1 font-semibold text-xs text-slate-300 pt-2 border-t border-slate-800">
+                  <div className="text-[10px] font-bold text-slate-500 uppercase px-1 mb-1">Fitur Pintar</div>
                   {[
-                    { label: 'Plugin', icon: <Wrench className="w-4 h-4 text-sky-400" /> },
-                    { label: 'Tugas Terjadwal', icon: <Clock className="w-4 h-4 text-emerald-400" /> },
                     { label: 'Klaster', icon: <Layers className="w-4 h-4 text-purple-400" /> },
                     { label: 'Slide', icon: <Presentation className="w-4 h-4 text-orange-400" /> },
                     { label: 'Riset Mendalam', icon: <Search className="w-4 h-4 text-amber-400" /> },
@@ -227,11 +525,17 @@ export const KimiAiReplica: React.FC = () => {
                   ].map((nav, nidx) => (
                     <button
                       key={nidx}
-                      onClick={() => showToast(`Fitur Navigasi: ${nav.label}`)}
-                      className="w-full flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-800/50 hover:text-white transition-all text-left"
+                      onClick={() => {
+                        setActiveFeatureChip(nav.label);
+                        showToast(`Tag Fitur Aktif: [${nav.label}]`);
+                      }}
+                      className={`w-full flex items-center justify-between p-2 rounded-xl transition-all text-left ${activeFeatureChip === nav.label ? 'bg-indigo-950 text-indigo-300 font-bold border border-indigo-700' : 'hover:bg-slate-800/50 hover:text-white'}`}
                     >
-                      {nav.icon}
-                      <span>{nav.label}</span>
+                      <div className="flex items-center space-x-2.5">
+                        {nav.icon}
+                        <span>{nav.label}</span>
+                      </div>
+                      {activeFeatureChip === nav.label && <Check className="w-3.5 h-3.5 text-indigo-400" />}
                     </button>
                   ))}
                 </div>
@@ -271,20 +575,6 @@ export const KimiAiReplica: React.FC = () => {
                   </button>
                 </div>
               )}
-
-              {/* Invite to Earn Banner */}
-              {!collapsedNav && (
-                <div
-                  onClick={() => showToast('Invite Friends & Claim K3 Credits!')}
-                  className="bg-gradient-to-r from-indigo-950 to-purple-950 border border-indigo-800/60 p-3 rounded-2xl cursor-pointer hover:border-indigo-500 transition-all space-y-1"
-                >
-                  <div className="flex items-center space-x-2 text-indigo-400 font-bold text-xs">
-                    <Gift className="w-4 h-4" />
-                    <span>Invite to Earn</span>
-                  </div>
-                  <div className="text-[10px] text-slate-300">Up to 1-year K3 Credits</div>
-                </div>
-              )}
             </div>
 
             {/* Bottom User Profile */}
@@ -296,7 +586,7 @@ export const KimiAiReplica: React.FC = () => {
                   </div>
                   <div className="truncate">
                     <div className="font-bold text-slate-200 truncate">Maxy Student</div>
-                    <div className="text-[10px] text-slate-500">Tingkatkan</div>
+                    <div className="text-[10px] text-slate-500">K3 Credits</div>
                   </div>
                 </div>
 
@@ -307,30 +597,59 @@ export const KimiAiReplica: React.FC = () => {
             )}
           </aside>
 
-          {/* Main Area */}
-          <main className="flex-1 flex flex-col justify-between p-6 sm:p-10 max-w-4xl mx-auto w-full relative">
-            {/* Top Upgrade Header Button */}
-            <div className="flex justify-end">
-              <button
-                onClick={() => showToast('Upgrade Paket Kimi Anda untuk akses K3 tanpa batas')}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs px-4 py-2 rounded-full shadow-lg flex items-center space-x-1.5 transition-all"
-              >
-                <span>♬ Upgrade paket Anda</span>
-              </button>
-            </div>
+          {/* Main Chat Content Area */}
+          <main className="flex-1 flex flex-col justify-between p-4 sm:p-8 max-w-4xl mx-auto w-full relative overflow-y-auto space-y-6">
+            {/* Active Chat Conversation or Big Header */}
+            {activeMessages.length > 0 ? (
+              <div className="flex-1 space-y-4 max-h-[480px] overflow-y-auto p-2">
+                {activeMessages.map((msg, idx) => (
+                  <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`max-w-xl rounded-2xl p-4 text-xs leading-relaxed space-y-1.5 shadow-md ${msg.sender === 'user' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-[#1b1b22] border border-slate-800 text-slate-100 rounded-tl-none'}`}>
+                      <div className="font-bold text-[10px] text-indigo-300">
+                        {msg.sender === 'user' ? 'Maxy Student' : '🤖 Kimi K2.5'}
+                      </div>
+                      <div className="whitespace-pre-wrap font-sans">{msg.text}</div>
+                    </div>
+                  </div>
+                ))}
 
-            {/* Center Area: Big Logo + Input Area */}
-            <div className="my-auto space-y-8 text-center">
-              <h1 className="text-4xl sm:text-6xl font-black tracking-widest text-white font-mono drop-shadow-md">
-                KIMI
-              </h1>
+                {isLoading && (
+                  <div className="flex justify-start">
+                    <div className="bg-[#1b1b22] border border-slate-800 rounded-2xl rounded-tl-none p-3 text-xs text-indigo-400 flex items-center space-x-2">
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                      <span>Kimi K2.5 sedang berpikir ({chatMode} Mode)...</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="my-auto space-y-6 text-center">
+                <h1 className="text-4xl sm:text-6xl font-black tracking-widest text-white font-mono drop-shadow-md">
+                  KIMI
+                </h1>
+                <p className="text-xs text-slate-400 max-w-md mx-auto">
+                  Tanyakan apapun atau pilih inspirasi di bawah untuk mulai berdiskusi dengan Kimi K2.5.
+                </p>
+              </div>
+            )}
 
-              {/* Input Box */}
+            {/* Input Box Bar */}
+            <div className="space-y-4">
               <div className="bg-[#1c1c24] border border-slate-700/80 rounded-3xl p-4 shadow-2xl space-y-3 text-left relative">
+                {activeFeatureChip && (
+                  <div className="inline-flex items-center space-x-1.5 bg-indigo-950 border border-indigo-700 px-2.5 py-0.5 rounded-full text-[10px] text-indigo-300 font-bold">
+                    <span>Tag Fitur: {activeFeatureChip}</span>
+                    <button onClick={() => setActiveFeatureChip(null)} className="hover:text-white">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </div>
+                )}
+
                 <textarea
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
-                  placeholder='Ketik "/" untuk memanggil plugin dan skill'
+                  onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), handleSendMainChat())}
+                  placeholder='Ketik "/" untuk memanggil plugin dan skill, atau masukkan pertanyaan...'
                   rows={2}
                   className="w-full bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none resize-none font-medium"
                 />
@@ -369,7 +688,7 @@ export const KimiAiReplica: React.FC = () => {
                             onClick={() => {
                               setChatMode('Tinggi');
                               setShowModeDropdown(false);
-                              showToast('Mode: Tinggi (Respon mendalam dengan K2.5/K3)');
+                              showToast('Mode: Tinggi (Respon mendalam dengan K2.5)');
                             }}
                             className={`p-2 rounded-xl cursor-pointer hover:bg-slate-800 ${chatMode === 'Tinggi' ? 'bg-indigo-950 text-indigo-300 font-bold' : 'text-slate-300'}`}
                           >
@@ -382,12 +701,9 @@ export const KimiAiReplica: React.FC = () => {
                   </div>
 
                   <button
-                    onClick={() => {
-                      if (!chatInput.trim()) return;
-                      showToast(`Pesan terkirim dalam mode ${chatMode}!`);
-                      setChatInput('');
-                    }}
-                    className="bg-indigo-600 hover:bg-indigo-500 text-white p-2.5 rounded-xl shadow-lg font-bold"
+                    onClick={() => handleSendMainChat()}
+                    disabled={isLoading}
+                    className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white p-2.5 rounded-xl shadow-lg font-bold flex items-center space-x-1"
                   >
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -424,8 +740,8 @@ export const KimiAiReplica: React.FC = () => {
                 </div>
               </div>
 
-              {/* Row Shortcut Fitur */}
-              <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+              {/* Row Shortcut Fitur Chips */}
+              <div className="flex flex-wrap items-center justify-center gap-2">
                 {[
                   { name: 'Klaster', icon: <Layers className="w-3.5 h-3.5 text-purple-400" /> },
                   { name: 'Slide', icon: <Presentation className="w-3.5 h-3.5 text-orange-400" /> },
@@ -436,51 +752,56 @@ export const KimiAiReplica: React.FC = () => {
                 ].map((sc, scidx) => (
                   <button
                     key={scidx}
-                    onClick={() => showToast(`Shortcut Fitur: ${sc.name}`)}
-                    className="flex items-center space-x-1.5 bg-[#181820] hover:bg-[#22222c] border border-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm"
+                    onClick={() => {
+                      setActiveFeatureChip(sc.name);
+                      showToast(`Tag Fitur Ditambahkan: [${sc.name}]`);
+                    }}
+                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${activeFeatureChip === sc.name ? 'bg-indigo-600 text-white border-indigo-400' : 'bg-[#181820] hover:bg-[#22222c] border-slate-800 text-slate-300 hover:text-white'}`}
                   >
                     {sc.icon}
                     <span>{sc.name}</span>
                   </button>
                 ))}
               </div>
-            </div>
 
-            {/* Section "Jelajahi inspirasi" */}
-            <div className="bg-[#14141a] border border-slate-800 rounded-2xl p-4 text-xs space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-slate-300 flex items-center space-x-2">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
-                  <span>Jelajahi inspirasi</span>
-                </span>
-                <span className="text-[10px] text-slate-500">Gulir untuk menjelajah ➔</span>
-              </div>
+              {/* Section "Jelajahi inspirasi" */}
+              <div className="bg-[#14141a] border border-slate-800 rounded-2xl p-4 text-xs space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-slate-300 flex items-center space-x-2">
+                    <Sparkles className="w-4 h-4 text-amber-400" />
+                    <span>Jelajahi inspirasi</span>
+                  </span>
+                  <span className="text-[10px] text-slate-500">Klik untuk mengisi otomatis ➔</span>
+                </div>
 
-              <div className="flex space-x-3 overflow-x-auto pb-2 text-left">
-                {[
-                  'Analis data kurikulum AI Maxy Academy',
-                  'Ringkas dokumen PDF 100 halaman jadi poin slide',
-                  'Buat kode program React dengan Kimi Code',
-                  'Automasi pencarian tren AI dengan Kimi Work',
-                ].map((insp, iidx) => (
-                  <div
-                    key={iidx}
-                    onClick={() => {
-                      setChatInput(insp);
-                      showToast(`Inspirasi dipilih: "${insp}"`);
-                    }}
-                    className="min-w-[200px] bg-[#1d1d26] hover:bg-[#262632] border border-slate-700/60 p-3 rounded-xl cursor-pointer text-slate-300 font-medium transition-all shrink-0"
-                  >
-                    {insp}
-                  </div>
-                ))}
+                <div className="flex space-x-3 overflow-x-auto pb-2 text-left">
+                  {[
+                    'Analis data kurikulum AI Maxy Academy',
+                    'Ringkas dokumen PDF 100 halaman jadi poin slide',
+                    'Buat kode program React dengan Kimi Code',
+                    'Automasi pencarian tren AI dengan Kimi Work',
+                  ].map((insp, iidx) => (
+                    <div
+                      key={iidx}
+                      onClick={() => {
+                        setChatInput(insp);
+                        showToast(`Input diisi: "${insp}"`);
+                      }}
+                      className="min-w-[200px] bg-[#1d1d26] hover:bg-[#262632] border border-slate-700/60 p-3 rounded-xl cursor-pointer text-slate-300 font-medium transition-all shrink-0 hover:border-indigo-500"
+                    >
+                      {insp}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </main>
         </div>
       )}
 
+      {/* ========================================================= */}
       {/* TAHAP 2: KIMI WORK (RUANG KERJA AGENTIC) */}
+      {/* ========================================================= */}
       {activeStage === 'work' && (
         <div className="flex-1 bg-[#121216] flex flex-col overflow-hidden">
           {/* Top Switcher Tab: Work / Chat */}
@@ -490,31 +811,31 @@ export const KimiAiReplica: React.FC = () => {
                 onClick={() => setWorkTab('Work')}
                 className={`px-4 py-1.5 rounded-lg font-extrabold transition-all ${workTab === 'Work' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400'}`}
               >
-                🖥️ Work
+                🖥️ Work (Agentic Execution)
               </button>
               <button
-                onClick={() => setActiveStage('chat')}
-                className="px-4 py-1.5 rounded-lg font-bold text-slate-400 hover:text-white"
+                onClick={() => setWorkTab('Chat')}
+                className={`px-4 py-1.5 rounded-lg font-bold transition-all ${workTab === 'Chat' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}
               >
-                💬 Chat
+                💬 Chat (Conversational)
               </button>
             </div>
             <span className="text-xs font-mono text-indigo-400 font-bold bg-indigo-950 px-3 py-1 rounded-full border border-indigo-800">
-              Agentic Workspace Active
+              {workTab === 'Work' ? 'Mode: Agen Otonom Multi-Langkah' : 'Mode: Percakapan Biasa'}
             </span>
           </div>
 
           {/* Body Split Screen */}
           <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
             {/* Sidebar Dalam Work */}
-            <aside className="w-full md:w-64 bg-[#0c0c0f] border-r border-slate-800 p-3.5 flex flex-col justify-between shrink-0 text-xs">
+            <aside className="w-full md:w-64 bg-[#0c0c0f] border-r border-slate-800 p-3.5 flex flex-col justify-between shrink-0 text-xs overflow-y-auto space-y-4">
               <div className="space-y-4">
                 <button
-                  onClick={() => showToast('Membuat tugas baru di Kimi Work')}
-                  className="w-full flex items-center space-x-2 p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow"
+                  onClick={handleNewWorkTask}
+                  className="w-full flex items-center space-x-2 p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow transition-all"
                 >
                   <Plus className="w-4 h-4" />
-                  <span>New task</span>
+                  <span>+ New task</span>
                 </button>
 
                 <div className="space-y-1 font-semibold text-slate-300">
@@ -542,25 +863,32 @@ export const KimiAiReplica: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Section Tasks */}
+                {/* Section TASKS with status colors */}
                 <div className="pt-2 border-t border-slate-800 space-y-1">
-                  <div className="text-[10px] font-bold text-slate-500 uppercase px-1">Tasks</div>
+                  <div className="text-[10px] font-bold text-slate-500 uppercase px-1">TASKS</div>
                   {tasks.map((t) => (
-                    <div key={t.id} className="p-2 rounded-lg hover:bg-slate-800/50 cursor-pointer text-slate-300 truncate flex items-center space-x-2">
-                      <span className={`w-2 h-2 rounded-full shrink-0 ${t.status === 'in_progress' ? 'bg-blue-400 animate-pulse' : t.status === 'pending' ? 'bg-yellow-400' : 'bg-emerald-400'}`}></span>
-                      <span className="truncate text-[11px]">{t.name}</span>
+                    <div
+                      key={t.id}
+                      onClick={() => {
+                        if (t.result) setActiveTaskResult(t.result);
+                        showToast(`Melihat status task: ${t.name}`);
+                      }}
+                      className="p-2 rounded-lg hover:bg-slate-800/50 cursor-pointer text-slate-300 truncate flex items-center space-x-2"
+                    >
+                      <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${t.status === 'in_progress' ? 'bg-blue-400 animate-pulse' : t.status === 'pending' ? 'bg-yellow-400' : 'bg-emerald-400'}`}></span>
+                      <span className="truncate text-[11px] font-medium">{t.name}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-slate-800 font-bold text-slate-400">
+              <div className="pt-3 border-t border-slate-800 font-bold text-slate-400 text-[10px]">
                 Moonshot AI Workspace
               </div>
             </aside>
 
             {/* Main Agent Area */}
-            <main className="flex-1 p-6 sm:p-10 flex flex-col justify-center max-w-3xl mx-auto w-full space-y-6">
+            <main className="flex-1 p-6 sm:p-10 flex flex-col justify-center max-w-3xl mx-auto w-full space-y-6 overflow-y-auto">
               {/* Mascot + Title */}
               <div className="text-center space-y-3">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-indigo-950 border border-indigo-700 text-3xl shadow-xl">
@@ -568,7 +896,7 @@ export const KimiAiReplica: React.FC = () => {
                 </div>
                 <div className="space-y-1">
                   <div className="inline-block bg-indigo-950 text-indigo-400 border border-indigo-800 text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider">
-                    Beta Preview
+                    {workTab === 'Work' ? 'Agentic Workspace Active' : 'Chat Mode Active'}
                   </div>
                   <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white">
                     Let's take something off your plate
@@ -582,6 +910,7 @@ export const KimiAiReplica: React.FC = () => {
                   value={workInput}
                   onChange={(e) => setWorkInput(e.target.value)}
                   rows={4}
+                  placeholder="Deskripsikan tugas multi-langkah yang ingin Anda selesaikan secara otonom..."
                   className="w-full bg-transparent text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none resize-none font-mono leading-relaxed"
                 />
 
@@ -629,35 +958,34 @@ export const KimiAiReplica: React.FC = () => {
                     disabled={isWorkRunning}
                     className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center space-x-1.5"
                   >
-                    <span>{isWorkRunning ? 'Menjalankan...' : 'Kirim Ke Agent'}</span>
+                    <span>{isWorkRunning ? 'Memproses...' : 'Kirim Ke Agent'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
 
                 <div className="text-[11px] text-slate-500 font-mono">
-                  📁 Project: Choose a project ▾
+                  📁 Project: {selectedProject}
                 </div>
               </div>
 
-              {/* Explanatory Box */}
-              <div className="bg-[#181822] border border-slate-800 rounded-2xl p-5 text-xs text-slate-300 space-y-2">
-                <strong className="text-white text-sm block">💡 Penjelasan Konsep: Kimi Work Agentic Workspace</strong>
-                <p>
-                  <strong className="text-indigo-400">Kimi Work</strong> dirancang untuk menyelesaikan tugas multi-langkah kompleks secara otonom dengan akses direktori lokal via <strong className="text-emerald-400">WebBridge</strong>.
-                </p>
-                <ul className="list-disc pl-4 space-y-1 text-slate-400">
-                  <li><strong>Ask:</strong> Menjawab pertanyaan seperti AI biasa.</li>
-                  <li><strong>Agent:</strong> Mengeksekusi tugas otonom langkah-demi-langkah.</li>
-                  <li><strong>Agent Swarm:</strong> Mengirimkan beberapa agen AI yang bekerja secara paralel untuk mempercepat tugas skala besar.</li>
-                  <li><strong>Cron Job:</strong> Menjadwalkan tugas otomatis berulang (mis. ringkasan laporan mingguan).</li>
-                </ul>
-              </div>
+              {/* Task Result Box */}
+              {activeTaskResult && (
+                <div className="p-4 bg-[#1b1b26] border border-indigo-700/60 rounded-2xl text-xs text-slate-200 font-mono space-y-2 animate-fade-in shadow-xl">
+                  <div className="font-bold text-indigo-400 flex items-center space-x-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    <span>Laporan Eksekusi Tugas Kimi Work</span>
+                  </div>
+                  <div className="whitespace-pre-wrap">{activeTaskResult}</div>
+                </div>
+              )}
             </main>
           </div>
         </div>
       )}
 
+      {/* ========================================================= */}
       {/* TAHAP 3: KIMI CODE (CODING ASSISTANT) */}
+      {/* ========================================================= */}
       {activeStage === 'code' && (
         <div className="flex-1 bg-[#0a0a0d] flex flex-col overflow-y-auto">
           {/* Navbar Kimi Code */}
@@ -702,14 +1030,14 @@ export const KimiAiReplica: React.FC = () => {
                   className={`px-6 py-2 rounded-xl font-bold transition-all ${codeTab === 'terminal' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400'}`}
                 >
                   <Terminal className="w-4 h-4 inline mr-1.5" />
-                  Terminal
+                  Terminal CLI
                 </button>
                 <button
                   onClick={() => setCodeTab('ide')}
                   className={`px-6 py-2 rounded-xl font-bold transition-all ${codeTab === 'ide' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400'}`}
                 >
                   <Code className="w-4 h-4 inline mr-1.5" />
-                  IDE
+                  IDE Editor
                 </button>
               </div>
             </div>
@@ -724,7 +1052,7 @@ export const KimiAiReplica: React.FC = () => {
                     <span className="w-3 h-3 rounded-full bg-red-500"></span>
                     <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
-                    <span className="text-slate-400 ml-2 font-bold">Kimi CLI</span>
+                    <span className="text-slate-400 ml-2 font-bold">Kimi CLI Terminal</span>
                   </div>
                   <span className="text-[10px] text-indigo-400 bg-indigo-950 px-2 py-0.5 rounded border border-indigo-800">
                     Model: K2.7 Code
@@ -733,20 +1061,34 @@ export const KimiAiReplica: React.FC = () => {
 
                 {/* Terminal Body */}
                 <div className="p-6 space-y-4 text-slate-200 min-h-[250px] max-h-[350px] overflow-y-auto">
-                  <div className="bg-[#181822] p-4 rounded-xl border border-indigo-900/50 space-y-1">
-                    <div className="text-indigo-400 font-bold">Welcome to Kimi Code CLI!</div>
-                    <div className="text-slate-400 text-[11px]">Send /help for help information.</div>
-                    <div className="text-slate-500 text-[11px]">Model: K2.7 Code</div>
-                  </div>
-
                   {cliOutput.map((line, idx) => (
                     <div key={idx} className="whitespace-pre-wrap leading-relaxed text-slate-300">
                       {line}
                     </div>
                   ))}
 
+                  {isTypingCli && (
+                    <div className="text-indigo-400 animate-pulse">⚡ Kimi Code sedang mengeksekusi komando...</div>
+                  )}
+
+                  {/* CLI Custom Input */}
+                  <div className="pt-2 border-t border-slate-800 flex items-center space-x-2">
+                    <span className="text-indigo-400 font-bold">$</span>
+                    <input
+                      type="text"
+                      value={cliInput}
+                      onChange={(e) => setCliInput(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleCliCommand()}
+                      placeholder="Ketik perintah CLI (misal: git status, npm test, analyze architecture)..."
+                      className="flex-1 bg-transparent text-xs text-white focus:outline-none"
+                    />
+                    <button onClick={() => handleCliCommand()} className="bg-indigo-600 text-white px-3 py-1 rounded-lg text-[10px] font-bold">
+                      Jalankan
+                    </button>
+                  </div>
+
                   {/* Sample Clickable Commands */}
-                  <div className="pt-2 border-t border-slate-800 space-y-2">
+                  <div className="pt-2 border-t border-slate-800/60 space-y-2">
                     <div className="text-[10px] text-slate-500 uppercase font-bold">Klik perintah contoh:</div>
                     <div className="flex flex-wrap gap-2">
                       {['introduce yourself', 'npm run build', 'analyze codebase'].map((cmd, cidx) => (
@@ -764,44 +1106,41 @@ export const KimiAiReplica: React.FC = () => {
               </div>
             ) : (
               /* IDE View */
-              <div className="bg-[#0e0e12] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl font-mono text-xs flex flex-col h-[320px]">
-                <div className="bg-[#181820] px-4 py-2 border-b border-slate-800 flex items-center justify-between text-slate-400">
-                  <span>Kimi IDE - Maxy Academy Workspace</span>
-                  <span>TypeScript / React</span>
+              <div className="bg-[#0e0e12] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl font-mono text-xs flex flex-col space-y-3 p-4">
+                <div className="bg-[#181820] px-4 py-2 rounded-xl border border-slate-800 flex items-center justify-between text-slate-400">
+                  <span>Kimi IDE Editor - Maxy Workspace</span>
+                  <button
+                    onClick={handleRunIdeCode}
+                    disabled={isLoading}
+                    className="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded-lg text-xs font-bold shadow flex items-center space-x-1"
+                  >
+                    <Play className="w-3.5 h-3.5" />
+                    <span>Jalankan & Analisis Kode</span>
+                  </button>
                 </div>
-                <div className="flex-1 flex">
-                  <div className="w-48 bg-[#121218] border-r border-slate-800 p-3 space-y-2 text-[11px] text-slate-400">
-                    <div className="font-bold text-slate-200">📁 src/</div>
-                    <div className="pl-3 text-indigo-400 font-bold">📄 App.tsx</div>
-                    <div className="pl-3">📄 types.ts</div>
-                    <div className="pl-3">📄 server.ts</div>
+
+                <textarea
+                  value={ideCodeInput}
+                  onChange={(e) => setIdeCodeInput(e.target.value)}
+                  rows={8}
+                  className="w-full bg-[#070709] border border-slate-800 rounded-2xl p-4 text-xs font-mono text-emerald-300 focus:outline-none focus:border-indigo-500 resize-none leading-relaxed"
+                />
+
+                {ideExplanation && (
+                  <div className="p-4 bg-[#14141c] border border-indigo-800 rounded-2xl text-xs text-slate-200 font-sans space-y-1">
+                    <strong className="text-indigo-400 block font-bold">💡 Analisis Kimi Code IDE:</strong>
+                    <div className="whitespace-pre-wrap">{ideExplanation}</div>
                   </div>
-                  <div className="flex-1 p-4 bg-[#0a0a0d] text-slate-300 overflow-y-auto space-y-1">
-                    <div><span className="text-purple-400">import</span> React <span className="text-purple-400">from</span> <span className="text-emerald-300">'react'</span>;</div>
-                    <div><span className="text-purple-400">export const</span> MaxyApp = () =&gt; &#123;</div>
-                    <div className="pl-4 text-slate-500">// Kimi Code AI auto-completion active</div>
-                    <div className="pl-4"><span className="text-blue-400">return</span> &lt;<span className="text-amber-300">div</span>&gt;Maxy Academy Kimi Code IDE&lt;/<span className="text-amber-300">div</span>&gt;;</div>
-                    <div>&#125;;</div>
-                  </div>
-                </div>
+                )}
               </div>
             )}
-
-            {/* Explanation Box */}
-            <div className="bg-[#161620] border border-slate-800 rounded-2xl p-5 text-xs text-slate-300 space-y-2">
-              <strong className="text-white text-sm block">💡 Penjelasan Konsep: Kimi Code</strong>
-              <p>
-                <strong className="text-purple-400">Kimi Code</strong> difokuskan khusus untuk aktivitas rekayasa perangkat lunak (debugging, pemahaman repositori besar, dan eksekusi komando terminal).
-              </p>
-              <ul className="list-disc pl-4 space-y-1 text-slate-400">
-                <li><strong>Perbedaan dengan Kimi Work:</strong> Kimi Work menangani tugas dokumen & riset umum, sedangkan Kimi Code fokus penuh pada lingkungan pengembangan perangkat lunak (CLI & IDE).</li>
-              </ul>
-            </div>
           </div>
         </div>
       )}
 
+      {/* ========================================================= */}
       {/* TAHAP 4: KIMI CLAW (DEPLOY AI AGENT) */}
+      {/* ========================================================= */}
       {activeStage === 'claw' && (
         <div className="flex-1 bg-[#121216] flex flex-col overflow-y-auto">
           <div className="flex-1 max-w-4xl w-full mx-auto p-6 sm:p-10 flex flex-col justify-center space-y-8">
@@ -820,18 +1159,18 @@ export const KimiAiReplica: React.FC = () => {
                     <strong>Publikasikan OpenClaw dalam hitungan detik:</strong> OpenClaw adalah asisten AI dengan kepribadian dan memori. Kimi men-deploy-nya ke cloud untuk Anda hanya dengan satu klik. Online 24/7 tanpa pengaturan rumit.
                   </p>
                   <p>
-                    <strong>Mengobrol dengan bebas melalui Kimi:</strong> Dikonfigurasi dengan Kimi K2.6 Thinking dan skill siap pakai; berjalan di berbagai aplikasi pesan.
+                    <strong>Mengobrol dengan bebas melalui Kimi:</strong> Dikonfigurasi dengan Kimi K2.6 Thinking dan skill siap pakai.
                   </p>
                 </div>
               </div>
 
-              {/* Lobster / Claw Mascot Illustration */}
+              {/* Mascot Illustration */}
               <div className="mt-6 sm:mt-0 text-6xl select-none z-10 shrink-0">
                 🦞
               </div>
             </div>
 
-            {/* Section Mulai */}
+            {/* Section Mulai Deployment */}
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                 <h3 className="font-bold text-base text-white">Mulai Deployment</h3>
@@ -886,24 +1225,55 @@ export const KimiAiReplica: React.FC = () => {
 
               {/* Deployment Status Bar */}
               {deployingStatus && (
-                <div className="bg-indigo-950/80 border border-indigo-700 p-4 rounded-2xl text-xs font-bold text-indigo-200 flex items-center space-x-3">
+                <div className="bg-indigo-950/80 border border-indigo-700 p-4 rounded-2xl text-xs font-bold text-indigo-200 flex items-center space-x-3 shadow-lg">
                   <Sparkles className="w-5 h-5 text-indigo-400 shrink-0" />
                   <span>{deployingStatus}</span>
                 </div>
               )}
             </div>
 
-            {/* Explanation Box */}
-            <div className="bg-[#181822] border border-slate-800 rounded-2xl p-5 text-xs text-slate-300 space-y-2">
-              <strong className="text-white text-sm block">💡 Penjelasan Konsep: Kimi Claw / OpenClaw</strong>
-              <p>
-                <strong className="text-rose-400">Kimi Claw</strong> memungkinkan pengguna menyebarkan (deploy) asisten AI otonom pribadi yang memiliki kepribadian dan memori sendiri secara independen.
-              </p>
-              <ul className="list-disc pl-4 space-y-1 text-slate-400">
-                <li><strong>Server Cloud:</strong> Terbaik untuk uptime 24/7 dan keandalan tingkat tinggi.</li>
-                <li><strong>Komputer Saya (Desktop):</strong> Terbaik untuk privasi penuh dan akses langsung ke sistem file lokal.</li>
-                <li><strong>Ponsel Android:</strong> Memanfaatkan HP lama menjadi server AI personal terdedikasi.</li>
-              </ul>
+            {/* Interactive OpenClaw Chat Box (Visible after deployment or option selected) */}
+            <div className="bg-[#181822] border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div className="flex items-center space-x-2">
+                  <span className="text-xl">🦞</span>
+                  <h4 className="font-bold text-sm text-white">Mengobrol dengan OpenClaw Agent</h4>
+                </div>
+                <span className="text-[10px] font-mono text-rose-400 bg-rose-950 border border-rose-800 px-2.5 py-0.5 rounded-full">
+                  K2.6 Thinking Active
+                </span>
+              </div>
+
+              <div className="space-y-3 max-h-56 overflow-y-auto p-1">
+                {clawMessages.map((cMsg, cidx) => (
+                  <div key={cidx} className={`flex ${cMsg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`max-w-md rounded-2xl p-3 text-xs leading-relaxed ${cMsg.sender === 'user' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-[#22222d] border border-slate-700 text-slate-200 rounded-tl-none'}`}>
+                      <div className="font-bold text-[10px] text-indigo-300 mb-1">
+                        {cMsg.sender === 'user' ? 'Maxy Student' : '🦞 OpenClaw'}
+                      </div>
+                      <div>{cMsg.text}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex items-center space-x-2 pt-2 border-t border-slate-800">
+                <input
+                  type="text"
+                  value={clawChatInput}
+                  onChange={(e) => setClawChatInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSendClawChat()}
+                  placeholder="Kirim pesan ke OpenClaw..."
+                  className="flex-1 bg-[#121218] border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"
+                />
+                <button
+                  onClick={handleSendClawChat}
+                  disabled={isLoading}
+                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

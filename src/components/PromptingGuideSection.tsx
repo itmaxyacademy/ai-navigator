@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { CourseModule } from '../types';
+import { MiniQuizCheckpoint } from './MiniQuizCheckpoint';
+import { getSectionCheckpointQuestion } from '../lib/miniQuizData';
 import { 
   Sparkles, Copy, Check, Lightbulb, Zap, HelpCircle, 
   ArrowRight, Compass, ShieldAlert, CheckCircle2, MessageSquare, Terminal
@@ -8,14 +10,19 @@ import {
 interface PromptingGuideSectionProps {
   module: CourseModule;
   onAdvanceToQuiz: () => void;
+  completedCheckpoints?: string[];
+  onCompleteCheckpoint?: (checkpointId: string, xpBonus: number) => void;
 }
 
 export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
   module,
   onAdvanceToQuiz,
+  completedCheckpoints,
+  onCompleteCheckpoint,
 }) => {
   const guide = module.content.promptingGuide;
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const promptingQuestion = getSectionCheckpointQuestion(module, 'prompting');
 
   const handleCopy = (text: string, index: number) => {
     navigator.clipboard.writeText(text);
@@ -165,6 +172,17 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
           ))}
         </div>
       </div>
+
+      {/* Mid-Module Mini-Quiz Checkpoint */}
+      {onCompleteCheckpoint && (
+        <MiniQuizCheckpoint
+          checkpointId={promptingQuestion.id}
+          title={promptingQuestion.title}
+          question={promptingQuestion}
+          completedCheckpoints={completedCheckpoints}
+          onCompleteCheckpoint={onCompleteCheckpoint}
+        />
+      )}
 
       {/* Bottom CTA to Quiz */}
       <div className="p-6 rounded-3xl bg-gradient-to-r from-indigo-950/80 via-slate-900 to-purple-950/80 border border-indigo-800/50 flex flex-col sm:flex-row items-center justify-between gap-4">

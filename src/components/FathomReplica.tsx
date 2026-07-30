@@ -301,44 +301,95 @@ export const FathomReplica: React.FC = () => {
     return () => clearInterval(interval);
   }, [isPlaying]);
 
+  // Search query for meetings list
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [askError, setAskError] = useState<string | null>(null);
+
   // Handle Global Ask Fathom Submit
-  const handleGlobalAskSubmit = (promptText?: string) => {
+  const handleGlobalAskSubmit = async (promptText?: string) => {
     const text = promptText || globalAskInput;
     if (!text.trim()) return;
 
+    setGlobalAskInput(text);
     const userMsg = { sender: 'user' as const, text };
     setGlobalAskMessages(prev => [...prev, userMsg]);
     setGlobalAskInput('');
     setGlobalAskLoading(true);
+    setAskError(null);
 
-    setTimeout(() => {
-      let fathomAnswer = '';
-      if (text.toLowerCase().includes('summarize') || text.toLowerCase().includes('minggu ini')) {
-        fathomAnswer = 'Berdasarkan 5 rapat Anda minggu ini: Tim berhasil menyelesaikan peninjauan kurikulum AI Maxy Academy, mengonfirmasi penambahan simulator Fathom, serta merencanakan peningkatan dasbor penjualan Pak Budi.';
-      } else if (text.toLowerCase().includes('urgent') || text.toLowerCase().includes('mendesak')) {
-        fathomAnswer = 'Hal mendesak baru-baru ini: Distribusi survey dampak pelatihan ke peserta setelah sesi dan pembaruan dasbor prospek penjualan Pak Budi.';
-      } else if (text.toLowerCase().includes('promised') || text.toLowerCase().includes('janji')) {
-        fathomAnswer = 'Tugas yang dijanjikan minggu ini: (1) Distribusi Google Form survey oleh Nabila, (2) Laporan harian Fathom ke grup tim, (3) Alignment program dengan tim eksekutif oleh Wahyudi.';
-      } else {
-        fathomAnswer = `[Fathom AI - Scope: ${globalAskScope}] Menjawab: "${text}" — Seluruh hasil rekaman rapat Anda telah terindeks secara aman. Tidak ditemukan kendala kritis pada proyek Maxy Academy.`;
+    try {
+      const res = await fetch('/api/fathom-ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question: text,
+          meetingsContext: meetings,
+          scope: globalAskScope,
+        }),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Gagal menghubungi Fathom Gemini AI.');
       }
 
+      const data = await res.json();
+      const fathomAnswer = data.answer || 'Tidak ada jawaban.';
+
       setGlobalAskMessages(prev => [...prev, { sender: 'fathom', text: fathomAnswer }]);
+      showToastMsg('✨ Jawaban Fathom AI berhasil diterima!');
+    } catch (err: any) {
+      console.error('Fathom ask error:', err);
+      setAskError(err.message || 'Terjadi kesalahan saat memproses pertanyaan.');
+
+      // Fallback response for offline / error
+      let fallbackAnswer = '';
+      const q = text.toLowerCase();
+      if (q.includes('summarize') || q.includes('minggu ini')) {
+        fallbackAnswer = 'Berdasarkan 5 rapat Anda minggu ini: Tim berhasil menyelesaikan peninjauan kurikulum AI Maxy Academy, mengonfirmasi penambahan simulator Fathom, serta merencanakan peningkatan dasbor penjualan Pak Budi.';
+      } else if (q.includes('urgent') || q.includes('mendesak')) {
+        fallbackAnswer = 'Hal mendesak baru-baru ini: Distribusi survey dampak pelatihan ke peserta setelah sesi dan pembaruan dasbor prospek penjualan Pak Budi.';
+      } else if (q.includes('promised') || q.includes('janji')) {
+        fallbackAnswer = 'Tugas yang dijanjikan minggu ini: (1) Distribusi Google Form survey oleh Nabila, (2) Laporan harian Fathom ke grup tim, (3) Alignment program dengan tim eksekutif oleh Wahyudi.';
+      } else {
+        fallbackAnswer = `[Fathom AI - Scope: ${globalAskScope}] Menjawab: "${text}" — Seluruh hasil rekaman rapat Anda telah terindeks secara aman. Tidak ditemukan kendala kritis pada proyek Maxy Academy.`;
+      }
+
+      setGlobalAskMessages(prev => [...prev, { sender: 'fathom', text: fallbackAnswer }]);
+    } finally {
       setGlobalAskLoading(false);
-    }, 1200);
+    }
   };
 
   // Handle Call Detail Ask Fathom Submit
-  const handleCallAskSubmit = (promptText?: string) => {
+  const handleCallAskSubmit = async (promptText?: string) => {
     const text = promptText || callAskInput;
     if (!text.trim()) return;
 
+    setCallAskInput(text);
     const userMsg = { sender: 'user' as const, text };
     setCallAskMessages(prev => [...prev, userMsg]);
     setCallAskInput('');
     setCallAskLoading(true);
 
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/fathom-ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question: `Regarding meeting "${selectedCall.title}": ${text}`,
+          meetingsContext: [selectedCall],
+          scope: 'Selected Meeting Call',
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Gagal memproses pertanyaan.');
+      }
+
+      const data = await res.json();
+      setCallAskMessages(prev => [...prev, { sender: 'fathom', text: data.answer }]);
+    } catch (err: any) {
       let fathomAnswer = '';
       if (text.toLowerCase().includes('why') || text.toLowerCase().includes('mengapa')) {
         fathomAnswer = `Rapat "${selectedCall.title}" dijadwalkan untuk meninjau progres pengembangan produk Maxy Academy, menyeleraskan kurikulum AI, dan mengatasi isu fitur yang berlebihan (over-engineering).`;
@@ -349,8 +400,9 @@ export const FathomReplica: React.FC = () => {
       }
 
       setCallAskMessages(prev => [...prev, { sender: 'fathom', text: fathomAnswer }]);
+    } finally {
       setCallAskLoading(false);
-    }, 1200);
+    }
   };
 
   // Toggle Action Item Checkbox
@@ -397,6 +449,31 @@ export const FathomReplica: React.FC = () => {
     t.speaker.toLowerCase().includes(transcriptSearch.toLowerCase())
   );
 
+  const filteredMeetings = meetings.filter(call => {
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const matchTitle = call.title.toLowerCase().includes(q);
+      const matchParticipant = call.participants.some(p => p.name.toLowerCase().includes(q));
+      if (!matchTitle && !matchParticipant) return false;
+    }
+
+    if (navTab === 'my-calls') {
+      return call.hasAudio;
+    } else if (navTab === 'team-calls') {
+      return true;
+    } else if (navTab === 'playlists') {
+      const titleLower = call.title.toLowerCase();
+      return titleLower.includes('kurikulum') || titleLower.includes('workshop') || titleLower.includes('sync') || titleLower.includes('perencanaan');
+    } else if (navTab === 'alerts') {
+      const titleLower = call.title.toLowerCase();
+      return !call.hasAudio || titleLower.includes('evaluasi') || titleLower.includes('silent');
+    } else if (navTab === 'deals') {
+      const titleLower = call.title.toLowerCase();
+      return titleLower.includes('penjualan') || titleLower.includes('evaluasi');
+    }
+    return true;
+  });
+
   return (
     <div className="w-full min-h-[750px] bg-[#0d0f12] text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-800 flex flex-col relative shadow-2xl">
       {/* Global Toast Banner */}
@@ -428,6 +505,8 @@ export const FathomReplica: React.FC = () => {
           <div className="relative hidden md:block w-64 lg:w-80">
             <input
               type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search Call Recordings"
               className="w-full bg-[#1b2028] border border-slate-700/70 rounded-xl py-1.5 px-3 pl-9 text-xs text-slate-200 placeholder-slate-400 focus:outline-none focus:border-cyan-500 transition-colors"
             />
@@ -548,16 +627,23 @@ export const FathomReplica: React.FC = () => {
                   <span>June</span>
                 </h3>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {meetings.filter(m => m.monthGroup === 'June').map(call => (
-                    <div
-                      key={call.id}
-                      onClick={() => {
-                        setSelectedCallId(call.id);
-                        setActiveStage('call-detail');
-                      }}
-                      className="bg-[#141820] border border-slate-800 hover:border-cyan-500/60 rounded-xl overflow-hidden cursor-pointer group transition-all transform hover:-translate-y-1 shadow-lg flex flex-col justify-between"
-                    >
+                {filteredMeetings.length === 0 ? (
+                  <div className="bg-[#141820] border border-slate-800 rounded-2xl p-8 text-center space-y-2">
+                    <Video className="w-8 h-8 text-slate-600 mx-auto" />
+                    <p className="text-sm font-semibold text-slate-300">Tidak ada rekaman rapat yang sesuai dengan filter/pencarian ini.</p>
+                    <p className="text-xs text-slate-500">Coba ubah tab navigasi atau kata kunci di kolom pencarian.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    {filteredMeetings.map(call => (
+                      <div
+                        key={call.id}
+                        onClick={() => {
+                          setSelectedCallId(call.id);
+                          setActiveStage('call-detail');
+                        }}
+                        className="bg-[#141820] border border-slate-800 hover:border-cyan-500/60 rounded-xl overflow-hidden cursor-pointer group transition-all transform hover:-translate-y-1 shadow-lg flex flex-col justify-between"
+                      >
                       {/* Card Thumbnail Box */}
                       <div className="h-32 bg-slate-900 relative flex items-center justify-center p-3 border-b border-slate-800/80">
                         {/* Participants Avatar Grid */}
@@ -600,6 +686,7 @@ export const FathomReplica: React.FC = () => {
                     </div>
                   ))}
                 </div>
+                )}
               </div>
 
               {/* Info Note on Navigation Tabs */}
@@ -654,6 +741,18 @@ export const FathomReplica: React.FC = () => {
                   <div className="flex items-center space-x-2 text-xs text-cyan-400 animate-pulse pt-2">
                     <Sparkles className="w-4 h-4 animate-spin" />
                     <span>Fathom sedang menganalisis seluruh rekaman rapat Anda...</span>
+                  </div>
+                )}
+
+                {askError && (
+                  <div className="bg-rose-950/80 border border-rose-800 p-2.5 rounded-xl text-xs text-rose-200 flex items-center justify-between gap-2">
+                    <div className="flex items-center space-x-1.5">
+                      <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                      <span>{askError}</span>
+                    </div>
+                    <button onClick={() => setAskError(null)} className="text-rose-400 hover:text-white">
+                      <X className="w-3.5 h-3.5" />
+                    </button>
                   </div>
                 )}
 

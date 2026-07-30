@@ -6,10 +6,14 @@ import {
   Code, MessageCircle, Wand2, Workflow, Coins, Download, ArrowRight, CheckCircle2, Star
 } from 'lucide-react';
 import { CourseModule } from '../types';
+import { MiniQuizCheckpoint } from './MiniQuizCheckpoint';
+import { getSectionCheckpointQuestion } from '../lib/miniQuizData';
 
 interface ModuleOverviewProps {
   module: CourseModule;
   onAdvanceToReplica: () => void;
+  completedCheckpoints?: string[];
+  onCompleteCheckpoint?: (checkpointId: string, xpBonus: number) => void;
 }
 
 const renderAdvantageIcon = (iconName: string) => {
@@ -52,8 +56,11 @@ const renderAdvantageIcon = (iconName: string) => {
 export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
   module,
   onAdvanceToReplica,
+  completedCheckpoints,
+  onCompleteCheckpoint,
 }) => {
   const overview = module.content.overview;
+  const overviewQuestion = getSectionCheckpointQuestion(module, 'overview');
 
   return (
     <div className="space-y-8">
@@ -148,6 +155,17 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
           </ul>
         </div>
       </div>
+
+      {/* Mid-Module Mini-Quiz Checkpoint */}
+      {onCompleteCheckpoint && (
+        <MiniQuizCheckpoint
+          checkpointId={overviewQuestion.id}
+          title={overviewQuestion.title}
+          question={overviewQuestion}
+          completedCheckpoints={completedCheckpoints}
+          onCompleteCheckpoint={onCompleteCheckpoint}
+        />
+      )}
 
       {/* Next Step Action Button */}
       <div className="pt-4 flex justify-end">

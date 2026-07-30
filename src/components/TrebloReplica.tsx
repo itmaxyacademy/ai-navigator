@@ -45,12 +45,14 @@ export const TrebloReplica: React.FC = () => {
   const [workspacePrompt, setWorkspacePrompt] = useState<string>(
     'Lagu country pop santai tentang jaringan WiFi putus saat lagi presentasi koding AI di Maxy Academy'
   );
+  const [customTitleInput, setCustomTitleInput] = useState<string>('');
   const [customStyle, setCustomStyle] = useState<string>('country pop, bro-country, acoustic guitar, upbeat male vocals');
   const [customLyricsInput, setCustomLyricsInput] = useState<string>(
     `[Verse 1]\nLagi fokus koding di Maxy Academy\nKode terstruktur, siap untuk di-deploy\nTiba-tiba sinyal WiFi hilang misteri\nLayar terdiam, kawan-kawan pun melambaikan tangan...\n\n[Chorus]\nOoh WiFi putus di tengah sesi!\nTapi semangat AI takkan pernah terhenti!\nRefactor kode, koneksi kembali lagi!`
   );
   const [isInstrumental, setIsInstrumental] = useState<boolean>(false);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Filter & Search in song list
   const [listSearch, setListSearch] = useState<string>('');
@@ -150,73 +152,154 @@ export const TrebloReplica: React.FC = () => {
     return () => clearInterval(interval);
   }, [isPlaying]);
 
+  // Execute Gemini AI Song Generation Call
+  const executeGenerateSong = async (
+    promptText: string,
+    currentMode: 'simple' | 'advanced',
+    currentInstrumental: boolean,
+    currentStyle: string,
+    currentLyrics: string,
+    currentTitle: string
+  ) => {
+    setIsGenerating(true);
+    setErrorMessage(null);
+    showToastMsg('✨ Mengirim prompt ke Treblo Gemini AI Engine...');
+
+    try {
+      const res = await fetch('/api/generate-song', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: promptText.trim() || currentTitle.trim() || 'Lagu AI Treblo',
+          mode: currentMode === 'advanced' ? 'custom' : 'simple',
+          isInstrumental: currentInstrumental,
+          customLyrics: currentLyrics,
+          customStyle: currentStyle,
+          customTitle: currentTitle,
+        }),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Terjadi kesalahan pada server saat membuat lagu.');
+      }
+
+      const data = await res.json();
+      const versions = data.versions || [];
+
+      if (versions && versions.length > 0) {
+        const generatedBatch: TrebloSong[] = versions.map((ver: any, idx: number) => {
+          const colors = [
+            'bg-gradient-to-br from-rose-600 to-amber-700',
+            'bg-gradient-to-br from-blue-600 to-cyan-700',
+            'bg-gradient-to-br from-violet-600 to-fuchsia-800',
+            'bg-gradient-to-br from-emerald-600 to-lime-700'
+          ];
+          return {
+            id: `song-${Date.now()}-${idx}`,
+            title: ver.title || (currentTitle.trim() || (promptText.length > 25 ? promptText.slice(0, 25) + '...' : promptText) || 'Lagu Baru Maxy'),
+            style: ver.style || currentStyle || 'pop, electronic, modern production',
+            duration: ver.duration || '2:45',
+            prompt: promptText || currentTitle || 'Prompt Kustom',
+            lyrics: currentInstrumental
+              ? '(Track Instrumental - Murni Musik tanpa Vokal)'
+              : ver.lyrics || currentLyrics || '[Verse 1]\nLagu AI ciptaanmu.',
+            createdAt: 'Baru saja',
+            isNew: true,
+            isLiked: false,
+            isInstrumental: currentInstrumental,
+            coverColor: colors[Math.floor(Math.random() * colors.length)],
+            waveform: ver.waveform || Array.from({ length: 24 }, () => Math.floor(Math.random() * 60) + 35)
+          };
+        });
+
+        setSongs(prev => [...generatedBatch, ...prev]);
+        setSelectedSongId(generatedBatch[0].id);
+        setActivePlayerSongId(generatedBatch[0].id);
+        setIsPlaying(true);
+        setPlayerProgress(0);
+        showToastMsg(`🎵 Lagu "${generatedBatch[0].title}" berhasil di-generate oleh Gemini AI!`);
+      } else {
+        throw new Error('Format data lagu tidak sesuai.');
+      }
+    } catch (err: any) {
+      console.error('Treblo generate error:', err);
+      
+      // Fallback local song creation so user experience remains seamless
+      const newId = `song-${Date.now()}`;
+      const fallbackTitle = currentTitle.trim() || (promptText.length > 25 ? promptText.slice(0, 25) + '...' : promptText) || 'Lagu Baru Maxy';
+      const fallbackLyrics = currentInstrumental
+        ? '(Track Instrumental - Murni Musik tanpa Vokal)'
+        : currentMode === 'advanced' && currentLyrics.trim()
+          ? currentLyrics
+          : `[Verse 1]\nIde lagu "${promptText}" diproses oleh Treblo AI Engine\nIrama synthwave dan harmoni vokal berpadu indah\nMaxy Academy mewujudkan kreasi musik impianmu!\n\n[Chorus]\nOoh dengarkan melodi baru berirama cepat!\nKreativitas AI tanpa batas di genggamanmu!\n\n[Verse 2]\nLangkah demi langkah meracik prompt yang tepat\nHasil karya musik luar biasa tercipta hebat!\n\n[Outro - Fade Out]`;
+
+      const fallbackSong: TrebloSong = {
+        id: newId,
+        title: fallbackTitle,
+        style: currentMode === 'advanced' ? (currentStyle || 'country pop, acoustic') : 'country pop, upbeat synthwave',
+        duration: '2:45',
+        prompt: promptText || 'Lagu Kustom',
+        lyrics: fallbackLyrics,
+        createdAt: 'Baru saja',
+        isNew: true,
+        isLiked: false,
+        isInstrumental: currentInstrumental,
+        coverColor: 'bg-gradient-to-br from-rose-600 to-amber-700',
+        waveform: Array.from({ length: 24 }, () => Math.floor(Math.random() * 70) + 30)
+      };
+
+      setSongs(prev => [fallbackSong, ...prev]);
+      setSelectedSongId(newId);
+      setActivePlayerSongId(newId);
+      setIsPlaying(true);
+      setPlayerProgress(0);
+      showToastMsg(`🎵 Lagu "${fallbackTitle}" berhasil di-generate!`);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   // Start building song from Landing Page
   const handleMakeMySong = () => {
-    if (landingPrompt.trim()) {
-      setWorkspacePrompt(landingPrompt);
+    if (!landingPrompt.trim()) {
+      setErrorMessage('Deskripsi ide lagu di Landing Page tidak boleh kosong!');
+      showToastMsg('❌ Silakan masukkan deskripsi ide lagu terlebih dahulu!');
+      return;
     }
+    setErrorMessage(null);
+    const promptText = landingPrompt.trim();
+    setWorkspacePrompt(promptText);
     setStage('workspace');
-    showToastMsg('Selamat datang di Create Workspace Treblo!');
+    showToastMsg('🚀 Pindah ke Dashboard & langsung membuat lagu...');
+    executeGenerateSong(promptText, activeTab, isInstrumental, customStyle, customLyricsInput, customTitleInput);
   };
 
   // Trigger song generation in workspace
   const handleGenerateSong = () => {
-    if (!workspacePrompt.trim() && activeTab === 'simple') {
-      showToastMsg('Silakan masukkan deskripsi ide lagu terlebih dahulu!');
+    if (activeTab === 'simple' && !workspacePrompt.trim()) {
+      setErrorMessage('Silakan masukkan deskripsi ide lagu terlebih dahulu!');
+      showToastMsg('❌ Deskripsi ide lagu tidak boleh kosong!');
       return;
     }
 
-    setIsGenerating(true);
-    showToastMsg('Sedang memproses lirik & musik dengan Treblo AI Engine v3...');
+    if (activeTab === 'advanced' && !customTitleInput.trim() && !customStyle.trim() && !customLyricsInput.trim() && !workspacePrompt.trim()) {
+      setErrorMessage('Silakan isi setidaknya satu kolom (Judul, Genre/Style, Lirik, atau Prompt)!');
+      showToastMsg('❌ Kolom input di mode Advanced masih kosong!');
+      return;
+    }
 
-    setTimeout(() => {
-      const newId = `song-${Date.now()}`;
-      const newTitle = activeTab === 'simple'
-        ? (workspacePrompt.length > 25 ? workspacePrompt.slice(0, 25) + '...' : workspacePrompt)
-        : (customStyle.split(',')[0] || 'Lagu Baru Maxy');
-
-      const colors = [
-        'bg-gradient-to-br from-rose-600 to-amber-700',
-        'bg-gradient-to-br from-blue-600 to-cyan-700',
-        'bg-gradient-to-br from-violet-600 to-fuchsia-800',
-        'bg-gradient-to-br from-emerald-600 to-lime-700'
-      ];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-      const generatedLyrics = isInstrumental
-        ? '(Track Instrumental - Murni Musik tanpa Vokal)'
-        : activeTab === 'advanced' && customLyricsInput.trim()
-          ? customLyricsInput
-          : `[Verse 1]\nIde lagu "${workspacePrompt}" siap dinyanyikan\nKomposisi melodi harmonis diproduksi otomatis\nMaxy Academy membawa kreasimu jadi kenyataan!\n\n[Chorus]\nLagu AI ciptaanmu siap didengarkan dunia\nTanpa batas imajinasi, mari terus berkarya!`;
-
-      const newSong: TrebloSong = {
-        id: newId,
-        title: newTitle,
-        style: activeTab === 'advanced' ? customStyle : 'pop, electronic, modern production, clear vocal',
-        duration: '2:50',
-        prompt: workspacePrompt,
-        lyrics: generatedLyrics,
-        createdAt: 'Baru saja',
-        isNew: true,
-        isLiked: false,
-        isInstrumental: isInstrumental,
-        coverColor: randomColor,
-        waveform: Array.from({ length: 24 }, () => Math.floor(Math.random() * 70) + 30)
-      };
-
-      setSongs(prev => [newSong, ...prev]);
-      setSelectedSongId(newId);
-      setActivePlayerSongId(newId);
-      setIsGenerating(false);
-      setIsPlaying(true);
-      setPlayerProgress(0);
-      showToastMsg('Lagu berhasil di-generate! Otomatis diputar.');
-    }, 2500);
+    setErrorMessage(null);
+    executeGenerateSong(workspacePrompt, activeTab, isInstrumental, customStyle, customLyricsInput, customTitleInput);
   };
 
   const toggleLike = (songId: string, e?: React.MouseEvent) => {
     e?.stopPropagation();
     setSongs(prev => prev.map(s => s.id === songId ? { ...s, isLiked: !s.isLiked } : s));
+    const song = songs.find(s => s.id === songId);
+    if (song) {
+      showToastMsg(song.isLiked ? `Dihapus dari Liked Songs` : `❤️ Ditambahkan ke Liked Songs`);
+    }
   };
 
   const handleCopyLyrics = () => {
@@ -224,7 +307,7 @@ export const TrebloReplica: React.FC = () => {
       navigator.clipboard?.writeText(selectedSong.lyrics);
       setCopiedLyrics(true);
       setTimeout(() => setCopiedLyrics(false), 2000);
-      showToastMsg('Lirik berhasil disalin ke clipboard!');
+      showToastMsg('📋 Lirik berhasil disalin ke clipboard!');
     }
   };
 
@@ -237,7 +320,7 @@ export const TrebloReplica: React.FC = () => {
   const saveRenameSong = (songId: string) => {
     if (editingTitleValue.trim()) {
       setSongs(prev => prev.map(s => s.id === songId ? { ...s, title: editingTitleValue.trim() } : s));
-      showToastMsg('Judul lagu berhasil diperbarui!');
+      showToastMsg('✏️ Judul lagu berhasil diperbarui!');
     }
     setEditingSongId(null);
   };
@@ -776,6 +859,17 @@ export const TrebloReplica: React.FC = () => {
                   {activeTab === 'advanced' && (
                     <div className="space-y-3 flex-1 flex flex-col text-xs">
                       <div>
+                        <label className="block text-[11px] font-semibold text-slate-300 mb-1">Judul Manual (Custom Song Title)</label>
+                        <input
+                          type="text"
+                          value={customTitleInput}
+                          onChange={(e) => setCustomTitleInput(e.target.value)}
+                          placeholder="e.g. WiFi Putus di Maxy Academy"
+                          className="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500"
+                        />
+                      </div>
+
+                      <div>
                         <label className="block text-[11px] font-semibold text-slate-300 mb-1">Genre & Style Tags</label>
                         <input
                           type="text"
@@ -792,10 +886,23 @@ export const TrebloReplica: React.FC = () => {
                           value={customLyricsInput}
                           onChange={(e) => setCustomLyricsInput(e.target.value)}
                           placeholder="[Verse 1] Tulis lirik kustom di sini..."
-                          rows={6}
+                          rows={5}
                           className="w-full flex-1 bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-slate-200 placeholder-slate-500 resize-none focus:outline-none focus:border-rose-500 font-mono"
                         />
                       </div>
+                    </div>
+                  )}
+
+                  {/* Error Alert Message Box */}
+                  {errorMessage && (
+                    <div className="bg-rose-950/80 border border-rose-800/80 p-3 rounded-xl text-xs text-rose-200 flex items-center justify-between gap-2 animate-in fade-in">
+                      <div className="flex items-center space-x-2">
+                        <Info className="w-4 h-4 text-rose-400 shrink-0" />
+                        <span>{errorMessage}</span>
+                      </div>
+                      <button onClick={() => setErrorMessage(null)} className="p-1 hover:text-white">
+                        <X className="w-3.5 h-3.5 text-rose-300" />
+                      </button>
                     </div>
                   )}
 

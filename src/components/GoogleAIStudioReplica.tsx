@@ -36,10 +36,25 @@ export const GoogleAIStudioReplica: React.FC = () => {
   const [selectedGridMode, setSelectedGridMode] = useState<string>('featured');
   const [gridFilterMode, setGridFilterMode] = useState<'models' | 'agents'>('models');
 
-  // Prompt Inputs & Loading
+  // Prompt Inputs & Loading & Error States
   const [playgroundPrompt, setPlaygroundPrompt] = useState<string>(
     'Buat aplikasi web interaktif Maxy AI Navigator dengan dashboard modul pembelajaran LLM'
   );
+  const [recentPrompts, setRecentPrompts] = useState<string[]>([
+    'Maxy AI Navigator',
+    'Optimasi Kode Game Arcade',
+    'Riset Prompting LLM',
+    'Generator Modul Pembelajaran',
+  ]);
+  const [playgroundOutput, setPlaygroundOutput] = useState<{
+    text: string;
+    imageUrl?: string;
+    modelUsed: string;
+    groundingSources?: Array<{ title?: string; url: string; snippet?: string }>;
+    timestamp: string;
+  } | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const [isGroundingChipActive, setIsGroundingChipActive] = useState<boolean>(true);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
@@ -97,16 +112,65 @@ export const GoogleAIStudioReplica: React.FC = () => {
     setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // Handler for Start Building or Running Prompt
-  const handleStartBuilding = (customPrompt?: string) => {
-    const promptToUse = customPrompt || playgroundPrompt;
-    if (!promptToUse.trim()) return;
+  // Handler for Running Prompt via API
+  const handleRunPrompt = async (customPrompt?: string, openWorkspace = false) => {
+    const promptToUse = customPrompt !== undefined ? customPrompt : playgroundPrompt;
 
+    if (!promptToUse || !promptToUse.trim()) {
+      setErrorMessage('Prompt tidak boleh kosong! Silakan ketik instruksi atau pilih dari Recent Prompts.');
+      showToast('❌ Prompt kosong!');
+      return;
+    }
+
+    setErrorMessage(null);
     setIsGenerating(true);
-    showToast('Sedang memproses prompt & membangun aplikasi di Gemini 3...');
+    showToast(`🚀 Memproses request dengan model ${selectedModel}...`);
 
-    setTimeout(() => {
-      setIsGenerating(false);
+    try {
+      const res = await fetch('/api/gemini-playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: promptToUse,
+          model: selectedModel,
+          systemInstruction,
+          temperature,
+          thinkingLevel,
+          tools: toolsState,
+          mode: selectedGridMode,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Gagal memproses request dari API.');
+      }
+
+      const outputData = {
+        text: data.text || 'Tidak ada teks respons yang diterima.',
+        imageUrl: data.imageUrl,
+        modelUsed: data.modelUsed || selectedModel,
+        groundingSources: data.groundingSources,
+        timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
+      };
+
+      setPlaygroundOutput(outputData);
+
+      // Add to Recent Prompts
+      const summaryTitle = promptToUse.length > 28 ? promptToUse.slice(0, 28) + '...' : promptToUse;
+      setRecentPrompts((prev) => {
+        const filtered = prev.filter((item) => item.toLowerCase() !== summaryTitle.toLowerCase());
+        return [summaryTitle, ...filtered].slice(0, 8);
+      });
+
+      // Update Workspace Title if user ran a new app creation prompt
+      if (promptToUse.length > 5) {
+        const firstWords = promptToUse.split(' ').slice(0, 4).join(' ');
+        setWorkspaceAppTitle(firstWords.charAt(0).toUpperCase() + firstWords.slice(1));
+      }
+
+      // Add entry to Chat Messages
       setChatMessages((prev) => [
         ...prev,
         {
@@ -115,22 +179,38 @@ export const GoogleAIStudioReplica: React.FC = () => {
         },
         {
           sender: 'ai',
-          duration: 'Ran for 8s',
-          text: `Fitur baru berhasil diintegrasikan ke dalam ${workspaceAppTitle}!`,
+          duration: `Ran for 3s • ${data.modelUsed || selectedModel}`,
+          text: data.imageUrl ? `Gambar berhasil digenerasi untuk prompt: "${promptToUse}"` : (data.text?.slice(0, 160) + '...'),
           bullets: [
-            `Menerapkan perintah: "${promptToUse}"`,
-            `Mengoptimalkan parameter Temperature (${temperature.toFixed(1)}) & Thinking level (${thinkingLevel})`,
-            'Menyelaraskan komponen UI dengan sistem desain Maxy Academy',
+            `Model: ${data.modelUsed || selectedModel}`,
+            `Temperature: ${temperature.toFixed(1)} | Thinking Level: ${thinkingLevel}`,
+            `Active Tools: ${Object.entries(toolsState).filter(([, v]) => v).map(([k]) => k).join(', ') || 'Standard'}`,
           ],
         },
       ]);
-      setActiveTab('build_workspace');
-      showToast('Aplikasi siap diuji di Build Workspace!');
-    }, 1500);
+
+      if (openWorkspace) {
+        setActiveTab('build_workspace');
+        showToast('🎉 Aplikasi berhasil dibangun & dibuka di Build Workspace!');
+      } else {
+        showToast('✨ Respons Gemini AI Studio berhasil dihasilkan!');
+      }
+    } catch (err: any) {
+      console.error('Playground run error:', err);
+      setErrorMessage(err.message || 'Terjadi kesalahan saat memproses request.');
+      showToast('❌ Gagal memproses prompt.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  // Handler for Start Building legacy wrapper
+  const handleStartBuilding = (customPrompt?: string) => {
+    handleRunPrompt(customPrompt, true);
   };
 
   // Handler for chat input in Build Workspace
-  const handleSendWorkspaceMessage = () => {
+  const handleSendWorkspaceMessage = async () => {
     if (!workspaceInput.trim() || isGenerating) return;
     const msg = workspaceInput;
     setWorkspaceInput('');
@@ -141,23 +221,51 @@ export const GoogleAIStudioReplica: React.FC = () => {
       { sender: 'user', text: msg },
     ]);
 
-    setTimeout(() => {
-      setIsGenerating(false);
+    try {
+      const res = await fetch('/api/gemini-playground', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: msg,
+          model: selectedModel,
+          systemInstruction,
+          temperature,
+          thinkingLevel,
+          tools: toolsState,
+          mode: 'code_chat',
+        }),
+      });
+
+      const data = await res.json();
+      const responseText = data.text || 'Langkah iterasi berhasil diselesaikan.';
+
       setChatMessages((prev) => [
         ...prev,
         {
           sender: 'ai',
-          duration: 'Ran for 5s',
+          duration: 'Ran for 3s',
           text: `Pembaruan diselesaikan berdasarkan instruksi Anda:`,
           bullets: [
-            `Modifikasi: ${msg}`,
-            'Pembaruan komponen visual dan pembaruan state pada Live Preview',
-            'Sintaksis TypeScript divalidasi tanpa error runtime',
+            `Instruksi: "${msg}"`,
+            responseText.slice(0, 120) + '...',
+            `Konfigurasi: Temp ${temperature.toFixed(1)} | Thinking: ${thinkingLevel}`,
           ],
         },
       ]);
-      showToast('Perubahan berhasil diterapkan pada Preview!');
-    }, 1200);
+      showToast('Perubahan berhasil diterapkan pada Live Preview!');
+    } catch (err: any) {
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          sender: 'ai',
+          duration: 'Error',
+          text: `Gagal memproses iterasi: ${err.message}`,
+        },
+      ]);
+      showToast('❌ Gagal memperbarui aplikasi.');
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   // Mock Data for My Apps
@@ -430,19 +538,15 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     Recent Prompts
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    {[
-                      'Maxy AI Navigator',
-                      'Optimasi Kode Game Arcade',
-                      'Riset Prompting LLM',
-                      'Generator Modul Pembelajaran',
-                    ].map((item, idx) => (
+                    {recentPrompts.map((item, idx) => (
                       <button
                         key={idx}
                         onClick={() => {
-                          setPlaygroundPrompt(`Optimasi dan kembangkan fitur untuk "${item}" di Maxy Academy`);
+                          setPlaygroundPrompt(item);
+                          if (errorMessage) setErrorMessage(null);
                           showToast(`Prompt "${item}" dimuat!`);
                         }}
-                        className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs flex items-center gap-2 transition-all group"
+                        className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs flex items-center gap-2 transition-all group cursor-pointer"
                       >
                         <Clock className="w-3 h-3 text-slate-500 group-hover:text-blue-400" />
                         <span>{item}</span>
@@ -450,6 +554,22 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     ))}
                   </div>
                 </div>
+
+                {/* Error Alert Box */}
+                {errorMessage && (
+                  <div className="bg-rose-500/10 border border-rose-500/40 rounded-2xl p-3 flex items-center justify-between gap-3 text-xs text-rose-300 animate-in fade-in">
+                    <div className="flex items-center gap-2">
+                      <X className="w-4 h-4 text-rose-400 shrink-0" />
+                      <span>{errorMessage}</span>
+                    </div>
+                    <button
+                      onClick={() => setErrorMessage(null)}
+                      className="text-rose-400 hover:text-white shrink-0 cursor-pointer"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                )}
 
                 {/* Section Models Grid Mode */}
                 <div className="space-y-3">
@@ -539,6 +659,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                           key={card.id}
                           onClick={() => {
                             setSelectedGridMode(card.id);
+                            if (errorMessage) setErrorMessage(null);
                             showToast(`Mode "${card.title}" dipilih`);
                           }}
                           className={`p-3.5 rounded-2xl border cursor-pointer transition-all ${
@@ -569,7 +690,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     </p>
                     <button
                       onClick={() => handleStartBuilding()}
-                      className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-blue-500/20 border border-blue-400/30 flex items-center gap-2 transition-all"
+                      className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-blue-500/20 border border-blue-400/30 flex items-center gap-2 transition-all cursor-pointer"
                     >
                       <Sparkles className="w-4 h-4 text-amber-300" />
                       <span>Start building</span>
@@ -580,11 +701,38 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 {/* Prompt Input Box & Toolbar */}
                 <div className="space-y-2 pt-2">
                   <div className="relative rounded-2xl bg-slate-900/90 border border-slate-800 focus-within:border-blue-500 transition-all p-3 shadow-xl">
+                    <div className="flex items-center justify-between mb-1.5 text-[11px] font-semibold text-slate-400">
+                      <span className="capitalize text-blue-400 flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        Mode: {selectedGridMode.replace('_', ' ')}
+                      </span>
+                      {selectedGridMode === 'image_gen' && (
+                        <span className="text-purple-400 font-mono text-[10px] bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded">
+                          Imagen 3 / Nano Banana
+                        </span>
+                      )}
+                    </div>
+
                     <textarea
                       value={playgroundPrompt}
-                      onChange={(e) => setPlaygroundPrompt(e.target.value)}
-                      placeholder="Start typing a prompt to see what our models can do..."
-                      rows={3}
+                      onChange={(e) => {
+                        setPlaygroundPrompt(e.target.value);
+                        if (errorMessage) setErrorMessage(null);
+                      }}
+                      placeholder={
+                        selectedGridMode === 'image_gen'
+                          ? 'Deskripsikan gambar visual yang ingin Anda buat dengan Imagen 3 (mis. "Futuristic Cyberpunk City with neon lights in rain")...'
+                          : selectedGridMode === 'code_chat'
+                          ? 'Ketik instruksi koding, analisis logika program, atau percakapan dengan Gemini 3...'
+                          : selectedGridMode === 'speech_music'
+                          ? 'Deskripsikan narasi audio, efek suara, atau komposisi musik yang ingin dibuat...'
+                          : selectedGridMode === 'video_gen'
+                          ? 'Deskripsikan skenario video dan arah sinematografi yang diinginkan...'
+                          : selectedGridMode === 'realtime'
+                          ? 'Ketik instruksi streaming percakapan atau kontrol Live API...'
+                          : 'Start typing a prompt or app requirement to see what our models can do...'
+                      }
+                      rows={selectedGridMode === 'image_gen' ? 4 : 3}
                       className="w-full bg-transparent text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none resize-none leading-relaxed"
                     />
 
@@ -594,7 +742,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         {/* Tools Button */}
                         <button
                           onClick={() => showToast('Tools dropdown: pilih Grounding Search, Maps, atau Custom Functions')}
-                          className="px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 text-xs flex items-center gap-1.5 transition-all"
+                          className="px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 text-xs flex items-center gap-1.5 transition-all cursor-pointer"
                         >
                           <Sliders className="w-3.5 h-3.5 text-blue-400" />
                           <span>Tools</span>
@@ -611,7 +759,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                                 setToolsState((prev) => ({ ...prev, groundingSearch: false }));
                                 showToast('Chip Grounding Search dihapus');
                               }}
-                              className="p-0.5 hover:bg-blue-900/80 rounded transition-all text-blue-400 hover:text-white"
+                              className="p-0.5 hover:bg-blue-900/80 rounded transition-all text-blue-400 hover:text-white cursor-pointer"
                             >
                               <X className="w-3 h-3" />
                             </button>
@@ -620,14 +768,14 @@ export const GoogleAIStudioReplica: React.FC = () => {
 
                         <button
                           onClick={() => showToast('Gunakan perintah suara untuk merekam prompt')}
-                          className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all"
+                          className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all cursor-pointer"
                         >
                           <Mic className="w-3.5 h-3.5" />
                         </button>
 
                         <button
                           onClick={() => showToast('Tambahkan file sampel/referensi ke prompt')}
-                          className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all"
+                          className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all cursor-pointer"
                         >
                           <Paperclip className="w-3.5 h-3.5" />
                         </button>
@@ -635,9 +783,9 @@ export const GoogleAIStudioReplica: React.FC = () => {
 
                       {/* Run Button */}
                       <button
-                        onClick={() => handleStartBuilding()}
+                        onClick={() => handleRunPrompt(undefined, false)}
                         disabled={isGenerating}
-                        className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md flex items-center gap-2 transition-all disabled:opacity-50"
+                        className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md flex items-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
                       >
                         {isGenerating ? (
                           <>
@@ -654,6 +802,97 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     </div>
                   </div>
                 </div>
+
+                {/* Output / Response Panel in Playground */}
+                {(playgroundOutput || isGenerating) && (
+                  <div className="space-y-3 pt-4 border-t border-slate-800/80 animate-in fade-in">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-amber-400" />
+                        <span>Output Response</span>
+                      </h3>
+                      {playgroundOutput && (
+                        <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                          <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30 font-mono">
+                            {playgroundOutput.modelUsed}
+                          </span>
+                          <span>{playgroundOutput.timestamp}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {isGenerating ? (
+                      <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800/80 flex items-center justify-center gap-3 text-slate-400 text-xs animate-pulse">
+                        <RefreshCw className="w-5 h-5 text-blue-400 animate-spin" />
+                        <span>Gemini AI Studio sedang mengolah request Anda...</span>
+                      </div>
+                    ) : playgroundOutput ? (
+                      <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 space-y-4 shadow-2xl">
+                        {playgroundOutput.imageUrl && (
+                          <div className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-700/80 shadow-2xl">
+                            <img
+                              src={playgroundOutput.imageUrl}
+                              alt="Generasi AI"
+                              className="w-full h-auto object-cover"
+                              referrerPolicy="no-referrer"
+                            />
+                          </div>
+                        )}
+
+                        <div className="text-xs text-slate-200 leading-relaxed font-sans whitespace-pre-wrap bg-slate-950/80 p-4 rounded-xl border border-slate-800/80 font-mono overflow-x-auto max-h-[350px]">
+                          {playgroundOutput.text}
+                        </div>
+
+                        {playgroundOutput.groundingSources && playgroundOutput.groundingSources.length > 0 && (
+                          <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                            <span className="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
+                              <Globe className="w-3 h-3" />
+                              Sumber Grounding Google Search:
+                            </span>
+                            <div className="flex flex-wrap gap-2">
+                              {playgroundOutput.groundingSources.map((src, idx) => (
+                                <a
+                                  key={idx}
+                                  href={src.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="px-2.5 py-1 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-[11px] flex items-center gap-1 hover:underline"
+                                >
+                                  <span>{src.title || src.url}</span>
+                                  <ExternalLink className="w-3 h-3 text-emerald-400" />
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="flex items-center justify-between pt-2">
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(playgroundOutput.text);
+                              showToast('Respons disalin ke clipboard!');
+                            }}
+                            className="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+                          >
+                            <Copy className="w-3.5 h-3.5 text-blue-400" />
+                            <span>Copy Output</span>
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              setActiveTab('build_workspace');
+                              showToast('Buka di Build Workspace');
+                            }}
+                            className="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer"
+                          >
+                            <span>Open in Workspace</span>
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                )}
               </div>
 
               {/* Right Panel: RUN SETTINGS */}
