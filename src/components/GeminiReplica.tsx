@@ -81,7 +81,7 @@ export const GeminiReplica: React.FC = () => {
   const [isToolsMenuOpen, setIsToolsMenuOpen] = useState(false);
   const [isSettingsMenuOpen, setIsSettingsMenuOpen] = useState(false);
   const [isThemeSubmenuOpen, setIsThemeSubmenuOpen] = useState(false);
-  const [activeTheme, setActiveTheme] = useState<'Dark' | 'Light' | 'System'>('Dark');
+  const [activeTheme, setActiveTheme] = useState<'Dark' | 'Light' | 'System'>('Light');
 
   // Active Selected Model
   const [selectedModel, setSelectedModel] = useState<'3.5 Flash-Lite' | '3.6 Flash' | '3.1 Pro' | 'Extended thinking'>('3.6 Flash');

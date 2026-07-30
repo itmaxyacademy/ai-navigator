@@ -91,7 +91,7 @@ export default function App() {
     } catch (e) {
       console.error('Failed to load theme preference', e);
     }
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {
