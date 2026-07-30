@@ -531,8 +531,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
 
             <div className="flex items-center gap-3 pt-1">
               <img
-                src="/logo-maxy.png"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://cms.maxy.academy/uploads/LogoMaxy.png'; }}
+                src="https://cms.maxy.academy/uploads/LogoMaxy.png"
                 alt="Maxy Academy Logo"
                 className="h-10 sm:h-12 w-auto object-contain shrink-0"
               />

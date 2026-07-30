@@ -62,8 +62,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="flex items-center gap-2.5 cursor-pointer group shrink-0"
           >
             <img
-              src="/logo-maxy.png"
-              onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://cms.maxy.academy/uploads/LogoMaxy.png'; }}
+              src="https://cms.maxy.academy/uploads/LogoMaxy.png"
               alt="Maxy Academy Logo"
               className="h-8 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform"
             />
