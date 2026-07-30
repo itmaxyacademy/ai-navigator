@@ -342,27 +342,18 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 </button>
               </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => window.print()}
-                  className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-600/20 transition-all cursor-pointer"
-                >
-                  <Printer className="w-4 h-4" /> Cetak / PDF (Browser)
-                </button>
-
-                <button
-                  onClick={handleDownloadPDF}
-                  disabled={isDownloading}
-                  className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white font-black text-xs rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
-                >
-                  {isDownloading ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Download className="w-4 h-4" />
-                  )}
-                  <span>{isDownloading ? 'Memproses...' : 'Download File PDF'}</span>
-                </button>
-              </div>
+              <button
+                onClick={handleDownloadPDF}
+                disabled={isDownloading}
+                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white font-black text-xs sm:text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition-all cursor-pointer"
+              >
+                {isDownloading ? (
+                  <Loader2 className="w-4.5 h-4.5 animate-spin" />
+                ) : (
+                  <Download className="w-4.5 h-4.5" />
+                )}
+                <span>{isDownloading ? 'Mengekstrak PDF 2 Halaman...' : 'Download Sertifikat PDF (2 Halaman)'}</span>
+              </button>
             </div>
 
             <div id="printable-certificate-area" className="space-y-6">
