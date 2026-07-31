@@ -266,7 +266,7 @@ export default function App() {
       window.location.reload();
       return;
     }
-    const target = 'https://ainavigator.maxy.academy?login=true';
+    const target = 'https://ainavigator.maxy.academy';
     window.location.href = target;
   };
 
