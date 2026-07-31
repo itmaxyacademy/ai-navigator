@@ -2,12 +2,12 @@ import { UserTier } from '../types';
 
 export function useTierAccess(userTier: UserTier = 'free', maxAllowedModuleId?: number) {
   const effectiveMaxModule = maxAllowedModuleId || (
-    userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 2
+    userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3
   );
 
   /**
    * Checks if a given module is accessible based on the user's tier.
-   * - Free Trial: Modules 1 to 2
+   * - Free Trial: Modules 1 to 3
    * - Tier 1: Modules 1 to 22
    * - Tier 2 VIP: Modules 1 to 29 (All Modules)
    */

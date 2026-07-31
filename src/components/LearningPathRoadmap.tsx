@@ -767,11 +767,11 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                   const isCompleted = progress.completedModules.includes(module.id);
                   const isCurrent = module.id === currentActiveModuleId;
                   
-                  // Free Trial lock: User on 'free' tier can only access Module 1 and 2 directly
+                  // Free Trial lock: User on 'free' tier can access Modules 1, 2, and 3 directly
                   const isFreeTrialLocked = !canAccessModule(module.id);
 
-                  // Module is locked if index > 0 and previous module not finished
-                  const isLocked = index > 0 && !progress.completedModules.includes(modules[index - 1].id) && !isCurrent && !isCompleted;
+                  // Module is locked sequentially ONLY IF it's beyond accessible range and previous module not finished
+                  const isLocked = index > 0 && !progress.completedModules.includes(modules[index - 1].id) && !isCurrent && !isCompleted && !canAccessModule(module.id);
                   
                   const posX = getNodePositionX(index);
                   const score = progress.moduleScores[module.id];
@@ -835,7 +835,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                               if (onOpenUpgradeModal) {
                                 onOpenUpgradeModal(module.id);
                               } else {
-                                setLockedTooltip(`🔒 Status Free Trial hanya dapat mengakses Modul 1 & 2. Silakan upgrade ke Tier 1 atau Tier 2!`);
+                                setLockedTooltip(`🔒 Status Free Trial dapat mengakses Modul 1 hingga Modul 3. Silakan upgrade ke Tier 1 atau Tier 2!`);
                                 setTimeout(() => setLockedTooltip(null), 3500);
                               }
                             } else if (isLocked) {

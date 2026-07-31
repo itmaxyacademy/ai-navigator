@@ -214,7 +214,7 @@ export const Header: React.FC<HeaderProps> = ({
                     ) : userTier !== 'free' ? (
                       <p className="text-[10px] text-emerald-400 mt-0.5">✅ Akses Aktif</p>
                     ) : (
-                      <p className="text-[10px] text-amber-400 mt-0.5">⚡ Free Trial (Modul 1-2)</p>
+                      <p className="text-[10px] text-amber-400 mt-0.5">⚡ Free Trial (Modul 1-3)</p>
                     )}
                   </div>
                 </div>

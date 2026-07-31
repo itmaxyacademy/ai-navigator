@@ -67,7 +67,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
             {targetModuleId ? (
               <>
-                Status Anda saat ini adalah <strong className="text-amber-400">{currentTier === 'free' ? 'Free Trial' : currentTier === 'tier1' ? 'Tier 1' : 'Tier 2'}</strong>{currentTier === 'free' ? ' (hanya dapat mengakses Modul 1 & Modul 2)' : ''}. Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-slate-900 dark:text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
+                Status Anda saat ini adalah <strong className="text-amber-400">{currentTier === 'free' ? 'Free Trial' : currentTier === 'tier1' ? 'Tier 1' : 'Tier 2'}</strong>{currentTier === 'free' ? ' (hanya dapat mengakses Modul 1 hingga Modul 3)' : ''}. Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-slate-900 dark:text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
               </>
             ) : (
               <>
@@ -319,7 +319,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             onClick={onClose}
             className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white underline text-xs font-semibold cursor-pointer"
           >
-            Lanjutkan dengan Free Trial (Modul 1 &amp; 2)
+            Lanjutkan dengan Free Trial (Modul 1 – 3)
           </button>
         </div>
       </div>

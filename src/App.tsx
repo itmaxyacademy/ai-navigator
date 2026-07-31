@@ -49,7 +49,7 @@ export default function App() {
           ...parsed,
           userTier: 'free',
           tier: 'free',
-          maxAllowedModuleId: 2,
+          maxAllowedModuleId: 3,
         };
       }
     } catch (e) {
@@ -168,7 +168,7 @@ export default function App() {
         const user = res.data.user;
         const rawTier = sub?.active_tier || sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
         const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
-        const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 2);
+        const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
         const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
         const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
         const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
