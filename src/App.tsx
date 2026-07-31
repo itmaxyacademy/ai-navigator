@@ -110,6 +110,7 @@ export default function App() {
   }, [theme]);
 
   // Auth Guard: Sync user profile & active tier subscription from API Gateway api.maxy.academy
+  useEffect(() => {
     // Detect local development environment
     const isLocalDev = typeof window !== 'undefined' && (
       window.location.hostname === 'localhost' || 
