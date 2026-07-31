@@ -111,37 +111,9 @@ export default function App() {
 
   // Auth Guard: Sync user profile & active tier subscription from API Gateway api.maxy.academy
   useEffect(() => {
-    // Check if running locally (localhost, 127.0.0.1, or local LAN IP like 192.168.x.x)
-    const isLocalDev = typeof window !== 'undefined' && (
-      window.location.hostname === 'localhost' || 
-      window.location.hostname === '127.0.0.1' ||
-      window.location.hostname.startsWith('192.168.') ||
-      window.location.hostname.startsWith('10.') ||
-      window.location.hostname.startsWith('172.')
-    );
-
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
-
-    if (isLocalDev && !token) {
-      // Best Practice: For local development, mock a premium user so all features are accessible
-      // without needing to login to the production server.
-      setProgress(prev => ({
-        ...prev,
-        userTier: 'tier2',
-        tier: 'tier2',
-        maxAllowedModuleId: 29,
-        paidTiers: ['tier1', 'tier2'],
-        hasTier1: true,
-        hasTier2: true,
-        userName: 'Local Developer',
-        userEmail: 'dev@localhost',
-        packageName: 'Local Development VIP'
-      }));
-      setIsAuthValidating(false);
-      return;
-    }
 
     const getLandingUrl = () => {
       // Always redirect to the real login portal if unauthenticated
