@@ -759,7 +759,8 @@ export default function App() {
   };
 
   const currentModule = MODULES_DATA.find((m) => m.id === selectedModuleId);
-  const allModulesCompleted = progress.completedModules.length === MODULES_DATA.length;
+  // Sertifikat terbuka jika user menyelesaikan Capstone Tier 1 (Modul 22) ATAU Capstone Tier 2 (Modul 29)
+  const allModulesCompleted = progress.completedModules.includes(22) || progress.completedModules.includes(29);
 
   if (isAuthValidating) {
     return (
