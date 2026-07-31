@@ -617,7 +617,7 @@ export const FathomReplica: React.FC = () => {
           </div>
 
           {/* Main Content Grid: Left Calls Cards List (Cols 8) + Right Ask Fathom Panel (Cols 4) */}
-          <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden min-w-0">
             {/* LEFT CALLS LIST AREA */}
             <div className="lg:col-span-8 p-4 sm:p-6 overflow-y-auto space-y-6">
               {/* Group Month: June */}
@@ -853,7 +853,7 @@ export const FathomReplica: React.FC = () => {
           </div>
 
           {/* Main Call Detail Layout Grid (Left Video & Tabs + Right Action Items) */}
-          <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden min-w-0">
             {/* LEFT AREA: Video Player & Tabs (Cols 8) */}
             <div className="lg:col-span-8 flex flex-col border-r border-slate-200 dark:border-slate-800 overflow-y-auto bg-[#0d0f13]">
               {/* VIDEO PLAYER AREA */}
@@ -866,7 +866,7 @@ export const FathomReplica: React.FC = () => {
                         <div className="w-12 h-12 rounded-full bg-white dark:bg-slate-900/60 border border-slate-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-base shadow">
                           {p.initial}
                         </div>
-                        <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 mt-2 bg-slate-100 dark:bg-slate-950/80 px-2 py-0.5 rounded truncate max-w-[90%]">
+                        <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 mt-2 bg-slate-100 dark:bg-slate-950/80 px-2 py-0.5 rounded break-words whitespace-normal leading-snug max-w-[90%]">
                           {p.name}
                         </span>
                       </div>
@@ -896,7 +896,7 @@ export const FathomReplica: React.FC = () => {
                   </div>
 
                   {/* Progress Bar */}
-                  <div className="flex-1 mx-4 bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden cursor-pointer relative" onClick={(e) => {
+                  <div className="flex-1 mx-4 bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden cursor-pointer relative min-w-0" onClick={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
                     const clickX = e.clientX - rect.left;
                     setPlayerProgress(Math.floor((clickX / rect.width) * 100));
@@ -1046,7 +1046,7 @@ export const FathomReplica: React.FC = () => {
                 <div className="p-4 sm:p-6 space-y-4">
                   {/* Top Search & Copy Toolbar */}
                   <div className="flex items-center justify-between gap-3 flex-wrap">
-                    <div className="relative flex-1 min-w-[200px]">
+                    <div className="relative flex-1 min-w-[200px] min-w-0">
                       <input
                         type="text"
                         value={transcriptSearch}
@@ -1196,7 +1196,7 @@ export const FathomReplica: React.FC = () => {
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={handleCopyFor}
-                    className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-lg font-bold flex items-center justify-center space-x-1 transition-colors"
+                    className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-lg font-bold flex items-center justify-center space-x-1 transition-colors min-w-0"
                   >
                     <Copy className="w-3 h-3 text-cyan-400" />
                     <span>{copiedForState ? 'Copied!' : 'Copy for ...'}</span>
@@ -1204,7 +1204,7 @@ export const FathomReplica: React.FC = () => {
 
                   <button
                     onClick={handleCopyFollowUp}
-                    className="flex-1 bg-cyan-950 hover:bg-cyan-900 border border-cyan-800 text-cyan-300 text-xs py-1.5 rounded-lg font-bold flex items-center justify-center space-x-1 transition-colors"
+                    className="flex-1 bg-cyan-950 hover:bg-cyan-900 border border-cyan-800 text-cyan-300 text-xs py-1.5 rounded-lg font-bold flex items-center justify-center space-x-1 transition-colors min-w-0"
                   >
                     <Mail className="w-3 h-3 text-cyan-400" />
                     <span>{copiedFollowUp ? 'Copied!' : 'Copy Follow-up Email'}</span>
@@ -1213,7 +1213,7 @@ export const FathomReplica: React.FC = () => {
               </div>
 
               {/* Checklist Items List */}
-              <div className="space-y-3 flex-1">
+              <div className="space-y-3 flex-1 min-w-0">
                 {selectedCall.actionItems.map((item) => (
                   <div
                     key={item.id}
@@ -1228,7 +1228,7 @@ export const FathomReplica: React.FC = () => {
                       )}
                     </div>
 
-                    <div className="space-y-1.5 text-xs flex-1">
+                    <div className="space-y-1.5 text-xs flex-1 min-w-0">
                       <p className={`leading-relaxed font-medium ${item.isCompleted ? 'line-through text-slate-500' : 'text-slate-800 dark:text-slate-100'}`}>
                         {item.text}
                       </p>

@@ -346,7 +346,7 @@ export const DeepSeekReplica: React.FC = () => {
       {/* Top Header: DeepSeek Logo & Controls */}
       <div className="p-3.5 flex items-center justify-between border-b border-[#26272c]/60">
         <div 
-          className="flex items-center gap-2 cursor-pointer group"
+          className="flex items-center gap-2 cursor-pointer group flex-wrap max-w-full"
           onClick={() => openModal('new-chat')}
         >
           {/* DeepSeek Logo Icon (Whale SVG) */}
@@ -361,7 +361,7 @@ export const DeepSeekReplica: React.FC = () => {
           </span>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 flex-wrap max-w-full">
           <button 
             onClick={() => openModal('search')}
             className="p-1.5 rounded-lg hover:bg-[#282a30] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
@@ -393,7 +393,7 @@ export const DeepSeekReplica: React.FC = () => {
             openModal('new-chat');
             if (viewMode === 'mobile') setIsMobileSidebarOpen(false);
           }}
-          className="w-full py-2 px-3.5 rounded-full bg-[#282a30] hover:bg-[#32353e] text-slate-800 dark:text-slate-100 font-medium text-sm flex items-center gap-2 border border-slate-300 dark:border-slate-700/50 shadow-sm transition-all group"
+          className="w-full py-2 px-3.5 rounded-full bg-[#282a30] hover:bg-[#32353e] text-slate-800 dark:text-slate-100 font-medium text-sm flex items-center gap-2 border border-slate-300 dark:border-slate-700/50 shadow-sm transition-all group flex-wrap max-w-full"
         >
           <div className="w-4 h-4 rounded-full border border-slate-400 flex items-center justify-center group-hover:border-white">
             <Plus className="w-3 h-3 text-slate-700 dark:text-slate-200" />
@@ -403,7 +403,7 @@ export const DeepSeekReplica: React.FC = () => {
       </div>
 
       {/* Chat History List (Fictional conversations for Maxy Academy) */}
-      <div className="flex-1 overflow-y-auto px-3 py-2 space-y-4 text-xs scrollbar-thin scrollbar-thumb-slate-700">
+      <div className="flex-1 overflow-y-auto px-3 py-2 space-y-4 text-xs scrollbar-thin scrollbar-thumb-slate-700 min-w-0">
         {chatHistory.map((group) => (
           <div key={group.period} className="space-y-1">
             <div className="px-2 py-1 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
@@ -417,10 +417,10 @@ export const DeepSeekReplica: React.FC = () => {
                   handleSendMessage(`Buka kembali sesi percakapan "${item.title}"`);
                   if (viewMode === 'mobile') setIsMobileSidebarOpen(false);
                 }}
-                className="px-2.5 py-2 rounded-lg hover:bg-[#24262c] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white cursor-pointer transition-colors truncate flex items-center gap-2 group"
+                className="px-2.5 py-2 rounded-lg hover:bg-[#24262c] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white cursor-pointer transition-colors truncate flex items-center gap-2 group flex-wrap max-w-full"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-slate-500 group-hover:text-blue-400 shrink-0" />
-                <span className="truncate">{item.title}</span>
+                <span className="break-words whitespace-normal leading-snug">{item.title}</span>
               </div>
             ))}
           </div>
@@ -437,7 +437,7 @@ export const DeepSeekReplica: React.FC = () => {
                 setIsProfileMenuOpen(false);
                 openModal('download-app');
               }}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
             >
               <Smartphone className="w-4 h-4 text-blue-400" />
               <span>Download mobile app</span>
@@ -447,7 +447,7 @@ export const DeepSeekReplica: React.FC = () => {
                 setIsProfileMenuOpen(false);
                 openModal('settings');
               }}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
             >
               <Settings className="w-4 h-4 text-slate-500 dark:text-slate-400" />
               <span>Settings</span>
@@ -457,7 +457,7 @@ export const DeepSeekReplica: React.FC = () => {
                 setIsProfileMenuOpen(false);
                 openModal('help-feedback');
               }}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
             >
               <HelpCircle className="w-4 h-4 text-amber-400" />
               <span>Help & Feedback</span>
@@ -468,7 +468,7 @@ export const DeepSeekReplica: React.FC = () => {
                 setIsProfileMenuOpen(false);
                 openModal('profile-maxy');
               }}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-rose-400 flex items-center gap-2.5 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-rose-400 flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
             >
               <LogOut className="w-4 h-4" />
               <span>Log out</span>
@@ -484,11 +484,11 @@ export const DeepSeekReplica: React.FC = () => {
           }}
           className="flex items-center justify-between p-1.5 rounded-lg hover:bg-[#24262c] cursor-pointer transition-colors"
         >
-          <div className="flex items-center gap-2.5 overflow-hidden">
+          <div className="flex items-center gap-2.5 overflow-hidden flex-wrap max-w-full">
             <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-indigo-600 via-blue-600 to-sky-500 flex items-center justify-center font-semibold text-slate-900 dark:text-white text-xs shrink-0 shadow-md">
               MA
             </div>
-            <span className="text-xs font-medium text-slate-700 dark:text-slate-200 truncate">
+            <span className="text-xs font-medium text-slate-700 dark:text-slate-200 break-words whitespace-normal leading-snug">
               Maxy Academy
             </span>
           </div>
@@ -502,20 +502,20 @@ export const DeepSeekReplica: React.FC = () => {
     <div className="relative w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#131417] overflow-hidden shadow-2xl text-slate-800 dark:text-slate-100 font-sans flex flex-col min-h-[720px] max-h-[880px]">
       {/* Interactive Replica Top Control Bar */}
       <div className="bg-[#18191c] border-b border-[#26272c] px-4 py-2.5 flex items-center justify-between z-30 shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-3 flex-wrap max-w-full">
+          <div className="flex items-center gap-1.5 flex-wrap max-w-full">
             <div className="w-3 h-3 rounded-full bg-rose-500/80" />
             <div className="w-3 h-3 rounded-full bg-amber-500/80" />
             <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
           </div>
-          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 ml-2">
+          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 ml-2 flex-wrap max-w-full">
             <Atom className="w-4 h-4 text-blue-400 animate-pulse" />
             DeepSeek AI Replica (Maxy Academy)
           </span>
         </div>
 
         {/* Desktop / Mobile View Mode Switcher */}
-        <div className="flex items-center gap-2 bg-[#23252b] p-1 rounded-lg border border-slate-300 dark:border-slate-700/60">
+        <div className="flex items-center gap-2 bg-[#23252b] p-1 rounded-lg border border-slate-300 dark:border-slate-700/60 flex-wrap max-w-full">
           <button
             onClick={() => {
               setViewMode('desktop');
@@ -550,7 +550,7 @@ export const DeepSeekReplica: React.FC = () => {
       {/* Main Workspace Body */}
       {viewMode === 'mobile' ? (
         /* Mobile Device Outer Phone Frame Simulation */
-        <div className="flex-1 flex items-center justify-center p-3 bg-[#0c0d0f] overflow-hidden">
+        <div className="flex-1 flex items-center justify-center p-3 bg-[#0c0d0f] overflow-hidden min-w-0">
           <div className="relative w-full max-w-[380px] h-[670px] rounded-[36px] border-[6px] border-slate-200 dark:border-slate-800 bg-[#131417] overflow-hidden shadow-2xl flex flex-col">
             {/* Mobile Sidebar Overlay Drawer */}
             {isMobileSidebarOpen && (
@@ -574,7 +574,7 @@ export const DeepSeekReplica: React.FC = () => {
               >
                 <Menu className="w-5 h-5 text-slate-700 dark:text-slate-200" />
               </button>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 flex-wrap max-w-full">
                 <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center">
                   <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-slate-900 dark:text-white fill-current">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-2.48 0-4.5-2.02-4.5-4.5S10.52 7.5 13 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/>
@@ -597,12 +597,12 @@ export const DeepSeekReplica: React.FC = () => {
             </div>
 
             {/* Messages or Welcome Center Area */}
-            <div className="flex-1 overflow-y-auto px-3 py-4 scrollbar-thin scrollbar-thumb-slate-800">
+            <div className="flex-1 overflow-y-auto px-3 py-4 scrollbar-thin scrollbar-thumb-slate-800 min-w-0">
               {messages.length === 0 ? (
                 /* Initial Welcome Dashboard matching Mobile Screenshot */
                 <div className="h-full flex flex-col items-center justify-center text-center space-y-5 my-auto py-6">
                   {/* Whale Icon Header */}
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                     <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/25">
                       <svg viewBox="0 0 24 24" className="w-5 h-5 text-slate-900 dark:text-white fill-current">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-2.48 0-4.5-2.02-4.5-4.5S10.52 7.5 13 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/>
@@ -678,7 +678,7 @@ export const DeepSeekReplica: React.FC = () => {
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-2.48 0-4.5-2.02-4.5-4.5S10.52 7.5 13 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/>
                             </svg>
                           </div>
-                          <div className="flex-1 space-y-2 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
+                          <div className="flex-1 space-y-2 text-xs leading-relaxed text-slate-700 dark:text-slate-200 min-w-0">
                             {msg.thought && (
                               <div className="rounded-lg border border-blue-900/40 bg-blue-950/30 p-2 text-[11px] space-y-1">
                                 <button
@@ -688,7 +688,7 @@ export const DeepSeekReplica: React.FC = () => {
                                   }}
                                   className="flex items-center justify-between w-full font-medium text-blue-300"
                                 >
-                                  <div className="flex items-center gap-1.5">
+                                  <div className="flex items-center gap-1.5 flex-wrap max-w-full">
                                     <Brain className="w-3.5 h-3.5 text-blue-400" />
                                     <span>Thinking Process (R1)</span>
                                   </div>
@@ -710,7 +710,7 @@ export const DeepSeekReplica: React.FC = () => {
                     </div>
                   ))}
                   {isLoading && (
-                    <div className="flex items-center gap-2 animate-pulse text-xs text-slate-500 dark:text-slate-400">
+                    <div className="flex items-center gap-2 animate-pulse text-xs text-slate-500 dark:text-slate-400 flex-wrap max-w-full">
                       <Atom className="w-4 h-4 text-blue-400 animate-spin" />
                       <span>DeepSeek thinking...</span>
                     </div>
@@ -739,7 +739,7 @@ export const DeepSeekReplica: React.FC = () => {
                   className="w-full bg-transparent text-slate-800 dark:text-slate-100 placeholder-slate-400/80 text-xs focus:outline-none resize-none pr-6"
                 />
                 <div className="flex items-center justify-between pt-1.5 border-t border-slate-300 dark:border-slate-700/40 mt-1">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap max-w-full">
                     <button
                       type="button"
                       onClick={() => {
@@ -771,7 +771,7 @@ export const DeepSeekReplica: React.FC = () => {
                       <span>Search</span>
                     </button>
                   </div>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap max-w-full">
                     <button
                       type="button"
                       onClick={() => openModal('attachment')}
@@ -799,7 +799,7 @@ export const DeepSeekReplica: React.FC = () => {
         </div>
       ) : (
         /* Desktop View Workspace */
-        <div className="relative flex-1 flex overflow-hidden">
+        <div className="relative flex-1 flex overflow-hidden min-w-0">
           {/* Desktop View Sidebar */}
           {!isSidebarCollapsed && (
             <div className="w-64 shrink-0 h-full">
@@ -821,12 +821,12 @@ export const DeepSeekReplica: React.FC = () => {
             )}
 
             {/* Messages or Welcome Center Area */}
-            <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-thumb-slate-800">
+            <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-thin scrollbar-thumb-slate-800 min-w-0">
               {messages.length === 0 ? (
                 /* Initial Welcome Dashboard matching Screenshot */
                 <div className="h-full flex flex-col items-center justify-center text-center max-w-2xl mx-auto my-auto space-y-6 pt-4 pb-12">
                   {/* Whale Icon Header */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap max-w-full">
                     <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/25">
                       <svg viewBox="0 0 24 24" className="w-6 h-6 text-slate-900 dark:text-white fill-current">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-2.48 0-4.5-2.02-4.5-4.5S10.52 7.5 13 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/>
@@ -903,7 +903,7 @@ export const DeepSeekReplica: React.FC = () => {
                             </svg>
                           </div>
 
-                          <div className="flex-1 space-y-3 overflow-hidden text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                          <div className="flex-1 space-y-3 overflow-hidden text-sm leading-relaxed text-slate-700 dark:text-slate-200 min-w-0">
                             {msg.thought && (
                               <div className="rounded-xl border border-blue-900/40 bg-gradient-to-r from-blue-950/30 to-indigo-950/20 p-3 text-xs space-y-2">
                                 <button
@@ -913,11 +913,11 @@ export const DeepSeekReplica: React.FC = () => {
                                   }}
                                   className="flex items-center justify-between w-full font-medium text-blue-300 hover:text-blue-200 transition-colors"
                                 >
-                                  <div className="flex items-center gap-2">
+                                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                                     <Brain className="w-4 h-4 text-blue-400 animate-pulse" />
                                     <span>Thinking Process (DeepSeek-R1 Chain of Thought)</span>
                                   </div>
-                                  <div className="flex items-center gap-1 text-[11px] text-blue-400/80">
+                                  <div className="flex items-center gap-1 text-[11px] text-blue-400/80 flex-wrap max-w-full">
                                     <span>{msg.showThought ? 'Hide' : 'Show'}</span>
                                     {msg.showThought ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
                                   </div>
@@ -935,7 +935,7 @@ export const DeepSeekReplica: React.FC = () => {
                               {msg.text}
                             </div>
 
-                            <div className="flex items-center gap-2 pt-1 text-slate-500">
+                            <div className="flex items-center gap-2 pt-1 text-slate-500 flex-wrap max-w-full">
                               <button
                                 onClick={() => copyToClipboard(msg.id, msg.text)}
                                 className="p-1.5 rounded-md hover:bg-[#25272e] hover:text-slate-600 dark:text-slate-300 transition-colors"
@@ -964,7 +964,7 @@ export const DeepSeekReplica: React.FC = () => {
                   ))}
 
                   {isLoading && (
-                    <div className="flex items-center gap-3 animate-pulse">
+                    <div className="flex items-center gap-3 animate-pulse flex-wrap max-w-full">
                       <div className="w-7 h-7 rounded-lg bg-blue-600/50 flex items-center justify-center text-xs text-white">
                         <Atom className="w-4 h-4 animate-spin" />
                       </div>
@@ -978,7 +978,7 @@ export const DeepSeekReplica: React.FC = () => {
             {/* Bottom DeepSeek Prompt Box */}
             <div className="p-4 bg-[#131417] border-t border-[#26272c]/40 shrink-0">
               <div className="max-w-2xl mx-auto relative rounded-2xl bg-[#212328] border border-slate-300 dark:border-slate-700/60 p-3 shadow-xl transition-all focus-within:border-blue-500/80 focus-within:ring-1 focus-within:ring-blue-500/30">
-                <div className="absolute top-3 right-3 flex items-center gap-1.5">
+                <div className="absolute top-3 right-3 flex items-center gap-1.5 flex-wrap max-w-full">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 </div>
 
@@ -997,7 +997,7 @@ export const DeepSeekReplica: React.FC = () => {
                 />
 
                 <div className="flex items-center justify-between pt-2 border-t border-slate-300 dark:border-slate-700/40 mt-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <button
                       type="button"
                       onClick={() => {
@@ -1031,7 +1031,7 @@ export const DeepSeekReplica: React.FC = () => {
                     </button>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <button
                       type="button"
                       onClick={() => openModal('attachment')}
@@ -1072,7 +1072,7 @@ export const DeepSeekReplica: React.FC = () => {
             {/* Modal Header */}
             <div className="flex items-start justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
               <div className="space-y-1">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-900/60 text-blue-300 border border-blue-700/50">
                     {activeModal.category}
                   </span>
@@ -1082,7 +1082,7 @@ export const DeepSeekReplica: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                   {activeModal.title}
                 </h3>
               </div>
@@ -1101,7 +1101,7 @@ export const DeepSeekReplica: React.FC = () => {
               </p>
 
               <div className="space-y-2">
-                <h4 className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 text-xs">
+                <h4 className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 text-xs flex-wrap max-w-full">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   Fitur Utama & Keunggulan:
                 </h4>
@@ -1116,7 +1116,7 @@ export const DeepSeekReplica: React.FC = () => {
               </div>
 
               <div className="p-3.5 rounded-xl bg-blue-950/30 border border-blue-900/40 space-y-1">
-                <h4 className="font-semibold text-blue-300 text-xs flex items-center gap-1.5">
+                <h4 className="font-semibold text-blue-300 text-xs flex items-center gap-1.5 flex-wrap max-w-full">
                   <Sparkles className="w-3.5 h-3.5 text-blue-400" />
                   Cara Penggunaan di Simulator:
                 </h4>

@@ -232,7 +232,7 @@ export const GammaReplica: React.FC = () => {
                 <button onClick={() => setInfoModal({ title: 'Harga Paket', content: 'Mulai secara gratis dengan kredit awal, lalu upgrade ke Paket Plus/Pro untuk fitur tanpa batas.' })} className="hover:text-slate-900 cursor-pointer">Harga</button>
               </nav>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-wrap max-w-full">
               <button onClick={() => setFlowStage('onboarding')} className="text-sm font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">Masuk</button>
               <button
                 onClick={() => setFlowStage('onboarding')}
@@ -244,7 +244,7 @@ export const GammaReplica: React.FC = () => {
           </header>
 
           {/* Hero Section */}
-          <main className="flex-1 max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <main className="flex-1 max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-w-0">
             {/* Left Column Content */}
             <div className="lg:col-span-6 space-y-6">
               <div className="w-10 h-10 rounded-xl bg-blue-100 border border-blue-200 text-[#0e44b8] flex items-center justify-center font-bold text-xl shadow-sm">
@@ -265,7 +265,7 @@ export const GammaReplica: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setInfoModal({ title: 'Tutorial Video Gamma', content: 'Simulasi pemutaran video pengenalan pembuatan presentasi AI otomatis di Gamma.' })}
-                  className="px-6 py-3.5 rounded-full bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-800 font-bold text-sm transition-all cursor-pointer flex items-center gap-2"
+                  className="px-6 py-3.5 rounded-full bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-800 font-bold text-sm transition-all cursor-pointer flex items-center gap-2 flex-wrap max-w-full"
                 >
                   Tonton video ►
                 </button>
@@ -281,7 +281,7 @@ export const GammaReplica: React.FC = () => {
                 <div className="flex justify-center items-center py-6">
                   <div className="text-6xl animate-bounce">🍄</div>
                 </div>
-                <div className="self-start px-3 py-1.5 rounded-lg bg-white/80 backdrop-blur-sm text-xs font-bold text-blue-900 flex items-center gap-1.5 shadow-sm">
+                <div className="self-start px-3 py-1.5 rounded-lg bg-white/80 backdrop-blur-sm text-xs font-bold text-blue-900 flex items-center gap-1.5 shadow-sm flex-wrap max-w-full">
                   <Sparkles className="w-3.5 h-3.5 text-blue-600" /> Suggest images ✨
                 </div>
               </div>
@@ -372,7 +372,7 @@ export const GammaReplica: React.FC = () => {
           <div className="flex items-center justify-between mb-8">
             <button
               onClick={() => setFlowStage('landing')}
-              className="px-4 py-1.5 rounded-full bg-white border border-slate-200 hover:bg-slate-50 text-xs font-bold text-slate-700 shadow-sm flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-1.5 rounded-full bg-white border border-slate-200 hover:bg-slate-50 text-xs font-bold text-slate-700 shadow-sm flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full"
             >
               <span>🏠 Beranda</span>
             </button>
@@ -393,7 +393,7 @@ export const GammaReplica: React.FC = () => {
             {/* Card 1: Buat (Recommended) with Cat Mascot */}
             <div className="relative pt-6">
               {/* Black Cat Mascot Speech Bubble */}
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 text-white text-[11px] font-bold px-3 py-1 rounded-2xl shadow-lg border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 whitespace-nowrap z-20">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 text-white text-[11px] font-bold px-3 py-1 rounded-2xl shadow-lg border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 whitespace-nowrap z-20 flex-wrap max-w-full">
                 <span>Tidak yakin? Mulai dari sini!</span>
               </div>
               <div className="absolute top-3 left-1/2 -translate-x-1/2 text-2xl z-10">🐱</div>
@@ -408,7 +408,7 @@ export const GammaReplica: React.FC = () => {
                 <div className="w-full h-28 rounded-xl bg-gradient-to-r from-orange-400 via-rose-400 to-indigo-500 p-4 flex items-center justify-center text-slate-900 dark:text-white text-3xl shadow-md">
                   ✨
                 </div>
-                <div className="space-y-2 flex-1">
+                <div className="space-y-2 flex-1 min-w-0">
                   <h3 className="text-base font-extrabold text-slate-900">Buat</h3>
                   <p className="text-xs text-slate-500 leading-relaxed font-medium">
                     Membuat dari prompt satu baris dalam beberapa detik
@@ -432,7 +432,7 @@ export const GammaReplica: React.FC = () => {
               <div className="w-full h-28 rounded-xl bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 p-4 flex items-center justify-center text-slate-900 dark:text-white font-black text-3xl shadow-md">
                 Aa
               </div>
-              <div className="space-y-2 flex-1">
+              <div className="space-y-2 flex-1 min-w-0">
                 <h3 className="text-base font-extrabold text-slate-900">Menempelkan dalam teks</h3>
                 <p className="text-xs text-slate-500 leading-relaxed font-medium">
                   Membuat dari catatan, garis besar, atau konten yang sudah ada
@@ -452,7 +452,7 @@ export const GammaReplica: React.FC = () => {
               <div className="w-full h-28 rounded-xl bg-gradient-to-r from-emerald-400 via-teal-500 to-blue-500 p-4 flex items-center justify-center text-slate-900 dark:text-white text-3xl shadow-md">
                 📚
               </div>
-              <div className="space-y-2 flex-1">
+              <div className="space-y-2 flex-1 min-w-0">
                 <h3 className="text-base font-extrabold text-slate-900">Buat dari templat</h3>
                 <p className="text-xs text-slate-500 leading-relaxed font-medium">
                   Membuat menggunakan struktur atau tata letak dari templat
@@ -472,7 +472,7 @@ export const GammaReplica: React.FC = () => {
               <div className="w-full h-28 rounded-xl bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-600 p-4 flex items-center justify-center text-slate-900 dark:text-white text-3xl shadow-md">
                 📤
               </div>
-              <div className="space-y-2 flex-1">
+              <div className="space-y-2 flex-1 min-w-0">
                 <h3 className="text-base font-extrabold text-slate-900">Impor file atau URL</h3>
                 <p className="text-xs text-slate-500 leading-relaxed font-medium">
                   Menyempurnakan dokumen, presentasi, atau halaman web yang sudah ada
@@ -494,7 +494,7 @@ export const GammaReplica: React.FC = () => {
           <div className="relative z-20 flex items-center justify-between mb-6">
             <button
               onClick={handleBackNavigation}
-              className="px-4 py-1.5 rounded-full bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 hover:bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-4 py-1.5 rounded-full bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 hover:bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 flex-wrap max-w-full"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Kembali</span>
@@ -524,9 +524,9 @@ export const GammaReplica: React.FC = () => {
 
               {/* Attached File/Notes Tag Badge */}
               {(pastedNotesText || attachedFileName) && (
-                <div className="flex items-center gap-2 p-2 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs font-bold">
+                <div className="flex items-center gap-2 p-2 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs font-bold flex-wrap max-w-full">
                   <FileText className="w-4 h-4 text-blue-600" />
-                  <span className="truncate max-w-xs">{attachedFileName || 'Catatan rapat terlampir'}</span>
+                  <span className="break-words whitespace-normal leading-snug max-w-xs">{attachedFileName || 'Catatan rapat terlampir'}</span>
                   <button
                     onClick={() => {
                       setPastedNotesText('');
@@ -541,10 +541,10 @@ export const GammaReplica: React.FC = () => {
 
               {/* Bottom Control Bar Inside Box */}
               <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <button
                     onClick={() => setShowNotesModal(true)}
-                    className="px-3 py-1.5 rounded-xl border border-dashed border-slate-300 hover:border-blue-400 bg-slate-50 text-slate-600 hover:text-blue-600 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl border border-dashed border-slate-300 hover:border-blue-400 bg-slate-50 text-slate-600 hover:text-blue-600 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer flex-wrap max-w-full"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Catatan rapat</span>
@@ -573,7 +573,7 @@ export const GammaReplica: React.FC = () => {
             {/* Error Message */}
             {errorMessage && (
               <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 text-xs flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
@@ -591,10 +591,10 @@ export const GammaReplica: React.FC = () => {
         <div className="flex-1 flex flex-col bg-[#f8fafc] overflow-hidden">
           {/* Top Bar Header */}
           <header className="px-6 py-3 bg-white border-b border-slate-200 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="flex items-center gap-3 min-w-0 flex-1 flex-wrap max-w-full">
               <button
                 onClick={handleBackNavigation}
-                className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer shrink-0"
+                className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer shrink-0 flex-wrap max-w-full"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Kembali</span>
@@ -606,15 +606,15 @@ export const GammaReplica: React.FC = () => {
           </header>
 
           {/* Main Chat Workspace */}
-          <div className="flex-1 max-w-4xl mx-auto w-full p-4 sm:p-6 overflow-y-auto space-y-6 min-h-0">
+          <div className="flex-1 max-w-4xl mx-auto w-full p-4 sm:p-6 overflow-y-auto space-y-6 min-h-0 min-w-0">
             {/* Agent Header Control */}
             <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex items-center justify-between">
-              <div className="flex items-center gap-2 font-black text-slate-900 text-sm">
+              <div className="flex items-center gap-2 font-black text-slate-900 text-sm flex-wrap max-w-full">
                 <span className="text-blue-600">✦</span> Agent
               </div>
               <button
                 onClick={handleClearConversation}
-                className="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                className="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors flex-wrap max-w-full"
               >
                 <RotateCcw className="w-3.5 h-3.5" /> Jelas
               </button>
@@ -637,13 +637,13 @@ export const GammaReplica: React.FC = () => {
                     <div className="pt-2 border-t border-slate-100 flex flex-wrap gap-2">
                       <button
                         onClick={() => setShowNotesModal(true)}
-                        className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                        className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full"
                       >
                         <Plus className="w-3.5 h-3.5" /> Paste Catatan Rapat
                       </button>
                       <button
                         onClick={handleFileUploadSimulated}
-                        className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                        className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full"
                       >
                         <Upload className="w-3.5 h-3.5" /> Upload File (PDF/Word)
                       </button>
@@ -656,7 +656,7 @@ export const GammaReplica: React.FC = () => {
             {/* Loading Progress State */}
             {isLoading && (
               <div className="p-4 rounded-2xl bg-white border border-slate-200 text-xs text-blue-700 space-y-2 animate-pulse shadow-sm">
-                <div className="flex items-center gap-2 font-bold text-slate-900">
+                <div className="flex items-center gap-2 font-bold text-slate-900 flex-wrap max-w-full">
                   <RefreshCw className="w-4 h-4 animate-spin text-blue-600" />
                   <span>Gamma Agent Sedang Menyiapkan...</span>
                 </div>
@@ -685,7 +685,7 @@ export const GammaReplica: React.FC = () => {
               />
 
               <div className="flex items-center justify-between pt-1 border-t border-slate-100">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <button
                     onClick={() => setShowNotesModal(true)}
                     className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer"
@@ -735,12 +735,12 @@ export const GammaReplica: React.FC = () => {
             <div className="flex items-center justify-between pt-2">
               <button
                 onClick={handleFileUploadSimulated}
-                className="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer flex items-center gap-1.5"
+                className="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer flex items-center gap-1.5 flex-wrap max-w-full"
               >
                 <Upload className="w-3.5 h-3.5" /> Upload File Simulasi
               </button>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap max-w-full">
                 <button
                   onClick={() => setShowNotesModal(false)}
                   className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer"

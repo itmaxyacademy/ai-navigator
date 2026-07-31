@@ -730,7 +730,12 @@ export default function App() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `ainavigator-progress-${new Date().toISOString().split('T')[0]}.json`;
+    
+    // Format nama file: ainavigator-progress-NamaUser-YYYY-MM-DD.json
+    const safeName = progress.userName ? progress.userName.replace(/[^a-zA-Z0-9]/g, '_') + '-' : '';
+    const dateStr = new Date().toISOString().split('T')[0];
+    a.download = `ainavigator-progress-${safeName}${dateStr}.json`;
+    
     a.click();
     URL.revokeObjectURL(url);
   };

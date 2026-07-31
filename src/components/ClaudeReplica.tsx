@@ -318,7 +318,7 @@ export const ClaudeReplica: React.FC = () => {
       
       {/* Top Controls: Switch View Mode & Quick Info Banner */}
       <div className="bg-[#1f1f1f] border-b border-neutral-800 px-4 py-2.5 flex items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap max-w-full">
           <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
           <span className="font-semibold text-neutral-200">Claude Interactive Simulator</span>
           <span className="hidden sm:inline-block px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-mono">
@@ -327,7 +327,7 @@ export const ClaudeReplica: React.FC = () => {
         </div>
 
         {/* Desktop / Mobile Toggle Buttons */}
-        <div className="flex items-center gap-1 bg-[#121212] p-1 rounded-xl border border-neutral-800">
+        <div className="flex items-center gap-1 bg-[#121212] p-1 rounded-xl border border-neutral-800 flex-wrap max-w-full">
           <button
             onClick={() => { setViewMode('desktop'); setIsMobileSidebarOpen(false); }}
             className={`px-3 py-1 rounded-lg font-bold flex items-center gap-1.5 transition-all ${
@@ -363,11 +363,11 @@ export const ClaudeReplica: React.FC = () => {
             : 'w-64 bg-[#171717] border-r border-neutral-800/80 flex-shrink-0 flex flex-col justify-between transition-all duration-300'
           }
         `}>
-          <div className="p-3 space-y-4 overflow-y-auto max-h-[calc(100vh-120px)] flex-1">
+          <div className="p-3 space-y-4 overflow-y-auto max-h-[calc(100vh-120px)] flex-1 min-w-0">
             
             {/* Sidebar Top Title Header & Close / Toggle */}
             <div className="flex items-center justify-between px-2 pt-1">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap max-w-full">
                 <span className="text-xl font-serif tracking-tight font-bold text-neutral-100">Claude</span>
                 <button
                   onClick={() => handleOpenModal('new-chat')}
@@ -378,7 +378,7 @@ export const ClaudeReplica: React.FC = () => {
                 </button>
               </div>
 
-              <div className="flex items-center gap-1 text-neutral-400">
+              <div className="flex items-center gap-1 text-neutral-400 flex-wrap max-w-full">
                 <button 
                   onClick={() => handleOpenModal('chats')} 
                   className="p-1.5 hover:bg-neutral-800 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
@@ -413,7 +413,7 @@ export const ClaudeReplica: React.FC = () => {
                 }}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800/80 transition-colors font-medium text-left group cursor-pointer"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <Plus className="w-4 h-4 text-neutral-400 group-hover:text-amber-400" />
                   <span>New chat</span>
                 </div>
@@ -429,7 +429,7 @@ export const ClaudeReplica: React.FC = () => {
                 onClick={() => handleOpenModal('chats')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-left group cursor-pointer"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <MessageSquare className="w-4 h-4 text-neutral-400" />
                   <span>Chats</span>
                 </div>
@@ -445,7 +445,7 @@ export const ClaudeReplica: React.FC = () => {
                 onClick={() => handleOpenModal('projects')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-left group cursor-pointer"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <Folder className="w-4 h-4 text-neutral-400" />
                   <span>Projects</span>
                 </div>
@@ -461,7 +461,7 @@ export const ClaudeReplica: React.FC = () => {
                 onClick={() => handleOpenModal('artifacts')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-left group"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <Layers className="w-4 h-4 text-amber-400" />
                   <span>Artifacts</span>
                 </div>
@@ -474,7 +474,7 @@ export const ClaudeReplica: React.FC = () => {
                 onClick={() => handleOpenModal('code')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-left group"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <Code className="w-4 h-4 text-neutral-400" />
                   <span>Code</span>
                 </div>
@@ -487,7 +487,7 @@ export const ClaudeReplica: React.FC = () => {
                 onClick={() => handleOpenModal('customize')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-left group cursor-pointer"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <Sliders className="w-4 h-4 text-neutral-400" />
                   <span>Customize</span>
                 </div>
@@ -509,7 +509,7 @@ export const ClaudeReplica: React.FC = () => {
                 onClick={() => handleOpenModal('design')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-xs text-left group cursor-pointer"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <Palette className="w-4 h-4 text-neutral-400" />
                   <span>Design</span>
                 </div>
@@ -541,7 +541,7 @@ export const ClaudeReplica: React.FC = () => {
                     }}
                     className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-300 hover:bg-neutral-800/80 truncate block hover:text-slate-900 dark:text-white transition-colors group relative"
                   >
-                    <span className="truncate block pr-4">{item.title}</span>
+                    <span className="break-words whitespace-normal leading-snug block pr-4">{item.title}</span>
                   </button>
                 ))}
               </div>
@@ -562,7 +562,7 @@ export const ClaudeReplica: React.FC = () => {
                   onClick={() => { handleOpenModal('user-profile'); setIsProfileMenuOpen(false); }}
                   className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <Settings className="w-3.5 h-3.5 text-neutral-400" />
                     <span>Settings</span>
                   </div>
@@ -572,7 +572,7 @@ export const ClaudeReplica: React.FC = () => {
                   onClick={() => { handleOpenModal('user-profile'); setIsProfileMenuOpen(false); }}
                   className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <Globe className="w-3.5 h-3.5 text-neutral-400" />
                     <span>Language</span>
                   </div>
@@ -582,7 +582,7 @@ export const ClaudeReplica: React.FC = () => {
                   onClick={() => { handleOpenModal('user-profile'); setIsProfileMenuOpen(false); }}
                   className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <HelpCircle className="w-3.5 h-3.5 text-neutral-400" />
                     <span>Get help</span>
                   </div>
@@ -592,21 +592,21 @@ export const ClaudeReplica: React.FC = () => {
 
                 <button 
                   onClick={() => { handleOpenModal('model-selector'); setIsProfileMenuOpen(false); }}
-                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
+                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left flex-wrap max-w-full"
                 >
                   <ArrowUpRight className="w-3.5 h-3.5 text-amber-400" />
                   <span>Upgrade plan</span>
                 </button>
                 <button 
                   onClick={() => { handleOpenModal('user-profile'); setIsProfileMenuOpen(false); }}
-                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
+                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left flex-wrap max-w-full"
                 >
                   <FileText className="w-3.5 h-3.5 text-neutral-400" />
                   <span>Get apps and extensions</span>
                 </button>
                 <button 
                   onClick={() => { handleOpenModal('user-profile'); setIsProfileMenuOpen(false); }}
-                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
+                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left flex-wrap max-w-full"
                 >
                   <BookOpen className="w-3.5 h-3.5 text-neutral-400" />
                   <span>Learn more</span>
@@ -616,7 +616,7 @@ export const ClaudeReplica: React.FC = () => {
 
                 <button 
                   onClick={() => { setIsProfileMenuOpen(false); setMessages([]); }}
-                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-rose-500/20 text-rose-300 rounded-xl text-left"
+                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-rose-500/20 text-rose-300 rounded-xl text-left flex-wrap max-w-full"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   <span>Log out</span>
@@ -628,7 +628,7 @@ export const ClaudeReplica: React.FC = () => {
               onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
               className="flex items-center justify-between cursor-pointer p-1.5 hover:bg-neutral-800 rounded-xl transition-colors"
             >
-              <div className="flex items-center gap-2.5 min-w-0">
+              <div className="flex items-center gap-2.5 min-w-0 flex-wrap max-w-full">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-600 to-orange-700 text-slate-900 dark:text-white font-bold flex items-center justify-center text-xs shrink-0 shadow">
                   MA
                 </div>
@@ -638,7 +638,7 @@ export const ClaudeReplica: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-1 text-neutral-400">
+              <div className="flex items-center gap-1 text-neutral-400 flex-wrap max-w-full">
                 <button 
                   onClick={(e) => { e.stopPropagation(); handleOpenModal('user-profile'); }} 
                   className="p-1 hover:text-slate-900 dark:text-white"
@@ -667,7 +667,7 @@ export const ClaudeReplica: React.FC = () => {
           
           {/* Header Top Bar */}
           <div className="px-4 py-3 border-b border-neutral-800/80 flex items-center justify-between bg-[#1e1e1e]">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
               {/* Sidebar Toggle Icon for Mobile or Collapsed */}
               <button
                 onClick={() => viewMode === 'mobile' ? setIsMobileSidebarOpen(!isMobileSidebarOpen) : setIsSidebarCollapsed(!isSidebarCollapsed)}
@@ -684,7 +684,7 @@ export const ClaudeReplica: React.FC = () => {
             {/* Top Center Upgrade Pill */}
             <button
               onClick={() => handleOpenModal('model-selector')}
-              className="px-3 py-1 bg-neutral-800/80 hover:bg-neutral-700/80 border border-neutral-700 text-neutral-200 text-xs font-medium rounded-full flex items-center gap-1.5 transition-colors"
+              className="px-3 py-1 bg-neutral-800/80 hover:bg-neutral-700/80 border border-neutral-700 text-neutral-200 text-xs font-medium rounded-full flex items-center gap-1.5 transition-colors flex-wrap max-w-full"
             >
               <span>Free plan</span>
               <span className="text-neutral-500">•</span>
@@ -692,10 +692,10 @@ export const ClaudeReplica: React.FC = () => {
             </button>
 
             {/* Top Right Feedback / Ghost Icon */}
-            <div className="flex items-center gap-2 text-neutral-400">
+            <div className="flex items-center gap-2 text-neutral-400 flex-wrap max-w-full">
               <button
                 onClick={() => handleOpenModal('artifacts')}
-                className="p-1.5 hover:text-slate-900 dark:text-white hover:bg-neutral-800 rounded-lg text-xs flex items-center gap-1 text-amber-400"
+                className="p-1.5 hover:text-slate-900 dark:text-white hover:bg-neutral-800 rounded-lg text-xs flex items-center gap-1 text-amber-400 flex-wrap max-w-full"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Artifacts</span>
@@ -704,7 +704,7 @@ export const ClaudeReplica: React.FC = () => {
           </div>
 
           {/* Main Content View (Empty State vs Active Messages) */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 max-h-[520px]">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 max-h-[520px] min-w-0">
             {messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center min-h-[380px] text-center max-w-xl mx-auto space-y-6 my-auto">
                 
@@ -762,7 +762,7 @@ export const ClaudeReplica: React.FC = () => {
                             onClick={() => { handleOpenModal('plus-menu'); setIsPlusMenuOpen(false); }}
                             className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
                           >
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 flex-wrap max-w-full">
                               <Paperclip className="w-3.5 h-3.5 text-neutral-400" />
                               <span>Add files or photos</span>
                             </div>
@@ -771,7 +771,7 @@ export const ClaudeReplica: React.FC = () => {
 
                           <button
                             onClick={() => { handleOpenModal('plus-menu'); setIsPlusMenuOpen(false); }}
-                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
+                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left flex-wrap max-w-full"
                           >
                             <Monitor className="w-3.5 h-3.5 text-neutral-400" />
                             <span>Take a screenshot</span>
@@ -781,7 +781,7 @@ export const ClaudeReplica: React.FC = () => {
                             onClick={() => { handleOpenModal('projects'); setIsPlusMenuOpen(false); }}
                             className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
                           >
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 flex-wrap max-w-full">
                               <Folder className="w-3.5 h-3.5 text-neutral-400" />
                               <span>Add to project</span>
                             </div>
@@ -790,7 +790,7 @@ export const ClaudeReplica: React.FC = () => {
 
                           <button
                             onClick={() => { handleOpenModal('code'); setIsPlusMenuOpen(false); }}
-                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
+                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left flex-wrap max-w-full"
                           >
                             <Github className="w-3.5 h-3.5 text-neutral-400" />
                             <span>Add from GitHub</span>
@@ -802,7 +802,7 @@ export const ClaudeReplica: React.FC = () => {
                             onClick={() => { handleOpenModal('plus-menu'); setIsPlusMenuOpen(false); }}
                             className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
                           >
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 flex-wrap max-w-full">
                               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                               <span>Skills</span>
                             </div>
@@ -813,7 +813,7 @@ export const ClaudeReplica: React.FC = () => {
                             onClick={() => { handleOpenModal('plus-menu'); setIsPlusMenuOpen(false); }}
                             className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
                           >
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 flex-wrap max-w-full">
                               <Layers className="w-3.5 h-3.5 text-neutral-400" />
                               <span>Add connector</span>
                             </div>
@@ -822,7 +822,7 @@ export const ClaudeReplica: React.FC = () => {
 
                           <button
                             onClick={() => { handleOpenModal('plus-menu'); setIsPlusMenuOpen(false); }}
-                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left"
+                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 text-left flex-wrap max-w-full"
                           >
                             <Wand2 className="w-3.5 h-3.5 text-neutral-400" />
                             <span>Add plugins...</span>
@@ -834,7 +834,7 @@ export const ClaudeReplica: React.FC = () => {
                             onClick={() => setIsWebSearchEnabled(!isWebSearchEnabled)}
                             className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-700/60 rounded-xl text-neutral-200 cursor-pointer"
                           >
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 flex-wrap max-w-full">
                               <Globe className="w-3.5 h-3.5 text-sky-400" />
                               <span>Web search</span>
                             </div>
@@ -845,12 +845,12 @@ export const ClaudeReplica: React.FC = () => {
                     </div>
 
                     {/* Right Controls: Model Selector Dropdown & Send Button */}
-                    <div className="flex items-center gap-2 relative">
+                    <div className="flex items-center gap-2 relative flex-wrap max-w-full">
                       
                       {/* Model Selector Pill */}
                       <button
                         onClick={() => setIsModelPickerOpen(!isModelPickerOpen)}
-                        className="px-2.5 py-1 bg-neutral-700/50 hover:bg-neutral-700 rounded-lg text-xs font-medium text-neutral-300 flex items-center gap-1.5 transition-colors"
+                        className="px-2.5 py-1 bg-neutral-700/50 hover:bg-neutral-700 rounded-lg text-xs font-medium text-neutral-300 flex items-center gap-1.5 transition-colors flex-wrap max-w-full"
                       >
                         <span>{selectedModel}</span>
                         <span className="text-[10px] text-neutral-400">Medium</span>
@@ -866,7 +866,7 @@ export const ClaudeReplica: React.FC = () => {
                             className="p-2 hover:bg-neutral-700/60 rounded-xl cursor-pointer flex items-start justify-between"
                           >
                             <div>
-                              <div className="font-bold text-neutral-100 flex items-center gap-1.5">
+                              <div className="font-bold text-neutral-100 flex items-center gap-1.5 flex-wrap max-w-full">
                                 <span>Fable 5</span>
                                 <span className="px-1.5 py-0.2 bg-indigo-500/20 text-indigo-300 rounded text-[9px]">Pro</span>
                               </div>
@@ -880,7 +880,7 @@ export const ClaudeReplica: React.FC = () => {
                             className="p-2 hover:bg-neutral-700/60 rounded-xl cursor-pointer flex items-start justify-between"
                           >
                             <div>
-                              <div className="font-bold text-neutral-100 flex items-center gap-1.5">
+                              <div className="font-bold text-neutral-100 flex items-center gap-1.5 flex-wrap max-w-full">
                                 <span>Opus 5</span>
                                 <span className="px-1.5 py-0.2 bg-indigo-500/20 text-indigo-300 rounded text-[9px]">Pro</span>
                               </div>
@@ -894,7 +894,7 @@ export const ClaudeReplica: React.FC = () => {
                             className="p-2 bg-amber-500/10 border border-amber-500/20 rounded-xl cursor-pointer flex items-start justify-between"
                           >
                             <div>
-                              <div className="font-bold text-amber-300 flex items-center gap-1.5">
+                              <div className="font-bold text-amber-300 flex items-center gap-1.5 flex-wrap max-w-full">
                                 <span>Sonnet 5</span>
                                 <Check className="w-3 h-3 text-amber-400" />
                               </div>
@@ -939,31 +939,31 @@ export const ClaudeReplica: React.FC = () => {
                 <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
                   <button
                     onClick={() => handleSendPrompt('Buatkan draf penulisan email profesional untuk mitra bisnis.')}
-                    className="px-3 py-1.5 bg-[#262626] hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-neutral-700 flex items-center gap-1.5 transition-colors"
+                    className="px-3 py-1.5 bg-[#262626] hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-neutral-700 flex items-center gap-1.5 transition-colors flex-wrap max-w-full"
                   >
                     <span>✏️</span> Write
                   </button>
                   <button
                     onClick={() => handleSendPrompt('Jelaskan konsep dasar Machine Learning dengan analogi sederhana.')}
-                    className="px-3 py-1.5 bg-[#262626] hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-neutral-700 flex items-center gap-1.5 transition-colors"
+                    className="px-3 py-1.5 bg-[#262626] hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-neutral-700 flex items-center gap-1.5 transition-colors flex-wrap max-w-full"
                   >
                     <span>🎓</span> Learn
                   </button>
                   <button
                     onClick={() => handleSendPrompt('Buatkan komponen button React dengan Tailwind CSS.')}
-                    className="px-3 py-1.5 bg-[#262626] hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-neutral-700 flex items-center gap-1.5 transition-colors"
+                    className="px-3 py-1.5 bg-[#262626] hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-neutral-700 flex items-center gap-1.5 transition-colors flex-wrap max-w-full"
                   >
                     <span>&lt;/&gt;</span> Code
                   </button>
                   <button
                     onClick={() => handleSendPrompt('Berikan tips manajemen waktu kerja harian.')}
-                    className="px-3 py-1.5 bg-[#262626] hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-neutral-700 flex items-center gap-1.5 transition-colors"
+                    className="px-3 py-1.5 bg-[#262626] hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-neutral-700 flex items-center gap-1.5 transition-colors flex-wrap max-w-full"
                   >
                     <span>☕</span> Life stuff
                   </button>
                   <button
                     onClick={() => handleSendPrompt('Rekomendasikan ide proyek AI inovatif untuk portofolio.')}
-                    className="px-3 py-1.5 bg-[#262626] hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-neutral-700 flex items-center gap-1.5 transition-colors"
+                    className="px-3 py-1.5 bg-[#262626] hover:bg-neutral-700 text-neutral-300 text-xs rounded-xl border border-neutral-700 flex items-center gap-1.5 transition-colors flex-wrap max-w-full"
                   >
                     <span>💡</span> Claude&apos;s choice
                   </button>
@@ -986,7 +986,7 @@ export const ClaudeReplica: React.FC = () => {
                       }`}
                     >
                       <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
-                        <span className="font-bold flex items-center gap-1 text-[11px]">
+                        <span className="font-bold flex items-center gap-1 text-[11px] flex-wrap max-w-full">
                           {msg.sender === 'user' ? (
                             'Maxy Academy'
                           ) : (
@@ -999,7 +999,7 @@ export const ClaudeReplica: React.FC = () => {
                         {msg.sender === 'ai' && (
                           <button
                             onClick={() => handleCopyMessage(idx, msg.text)}
-                            className="text-neutral-400 hover:text-slate-900 dark:text-white flex items-center gap-1 text-[10px]"
+                            className="text-neutral-400 hover:text-slate-900 dark:text-white flex items-center gap-1 text-[10px] flex-wrap max-w-full"
                           >
                             {copiedIndex === idx ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
                             {copiedIndex === idx ? 'Tersalin' : 'Salin'}
@@ -1015,7 +1015,7 @@ export const ClaudeReplica: React.FC = () => {
                       {msg.hasArtifact && showArtifactPanel && (
                         <div className="mt-3 p-3 bg-[#171717] border border-amber-500/30 rounded-xl space-y-2">
                           <div className="flex items-center justify-between text-amber-400 text-[11px] font-bold">
-                            <span className="flex items-center gap-1">
+                            <span className="flex items-center gap-1 flex-wrap max-w-full">
                               <Eye className="w-3.5 h-3.5" /> Artifacts Preview: React UI Component
                             </span>
                             <span className="text-[10px] bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded border border-amber-500/20">
@@ -1035,7 +1035,7 @@ export const ClaudeReplica: React.FC = () => {
 
                 {isLoading && (
                   <div className="flex justify-start">
-                    <div className="bg-[#262626] border border-neutral-700/80 rounded-2xl rounded-tl-none p-3 text-xs text-neutral-400 flex items-center gap-2">
+                    <div className="bg-[#262626] border border-neutral-700/80 rounded-2xl rounded-tl-none p-3 text-xs text-neutral-400 flex items-center gap-2 flex-wrap max-w-full">
                       <div className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
                       <span>Claude sedang berpikir & merangkum jawaban...</span>
                     </div>
@@ -1048,14 +1048,14 @@ export const ClaudeReplica: React.FC = () => {
           {/* Bottom Chat Input Bar (if messages exist) */}
           {messages.length > 0 && (
             <div className="p-3 border-t border-neutral-800 bg-[#1e1e1e]">
-              <div className="bg-[#262626] border border-neutral-700/80 rounded-xl p-2 flex items-center gap-2">
+              <div className="bg-[#262626] border border-neutral-700/80 rounded-xl p-2 flex items-center gap-2 flex-wrap max-w-full">
                 <input
                   type="text"
                   value={inputPrompt}
                   onChange={(e) => setInputPrompt(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendPrompt()}
                   placeholder="Ketik instruksi balasan untuk Claude..."
-                  className="flex-1 bg-transparent text-neutral-100 placeholder-neutral-500 text-xs focus:outline-none px-2"
+                  className="flex-1 bg-transparent text-neutral-100 placeholder-neutral-500 text-xs focus:outline-none px-2 min-w-0"
                 />
                 <button
                   onClick={() => handleSendPrompt()}
@@ -1079,12 +1079,12 @@ export const ClaudeReplica: React.FC = () => {
             
             {/* Modal Header */}
             <div className="flex items-start justify-between border-b border-neutral-700 pb-4">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap max-w-full">
                 <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center font-bold">
                   ✳
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
                       {activeModal.category}
                     </span>
@@ -1114,7 +1114,7 @@ export const ClaudeReplica: React.FC = () => {
 
               {/* Key Features Bullet Points */}
               <div className="bg-[#1a1a1a] p-3.5 rounded-xl border border-neutral-800 space-y-2">
-                <div className="font-bold text-amber-400 text-[11px] flex items-center gap-1.5">
+                <div className="font-bold text-amber-400 text-[11px] flex items-center gap-1.5 flex-wrap max-w-full">
                   <Sparkles className="w-3.5 h-3.5" /> Key Capabilities:
                 </div>
                 <ul className="space-y-1.5 pl-2">

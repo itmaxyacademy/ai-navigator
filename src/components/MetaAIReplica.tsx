@@ -313,14 +313,14 @@ export const MetaAIReplica: React.FC = () => {
     <div className="relative rounded-2xl border border-[#27272a] bg-[#121214] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl font-sans">
       {/* Top Header Bar for Simulator View Controls */}
       <div className="bg-[#18181b] border-b border-[#27272a] px-4 py-2.5 flex items-center justify-between text-xs">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap max-w-full">
           {/* Meta Swirl Gradient Ring Icon */}
           <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-purple-600 via-fuchsia-500 to-indigo-400 p-1 flex items-center justify-center animate-pulse">
             <div className="w-full h-full bg-[#18181b] rounded-full flex items-center justify-center">
               <div className="w-2 h-2 rounded-full bg-gradient-to-tr from-purple-400 to-fuchsia-400" />
             </div>
           </div>
-          <span className="font-bold text-slate-900 dark:text-white tracking-wide flex items-center gap-1.5">
+          <span className="font-bold text-slate-900 dark:text-white tracking-wide flex items-center gap-1.5 flex-wrap max-w-full">
             Meta AI Replica (Llama 3.3)
           </span>
           <span className="hidden sm:inline-block px-2 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-800/60 text-[10px]">
@@ -329,7 +329,7 @@ export const MetaAIReplica: React.FC = () => {
         </div>
 
         {/* View Mode Switcher (Desktop View vs Mobile View) */}
-        <div className="flex items-center gap-1 bg-[#09090b] p-1 rounded-xl border border-[#27272a]">
+        <div className="flex items-center gap-1 bg-[#09090b] p-1 rounded-xl border border-[#27272a] flex-wrap max-w-full">
           <button
             onClick={() => {
               setViewMode('desktop');
@@ -379,7 +379,7 @@ export const MetaAIReplica: React.FC = () => {
               <div className="flex items-center justify-between px-2 pt-1">
                 <button
                   onClick={() => handleOpenModal('new-chat')}
-                  className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                  className="flex items-center gap-2 hover:opacity-80 transition-opacity flex-wrap max-w-full"
                 >
                   <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-purple-500 via-fuchsia-500 to-indigo-500 p-0.5 flex items-center justify-center">
                     <div className="w-full h-full bg-[#18181b] rounded-full flex items-center justify-center">
@@ -406,7 +406,7 @@ export const MetaAIReplica: React.FC = () => {
                   }}
                   className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#27272a] transition-colors text-left"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap max-w-full">
                     <Plus className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                     <span>New chat</span>
                   </div>
@@ -417,7 +417,7 @@ export const MetaAIReplica: React.FC = () => {
                   onClick={() => handleOpenModal('search')}
                   className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap max-w-full">
                     <Search className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Search</span>
                   </div>
@@ -426,7 +426,7 @@ export const MetaAIReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('media')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                 >
                   <ImageIcon className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Media</span>
@@ -434,7 +434,7 @@ export const MetaAIReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('artifacts')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                 >
                   <LayoutGrid className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Artifacts</span>
@@ -442,7 +442,7 @@ export const MetaAIReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('scheduled')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                 >
                   <Calendar className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Scheduled</span>
@@ -450,7 +450,7 @@ export const MetaAIReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('vibes')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                 >
                   <Play className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Vibes</span>
@@ -490,12 +490,12 @@ export const MetaAIReplica: React.FC = () => {
               <div className="flex items-center justify-between gap-2 p-1.5 rounded-xl hover:bg-[#27272a] transition-colors">
                 <button
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  className="flex items-center gap-2.5 min-w-0 text-left flex-1"
+                  className="flex items-center gap-2.5 min-w-0 text-left flex-1 flex-wrap max-w-full"
                 >
                   <div className="w-7 h-7 rounded-full bg-emerald-700/80 border border-emerald-500/50 flex items-center justify-center text-white font-bold text-xs shrink-0 overflow-hidden">
                     <span className="text-[10px]">MA</span>
                   </div>
-                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 break-words whitespace-normal leading-snug">
                     {userProfile.username}
                   </span>
                 </button>
@@ -517,7 +517,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsProfileMenuOpen(false);
                       handleOpenModal('profile-menu');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium flex-wrap max-w-full"
                   >
                     <User className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>View profile</span>
@@ -528,7 +528,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsProfileMenuOpen(false);
                       setIsSettingsModalOpen(true);
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium flex-wrap max-w-full"
                   >
                     <Settings className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Settings</span>
@@ -541,7 +541,7 @@ export const MetaAIReplica: React.FC = () => {
                     }}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
                   >
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                       <Keyboard className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                       <span>Keyboard shortcuts</span>
                     </div>
@@ -557,7 +557,7 @@ export const MetaAIReplica: React.FC = () => {
                     }}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
                   >
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                       <Play className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                       <span>Vibes.ai</span>
                     </div>
@@ -571,7 +571,7 @@ export const MetaAIReplica: React.FC = () => {
                     }}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
                   >
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                       <LayoutGrid className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                       <span>AI Demos</span>
                     </div>
@@ -583,7 +583,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsProfileMenuOpen(false);
                       handleOpenModal('ai-identification');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium flex-wrap max-w-full"
                   >
                     <Eye className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>AI identification</span>
@@ -596,7 +596,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsProfileMenuOpen(false);
                       alert('Sesi keluar berhasil diformat.');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-rose-400 hover:bg-[#2c2c32] transition-colors text-left font-medium"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-rose-400 hover:bg-[#2c2c32] transition-colors text-left font-medium flex-wrap max-w-full"
                   >
                     <LogOut className="w-4 h-4 text-rose-400" />
                     <span>Sign Out</span>
@@ -692,7 +692,7 @@ export const MetaAIReplica: React.FC = () => {
                     </button>
 
                     {/* Mode Tag & Send Arrow Button */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap max-w-full">
                       <button
                         onClick={() => {
                           const nextMode = selectedMode === 'Instant' ? 'Llama 3.3' : 'Instant';
@@ -832,7 +832,7 @@ export const MetaAIReplica: React.FC = () => {
                       msg.sender === 'user' ? 'items-end' : 'items-start'
                     } space-y-1 animate-in fade-in duration-200`}
                   >
-                    <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 px-1">
+                    <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 px-1 flex-wrap max-w-full">
                       <span>{msg.sender === 'user' ? userProfile.username : 'Meta AI'}</span>
                       {msg.modelUsed && <span className="text-purple-400">({msg.modelUsed})</span>}
                       <span>• {msg.timestamp}</span>
@@ -848,10 +848,10 @@ export const MetaAIReplica: React.FC = () => {
                       <div className="whitespace-pre-wrap font-sans">{msg.text}</div>
 
                       {msg.sender === 'meta' && (
-                        <div className="flex items-center gap-3 pt-2 text-slate-500 dark:text-slate-400 border-t border-[#2b2b30] text-[11px]">
+                        <div className="flex items-center gap-3 pt-2 text-slate-500 dark:text-slate-400 border-t border-[#2b2b30] text-[11px] flex-wrap max-w-full">
                           <button
                             onClick={() => handleCopyMessage(idx, msg.text)}
-                            className="hover:text-slate-900 dark:text-white flex items-center gap-1 transition-colors"
+                            className="hover:text-slate-900 dark:text-white flex items-center gap-1 transition-colors flex-wrap max-w-full"
                           >
                             {copiedIndex === idx ? (
                               <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -876,7 +876,7 @@ export const MetaAIReplica: React.FC = () => {
                 ))}
 
                 {isTyping && (
-                  <div className="flex items-center gap-2 text-xs text-purple-400 font-medium p-2">
+                  <div className="flex items-center gap-2 text-xs text-purple-400 font-medium p-2 flex-wrap max-w-full">
                     <div className="w-2 h-2 rounded-full bg-purple-500 animate-bounce" />
                     <span>Meta AI sedang berpikir (Llama 3.3)...</span>
                   </div>
@@ -900,7 +900,7 @@ export const MetaAIReplica: React.FC = () => {
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-purple-500 via-fuchsia-500 to-indigo-500 p-0.5 flex items-center justify-center">
                       <div className="w-full h-full bg-[#18181b] rounded-full flex items-center justify-center">
                         <div className="w-2.5 h-2.5 rounded-full bg-fuchsia-400" />
@@ -922,7 +922,7 @@ export const MetaAIReplica: React.FC = () => {
                       handleNewChat();
                       handleOpenModal('new-chat');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#27272a]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#27272a] flex-wrap max-w-full"
                   >
                     <Plus className="w-4 h-4" />
                     <span>New chat</span>
@@ -932,7 +932,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('search');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] flex-wrap max-w-full"
                   >
                     <Search className="w-4 h-4" />
                     <span>Search</span>
@@ -942,7 +942,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('media');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] flex-wrap max-w-full"
                   >
                     <ImageIcon className="w-4 h-4" />
                     <span>Media</span>
@@ -952,7 +952,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('artifacts');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] flex-wrap max-w-full"
                   >
                     <LayoutGrid className="w-4 h-4" />
                     <span>Artifacts</span>
@@ -962,7 +962,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('scheduled');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] flex-wrap max-w-full"
                   >
                     <Calendar className="w-4 h-4" />
                     <span>Scheduled</span>
@@ -1006,7 +1006,7 @@ export const MetaAIReplica: React.FC = () => {
                   }}
                   className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#27272a]"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <div className="w-7 h-7 rounded-full bg-emerald-700 flex items-center justify-center font-bold text-xs text-white">
                       MA
                     </div>
@@ -1056,7 +1056,7 @@ export const MetaAIReplica: React.FC = () => {
 
             {/* Upload Tabs: Recent Uploads vs Creations */}
             <div className="space-y-3">
-              <div className="flex items-center gap-4 text-xs font-semibold border-b border-[#33333a] pb-2">
+              <div className="flex items-center gap-4 text-xs font-semibold border-b border-[#33333a] pb-2 flex-wrap max-w-full">
                 <button
                   onClick={() => setUploadTab('recent')}
                   className={`pb-1 transition-colors relative ${
@@ -1176,7 +1176,7 @@ export const MetaAIReplica: React.FC = () => {
         <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
           <div className="w-full max-w-md bg-[#1f1f23] border border-[#333338] rounded-3xl p-6 shadow-2xl space-y-4 animate-in zoom-in-95 duration-200 text-left">
             <div className="flex items-center justify-between border-b border-[#2d2d34] pb-3">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap max-w-full">
                 <Settings className="w-4 h-4 text-purple-400" />
                 <h3 className="font-bold text-slate-900 dark:text-white text-sm">Pengaturan Meta AI</h3>
               </div>

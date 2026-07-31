@@ -463,7 +463,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
             <div className="space-y-4">
               {/* Header Logo */}
               <div className="flex items-center justify-between px-1">
-                <span className="font-serif text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
+                <span className="font-serif text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5 flex-wrap max-w-full">
                   <span className="text-amber-500 font-sans">✳</span> Claude
                 </span>
                 <div className="flex items-center space-x-1 text-slate-500 dark:text-slate-400">
@@ -557,7 +557,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
             {selectedNav === 'Obrolan' ? (
               <div className="flex-1 flex flex-col justify-between space-y-4 h-full min-h-[500px]">
                 {/* Chat Messages Stream */}
-                <div className="flex-1 space-y-3 overflow-y-auto max-h-[420px] p-2">
+                <div className="flex-1 space-y-3 overflow-y-auto max-h-[420px] p-2 min-w-0">
                   {activeMessages.length === 0 ? (
                     <div className="text-center py-16 space-y-3">
                       <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 text-slate-900 dark:text-white font-bold flex items-center justify-center text-xl mx-auto shadow-lg">
@@ -604,7 +604,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     onChange={(e) => setNavChatInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSendNavChat()}
                     placeholder="Mulai percakapan dengan Claude..."
-                    className="flex-1 bg-transparent text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none px-2"
+                    className="flex-1 bg-transparent text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none px-2 min-w-0"
                   />
                   <button
                     onClick={() => handleSendNavChat()}
@@ -764,7 +764,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     onChange={(e) => setArtifactRevisionPrompt(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleGenerateArtifact(true)}
                     placeholder="Misal: Tambahkan tombol eksport PDF atau ganti tema menjadi dark luxury..."
-                    className="flex-1 bg-[#141416] border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
+                    className="flex-1 bg-[#141416] border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 min-w-0"
                   />
                   <button
                     onClick={() => handleGenerateArtifact(true)}
@@ -980,7 +980,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                         className={`p-3 rounded-2xl border flex flex-col items-center justify-center text-center space-y-2 cursor-pointer transition-all ${selectedFolder === fName ? 'border-amber-600 bg-amber-50 ring-2 ring-amber-500/20' : 'border-slate-200 hover:border-slate-400 bg-white'}`}
                       >
                         <Folder className={`w-8 h-8 ${selectedFolder === fName ? 'text-amber-600' : 'text-blue-500'}`} />
-                        <span className="font-bold text-slate-800 text-[11px] truncate w-full">{fName}</span>
+                        <span className="font-bold text-slate-800 text-[11px] break-words whitespace-normal leading-snug w-full">{fName}</span>
                       </div>
                     ))}
                   </div>
@@ -1042,7 +1042,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
           {/* Office Main Workspace Split Screen */}
           <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
             {/* Left Main Office Simulation Canvas */}
-            <div className="flex-1 bg-white text-slate-900 p-4 sm:p-6 overflow-y-auto">
+            <div className="flex-1 bg-white text-slate-900 p-4 sm:p-6 overflow-y-auto min-w-0">
               {officeApp === 'excel' ? (
                 /* Excel Editable Table */
                 <div className="space-y-4">

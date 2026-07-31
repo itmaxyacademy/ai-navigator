@@ -275,7 +275,7 @@ export const PerplexityReplica: React.FC = () => {
     <div className="w-full flex flex-col items-center gap-4">
       {/* Top View Mode Selector Bar */}
       <div className="w-full max-w-5xl bg-neutral-900 border border-neutral-800 rounded-2xl p-2.5 flex items-center justify-between shadow-xl">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap max-w-full">
           <div className="w-7 h-7 rounded-xl bg-cyan-950 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
             <Sparkles className="w-4 h-4" />
           </div>
@@ -285,7 +285,7 @@ export const PerplexityReplica: React.FC = () => {
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-neutral-950 p-1 rounded-xl border border-neutral-800">
+        <div className="flex items-center gap-1.5 bg-neutral-950 p-1 rounded-xl border border-neutral-800 flex-wrap max-w-full">
           <button
             onClick={() => setViewMode('desktop')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
@@ -326,20 +326,20 @@ export const PerplexityReplica: React.FC = () => {
             <div className="flex flex-col h-full w-full relative bg-[#141414]">
               {/* Mobile Header Bar */}
               <div className="h-14 px-4 border-b border-neutral-800/80 flex items-center justify-between shrink-0 bg-[#141414]">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex-wrap max-w-full">
                   <button
                     onClick={() => setIsMobileSidebarOpen(true)}
                     className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-300 transition-colors"
                   >
                     <Menu className="w-5 h-5" />
                   </button>
-                  <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white tracking-tight">
+                  <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white tracking-tight flex-wrap max-w-full">
                     <span className="text-cyan-400 text-lg font-mono">✳</span>
                     <span className="text-sm font-semibold">perplexity</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <button
                     onClick={() => handleOpenModal('category-menu')}
                     className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
@@ -363,7 +363,7 @@ export const PerplexityReplica: React.FC = () => {
                     <div className="space-y-4 overflow-y-auto max-h-[calc(100%-70px)]">
                       {/* Logo Header */}
                       <div className="flex items-center justify-between px-1">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap max-w-full">
                           <span className="text-cyan-400 text-xl font-bold font-mono">✳</span>
                           <span className="font-bold text-slate-900 dark:text-white text-base">perplexity</span>
                         </div>
@@ -381,7 +381,7 @@ export const PerplexityReplica: React.FC = () => {
                           setIsMobileSidebarOpen(false);
                           handleOpenModal('new-search');
                         }}
-                        className="w-full bg-[#212121] hover:bg-neutral-800 border border-neutral-700/60 text-slate-900 dark:text-white rounded-xl py-2.5 px-3 flex items-center gap-2 font-medium text-xs shadow-sm transition-colors"
+                        className="w-full bg-[#212121] hover:bg-neutral-800 border border-neutral-700/60 text-slate-900 dark:text-white rounded-xl py-2.5 px-3 flex items-center gap-2 font-medium text-xs shadow-sm transition-colors flex-wrap max-w-full"
                       >
                         <Plus className="w-4 h-4 text-neutral-300" />
                         <span>New</span>
@@ -393,7 +393,7 @@ export const PerplexityReplica: React.FC = () => {
                           onClick={() => handleOpenModal('computer')}
                           className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors"
                         >
-                          <div className="flex items-center gap-2.5">
+                          <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                             <Monitor className="w-4 h-4 text-neutral-400" />
                             <span>Computer</span>
                           </div>
@@ -404,7 +404,7 @@ export const PerplexityReplica: React.FC = () => {
                           onClick={() => handleOpenModal('spaces')}
                           className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors"
                         >
-                          <div className="flex items-center gap-2.5">
+                          <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                             <Folder className="w-4 h-4 text-neutral-400" />
                             <span>Spaces</span>
                           </div>
@@ -415,7 +415,7 @@ export const PerplexityReplica: React.FC = () => {
                           onClick={() => handleOpenModal('artifacts')}
                           className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors"
                         >
-                          <div className="flex items-center gap-2.5">
+                          <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                             <LayoutGrid className="w-4 h-4 text-neutral-400" />
                             <span>Artifacts</span>
                           </div>
@@ -428,7 +428,7 @@ export const PerplexityReplica: React.FC = () => {
                             onClick={() => setIsCustomizeExpanded(!isCustomizeExpanded)}
                             className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors"
                           >
-                            <div className="flex items-center gap-2.5">
+                            <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                               <Settings className="w-4 h-4 text-neutral-400" />
                               <span>Customize</span>
                             </div>
@@ -471,7 +471,7 @@ export const PerplexityReplica: React.FC = () => {
                             onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
                             className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors"
                           >
-                            <div className="flex items-center gap-2.5">
+                            <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                               <Clock className="w-4 h-4 text-neutral-400" />
                               <span>History</span>
                             </div>
@@ -489,13 +489,13 @@ export const PerplexityReplica: React.FC = () => {
 
                     {/* Mobile Drawer Bottom User */}
                     <div className="pt-3 border-t border-neutral-800 flex items-center justify-between">
-                      <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="flex items-center gap-2.5 min-w-0 flex-wrap max-w-full">
                         <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-cyan-600 to-teal-500 text-slate-900 dark:text-white font-bold text-[10px] flex items-center justify-center shrink-0">
                           {userProfile.avatarText}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">{userProfile.name}</p>
-                          <p className="text-[10px] text-neutral-400 truncate">{userProfile.username}</p>
+                          <p className="text-xs font-semibold text-slate-900 dark:text-white break-words whitespace-normal leading-snug">{userProfile.name}</p>
+                          <p className="text-[10px] text-neutral-400 break-words whitespace-normal leading-snug">{userProfile.username}</p>
                         </div>
                       </div>
 
@@ -529,7 +529,7 @@ export const PerplexityReplica: React.FC = () => {
                   <div className="space-y-4 pb-20">
                     {searchHistory.map((item, idx) => (
                       <div key={idx} className="bg-[#1c1c1c] border border-neutral-800/80 rounded-2xl p-3.5 space-y-2 text-xs">
-                        <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                        <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                           <span className="text-cyan-400 font-mono text-sm">Q:</span>
                           <span>{item.query}</span>
                         </div>
@@ -546,10 +546,10 @@ export const PerplexityReplica: React.FC = () => {
                                 href={src.url}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="px-2 py-1 bg-neutral-900 hover:bg-neutral-800 text-cyan-300 rounded-md border border-neutral-800 text-[10px] flex items-center gap-1"
+                                className="px-2 py-1 bg-neutral-900 hover:bg-neutral-800 text-cyan-300 rounded-md border border-neutral-800 text-[10px] flex items-center gap-1 flex-wrap max-w-full"
                               >
                                 <ExternalLink className="w-2.5 h-2.5" />
-                                <span className="truncate max-w-[120px]">{src.title}</span>
+                                <span className="break-words whitespace-normal leading-snug max-w-[120px]">{src.title}</span>
                               </a>
                             ))}
                           </div>
@@ -576,7 +576,7 @@ export const PerplexityReplica: React.FC = () => {
                   />
 
                   <div className="flex items-center justify-between pt-1">
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 flex-wrap max-w-full">
                       <button
                         onClick={() => setIsMobilePlusMenuOpen(true)}
                         className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
@@ -587,10 +587,10 @@ export const PerplexityReplica: React.FC = () => {
 
                       <button
                         onClick={() => setIsMobileSearchModeOpen(true)}
-                        className="flex items-center gap-1 px-2 py-1 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-neutral-300 text-[11px] transition-colors"
+                        className="flex items-center gap-1 px-2 py-1 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-neutral-300 text-[11px] transition-colors flex-wrap max-w-full"
                       >
                         <Search className="w-3 h-3 text-neutral-400" />
-                        <span className="text-[10px] truncate max-w-[80px]">{selectedSearchMode}</span>
+                        <span className="text-[10px] break-words whitespace-normal leading-snug max-w-[80px]">{selectedSearchMode}</span>
                         <ChevronDown className="w-3 h-3 text-neutral-400" />
                       </button>
 
@@ -602,11 +602,11 @@ export const PerplexityReplica: React.FC = () => {
                       </button>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap max-w-full">
                       <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                       <button
                         onClick={() => setIsMobileModelPickerOpen(true)}
-                        className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors flex items-center gap-1"
+                        className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors flex items-center gap-1 flex-wrap max-w-full"
                         title="Select Model"
                       >
                         <Sparkles className="w-4 h-4 text-cyan-400" />
@@ -639,7 +639,7 @@ export const PerplexityReplica: React.FC = () => {
                   <div className="bg-[#181818] border-t border-neutral-800 rounded-t-3xl max-h-[92%] overflow-y-auto w-full p-4 text-neutral-100 shadow-2xl relative space-y-4 animate-in slide-in-from-bottom duration-200">
                     {/* Header Row */}
                     <div className="flex items-center justify-between pb-1">
-                      <button className="flex items-center gap-1 text-sm font-semibold text-slate-900 dark:text-white hover:text-neutral-300">
+                      <button className="flex items-center gap-1 text-sm font-semibold text-slate-900 dark:text-white hover:text-neutral-300 flex-wrap max-w-full">
                         <span>Account</span>
                         <ChevronDown className="w-4 h-4 text-neutral-400" />
                       </button>
@@ -655,7 +655,7 @@ export const PerplexityReplica: React.FC = () => {
 
                     {/* Profile Info Row */}
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-wrap max-w-full">
                         <div className="w-12 h-12 rounded-full overflow-hidden bg-neutral-800 border border-neutral-700/80 shrink-0 flex items-center justify-center">
                           {userProfile.avatarUrl ? (
                             <img src={userProfile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
@@ -664,8 +664,8 @@ export const PerplexityReplica: React.FC = () => {
                           )}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">{userProfile.name}</p>
-                          <p className="text-xs text-neutral-400 truncate">{userProfile.username}</p>
+                          <p className="text-sm font-semibold text-slate-900 dark:text-white break-words whitespace-normal leading-snug">{userProfile.name}</p>
+                          <p className="text-xs text-neutral-400 break-words whitespace-normal leading-snug">{userProfile.username}</p>
                         </div>
                       </div>
 
@@ -770,7 +770,7 @@ export const PerplexityReplica: React.FC = () => {
                           setIsMobilePlusMenuOpen(false);
                           alert('Pilih file atau gambar dari perangkat.');
                         }}
-                        className="w-full flex items-center gap-3 px-3 py-3 hover:bg-neutral-800/80 rounded-xl transition-colors text-left"
+                        className="w-full flex items-center gap-3 px-3 py-3 hover:bg-neutral-800/80 rounded-xl transition-colors text-left flex-wrap max-w-full"
                       >
                         <Paperclip className="w-4 h-4 text-neutral-300" />
                         <span className="font-medium text-slate-900 dark:text-white text-xs">Upload files or images</span>
@@ -783,7 +783,7 @@ export const PerplexityReplica: React.FC = () => {
                         }}
                         className="w-full flex items-center justify-between px-3 py-3 hover:bg-neutral-800/80 rounded-xl transition-colors text-left"
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-wrap max-w-full">
                           <Plug className="w-4 h-4 text-neutral-300" />
                           <span className="font-medium text-slate-900 dark:text-white text-xs">Connectors</span>
                         </div>
@@ -797,7 +797,7 @@ export const PerplexityReplica: React.FC = () => {
                         }}
                         className="w-full flex items-center justify-between px-3 py-3 hover:bg-neutral-800/80 rounded-xl transition-colors text-left"
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-wrap max-w-full">
                           <Folder className="w-4 h-4 text-neutral-300" />
                           <span className="font-medium text-slate-900 dark:text-white text-xs">Spaces</span>
                         </div>
@@ -831,7 +831,7 @@ export const PerplexityReplica: React.FC = () => {
                         }}
                         className="w-full flex items-center justify-between px-3 py-3 hover:bg-neutral-800/80 rounded-xl transition-colors text-left"
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-wrap max-w-full">
                           <Search className="w-4 h-4 text-neutral-300" />
                           <span className="font-medium text-slate-900 dark:text-white text-xs">Search</span>
                         </div>
@@ -846,7 +846,7 @@ export const PerplexityReplica: React.FC = () => {
                         }}
                         className="w-full flex items-center justify-between px-3 py-3 hover:bg-neutral-800/80 rounded-xl transition-colors text-left"
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-wrap max-w-full">
                           <Telescope className="w-4 h-4 text-neutral-400" />
                           <span className="font-medium text-neutral-300 text-xs">Deep research</span>
                         </div>
@@ -861,7 +861,7 @@ export const PerplexityReplica: React.FC = () => {
                         }}
                         className="w-full flex items-center justify-between px-3 py-3 hover:bg-neutral-800/80 rounded-xl transition-colors text-left"
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-wrap max-w-full">
                           <Gavel className="w-4 h-4 text-neutral-400" />
                           <span className="font-medium text-neutral-300 text-xs">Model council</span>
                           <span className="px-1.5 py-0.5 text-[9px] bg-neutral-800 text-neutral-400 rounded border border-neutral-700/60 font-medium">Max</span>
@@ -877,7 +877,7 @@ export const PerplexityReplica: React.FC = () => {
                         }}
                         className="w-full flex items-center justify-between px-3 py-3 hover:bg-neutral-800/80 rounded-xl transition-colors text-left"
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-wrap max-w-full">
                           <BookOpen className="w-4 h-4 text-neutral-300" />
                           <span className="font-medium text-slate-900 dark:text-white text-xs">Learn step by step</span>
                         </div>
@@ -939,7 +939,7 @@ export const PerplexityReplica: React.FC = () => {
                             }}
                             className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-neutral-800/80 rounded-xl transition-colors text-left"
                           >
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 flex-wrap max-w-full">
                               <IconComp className="w-4 h-4 text-neutral-400" />
                               <span className="font-medium text-neutral-200 text-xs">{m.name}</span>
                               {m.isMax && (
@@ -969,7 +969,7 @@ export const PerplexityReplica: React.FC = () => {
                 <div className="space-y-3 overflow-y-auto max-h-[calc(100%-110px)] pr-1">
                   {/* Top Bar Logo & Collapse */}
                   <div className="flex items-center justify-between px-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap max-w-full">
                       <span className="text-cyan-400 text-xl font-bold font-mono">✳</span>
                     </div>
                     <button
@@ -984,7 +984,7 @@ export const PerplexityReplica: React.FC = () => {
                   {/* New Button */}
                   <button
                     onClick={() => handleOpenModal('new-search')}
-                    className="w-full bg-[#1e1f20] hover:bg-neutral-800 border border-neutral-700/60 text-slate-900 dark:text-white rounded-xl py-2 px-3 flex items-center gap-2 font-medium text-xs shadow-sm transition-colors"
+                    className="w-full bg-[#1e1f20] hover:bg-neutral-800 border border-neutral-700/60 text-slate-900 dark:text-white rounded-xl py-2 px-3 flex items-center gap-2 font-medium text-xs shadow-sm transition-colors flex-wrap max-w-full"
                   >
                     <Plus className="w-4 h-4 text-neutral-300" />
                     <span>New</span>
@@ -994,7 +994,7 @@ export const PerplexityReplica: React.FC = () => {
                   <div className="space-y-0.5 text-xs">
                     <button
                       onClick={() => handleOpenModal('computer')}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                     >
                       <Monitor className="w-4 h-4 text-neutral-400" />
                       <span>Computer</span>
@@ -1002,7 +1002,7 @@ export const PerplexityReplica: React.FC = () => {
 
                     <button
                       onClick={() => handleOpenModal('spaces')}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                     >
                       <Folder className="w-4 h-4 text-neutral-400" />
                       <span>Spaces</span>
@@ -1010,7 +1010,7 @@ export const PerplexityReplica: React.FC = () => {
 
                     <button
                       onClick={() => handleOpenModal('artifacts')}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                     >
                       <LayoutGrid className="w-4 h-4 text-neutral-400" />
                       <span>Artifacts</span>
@@ -1022,7 +1022,7 @@ export const PerplexityReplica: React.FC = () => {
                         onClick={() => setIsCustomizeExpanded(!isCustomizeExpanded)}
                         className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left"
                       >
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                           <Settings className="w-4 h-4 text-neutral-400" />
                           <span>Customize</span>
                         </div>
@@ -1064,7 +1064,7 @@ export const PerplexityReplica: React.FC = () => {
                         onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
                         className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left"
                       >
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                           <Clock className="w-4 h-4 text-neutral-400" />
                           <span>History</span>
                         </div>
@@ -1092,12 +1092,12 @@ export const PerplexityReplica: React.FC = () => {
                   <div className="flex items-center justify-between px-1.5 py-1">
                     <button
                       onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
-                      className="flex items-center gap-2 min-w-0 hover:bg-neutral-800 p-1 rounded-xl transition-colors text-left"
+                      className="flex items-center gap-2 min-w-0 hover:bg-neutral-800 p-1 rounded-xl transition-colors text-left flex-wrap max-w-full"
                     >
                       <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-600 to-teal-500 text-slate-900 dark:text-white font-bold text-[9px] flex items-center justify-center shrink-0">
                         {userProfile.avatarText}
                       </div>
-                      <span className="text-xs font-medium text-neutral-200 truncate max-w-[90px]">
+                      <span className="text-xs font-medium text-neutral-200 break-words whitespace-normal leading-snug max-w-[90px]">
                         {userProfile.name}
                       </span>
                       <ChevronUp className="w-3 h-3 text-neutral-400" />
@@ -1117,7 +1117,7 @@ export const PerplexityReplica: React.FC = () => {
               <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#141414] relative">
                 {/* Desktop Header */}
                 <div className="h-14 px-6 border-b border-neutral-800/60 flex items-center justify-between shrink-0 bg-[#141414]">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     {isSidebarCollapsed && (
                       <button
                         onClick={() => setIsSidebarCollapsed(false)}
@@ -1135,7 +1135,7 @@ export const PerplexityReplica: React.FC = () => {
                     </button>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <button
                       onClick={() => handleOpenModal('category-menu')}
                       className="p-2 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-xl transition-colors"
@@ -1187,8 +1187,8 @@ export const PerplexityReplica: React.FC = () => {
                                   className="p-2 bg-[#212121] hover:bg-neutral-800 rounded-xl border border-neutral-700/60 text-cyan-300 text-xs flex items-center justify-between gap-1 transition-colors"
                                 >
                                   <div className="min-w-0">
-                                    <p className="font-medium truncate text-slate-900 dark:text-white text-[11px]">{src.title}</p>
-                                    <p className="text-[10px] text-neutral-400 truncate">{src.domain}</p>
+                                    <p className="font-medium break-words whitespace-normal leading-snug text-slate-900 dark:text-white text-[11px]">{src.title}</p>
+                                    <p className="text-[10px] text-neutral-400 break-words whitespace-normal leading-snug">{src.domain}</p>
                                   </div>
                                   <ExternalLink className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                                 </a>
@@ -1218,7 +1218,7 @@ export const PerplexityReplica: React.FC = () => {
 
                     <div className="flex items-center justify-between pt-1">
                       {/* Left Input Actions */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap max-w-full">
                         {/* (+) Button Popover Trigger */}
                         <div className="relative">
                           <button
@@ -1237,7 +1237,7 @@ export const PerplexityReplica: React.FC = () => {
                                   alert('Pilih berkas dari komputer Anda.');
                                   setIsPlusMenuOpen(false);
                                 }}
-                                className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
+                                className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left flex-wrap max-w-full"
                               >
                                 <Paperclip className="w-4 h-4 text-neutral-400" />
                                 <span>Upload files or images</span>
@@ -1249,7 +1249,7 @@ export const PerplexityReplica: React.FC = () => {
                                 }}
                                 className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
                               >
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-3 flex-wrap max-w-full">
                                   <Plug className="w-4 h-4 text-neutral-400" />
                                   <span>Connectors</span>
                                 </div>
@@ -1262,7 +1262,7 @@ export const PerplexityReplica: React.FC = () => {
                                 }}
                                 className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
                               >
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-3 flex-wrap max-w-full">
                                   <Folder className="w-4 h-4 text-neutral-400" />
                                   <span>Spaces</span>
                                 </div>
@@ -1276,7 +1276,7 @@ export const PerplexityReplica: React.FC = () => {
                         <div className="relative">
                           <button
                             onClick={() => setIsSearchModeMenuOpen(!isSearchModeMenuOpen)}
-                            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#262626] hover:bg-neutral-800 rounded-xl border border-neutral-700/60 text-xs font-medium text-neutral-200 transition-colors"
+                            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#262626] hover:bg-neutral-800 rounded-xl border border-neutral-700/60 text-xs font-medium text-neutral-200 transition-colors flex-wrap max-w-full"
                           >
                             <Search className="w-3.5 h-3.5 text-neutral-400" />
                             <span>{selectedSearchMode}</span>
@@ -1293,7 +1293,7 @@ export const PerplexityReplica: React.FC = () => {
                                 }}
                                 className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
                               >
-                                <div className="flex items-center gap-2.5">
+                                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                                   <Search className="w-4 h-4 text-neutral-400" />
                                   <span>Search</span>
                                 </div>
@@ -1307,7 +1307,7 @@ export const PerplexityReplica: React.FC = () => {
                                 }}
                                 className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left opacity-90"
                               >
-                                <div className="flex items-center gap-2.5">
+                                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                                   <Telescope className="w-4 h-4 text-neutral-400" />
                                   <span>Deep research</span>
                                 </div>
@@ -1321,7 +1321,7 @@ export const PerplexityReplica: React.FC = () => {
                                 }}
                                 className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left opacity-90"
                               >
-                                <div className="flex items-center gap-2.5">
+                                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                                   <Gavel className="w-4 h-4 text-neutral-400" />
                                   <span>Model council</span>
                                   <span className="text-[9px] bg-neutral-800 text-neutral-300 px-1.5 py-0.5 rounded border border-neutral-700">Max</span>
@@ -1334,7 +1334,7 @@ export const PerplexityReplica: React.FC = () => {
                                   handleOpenModal('learn-step-by-step');
                                   setIsSearchModeMenuOpen(false);
                                 }}
-                                className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
+                                className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left flex-wrap max-w-full"
                               >
                                 <BookOpen className="w-4 h-4 text-neutral-400" />
                                 <span>Learn step by step</span>
@@ -1361,14 +1361,14 @@ export const PerplexityReplica: React.FC = () => {
                       </div>
 
                       {/* Right Input Actions */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap max-w-full">
                         <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" title="Active AI Engine" />
 
                         {/* Model Selector Dropdown (Screenshot 4) */}
                         <div className="relative">
                           <button
                             onClick={() => setIsModelPickerOpen(!isModelPickerOpen)}
-                            className="flex items-center gap-1 px-2.5 py-1.5 hover:bg-neutral-800 rounded-xl text-neutral-300 text-xs font-medium transition-colors"
+                            className="flex items-center gap-1 px-2.5 py-1.5 hover:bg-neutral-800 rounded-xl text-neutral-300 text-xs font-medium transition-colors flex-wrap max-w-full"
                           >
                             <span>Model</span>
                             <ChevronDown className="w-3.5 h-3.5 text-neutral-400" />
@@ -1409,9 +1409,9 @@ export const PerplexityReplica: React.FC = () => {
                                     }}
                                     className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-neutral-800 rounded-xl text-neutral-300 transition-colors text-left"
                                   >
-                                    <div className="flex items-center gap-2 min-w-0">
+                                    <div className="flex items-center gap-2 min-w-0 flex-wrap max-w-full">
                                       <Sparkles className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
-                                      <span className="truncate">{m.name}</span>
+                                      <span className="break-words whitespace-normal leading-snug">{m.name}</span>
                                       {m.badge && (
                                         <span className="text-[9px] bg-neutral-800 text-neutral-400 px-1.5 py-0.2 rounded border border-neutral-700">
                                           {m.badge}
@@ -1471,7 +1471,7 @@ export const PerplexityReplica: React.FC = () => {
                               handleOpenModal('category-menu');
                               setIsCategoryMenuOpen(false);
                             }}
-                            className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
+                            className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left flex-wrap max-w-full"
                           >
                             <Icon className="w-4 h-4 text-neutral-400" />
                             <span>{item.title}</span>
@@ -1492,13 +1492,13 @@ export const PerplexityReplica: React.FC = () => {
                     <div className="absolute left-3 bottom-14 bg-[#1e1f20] border border-neutral-700/80 rounded-2xl p-3 shadow-2xl w-72 max-h-[500px] overflow-y-auto text-xs text-neutral-200 z-50 space-y-2 animate-in fade-in">
                       {/* Profile Card Header */}
                       <div className="p-2 bg-[#262626] rounded-xl border border-neutral-700/60 space-y-1.5">
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                           <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-cyan-600 to-teal-500 text-slate-900 dark:text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-md">
                             {userProfile.avatarText}
                           </div>
                           <div className="min-w-0">
-                            <p className="font-semibold text-slate-900 dark:text-white truncate text-xs">{userProfile.name}</p>
-                            <p className="text-[10px] text-neutral-400 truncate">{userProfile.email}</p>
+                            <p className="font-semibold text-slate-900 dark:text-white break-words whitespace-normal leading-snug text-xs">{userProfile.name}</p>
+                            <p className="text-[10px] text-neutral-400 break-words whitespace-normal leading-snug">{userProfile.email}</p>
                           </div>
                         </div>
                       </div>
@@ -1509,7 +1509,7 @@ export const PerplexityReplica: React.FC = () => {
                             alert('Tambah akun baru.');
                             setIsAccountMenuOpen(false);
                           }}
-                          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
+                          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left flex-wrap max-w-full"
                         >
                           <Plus className="w-4 h-4 text-neutral-400" />
                           <span>Add account</span>
@@ -1522,7 +1522,7 @@ export const PerplexityReplica: React.FC = () => {
                           }}
                           className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
                         >
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 flex-wrap max-w-full">
                             <Settings className="w-4 h-4 text-neutral-400" />
                             <span>All settings</span>
                           </div>
@@ -1534,7 +1534,7 @@ export const PerplexityReplica: React.FC = () => {
                             handleOpenModal('account-settings');
                             setIsAccountMenuOpen(false);
                           }}
-                          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
+                          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left flex-wrap max-w-full"
                         >
                           <ArrowUpRight className="w-4 h-4 text-neutral-400" />
                           <span>Upgrade plan</span>
@@ -1545,7 +1545,7 @@ export const PerplexityReplica: React.FC = () => {
                             alert('Mengunduh aplikasi desktop Perplexity...');
                             setIsAccountMenuOpen(false);
                           }}
-                          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
+                          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left flex-wrap max-w-full"
                         >
                           <Download className="w-4 h-4 text-neutral-400" />
                           <span>Install apps</span>
@@ -1558,7 +1558,7 @@ export const PerplexityReplica: React.FC = () => {
                           }}
                           className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
                         >
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 flex-wrap max-w-full">
                             <Moon className="w-4 h-4 text-neutral-400" />
                             <span>Appearance</span>
                           </div>
@@ -1572,7 +1572,7 @@ export const PerplexityReplica: React.FC = () => {
                           }}
                           className="w-full flex items-center justify-between px-3 py-2 hover:bg-neutral-800 rounded-xl transition-colors text-left"
                         >
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 flex-wrap max-w-full">
                             <HelpCircle className="w-4 h-4 text-neutral-400" />
                             <span>Help</span>
                           </div>
@@ -1584,7 +1584,7 @@ export const PerplexityReplica: React.FC = () => {
                             alert('Sesi keluar berhasil.');
                             setIsAccountMenuOpen(false);
                           }}
-                          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl text-rose-400 transition-colors text-left"
+                          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-neutral-800 rounded-xl text-rose-400 transition-colors text-left flex-wrap max-w-full"
                         >
                           <LogOut className="w-4 h-4 text-rose-400" />
                           <span>Sign out</span>
@@ -1608,7 +1608,7 @@ export const PerplexityReplica: React.FC = () => {
             {/* Modal Header */}
             <div className="flex items-start justify-between border-b border-neutral-800 pb-3">
               <div className="space-y-1">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
                     {activeModal.category}
                   </span>
@@ -1618,7 +1618,7 @@ export const PerplexityReplica: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                   <Sparkles className="w-5 h-5 text-cyan-400" />
                   {activeModal.title}
                 </h3>
@@ -1637,7 +1637,7 @@ export const PerplexityReplica: React.FC = () => {
               <p className="text-neutral-200">{activeModal.description}</p>
 
               <div className="space-y-1.5 bg-[#262626] p-3 rounded-xl border border-neutral-700/60">
-                <h4 className="font-bold text-cyan-300 flex items-center gap-1.5 text-xs">
+                <h4 className="font-bold text-cyan-300 flex items-center gap-1.5 text-xs flex-wrap max-w-full">
                   <Check className="w-4 h-4 text-cyan-400" /> Fitur Kunci & Keunggulan:
                 </h4>
                 <ul className="list-disc list-inside space-y-1 text-neutral-300 pl-1">

@@ -198,7 +198,7 @@ export const ManusReplica: React.FC = () => {
       {/* ---------------- NAVBAR HEADER ---------------- */}
       <header className="px-6 py-4 bg-white/90 backdrop-blur-md border-b border-slate-100 flex items-center justify-between z-30 shrink-0">
         {/* Logo */}
-        <div onClick={handleResetToLanding} className="flex items-center gap-2 cursor-pointer group">
+        <div onClick={handleResetToLanding} className="flex items-center gap-2 cursor-pointer group flex-wrap max-w-full">
           <div className="w-6 h-6 rounded-lg bg-white dark:bg-slate-900 text-white flex items-center justify-center font-bold text-xs shadow-sm">
             ✋
           </div>
@@ -218,7 +218,7 @@ export const ManusReplica: React.FC = () => {
         </nav>
 
         {/* Auth Buttons */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap max-w-full">
           <button
             onClick={() => setShowAuthModal(true)}
             className="px-4 py-1.5 rounded-full bg-white dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
@@ -241,7 +241,7 @@ export const ManusReplica: React.FC = () => {
           <div className="mb-12">
             <button
               onClick={() => setShowMetaBannerModal(true)}
-              className="px-4 py-2 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/80 text-slate-700 text-xs font-medium transition-all shadow-xs flex items-center gap-2 cursor-pointer group"
+              className="px-4 py-2 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/80 text-slate-700 text-xs font-medium transition-all shadow-xs flex items-center gap-2 cursor-pointer group flex-wrap max-w-full"
             >
               <span>Manus is now part of Meta — bringing AI to businesses worldwide</span>
               <span className="text-slate-500 dark:text-slate-400 group-hover:translate-x-0.5 transition-transform">→</span>
@@ -273,7 +273,7 @@ export const ManusReplica: React.FC = () => {
 
             {/* Attached File Chip */}
             {attachedFile && (
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold flex-wrap max-w-full">
                 <FileText className="w-3.5 h-3.5 text-slate-500" />
                 <span>{attachedFile}</span>
                 <button
@@ -365,7 +365,7 @@ export const ManusReplica: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setShowMoreDropdown(!showMoreDropdown)}
-                className="px-4 py-2 rounded-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                className="px-4 py-2 rounded-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer flex-wrap max-w-full"
               >
                 <span>More</span>
                 <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
@@ -376,21 +376,21 @@ export const ManusReplica: React.FC = () => {
                 <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-40 text-left animate-in fade-in zoom-in-95 duration-150">
                   <button
                     onClick={() => handleSelectChip('Analyze data', 'Analisis data eksekutif berikut dan sajikan wawasan kunci')}
-                    className="w-full px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 text-left flex items-center gap-2"
+                    className="w-full px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 text-left flex items-center gap-2 flex-wrap max-w-full"
                   >
                     <FileSpreadsheet className="w-3.5 h-3.5 text-blue-500" />
                     <span>Analyze data</span>
                   </button>
                   <button
                     onClick={() => handleSelectChip('Write report', 'Susun laporan komprehensif berstruktur tentang perkembangan proyek')}
-                    className="w-full px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 text-left flex items-center gap-2"
+                    className="w-full px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 text-left flex items-center gap-2 flex-wrap max-w-full"
                   >
                     <FileText className="w-3.5 h-3.5 text-purple-500" />
                     <span>Write report</span>
                   </button>
                   <button
                     onClick={() => handleSelectChip('Automate workflow', 'Rancang alur kerja otomatisasi bertahap untuk tim engineering')}
-                    className="w-full px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 text-left flex items-center gap-2"
+                    className="w-full px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 text-left flex items-center gap-2 flex-wrap max-w-full"
                   >
                     <Sliders className="w-3.5 h-3.5 text-emerald-500" />
                     <span>Automate workflow</span>
@@ -403,7 +403,7 @@ export const ManusReplica: React.FC = () => {
           {/* Error Message Alert */}
           {errorMessage && (
             <div className="mt-6 max-w-md w-full p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-center justify-between">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap max-w-full">
                 <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
                 <span>{errorMessage}</span>
               </div>
@@ -420,25 +420,25 @@ export const ManusReplica: React.FC = () => {
         <div className="flex-1 flex flex-col bg-[#f8fafc] overflow-hidden">
           {/* Workspace Sub-Header */}
           <div className="px-6 py-3 bg-white border-b border-slate-200 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap max-w-full">
               <button
                 onClick={handleResetToLanding}
-                className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-colors"
+                className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-colors flex-wrap max-w-full"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>New Task</span>
               </button>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap max-w-full">
                 <span className="px-2.5 py-0.5 rounded-md bg-purple-100 text-purple-800 text-[10px] font-black uppercase tracking-wider">
                   {taskType}
                 </span>
-                <span className="text-xs font-extrabold text-slate-800 truncate max-w-md">
+                <span className="text-xs font-extrabold text-slate-800 break-words whitespace-normal leading-snug max-w-md">
                   {taskInput}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
               <span className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 ${
                 isLoading
                   ? 'bg-amber-100 text-amber-800 border border-amber-200'
@@ -451,11 +451,11 @@ export const ManusReplica: React.FC = () => {
           </div>
 
           {/* 2-Column Split Workspace */}
-          <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 min-h-0 overflow-hidden">
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 min-h-0 overflow-hidden min-w-0">
             {/* Left Panel: Execution Steps Log (4 cols) */}
             <div className="lg:col-span-4 border-r border-slate-200 bg-white p-5 overflow-y-auto space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                <h3 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                <h3 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2 flex-wrap max-w-full">
                   <Terminal className="w-4 h-4 text-purple-600" />
                   <span>Log Langkah Eksekusi</span>
                 </h3>
@@ -483,7 +483,7 @@ export const ManusReplica: React.FC = () => {
                       ) : (
                         <Circle className="w-4 h-4 text-slate-600 dark:text-slate-300 shrink-0 mt-0.5" />
                       )}
-                      <div className="space-y-0.5 flex-1">
+                      <div className="space-y-0.5 flex-1 min-w-0">
                         <p>{step.text}</p>
                         {step.timestamp && (
                           <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 block">{step.timestamp}</span>
@@ -500,16 +500,16 @@ export const ManusReplica: React.FC = () => {
             <div className="lg:col-span-8 bg-[#f8fafc] p-6 flex flex-col min-h-0 overflow-hidden">
               {/* Output Header Bar */}
               <div className="bg-white border border-slate-200 rounded-t-2xl px-5 py-3 flex items-center justify-between shrink-0 shadow-xs">
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-700 flex-wrap max-w-full">
                   <Code2 className="w-4 h-4 text-slate-500" />
                   <span>Hasil Eksekusi Agent</span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <button
                     onClick={handleCopyResult}
                     disabled={!activeResultText}
-                    className="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                    className="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50 flex-wrap max-w-full"
                   >
                     {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copied ? 'Tercopy' : 'Copy'}</span>
@@ -518,7 +518,7 @@ export const ManusReplica: React.FC = () => {
               </div>
 
               {/* Output Content Body */}
-              <div className="flex-1 bg-white border-x border-b border-slate-200 rounded-b-2xl p-6 overflow-y-auto space-y-4 shadow-sm">
+              <div className="flex-1 bg-white border-x border-b border-slate-200 rounded-b-2xl p-6 overflow-y-auto space-y-4 shadow-sm min-w-0">
                 {isLoading ? (
                   <div className="h-full flex flex-col items-center justify-center space-y-4 text-center py-16">
                     <div className="relative">
@@ -546,7 +546,7 @@ export const ManusReplica: React.FC = () => {
 
               {/* Follow-up Prompt Input Box */}
               <div className="mt-4 pt-2">
-                <div className="bg-white border border-slate-200 rounded-2xl p-3 shadow-md flex items-center gap-2">
+                <div className="bg-white border border-slate-200 rounded-2xl p-3 shadow-md flex items-center gap-2 flex-wrap max-w-full">
                   <input
                     type="text"
                     value={followUpInput}
@@ -557,7 +557,7 @@ export const ManusReplica: React.FC = () => {
                       }
                     }}
                     placeholder="Minta Manus melakukan revisi atau tugas tambahan..."
-                    className="flex-1 bg-transparent text-xs sm:text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none"
+                    className="flex-1 bg-transparent text-xs sm:text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none min-w-0"
                   />
                   <button
                     onClick={handleFollowUpSubmit}
@@ -591,7 +591,7 @@ export const ManusReplica: React.FC = () => {
                 onClick={() => handleAttachSimulatedFile('Spesifikasi_Kebutuhan_Proyek.pdf')}
                 className="w-full p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left text-xs font-bold text-slate-800 flex items-center justify-between cursor-pointer"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <FileText className="w-4 h-4 text-blue-600" />
                   <span>Spesifikasi_Kebutuhan_Proyek.pdf</span>
                 </div>
@@ -602,7 +602,7 @@ export const ManusReplica: React.FC = () => {
                 onClick={() => handleAttachSimulatedFile('Data_Analisis_Pasar_2026.csv')}
                 className="w-full p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left text-xs font-bold text-slate-800 flex items-center justify-between cursor-pointer"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
                   <span>Data_Analisis_Pasar_2026.csv</span>
                 </div>

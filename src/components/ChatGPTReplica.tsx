@@ -365,7 +365,7 @@ export const ChatGPTReplica: React.FC = () => {
         }}
         className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-neutral-700/70 transition-colors cursor-pointer group"
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap max-w-full">
           <div className="w-7 h-7 rounded-full bg-neutral-800 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
             <Sparkles className="w-4 h-4 text-emerald-400" />
           </div>
@@ -394,7 +394,7 @@ export const ChatGPTReplica: React.FC = () => {
         }}
         className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-neutral-700/70 transition-colors cursor-pointer"
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap max-w-full">
           <div className="w-7 h-7 rounded-full bg-black border border-neutral-700 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
             <svg className="w-4 h-4 text-slate-900 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
               <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0813 4.7792-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4954 4.4953zM3.6 18.304a4.4707 4.4707 0 0 1-.5358-3.0141l.142.0852 4.7839 2.7582a.771.771 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0806.0806 0 0 1-.0332.0615L9.74 19.9502A4.4992 4.4992 0 0 1 3.6 18.304zm-1.3887-10.8a4.4707 4.4707 0 0 1 2.3453-1.9684v5.6726a.7806.7806 0 0 0 .3928.6765l5.8286 3.3638-2.0152 1.1638a.0806.0806 0 0 1-.0711 0l-4.8303-2.7866A4.4992 4.4992 0 0 1 2.2113 7.504zm15.4216 2.4552l-5.8333-3.3685 2.0152-1.1638a.0806.0806 0 0 1 .0711 0l4.8303 2.7866a4.4992 4.4992 0 0 1-.6731 8.1299v-5.7058a.7806.7806 0 0 0-.4102-.6784zm3.0335-3.0141a4.4707 4.4707 0 0 1 .5358 3.0141l-.142-.0852-4.7839-2.7582a.771.771 0 0 0-.7806 0l-5.838 3.3685V8.1519a.0806.0806 0 0 1 .0332-.0615l4.84-2.7914a4.4992 4.4992 0 0 1 6.1355 1.6433zM8.3065 12.863l-2.02-1.1638a.0806.0806 0 0 1-.038-.052V6.0646a4.504 4.504 0 0 1 7.3718-3.4545l-.1419.0813-4.7792 2.7582a.7948.7948 0 0 0-.3927.6813v6.7321zm2.1803-3.1382l2.3608-1.3651 2.3608 1.3651v2.7301l-2.3608 1.3652-2.3608-1.3652z"/>
@@ -415,10 +415,10 @@ export const ChatGPTReplica: React.FC = () => {
       
       {/* VIEW MODE TOGGLE (Desktop vs Mobile View) */}
       <div className="flex items-center justify-between p-2.5 bg-neutral-900 border border-neutral-800 rounded-2xl shadow-md">
-        <div className="flex items-center gap-2 px-1">
+        <div className="flex items-center gap-2 px-1 flex-wrap max-w-full">
           <span className="text-xs font-bold text-neutral-300">Tampilan Simulator:</span>
         </div>
-        <div className="flex items-center gap-1 bg-black p-1 rounded-xl border border-neutral-800">
+        <div className="flex items-center gap-1 bg-black p-1 rounded-xl border border-neutral-800 flex-wrap max-w-full">
           <button
             onClick={() => {
               setViewMode('desktop');
@@ -469,7 +469,7 @@ export const ChatGPTReplica: React.FC = () => {
                     setMessages([]);
                     setInputPrompt('');
                   }}
-                  className="flex items-center gap-2 group cursor-pointer p-1 rounded-xl hover:bg-neutral-800/80 transition-all"
+                  className="flex items-center gap-2 group cursor-pointer p-1 rounded-xl hover:bg-neutral-800/80 transition-all flex-wrap max-w-full"
                   title="Kembali ke halaman 'Where should we begin?'"
                 >
                   <div className="w-7 h-7 rounded-full bg-black border border-neutral-700 flex items-center justify-center shadow-md group-hover:border-neutral-500 transition-colors">
@@ -478,7 +478,7 @@ export const ChatGPTReplica: React.FC = () => {
                     </svg>
                   </div>
                 </button>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 flex-wrap max-w-full">
                   <button 
                     onClick={() => handleOpenModal('web-search')}
                     className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
@@ -500,7 +500,7 @@ export const ChatGPTReplica: React.FC = () => {
               <nav className="space-y-0.5 text-xs font-medium">
                 <button
                   onClick={() => handleOpenModal('new-chat')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-neutral-800/80 hover:bg-neutral-800 text-slate-900 dark:text-white font-semibold transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-neutral-800/80 hover:bg-neutral-800 text-slate-900 dark:text-white font-semibold transition-colors group flex-wrap max-w-full"
                 >
                   <SquarePen className="w-4 h-4 text-neutral-300 group-hover:text-emerald-400 transition-colors" />
                   <span>New chat</span>
@@ -508,7 +508,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('images')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group flex-wrap max-w-full"
                 >
                   <ImageIcon className="w-4 h-4 text-neutral-400 group-hover:text-amber-400 transition-colors" />
                   <span>Images</span>
@@ -516,7 +516,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('library')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group flex-wrap max-w-full"
                 >
                   <BookOpen className="w-4 h-4 text-neutral-400 group-hover:text-indigo-400 transition-colors" />
                   <span>Library</span>
@@ -524,7 +524,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('plugins')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group flex-wrap max-w-full"
                 >
                   <Plug className="w-4 h-4 text-neutral-400 group-hover:text-purple-400 transition-colors" />
                   <span>Plugins</span>
@@ -532,7 +532,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('projects')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group flex-wrap max-w-full"
                 >
                   <Folder className="w-4 h-4 text-neutral-400 group-hover:text-emerald-400 transition-colors" />
                   <span>Projects</span>
@@ -540,7 +540,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('codex')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group flex-wrap max-w-full"
                 >
                   <Code className="w-4 h-4 text-neutral-400 group-hover:text-blue-400 transition-colors" />
                   <span>Codex</span>
@@ -548,7 +548,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('library')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-400 hover:text-slate-900 dark:text-white transition-colors flex-wrap max-w-full"
                 >
                   <MoreHorizontal className="w-4 h-4 text-neutral-400" />
                   <span>More</span>
@@ -585,7 +585,7 @@ export const ChatGPTReplica: React.FC = () => {
 
             {/* Bottom User Profile Card */}
             <div className="p-3 border-t border-neutral-800 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                 <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-extrabold text-xs shadow-inner">
                   MA
                 </div>
@@ -609,7 +609,7 @@ export const ChatGPTReplica: React.FC = () => {
             {/* Top Header Bar */}
             <div className="h-14 px-5 border-b border-neutral-800/60 flex items-center justify-between shrink-0 bg-[#212121]/90 backdrop-blur">
               {/* Left Actions / Model Selector */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap max-w-full">
                 {isSidebarCollapsed && (
                   <button
                     onClick={() => setIsSidebarCollapsed(false)}
@@ -623,7 +623,7 @@ export const ChatGPTReplica: React.FC = () => {
                 <div className="relative">
                   <button
                     onClick={() => setIsModelPickerOpen(!isModelPickerOpen)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-neutral-800 text-sm font-bold text-slate-900 dark:text-white transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-neutral-800 text-sm font-bold text-slate-900 dark:text-white transition-colors flex-wrap max-w-full"
                   >
                     <span>{selectedModel}</span>
                     <ChevronDown className="w-4 h-4 text-neutral-400" />
@@ -635,10 +635,10 @@ export const ChatGPTReplica: React.FC = () => {
               </div>
 
               {/* Top Right Actions */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap max-w-full">
                 <button
                   onClick={() => handleOpenModal('upgrade')}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-xs font-bold text-emerald-400 rounded-full border border-neutral-700 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-xs font-bold text-emerald-400 rounded-full border border-neutral-700 transition-colors flex-wrap max-w-full"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Upgrade</span>
@@ -696,7 +696,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                             <button
                               onClick={() => handleOpenModal('upload-file')}
-                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium"
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium flex-wrap max-w-full"
                             >
                               <FileText className="w-4 h-4 text-emerald-400" />
                               <span>Upload file / Documents</span>
@@ -704,7 +704,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                             <button
                               onClick={() => handleOpenModal('create-image')}
-                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium"
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium flex-wrap max-w-full"
                             >
                               <ImageIcon className="w-4 h-4 text-amber-400" />
                               <span>Create an image (DALL-E 3)</span>
@@ -712,7 +712,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                             <button
                               onClick={() => handleOpenModal('code-analysis')}
-                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium"
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium flex-wrap max-w-full"
                             >
                               <BarChart3 className="w-4 h-4 text-indigo-400" />
                               <span>Code & Data analysis</span>
@@ -720,7 +720,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                             <button
                               onClick={() => handleOpenModal('web-search')}
-                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium"
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium flex-wrap max-w-full"
                             >
                               <Globe className="w-4 h-4 text-cyan-400" />
                               <span>Web search / Browse</span>
@@ -728,7 +728,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                             <button
                               onClick={() => handleOpenModal('reason-think')}
-                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium"
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium flex-wrap max-w-full"
                             >
                               <Brain className="w-4 h-4 text-purple-400" />
                               <span>Reason / Think (o1/o3)</span>
@@ -747,7 +747,7 @@ export const ChatGPTReplica: React.FC = () => {
                       </div>
 
                       {/* Right Action Icons: Dictate & Start Voice */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap max-w-full">
                         {/* Dictate (Microphone) Button */}
                         <button
                           onClick={() => handleOpenModal('dictate')}
@@ -786,7 +786,7 @@ export const ChatGPTReplica: React.FC = () => {
                         setInputPrompt('Buatkan gambar poster kafe kopi modern bernuansa vintage.');
                         handleOpenModal('create-image');
                       }}
-                      className="flex items-center gap-2 px-4 py-2.5 bg-[#2f2f2f] hover:bg-neutral-700 border border-neutral-700/60 rounded-2xl text-xs font-semibold text-neutral-200 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2.5 bg-[#2f2f2f] hover:bg-neutral-700 border border-neutral-700/60 rounded-2xl text-xs font-semibold text-neutral-200 transition-colors flex-wrap max-w-full"
                     >
                       <ImageIcon className="w-4 h-4 text-amber-400" />
                       <span>Create an image</span>
@@ -797,7 +797,7 @@ export const ChatGPTReplica: React.FC = () => {
                         setInputPrompt('Bantu saya mengedit email lamaran kerja agar terlihat profesional.');
                         handleOpenModal('upload-file');
                       }}
-                      className="flex items-center gap-2 px-4 py-2.5 bg-[#2f2f2f] hover:bg-neutral-700 border border-neutral-700/60 rounded-2xl text-xs font-semibold text-neutral-200 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2.5 bg-[#2f2f2f] hover:bg-neutral-700 border border-neutral-700/60 rounded-2xl text-xs font-semibold text-neutral-200 transition-colors flex-wrap max-w-full"
                     >
                       <SquarePen className="w-4 h-4 text-emerald-400" />
                       <span>Write or edit</span>
@@ -808,7 +808,7 @@ export const ChatGPTReplica: React.FC = () => {
                         setInputPrompt('Cari informasi terbaru perkembangan teknologi AI Generatif 2026.');
                         handleOpenModal('web-search');
                       }}
-                      className="flex items-center gap-2 px-4 py-2.5 bg-[#2f2f2f] hover:bg-neutral-700 border border-neutral-700/60 rounded-2xl text-xs font-semibold text-neutral-200 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2.5 bg-[#2f2f2f] hover:bg-neutral-700 border border-neutral-700/60 rounded-2xl text-xs font-semibold text-neutral-200 transition-colors flex-wrap max-w-full"
                     >
                       <Globe className="w-4 h-4 text-cyan-400" />
                       <span>Look something up</span>
@@ -837,7 +837,7 @@ export const ChatGPTReplica: React.FC = () => {
                           {msg.sender === 'ai' && (
                             <button
                               onClick={() => handleCopy(msg.text, idx)}
-                              className="text-neutral-400 hover:text-slate-900 dark:text-white flex items-center gap-1 text-[10px]"
+                              className="text-neutral-400 hover:text-slate-900 dark:text-white flex items-center gap-1 text-[10px] flex-wrap max-w-full"
                             >
                               {copiedIndex === idx ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
                               {copiedIndex === idx ? 'Tersalin' : 'Salin'}
@@ -851,7 +851,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   {isLoading && (
                     <div className="flex justify-start">
-                      <div className="bg-[#2f2f2f] border border-neutral-700 text-neutral-400 rounded-2xl px-4 py-3 text-xs flex items-center gap-2">
+                      <div className="bg-[#2f2f2f] border border-neutral-700 text-neutral-400 rounded-2xl px-4 py-3 text-xs flex items-center gap-2 flex-wrap max-w-full">
                         <Sparkles className="w-4 h-4 animate-spin text-emerald-400" />
                         <span>ChatGPT sedang mengetik...</span>
                       </div>
@@ -860,7 +860,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   {/* Bottom Sticky Input for Ongoing Chat */}
                   <div className="pt-4">
-                    <div className="relative bg-[#2f2f2f] border border-neutral-700 rounded-2xl p-2.5 flex items-center gap-2">
+                    <div className="relative bg-[#2f2f2f] border border-neutral-700 rounded-2xl p-2.5 flex items-center gap-2 flex-wrap max-w-full">
                       <button
                         onClick={() => setIsPlusMenuOpen(!isPlusMenuOpen)}
                         className="p-2 bg-neutral-700 hover:bg-neutral-600 rounded-full text-neutral-200"
@@ -873,7 +873,7 @@ export const ChatGPTReplica: React.FC = () => {
                         onChange={(e) => setInputPrompt(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                         placeholder="Tulis balasan..."
-                        className="flex-1 bg-transparent text-xs text-slate-900 dark:text-white focus:outline-none placeholder-neutral-500"
+                        className="flex-1 bg-transparent text-xs text-slate-900 dark:text-white focus:outline-none placeholder-neutral-500 min-w-0"
                       />
                       <button
                         onClick={handleSendMessage}
@@ -909,7 +909,7 @@ export const ChatGPTReplica: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setIsModelPickerOpen(!isModelPickerOpen)}
-                className="flex items-center gap-1 text-sm font-bold text-slate-900 dark:text-white hover:text-neutral-300 transition-colors"
+                className="flex items-center gap-1 text-sm font-bold text-slate-900 dark:text-white hover:text-neutral-300 transition-colors flex-wrap max-w-full"
               >
                 <span>{selectedModel}</span>
                 <ChevronDown className="w-4 h-4 text-neutral-400" />
@@ -918,10 +918,10 @@ export const ChatGPTReplica: React.FC = () => {
             </div>
 
             {/* Right: Upgrade & Chat Icon */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
               <button
                 onClick={() => handleOpenModal('upgrade')}
-                className="flex items-center gap-1 text-xs font-semibold text-sky-400 hover:text-sky-300 transition-colors"
+                className="flex items-center gap-1 text-xs font-semibold text-sky-400 hover:text-sky-300 transition-colors flex-wrap max-w-full"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Upgrade</span>
@@ -954,7 +954,7 @@ export const ChatGPTReplica: React.FC = () => {
                     }}
                     className="flex items-center justify-between p-3 bg-black border border-neutral-900 rounded-2xl hover:bg-neutral-900 transition-colors cursor-pointer group"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap max-w-full">
                       <ImageIcon className="w-4 h-4 text-neutral-400" />
                       <span className="text-xs font-medium text-neutral-200">Create an image</span>
                     </div>
@@ -968,7 +968,7 @@ export const ChatGPTReplica: React.FC = () => {
                     }}
                     className="flex items-center justify-between p-3 bg-black border border-neutral-900 rounded-2xl hover:bg-neutral-900 transition-colors cursor-pointer group"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap max-w-full">
                       <SquarePen className="w-4 h-4 text-neutral-400" />
                       <span className="text-xs font-medium text-neutral-200">Write or edit</span>
                     </div>
@@ -982,7 +982,7 @@ export const ChatGPTReplica: React.FC = () => {
                     }}
                     className="flex items-center justify-between p-3 bg-black border border-neutral-900 rounded-2xl hover:bg-neutral-900 transition-colors cursor-pointer group"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap max-w-full">
                       <Globe className="w-4 h-4 text-neutral-400" />
                       <span className="text-xs font-medium text-neutral-200">Look something up</span>
                     </div>
@@ -1005,7 +1005,7 @@ export const ChatGPTReplica: React.FC = () => {
                   </div>
                 ))}
                 {isLoading && (
-                  <div className="text-xs text-neutral-400 flex items-center gap-2">
+                  <div className="text-xs text-neutral-400 flex items-center gap-2 flex-wrap max-w-full">
                     <Sparkles className="w-3.5 h-3.5 animate-spin text-emerald-400" />
                     <span>ChatGPT sedang mengetik...</span>
                   </div>
@@ -1021,7 +1021,7 @@ export const ChatGPTReplica: React.FC = () => {
                 <div className="absolute bottom-16 left-0 w-60 bg-[#1c1c1e] border border-neutral-800 rounded-3xl p-2.5 shadow-2xl z-50 space-y-1 text-xs text-slate-900 dark:text-white animate-in fade-in slide-in-from-bottom-2">
                   <button
                     onClick={() => handleOpenModal('camera')}
-                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors"
+                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors flex-wrap max-w-full"
                   >
                     <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-200">
                       <Camera className="w-4 h-4" />
@@ -1031,7 +1031,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   <button
                     onClick={() => handleOpenModal('photos')}
-                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors"
+                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors flex-wrap max-w-full"
                   >
                     <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-200">
                       <ImageIcon className="w-4 h-4" />
@@ -1041,7 +1041,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   <button
                     onClick={() => handleOpenModal('files')}
-                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors"
+                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors flex-wrap max-w-full"
                   >
                     <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-200">
                       <Paperclip className="w-4 h-4" />
@@ -1051,7 +1051,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   <button
                     onClick={() => handleOpenModal('create-image')}
-                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors"
+                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors flex-wrap max-w-full"
                   >
                     <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-200">
                       <ImageIcon className="w-4 h-4" />
@@ -1061,7 +1061,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   <button
                     onClick={() => handleOpenModal('thinking')}
-                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors"
+                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors flex-wrap max-w-full"
                   >
                     <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-200">
                       <Lightbulb className="w-4 h-4" />
@@ -1071,7 +1071,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   <button
                     onClick={() => handleOpenModal('web-search')}
-                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors"
+                    className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors flex-wrap max-w-full"
                   >
                     <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center text-neutral-200">
                       <Globe className="w-4 h-4" />
@@ -1102,7 +1102,7 @@ export const ChatGPTReplica: React.FC = () => {
                   </button>
 
                   {/* Right Action Icons */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <button 
                       onClick={() => handleOpenModal('plus-menu')}
                       className="p-1.5 text-neutral-400 hover:text-slate-900 dark:text-white"
@@ -1162,7 +1162,7 @@ export const ChatGPTReplica: React.FC = () => {
                     </svg>
                   </button>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <button 
                       onClick={() => { handleOpenModal('web-search'); setIsMobileSidebarOpen(false); }}
                       className="p-1 hover:bg-neutral-800 rounded-lg text-neutral-400"
@@ -1182,7 +1182,7 @@ export const ChatGPTReplica: React.FC = () => {
                 <nav className="space-y-1 font-medium">
                   <button
                     onClick={() => { handleOpenModal('new-chat'); setIsMobileSidebarOpen(false); }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-neutral-900 text-slate-900 dark:text-white font-semibold text-xs"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-neutral-900 text-slate-900 dark:text-white font-semibold text-xs flex-wrap max-w-full"
                   >
                     <SquarePen className="w-4 h-4 text-neutral-300" />
                     <span>New chat</span>
@@ -1190,7 +1190,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   <button
                     onClick={() => { handleOpenModal('images'); setIsMobileSidebarOpen(false); }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-900 text-neutral-300 text-xs"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-900 text-neutral-300 text-xs flex-wrap max-w-full"
                   >
                     <ImageIcon className="w-4 h-4 text-neutral-400" />
                     <span>Images</span>
@@ -1198,7 +1198,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   <button
                     onClick={() => { handleOpenModal('library'); setIsMobileSidebarOpen(false); }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-900 text-neutral-300 text-xs"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-900 text-neutral-300 text-xs flex-wrap max-w-full"
                   >
                     <BookOpen className="w-4 h-4 text-neutral-400" />
                     <span>Library</span>
@@ -1206,7 +1206,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   <button
                     onClick={() => { handleOpenModal('plugins'); setIsMobileSidebarOpen(false); }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-900 text-neutral-300 text-xs"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-900 text-neutral-300 text-xs flex-wrap max-w-full"
                   >
                     <Plug className="w-4 h-4 text-neutral-400" />
                     <span>Plugins</span>
@@ -1216,7 +1216,7 @@ export const ChatGPTReplica: React.FC = () => {
                     onClick={() => { handleOpenModal('projects'); setIsMobileSidebarOpen(false); }}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-neutral-900 text-neutral-300 text-xs"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap max-w-full">
                       <Folder className="w-4 h-4 text-neutral-400" />
                       <span>Projects</span>
                     </div>
@@ -1227,7 +1227,7 @@ export const ChatGPTReplica: React.FC = () => {
                     onClick={() => { handleOpenModal('codex'); setIsMobileSidebarOpen(false); }}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-neutral-900 text-neutral-300 text-xs"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap max-w-full">
                       <Code className="w-4 h-4 text-neutral-400" />
                       <span>Codex</span>
                     </div>
@@ -1236,7 +1236,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                   <button
                     onClick={() => { handleOpenModal('library'); setIsMobileSidebarOpen(false); }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-900 text-neutral-400 text-xs"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-900 text-neutral-400 text-xs flex-wrap max-w-full"
                   >
                     <MoreHorizontal className="w-4 h-4" />
                     <span>More</span>
@@ -1247,7 +1247,7 @@ export const ChatGPTReplica: React.FC = () => {
                 <div className="pt-2 border-t border-neutral-900 space-y-1">
                   <div className="flex items-center justify-between px-3 text-[10px] font-bold text-neutral-500 uppercase tracking-wider">
                     <span>Recents</span>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap max-w-full">
                       <MoreHorizontal className="w-3.5 h-3.5 text-neutral-500" />
                       <SquarePen className="w-3.5 h-3.5 text-neutral-500" />
                     </div>
@@ -1283,7 +1283,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 {/* User Profile Footer */}
                 <div className="pt-2 border-t border-neutral-900 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-[10px]">
                       MA
                     </div>
@@ -1313,7 +1313,7 @@ export const ChatGPTReplica: React.FC = () => {
             {/* Modal Header */}
             <div className="flex items-start justify-between border-b border-neutral-800 pb-4">
               <div className="space-y-1">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                     {activeModal.badge || 'ChatGPT Feature'}
                   </span>
@@ -1321,7 +1321,7 @@ export const ChatGPTReplica: React.FC = () => {
                     {activeModal.category}
                   </span>
                 </div>
-                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                   <Sparkles className="w-5 h-5 text-amber-400" />
                   {activeModal.title}
                 </h3>
@@ -1355,7 +1355,7 @@ export const ChatGPTReplica: React.FC = () => {
 
               {/* How to Use Box */}
               <div className="bg-neutral-800/60 p-3.5 rounded-xl border border-neutral-700/60 space-y-1">
-                <span className="font-bold text-amber-300 block text-[11px] flex items-center gap-1">
+                <span className="font-bold text-amber-300 block text-[11px] flex items-center gap-1 flex-wrap max-w-full">
                   <HelpCircle className="w-3.5 h-3.5" /> Cara Menggunakan:
                 </span>
                 <p className="text-neutral-300 italic text-[11px]">

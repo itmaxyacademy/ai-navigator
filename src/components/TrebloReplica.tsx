@@ -455,8 +455,8 @@ export const TrebloReplica: React.FC = () => {
                     <Music className="w-6 h-6 text-slate-900 dark:text-white" />
                   </div>
                   <div className="overflow-hidden">
-                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-rose-400 truncate">WiFi Putus Saat Coding</h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Country Pop • Maxy Academy</p>
+                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-rose-400 break-words whitespace-normal leading-snug">WiFi Putus Saat Coding</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 break-words whitespace-normal leading-snug">Country Pop • Maxy Academy</p>
                     <span className="inline-block mt-1 text-[10px] bg-rose-950 text-rose-300 px-2 py-0.5 rounded font-medium">Click to Play</span>
                   </div>
                 </div>
@@ -474,8 +474,8 @@ export const TrebloReplica: React.FC = () => {
                     <Sparkles className="w-6 h-6 text-slate-900 dark:text-white" />
                   </div>
                   <div className="overflow-hidden">
-                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-rose-400 truncate">Irama Prompting Gemini</h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Synthwave • Maxy Academy</p>
+                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-rose-400 break-words whitespace-normal leading-snug">Irama Prompting Gemini</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 break-words whitespace-normal leading-snug">Synthwave • Maxy Academy</p>
                     <span className="inline-block mt-1 text-[10px] bg-rose-950 text-rose-300 px-2 py-0.5 rounded font-medium">Click to Play</span>
                   </div>
                 </div>
@@ -493,8 +493,8 @@ export const TrebloReplica: React.FC = () => {
                     <Headphones className="w-6 h-6 text-slate-900 dark:text-white" />
                   </div>
                   <div className="overflow-hidden">
-                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-rose-400 truncate">Melodi Belajar AI</h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Lofi Chill • Maxy Academy</p>
+                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-rose-400 break-words whitespace-normal leading-snug">Melodi Belajar AI</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 break-words whitespace-normal leading-snug">Lofi Chill • Maxy Academy</p>
                     <span className="inline-block mt-1 text-[10px] bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded font-medium">Instrumental</span>
                   </div>
                 </div>
@@ -532,7 +532,7 @@ export const TrebloReplica: React.FC = () => {
           )}
 
           {/* Main Workspace Layout */}
-          <div className="flex-1 flex overflow-hidden relative">
+          <div className="flex-1 flex overflow-hidden relative min-w-0">
             {/* LEFT SIDEBAR */}
             <aside className="w-56 bg-[#141012] border-r border-slate-200 dark:border-slate-800/80 flex flex-col shrink-0 hidden md:flex">
               {/* Logo & Collapse Header */}
@@ -605,7 +605,7 @@ export const TrebloReplica: React.FC = () => {
               </div>
 
               {/* Your Library Section */}
-              <div className="flex-1 p-3 overflow-y-auto space-y-3">
+              <div className="flex-1 p-3 overflow-y-auto space-y-3 min-w-0">
                 <div className="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
                   <span>Your Library</span>
                   <button 
@@ -628,14 +628,14 @@ export const TrebloReplica: React.FC = () => {
                         setIsPlaying(!isPlaying);
                         showToastMsg(isPlaying ? 'Playback di-pause' : 'Memutar semua koleksi');
                       }}
-                      className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-md font-medium flex items-center justify-center space-x-1"
+                      className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-md font-medium flex items-center justify-center space-x-1 min-w-0"
                     >
                       <Play className="w-3 h-3 fill-current text-rose-400" />
                       <span>Play</span>
                     </button>
                     <button 
                       onClick={() => showToastMsg('Shuffle koleksi lagu')}
-                      className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-md font-medium flex items-center justify-center space-x-1"
+                      className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-md font-medium flex items-center justify-center space-x-1 min-w-0"
                     >
                       <Disc className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                       <span>Shuffle</span>
@@ -772,7 +772,7 @@ export const TrebloReplica: React.FC = () => {
               </div>
 
               {/* Responsive 3-Panel Grid Workspace */}
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden">
+              <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-w-0">
                 {/* PANEL TENGAH: AREA GENERATE (Cols 1-4 on Desktop) */}
                 <div className={`md:col-span-4 border-r border-slate-200 dark:border-slate-800/80 p-4 overflow-y-auto flex flex-col space-y-4 bg-[#110e10] ${mobileTab === 'editor' ? 'block' : 'hidden md:block'}`}>
                   {/* Model Notice Box */}
@@ -840,7 +840,7 @@ export const TrebloReplica: React.FC = () => {
                           onChange={(e) => setWorkspacePrompt(e.target.value)}
                           placeholder="Contoh: a country song about my WiFi going out mid-meeting..."
                           rows={5}
-                          className="w-full flex-1 bg-transparent text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-500 resize-none focus:outline-none"
+                          className="w-full flex-1 bg-transparent text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-500 resize-none focus:outline-none min-w-0"
                         />
                         <div className="flex items-center justify-end pt-2">
                           <button 
@@ -887,7 +887,7 @@ export const TrebloReplica: React.FC = () => {
                           onChange={(e) => setCustomLyricsInput(e.target.value)}
                           placeholder="[Verse 1] Tulis lirik kustom di sini..."
                           rows={5}
-                          className="w-full flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-xs text-slate-700 dark:text-slate-200 placeholder-slate-500 resize-none focus:outline-none focus:border-rose-500 font-mono"
+                          className="w-full flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-xs text-slate-700 dark:text-slate-200 placeholder-slate-500 resize-none focus:outline-none focus:border-rose-500 font-mono min-w-0"
                         />
                       </div>
                     </div>
@@ -957,7 +957,7 @@ export const TrebloReplica: React.FC = () => {
                       <span>Liked</span>
                     </button>
 
-                    <div className="relative flex-1">
+                    <div className="relative flex-1 min-w-0">
                       <input
                         type="text"
                         value={listSearch}
@@ -970,7 +970,7 @@ export const TrebloReplica: React.FC = () => {
                   </div>
 
                   {/* Songs List */}
-                  <div className="space-y-2 flex-1">
+                  <div className="space-y-2 flex-1 min-w-0">
                     {filteredSongs.length === 0 ? (
                       <div className="text-center py-10 text-slate-500 text-xs">
                         Tidak ada lagu yang cocok dengan pencarian.
@@ -1198,7 +1198,7 @@ export const TrebloReplica: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex-1 overflow-y-auto text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-sans whitespace-pre-wrap">
+                    <div className="bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex-1 overflow-y-auto text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-sans whitespace-pre-wrap min-w-0">
                       {selectedSong.lyrics}
                     </div>
                   </div>
@@ -1213,8 +1213,8 @@ export const TrebloReplica: React.FC = () => {
                     <Music className="w-5 h-5 text-slate-900 dark:text-white" />
                   </div>
                   <div className="overflow-hidden">
-                    <h5 className="font-bold text-slate-900 dark:text-white text-xs truncate">{activePlayerSong.title}</h5>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">Maxy Academy Student</p>
+                    <h5 className="font-bold text-slate-900 dark:text-white text-xs break-words whitespace-normal leading-snug">{activePlayerSong.title}</h5>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 break-words whitespace-normal leading-snug">Maxy Academy Student</p>
                   </div>
                   <button 
                     onClick={(e) => toggleLike(activePlayerSong.id, e)}
@@ -1246,7 +1246,7 @@ export const TrebloReplica: React.FC = () => {
                         const pct = Math.round((clickX / rect.width) * 100);
                         setPlayerProgress(pct);
                       }}
-                      className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full cursor-pointer relative overflow-hidden"
+                      className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full cursor-pointer relative overflow-hidden min-w-0"
                     >
                       <div 
                         style={{ width: `${playerProgress}%` }}

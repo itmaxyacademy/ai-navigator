@@ -349,12 +349,12 @@ export const GoogleFlowReplica: React.FC = () => {
     <div className="space-y-4">
       {/* Device Mode Toggle & Quick Help Banner */}
       <div className="bg-[#12151e] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap max-w-full">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-slate-900 dark:text-white font-bold shadow-lg shadow-indigo-500/20">
             <Film className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
               Google Flow Interactive Replica
               <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 Studio Mode
@@ -367,7 +367,7 @@ export const GoogleFlowReplica: React.FC = () => {
         </div>
 
         {/* View Switcher: Desktop vs Mobile */}
-        <div className="flex items-center gap-1.5 bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shrink-0">
+        <div className="flex items-center gap-1.5 bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shrink-0 flex-wrap max-w-full">
           <button
             onClick={() => setDeviceMode('desktop')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
@@ -398,7 +398,7 @@ export const GoogleFlowReplica: React.FC = () => {
           {/* TOP HEADER BAR */}
           <div className="bg-[#12151e]/90 border-b border-slate-200 dark:border-slate-800/80 px-3 py-2.5 flex items-center justify-between gap-2 z-20 shrink-0">
             {/* Left: Back & Title */}
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-2 shrink-0 flex-wrap max-w-full">
               <button 
                 onClick={() => setExplanationModal(featureExplanations['All Media'])}
                 className="p-1.5 rounded-lg hover:bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
@@ -407,7 +407,7 @@ export const GoogleFlowReplica: React.FC = () => {
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 flex-wrap max-w-full">
                 <span className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm tracking-wide">
                   Captain Maxy 04
                 </span>
@@ -421,7 +421,7 @@ export const GoogleFlowReplica: React.FC = () => {
             </div>
 
             {/* Middle: Search Bar with Filter/View Mode Button */}
-            <div className="flex-1 max-w-md mx-2">
+            <div className="flex-1 max-w-md mx-2 min-w-0">
               <div className="relative flex items-center">
                 <Search className="w-3.5 h-3.5 absolute left-3 text-slate-500 dark:text-slate-400 pointer-events-none" />
                 <input
@@ -440,7 +440,7 @@ export const GoogleFlowReplica: React.FC = () => {
             </div>
 
             {/* Right: Actions Top Bar */}
-            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+            <div className="flex items-center gap-1 sm:gap-2 shrink-0 flex-wrap max-w-full">
               {/* Add Media / Create button */}
               <div className="relative">
                 <button
@@ -465,7 +465,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowCreateDropdown(false);
                           setExplanationModal(featureExplanations['Upload media']);
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <Upload className="w-4 h-4 text-blue-400" />
                         <span>Upload media</span>
@@ -475,7 +475,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowCreateDropdown(false);
                           setExplanationModal(featureExplanations['Create Collection']);
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <FolderPlus className="w-4 h-4 text-amber-400" />
                         <span>Create Collection</span>
@@ -485,7 +485,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowCreateDropdown(false);
                           setExplanationModal(featureExplanations['Create Character']);
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <UserPlus className="w-4 h-4 text-emerald-400" />
                         <span>Create Character</span>
@@ -495,7 +495,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowCreateDropdown(false);
                           setExplanationModal(featureExplanations['Create Scene']);
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <Clapperboard className="w-4 h-4 text-purple-400" />
                         <span>Create Scene</span>
@@ -547,7 +547,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowMoreDropdown(false);
                           setExplanationModal(featureExplanations['Download Project']);
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <Download className="w-3.5 h-3.5 text-blue-400" />
                         <span>Download Project</span>
@@ -557,7 +557,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowMoreDropdown(false);
                           setExplanationModal(featureExplanations['Flow Help Center']);
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
                         <span>Product Help</span>
@@ -567,7 +567,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowMoreDropdown(false);
                           setExplanationModal(featureExplanations['Flow Help Center']);
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
                         <span>Flow Help Center</span>
@@ -577,7 +577,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowMoreDropdown(false);
                           alert('Maxy Academy Google Flow Changelog Versi 2.4 Active!');
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <FileText className="w-3.5 h-3.5 text-purple-400" />
                         <span>View all changelogs</span>
@@ -587,7 +587,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowMoreDropdown(false);
                           alert('Membuka Flow TV Showcase!');
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <Tv className="w-3.5 h-3.5 text-rose-400" />
                         <span>Flow TV</span>
@@ -597,7 +597,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowMoreDropdown(false);
                           alert('Google Flow Studio Powered by Gemini & Veo Models for Maxy Academy');
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <Info className="w-3.5 h-3.5 text-cyan-400" />
                         <span>About Flow</span>
@@ -607,7 +607,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowMoreDropdown(false);
                           setExplanationModal(featureExplanations['Flow Help Center']);
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <Play className="w-3.5 h-3.5 text-indigo-400" />
                         <span>Learn Flow</span>
@@ -617,7 +617,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowMoreDropdown(false);
                           alert('Umpan balik telah dikirim ke tim Maxy Academy!');
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                         <span>Send app feedback</span>
@@ -627,7 +627,7 @@ export const GoogleFlowReplica: React.FC = () => {
                           setShowMoreDropdown(false);
                           alert('Privacy & Legal Notice Maxy Academy AI Studio');
                         }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors"
+                        className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 hover:text-slate-900 dark:text-white flex items-center gap-2.5 transition-colors flex-wrap max-w-full"
                       >
                         <ShieldAlert className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                         <span>Privacy Notice</span>
@@ -650,7 +650,7 @@ export const GoogleFlowReplica: React.FC = () => {
           </div>
 
           {/* MAIN BODY WORKSPACE */}
-          <div className="flex-1 flex overflow-hidden relative">
+          <div className="flex-1 flex overflow-hidden relative min-w-0">
             
             {/* LEFT NAVIGATION SIDEBAR (Desktop & Mobile Drawer) */}
             <div className={`${deviceMode === 'mobile' ? 'w-14 border-r border-slate-200 dark:border-slate-800/80 bg-[#0d1017]' : 'w-48 border-r border-slate-200 dark:border-slate-800/80 bg-[#0d1017] hidden md:flex'} flex-col justify-between py-3 shrink-0`}>
@@ -684,7 +684,7 @@ export const GoogleFlowReplica: React.FC = () => {
                       }`}
                       title={item.name}
                     >
-                      <div className="flex items-center gap-2.5 truncate">
+                      <div className="flex items-center gap-2.5 truncate flex-wrap max-w-full">
                         <IconComp className={`w-4 h-4 shrink-0 ${isActive ? 'text-blue-400' : 'text-slate-500 dark:text-slate-400'}`} />
                         {deviceMode === 'desktop' && <span>{item.name}</span>}
                       </div>
@@ -703,7 +703,7 @@ export const GoogleFlowReplica: React.FC = () => {
                 <div className="px-3 pt-3 border-t border-slate-200 dark:border-slate-800/60 space-y-2">
                   <button
                     onClick={() => setExplanationModal(featureExplanations['All Media'])}
-                    className="w-full text-left text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-100 dark:bg-slate-800/50"
+                    className="w-full text-left text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-slate-100 dark:bg-slate-800/50 flex-wrap max-w-full"
                   >
                     <PanelLeftClose className="w-4 h-4" />
                     <span>Collapse</span>
@@ -716,7 +716,7 @@ export const GoogleFlowReplica: React.FC = () => {
             </div>
 
             {/* CENTER GALLERY GRID (Image 1 reference) */}
-            <div className="flex-1 bg-[#0b0d14] p-3 sm:p-4 overflow-y-auto space-y-4">
+            <div className="flex-1 bg-[#0b0d14] p-3 sm:p-4 overflow-y-auto space-y-4 min-w-0">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 
                 {/* Tile 1: Warehouse pallets with boxes (Portrait Video) */}
@@ -754,7 +754,7 @@ export const GoogleFlowReplica: React.FC = () => {
 
                   <div className="relative z-20 space-y-2">
                     <span className="text-xs font-bold text-slate-900 dark:text-white block">Gabungan</span>
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 flex-wrap max-w-full">
                       <div className="w-12 h-8 rounded-lg overflow-hidden border border-slate-300 dark:border-slate-700">
                         <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=100&q=80" alt="thumb1" className="w-full h-full object-cover" />
                       </div>
@@ -831,15 +831,15 @@ export const GoogleFlowReplica: React.FC = () => {
             <div className={`${deviceMode === 'mobile' ? 'hidden' : 'w-80 border-l border-slate-200 dark:border-slate-800/80 bg-[#0f121a]'} flex flex-col justify-between shrink-0 z-10`}>
               {/* Agent Panel Header */}
               <div className="p-3 border-b border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
-                <div className="flex items-center gap-2 overflow-hidden">
+                <div className="flex items-center gap-2 overflow-hidden flex-wrap max-w-full">
                   <span className="p-1 rounded text-slate-500 dark:text-slate-400">
                     <LayoutGrid className="w-4 h-4" />
                   </span>
-                  <span className="font-bold text-xs text-slate-900 dark:text-white truncate">
+                  <span className="font-bold text-xs text-slate-900 dark:text-white break-words whitespace-normal leading-snug">
                     Seamless Character Ani...
                   </span>
                 </div>
-                <div className="flex items-center gap-1 shrink-0">
+                <div className="flex items-center gap-1 shrink-0 flex-wrap max-w-full">
                   <button className="p-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded">
                     <Edit3 className="w-3.5 h-3.5" />
                   </button>
@@ -850,7 +850,7 @@ export const GoogleFlowReplica: React.FC = () => {
               </div>
 
               {/* Chat Message Stream */}
-              <div className="p-3 flex-1 overflow-y-auto space-y-3 text-xs leading-relaxed">
+              <div className="p-3 flex-1 overflow-y-auto space-y-3 text-xs leading-relaxed min-w-0">
                 {/* Generated Media Thumbnail */}
                 <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 aspect-video relative group">
                   <img
@@ -871,14 +871,14 @@ export const GoogleFlowReplica: React.FC = () => {
                 ))}
 
                 {isGenerating && (
-                  <div className="p-3 bg-indigo-950/40 border border-indigo-800/40 rounded-xl text-[11px] text-indigo-300 flex items-center gap-2">
+                  <div className="p-3 bg-indigo-950/40 border border-indigo-800/40 rounded-xl text-[11px] text-indigo-300 flex items-center gap-2 flex-wrap max-w-full">
                     <RefreshCw className="w-3.5 h-3.5 animate-spin text-indigo-400" />
                     <span>Agent Omni Flash sedang merender adegan...</span>
                   </div>
                 )}
 
                 {/* Message Feedback Action Bar */}
-                <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 pt-1 px-1">
+                <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 pt-1 px-1 flex-wrap max-w-full">
                   <button className="hover:text-slate-900 dark:text-white"><ThumbsUp className="w-3.5 h-3.5" /></button>
                   <button className="hover:text-slate-900 dark:text-white"><ThumbsDown className="w-3.5 h-3.5" /></button>
                   <button className="hover:text-slate-900 dark:text-white"><Copy className="w-3.5 h-3.5" /></button>
@@ -904,7 +904,7 @@ export const GoogleFlowReplica: React.FC = () => {
                   />
 
                   <div className="flex items-center justify-between pt-1 border-t border-slate-200 dark:border-slate-800/60">
-                    <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
+                    <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400 flex-wrap max-w-full">
                       <button 
                         onClick={() => setShowCreateDropdown(!showCreateDropdown)}
                         className="p-1 hover:text-slate-900 dark:text-white rounded"
@@ -963,7 +963,7 @@ export const GoogleFlowReplica: React.FC = () => {
               <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
                 <button
                   onClick={() => setShowSettingsModal(false)}
-                  className="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white"
+                  className="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex-wrap max-w-full"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span>Agent settings</span>
@@ -985,7 +985,7 @@ export const GoogleFlowReplica: React.FC = () => {
                     <span className="font-bold text-slate-700 dark:text-slate-200">Confirm before generating</span>
                     <button
                       onClick={() => setExplanationModal(featureExplanations['Confirm before generating'])}
-                      className="text-amber-400 hover:underline text-[10px] flex items-center gap-1"
+                      className="text-amber-400 hover:underline text-[10px] flex items-center gap-1 flex-wrap max-w-full"
                     >
                       <Info className="w-3 h-3" /> Info
                     </button>
@@ -1032,7 +1032,7 @@ export const GoogleFlowReplica: React.FC = () => {
                     <span className="font-bold text-slate-700 dark:text-slate-200">Image generation default</span>
                     <button
                       onClick={() => setExplanationModal(featureExplanations['Image generation default'])}
-                      className="text-amber-400 hover:underline text-[10px] flex items-center gap-1"
+                      className="text-amber-400 hover:underline text-[10px] flex items-center gap-1 flex-wrap max-w-full"
                     >
                       <Info className="w-3 h-3" /> Info
                     </button>
@@ -1090,7 +1090,7 @@ export const GoogleFlowReplica: React.FC = () => {
                     <span className="font-bold text-slate-700 dark:text-slate-200">Video generation default</span>
                     <button
                       onClick={() => setExplanationModal(featureExplanations['Video generation default'])}
-                      className="text-amber-400 hover:underline text-[10px] flex items-center gap-1"
+                      className="text-amber-400 hover:underline text-[10px] flex items-center gap-1 flex-wrap max-w-full"
                     >
                       <Info className="w-3 h-3" /> Info
                     </button>
@@ -1169,7 +1169,7 @@ export const GoogleFlowReplica: React.FC = () => {
               className="w-full max-w-sm bg-[#181c28] border border-slate-300 dark:border-slate-700 rounded-3xl p-5 space-y-5 text-slate-800 dark:text-slate-100 shadow-2xl text-xs"
             >
               <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-                <span className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                <span className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                   <SlidersHorizontal className="w-4 h-4 text-amber-400" /> View Mode & Filter
                 </span>
                 <button
@@ -1295,13 +1295,13 @@ export const GoogleFlowReplica: React.FC = () => {
             >
               <div className="flex items-start justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase tracking-wide">
                       {explanationModal.badge}
                     </span>
                     <span className="text-xs text-slate-500 dark:text-slate-400">{explanationModal.category}</span>
                   </div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
                     {explanationModal.title}
                   </h3>
@@ -1319,7 +1319,7 @@ export const GoogleFlowReplica: React.FC = () => {
               </p>
 
               <div className="space-y-2">
-                <h4 className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                <h4 className="text-xs font-bold text-amber-300 flex items-center gap-1.5 flex-wrap max-w-full">
                   <Check className="w-4 h-4 text-emerald-400" /> Keunggulan Utama Fitur:
                 </h4>
                 <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">

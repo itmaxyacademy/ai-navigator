@@ -213,7 +213,7 @@ export const LovableReplica: React.FC = () => {
         {/* Left: Brand Logo */}
         <div
           onClick={() => setViewState('landing')}
-          className="flex items-center gap-2 cursor-pointer group"
+          className="flex items-center gap-2 cursor-pointer group flex-wrap max-w-full"
         >
           <span className="text-xl">❤️</span>
           <span className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-purple-300 transition-colors">
@@ -226,7 +226,7 @@ export const LovableReplica: React.FC = () => {
           <div className="relative">
             <button
               onClick={() => setIsNavDropdownOpen(isNavDropdownOpen === 'solusi' ? null : 'solusi')}
-              className="flex items-center gap-1 hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
+              className="flex items-center gap-1 hover:text-slate-900 dark:text-white transition-colors cursor-pointer flex-wrap max-w-full"
             >
               <span>Solusi</span>
               <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
@@ -242,7 +242,7 @@ export const LovableReplica: React.FC = () => {
           <div className="relative">
             <button
               onClick={() => setIsNavDropdownOpen(isNavDropdownOpen === 'sumber' ? null : 'sumber')}
-              className="flex items-center gap-1 hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
+              className="flex items-center gap-1 hover:text-slate-900 dark:text-white transition-colors cursor-pointer flex-wrap max-w-full"
             >
               <span>Sumber daya</span>
               <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
@@ -276,7 +276,7 @@ export const LovableReplica: React.FC = () => {
         </nav>
 
         {/* Right: Action Buttons */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap max-w-full">
           <button
             onClick={() => handleOpenNavSimulationModal('Masuk')}
             className="px-4 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700/80 bg-white dark:bg-slate-900/60 hover:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-semibold transition-all cursor-pointer"
@@ -298,7 +298,7 @@ export const LovableReplica: React.FC = () => {
           {/* Announcement Pill Banner */}
           <button
             onClick={handleOpenBannerModal}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1b1730]/80 border border-indigo-500/30 hover:border-indigo-400 text-xs text-slate-700 dark:text-slate-200 transition-all cursor-pointer group shadow-xl"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1b1730]/80 border border-indigo-500/30 hover:border-indigo-400 text-xs text-slate-700 dark:text-slate-200 transition-all cursor-pointer group shadow-xl flex-wrap max-w-full"
           >
             <span className="px-2 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-extrabold uppercase tracking-wide">
               Baru
@@ -346,12 +346,12 @@ export const LovableReplica: React.FC = () => {
                 </button>
 
                 {/* Right Side Controls */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   {/* Mode Selector Dropdown */}
                   <div className="relative">
                     <button
                       onClick={() => setIsModeDropdownOpen(!isModeDropdownOpen)}
-                      className="px-3 py-1.5 rounded-xl bg-[#231f36] border border-slate-300 dark:border-slate-700/80 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer"
+                      className="px-3 py-1.5 rounded-xl bg-[#231f36] border border-slate-300 dark:border-slate-700/80 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full"
                     >
                       <span>{mode}</span>
                       <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
@@ -435,7 +435,7 @@ export const LovableReplica: React.FC = () => {
             {/* Error Message */}
             {errorMessage && (
               <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 text-xs flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
@@ -454,16 +454,16 @@ export const LovableReplica: React.FC = () => {
         <div className="relative z-10 flex-1 flex flex-col overflow-hidden bg-[#0a0814]">
           {/* Workspace Top Toolbar */}
           <div className="px-4 py-2.5 bg-[#120f22] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap max-w-full">
               <button
                 onClick={() => setViewState('landing')}
-                className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
+                className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Kembali ke Home</span>
               </button>
 
-              <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
+              <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300 flex-wrap max-w-full">
                 <span className="text-purple-400 font-bold">Lovable Workspace</span>
                 <span className="text-slate-600">•</span>
                 <span className="px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 text-[10px]">
@@ -501,10 +501,10 @@ export const LovableReplica: React.FC = () => {
             </div>
 
             {/* Right: Actions */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
               <button
                 onClick={handleCopyCode}
-                className="px-3 py-1.5 rounded-lg bg-[#221d38] border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-1.5 rounded-lg bg-[#221d38] border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full"
               >
                 {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copiedCode ? 'Tersalin' : 'Salin Kode'}</span>
@@ -513,7 +513,7 @@ export const LovableReplica: React.FC = () => {
           </div>
 
           {/* Workspace Body Grid */}
-          <div className="flex-1 flex overflow-hidden">
+          <div className="flex-1 flex overflow-hidden min-w-0">
             {/* LEFT PANEL: CHAT & CODE EDITOR */}
             {(workspaceTab === 'split' || workspaceTab === 'code') && (
               <div
@@ -522,7 +522,7 @@ export const LovableReplica: React.FC = () => {
                 } flex flex-col bg-[#0d0b1a] overflow-hidden`}
               >
                 {/* Chat History Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 min-w-0">
                   {history.map((msg) => (
                     <div
                       key={msg.id}
@@ -543,7 +543,7 @@ export const LovableReplica: React.FC = () => {
                   {/* Loading Indicator */}
                   {isLoading && (
                     <div className="p-4 rounded-2xl bg-[#151226] border border-slate-200 dark:border-slate-800 text-xs text-purple-300 space-y-2 animate-pulse">
-                      <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                      <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white flex-wrap max-w-full">
                         <RefreshCw className="w-4 h-4 animate-spin text-purple-400" />
                         <span>Lovable Builder Sedang Bekerja...</span>
                       </div>
@@ -558,7 +558,7 @@ export const LovableReplica: React.FC = () => {
                 {currentCodeSnippet && (
                   <div className="h-64 border-t border-slate-200 dark:border-slate-800 bg-[#080712] flex flex-col shrink-0">
                     <div className="px-3 py-1.5 bg-[#120f22] border-b border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-mono">
-                      <span className="flex items-center gap-1.5">
+                      <span className="flex items-center gap-1.5 flex-wrap max-w-full">
                         <Code2 className="w-3.5 h-3.5 text-purple-400" /> Component.tsx
                       </span>
                       <button
@@ -568,7 +568,7 @@ export const LovableReplica: React.FC = () => {
                         Salin Semuanya
                       </button>
                     </div>
-                    <pre className="flex-1 p-3 text-[11px] font-mono text-purple-200 overflow-auto whitespace-pre leading-relaxed select-text">
+                    <pre className="flex-1 p-3 text-[11px] font-mono text-purple-200 overflow-auto whitespace-pre leading-relaxed select-text min-w-0">
                       <code>{currentCodeSnippet}</code>
                     </pre>
                   </div>
@@ -576,7 +576,7 @@ export const LovableReplica: React.FC = () => {
 
                 {/* Input Prompt Box at Bottom of Left Panel */}
                 <div className="p-3 bg-[#110e20] border-t border-slate-200 dark:border-slate-800 shrink-0">
-                  <div className="relative bg-[#1a1728] border border-slate-300 dark:border-slate-700 rounded-xl p-2 flex items-center gap-2">
+                  <div className="relative bg-[#1a1728] border border-slate-300 dark:border-slate-700 rounded-xl p-2 flex items-center gap-2 flex-wrap max-w-full">
                     <input
                       type="text"
                       value={inputPrompt}
@@ -585,7 +585,7 @@ export const LovableReplica: React.FC = () => {
                         if (e.key === 'Enter') handleGenerate();
                       }}
                       placeholder="Minta perubahan atau iterasi desain..."
-                      className="flex-1 bg-transparent text-slate-900 dark:text-white text-xs placeholder-slate-500 focus:outline-none"
+                      className="flex-1 bg-transparent text-slate-900 dark:text-white text-xs placeholder-slate-500 focus:outline-none min-w-0"
                     />
                     <button
                       onClick={() => handleGenerate()}
@@ -608,7 +608,7 @@ export const LovableReplica: React.FC = () => {
               >
                 {/* Device Responsiveness Toolbar */}
                 <div className="px-4 py-2 bg-[#120f22] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 shrink-0">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <button
                       onClick={() => setPreviewDevice('desktop')}
                       className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
@@ -644,7 +644,7 @@ export const LovableReplica: React.FC = () => {
                 </div>
 
                 {/* Render Frame Container */}
-                <div className="flex-1 overflow-auto p-4 flex items-center justify-center bg-slate-100 dark:bg-slate-950">
+                <div className="flex-1 overflow-auto p-4 flex items-center justify-center bg-slate-100 dark:bg-slate-950 min-w-0">
                   <div
                     className={`bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 w-full ${
                       previewDevice === 'desktop'
@@ -656,7 +656,7 @@ export const LovableReplica: React.FC = () => {
                   >
                     {/* Simulated Component Render */}
                     <div className="h-full overflow-y-auto p-6 space-y-6 text-slate-900 dark:text-white font-sans bg-slate-100 dark:bg-slate-950">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-900/60 border border-purple-500/30 text-purple-300 text-xs font-semibold">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-900/60 border border-purple-500/30 text-purple-300 text-xs font-semibold flex-wrap max-w-full">
                         <Sparkles className="w-3.5 h-3.5" /> Halaman Dihasilkan oleh Lovable AI
                       </div>
 
@@ -669,7 +669,7 @@ export const LovableReplica: React.FC = () => {
                       </p>
 
                       <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-left">
-                        <div className="flex items-center gap-2 text-xs font-bold text-purple-300">
+                        <div className="flex items-center gap-2 text-xs font-bold text-purple-300 flex-wrap max-w-full">
                           <Check className="w-4 h-4 text-emerald-400" /> Responsif Sempurna
                         </div>
                         <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -677,7 +677,7 @@ export const LovableReplica: React.FC = () => {
                         </p>
                       </div>
 
-                      <div className="pt-4 flex items-center gap-3">
+                      <div className="pt-4 flex items-center gap-3 flex-wrap max-w-full">
                         <button className="px-4 py-2 rounded-xl bg-[#6149f6] text-slate-900 dark:text-white text-xs font-bold shadow-lg">
                           Mulai Uji Coba
                         </button>

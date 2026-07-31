@@ -431,7 +431,7 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <ImageIcon className="w-5 h-5 text-purple-400" />
                     AI Image & Thumbnail Generator
                   </h2>
@@ -499,7 +499,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleGenerateImage}
                   disabled={isGeneratingImage}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50 flex-wrap max-w-full"
                 >
                   {isGeneratingImage ? (
                     <>
@@ -520,7 +520,7 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedImageResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Sparkles className="w-4 h-4 text-purple-400" />
                     Hasil Gambar AI - {imageStyle}
                   </span>
@@ -542,7 +542,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       "{imagePrompt}"
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 pt-2">
+                  <div className="flex items-center gap-2 pt-2 flex-wrap max-w-full">
                     <span className="px-2.5 py-1 rounded-lg bg-black/40 text-[10px] text-slate-600 dark:text-slate-300 font-mono border border-white/10">
                       Resolution: 1920x1080 • Model: Eleven Labs Gen-3
                     </span>
@@ -552,14 +552,14 @@ export const ElevenLabsReplica: React.FC = () => {
                 <div className="flex items-center justify-end gap-2 text-xs">
                   <button
                     onClick={() => showToast('Prompt disalin ke clipboard!')}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#181d2c] hover:bg-[#232a3f] rounded-xl text-slate-600 dark:text-slate-300 border border-[#2b334d]"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#181d2c] hover:bg-[#232a3f] rounded-xl text-slate-600 dark:text-slate-300 border border-[#2b334d] flex-wrap max-w-full"
                   >
                     <Copy className="w-3.5 h-3.5" />
                     <span>Salin Prompt</span>
                   </button>
                   <button
                     onClick={() => showToast('Gambar berhasil diunduh (PNG)!')}
-                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-white shadow-md"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-white shadow-md flex-wrap max-w-full"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Unduh Gambar</span>
@@ -576,7 +576,7 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Video className="w-5 h-5 text-purple-400" />
                     AI Video & Lip-Sync Studio
                   </h2>
@@ -622,7 +622,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleGenerateVideo}
                   disabled={isGeneratingVideo}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50 flex-wrap max-w-full"
                 >
                   {isGeneratingVideo ? (
                     <>
@@ -643,7 +643,7 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedVideoResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Video className="w-4 h-4 text-indigo-400" />
                     Hasil Video AI Studio - {videoResolution}
                   </span>
@@ -676,11 +676,11 @@ export const ElevenLabsReplica: React.FC = () => {
                   </div>
 
                   {/* Player Scrubber Bar Overlay */}
-                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-3 flex items-center gap-3 text-[11px] font-mono text-slate-600 dark:text-slate-300">
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-3 flex items-center gap-3 text-[11px] font-mono text-slate-600 dark:text-slate-300 flex-wrap max-w-full">
                     <button onClick={() => setIsVideoPlaying(!isVideoPlaying)} className="cursor-pointer">
                       {isVideoPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                     </button>
-                    <div className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden min-w-0">
                       <div className={`h-full bg-purple-500 transition-all ${isVideoPlaying ? 'w-3/4 animate-pulse' : 'w-1/3'}`} />
                     </div>
                     <span>0:0{videoDuration} / 0:0{videoDuration}</span>
@@ -690,7 +690,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <div className="flex items-center justify-end gap-2 text-xs">
                   <button
                     onClick={() => showToast('File video MP4 HD berhasil diunduh!')}
-                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-white shadow-md"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-white shadow-md flex-wrap max-w-full"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Unduh Video MP4</span>
@@ -707,7 +707,7 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Sparkles className="w-5 h-5 text-amber-400" />
                     AI Sound Effects Generator (SFX)
                   </h2>
@@ -768,7 +768,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleGenerateSfx}
                   disabled={isGeneratingSfx}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50 flex-wrap max-w-full"
                 >
                   {isGeneratingSfx ? (
                     <>
@@ -789,20 +789,20 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedSfxResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Sparkles className="w-4 h-4 text-amber-400" />
                     Hasil Efek Suara SFX - {sfxDuration} Detik
                   </span>
                   <button
                     onClick={() => showToast('Berkas SFX WAV berhasil diunduh!')}
-                    className="flex items-center gap-1 px-3 py-1 bg-amber-500 hover:bg-amber-600 rounded-lg text-xs font-bold text-slate-950 cursor-pointer"
+                    className="flex items-center gap-1 px-3 py-1 bg-amber-500 hover:bg-amber-600 rounded-lg text-xs font-bold text-slate-950 cursor-pointer flex-wrap max-w-full"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download WAV</span>
                   </button>
                 </div>
 
-                <div className="bg-[#0b0e16] rounded-xl p-3.5 flex items-center gap-4 border border-[#1e2436]">
+                <div className="bg-[#0b0e16] rounded-xl p-3.5 flex items-center gap-4 border border-[#1e2436] flex-wrap max-w-full">
                   <button
                     onClick={() => {
                       setIsSfxPlaying(!isSfxPlaying);
@@ -813,9 +813,9 @@ export const ElevenLabsReplica: React.FC = () => {
                     {isSfxPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
 
-                  <div className="flex-1 space-y-1">
+                  <div className="flex-1 space-y-1 min-w-0">
                     <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
-                      <span className="truncate max-w-[200px]">"{sfxPrompt}"</span>
+                      <span className="break-words whitespace-normal leading-snug max-w-[200px]">"{sfxPrompt}"</span>
                       <span className="text-[10px] text-amber-400 font-mono">24-bit 48kHz WAV</span>
                     </div>
                     <div className="h-2 bg-[#1b2030] rounded-full overflow-hidden">
@@ -834,7 +834,7 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Music className="w-5 h-5 text-indigo-400" />
                     AI Music & Instrumental Studio
                   </h2>
@@ -882,7 +882,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleGenerateMusic}
                   disabled={isGeneratingMusic}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50 flex-wrap max-w-full"
                 >
                   {isGeneratingMusic ? (
                     <>
@@ -903,20 +903,20 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedMusicResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Disc className="w-4 h-4 text-indigo-400 animate-spin" />
                     Hasil Komposisi Musik AI - Maxy Academy Soundtrack
                   </span>
                   <button
                     onClick={() => showToast('Musik MP3 berhasil diunduh!')}
-                    className="flex items-center gap-1 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-xs font-bold text-white cursor-pointer"
+                    className="flex items-center gap-1 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-xs font-bold text-white cursor-pointer flex-wrap max-w-full"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download MP3</span>
                   </button>
                 </div>
 
-                <div className="bg-[#0b0e16] rounded-xl p-3.5 flex items-center gap-4 border border-[#1e2436]">
+                <div className="bg-[#0b0e16] rounded-xl p-3.5 flex items-center gap-4 border border-[#1e2436] flex-wrap max-w-full">
                   <button
                     onClick={() => {
                       setIsMusicPlaying(!isMusicPlaying);
@@ -927,7 +927,7 @@ export const ElevenLabsReplica: React.FC = () => {
                     {isMusicPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
 
-                  <div className="flex-1 space-y-1">
+                  <div className="flex-1 space-y-1 min-w-0">
                     <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                       <span>"{musicPrompt}"</span>
                       <span className="text-[10px] text-indigo-400 font-mono">{musicGenre} • {musicLength}</span>
@@ -948,7 +948,7 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Radio className="w-5 h-5 text-rose-400" />
                     AI Voice Changer (Speech-to-Speech)
                   </h2>
@@ -1006,7 +1006,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleConvertVoice}
                   disabled={isConvertingVoice}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50 flex-wrap max-w-full"
                 >
                   {isConvertingVoice ? (
                     <>
@@ -1027,20 +1027,20 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedVoiceChangerResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Radio className="w-4 h-4 text-rose-400" />
                     Hasil Konversi Voice Changer - Target: {voiceChangerTarget}
                   </span>
                   <button
                     onClick={() => showToast('Audio hasil konversi berhasil diunduh!')}
-                    className="flex items-center gap-1 px-3 py-1 bg-rose-600 hover:bg-rose-700 rounded-lg text-xs font-bold text-white cursor-pointer"
+                    className="flex items-center gap-1 px-3 py-1 bg-rose-600 hover:bg-rose-700 rounded-lg text-xs font-bold text-white cursor-pointer flex-wrap max-w-full"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download Audio</span>
                   </button>
                 </div>
 
-                <div className="bg-[#0b0e16] rounded-xl p-3.5 flex items-center gap-4 border border-[#1e2436]">
+                <div className="bg-[#0b0e16] rounded-xl p-3.5 flex items-center gap-4 border border-[#1e2436] flex-wrap max-w-full">
                   <button
                     onClick={() => {
                       setIsVoiceChangerPlaying(!isVoiceChangerPlaying);
@@ -1051,7 +1051,7 @@ export const ElevenLabsReplica: React.FC = () => {
                     {isVoiceChangerPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
 
-                  <div className="flex-1 space-y-1">
+                  <div className="flex-1 space-y-1 min-w-0">
                     <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                       <span>{voiceChangerFile} ➔ {voiceChangerTarget}</span>
                       <span className="text-[10px] text-rose-400 font-mono">100% Speech-to-Speech</span>
@@ -1072,7 +1072,7 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Wand2 className="w-5 h-5 text-teal-400" />
                     AI Voice Isolator & Noise Remover
                   </h2>
@@ -1115,7 +1115,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleIsolateVoice}
                   disabled={isIsolatingVoice}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50 flex-wrap max-w-full"
                 >
                   {isIsolatingVoice ? (
                     <>
@@ -1136,20 +1136,20 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedIsolatorResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Wand2 className="w-4 h-4 text-teal-400" />
                     Vokal Bersih Terisolasi - Reduced -28dB Noise
                   </span>
                   <button
                     onClick={() => showToast('File audio Vokal Bersih WAV diunduh!')}
-                    className="flex items-center gap-1 px-3 py-1 bg-teal-600 hover:bg-teal-700 rounded-lg text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
+                    className="flex items-center gap-1 px-3 py-1 bg-teal-600 hover:bg-teal-700 rounded-lg text-xs font-bold text-slate-900 dark:text-white cursor-pointer flex-wrap max-w-full"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download Clean WAV</span>
                   </button>
                 </div>
 
-                <div className="bg-[#0b0e16] rounded-xl p-3.5 flex items-center gap-4 border border-[#1e2436]">
+                <div className="bg-[#0b0e16] rounded-xl p-3.5 flex items-center gap-4 border border-[#1e2436] flex-wrap max-w-full">
                   <button
                     onClick={() => {
                       setIsIsolatorPlaying(!isIsolatorPlaying);
@@ -1160,7 +1160,7 @@ export const ElevenLabsReplica: React.FC = () => {
                     {isIsolatorPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
 
-                  <div className="flex-1 space-y-1">
+                  <div className="flex-1 space-y-1 min-w-0">
                     <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                       <span>{isolatorFile} ➔ Clean Vocal</span>
                       <span className="text-[10px] text-teal-400 font-mono">Noise Free</span>
@@ -1181,7 +1181,7 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Zap className="w-5 h-5 text-amber-400" />
                     Audio Upscaler & Studio Quality Enhancer
                   </h2>
@@ -1222,7 +1222,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleUpscaleAudio}
                   disabled={isUpscalingAudio}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-slate-950 font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-slate-950 font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50 flex-wrap max-w-full"
                 >
                   {isUpscalingAudio ? (
                     <>
@@ -1243,20 +1243,20 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedUpscaleResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Zap className="w-4 h-4 text-amber-400" />
                     Hasil Upscale Audio Studio Master - {upscaleQuality}
                   </span>
                   <button
                     onClick={() => showToast('Master Audio 24-bit WAV berhasil diunduh!')}
-                    className="flex items-center gap-1 px-3 py-1 bg-amber-500 hover:bg-amber-600 rounded-lg text-xs font-bold text-slate-950 cursor-pointer"
+                    className="flex items-center gap-1 px-3 py-1 bg-amber-500 hover:bg-amber-600 rounded-lg text-xs font-bold text-slate-950 cursor-pointer flex-wrap max-w-full"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download Master WAV</span>
                   </button>
                 </div>
 
-                <div className="bg-[#0b0e16] rounded-xl p-3.5 flex items-center gap-4 border border-[#1e2436]">
+                <div className="bg-[#0b0e16] rounded-xl p-3.5 flex items-center gap-4 border border-[#1e2436] flex-wrap max-w-full">
                   <button
                     onClick={() => {
                       setIsUpscalePlaying(!isUpscalePlaying);
@@ -1267,7 +1267,7 @@ export const ElevenLabsReplica: React.FC = () => {
                     {isUpscalePlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
 
-                  <div className="flex-1 space-y-1">
+                  <div className="flex-1 space-y-1 min-w-0">
                     <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                       <span>128 kbps MP3 ➔ 2304 kbps Studio WAV</span>
                       <span className="text-[10px] text-amber-400 font-mono">High-Res Restoration</span>
@@ -1291,7 +1291,7 @@ export const ElevenLabsReplica: React.FC = () => {
               {/* Header Title & Quick Prompt Pills */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <Volume2 className="w-5 h-5 text-purple-400" />
                     Text to Speech AI Studio
                   </h2>
@@ -1359,7 +1359,7 @@ export const ElevenLabsReplica: React.FC = () => {
               {/* Error Alert Box */}
               {errorMessage && (
                 <div className="bg-red-500/10 border border-red-500/40 rounded-2xl p-3 flex items-center justify-between gap-3 text-xs text-red-300 animate-in fade-in">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <X className="w-4 h-4 text-red-400 shrink-0" />
                     <span>{errorMessage}</span>
                   </div>
@@ -1441,7 +1441,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleGenerateSpeech}
                   disabled={isGenerating}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg shadow-purple-600/30 transition-all active:scale-95 disabled:opacity-50 text-xs cursor-pointer"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg shadow-purple-600/30 transition-all active:scale-95 disabled:opacity-50 text-xs cursor-pointer flex-wrap max-w-full"
                 >
                   {isGenerating ? (
                     <>
@@ -1461,7 +1461,7 @@ export const ElevenLabsReplica: React.FC = () => {
               {showVoiceSettings && (
                 <div className="bg-[#0b0e16] border border-purple-500/40 rounded-2xl p-4 text-xs space-y-4 animate-in fade-in duration-150">
                   <div className="flex items-center justify-between border-b border-[#1b2133] pb-2">
-                    <span className="font-bold text-purple-300 flex items-center gap-1.5">
+                    <span className="font-bold text-purple-300 flex items-center gap-1.5 flex-wrap max-w-full">
                       <Sliders className="w-3.5 h-3.5" />
                       Voice Settings Fine-Tuning
                     </span>
@@ -1544,7 +1544,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl hover:border-purple-500/40 transition-colors"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <div className="w-8 h-8 rounded-full bg-purple-600/30 flex items-center justify-center text-purple-300 border border-purple-500/40">
                       <Volume2 className="w-4 h-4" />
                     </div>
@@ -1558,10 +1558,10 @@ export const ElevenLabsReplica: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <button
                       onClick={handleShareLink}
-                      className="flex items-center gap-1 px-2.5 py-1 bg-[#181d2c] hover:bg-[#232a3f] rounded-lg text-xs text-slate-600 dark:text-slate-300 border border-[#2b334d] cursor-pointer"
+                      className="flex items-center gap-1 px-2.5 py-1 bg-[#181d2c] hover:bg-[#232a3f] rounded-lg text-xs text-slate-600 dark:text-slate-300 border border-[#2b334d] cursor-pointer flex-wrap max-w-full"
                     >
                       <Share2 className="w-3 h-3" />
                       <span>Share</span>
@@ -1569,7 +1569,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                     <button
                       onClick={handleDownloadAudio}
-                      className="flex items-center gap-1 px-2.5 py-1 bg-purple-600 hover:bg-purple-700 rounded-lg text-xs font-bold text-white shadow-md cursor-pointer"
+                      className="flex items-center gap-1 px-2.5 py-1 bg-purple-600 hover:bg-purple-700 rounded-lg text-xs font-bold text-white shadow-md cursor-pointer flex-wrap max-w-full"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>Download</span>
@@ -1578,8 +1578,8 @@ export const ElevenLabsReplica: React.FC = () => {
                 </div>
 
                 {/* Audio Controls & Interactive Waveform */}
-                <div className="bg-[#0b0e16] rounded-xl p-3 flex items-center gap-4 border border-[#1a1f2e]">
-                  <div className="flex items-center gap-2">
+                <div className="bg-[#0b0e16] rounded-xl p-3 flex items-center gap-4 border border-[#1a1f2e] flex-wrap max-w-full">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <button
                       onClick={handleRewind}
                       title="Rewind 10s"
@@ -1610,7 +1610,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                   {/* Interactive Waveform Bar Scrubber */}
                   <div
-                    className="flex-1 flex items-center gap-1 h-8 px-2 cursor-pointer group"
+                    className="flex-1 flex items-center gap-1 h-8 px-2 cursor-pointer group flex-wrap max-w-full min-w-0"
                     onClick={(e) => {
                       const rect = e.currentTarget.getBoundingClientRect();
                       const clickX = e.clientX - rect.left;
@@ -2071,13 +2071,13 @@ export const ElevenLabsReplica: React.FC = () => {
     <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#0a0c10] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl font-sans">
       {/* Top Device & Simulator Header */}
       <div className="bg-[#12151e] border-b border-[#212638] px-4 py-2.5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-3 flex-wrap max-w-full">
+          <div className="flex items-center gap-1.5 flex-wrap max-w-full">
             <div className="w-3 h-3 rounded-full bg-rose-500/80" />
             <div className="w-3 h-3 rounded-full bg-amber-500/80" />
             <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
           </div>
-          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 ml-2">
+          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 ml-2 flex-wrap max-w-full">
             <Volume2 className="w-3.5 h-3.5 text-purple-400" />
             ElevenLabs Dashboard Simulator - Maxy Academy
           </span>
@@ -2115,7 +2115,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
       {/* Floating Toast Notification */}
       {toastMessage && (
-        <div className="absolute top-14 right-6 z-50 bg-[#1e1b2e] text-purple-200 text-xs font-bold px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 border border-purple-500/50 animate-in fade-in slide-in-from-top-2">
+        <div className="absolute top-14 right-6 z-50 bg-[#1e1b2e] text-purple-200 text-xs font-bold px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 border border-purple-500/50 animate-in fade-in slide-in-from-top-2 flex-wrap max-w-full">
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
           <span>{toastMessage}</span>
         </div>
@@ -2133,12 +2133,12 @@ export const ElevenLabsReplica: React.FC = () => {
                 onClick={() => openModal('workspace-switcher')}
                 className="flex items-center justify-between p-2 rounded-xl bg-[#161a26] border border-[#262c3f] hover:border-purple-500/50 cursor-pointer transition-all group"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs shadow-md">
                     MA
                   </div>
                   <div className="space-y-0.5 text-left">
-                    <span className="font-bold text-slate-900 dark:text-white text-xs block truncate max-w-[120px]">
+                    <span className="font-bold text-slate-900 dark:text-white text-xs block break-words whitespace-normal leading-snug max-w-[120px]">
                       Maxy Academy
                     </span>
                     <span className="text-[10px] text-purple-400 font-mono block">Pro Workspace</span>
@@ -2151,7 +2151,7 @@ export const ElevenLabsReplica: React.FC = () => {
               <div className="space-y-1">
                 <button
                   onClick={() => openModal('menu-home')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#1a1f2e] text-slate-900 dark:text-white font-semibold border border-purple-500/30 shadow-sm"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#1a1f2e] text-slate-900 dark:text-white font-semibold border border-purple-500/30 shadow-sm flex-wrap max-w-full"
                 >
                   <Home className="w-3.5 h-3.5 text-purple-400" />
                   <span>Home</span>
@@ -2159,7 +2159,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('menu-voices')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Mic className="w-3.5 h-3.5 text-indigo-400" />
                   <span>Voices</span>
@@ -2167,7 +2167,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('menu-studio')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <FileText className="w-3.5 h-3.5 text-blue-400" />
                   <span>Studio</span>
@@ -2175,7 +2175,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('menu-flows')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Layers className="w-3.5 h-3.5 text-cyan-400" />
                   <span>Flows</span>
@@ -2183,7 +2183,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('menu-templates')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Layout className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Templates</span>
@@ -2191,7 +2191,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('menu-assets')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Folder className="w-3.5 h-3.5 text-amber-400" />
                   <span>Assets</span>
@@ -2206,7 +2206,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-tts')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Volume2 className="w-3.5 h-3.5 text-purple-400" />
                   <span>Text to Speech</span>
@@ -2214,7 +2214,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-sfx')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>Sound Effects</span>
@@ -2222,7 +2222,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-isolator')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Wand2 className="w-3.5 h-3.5 text-teal-400" />
                   <span>Voice Isolator</span>
@@ -2230,7 +2230,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-changer')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Radio className="w-3.5 h-3.5 text-rose-400" />
                   <span>Voice Changer</span>
@@ -2238,7 +2238,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-music')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Music className="w-3.5 h-3.5 text-indigo-400" />
                   <span>Music</span>
@@ -2246,7 +2246,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-stt')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <MessageSquare className="w-3.5 h-3.5 text-sky-400" />
                   <span>Speech to Text</span>
@@ -2254,7 +2254,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-dubbing')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Globe className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Dubbing</span>
@@ -2262,7 +2262,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-audiobooks')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                 >
                   <Disc className="w-3.5 h-3.5 text-amber-400" />
                   <span>Audiobooks</span>
@@ -2311,7 +2311,7 @@ export const ElevenLabsReplica: React.FC = () => {
               </div>
 
               {/* Action Buttons & Profile */}
-              <div className="flex items-center gap-3 text-xs text-slate-600 dark:text-slate-300 font-medium">
+              <div className="flex items-center gap-3 text-xs text-slate-600 dark:text-slate-300 font-medium flex-wrap max-w-full">
                 <button
                   onClick={() => openModal('topbar-feedback')}
                   className="px-2.5 py-1 bg-[#161a26] hover:bg-[#202638] rounded-lg border border-[#242b3f] transition-colors"
@@ -2328,7 +2328,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('topbar-ask')}
-                  className="flex items-center gap-1 px-2.5 py-1 bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 rounded-lg border border-purple-500/40 transition-colors"
+                  className="flex items-center gap-1 px-2.5 py-1 bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 rounded-lg border border-purple-500/40 transition-colors flex-wrap max-w-full"
                 >
                   <Sparkles className="w-3 h-3 text-purple-400" />
                   <span>Ask</span>
@@ -2344,7 +2344,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 {/* Profile */}
                 <div
                   onClick={() => openModal('topbar-profile')}
-                  className="flex items-center gap-2 pl-2 border-l border-[#21273b] cursor-pointer group"
+                  className="flex items-center gap-2 pl-2 border-l border-[#21273b] cursor-pointer group flex-wrap max-w-full"
                 >
                   <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs shadow-md">
                     M
@@ -2360,9 +2360,9 @@ export const ElevenLabsReplica: React.FC = () => {
             </header>
 
             {/* Dashboard Main Workspace Area */}
-            <div className="p-6 space-y-6 flex-1">
+            <div className="p-6 space-y-6 flex-1 min-w-0">
               {/* Tool Navigation Tabs Bar */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-[#1b2030] text-xs font-semibold">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-[#1b2030] text-xs font-semibold flex-wrap max-w-full">
                 {[
                   { id: 'speech', label: 'Speech', icon: Volume2 },
                   { id: 'image', label: 'Image', icon: ImageIcon },
@@ -2412,7 +2412,7 @@ export const ElevenLabsReplica: React.FC = () => {
           <div className="flex items-center justify-between pb-3 border-b border-[#1c2030]">
             <div
               onClick={() => openModal('workspace-switcher')}
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer flex-wrap max-w-full"
             >
               <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs">
                 MA
@@ -2422,7 +2422,7 @@ export const ElevenLabsReplica: React.FC = () => {
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
               <button
                 onClick={() => openModal('topbar-notifications')}
                 className="p-1.5 bg-[#161a26] border border-[#242b3f] rounded-xl text-slate-600 dark:text-slate-300"
@@ -2442,7 +2442,7 @@ export const ElevenLabsReplica: React.FC = () => {
           </div>
 
           {/* Tool Navigation Tabs Bar Mobile */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-[#1b2030] text-[11px] font-semibold">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-[#1b2030] text-[11px] font-semibold flex-wrap max-w-full">
             {[
               { id: 'speech', label: 'Speech', icon: Volume2 },
               { id: 'image', label: 'Image', icon: ImageIcon },
@@ -2555,7 +2555,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400">
                   {infoDictionary[activeModalKey].category}
                 </span>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                   {infoDictionary[activeModalKey].title}
                 </h3>
               </div>

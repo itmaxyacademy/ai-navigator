@@ -380,9 +380,9 @@ export const CopilotReplica: React.FC = () => {
     <div className="relative rounded-2xl border border-[#1e2638] bg-[#0b0f19] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl font-sans">
       {/* Top Header Bar for Simulator Controls & Device Switcher */}
       <div className="bg-[#0e1320] border-b border-[#1d2538] px-4 py-2.5 flex items-center justify-between text-xs">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap max-w-full">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-bold text-slate-900 dark:text-white tracking-wide flex items-center gap-1.5">
+          <span className="font-bold text-slate-900 dark:text-white tracking-wide flex items-center gap-1.5 flex-wrap max-w-full">
             <Bot className="w-4 h-4 text-cyan-400" />
             Microsoft Copilot Replica
           </span>
@@ -392,7 +392,7 @@ export const CopilotReplica: React.FC = () => {
         </div>
 
         {/* View Mode Toggle (Desktop vs Mobile Simulator Mode) */}
-        <div className="flex items-center gap-1 bg-[#080b12] p-1 rounded-xl border border-[#1e283d]">
+        <div className="flex items-center gap-1 bg-[#080b12] p-1 rounded-xl border border-[#1e283d] flex-wrap max-w-full">
           <button
             onClick={() => {
               setViewMode('desktop');
@@ -435,7 +435,7 @@ export const CopilotReplica: React.FC = () => {
             <div className="space-y-4">
               {/* Header Title with Sidebar Toggle */}
               <div className="flex items-center justify-between px-2 pt-1">
-                <span className="font-bold text-lg text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+                <span className="font-bold text-lg text-slate-900 dark:text-white tracking-tight flex items-center gap-2 flex-wrap max-w-full">
                   Copilot
                 </span>
                 <button
@@ -454,7 +454,7 @@ export const CopilotReplica: React.FC = () => {
                     handleNewChat();
                     handleOpenModal('new-chat');
                   }}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#131a2b] transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#131a2b] transition-colors text-left flex-wrap max-w-full"
                 >
                   <Plus className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                   <span>New chat</span>
@@ -462,7 +462,7 @@ export const CopilotReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('library')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                 >
                   <Bookmark className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Library</span>
@@ -472,7 +472,7 @@ export const CopilotReplica: React.FC = () => {
                   onClick={() => handleOpenModal('tasks-preview')}
                   className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap max-w-full">
                     <CheckSquare className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Tasks</span>
                   </div>
@@ -485,7 +485,7 @@ export const CopilotReplica: React.FC = () => {
                   onClick={() => handleOpenModal('projects')}
                   className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap max-w-full">
                     <Folder className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Projects</span>
                   </div>
@@ -499,7 +499,7 @@ export const CopilotReplica: React.FC = () => {
               <div className="space-y-1 text-xs font-medium">
                 <button
                   onClick={() => handleOpenModal('discover')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                 >
                   <Compass className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Discover</span>
@@ -507,7 +507,7 @@ export const CopilotReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('imagine')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                 >
                   <ImageIcon className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Imagine</span>
@@ -515,7 +515,7 @@ export const CopilotReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('experiments')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left flex-wrap max-w-full"
                 >
                   <LayoutGrid className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Experiments</span>
@@ -527,7 +527,7 @@ export const CopilotReplica: React.FC = () => {
               {/* Fictional Recents Item (Matching Screenshot 1) */}
               <div className="space-y-1 text-xs">
                 <div className="px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] flex items-center justify-between group cursor-pointer transition-colors">
-                  <span className="truncate text-slate-600 dark:text-slate-300 text-[11px] font-normal">
+                  <span className="break-words whitespace-normal leading-snug text-slate-600 dark:text-slate-300 text-[11px] font-normal">
                     Negative Keywords Report for Pro...
                   </span>
                   <MoreVertical className="w-3.5 h-3.5 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
@@ -540,14 +540,14 @@ export const CopilotReplica: React.FC = () => {
               <div className="flex items-center justify-between gap-2 p-2 rounded-xl hover:bg-[#131a2b] transition-colors">
                 <button
                   onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
-                  className="flex items-center gap-2.5 min-w-0 text-left"
+                  className="flex items-center gap-2.5 min-w-0 text-left flex-wrap max-w-full"
                 >
                   <div className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white font-bold text-xs shrink-0">
                     A
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">{userProfile.name}</p>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{userProfile.plan}</p>
+                    <p className="text-xs font-semibold text-slate-900 dark:text-white break-words whitespace-normal leading-snug">{userProfile.name}</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 break-words whitespace-normal leading-snug">{userProfile.plan}</p>
                   </div>
                 </button>
 
@@ -564,7 +564,7 @@ export const CopilotReplica: React.FC = () => {
                 <div className="absolute bottom-14 left-0 w-64 bg-[#0f1422] border border-[#232d45] rounded-2xl p-3 shadow-2xl z-50 text-xs space-y-2 animate-in fade-in slide-in-from-bottom-2 duration-150">
                   <div className="space-y-0.5 px-1 py-1">
                     <p className="font-semibold text-slate-900 dark:text-white text-xs">{userProfile.name}</p>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{userProfile.email}</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 break-words whitespace-normal leading-snug">{userProfile.email}</p>
                   </div>
 
                   <div className="border-b border-[#1a2336]" />
@@ -674,7 +674,7 @@ export const CopilotReplica: React.FC = () => {
           
           {/* Top Bar Right: Temporary Chat Button & Mobile Menu Trigger */}
           <div className="flex items-center justify-between w-full pb-2">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
               {/* Mobile Drawer Trigger (Only in Mobile Mode or small screen) */}
               {(viewMode === 'mobile' || viewMode === 'desktop') && (
                 <button
@@ -743,7 +743,7 @@ export const CopilotReplica: React.FC = () => {
 
                   {/* Bottom Controls Row inside Input Box */}
                   <div className="flex items-center justify-between pt-1">
-                    <div className="flex items-center gap-2 relative">
+                    <div className="flex items-center gap-2 relative flex-wrap max-w-full">
                       {/* Plus Button (+) */}
                       <button
                         onClick={() => setIsPlusMenuOpen(!isPlusMenuOpen)}
@@ -756,7 +756,7 @@ export const CopilotReplica: React.FC = () => {
                       {/* Model Selector Dropdown Button */}
                       <button
                         onClick={() => setIsModelMenuOpen(!isModelMenuOpen)}
-                        className="flex items-center gap-1.5 px-3 py-1 bg-[#192238] hover:bg-[#212e4c] rounded-xl text-slate-700 dark:text-slate-200 text-xs font-medium border border-[#273659] transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1 bg-[#192238] hover:bg-[#212e4c] rounded-xl text-slate-700 dark:text-slate-200 text-xs font-medium border border-[#273659] transition-colors flex-wrap max-w-full"
                       >
                         <span>{selectedModel.name}</span>
                         <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
@@ -780,7 +780,7 @@ export const CopilotReplica: React.FC = () => {
                               setIsPlusMenuOpen(false);
                               handleOpenModal('plus-add-files');
                             }}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left flex-wrap max-w-full"
                           >
                             <Paperclip className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                             <span>Add images or files</span>
@@ -791,7 +791,7 @@ export const CopilotReplica: React.FC = () => {
                               setIsPlusMenuOpen(false);
                               handleOpenModal('imagine');
                             }}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left flex-wrap max-w-full"
                           >
                             <ImageIcon className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                             <span>Generate image</span>
@@ -804,7 +804,7 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full flex items-center justify-between px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
                           >
-                            <div className="flex items-center gap-2.5">
+                            <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                               <Globe className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                               <span>Start deep research</span>
                             </div>
@@ -820,7 +820,7 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full flex items-center justify-between px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
                           >
-                            <div className="flex items-center gap-2.5">
+                            <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                               <Headphones className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                               <span>Create a podcast</span>
                             </div>
@@ -834,7 +834,7 @@ export const CopilotReplica: React.FC = () => {
                               setIsPlusMenuOpen(false);
                               handleOpenModal('plus-take-quiz');
                             }}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left flex-wrap max-w-full"
                           >
                             <BookOpen className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                             <span>Take a quiz</span>
@@ -849,7 +849,7 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full flex items-center justify-between px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
                           >
-                            <div className="flex items-center gap-2.5">
+                            <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                               <Sliders className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                               <span>Use connectors</span>
                             </div>
@@ -874,7 +874,7 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full text-left p-2.5 hover:bg-[#1a2338] rounded-xl transition-colors space-y-0.5"
                           >
-                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white flex-wrap max-w-full">
                               <Sparkles className="w-4 h-4 text-cyan-400" />
                               <span>Smart</span>
                             </div>
@@ -896,7 +896,7 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full text-left p-2.5 hover:bg-[#1a2338] rounded-xl transition-colors space-y-0.5"
                           >
-                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white flex-wrap max-w-full">
                               <Brain className="w-4 h-4 text-purple-400" />
                               <span>Think deeper</span>
                             </div>
@@ -918,7 +918,7 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full text-left p-2.5 hover:bg-[#1a2338] rounded-xl transition-colors space-y-0.5"
                           >
-                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white flex-wrap max-w-full">
                               <BookOpen className="w-4 h-4 text-emerald-400" />
                               <span>Study and learn</span>
                             </div>
@@ -940,7 +940,7 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full text-left p-2.5 hover:bg-[#1a2338] rounded-xl transition-colors space-y-0.5"
                           >
-                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white flex-wrap max-w-full">
                               <Search className="w-4 h-4 text-amber-400" />
                               <span>Search</span>
                             </div>
@@ -995,7 +995,7 @@ export const CopilotReplica: React.FC = () => {
                       msg.sender === 'user' ? 'items-end' : 'items-start'
                     } space-y-1 animate-in fade-in duration-200`}
                   >
-                    <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 px-1">
+                    <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 px-1 flex-wrap max-w-full">
                       <span>{msg.sender === 'user' ? userProfile.name : 'Microsoft Copilot'}</span>
                       {msg.modelUsed && <span className="text-cyan-400">({msg.modelUsed})</span>}
                       <span>• {msg.timestamp}</span>
@@ -1012,7 +1012,7 @@ export const CopilotReplica: React.FC = () => {
 
                       {/* Bot Response Interactive Actions */}
                       {msg.sender === 'copilot' && (
-                        <div className="flex items-center gap-2 pt-2 border-t border-[#1b253b] text-slate-500 dark:text-slate-400">
+                        <div className="flex items-center gap-2 pt-2 border-t border-[#1b253b] text-slate-500 dark:text-slate-400 flex-wrap max-w-full">
                           <button
                             onClick={() => handleCopyMessage(idx, msg.text)}
                             className="p-1 hover:text-slate-900 dark:text-white rounded transition-colors"
@@ -1044,7 +1044,7 @@ export const CopilotReplica: React.FC = () => {
                 ))}
 
                 {isTyping && (
-                  <div className="flex items-center gap-2 p-3 bg-[#121826] border border-[#212c45] rounded-2xl w-fit text-xs text-slate-500 dark:text-slate-400 animate-pulse">
+                  <div className="flex items-center gap-2 p-3 bg-[#121826] border border-[#212c45] rounded-2xl w-fit text-xs text-slate-500 dark:text-slate-400 animate-pulse flex-wrap max-w-full">
                     <Bot className="w-4 h-4 text-cyan-400 animate-spin" />
                     <span>Copilot sedang berpikir...</span>
                   </div>
@@ -1096,7 +1096,7 @@ export const CopilotReplica: React.FC = () => {
                       handleNewChat();
                       handleOpenModal('new-chat');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#131a2b]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#131a2b] flex-wrap max-w-full"
                   >
                     <Plus className="w-4 h-4" />
                     <span>New chat</span>
@@ -1106,7 +1106,7 @@ export const CopilotReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('library');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] flex-wrap max-w-full"
                   >
                     <Bookmark className="w-4 h-4" />
                     <span>Library</span>
@@ -1118,7 +1118,7 @@ export const CopilotReplica: React.FC = () => {
                     }}
                     className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b]"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap max-w-full">
                       <CheckSquare className="w-4 h-4" />
                       <span>Tasks</span>
                     </div>
@@ -1136,7 +1136,7 @@ export const CopilotReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('discover');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] flex-wrap max-w-full"
                   >
                     <Compass className="w-4 h-4" />
                     <span>Discover</span>
@@ -1146,7 +1146,7 @@ export const CopilotReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('imagine');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] flex-wrap max-w-full"
                   >
                     <ImageIcon className="w-4 h-4" />
                     <span>Imagine</span>
@@ -1156,7 +1156,7 @@ export const CopilotReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('experiments');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] flex-wrap max-w-full"
                   >
                     <LayoutGrid className="w-4 h-4" />
                     <span>Experiments</span>
@@ -1172,7 +1172,7 @@ export const CopilotReplica: React.FC = () => {
                   }}
                   className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#131a2b]"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <div className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-xs text-slate-900 dark:text-white">
                       A
                     </div>

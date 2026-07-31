@@ -336,7 +336,7 @@ export const MistralVibeReplica: React.FC = () => {
                         className="flex items-center space-x-3 p-2.5 rounded-xl hover:bg-slate-100 cursor-pointer transition-colors"
                       >
                         {item.icon}
-                        <span className="truncate">{item.text}</span>
+                        <span className="break-words whitespace-normal leading-snug">{item.text}</span>
                       </div>
                     ))}
                   </div>
@@ -357,7 +357,7 @@ export const MistralVibeReplica: React.FC = () => {
 
       {/* STAGE 2: ONBOARDING MODAL "MEET VIBE" OVERLAY */}
       {activeStage === 'onboarding' && (
-        <div className="flex-1 bg-[#090a0c] relative flex items-center justify-center p-4">
+        <div className="flex-1 bg-[#090a0c] relative flex items-center justify-center p-4 min-w-0">
           {/* Blurred background preview of workspace */}
           <div className="absolute inset-0 opacity-20 pointer-events-none filter blur-sm bg-gradient-to-br from-slate-900 via-black to-slate-950 p-8 space-y-6">
             <div className="h-10 bg-slate-100 dark:bg-slate-800 rounded-xl w-full"></div>
@@ -583,7 +583,7 @@ export const MistralVibeReplica: React.FC = () => {
                           >
                             <div className="flex items-center space-x-2 truncate">
                               <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isSelected ? 'bg-orange-400' : 'bg-slate-500'}`}></span>
-                              <span className="truncate">{p}</span>
+                              <span className="break-words whitespace-normal leading-snug">{p}</span>
                             </div>
                             {isSelected && <Check className="w-3.5 h-3.5 text-orange-400 shrink-0 ml-1" />}
                           </div>
@@ -815,7 +815,7 @@ export const MistralVibeReplica: React.FC = () => {
                       className="bg-orange-950/30 border border-orange-500/40 hover:border-orange-500 p-3 rounded-xl flex items-center space-x-3 cursor-pointer transition-all hover:-translate-y-0.5 shadow-sm text-orange-200"
                     >
                       <Sparkles className="w-4 h-4 text-orange-400 shrink-0" />
-                      <span className="truncate font-semibold">{sugText}</span>
+                      <span className="break-words whitespace-normal leading-snug font-semibold">{sugText}</span>
                       <span className="ml-auto text-[9px] bg-orange-900/60 px-1.5 py-0.5 rounded text-orange-300">Baru</span>
                     </div>
                   ))}
@@ -841,7 +841,7 @@ export const MistralVibeReplica: React.FC = () => {
                       className="bg-[#141620] border border-slate-200 dark:border-slate-800/80 hover:border-orange-500/60 p-3 rounded-xl flex items-center space-x-3 cursor-pointer transition-all hover:-translate-y-0.5 shadow-sm text-slate-700 dark:text-slate-200"
                     >
                       {sug.icon}
-                      <span className="truncate font-medium">{sug.text}</span>
+                      <span className="break-words whitespace-normal leading-snug font-medium">{sug.text}</span>
                     </div>
                   ))}
                 </div>

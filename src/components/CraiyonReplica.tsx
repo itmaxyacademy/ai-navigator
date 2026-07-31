@@ -494,7 +494,7 @@ export const CraiyonReplica: React.FC = () => {
     <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#0d0f17] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl font-sans">
       {/* Toast Notice Bar */}
       {toastNotice && (
-        <div className="absolute top-14 left-1/2 -translate-x-1/2 z-40 bg-gradient-to-r from-orange-500 to-amber-600 text-slate-900 dark:text-white text-xs font-bold px-4 py-2 rounded-full shadow-2xl border border-white/20 flex items-center gap-2 animate-bounce">
+        <div className="absolute top-14 left-1/2 -translate-x-1/2 z-40 bg-gradient-to-r from-orange-500 to-amber-600 text-slate-900 dark:text-white text-xs font-bold px-4 py-2 rounded-full shadow-2xl border border-white/20 flex items-center gap-2 animate-bounce flex-wrap max-w-full">
           <Sparkles className="w-4 h-4 text-amber-200" />
           <span>{toastNotice}</span>
           <button onClick={() => setToastNotice(null)} className="ml-2 hover:opacity-80">
@@ -505,13 +505,13 @@ export const CraiyonReplica: React.FC = () => {
 
       {/* Top Device & Control Bar */}
       <div className="bg-[#131622] border-b border-[#212536] px-4 py-2.5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-3 flex-wrap max-w-full">
+          <div className="flex items-center gap-1.5 flex-wrap max-w-full">
             <div className="w-3 h-3 rounded-full bg-rose-500/80" />
             <div className="w-3 h-3 rounded-full bg-amber-500/80" />
             <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
           </div>
-          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 ml-2">
+          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 ml-2 flex-wrap max-w-full">
             <Pencil className="w-3.5 h-3.5 text-orange-400" />
             Craiyon Simulator - Maxy Academy
           </span>
@@ -558,7 +558,7 @@ export const CraiyonReplica: React.FC = () => {
               <div className="flex items-center justify-between pb-3 border-b border-[#1f2333]">
                 <div
                   onClick={() => openModal('image-suite-image')}
-                  className="flex items-center gap-2 cursor-pointer group"
+                  className="flex items-center gap-2 cursor-pointer group flex-wrap max-w-full"
                 >
                   <div className="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center text-slate-900 dark:text-white shadow-md shadow-orange-500/30 group-hover:scale-105 transition-transform">
                     <Pencil className="w-4 h-4 fill-white" />
@@ -567,7 +567,7 @@ export const CraiyonReplica: React.FC = () => {
                     Craiyon
                   </span>
                 </div>
-                <div className="flex items-center gap-1 px-2 py-1 bg-[#1a1d2e] rounded-md border border-[#2a2f47] text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+                <div className="flex items-center gap-1 px-2 py-1 bg-[#1a1d2e] rounded-md border border-[#2a2f47] text-[11px] font-semibold text-slate-600 dark:text-slate-300 flex-wrap max-w-full">
                   <span>🇺🇸</span>
                   <span>EN</span>
                 </div>
@@ -576,7 +576,7 @@ export const CraiyonReplica: React.FC = () => {
               {/* Image Suite Accordion Section */}
               <div className="space-y-1">
                 <div className="flex items-center justify-between py-1 px-2 text-slate-500 dark:text-slate-400 font-medium">
-                  <span className="flex items-center gap-2">
+                  <span className="flex items-center gap-2 flex-wrap max-w-full">
                     <ImageIcon className="w-3.5 h-3.5" />
                     Image suite
                   </span>
@@ -604,7 +604,7 @@ export const CraiyonReplica: React.FC = () => {
                       setSelectedSuite('logo');
                       openModal('image-suite-logo');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                   >
                     <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                     <span>Logo</span>
@@ -615,7 +615,7 @@ export const CraiyonReplica: React.FC = () => {
                       setSelectedSuite('anime');
                       openModal('image-suite-anime');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                   >
                     <Pencil className="w-3.5 h-3.5 text-rose-400" />
                     <span>Anime</span>
@@ -626,7 +626,7 @@ export const CraiyonReplica: React.FC = () => {
                       setSelectedSuite('tattoo');
                       openModal('image-suite-tattoo');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                   >
                     <Palette className="w-3.5 h-3.5 text-cyan-400" />
                     <span>Tattoo</span>
@@ -637,7 +637,7 @@ export const CraiyonReplica: React.FC = () => {
                       setSelectedSuite('homedesign');
                       openModal('image-suite-homedesign');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                   >
                     <Home className="w-3.5 h-3.5 text-emerald-400" />
                     <span>Home design</span>
@@ -648,7 +648,7 @@ export const CraiyonReplica: React.FC = () => {
                       setSelectedSuite('poster');
                       openModal('image-suite-poster');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                   >
                     <Frame className="w-3.5 h-3.5 text-purple-400" />
                     <span>Poster</span>
@@ -659,7 +659,7 @@ export const CraiyonReplica: React.FC = () => {
                       setSelectedSuite('bgremover');
                       openModal('image-suite-bgremover');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
                   >
                     <Scissors className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Background remover</span>
@@ -672,7 +672,7 @@ export const CraiyonReplica: React.FC = () => {
                 onClick={() => openModal('menu-studio')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-600 dark:text-slate-300 transition-all"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <LayoutGrid className="w-3.5 h-3.5 text-orange-400" />
                   <span className="font-medium">Studio</span>
                 </div>
@@ -686,7 +686,7 @@ export const CraiyonReplica: React.FC = () => {
                 onClick={() => openModal('menu-imagesearch')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <Search className="w-3.5 h-3.5" />
                   <span>Image search</span>
                 </div>
@@ -699,7 +699,7 @@ export const CraiyonReplica: React.FC = () => {
                   onClick={() => openModal('menu-myimages')}
                   className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
                 >
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                     <User className="w-3.5 h-3.5" />
                     <span>My account</span>
                   </div>
@@ -709,7 +709,7 @@ export const CraiyonReplica: React.FC = () => {
                 <div className="pl-6 space-y-1 text-slate-500 dark:text-slate-400">
                   <button
                     onClick={() => openModal('menu-myimages')}
-                    className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg hover:text-slate-900 dark:text-white hover:bg-[#181b2a]"
+                    className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg hover:text-slate-900 dark:text-white hover:bg-[#181b2a] flex-wrap max-w-full"
                   >
                     <Folder className="w-3 h-3" />
                     <span>My images</span>
@@ -719,14 +719,14 @@ export const CraiyonReplica: React.FC = () => {
                       setActiveTab('recents');
                       openModal('menu-history');
                     }}
-                    className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg hover:text-slate-900 dark:text-white hover:bg-[#181b2a]"
+                    className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg hover:text-slate-900 dark:text-white hover:bg-[#181b2a] flex-wrap max-w-full"
                   >
                     <Clock className="w-3 h-3" />
                     <span>History ({recents.length})</span>
                   </button>
                   <button
                     onClick={() => openModal('menu-settings')}
-                    className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg hover:text-slate-900 dark:text-white hover:bg-[#181b2a]"
+                    className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg hover:text-slate-900 dark:text-white hover:bg-[#181b2a] flex-wrap max-w-full"
                   >
                     <Settings className="w-3 h-3" />
                     <span>Settings</span>
@@ -737,7 +737,7 @@ export const CraiyonReplica: React.FC = () => {
               {/* Help */}
               <button
                 onClick={() => openModal('menu-help')}
-                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#181b2a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all flex-wrap max-w-full"
               >
                 <HelpCircle className="w-3.5 h-3.5" />
                 <span>Help</span>
@@ -763,7 +763,7 @@ export const CraiyonReplica: React.FC = () => {
           </aside>
 
           {/* Right Main Content Area */}
-          <main className="flex-1 p-6 md:p-8 space-y-6 overflow-y-auto">
+          <main className="flex-1 p-6 md:p-8 space-y-6 overflow-y-auto min-w-0">
             {/* Hero Title */}
             <div className="text-center space-y-2 max-w-2xl mx-auto">
               <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
@@ -818,7 +818,7 @@ export const CraiyonReplica: React.FC = () => {
                   {/* Reference */}
                   <button
                     onClick={() => openModal('control-uploadref')}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1e30] hover:bg-[#242a42] rounded-xl border border-[#2a304a] transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1e30] hover:bg-[#242a42] rounded-xl border border-[#2a304a] transition-colors flex-wrap max-w-full"
                   >
                     <ImageIcon className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                     <span>Reference</span>
@@ -830,7 +830,7 @@ export const CraiyonReplica: React.FC = () => {
                       setIsPublic(!isPublic);
                       openModal('control-public');
                     }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1e30] hover:bg-[#242a42] rounded-xl border border-[#2a304a] transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1e30] hover:bg-[#242a42] rounded-xl border border-[#2a304a] transition-colors flex-wrap max-w-full"
                   >
                     <Lock className="w-3.5 h-3.5 text-amber-400" />
                     <span>{isPublic ? 'Public' : 'Private (Pro)'}</span>
@@ -844,7 +844,7 @@ export const CraiyonReplica: React.FC = () => {
                       setStylePreset(next);
                       openModal('control-style');
                     }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1e30] hover:bg-[#242a42] rounded-xl border border-[#2a304a] transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1e30] hover:bg-[#242a42] rounded-xl border border-[#2a304a] transition-colors flex-wrap max-w-full"
                   >
                     <Palette className="w-3.5 h-3.5 text-indigo-400" />
                     <span className="capitalize">{stylePreset}</span>
@@ -858,7 +858,7 @@ export const CraiyonReplica: React.FC = () => {
                       setAspectRatio(next);
                       openModal('control-aspect');
                     }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1e30] hover:bg-[#242a42] rounded-xl border border-[#2a304a] transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1a1e30] hover:bg-[#242a42] rounded-xl border border-[#2a304a] transition-colors flex-wrap max-w-full"
                   >
                     <Frame className="w-3.5 h-3.5 text-cyan-400" />
                     <span>{aspectRatio === 'auto' ? 'Auto' : aspectRatio}</span>
@@ -901,7 +901,7 @@ export const CraiyonReplica: React.FC = () => {
             {generationError && (
               <div className="max-w-2xl mx-auto bg-rose-950/80 border border-rose-500/60 p-4 rounded-2xl flex items-start gap-3 text-xs text-rose-200 shadow-xl animate-in fade-in">
                 <AlertTriangle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
-                <div className="space-y-1 flex-1">
+                <div className="space-y-1 flex-1 min-w-0">
                   <h4 className="font-bold text-rose-300">Gagal Menggenerasi Gambar</h4>
                   <p className="leading-relaxed">{generationError}</p>
                 </div>
@@ -936,7 +936,7 @@ export const CraiyonReplica: React.FC = () => {
             {generatedResult && !isGenerating ? (
               <div className="max-w-2xl mx-auto bg-[#131625] border border-orange-500/60 rounded-3xl p-4 space-y-3 shadow-2xl animate-in fade-in zoom-in-95">
                 <div className="flex items-center justify-between text-xs font-bold border-b border-[#22273d] pb-2">
-                  <span className="text-orange-400 flex items-center gap-1.5">
+                  <span className="text-orange-400 flex items-center gap-1.5 flex-wrap max-w-full">
                     <Sparkles className="w-4 h-4" /> Hasil Generasi AI Terbaru
                   </span>
                   <span className="text-slate-500 dark:text-slate-400 font-mono text-[10px]">{generatedResult.timestamp}</span>
@@ -954,7 +954,7 @@ export const CraiyonReplica: React.FC = () => {
                     download="craiyon-ai-image.jpg"
                     target="_blank"
                     rel="noreferrer"
-                    className="absolute bottom-3 right-3 p-2.5 bg-orange-500 hover:bg-orange-600 text-slate-900 dark:text-white rounded-xl shadow-lg flex items-center gap-1.5 text-xs font-bold transition-all hover:scale-105"
+                    className="absolute bottom-3 right-3 p-2.5 bg-orange-500 hover:bg-orange-600 text-slate-900 dark:text-white rounded-xl shadow-lg flex items-center gap-1.5 text-xs font-bold transition-all hover:scale-105 flex-wrap max-w-full"
                   >
                     <Download className="w-4 h-4" /> Unduh Gambar
                   </a>
@@ -1015,7 +1015,7 @@ export const CraiyonReplica: React.FC = () => {
 
             {/* Inspirations & Recents Bar */}
             <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2">
-              <div className="flex items-center gap-2 bg-[#111320] border border-[#1f2336] p-1 rounded-2xl">
+              <div className="flex items-center gap-2 bg-[#111320] border border-[#1f2336] p-1 rounded-2xl flex-wrap max-w-full">
                 <button
                   onClick={() => {
                     setActiveTab('inspirations');
@@ -1139,7 +1139,7 @@ export const CraiyonReplica: React.FC = () => {
           <div className="flex items-center justify-between pb-3 border-b border-[#1c2030]">
             <div
               onClick={() => openModal('image-suite-image')}
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer flex-wrap max-w-full"
             >
               <div className="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center text-slate-900 dark:text-white shadow-md shadow-orange-500/30">
                 <Pencil className="w-4 h-4 fill-white" />
@@ -1149,8 +1149,8 @@ export const CraiyonReplica: React.FC = () => {
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1 px-2 py-0.5 bg-[#181b29] rounded-md border border-[#272d42] text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+            <div className="flex items-center gap-3 flex-wrap max-w-full">
+              <div className="flex items-center gap-1 px-2 py-0.5 bg-[#181b29] rounded-md border border-[#272d42] text-[11px] font-semibold text-slate-600 dark:text-slate-300 flex-wrap max-w-full">
                 <span>🇺🇸</span>
               </div>
               <button
@@ -1194,10 +1194,10 @@ export const CraiyonReplica: React.FC = () => {
 
             {/* Mobile Bottom Controls Row */}
             <div className="flex items-center justify-between pt-2 border-t border-[#1c2033] text-[11px]">
-              <div className="flex items-center gap-1 text-slate-600 dark:text-slate-300">
+              <div className="flex items-center gap-1 text-slate-600 dark:text-slate-300 flex-wrap max-w-full">
                 <button
                   onClick={() => openModal('control-public')}
-                  className="flex items-center gap-1 px-2 py-1 bg-[#1a1e30] rounded-lg border border-[#2a304a]"
+                  className="flex items-center gap-1 px-2 py-1 bg-[#1a1e30] rounded-lg border border-[#2a304a] flex-wrap max-w-full"
                 >
                   <Lock className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                   <span>Public</span>
@@ -1205,7 +1205,7 @@ export const CraiyonReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('control-style')}
-                  className="flex items-center gap-1 px-2 py-1 bg-[#1a1e30] rounded-lg border border-[#2a304a]"
+                  className="flex items-center gap-1 px-2 py-1 bg-[#1a1e30] rounded-lg border border-[#2a304a] flex-wrap max-w-full"
                 >
                   <Palette className="w-3 h-3 text-indigo-400" />
                   <span>Auto</span>
@@ -1213,7 +1213,7 @@ export const CraiyonReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('control-aspect')}
-                  className="flex items-center gap-1 px-2 py-1 bg-[#1a1e30] rounded-lg border border-[#2a304a]"
+                  className="flex items-center gap-1 px-2 py-1 bg-[#1a1e30] rounded-lg border border-[#2a304a] flex-wrap max-w-full"
                 >
                   <Frame className="w-3 h-3 text-cyan-400" />
                   <span>Auto</span>
@@ -1250,7 +1250,7 @@ export const CraiyonReplica: React.FC = () => {
                   download="craiyon-ai-image.jpg"
                   target="_blank"
                   rel="noreferrer"
-                  className="absolute bottom-2 right-2 p-2 rounded-lg bg-orange-500 text-slate-900 dark:text-white shadow-md hover:bg-orange-600 flex items-center gap-1 text-[10px] font-bold"
+                  className="absolute bottom-2 right-2 p-2 rounded-lg bg-orange-500 text-slate-900 dark:text-white shadow-md hover:bg-orange-600 flex items-center gap-1 text-[10px] font-bold flex-wrap max-w-full"
                 >
                   <Download className="w-3.5 h-3.5" /> Unduh
                 </a>
@@ -1295,7 +1295,7 @@ export const CraiyonReplica: React.FC = () => {
                 {/* Drawer Image Suite Section */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-slate-700 dark:text-slate-200 font-semibold text-sm pb-2 border-b border-[#1e2336]">
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center gap-2 flex-wrap max-w-full">
                       <ImageIcon className="w-4 h-4 text-orange-400" />
                       Image suite
                     </span>
@@ -1308,7 +1308,7 @@ export const CraiyonReplica: React.FC = () => {
                         setSelectedSuite('image');
                         openModal('image-suite-image');
                       }}
-                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-[#1b2033] text-slate-900 dark:text-white font-medium border border-orange-500/40"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-[#1b2033] text-slate-900 dark:text-white font-medium border border-orange-500/40 flex-wrap max-w-full"
                     >
                       <ImageIcon className="w-4 h-4 text-orange-400" />
                       <span>Image</span>
@@ -1319,7 +1319,7 @@ export const CraiyonReplica: React.FC = () => {
                         setSelectedSuite('logo');
                         openModal('image-suite-logo');
                       }}
-                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928]"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928] flex-wrap max-w-full"
                     >
                       <Sparkles className="w-4 h-4 text-amber-400" />
                       <span>Logo</span>
@@ -1330,7 +1330,7 @@ export const CraiyonReplica: React.FC = () => {
                         setSelectedSuite('anime');
                         openModal('image-suite-anime');
                       }}
-                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928]"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928] flex-wrap max-w-full"
                     >
                       <Pencil className="w-4 h-4 text-rose-400" />
                       <span>Anime</span>
@@ -1341,7 +1341,7 @@ export const CraiyonReplica: React.FC = () => {
                         setSelectedSuite('tattoo');
                         openModal('image-suite-tattoo');
                       }}
-                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928]"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928] flex-wrap max-w-full"
                     >
                       <Palette className="w-4 h-4 text-cyan-400" />
                       <span>Tattoo</span>
@@ -1352,7 +1352,7 @@ export const CraiyonReplica: React.FC = () => {
                         setSelectedSuite('homedesign');
                         openModal('image-suite-homedesign');
                       }}
-                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928]"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928] flex-wrap max-w-full"
                     >
                       <Home className="w-4 h-4 text-emerald-400" />
                       <span>Home design</span>
@@ -1363,7 +1363,7 @@ export const CraiyonReplica: React.FC = () => {
                         setSelectedSuite('poster');
                         openModal('image-suite-poster');
                       }}
-                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928]"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928] flex-wrap max-w-full"
                     >
                       <Frame className="w-4 h-4 text-purple-400" />
                       <span>Poster</span>
@@ -1374,7 +1374,7 @@ export const CraiyonReplica: React.FC = () => {
                         setSelectedSuite('bgremover');
                         openModal('image-suite-bgremover');
                       }}
-                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928]"
+                      className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#151928] flex-wrap max-w-full"
                     >
                       <Scissors className="w-4 h-4 text-indigo-400" />
                       <span>Background remover</span>
@@ -1387,7 +1387,7 @@ export const CraiyonReplica: React.FC = () => {
                   onClick={() => openModal('menu-studio')}
                   className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 text-xs hover:bg-[#151928]"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap max-w-full">
                     <LayoutGrid className="w-4 h-4 text-orange-400" />
                     <span className="font-medium">Studio</span>
                   </div>
@@ -1401,7 +1401,7 @@ export const CraiyonReplica: React.FC = () => {
                   onClick={() => openModal('menu-imagesearch')}
                   className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 text-xs hover:bg-[#151928]"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap max-w-full">
                     <Search className="w-4 h-4" />
                     <span>Image search</span>
                   </div>
@@ -1413,7 +1413,7 @@ export const CraiyonReplica: React.FC = () => {
                   onClick={() => openModal('menu-myimages')}
                   className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 text-xs hover:bg-[#151928]"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap max-w-full">
                     <User className="w-4 h-4" />
                     <span>My account</span>
                   </div>
@@ -1423,7 +1423,7 @@ export const CraiyonReplica: React.FC = () => {
                 {/* Help */}
                 <button
                   onClick={() => openModal('menu-help')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 text-xs hover:bg-[#151928]"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 text-xs hover:bg-[#151928] flex-wrap max-w-full"
                 >
                   <HelpCircle className="w-4 h-4" />
                   <span>Help</span>
@@ -1468,7 +1468,7 @@ export const CraiyonReplica: React.FC = () => {
                 <span className="text-[10px] font-bold uppercase tracking-wider text-orange-400">
                   {infoDictionary[activeModalKey].category}
                 </span>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                   {infoDictionary[activeModalKey].title}
                 </h3>
               </div>

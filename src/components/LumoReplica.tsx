@@ -344,7 +344,7 @@ export const LumoReplica: React.FC = () => {
     <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#0b0a12] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl flex flex-col h-[750px] relative font-sans select-none">
       {/* Top Header Navbar */}
       <header className="bg-[#0b0a12] px-4 py-3 flex items-center justify-between shrink-0 z-20 border-b border-slate-200 dark:border-slate-900">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap max-w-full">
           {/* Sidebar Toggle Button */}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -356,7 +356,7 @@ export const LumoReplica: React.FC = () => {
         </div>
 
         {/* Top Right Header Buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap max-w-full">
           <button
             onClick={() => handleOpenAccountModal('Create a free account')}
             className="px-4 py-1.5 rounded-lg bg-[#201e2e] hover:bg-[#2a283c] border border-slate-300 dark:border-slate-700/60 text-slate-900 dark:text-white text-xs font-semibold transition-all cursor-pointer"
@@ -373,7 +373,7 @@ export const LumoReplica: React.FC = () => {
       </header>
 
       {/* Main Content Layout with Sidebar */}
-      <div className="flex-1 flex overflow-hidden relative">
+      <div className="flex-1 flex overflow-hidden relative min-w-0">
         {/* Lumo Sidebar */}
         <aside
           className={`${
@@ -383,7 +383,7 @@ export const LumoReplica: React.FC = () => {
           {/* Sidebar Top Header & Nav */}
           <div className="space-y-4 min-w-0 overflow-y-auto">
             {/* Logo Brand Title */}
-            <div className="flex items-center gap-2 px-1 py-1">
+            <div className="flex items-center gap-2 px-1 py-1 flex-wrap max-w-full">
               {/* Cat mascot icon in rounded container */}
               <div className="w-7 h-7 rounded-lg bg-[#6149f6] flex items-center justify-center shrink-0 shadow-md">
                 <div className="w-5 h-5 relative flex items-center justify-center">
@@ -397,14 +397,14 @@ export const LumoReplica: React.FC = () => {
             <div className="flex items-center justify-between gap-2 pt-1">
               <button
                 onClick={handleNewChat}
-                className="flex-1 py-2 px-3 rounded-xl bg-[#1d1b2c] hover:bg-[#27243c] border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-medium text-xs flex items-center gap-2 transition-all cursor-pointer truncate"
+                className="flex-1 py-2 px-3 rounded-xl bg-[#1d1b2c] hover:bg-[#27243c] border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-medium text-xs flex items-center gap-2 transition-all cursor-pointer truncate flex-wrap max-w-full min-w-0"
               >
                 <MessageSquarePlus className="w-4 h-4 text-slate-600 dark:text-slate-300 shrink-0" />
                 <span>New chat</span>
               </button>
 
               {/* Incognito / Privacy Glasses Toggle Switch */}
-              <div className="flex items-center gap-1 bg-[#1d1b2c] border border-slate-200 dark:border-slate-800 rounded-xl p-1.5 shrink-0">
+              <div className="flex items-center gap-1 bg-[#1d1b2c] border border-slate-200 dark:border-slate-800 rounded-xl p-1.5 shrink-0 flex-wrap max-w-full">
                 <Glasses className={`w-4 h-4 ${privacyMode ? 'text-purple-400' : 'text-slate-500 dark:text-slate-400'}`} />
                 <button
                   onClick={() => setPrivacyMode(!privacyMode)}
@@ -483,7 +483,7 @@ export const LumoReplica: React.FC = () => {
                           : 'text-slate-500 dark:text-slate-400 hover:bg-[#181628] hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
-                      <span className="truncate min-w-0">{thread.title}</span>
+                      <span className="break-words whitespace-normal leading-snug min-w-0">{thread.title}</span>
                       <button
                         onClick={(e) => handleDeleteThread(e, thread.id)}
                         className="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-rose-400"
@@ -501,7 +501,7 @@ export const LumoReplica: React.FC = () => {
           <div className="space-y-3 pt-2">
             <button
               onClick={() => handleOpenAccountModal('Settings')}
-              className="w-full px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-[#1a1828] flex items-center gap-2.5 cursor-pointer"
+              className="w-full px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-[#1a1828] flex items-center gap-2.5 cursor-pointer flex-wrap max-w-full"
             >
               <Settings className="w-4 h-4 text-slate-500 dark:text-slate-400" />
               <span>Settings</span>
@@ -536,7 +536,7 @@ export const LumoReplica: React.FC = () => {
           {/* TAB 1: CHAT */}
           {activeTab === 'chat' && (
             <div className="flex-1 flex flex-col h-full min-h-0">
-              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 min-h-0">
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 min-h-0 min-w-0">
                 {messages.length === 0 ? (
                   /* INITIAL VIEW: "How can I help?" */
                   <div className="h-full flex flex-col items-center justify-center text-center space-y-6 max-w-lg mx-auto my-auto py-12">
@@ -567,7 +567,7 @@ export const LumoReplica: React.FC = () => {
 
                       {/* Controls inside input field */}
                       <div className="flex items-center justify-between pt-1">
-                        <div className="flex items-center gap-2 relative">
+                        <div className="flex items-center gap-2 relative flex-wrap max-w-full">
                           <button
                             onClick={() => handleSendMessage()}
                             className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
@@ -580,7 +580,7 @@ export const LumoReplica: React.FC = () => {
                           <div className="relative">
                             <button
                               onClick={() => setIsToolsDropdownOpen(!isToolsDropdownOpen)}
-                              className="px-2.5 py-1 rounded-xl bg-[#1b192c] border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer"
+                              className="px-2.5 py-1 rounded-xl bg-[#1b192c] border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full"
                             >
                               <Sliders className="w-3.5 h-3.5 text-purple-400" />
                               <span>Tools</span>
@@ -624,7 +624,7 @@ export const LumoReplica: React.FC = () => {
                         <div className="relative">
                           <button
                             onClick={() => setIsModelDropdownOpen(!isModelDropdownOpen)}
-                            className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#1b192c] border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white cursor-pointer"
+                            className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#1b192c] border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white cursor-pointer flex-wrap max-w-full"
                           >
                             <span>{selectedModel}</span>
                             <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
@@ -672,7 +672,7 @@ export const LumoReplica: React.FC = () => {
                         )}
 
                         <div className={`space-y-1 max-w-xl ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                          <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 font-mono px-1">
+                          <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 font-mono px-1 flex-wrap max-w-full">
                             <span>{msg.sender === 'user' ? 'Anda' : 'Lumo AI'}</span>
                             <span>•</span>
                             <span>{msg.timestamp}</span>
@@ -700,10 +700,10 @@ export const LumoReplica: React.FC = () => {
                           </div>
 
                           {msg.sender === 'lumo' && (
-                            <div className="flex items-center gap-2 px-1">
+                            <div className="flex items-center gap-2 px-1 flex-wrap max-w-full">
                               <button
                                 onClick={() => handleCopyText(msg.id, msg.text)}
-                                className="text-[10px] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white flex items-center gap-1 transition-colors cursor-pointer"
+                                className="text-[10px] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white flex items-center gap-1 transition-colors cursor-pointer flex-wrap max-w-full"
                               >
                                 {copiedId === msg.id ? (
                                   <>
@@ -735,7 +735,7 @@ export const LumoReplica: React.FC = () => {
                         <div className="w-8 h-8 rounded-xl bg-[#6149f6] flex items-center justify-center text-slate-900 dark:text-white shrink-0 animate-pulse">
                           🐱
                         </div>
-                        <div className="p-4 rounded-2xl bg-[#141222] border border-slate-200 dark:border-slate-800 text-xs text-purple-300 flex items-center gap-2">
+                        <div className="p-4 rounded-2xl bg-[#141222] border border-slate-200 dark:border-slate-800 text-xs text-purple-300 flex items-center gap-2 flex-wrap max-w-full">
                           <RefreshCw className="w-4 h-4 animate-spin text-purple-400" />
                           <span>Lumo sedang memproses respon...</span>
                         </div>
@@ -745,9 +745,9 @@ export const LumoReplica: React.FC = () => {
                     {/* Error Banner */}
                     {errorMessage && (
                       <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 text-xs flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2 min-w-0">
+                        <div className="flex items-center gap-2 min-w-0 flex-wrap max-w-full">
                           <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
-                          <span className="truncate">{errorMessage}</span>
+                          <span className="break-words whitespace-normal leading-snug">{errorMessage}</span>
                         </div>
                         <button
                           onClick={() => handleSendMessage()}
@@ -783,10 +783,10 @@ export const LumoReplica: React.FC = () => {
                       />
 
                       <div className="flex items-center justify-between pt-1">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap max-w-full">
                           <button
                             onClick={() => setIsToolsDropdownOpen(!isToolsDropdownOpen)}
-                            className="px-2.5 py-1 rounded-xl bg-[#1b192c] border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer"
+                            className="px-2.5 py-1 rounded-xl bg-[#1b192c] border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full"
                           >
                             <Sliders className="w-3.5 h-3.5 text-purple-400" />
                             <span>Tools</span>
@@ -814,10 +814,10 @@ export const LumoReplica: React.FC = () => {
 
           {/* TAB 2: IMAGES */}
           {activeTab === 'images' && (
-            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            <div className="flex-1 overflow-y-auto p-6 space-y-6 min-w-0">
               <div className="max-w-2xl mx-auto space-y-4">
                 <div className="space-y-1">
-                  <h3 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                  <h3 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                     <ImageIcon className="w-5 h-5 text-purple-400" />
                     Lumo Vision (Generasi Gambar Privasi)
                   </h3>
@@ -897,7 +897,7 @@ export const LumoReplica: React.FC = () => {
                   </button>
 
                   {imageError && (
-                    <div className="p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 text-xs flex items-center gap-2">
+                    <div className="p-2.5 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 text-xs flex items-center gap-2 flex-wrap max-w-full">
                       <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
                       <span>{imageError}</span>
                     </div>
@@ -935,7 +935,7 @@ export const LumoReplica: React.FC = () => {
                                 download={`lumo-image-${img.id}.jpg`}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-purple-400 hover:text-purple-300 flex items-center gap-1 font-bold"
+                                className="text-purple-400 hover:text-purple-300 flex items-center gap-1 font-bold flex-wrap max-w-full"
                               >
                                 <Download className="w-3 h-3" /> Unduh
                               </a>
@@ -952,11 +952,11 @@ export const LumoReplica: React.FC = () => {
 
           {/* TAB 3: PROJECTS */}
           {activeTab === 'projects' && (
-            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            <div className="flex-1 overflow-y-auto p-6 space-y-6 min-w-0">
               <div className="max-w-2xl mx-auto space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                    <h3 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                       <Folder className="w-5 h-5 text-purple-400" />
                       Lumo Workspace Projects
                     </h3>
@@ -967,7 +967,7 @@ export const LumoReplica: React.FC = () => {
 
                   <button
                     onClick={() => setIsNewProjectModalOpen(true)}
-                    className="px-3 py-1.5 rounded-xl bg-[#6149f6] hover:bg-[#523be3] text-slate-900 dark:text-white text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-md"
+                    className="px-3 py-1.5 rounded-xl bg-[#6149f6] hover:bg-[#523be3] text-slate-900 dark:text-white text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-md flex-wrap max-w-full"
                   >
                     <Plus className="w-4 h-4" />
                     <span>New Project</span>
@@ -1011,7 +1011,7 @@ export const LumoReplica: React.FC = () => {
         <div className="absolute inset-0 bg-slate-100 dark:bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-[#131220] border border-slate-200 dark:border-slate-800 rounded-2xl p-5 max-w-sm w-full space-y-4 shadow-2xl">
             <div className="flex items-center justify-between">
-              <h4 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+              <h4 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                 <Folder className="w-4 h-4 text-purple-400" />
                 Buat Proyek Baru
               </h4>

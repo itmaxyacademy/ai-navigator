@@ -350,12 +350,12 @@ export const GeminiReplica: React.FC = () => {
       {/* TOP CONTROL BAR (View Mode Toggle & App Header) */}
       {/* ========================================================= */}
       <div className="bg-[#1e1f20] border-b border-neutral-800/80 px-4 py-2.5 flex items-center justify-between text-xs text-neutral-400 z-10">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap max-w-full">
           {/* Gemini Spark Logo */}
           <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-blue-500 via-indigo-400 to-amber-300 flex items-center justify-center p-0.5 shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-black fill-black" />
           </div>
-          <span className="font-semibold text-neutral-200 text-sm tracking-tight flex items-center gap-1.5">
+          <span className="font-semibold text-neutral-200 text-sm tracking-tight flex items-center gap-1.5 flex-wrap max-w-full">
             Gemini Simulator <span className="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded font-mono">Google AI</span>
           </span>
         </div>
@@ -399,7 +399,7 @@ export const GeminiReplica: React.FC = () => {
         {/* ========================================================= */}
         {viewMode === 'mobile' && (
           <div className="absolute top-0 left-0 right-0 h-13 bg-[#1e1f20]/95 backdrop-blur-md border-b border-neutral-800/80 px-3 flex items-center justify-between z-20">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
               <button
                 onClick={() => setIsMobileSidebarOpen(true)}
                 className="p-1.5 text-neutral-300 hover:bg-neutral-800 rounded-lg transition-colors"
@@ -414,14 +414,14 @@ export const GeminiReplica: React.FC = () => {
               {/* Model Picker Trigger on Mobile */}
               <button
                 onClick={() => setIsModelDropdownOpen(!isModelDropdownOpen)}
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-neutral-800/90 text-neutral-200 hover:bg-neutral-700/80 transition-colors"
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-neutral-800/90 text-neutral-200 hover:bg-neutral-700/80 transition-colors flex-wrap max-w-full"
               >
                 <span>Gemini {selectedModel}</span>
                 <ChevronRight className="w-3 h-3 rotate-90 text-neutral-400" />
               </button>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
               <button
                 onClick={() => setMessages([])}
                 className="p-1.5 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800 rounded-lg"
@@ -456,10 +456,10 @@ export const GeminiReplica: React.FC = () => {
           `}
         >
           {/* Top Section */}
-          <div className="p-3 space-y-3 overflow-y-auto flex-1">
+          <div className="p-3 space-y-3 overflow-y-auto flex-1 min-w-0">
             {/* Header / Brand in Sidebar */}
             <div className="flex items-center justify-between px-2 pt-1 pb-2">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap max-w-full">
                 <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-blue-500 via-indigo-400 to-amber-300 flex items-center justify-center p-0.5">
                   <Sparkles className="w-4 h-4 text-black fill-black" />
                 </div>
@@ -489,7 +489,7 @@ export const GeminiReplica: React.FC = () => {
                 setMessages([]);
                 if (viewMode === 'mobile') setIsMobileSidebarOpen(false);
               }}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#282a2c] hover:bg-neutral-700/80 text-neutral-200 transition-colors font-medium text-xs shadow-sm border border-neutral-700/50"
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-[#282a2c] hover:bg-neutral-700/80 text-neutral-200 transition-colors font-medium text-xs shadow-sm border border-neutral-700/50 flex-wrap max-w-full"
             >
               <Plus className="w-4 h-4 text-blue-400" />
               <span>New chat</span>
@@ -501,7 +501,7 @@ export const GeminiReplica: React.FC = () => {
                 onClick={() => handleOpenModal('search-chats')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-left group"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <Search className="w-4 h-4 text-neutral-400 group-hover:text-blue-400" />
                   <span>Search chats</span>
                 </div>
@@ -511,7 +511,7 @@ export const GeminiReplica: React.FC = () => {
                 onClick={() => handleOpenModal('images')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-left group"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <ImageIcon className="w-4 h-4 text-neutral-400 group-hover:text-purple-400" />
                   <span>Images</span>
                 </div>
@@ -521,7 +521,7 @@ export const GeminiReplica: React.FC = () => {
                 onClick={() => handleOpenModal('library')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-left group"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <Grid className="w-4 h-4 text-neutral-400 group-hover:text-emerald-400" />
                   <span>Library</span>
                 </div>
@@ -531,7 +531,7 @@ export const GeminiReplica: React.FC = () => {
                 onClick={() => handleOpenModal('gems')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-left group"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <Gem className="w-4 h-4 text-neutral-400 group-hover:text-amber-400" />
                   <span>Gems</span>
                 </div>
@@ -541,7 +541,7 @@ export const GeminiReplica: React.FC = () => {
                 onClick={() => handleOpenModal('notebooks')}
                 className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 transition-colors text-left group"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <BookOpen className="w-4 h-4 text-neutral-400 group-hover:text-cyan-400" />
                   <span>Notebooks</span>
                 </div>
@@ -573,9 +573,9 @@ export const GeminiReplica: React.FC = () => {
                       ]);
                       if (viewMode === 'mobile') setIsMobileSidebarOpen(false);
                     }}
-                    className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/60 transition-colors text-left truncate"
+                    className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/60 transition-colors text-left truncate flex-wrap max-w-full"
                   >
-                    <span className="truncate">{title}</span>
+                    <span className="break-words whitespace-normal leading-snug">{title}</span>
                   </button>
                 ))}
               </div>
@@ -588,7 +588,7 @@ export const GeminiReplica: React.FC = () => {
               onClick={() => setIsSettingsMenuOpen(!isSettingsMenuOpen)}
               className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
             >
-              <div className="flex items-center gap-2.5 overflow-hidden">
+              <div className="flex items-center gap-2.5 overflow-hidden flex-wrap max-w-full">
                 <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-slate-900 dark:text-white text-[11px] font-bold border border-amber-400/40 flex-shrink-0">
                   MA
                 </div>
@@ -629,10 +629,10 @@ export const GeminiReplica: React.FC = () => {
 
           {/* Top Bar Right (Upgrade Button & Profile - Desktop Only) */}
           {viewMode === 'desktop' && (
-            <div className="absolute top-4 right-4 z-10 flex items-center gap-3">
+            <div className="absolute top-4 right-4 z-10 flex items-center gap-3 flex-wrap max-w-full">
               <button
                 onClick={() => handleOpenModal('import-memory')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-slate-900 dark:text-white text-xs font-medium shadow-md hover:opacity-90 transition-opacity"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-slate-900 dark:text-white text-xs font-medium shadow-md hover:opacity-90 transition-opacity flex-wrap max-w-full"
               >
                 <Sparkles className="w-3.5 h-3.5 fill-current" />
                 <span>Upgrade</span>
@@ -671,7 +671,7 @@ export const GeminiReplica: React.FC = () => {
                     onClick={() => {
                       setInputValue('@Drive Analisis draf kurikulum koding terbaru');
                     }}
-                    className="px-3 py-2 rounded-xl bg-[#1e1f20] hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-colors flex items-center gap-1.5"
+                    className="px-3 py-2 rounded-xl bg-[#1e1f20] hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-colors flex items-center gap-1.5 flex-wrap max-w-full"
                   >
                     <HardDrive className="w-3.5 h-3.5 text-emerald-400" />
                     <span>@Drive Kurikulum</span>
@@ -680,7 +680,7 @@ export const GeminiReplica: React.FC = () => {
                     onClick={() => {
                       setInputValue('Buatkan gambar ilustrasi AI Tutor dengan Imagen 3');
                     }}
-                    className="px-3 py-2 rounded-xl bg-[#1e1f20] hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-colors flex items-center gap-1.5"
+                    className="px-3 py-2 rounded-xl bg-[#1e1f20] hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-colors flex items-center gap-1.5 flex-wrap max-w-full"
                   >
                     <ImageIcon className="w-3.5 h-3.5 text-purple-400" />
                     <span>Buat Gambar AI</span>
@@ -689,7 +689,7 @@ export const GeminiReplica: React.FC = () => {
                     onClick={() => {
                       setInputValue('Lakukan Deep Research tentang tren AI 2026');
                     }}
-                    className="px-3 py-2 rounded-xl bg-[#1e1f20] hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-colors flex items-center gap-1.5"
+                    className="px-3 py-2 rounded-xl bg-[#1e1f20] hover:bg-neutral-800 text-neutral-300 border border-neutral-800 transition-colors flex items-center gap-1.5 flex-wrap max-w-full"
                   >
                     <Brain className="w-3.5 h-3.5 text-violet-400" />
                     <span>Deep Research</span>
@@ -717,7 +717,7 @@ export const GeminiReplica: React.FC = () => {
                       }`}
                     >
                       {msg.modelUsed && (
-                        <div className="text-[10px] text-blue-400 font-mono mb-1 flex items-center gap-1">
+                        <div className="text-[10px] text-blue-400 font-mono mb-1 flex items-center gap-1 flex-wrap max-w-full">
                           <Zap className="w-3 h-3" />
                           <span>Gemini {msg.modelUsed}</span>
                         </div>
@@ -764,7 +764,7 @@ export const GeminiReplica: React.FC = () => {
                         handleOpenModal('library');
                         setIsToolsMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left flex-wrap max-w-full"
                     >
                       <Paperclip className="w-4 h-4 text-blue-400" />
                       <span>Upload files</span>
@@ -775,7 +775,7 @@ export const GeminiReplica: React.FC = () => {
                         handleOpenModal('drive');
                         setIsToolsMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left flex-wrap max-w-full"
                     >
                       <HardDrive className="w-4 h-4 text-emerald-400" />
                       <span>Add from Drive</span>
@@ -787,7 +787,7 @@ export const GeminiReplica: React.FC = () => {
                         handleOpenModal('create-image');
                         setIsToolsMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left flex-wrap max-w-full"
                     >
                       <ImageIcon className="w-4 h-4 text-purple-400" />
                       <span>Create image</span>
@@ -798,7 +798,7 @@ export const GeminiReplica: React.FC = () => {
                         handleOpenModal('create-music');
                         setIsToolsMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left flex-wrap max-w-full"
                     >
                       <Music className="w-4 h-4 text-indigo-400" />
                       <span>Create music</span>
@@ -809,7 +809,7 @@ export const GeminiReplica: React.FC = () => {
                         handleOpenModal('canvas');
                         setIsToolsMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left flex-wrap max-w-full"
                     >
                       <Layout className="w-4 h-4 text-cyan-400" />
                       <span>Canvas</span>
@@ -820,7 +820,7 @@ export const GeminiReplica: React.FC = () => {
                         handleOpenModal('deep-research');
                         setIsToolsMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-200 hover:bg-neutral-800 text-left flex-wrap max-w-full"
                     >
                       <Brain className="w-4 h-4 text-violet-400" />
                       <span>Deep research</span>
@@ -835,11 +835,11 @@ export const GeminiReplica: React.FC = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Ask Gemini"
-                className="flex-1 bg-transparent text-xs sm:text-sm text-neutral-100 placeholder-neutral-500 focus:outline-none px-1"
+                className="flex-1 bg-transparent text-xs sm:text-sm text-neutral-100 placeholder-neutral-500 focus:outline-none px-1 min-w-0"
               />
 
               {/* Right Input Controls */}
-              <div className="flex items-center gap-1.5 relative">
+              <div className="flex items-center gap-1.5 relative flex-wrap max-w-full">
                 {/* Status Dot */}
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse hidden sm:inline-block" />
 
@@ -848,7 +848,7 @@ export const GeminiReplica: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setIsModelDropdownOpen(!isModelDropdownOpen)}
-                    className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-[#282a2c] hover:bg-neutral-700 text-xs font-medium text-neutral-200 transition-colors border border-neutral-700/50"
+                    className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-[#282a2c] hover:bg-neutral-700 text-xs font-medium text-neutral-200 transition-colors border border-neutral-700/50 flex-wrap max-w-full"
                   >
                     <span>{selectedModel}</span>
                     <ChevronRight className="w-3 h-3 rotate-90 text-neutral-400" />
@@ -866,7 +866,7 @@ export const GeminiReplica: React.FC = () => {
                         className="w-full p-2 rounded-xl hover:bg-neutral-800 text-left flex items-start justify-between"
                       >
                         <div>
-                          <div className="font-semibold text-neutral-200 flex items-center gap-1.5">
+                          <div className="font-semibold text-neutral-200 flex items-center gap-1.5 flex-wrap max-w-full">
                             <span>3.5 Flash-Lite</span>
                             <span className="text-[9px] bg-neutral-700 text-neutral-300 px-1 py-0.2 rounded font-mono">New</span>
                           </div>
@@ -884,7 +884,7 @@ export const GeminiReplica: React.FC = () => {
                         className="w-full p-2 rounded-xl hover:bg-neutral-800 text-left flex items-start justify-between"
                       >
                         <div>
-                          <div className="font-semibold text-neutral-200 flex items-center gap-1.5">
+                          <div className="font-semibold text-neutral-200 flex items-center gap-1.5 flex-wrap max-w-full">
                             <span>3.6 Flash</span>
                             <span className="text-[9px] bg-blue-500/20 text-blue-400 px-1 py-0.2 rounded font-mono">New</span>
                           </div>
@@ -975,7 +975,7 @@ export const GeminiReplica: React.FC = () => {
                       handleOpenModal('search-chats');
                       setIsSettingsMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left flex-wrap max-w-full"
                   >
                     <Clock className="w-4 h-4 text-neutral-400 shrink-0" />
                     <span>Activity</span>
@@ -986,7 +986,7 @@ export const GeminiReplica: React.FC = () => {
                       handleOpenModal('personal-intelligence');
                       setIsSettingsMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left flex-wrap max-w-full"
                   >
                     <User className="w-4 h-4 text-neutral-400 shrink-0" />
                     <span>Personal Intelligence</span>
@@ -999,9 +999,9 @@ export const GeminiReplica: React.FC = () => {
                     }}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
                   >
-                    <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex items-center gap-3 min-w-0 flex-wrap max-w-full">
                       <Upload className="w-4 h-4 text-neutral-400 shrink-0" />
-                      <span className="truncate">Import memory to Gemini</span>
+                      <span className="break-words whitespace-normal leading-snug">Import memory to Gemini</span>
                     </div>
                     <span className="text-[10px] bg-neutral-700 text-neutral-200 px-2 py-0.5 rounded-full font-medium shrink-0">New</span>
                   </button>
@@ -1011,7 +1011,7 @@ export const GeminiReplica: React.FC = () => {
                       alert('Avatar profil diperbarui.');
                       setIsSettingsMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left flex-wrap max-w-full"
                   >
                     <Smile className="w-4 h-4 text-neutral-400 shrink-0" />
                     <span>Avatar</span>
@@ -1022,7 +1022,7 @@ export const GeminiReplica: React.FC = () => {
                       alert('Batas penggunaan: Aktif.');
                       setIsSettingsMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left flex-wrap max-w-full"
                   >
                     <RefreshCw className="w-4 h-4 text-neutral-400 shrink-0" />
                     <span>Usage limits</span>
@@ -1033,7 +1033,7 @@ export const GeminiReplica: React.FC = () => {
                       handleOpenModal('gems');
                       setIsSettingsMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left flex-wrap max-w-full"
                   >
                     <Gem className="w-4 h-4 text-amber-400 shrink-0" />
                     <span>Gems</span>
@@ -1044,7 +1044,7 @@ export const GeminiReplica: React.FC = () => {
                       alert('Tidak ada tautan publik.');
                       setIsSettingsMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left flex-wrap max-w-full"
                   >
                     <Link className="w-4 h-4 text-neutral-400 shrink-0" />
                     <span>Your public links</span>
@@ -1056,7 +1056,7 @@ export const GeminiReplica: React.FC = () => {
                       onClick={() => setIsThemeSubmenuOpen(!isThemeSubmenuOpen)}
                       className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-wrap max-w-full">
                         <Sun className="w-4 h-4 text-neutral-400 shrink-0" />
                         <span>Theme</span>
                       </div>
@@ -1108,7 +1108,7 @@ export const GeminiReplica: React.FC = () => {
                       handleOpenModal('import-memory');
                       setIsSettingsMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left flex-wrap max-w-full"
                   >
                     <CreditCard className="w-4 h-4 text-neutral-400 shrink-0" />
                     <span>View subscriptions</span>
@@ -1119,7 +1119,7 @@ export const GeminiReplica: React.FC = () => {
                       handleOpenModal('notebooks');
                       setIsSettingsMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left flex-wrap max-w-full"
                   >
                     <BookOpen className="w-4 h-4 text-cyan-400 shrink-0" />
                     <span>Gemini Notebook</span>
@@ -1130,7 +1130,7 @@ export const GeminiReplica: React.FC = () => {
                       alert('Terima kasih atas masukan Anda!');
                       setIsSettingsMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left flex-wrap max-w-full"
                   >
                     <MessageSquare className="w-4 h-4 text-neutral-400 shrink-0" />
                     <span>Send feedback</span>
@@ -1143,7 +1143,7 @@ export const GeminiReplica: React.FC = () => {
                     }}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap max-w-full">
                       <HelpCircle className="w-4 h-4 text-neutral-400 shrink-0" />
                       <span>Help</span>
                     </div>
@@ -1153,9 +1153,9 @@ export const GeminiReplica: React.FC = () => {
 
                 {/* Bottom Location Section */}
                 <div className="mt-1 pt-2 border-t border-neutral-700/60 px-3 pb-1 text-xs text-neutral-300 space-y-0.5">
-                  <div className="flex items-center gap-2 font-medium">
+                  <div className="flex items-center gap-2 font-medium flex-wrap max-w-full">
                     <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0" />
-                    <span className="truncate">Surabaya, East Java, Indonesia</span>
+                    <span className="break-words whitespace-normal leading-snug">Surabaya, East Java, Indonesia</span>
                   </div>
                   <div className="text-[10px] text-neutral-400 pl-3.5">
                     Based on your places (Work)
@@ -1184,7 +1184,7 @@ export const GeminiReplica: React.FC = () => {
           <div className="w-full max-w-md bg-[#1e1f20] border border-neutral-700 rounded-3xl shadow-2xl p-6 text-neutral-100 space-y-4">
             {/* Header */}
             <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap max-w-full">
                 <div className="p-2.5 rounded-2xl bg-neutral-800 border border-neutral-700">
                   {activeModal.icon}
                 </div>
@@ -1215,7 +1215,7 @@ export const GeminiReplica: React.FC = () => {
               </div>
               <ul className="space-y-1">
                 {activeModal.keyFeatures.map((feat, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-xs text-neutral-300">
+                  <li key={idx} className="flex items-center gap-2 text-xs text-neutral-300 flex-wrap max-w-full">
                     <Check className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
                     <span>{feat}</span>
                   </li>

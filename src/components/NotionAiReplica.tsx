@@ -198,7 +198,7 @@ export const NotionAiReplica: React.FC = () => {
     <div className="rounded-2xl border border-slate-200 bg-[#fbfbfb] text-slate-800 overflow-hidden shadow-xl flex flex-col min-h-[720px] font-sans select-none">
       {/* ---------------- TOP NAVIGATION BAR & TAB SWITCHER ---------------- */}
       <header className="px-5 py-3 bg-white border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 z-30 shrink-0">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 flex-wrap max-w-full">
           <div className="w-7 h-7 rounded-lg bg-white dark:bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-xs">
             🦏
           </div>
@@ -211,7 +211,7 @@ export const NotionAiReplica: React.FC = () => {
         </div>
 
         {/* View Tabs */}
-        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
+        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold flex-wrap max-w-full">
           <button
             onClick={() => setActiveTab('builder')}
             className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
@@ -249,16 +249,16 @@ export const NotionAiReplica: React.FC = () => {
       {/* BAGIAN 1: MODAL BUILDER ("What do you want to build today?") */}
       {/* ================================================================= */}
       {activeTab === 'builder' && (
-        <div className="flex-1 bg-[#4d4d4d]/90 p-6 sm:p-12 flex items-center justify-center relative overflow-y-auto min-h-[600px]">
+        <div className="flex-1 bg-[#4d4d4d]/90 p-6 sm:p-12 flex items-center justify-center relative overflow-y-auto min-h-[600px] min-w-0">
           {/* Simulated Browser Top Bar */}
           <div className="absolute top-0 left-0 right-0 h-9 bg-[#2d2d2d] border-b border-slate-300 dark:border-slate-700 px-4 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap max-w-full">
               <div className="w-3 h-3 rounded-full bg-rose-500" />
               <div className="w-3 h-3 rounded-full bg-amber-500" />
               <div className="w-3 h-3 rounded-full bg-emerald-500" />
               <span className="ml-3 font-semibold text-slate-600 dark:text-slate-300">Acme / Notion AI Workspace</span>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap max-w-full">
               <span className="text-[11px] hover:text-slate-900 dark:text-white cursor-pointer">Personalize</span>
             </div>
           </div>
@@ -267,7 +267,7 @@ export const NotionAiReplica: React.FC = () => {
           {builderResult ? (
             <div className="max-w-3xl w-full bg-white rounded-2xl shadow-2xl p-6 space-y-4 animate-in fade-in zoom-in-95 mt-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <div className="flex items-center gap-2 text-sm font-extrabold text-slate-900">
+                <div className="flex items-center gap-2 text-sm font-extrabold text-slate-900 flex-wrap max-w-full">
                   <Table className="w-4 h-4 text-blue-600" />
                   <span>Hasil Database / Halaman Notion AI</span>
                 </div>
@@ -427,7 +427,7 @@ export const NotionAiReplica: React.FC = () => {
 
               {/* Error Message */}
               {builderError && (
-                <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-center gap-2">
+                <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-center gap-2 flex-wrap max-w-full">
                   <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
                   <span>{builderError}</span>
                 </div>
@@ -441,14 +441,14 @@ export const NotionAiReplica: React.FC = () => {
       {/* BAGIAN 2: INLINE AI EDITOR (Doc with Ask AI Popup) */}
       {/* ================================================================= */}
       {activeTab === 'editor' && (
-        <div className="flex-1 bg-[#fcfbf9] p-6 sm:p-12 flex justify-center overflow-y-auto min-h-[600px]">
+        <div className="flex-1 bg-[#fcfbf9] p-6 sm:p-12 flex justify-center overflow-y-auto min-h-[600px] min-w-0">
           <div className="max-w-3xl w-full bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 shadow-md space-y-6 relative">
             {/* Document Header */}
             <div className="space-y-2 border-b border-slate-100 pb-4">
               <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
                 Introduction
               </h1>
-              <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-medium">
+              <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-medium flex-wrap max-w-full">
                 <span>By Product Team</span>
                 <span>•</span>
                 <span>Draft Document</span>
@@ -488,7 +488,7 @@ export const NotionAiReplica: React.FC = () => {
               {isTextSelected && (
                 <div className="mt-4 bg-white border border-slate-200 rounded-2xl shadow-2xl p-3 max-w-lg w-full space-y-2 animate-in fade-in duration-150 border-blue-200">
                   {/* Custom Instruction Input Bar */}
-                  <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus-within:border-blue-500 focus-within:bg-white">
+                  <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus-within:border-blue-500 focus-within:bg-white flex-wrap max-w-full">
                     <Sparkles className="w-4 h-4 text-purple-600 shrink-0" />
                     <input
                       type="text"
@@ -498,7 +498,7 @@ export const NotionAiReplica: React.FC = () => {
                         if (e.key === 'Enter') handleApplyEditorAi();
                       }}
                       placeholder="Ask AI to edit or generate..."
-                      className="flex-1 bg-transparent text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none"
+                      className="flex-1 bg-transparent text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none min-w-0"
                     />
                     <button
                       onClick={() => handleApplyEditorAi()}
@@ -523,7 +523,7 @@ export const NotionAiReplica: React.FC = () => {
                     <div className="space-y-0.5 text-xs font-semibold text-slate-700">
                       <button
                         onClick={() => handleApplyEditorAi('Improve writing')}
-                        className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 text-left transition-colors cursor-pointer"
+                        className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 text-left transition-colors cursor-pointer flex-wrap max-w-full"
                       >
                         <Wand2 className="w-3.5 h-3.5 text-purple-600" />
                         <span>Improve writing</span>
@@ -531,7 +531,7 @@ export const NotionAiReplica: React.FC = () => {
 
                       <button
                         onClick={() => handleApplyEditorAi('Fix spelling & grammar')}
-                        className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 text-left transition-colors cursor-pointer"
+                        className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 text-left transition-colors cursor-pointer flex-wrap max-w-full"
                       >
                         <Check className="w-3.5 h-3.5 text-emerald-600" />
                         <span>Fix spelling & grammar</span>
@@ -539,7 +539,7 @@ export const NotionAiReplica: React.FC = () => {
 
                       <button
                         onClick={() => handleApplyEditorAi('Make longer')}
-                        className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 text-left transition-colors cursor-pointer"
+                        className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 text-left transition-colors cursor-pointer flex-wrap max-w-full"
                       >
                         <AlignLeft className="w-3.5 h-3.5 text-blue-600" />
                         <span>Make longer</span>
@@ -547,7 +547,7 @@ export const NotionAiReplica: React.FC = () => {
 
                       <button
                         onClick={() => handleApplyEditorAi('Make shorter')}
-                        className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 text-left transition-colors cursor-pointer"
+                        className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 text-left transition-colors cursor-pointer flex-wrap max-w-full"
                       >
                         <Minus className="w-3.5 h-3.5 text-amber-600" />
                         <span>Make shorter</span>
@@ -557,7 +557,7 @@ export const NotionAiReplica: React.FC = () => {
                         onClick={() => handleApplyEditorAi('Change tone')}
                         className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center justify-between text-left transition-colors cursor-pointer"
                       >
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                           <Mic className="w-3.5 h-3.5 text-indigo-600" />
                           <span>Change tone</span>
                         </div>
@@ -566,7 +566,7 @@ export const NotionAiReplica: React.FC = () => {
 
                       <button
                         onClick={() => handleApplyEditorAi('Simplify language')}
-                        className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 text-left transition-colors cursor-pointer"
+                        className="w-full p-2 rounded-xl hover:bg-slate-100 flex items-center gap-2.5 text-left transition-colors cursor-pointer flex-wrap max-w-full"
                       >
                         <Smile className="w-3.5 h-3.5 text-rose-600" />
                         <span>Simplify language</span>
@@ -580,7 +580,7 @@ export const NotionAiReplica: React.FC = () => {
               {aiEditedText && (
                 <div className="mt-4 p-4 rounded-2xl bg-purple-50 dark:bg-purple-950/60 max-w-full overflow-hidden border border-purple-200 space-y-3 animate-in fade-in">
                   <div className="flex items-center justify-between text-xs font-bold text-purple-900 border-b border-purple-100 pb-2">
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1.5 flex-wrap max-w-full">
                       <Sparkles className="w-4 h-4 text-purple-600" />
                       Notion AI Edit Result ({lastInstructionUsed})
                     </span>
@@ -594,7 +594,7 @@ export const NotionAiReplica: React.FC = () => {
                   <div className="flex flex-wrap items-center gap-2 pt-1 max-w-full">
                     <button
                       onClick={handleAcceptEdit}
-                      className="px-3 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                      className="px-3 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors flex-wrap max-w-full"
                     >
                       <Check className="w-3.5 h-3.5" />
                       <span>Accept</span>
@@ -602,7 +602,7 @@ export const NotionAiReplica: React.FC = () => {
 
                     <button
                       onClick={handleRejectEdit}
-                      className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-purple-200 text-slate-700 text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                      className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-purple-200 text-slate-700 text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors flex-wrap max-w-full"
                     >
                       <X className="w-3.5 h-3.5" />
                       <span>Reject</span>
@@ -611,7 +611,7 @@ export const NotionAiReplica: React.FC = () => {
                     <button
                       onClick={() => handleApplyEditorAi(lastInstructionUsed)}
                       disabled={editorLoading}
-                      className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-purple-200 text-slate-700 text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                      className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-purple-200 text-slate-700 text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors flex-wrap max-w-full"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
                       <span>Try again</span>
@@ -622,7 +622,7 @@ export const NotionAiReplica: React.FC = () => {
 
               {/* Error Message */}
               {editorError && (
-                <div className="mt-3 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-center gap-2">
+                <div className="mt-3 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-center gap-2 flex-wrap max-w-full">
                   <AlertCircle className="w-4 h-4 text-rose-500 shrink-0" />
                   <span>{editorError}</span>
                 </div>
@@ -673,7 +673,7 @@ export const NotionAiReplica: React.FC = () => {
                     Trusted by teams at
                   </span>
                   <div className="flex items-center gap-6 text-slate-700 font-extrabold text-xs">
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 flex-wrap max-w-full">
                       <Building2 className="w-4 h-4 text-slate-800" />
                       <span>TOYOTA</span>
                     </div>
@@ -784,7 +784,7 @@ export const NotionAiReplica: React.FC = () => {
             {activeFeatureDemo && (
               <div className="mt-6 bg-slate-50 border border-slate-200 rounded-3xl p-6 space-y-4 animate-in fade-in">
                 <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <span className="text-xs font-extrabold text-slate-900">
                       Demo Interactive Fitur: Notion AI ({activeFeatureDemo})
                     </span>
@@ -812,7 +812,7 @@ export const NotionAiReplica: React.FC = () => {
                     </div>
                   ))}
                   {featureLoading && (
-                    <div className="p-3 rounded-2xl bg-white border border-slate-200 text-slate-500 text-xs font-medium flex items-center gap-2">
+                    <div className="p-3 rounded-2xl bg-white border border-slate-200 text-slate-500 text-xs font-medium flex items-center gap-2 flex-wrap max-w-full">
                       <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-600" />
                       <span>Notion AI sedang mencari jawaban...</span>
                     </div>
@@ -820,7 +820,7 @@ export const NotionAiReplica: React.FC = () => {
                 </div>
 
                 {/* Chat Input Bar */}
-                <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-2xl p-2 shadow-xs">
+                <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-2xl p-2 shadow-xs flex-wrap max-w-full">
                   <input
                     type="text"
                     value={featureInput}
@@ -829,7 +829,7 @@ export const NotionAiReplica: React.FC = () => {
                       if (e.key === 'Enter') handleSendFeatureMessage();
                     }}
                     placeholder={`Tanyakan sesuatu ke Notion AI (${activeFeatureDemo})...`}
-                    className="flex-1 bg-transparent text-xs font-medium text-slate-800 focus:outline-none px-2"
+                    className="flex-1 bg-transparent text-xs font-medium text-slate-800 focus:outline-none px-2 min-w-0"
                   />
                   <button
                     onClick={handleSendFeatureMessage}

@@ -474,7 +474,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
             title="Percakapan baru"
           >
             <Edit2 className="w-4 h-4 shrink-0" />
-            <span className="text-xs hidden lg:inline truncate">Percakapan baru</span>
+            <span className="text-xs hidden lg:inline break-words whitespace-normal leading-snug">Percakapan baru</span>
           </button>
 
           {/* Search Button */}
@@ -487,7 +487,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
             title="Search"
           >
             <Search className="w-4 h-4 shrink-0" />
-            <span className="text-xs hidden lg:inline truncate">Search</span>
+            <span className="text-xs hidden lg:inline break-words whitespace-normal leading-snug">Search</span>
           </button>
 
           {/* Gems Manager Button */}
@@ -500,7 +500,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
             title="Pengelola Gem"
           >
             <Gem className="w-4 h-4 text-blue-400 shrink-0" />
-            <span className="text-xs hidden lg:inline truncate">Gems Manager</span>
+            <span className="text-xs hidden lg:inline break-words whitespace-normal leading-snug">Gems Manager</span>
           </button>
 
           {/* Apps Button */}
@@ -513,7 +513,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
             title="Apps"
           >
             <LayoutGrid className="w-4 h-4 shrink-0" />
-            <span className="text-xs hidden lg:inline truncate">Apps</span>
+            <span className="text-xs hidden lg:inline break-words whitespace-normal leading-snug">Apps</span>
           </button>
 
           {/* Saved / Heart Button */}
@@ -526,7 +526,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
             title="Disimpan"
           >
             <Heart className="w-4 h-4 shrink-0" />
-            <span className="text-xs hidden lg:inline truncate">Disimpan</span>
+            <span className="text-xs hidden lg:inline break-words whitespace-normal leading-snug">Disimpan</span>
           </button>
         </div>
 
@@ -549,8 +549,8 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
               W
             </div>
             <div className="hidden lg:flex flex-col text-[11px] truncate">
-              <span className="font-bold text-slate-700 dark:text-slate-200 truncate">Wahyudi</span>
-              <span className="text-slate-500 text-[10px] truncate">Maxy Academy</span>
+              <span className="font-bold text-slate-700 dark:text-slate-200 break-words whitespace-normal leading-snug">Wahyudi</span>
+              <span className="text-slate-500 text-[10px] break-words whitespace-normal leading-snug">Maxy Academy</span>
             </div>
           </div>
         </div>
@@ -651,7 +651,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
         {/* VIEW 2: SEARCH VIEW */}
         {currentView === 'search' && (
-          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6 bg-[#0c0d11]">
+          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6 bg-[#0c0d11] min-w-0">
             <div className="max-w-2xl mx-auto space-y-4">
               <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center space-x-2">
                 <Search className="w-5 h-5 text-blue-400" />
@@ -687,7 +687,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                           {gem.initial}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-blue-300 truncate">{gem.name}</h4>
+                          <h4 className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-blue-300 break-words whitespace-normal leading-snug">{gem.name}</h4>
                           <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">{gem.description}</p>
                         </div>
                       </div>
@@ -701,7 +701,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
         {/* VIEW 3: APPS INTEGRATION VIEW */}
         {currentView === 'apps' && (
-          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6 bg-[#0c0d11]">
+          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6 bg-[#0c0d11] min-w-0">
             <div className="max-w-2xl mx-auto space-y-4">
               <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center space-x-2">
                 <LayoutGrid className="w-5 h-5 text-blue-400" />
@@ -739,7 +739,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
         {/* VIEW 4: SAVED VIEW */}
         {currentView === 'saved' && (
-          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6 bg-[#0c0d11]">
+          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6 bg-[#0c0d11] min-w-0">
             <div className="max-w-2xl mx-auto space-y-4">
               <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center space-x-2">
                 <Heart className="w-5 h-5 text-rose-400 fill-current" />
@@ -762,7 +762,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
         {/* VIEW 5: GEM MANAGER ("Halaman Gems") */}
         {currentView === 'gems-manager' && (
-          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-8 bg-[#0c0d11]">
+          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-8 bg-[#0c0d11] min-w-0">
             {/* Promo Banner: Google Labs */}
             <div className="bg-gradient-to-r from-blue-950 via-indigo-950 to-slate-900 border border-blue-800/60 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4 shadow-xl">
               <div className="w-12 h-12 rounded-2xl bg-black/60 border border-blue-500/40 flex items-center justify-center shrink-0 shadow-md">
@@ -887,10 +887,10 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                         {gem.initial}
                       </div>
                       <div className="truncate">
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-300 transition-colors truncate">
+                        <h4 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-300 transition-colors break-words whitespace-normal leading-snug">
                           {gem.name}
                         </h4>
-                        <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate max-w-lg">
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 break-words whitespace-normal leading-snug max-w-lg">
                           {gem.description}
                         </p>
                       </div>
@@ -1014,7 +1014,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
             </div>
 
             {/* Split Form View: Left Form Fields + Right Real-time Preview Panel */}
-            <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
+            <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden min-w-0">
               {/* LEFT FORM FIELDS (Cols 7) */}
               <div className="lg:col-span-7 p-4 sm:p-6 overflow-y-auto space-y-5 border-r border-slate-200 dark:border-slate-800">
                 {/* Field: Nama */}
@@ -1197,7 +1197,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
             )}
 
             {/* Chat History Container */}
-            <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 max-w-3xl w-full mx-auto">
+            <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 max-w-3xl w-full mx-auto min-w-0">
               {chatMessages.map((msg, idx) => (
                 <div key={idx} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
                   {msg.label && (

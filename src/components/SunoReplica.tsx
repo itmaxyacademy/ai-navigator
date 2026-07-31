@@ -235,7 +235,7 @@ export const SunoReplica: React.FC = () => {
     <div className="w-full bg-[#090b10] text-slate-800 dark:text-slate-100 rounded-2xl overflow-hidden border border-[#1b2133] shadow-2xl font-sans relative">
       {/* Toast Notification Banner */}
       {toastMessage && (
-        <div className="fixed top-20 right-6 z-50 bg-gradient-to-r from-pink-600 to-orange-600 text-slate-900 dark:text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-2xl border border-pink-400/40 animate-in fade-in slide-in-from-top-2 duration-200 flex items-center gap-2">
+        <div className="fixed top-20 right-6 z-50 bg-gradient-to-r from-pink-600 to-orange-600 text-slate-900 dark:text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-2xl border border-pink-400/40 animate-in fade-in slide-in-from-top-2 duration-200 flex items-center gap-2 flex-wrap max-w-full">
           <Sparkles className="w-4 h-4 text-amber-200" />
           <span>{toastMessage}</span>
         </div>
@@ -243,7 +243,7 @@ export const SunoReplica: React.FC = () => {
 
       {/* Top Stage Navigation Switcher Header */}
       <div className="bg-[#0f121d] border-b border-[#1b2030] px-4 py-2.5 flex items-center justify-between text-xs">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap max-w-full">
           <span className="px-2.5 py-0.5 rounded-full font-extrabold bg-pink-500/20 text-pink-300 border border-pink-500/30 text-[10px] tracking-wide">
             SUNO AI V4.5
           </span>
@@ -253,7 +253,7 @@ export const SunoReplica: React.FC = () => {
         </div>
 
         {/* Stage Toggle Pills */}
-        <div className="flex items-center gap-1.5 bg-[#080a0f] p-1 rounded-xl border border-[#1e2436]">
+        <div className="flex items-center gap-1.5 bg-[#080a0f] p-1 rounded-xl border border-[#1e2436] flex-wrap max-w-full">
           <button
             onClick={() => {
               setCurrentStage('landing');
@@ -295,14 +295,14 @@ export const SunoReplica: React.FC = () => {
 
           {/* Landing Header Bar */}
           <div className="flex items-center justify-between relative z-10 border-b border-[#1b2030] pb-5">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap max-w-full">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-pink-500 via-rose-500 to-orange-500 flex items-center justify-center text-slate-900 dark:text-white font-black text-lg shadow-lg shadow-pink-500/20">
                 S
               </div>
               <span className="text-xl font-black tracking-widest text-slate-900 dark:text-white">SUNO</span>
             </div>
 
-            <div className="flex items-center gap-3 text-xs font-bold">
+            <div className="flex items-center gap-3 text-xs font-bold flex-wrap max-w-full">
               <button
                 onClick={() => {
                   setCurrentStage('dashboard');
@@ -326,7 +326,7 @@ export const SunoReplica: React.FC = () => {
 
           {/* Hero Section */}
           <div className="text-center space-y-4 max-w-3xl mx-auto pt-6 relative z-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-300 text-xs font-semibold">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-300 text-xs font-semibold flex-wrap max-w-full">
               <Sparkles className="w-3.5 h-3.5 text-pink-400 animate-pulse" />
               <span>Sintesis Musik AI Generatif Terdepan</span>
             </div>
@@ -344,7 +344,7 @@ export const SunoReplica: React.FC = () => {
             {/* Input Box: Chat untuk bikin musik */}
             <div className="bg-[#111422] border border-[#23293e] hover:border-pink-500/50 rounded-3xl p-4 shadow-2xl space-y-3 transition-colors text-left max-w-2xl mx-auto mt-6">
               <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-bold px-1">
-                <span className="flex items-center gap-1.5 text-pink-400">
+                <span className="flex items-center gap-1.5 text-pink-400 flex-wrap max-w-full">
                   <Wand2 className="w-4 h-4" />
                   Chat untuk bikin musik
                 </span>
@@ -367,7 +367,7 @@ export const SunoReplica: React.FC = () => {
                       setActiveModalKey('btn-plus');
                       showToast('Fungsi (+): Menambahkan sampel audio/referensi melodi');
                     }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#181d2c] hover:bg-[#232a3f] text-slate-600 dark:text-slate-300 rounded-xl text-xs font-semibold border border-[#2a324b] transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#181d2c] hover:bg-[#232a3f] text-slate-600 dark:text-slate-300 rounded-xl text-xs font-semibold border border-[#2a324b] transition-colors flex-wrap max-w-full"
                   >
                     <Plus className="w-3.5 h-3.5 text-pink-400" />
                     <span>(+) Referensi</span>
@@ -380,7 +380,7 @@ export const SunoReplica: React.FC = () => {
                       setCurrentStage('dashboard');
                       showToast('Membuka Opsi Lanjutan (Custom Mode)...');
                     }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#181d2c] hover:bg-[#232a3f] text-slate-600 dark:text-slate-300 rounded-xl text-xs font-semibold border border-[#2a324b] transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#181d2c] hover:bg-[#232a3f] text-slate-600 dark:text-slate-300 rounded-xl text-xs font-semibold border border-[#2a324b] transition-colors flex-wrap max-w-full"
                   >
                     <Sliders className="w-3.5 h-3.5 text-amber-400" />
                     <span>Lanjutan</span>
@@ -403,7 +403,7 @@ export const SunoReplica: React.FC = () => {
                     handleGenerateSong(landingPrompt);
                   }}
                   disabled={isGenerating}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-pink-600 via-rose-500 to-orange-500 hover:from-pink-500 hover:to-orange-400 text-slate-900 dark:text-white font-extrabold text-xs rounded-xl shadow-lg shadow-pink-600/30 transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-pink-600 via-rose-500 to-orange-500 hover:from-pink-500 hover:to-orange-400 text-slate-900 dark:text-white font-extrabold text-xs rounded-xl shadow-lg shadow-pink-600/30 transition-all active:scale-95 disabled:opacity-50 cursor-pointer flex-wrap max-w-full"
                 >
                   {isGenerating ? (
                     <>
@@ -427,19 +427,19 @@ export const SunoReplica: React.FC = () => {
               Dipercaya oleh Kreator & Komunitas Audio Global
             </p>
             <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 opacity-70 text-slate-500 dark:text-slate-400 font-extrabold text-xs">
-              <span className="flex items-center gap-1.5 hover:text-pink-400 transition-colors">
+              <span className="flex items-center gap-1.5 hover:text-pink-400 transition-colors flex-wrap max-w-full">
                 <Headphones className="w-4 h-4" /> TECH BEATS
               </span>
-              <span className="flex items-center gap-1.5 hover:text-orange-400 transition-colors">
+              <span className="flex items-center gap-1.5 hover:text-orange-400 transition-colors flex-wrap max-w-full">
                 <Globe className="w-4 h-4" /> GLOBAL MUSIC AI
               </span>
-              <span className="flex items-center gap-1.5 hover:text-purple-400 transition-colors">
+              <span className="flex items-center gap-1.5 hover:text-purple-400 transition-colors flex-wrap max-w-full">
                 <Disc className="w-4 h-4" /> SOUNDX STUDIO
               </span>
-              <span className="flex items-center gap-1.5 hover:text-amber-400 transition-colors">
+              <span className="flex items-center gap-1.5 hover:text-amber-400 transition-colors flex-wrap max-w-full">
                 <Zap className="w-4 h-4" /> MAXY AUDIO LAB
               </span>
-              <span className="flex items-center gap-1.5 hover:text-emerald-400 transition-colors">
+              <span className="flex items-center gap-1.5 hover:text-emerald-400 transition-colors flex-wrap max-w-full">
                 <Radio className="w-4 h-4" /> FUTURE SOUND
               </span>
             </div>
@@ -447,13 +447,13 @@ export const SunoReplica: React.FC = () => {
 
           {/* Button Explanation Guide Cards */}
           <div className="bg-[#0f121e] border border-[#1d2335] rounded-2xl p-5 space-y-3 text-xs relative z-10 max-w-4xl mx-auto">
-            <h3 className="font-extrabold text-slate-900 dark:text-white text-sm flex items-center gap-2">
+            <h3 className="font-extrabold text-slate-900 dark:text-white text-sm flex items-center gap-2 flex-wrap max-w-full">
               <Info className="w-4 h-4 text-pink-400" />
               Penjelasan Fungsi Tombol Input Landing Page Suno:
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-slate-600 dark:text-slate-300">
               <div className="bg-[#080a10] border border-[#1a1f30] p-3 rounded-xl space-y-1">
-                <span className="font-bold text-pink-400 flex items-center gap-1">
+                <span className="font-bold text-pink-400 flex items-center gap-1 flex-wrap max-w-full">
                   <Plus className="w-3.5 h-3.5" /> (+) Referensi
                 </span>
                 <p className="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
@@ -462,7 +462,7 @@ export const SunoReplica: React.FC = () => {
               </div>
 
               <div className="bg-[#080a10] border border-[#1a1f30] p-3 rounded-xl space-y-1">
-                <span className="font-bold text-amber-400 flex items-center gap-1">
+                <span className="font-bold text-amber-400 flex items-center gap-1 flex-wrap max-w-full">
                   <Sliders className="w-3.5 h-3.5" /> Tombol Lanjutan
                 </span>
                 <p className="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
@@ -471,7 +471,7 @@ export const SunoReplica: React.FC = () => {
               </div>
 
               <div className="bg-[#080a10] border border-[#1a1f30] p-3 rounded-xl space-y-1">
-                <span className="font-bold text-orange-400 flex items-center gap-1">
+                <span className="font-bold text-orange-400 flex items-center gap-1 flex-wrap max-w-full">
                   <Dices className="w-3.5 h-3.5" /> Tombol Dice
                 </span>
                 <p className="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
@@ -480,7 +480,7 @@ export const SunoReplica: React.FC = () => {
               </div>
 
               <div className="bg-[#080a10] border border-[#1a1f30] p-3 rounded-xl space-y-1">
-                <span className="font-bold text-rose-400 flex items-center gap-1">
+                <span className="font-bold text-rose-400 flex items-center gap-1 flex-wrap max-w-full">
                   <Music className="w-3.5 h-3.5" /> Tombol Buat
                 </span>
                 <p className="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
@@ -502,7 +502,7 @@ export const SunoReplica: React.FC = () => {
             <div className="space-y-5">
               {/* Suno Brand */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 flex-wrap max-w-full">
                   <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-pink-500 to-orange-500 flex items-center justify-center text-slate-900 dark:text-white font-black text-base">
                     S
                   </div>
@@ -517,12 +517,12 @@ export const SunoReplica: React.FC = () => {
               </div>
 
               {/* User Account Info Box */}
-              <div className="bg-[#131724] border border-[#21273c] rounded-2xl p-3 flex items-center gap-2.5">
+              <div className="bg-[#131724] border border-[#21273c] rounded-2xl p-3 flex items-center gap-2.5 flex-wrap max-w-full">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 text-slate-900 dark:text-white font-bold flex items-center justify-center text-xs shrink-0">
                   MA
                 </div>
-                <div className="flex-1 overflow-hidden">
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">wahyudi_maxy_academy</h4>
+                <div className="flex-1 overflow-hidden min-w-0">
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white break-words whitespace-normal leading-snug">wahyudi_maxy_academy</h4>
                   <p className="text-[10px] text-pink-400 font-semibold">Paket Gratis ({credits} Kredit)</p>
                 </div>
               </div>
@@ -538,7 +538,7 @@ export const SunoReplica: React.FC = () => {
               <nav className={`space-y-1 text-xs ${isMobileMenuOpen ? 'block' : 'hidden lg:block'}`}>
                 <button
                   onClick={() => showToast('Membuka Beranda Suno...')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors flex-wrap max-w-full"
                 >
                   <Home className="w-4 h-4" />
                   <span>Beranda</span>
@@ -546,7 +546,7 @@ export const SunoReplica: React.FC = () => {
 
                 <button
                   onClick={() => showToast('Membuka Jelajahi Musik...')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors flex-wrap max-w-full"
                 >
                   <Compass className="w-4 h-4" />
                   <span>Jelajahi</span>
@@ -566,7 +566,7 @@ export const SunoReplica: React.FC = () => {
 
                 <button
                   onClick={() => showToast('Membuka Studio Audio...')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors flex-wrap max-w-full"
                 >
                   <Radio className="w-4 h-4" />
                   <span>Studio</span>
@@ -574,7 +574,7 @@ export const SunoReplica: React.FC = () => {
 
                 <button
                   onClick={() => setMobileTab('workspace')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors flex-wrap max-w-full"
                 >
                   <FolderKanban className="w-4 h-4" />
                   <span>Pustaka Lagu</span>
@@ -592,7 +592,7 @@ export const SunoReplica: React.FC = () => {
           <div className="w-full lg:w-96 bg-[#0f121e] border-r border-[#1b2030] p-5 space-y-5 shrink-0 overflow-y-auto">
             {/* Top Mode Selector Tabs: Sederhana vs Lanjutan */}
             <div className="flex items-center justify-between border-b border-[#1b2030] pb-3">
-              <div className="flex items-center gap-1.5 bg-[#080a10] p-1 rounded-xl border border-[#1a1f30]">
+              <div className="flex items-center gap-1.5 bg-[#080a10] p-1 rounded-xl border border-[#1a1f30] flex-wrap max-w-full">
                 <button
                   onClick={() => {
                     setMode('simple');
@@ -628,7 +628,7 @@ export const SunoReplica: React.FC = () => {
             </div>
 
             {/* Quick Option Pills */}
-            <div className="flex items-center gap-1.5 text-[11px] overflow-x-auto pb-1">
+            <div className="flex items-center gap-1.5 text-[11px] overflow-x-auto pb-1 flex-wrap max-w-full">
               <button
                 onClick={() => showToast('Opsi + Audio: Unggah klip audio')}
                 className="px-2.5 py-1 bg-[#161a28] hover:bg-[#20273b] border border-[#232b42] rounded-lg text-slate-600 dark:text-slate-300 shrink-0"
@@ -637,7 +637,7 @@ export const SunoReplica: React.FC = () => {
               </button>
               <button
                 onClick={() => showToast('Opsi + Suara: Kloning sampel vokal baru')}
-                className="px-2.5 py-1 bg-[#161a28] hover:bg-[#20273b] border border-[#232b42] rounded-lg text-slate-600 dark:text-slate-300 shrink-0 flex items-center gap-1"
+                className="px-2.5 py-1 bg-[#161a28] hover:bg-[#20273b] border border-[#232b42] rounded-lg text-slate-600 dark:text-slate-300 shrink-0 flex items-center gap-1 flex-wrap max-w-full"
               >
                 + Suara <span className="px-1 py-0.2 bg-pink-600 text-[9px] text-slate-900 dark:text-white rounded font-bold">Baru</span>
               </button>
@@ -652,7 +652,7 @@ export const SunoReplica: React.FC = () => {
             {/* Error Alert Box */}
             {errorMessage && (
               <div className="bg-red-500/10 border border-red-500/40 rounded-2xl p-3 flex items-center justify-between gap-3 text-xs text-red-300 animate-in fade-in">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <X className="w-4 h-4 text-red-400 shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
@@ -671,7 +671,7 @@ export const SunoReplica: React.FC = () => {
                 <div className="space-y-1.5">
                   <label className="block text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center justify-between">
                     <span>Deskripsi Lagu (Song Prompt):</span>
-                    <button onClick={handleRandomizePrompt} className="text-pink-400 hover:underline flex items-center gap-1 text-[10px]">
+                    <button onClick={handleRandomizePrompt} className="text-pink-400 hover:underline flex items-center gap-1 text-[10px] flex-wrap max-w-full">
                       <Dices className="w-3 h-3" /> Acak
                     </button>
                   </label>
@@ -714,7 +714,7 @@ export const SunoReplica: React.FC = () => {
                     <span>Lirik Lagu (Lyrics):</span>
                     <button
                       onClick={handleAutoGenerateLyrics}
-                      className="text-pink-400 hover:underline flex items-center gap-1 text-[10px]"
+                      className="text-pink-400 hover:underline flex items-center gap-1 text-[10px] flex-wrap max-w-full"
                     >
                       <Sparkles className="w-3 h-3 text-pink-400" /> Auto-Generate Lirik
                     </button>
@@ -798,17 +798,17 @@ export const SunoReplica: React.FC = () => {
           </div>
 
           {/* Right Workspace / Song List & Player Column */}
-          <div className="flex-1 p-5 space-y-5 overflow-y-auto bg-[#090b10]">
+          <div className="flex-1 p-5 space-y-5 overflow-y-auto bg-[#090b10] min-w-0">
             <div className="flex items-center justify-between border-b border-[#1b2030] pb-3">
               <div>
-                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                   <FolderKanban className="w-4 h-4 text-pink-400" />
                   Workspaces &gt; My Workspace
                 </h3>
                 <p className="text-[10px] text-slate-500 dark:text-slate-400">Daftar lagu buatan Anda di Suno AI Maxy Academy</p>
               </div>
 
-              <div className="flex items-center gap-2 text-xs">
+              <div className="flex items-center gap-2 text-xs flex-wrap max-w-full">
                 <span className="px-2.5 py-1 bg-[#131725] text-slate-600 dark:text-slate-300 rounded-lg border border-[#21283e] font-mono text-[10px]">
                   {generatedSongs.length} Lagu
                 </span>
@@ -829,38 +829,38 @@ export const SunoReplica: React.FC = () => {
                         : 'border-[#1e2436] hover:border-[#2b344d]'
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
+                    <div className="flex items-start justify-between gap-2 sm:gap-3 w-full min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0 flex-wrap max-w-full">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             handleTogglePlay(song.id);
                           }}
-                          className={`w-11 h-11 rounded-2xl flex items-center justify-center font-bold text-slate-900 dark:text-white shadow-lg shrink-0 transition-transform active:scale-90 ${
+                          className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center font-bold text-slate-900 dark:text-white shadow-lg shrink-0 transition-transform active:scale-90 ${
                             isSelected && isPlaying
                               ? 'bg-gradient-to-tr from-pink-600 to-orange-500'
                               : 'bg-[#1d2336] hover:bg-[#28314a] text-slate-700 dark:text-slate-200'
                           }`}
                         >
-                          {isSelected && isPlaying ? <Pause className="w-5 h-5 fill-white" /> : <Play className="w-5 h-5 fill-white ml-0.5" />}
+                          {isSelected && isPlaying ? <Pause className="w-4 h-4 sm:w-5 sm:h-5 fill-white" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-white ml-0.5" />}
                         </button>
 
-                        <div>
-                          <h4 className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                            {song.title}
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-xs font-bold text-slate-900 dark:text-white flex flex-wrap items-center gap-1.5 w-full leading-snug">
+                            <span className="break-words">{song.title}</span>
                             {song.isInstrumental && (
-                              <span className="px-2 py-0.2 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[9px] rounded font-semibold">
+                              <span className="px-1.5 py-0.5 sm:px-2 sm:py-0.2 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[8px] sm:text-[9px] rounded font-semibold shrink-0">
                                 Instrumental
                               </span>
                             )}
                           </h4>
-                          <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate max-w-md">{song.style}</p>
-                          <span className="text-[10px] text-slate-500 font-mono">{song.createdAt} • {song.duration}</span>
+                          <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 break-words w-full mt-0.5 leading-snug">{song.style}</p>
+                          <span className="text-[9px] sm:text-[10px] text-slate-500 font-mono block w-full mt-1">{song.createdAt} • {song.duration}</span>
                         </div>
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="flex items-center gap-1.5 text-xs">
+                      <div className="flex items-center gap-1.5 text-xs shrink-0 flex-wrap max-w-full">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -899,7 +899,7 @@ export const SunoReplica: React.FC = () => {
                     </div>
 
                     {/* Waveform Visualization */}
-                    <div className="bg-[#080a10] rounded-xl p-2.5 flex items-center gap-1 h-9 border border-[#1b2030]">
+                    <div className="bg-[#080a10] rounded-xl p-2.5 flex items-center gap-1 h-9 border border-[#1b2030] flex-wrap max-w-full">
                       {song.waveform.map((barHeight, idx) => {
                         const isPlayed = isSelected && isPlaying && idx < 12;
                         return (
@@ -924,14 +924,14 @@ export const SunoReplica: React.FC = () => {
             {activeSong && (
               <div className="bg-[#0f1321] border border-pink-500/40 rounded-2xl p-4 space-y-3 shadow-2xl relative">
                 <div className="flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <Disc className={`w-4 h-4 text-pink-400 ${isPlaying ? 'animate-spin' : ''}`} />
                     <span className="font-bold text-slate-900 dark:text-white">Sedang Diputar: {activeSong.title}</span>
                   </div>
                   <span className="text-[10px] font-mono text-pink-400">{activeSong.style}</span>
                 </div>
 
-                <div className="flex items-center gap-4 bg-[#080a10] p-3 rounded-xl border border-[#1a1f30]">
+                <div className="flex items-center gap-4 bg-[#080a10] p-3 rounded-xl border border-[#1a1f30] flex-wrap max-w-full">
                   <button
                     onClick={() => handleTogglePlay(activeSong.id)}
                     className="w-10 h-10 rounded-full bg-gradient-to-tr from-pink-600 to-orange-500 text-slate-900 dark:text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
@@ -939,7 +939,7 @@ export const SunoReplica: React.FC = () => {
                     {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-white ml-0.5" />}
                   </button>
 
-                  <div className="flex-1 space-y-1">
+                  <div className="flex-1 space-y-1 min-w-0">
                     <div className="flex justify-between text-[11px] text-slate-600 dark:text-slate-300 font-mono">
                       <span>0:{Math.min(59, Math.floor(songProgress * 1.5)).toString().padStart(2, '0')}</span>
                       <span>{activeSong.duration}</span>

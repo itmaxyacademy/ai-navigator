@@ -177,7 +177,7 @@ export const StableDiffusionReplica: React.FC = () => {
       
       {/* Simulator Device View Mode Switcher Header Bar */}
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-4 py-2 flex items-center justify-between z-40 shrink-0 text-slate-900 dark:text-white">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap max-w-full">
           <Sparkles className="w-4 h-4 text-sky-400" />
           <span className="text-xs font-bold text-slate-700 dark:text-slate-200">Mode Tampilan Stable Diffusion Simulator:</span>
         </div>
@@ -205,12 +205,12 @@ export const StableDiffusionReplica: React.FC = () => {
       
       {/* Top Notice Banner (Matching Screenshot 1) */}
       <div className="bg-slate-100 border-b border-slate-200 px-3 py-2 text-xs flex flex-wrap items-center justify-between gap-2 z-30">
-        <div className="flex items-center gap-2 text-slate-600">
+        <div className="flex items-center gap-2 text-slate-600 flex-wrap max-w-full">
           <span>You're on the Free plan. Upgrade for more credits, access to every model, and watermark-free generations.</span>
         </div>
         <button
           onClick={() => explainFeature('Upgrade Membership', 'Subscription', 'Tingkatkan akun Maxy Academy Anda ke paket Pro untuk mendapatkan kredit tanpa batas dan bebas watermark!')}
-          className="relative px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition-all shadow flex items-center gap-1"
+          className="relative px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition-all shadow flex items-center gap-1 flex-wrap max-w-full"
         >
           <span>Upgrade</span>
           <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full shadow border border-white">
@@ -221,7 +221,7 @@ export const StableDiffusionReplica: React.FC = () => {
 
       {/* Main App Bar Header */}
       <div className="h-14 border-b border-slate-200 bg-white px-3 sm:px-4 flex items-center justify-between shrink-0 z-30">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap max-w-full">
           <button 
             onClick={() => {
               setIsSidebarOpen(!isSidebarOpen);
@@ -234,7 +234,7 @@ export const StableDiffusionReplica: React.FC = () => {
 
           <div 
             onClick={() => explainFeature('Yeri AI / Stable Diffusion Studio', 'Brand Identity', 'Yeri AI Studio: Platform kecerdasan buatan terdepan untuk pembuatan gambar, foto realistis, dan video karya Maxy Academy.')}
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer flex-wrap max-w-full"
           >
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 via-indigo-500 to-pink-500 p-0.5 shadow-md flex items-center justify-center">
               <div className="w-full h-full bg-white rounded-full flex items-center justify-center">
@@ -248,12 +248,12 @@ export const StableDiffusionReplica: React.FC = () => {
         </div>
 
         {/* Right Header Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap max-w-full">
 
           {/* Credit Balance Pill */}
           <button
             onClick={() => explainFeature('Kredit Harian AI', 'Credits', `Akun Maxy Academy saat ini memiliki ${credits} kredit tersisa untuk merender gambar.`)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-sky-100 border border-sky-200 text-sky-800 rounded-full text-xs font-bold shadow-sm hover:bg-sky-200 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-sky-100 border border-sky-200 text-sky-800 rounded-full text-xs font-bold shadow-sm hover:bg-sky-200 transition-colors flex-wrap max-w-full"
           >
             <Sparkles className="w-3.5 h-3.5 text-sky-600" />
             <span>Credit: {credits}</span>
@@ -281,7 +281,7 @@ export const StableDiffusionReplica: React.FC = () => {
       </div>
 
       {/* Main Content Layout */}
-      <div className="flex-1 flex overflow-hidden bg-slate-50">
+      <div className="flex-1 flex overflow-hidden bg-slate-50 min-w-0">
         
         {/* Desktop Left Sidebar (Screenshots 1 & 2) */}
         {deviceMode === 'desktop' && isSidebarOpen && (
@@ -314,7 +314,7 @@ export const StableDiffusionReplica: React.FC = () => {
                 </button>
                 <button 
                   onClick={() => explainFeature('AI Photo Effects', 'Sidebar Nav', 'Fitur penyuntingan efek foto portrait dan pencahayaan pintar.')}
-                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100"
+                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100 flex-wrap max-w-full"
                 >
                   <Sparkles className="w-4 h-4 text-amber-500" />
                   <span>AI Photo Effects</span>
@@ -326,14 +326,14 @@ export const StableDiffusionReplica: React.FC = () => {
                 <span className="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">AI Video</span>
                 <button 
                   onClick={() => explainFeature('AI Video Generator', 'Sidebar Nav', 'Mengubah foto statis atau teks menjadi video gerak cinematic.')}
-                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100"
+                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100 flex-wrap max-w-full"
                 >
                   <Video className="w-4 h-4 text-purple-600" />
                   <span>AI Video Generator</span>
                 </button>
                 <button 
                   onClick={() => explainFeature('AI Video Templates', 'Sidebar Nav', 'Kumpulan template animasi video promosi siap pakai.')}
-                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100"
+                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100 flex-wrap max-w-full"
                 >
                   <Layers className="w-4 h-4 text-emerald-600" />
                   <span>AI Video Templates</span>
@@ -347,7 +347,7 @@ export const StableDiffusionReplica: React.FC = () => {
                   onClick={() => explainFeature('Image Upscaler (Pro)', 'Sidebar Nav', 'Meningkatkan resolusi gambar hingga 4K/8K tanpa kehilangan detail.')}
                   className="w-full text-left px-3 py-2 rounded-xl flex items-center justify-between hover:bg-slate-100"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <Maximize2 className="w-4 h-4 text-indigo-600" />
                     <span>Image Upscaler</span>
                   </div>
@@ -355,14 +355,14 @@ export const StableDiffusionReplica: React.FC = () => {
                 </button>
                 <button 
                   onClick={() => explainFeature('Background Remover', 'Sidebar Nav', 'Menghapus latar belakang foto secara otomatis dengan ketajaman piksel tinggi.')}
-                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100"
+                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100 flex-wrap max-w-full"
                 >
                   <X className="w-4 h-4 text-rose-500" />
                   <span>Background Remover</span>
                 </button>
                 <button 
                   onClick={() => explainFeature('Expand Image', 'Sidebar Nav', 'Melakukan outpainting gambar untuk memperluas bingkai secara seamless.')}
-                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100"
+                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100 flex-wrap max-w-full"
                 >
                   <ExternalLink className="w-4 h-4 text-cyan-600" />
                   <span>Expand Image</span>
@@ -373,14 +373,14 @@ export const StableDiffusionReplica: React.FC = () => {
               <div className="space-y-1 border-t border-slate-200 pt-2">
                 <button 
                   onClick={() => explainFeature('Prompt Database', 'Sidebar Nav', 'Perpustakaan contoh prompt pilihan dari para kreator profesional.')}
-                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100"
+                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100 flex-wrap max-w-full"
                 >
                   <Database className="w-4 h-4 text-slate-500" />
                   <span>Prompt Database</span>
                 </button>
                 <button 
                   onClick={() => explainFeature('Creation History', 'Sidebar Nav', 'Riwayat hasil generasi gambar yang pernah dibuat oleh akun Maxy Academy.')}
-                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100"
+                  className="w-full text-left px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-slate-100 flex-wrap max-w-full"
                 >
                   <History className="w-4 h-4 text-slate-500" />
                   <span>Creation History</span>
@@ -400,7 +400,7 @@ export const StableDiffusionReplica: React.FC = () => {
         )}
 
         {/* Studio Center Workspace */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 min-w-0">
           
           {/* Main Title Banner */}
           <div className="text-center max-w-2xl mx-auto space-y-1">
@@ -429,7 +429,7 @@ export const StableDiffusionReplica: React.FC = () => {
                 </div>
 
                 {/* Text Area Input */}
-                <div className="flex-1 relative">
+                <div className="flex-1 relative min-w-0">
                   <textarea
                     value={promptInput}
                     onChange={(e) => setPromptInput(e.target.value)}
@@ -449,7 +449,7 @@ export const StableDiffusionReplica: React.FC = () => {
                   {/* Image Dropdown */}
                   <button 
                     onClick={() => explainFeature('Image Input Mode', 'Control', 'Mode referensi gambar aktif.')}
-                    className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg font-medium text-slate-700 flex items-center gap-1"
+                    className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg font-medium text-slate-700 flex items-center gap-1 flex-wrap max-w-full"
                   >
                     <span>Image</span>
                     <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
@@ -461,7 +461,7 @@ export const StableDiffusionReplica: React.FC = () => {
                       setIsModelModalOpen(true);
                       explainFeature('Model Selector', 'Model Choice', 'Membuka popup pilihan model AI (Seedream 3.5, Seedream 5.0, OpenAI GPT Image 2, Nano Banana Pro).');
                     }}
-                    className="px-2.5 py-1.5 bg-sky-50 hover:bg-sky-100 border border-sky-200 rounded-lg font-bold text-sky-800 flex items-center gap-1.5"
+                    className="px-2.5 py-1.5 bg-sky-50 hover:bg-sky-100 border border-sky-200 rounded-lg font-bold text-sky-800 flex items-center gap-1.5 flex-wrap max-w-full"
                   >
                     <BarChart2Icon className="w-3.5 h-3.5 text-sky-600" />
                     <span>{selectedModel}</span>
@@ -474,29 +474,29 @@ export const StableDiffusionReplica: React.FC = () => {
                       setIsStyleModalOpen(true);
                       explainFeature('Style Selector', 'Visual Style', 'Membuka galeri All Styles (Auto, Design, Photograph, Cinematic, Realista, Cyberpunk, dll).');
                     }}
-                    className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg font-medium text-slate-700 flex items-center gap-1"
+                    className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg font-medium text-slate-700 flex items-center gap-1 flex-wrap max-w-full"
                   >
                     <span>Style: <strong>{selectedStyle}</strong></span>
                     <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   </button>
 
                   {/* Aspect Ratio Pill */}
-                  <div className="flex items-center gap-1 bg-slate-100 border border-slate-200 rounded-lg px-2 py-1">
+                  <div className="flex items-center gap-1 bg-slate-100 border border-slate-200 rounded-lg px-2 py-1 flex-wrap max-w-full">
                     <span className="text-[11px] font-bold text-slate-600">🔲 {selectedAspect}</span>
                   </div>
 
                   {/* Speed Pill */}
-                  <div className="flex items-center gap-1 bg-slate-100 border border-slate-200 rounded-lg px-2 py-1">
+                  <div className="flex items-center gap-1 bg-slate-100 border border-slate-200 rounded-lg px-2 py-1 flex-wrap max-w-full">
                     <span className="text-[11px] font-bold text-slate-600">⚡ {generationMode}</span>
                   </div>
 
                   {/* Resolution Pill */}
-                  <div className="flex items-center gap-1 bg-slate-100 border border-slate-200 rounded-lg px-2 py-1">
+                  <div className="flex items-center gap-1 bg-slate-100 border border-slate-200 rounded-lg px-2 py-1 flex-wrap max-w-full">
                     <span className="text-[11px] font-bold text-slate-600">1K</span>
                   </div>
 
                   {/* Quantity Pill */}
-                  <div className="flex items-center gap-1 bg-slate-100 border border-slate-200 rounded-lg px-2 py-1">
+                  <div className="flex items-center gap-1 bg-slate-100 border border-slate-200 rounded-lg px-2 py-1 flex-wrap max-w-full">
                     <span className="text-[11px] font-bold text-slate-600">🖼️ {outputQuantity}</span>
                     <ChevronDown className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                   </div>
@@ -507,7 +507,7 @@ export const StableDiffusionReplica: React.FC = () => {
                       setWatermarkEnabled(!watermarkEnabled);
                       explainFeature('Watermark Toggle', 'Settings', `Watermark disesuaikan menjadi ${!watermarkEnabled ? 'Aktif' : 'Non-aktif'}.`);
                     }}
-                    className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg cursor-pointer"
+                    className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg cursor-pointer flex-wrap max-w-full"
                   >
                     <span className="text-[11px] font-semibold text-slate-700">Watermark</span>
                     <div className={`w-7 h-4 rounded-full p-0.5 transition-colors ${watermarkEnabled ? 'bg-blue-600' : 'bg-slate-300'}`}>
@@ -525,8 +525,8 @@ export const StableDiffusionReplica: React.FC = () => {
                 </div>
 
                 {/* Right Action Generate Button */}
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1 text-sky-700 font-bold text-xs bg-sky-50 px-2.5 py-1.5 rounded-lg border border-sky-200">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
+                  <div className="flex items-center gap-1 text-sky-700 font-bold text-xs bg-sky-50 px-2.5 py-1.5 rounded-lg border border-sky-200 flex-wrap max-w-full">
                     <Sparkles className="w-3.5 h-3.5 text-sky-600" />
                     <span>{outputQuantity * 2}</span>
                   </div>
@@ -579,7 +579,7 @@ export const StableDiffusionReplica: React.FC = () => {
                   onClick={() => setIsModelModalOpen(true)}
                   className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between cursor-pointer hover:border-blue-400"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap max-w-full">
                     <BarChart2Icon className="w-4 h-4 text-blue-600" />
                     <div>
                       <p className="text-xs font-bold text-slate-800">{selectedModel}</p>
@@ -614,7 +614,7 @@ export const StableDiffusionReplica: React.FC = () => {
                       }`}
                     >
                       <img src={st.image} alt={st.name} className="w-8 h-8 rounded-lg object-cover" />
-                      <span className="text-xs font-bold text-slate-800 truncate">{st.name}</span>
+                      <span className="text-xs font-bold text-slate-800 break-words whitespace-normal leading-snug">{st.name}</span>
                     </button>
                   ))}
                 </div>
@@ -681,7 +681,7 @@ export const StableDiffusionReplica: React.FC = () => {
                   onClick={() => setAdvancedControlsOpen(!advancedControlsOpen)}
                   className="w-full flex items-center justify-between text-xs font-bold text-slate-800"
                 >
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap max-w-full">
                     <ChevronRight className={`w-4 h-4 transition-transform ${advancedControlsOpen ? 'rotate-90' : ''}`} />
                     <span>Advanced Controls</span>
                   </div>
@@ -697,7 +697,7 @@ export const StableDiffusionReplica: React.FC = () => {
 
               {/* Watermark Toggle */}
               <div className="bg-white rounded-2xl p-3 border border-slate-200 flex items-center justify-between">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap max-w-full">
                   <CheckCircle2 className="w-4 h-4 text-blue-600" />
                   <span className="text-xs font-bold text-slate-800">Watermark</span>
                 </div>
@@ -713,7 +713,7 @@ export const StableDiffusionReplica: React.FC = () => {
               <div className="sticky bottom-2 z-20 bg-white/95 backdrop-blur border border-slate-200 rounded-2xl p-3 shadow-xl space-y-2">
                 <div className="flex justify-between items-center text-xs">
                   <span className="text-slate-500">Credits Required:</span>
-                  <span className="font-bold text-sky-700 flex items-center gap-1">
+                  <span className="font-bold text-sky-700 flex items-center gap-1 flex-wrap max-w-full">
                     <Sparkles className="w-3.5 h-3.5 text-sky-600" />
                     {outputQuantity * 2} credits
                   </span>
@@ -733,7 +733,7 @@ export const StableDiffusionReplica: React.FC = () => {
 
           {/* Promotional Banner: GPT Image 2 (Matching Screenshots 1 & 4) */}
           <div className="max-w-4xl mx-auto bg-gradient-to-r from-slate-900 via-blue-950 to-cyan-950 rounded-2xl p-4 border border-cyan-800/50 shadow-xl flex flex-wrap items-center justify-between gap-3 text-slate-900 dark:text-white">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 flex-wrap max-w-full">
               <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center font-black text-cyan-300">
                 GPT
               </div>
@@ -836,7 +836,7 @@ export const StableDiffusionReplica: React.FC = () => {
                       <span className="font-bold text-blue-600">{item.model} • {item.style}</span>
                       <button 
                         onClick={() => explainFeature('Download High-Res Image', 'Export', 'Mengunduh hasil karya generasi gambar resolusi tinggi tanpa watermark.')}
-                        className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-bold flex items-center gap-1"
+                        className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-bold flex items-center gap-1 flex-wrap max-w-full"
                       >
                         <Download className="w-3.5 h-3.5" />
                         <span>Download</span>
@@ -921,14 +921,14 @@ export const StableDiffusionReplica: React.FC = () => {
                     }`}
                   >
                     <div className="flex justify-between items-start">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap max-w-full">
                         <BarChart2Icon className="w-4 h-4 text-sky-600" />
                         <span className="font-extrabold text-sm text-slate-900">Seedream 5.0</span>
                       </div>
                       <Crown className="w-4 h-4 text-amber-500" />
                     </div>
                     <p className="text-[11px] text-slate-500 mt-1">Real-time web retrieval and precise editing controls.</p>
-                    <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+                    <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium flex-wrap max-w-full">
                       <span>⏱️ 47 sec</span>
                       <span>⚛️ 22+ credits</span>
                     </div>
@@ -946,14 +946,14 @@ export const StableDiffusionReplica: React.FC = () => {
                     }`}
                   >
                     <div className="flex justify-between items-start">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap max-w-full">
                         <BarChart2Icon className="w-4 h-4 text-sky-600" />
                         <span className="font-extrabold text-sm text-slate-900">Seedream 4.5</span>
                       </div>
                       <Crown className="w-4 h-4 text-amber-500" />
                     </div>
                     <p className="text-[11px] text-slate-500 mt-1">Stronger subject consistency and text rendering.</p>
-                    <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+                    <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium flex-wrap max-w-full">
                       <span>⏱️ 60 sec</span>
                       <span>⚛️ 22+ credits</span>
                     </div>
@@ -971,14 +971,14 @@ export const StableDiffusionReplica: React.FC = () => {
                     }`}
                   >
                     <div className="flex justify-between items-start">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap max-w-full">
                         <BarChart2Icon className="w-4 h-4 text-sky-600" />
                         <span className="font-extrabold text-sm text-slate-900">Seedream 4</span>
                       </div>
                       <Crown className="w-4 h-4 text-amber-500" />
                     </div>
                     <p className="text-[11px] text-slate-500 mt-1">Support images with cohesive, consistent styles.</p>
-                    <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+                    <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium flex-wrap max-w-full">
                       <span>⏱️ 18 sec</span>
                       <span>⚛️ 14+ credits</span>
                     </div>
@@ -996,14 +996,14 @@ export const StableDiffusionReplica: React.FC = () => {
                     }`}
                   >
                     <div className="flex justify-between items-start">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap max-w-full">
                         <BarChart2Icon className="w-4 h-4 text-sky-600" />
                         <span className="font-extrabold text-sm text-slate-900">Seedream 3.5</span>
                       </div>
                       <CheckCircle2 className="w-4 h-4 text-blue-600" />
                     </div>
                     <p className="text-[11px] text-slate-500 mt-1">All-around image quality, fast results, low cost.</p>
-                    <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+                    <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-500 dark:text-slate-400 font-medium flex-wrap max-w-full">
                       <span>⏱️ 10 sec</span>
                       <span>⚛️ 1+ credits</span>
                     </div>
@@ -1051,7 +1051,7 @@ export const StableDiffusionReplica: React.FC = () => {
               </div>
 
               {/* Styles Grid (Matching Screenshot 3) */}
-              <div className="flex-1 overflow-y-auto grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 pr-1">
+              <div className="flex-1 overflow-y-auto grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 pr-1 min-w-0">
                 {filteredStyles.map((st) => (
                   <div
                     key={st.id}
@@ -1072,7 +1072,7 @@ export const StableDiffusionReplica: React.FC = () => {
                         </span>
                       )}
                     </div>
-                    <span className="text-xs font-bold text-slate-800 mt-1.5 truncate w-full px-1">
+                    <span className="text-xs font-bold text-slate-800 mt-1.5 break-words whitespace-normal leading-snug w-full px-1">
                       {st.name}
                     </span>
                   </div>
@@ -1101,14 +1101,14 @@ export const StableDiffusionReplica: React.FC = () => {
                 <X className="w-4 h-4" />
               </button>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap max-w-full">
                 <span className="px-2.5 py-1 bg-blue-100 text-blue-700 text-[10px] font-bold rounded-full uppercase tracking-wider">
                   {activeModal.category}
                 </span>
               </div>
 
               <div>
-                <h3 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
+                <h3 className="text-xl font-extrabold text-slate-900 flex items-center gap-2 flex-wrap max-w-full">
                   <Sparkles className="w-5 h-5 text-blue-600" />
                   {activeModal.title}
                 </h3>
@@ -1119,7 +1119,7 @@ export const StableDiffusionReplica: React.FC = () => {
 
               {activeModal.parameters && activeModal.parameters.length > 0 && (
                 <div className="p-3 bg-blue-50/80 rounded-2xl border border-blue-200/80 space-y-1 text-xs">
-                  <p className="font-bold text-blue-900 flex items-center gap-1.5">
+                  <p className="font-bold text-blue-900 flex items-center gap-1.5 flex-wrap max-w-full">
                     <SlidersHorizontal className="w-3.5 h-3.5 text-blue-600" />
                     <span>Parameter & Spesifikasi Teknis:</span>
                   </p>
@@ -1133,7 +1133,7 @@ export const StableDiffusionReplica: React.FC = () => {
 
               {activeModal.usageGuide && activeModal.usageGuide.length > 0 && (
                 <div className="p-3 bg-sky-50 rounded-2xl border border-sky-200 space-y-1 text-xs">
-                  <p className="font-bold text-sky-900 flex items-center gap-1.5">
+                  <p className="font-bold text-sky-900 flex items-center gap-1.5 flex-wrap max-w-full">
                     <CheckCircle2 className="w-3.5 h-3.5 text-sky-600" />
                     <span>Cara Menggunakan (Panduan Langkah demi Langkah):</span>
                   </p>
