@@ -34,7 +34,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
 
   useEffect(() => {
     // 1. Fetch questions from the actual module data
-    const pool = (module.quiz || []).map((q) => ({
+    const pool = (module.content.quiz || []).map((q) => ({
       id: q.id,
       question: q.question,
       options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
@@ -108,7 +108,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
 
   const handleRestart = () => {
     // Reshuffle on restart for a completely new quiz experience
-    const pool = (module.quiz || []).map((q) => ({
+    const pool = (module.content.quiz || []).map((q) => ({
       id: q.id,
       question: q.question,
       options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
