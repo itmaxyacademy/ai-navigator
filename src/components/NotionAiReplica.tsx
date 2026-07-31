@@ -199,7 +199,7 @@ export const NotionAiReplica: React.FC = () => {
       {/* ---------------- TOP NAVIGATION BAR & TAB SWITCHER ---------------- */}
       <header className="px-5 py-3 bg-white border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 z-30 shrink-0">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-white flex items-center justify-center font-bold text-sm shadow-xs">
+          <div className="w-7 h-7 rounded-lg bg-white dark:bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-xs">
             🦏
           </div>
           <span className="text-base font-extrabold text-slate-900 tracking-tight">
@@ -321,7 +321,7 @@ export const NotionAiReplica: React.FC = () => {
                   <button
                     onClick={handleBuilderSubmit}
                     disabled={builderLoading || !builderPrompt.trim()}
-                    className="w-7 h-7 rounded-full bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white flex items-center justify-center transition-all cursor-pointer disabled:bg-slate-300 shadow-sm"
+                    className="w-7 h-7 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition-all cursor-pointer disabled:bg-slate-300 shadow-sm"
                     title="Generate with Notion AI"
                   >
                     {builderLoading ? (
@@ -464,7 +464,7 @@ export const NotionAiReplica: React.FC = () => {
                 onClick={() => setIsTextSelected(!isTextSelected)}
                 className={`px-3 py-1 rounded-xl font-bold cursor-pointer transition-colors ${
                   isTextSelected
-                    ? 'bg-blue-600 text-slate-900 dark:text-white'
+                    ? 'bg-blue-600 text-white'
                     : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
                 }`}
               >
@@ -503,7 +503,7 @@ export const NotionAiReplica: React.FC = () => {
                     <button
                       onClick={() => handleApplyEditorAi()}
                       disabled={editorLoading}
-                      className="w-6 h-6 rounded-full bg-slate-200 hover:bg-blue-600 hover:text-slate-900 dark:text-white text-slate-600 flex items-center justify-center transition-all cursor-pointer"
+                      className="w-6 h-6 rounded-full bg-slate-200 hover:bg-blue-600 hover:text-white text-slate-600 flex items-center justify-center transition-all cursor-pointer"
                     >
                       {editorLoading ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -578,7 +578,7 @@ export const NotionAiReplica: React.FC = () => {
 
               {/* AI Edited Preview & Action Box */}
               {aiEditedText && (
-                <div className="mt-4 p-4 rounded-2xl bg-purple-50 border border-purple-200 space-y-3 animate-in fade-in">
+                <div className="mt-4 p-4 rounded-2xl bg-purple-50 dark:bg-purple-950/60 max-w-full overflow-hidden border border-purple-200 space-y-3 animate-in fade-in">
                   <div className="flex items-center justify-between text-xs font-bold text-purple-900 border-b border-purple-100 pb-2">
                     <span className="flex items-center gap-1.5">
                       <Sparkles className="w-4 h-4 text-purple-600" />
@@ -591,10 +591,10 @@ export const NotionAiReplica: React.FC = () => {
                   </p>
 
                   {/* Accept / Reject / Try again buttons */}
-                  <div className="flex items-center gap-2 pt-1">
+                  <div className="flex flex-wrap items-center gap-2 pt-1 max-w-full">
                     <button
                       onClick={handleAcceptEdit}
-                      className="px-3 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-slate-900 dark:text-white text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                      className="px-3 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
                     >
                       <Check className="w-3.5 h-3.5" />
                       <span>Accept</span>
@@ -654,7 +654,7 @@ export const NotionAiReplica: React.FC = () => {
                 <div className="flex flex-wrap items-center gap-3">
                   <button
                     onClick={() => setShowSimulatedAuthModal(true)}
-                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white text-xs font-bold shadow-sm transition-all cursor-pointer"
+                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer"
                   >
                     Get Notion free
                   </button>
@@ -804,7 +804,7 @@ export const NotionAiReplica: React.FC = () => {
                       key={i}
                       className={`p-3 rounded-2xl text-xs font-medium max-w-xl leading-relaxed ${
                         msg.sender === 'user'
-                          ? 'bg-blue-600 text-slate-900 dark:text-white ml-auto'
+                          ? 'bg-blue-600 text-white ml-auto'
                           : 'bg-white border border-slate-200 text-slate-800'
                       }`}
                     >
@@ -834,7 +834,7 @@ export const NotionAiReplica: React.FC = () => {
                   <button
                     onClick={handleSendFeatureMessage}
                     disabled={featureLoading || !featureInput.trim()}
-                    className="w-8 h-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white flex items-center justify-center disabled:bg-slate-200 cursor-pointer transition-all"
+                    className="w-8 h-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center disabled:bg-slate-200 cursor-pointer transition-all"
                   >
                     <Send className="w-3.5 h-3.5" />
                   </button>

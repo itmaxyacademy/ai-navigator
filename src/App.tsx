@@ -14,7 +14,7 @@ import { useTierAccess } from './hooks/useTierAccess';
 import { BADGES_LIST } from './lib/achievementsData';
 import { FloatingXpNotification, FloatingXpItem } from './components/FloatingXpNotification';
 import { getLocalDateString, getDaysDifference } from './lib/gamification';
-import { Compass, Heart, Sparkles } from 'lucide-react';
+import { Compass, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 import { fetchUserProfile, checkoutUpgrade, loadCloudProgress, saveCloudProgress, fetchAiNavigatorPackages } from './services/api';
@@ -30,6 +30,13 @@ const defaultProgress: UserProgress = {
   streakDays: 1,
   unlockedBadges: [],
 };
+
+const isLocalDevEnv = typeof window !== 'undefined' && (
+  window.location.hostname === 'localhost' || 
+  window.location.hostname === '127.0.0.1' ||
+  window.location.hostname.startsWith('192.168.') ||
+  window.location.hostname.startsWith('10.')
+);
 
 export default function App() {
   const [progress, setProgress] = useState<UserProgress>(() => {
@@ -47,15 +54,32 @@ export default function App() {
         return {
           ...defaultProgress,
           ...parsed,
-          userTier: 'free',
-          tier: 'free',
-          maxAllowedModuleId: 3,
+          userTier: isLocalDevEnv ? 'tier2' : 'free',
+          tier: isLocalDevEnv ? 'tier2' : 'free',
+          maxAllowedModuleId: isLocalDevEnv ? 29 : 3,
+          paidTiers: isLocalDevEnv ? ['tier1', 'tier2'] : [],
+          hasTier1: isLocalDevEnv,
+          hasTier2: isLocalDevEnv,
+          userName: isLocalDevEnv ? 'Local Developer' : undefined,
+          userEmail: isLocalDevEnv ? 'dev@localhost' : undefined,
+          packageName: isLocalDevEnv ? 'Local Dev — VIP Access' : undefined,
         };
       }
     } catch (e) {
       console.error('Failed to load progress', e);
     }
-    return defaultProgress;
+    return {
+      ...defaultProgress,
+      userTier: isLocalDevEnv ? 'tier2' : 'free',
+      tier: isLocalDevEnv ? 'tier2' : 'free',
+      maxAllowedModuleId: isLocalDevEnv ? 29 : 3,
+      paidTiers: isLocalDevEnv ? ['tier1', 'tier2'] : [],
+      hasTier1: isLocalDevEnv,
+      hasTier2: isLocalDevEnv,
+      userName: isLocalDevEnv ? 'Local Developer' : undefined,
+      userEmail: isLocalDevEnv ? 'dev@localhost' : undefined,
+      packageName: isLocalDevEnv ? 'Local Dev — VIP Access' : undefined,
+    };
   });
 
   const { canAccessModule } = useTierAccess(progress.userTier, progress.maxAllowedModuleId);
@@ -70,7 +94,7 @@ export default function App() {
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [targetUpgradeModuleId, setTargetUpgradeModuleId] = useState<number | null>(null);
   const [capstoneModalOpen, setCapstoneModalOpen] = useState(false);
-  const [isAuthValidating, setIsAuthValidating] = useState<boolean>(true);
+  const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => !isLocalDevEnv);
   const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
   const [paymentLoadingTier, setPaymentLoadingTier] = useState<'tier1' | 'tier2' | null>(null);
   const [cmsPackages, setCmsPackages] = useState<Record<string, { price: number; fake_price: number; name?: string }>>({});
@@ -83,69 +107,33 @@ export default function App() {
     });
   }, []);
 
-  // Theme State ('dark' | 'light')
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    try {
-      const saved = localStorage.getItem('ai_navigator_theme_v1');
-      if (saved === 'light' || saved === 'dark') return saved;
-    } catch (e) {
-      console.error('Failed to load theme preference', e);
-    }
-    return 'light';
-  });
+  // Theme State ('dark' | 'light') - Forced to Dark Mode
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
     try {
-      localStorage.setItem('ai_navigator_theme_v1', theme);
+      localStorage.setItem('ai_navigator_theme_v1', 'dark');
     } catch (e) {
       console.error('Failed to save theme preference', e);
     }
-    if (theme === 'light') {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-    }
+    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('light');
   }, [theme]);
 
   // Auth Guard: Sync user profile & active tier subscription from API Gateway api.maxy.academy
   useEffect(() => {
-    // Detect local development environment
-    const isLocalDev = typeof window !== 'undefined' && (
-      window.location.hostname === 'localhost' || 
-      window.location.hostname === '127.0.0.1' ||
-      window.location.hostname.startsWith('192.168.') ||
-      window.location.hostname.startsWith('10.')
-    );
+    if (isLocalDevEnv) {
+      localStorage.removeItem('maxy_access_token');
+      localStorage.removeItem('maxy_refresh_token');
+      setIsAuthValidating(false);
+      return;
+    }
 
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
 
-    const setLocalDevUser = () => {
-      setProgress(prev => ({
-        ...prev,
-        userTier: 'tier2',
-        maxAllowedModuleId: 29,
-        paidTiers: ['tier1', 'tier2'],
-        hasTier1: true,
-        hasTier2: true,
-        userName: 'Local Developer',
-        userEmail: 'dev@localhost',
-        packageName: 'Local Dev — VIP Access'
-      }));
-      setIsAuthValidating(false);
-    };
-
-    // On localhost without a valid token: bypass auth entirely with mock VIP user
-    if (isLocalDev && !token) {
-      setLocalDevUser();
-      return;
-    }
-
     const getLandingUrl = () => {
-      // On production, redirect to the real login portal
       return 'https://ainavigator.maxy.academy?login=true';
     };
 
@@ -153,10 +141,6 @@ export default function App() {
       localStorage.removeItem('maxy_access_token');
       localStorage.removeItem('maxy_refresh_token');
       localStorage.removeItem(STORAGE_KEY);
-      if (isLocalDev) {
-        setLocalDevUser();
-        return;
-      }
       setIsAuthValidating(false);
       window.location.href = getLandingUrl();
     };
@@ -362,6 +346,30 @@ export default function App() {
     progress.completedCheckpoints,
     progress.dailyMinutesHistory,
   ]);
+
+  // Check and trigger certificate popup automatically if eligible
+  useEffect(() => {
+    const isTier1Complete = progress.userTier === 'tier1' && (progress.completedModules?.length || 0) >= 22;
+    const isTier2Complete = progress.userTier === 'tier2' && (progress.completedModules?.length || 0) >= 29;
+    
+    if ((isTier1Complete || isTier2Complete) && !progress.hasSeenCertPopup) {
+      const timer = setTimeout(() => {
+        try {
+          confetti({
+            particleCount: 100,
+            spread: 90,
+            origin: { y: 0.5 },
+            colors: ['#f59e0b', '#fbbf24', '#fcd34d'], // Gold confetti
+          });
+        } catch (e) {
+          // ignore
+        }
+        setCertificateOpen(true);
+        setProgress((prev) => ({ ...prev, hasSeenCertPopup: true }));
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [progress.completedModules, progress.userTier, progress.hasSeenCertPopup]);
 
   // Save progress to local storage & sync to cloud database (debounced 2s)
   useEffect(() => {
@@ -706,15 +714,6 @@ export default function App() {
     }
   };
 
-  // Reset Progress
-  const handleResetProgress = () => {
-    if (window.confirm('Apakah Anda yakin ingin mereset seluruh progres belajar?')) {
-      setProgress(defaultProgress);
-      setSelectedModuleId(null);
-      setActiveTab('path');
-    }
-  };
-
   // Data Management
   const handleManualSave = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -765,7 +764,7 @@ export default function App() {
   if (isAuthValidating) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
-        theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-white'
+        theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-white'
       }`}>
         <div className="w-12 h-12 rounded-2xl bg-[#ffb034]/20 border border-[#ffb034]/40 flex items-center justify-center mb-4 animate-pulse shadow-lg shadow-[#ffb034]/10">
           <Sparkles className="w-6 h-6 text-[#ffb034]" />
@@ -782,8 +781,8 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
-      theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100'
-    } selection:bg-indigo-500 selection:text-slate-900 dark:text-white`}>
+      theme === 'light' ? 'bg-slate-100/80 text-slate-900' : 'bg-[#070b14] text-slate-100'
+    } selection:bg-indigo-500 selection:text-white`}>
       {/* Header */}
       <Header
         progress={progress}
@@ -800,7 +799,6 @@ export default function App() {
         }}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        onResetProgress={handleResetProgress}
         onLogout={handleLogout}
         onOpenCertificate={() => setCertificateOpen(true)}
         onOpenStreakModal={() => setStreakModalOpen(true)}
@@ -815,7 +813,7 @@ export default function App() {
       />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
         {activeTab === 'path' && (
           <LearningPathRoadmap
             modules={MODULES_DATA}
@@ -928,11 +926,6 @@ export default function App() {
             <span>— Platform Pembelajaran LLM Interaktif Maxy Academy</span>
           </div>
 
-          <div className="flex items-center gap-1 text-slate-500 text-[11px]">
-            <span>Dibuat dengan</span>
-            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
-            <span>untuk Pembelajar AI Indonesia</span>
-          </div>
         </div>
       </footer>
     </div>

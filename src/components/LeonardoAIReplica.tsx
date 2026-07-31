@@ -162,7 +162,7 @@ export const LeonardoAIReplica: React.FC = () => {
   ];
 
   return (
-    <div className="relative w-full rounded-2xl border border-[#232733] bg-[#0e0f12] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl flex flex-col min-h-[720px] font-sans selection:bg-purple-600 selection:text-slate-900 dark:text-white">
+    <div className="relative w-full rounded-2xl border border-[#232733] bg-[#0e0f12] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl flex flex-col min-h-[720px] font-sans selection:bg-purple-600 selection:text-white">
 
       {/* Simulator Device View Mode Switcher Header Bar */}
       <div className="bg-[#07080a] border-b border-[#232733] px-3 sm:px-4 py-2 flex items-center justify-between z-40 shrink-0 text-slate-900 dark:text-white">
@@ -174,7 +174,7 @@ export const LeonardoAIReplica: React.FC = () => {
           <button
             onClick={() => setDeviceMode('desktop')}
             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-md transition-all ${
-              deviceMode === 'desktop' ? 'bg-purple-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
+              deviceMode === 'desktop' ? 'bg-purple-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Laptop className="w-3.5 h-3.5" />
@@ -183,7 +183,7 @@ export const LeonardoAIReplica: React.FC = () => {
           <button
             onClick={() => setDeviceMode('mobile')}
             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-md transition-all ${
-              deviceMode === 'mobile' ? 'bg-purple-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
+              deviceMode === 'mobile' ? 'bg-purple-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -272,7 +272,7 @@ export const LeonardoAIReplica: React.FC = () => {
               >
                 <Volume2 className="w-5 h-5" />
                 <span className="text-[9px] font-medium">Audio</span>
-                <span className="absolute top-1 right-1 bg-purple-600 text-[8px] font-extrabold px-1 rounded text-slate-900 dark:text-white">NEW</span>
+                <span className="absolute top-1 right-1 bg-purple-600 text-[8px] font-extrabold px-1 rounded text-white">NEW</span>
               </button>
 
               <button 
@@ -677,8 +677,8 @@ export const LeonardoAIReplica: React.FC = () => {
                       }}
                       className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all border ${
                         communityFilter === tag 
-                          ? 'bg-purple-600 text-slate-900 dark:text-white border-purple-500 shadow-md' 
-                          : 'bg-[#181b26] text-slate-500 dark:text-slate-400 border-[#232733] hover:text-slate-900 dark:text-white'
+                          ? 'bg-purple-600 text-white border-purple-500 shadow-md' 
+                          : 'bg-[#181b26] text-slate-500 dark:text-slate-400 border-[#232733] hover:text-white'
                       }`}
                     >
                       {tag}
@@ -822,7 +822,7 @@ export const LeonardoAIReplica: React.FC = () => {
                         onClick={() => setGenerationCount(num)}
                         className={`flex-1 py-2 text-xs font-bold rounded-xl border transition-all ${
                           generationCount === num 
-                            ? 'bg-purple-600 text-slate-900 dark:text-white border-purple-500 shadow-md' 
+                            ? 'bg-purple-600 text-white border-purple-500 shadow-md' 
                             : 'bg-[#1c202d] border-[#2b3042] text-slate-500 dark:text-slate-400'
                         }`}
                       >
@@ -942,8 +942,8 @@ export const LeonardoAIReplica: React.FC = () => {
                       }}
                       className={`px-4 py-2 text-xs font-bold rounded-xl transition-all border ${
                         activeTab === tab 
-                          ? 'bg-purple-600 text-slate-900 dark:text-white border-purple-500 shadow-md' 
-                          : 'bg-[#141720] text-slate-500 dark:text-slate-400 border-[#202432] hover:text-slate-900 dark:text-white'
+                          ? 'bg-purple-600 text-white border-purple-500 shadow-md' 
+                          : 'bg-[#141720] text-slate-500 dark:text-slate-400 border-[#202432] hover:text-white'
                       }`}
                     >
                       {tab} {tab === 'Audio' && <span className="ml-1 bg-purple-900 text-purple-300 text-[8px] px-1 rounded">New</span>}
@@ -1020,7 +1020,7 @@ export const LeonardoAIReplica: React.FC = () => {
                         <button 
                           onClick={() => setThumbsFeedback('up')}
                           className={`p-1.5 rounded-lg border transition-all ${
-                            thumbsFeedback === 'up' ? 'bg-emerald-500/20 border-emerald-500 text-[#00e699]' : 'bg-[#1c202d] border-[#2b3042] hover:text-slate-900 dark:text-white'
+                            thumbsFeedback === 'up' ? 'bg-emerald-500/20 border-emerald-500 text-[#00e699]' : 'bg-[#1c202d] border-[#2b3042] hover:text-white'
                           }`}
                         >
                           <ThumbsUp className="w-3.5 h-3.5" />
@@ -1029,7 +1029,7 @@ export const LeonardoAIReplica: React.FC = () => {
                         <button 
                           onClick={() => setThumbsFeedback('down')}
                           className={`p-1.5 rounded-lg border transition-all ${
-                            thumbsFeedback === 'down' ? 'bg-rose-500/20 border-rose-500 text-rose-400' : 'bg-[#1c202d] border-[#2b3042] hover:text-slate-900 dark:text-white'
+                            thumbsFeedback === 'down' ? 'bg-rose-500/20 border-rose-500 text-rose-400' : 'bg-[#1c202d] border-[#2b3042] hover:text-white'
                           }`}
                         >
                           <ThumbsDown className="w-3.5 h-3.5" />
@@ -1202,7 +1202,7 @@ export const LeonardoAIReplica: React.FC = () => {
                       <Volume2 className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                       <span>Audio</span>
                     </div>
-                    <span className="bg-purple-600 text-slate-900 dark:text-white text-[8px] font-bold px-1.5 py-0.5 rounded">New</span>
+                    <span className="bg-purple-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded">New</span>
                   </button>
 
                   <button 
@@ -1328,7 +1328,7 @@ export const LeonardoAIReplica: React.FC = () => {
       <div className="absolute bottom-4 right-4 z-40">
         <button 
           onClick={() => explainFeature('Dukungan Pelanggan & Bantuan AI', 'Support', 'Membuka obrolan langsung dengan tim dukungan pelanggan atau bot bantuan Leonardo.Ai.')}
-          className="w-12 h-12 rounded-full bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform border border-purple-400/40"
+          className="w-12 h-12 rounded-full bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform border border-purple-400/40"
           title="Leonardo Support Chat"
         >
           <MessageSquare className="w-5 h-5 fill-white" />

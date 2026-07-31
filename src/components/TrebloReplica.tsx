@@ -337,7 +337,7 @@ export const TrebloReplica: React.FC = () => {
     <div className="w-full min-h-[750px] bg-[#0c0a09] text-slate-800 dark:text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col relative shadow-2xl">
       {/* Toast Banner Notification */}
       {toast && (
-        <div className="fixed bottom-20 right-6 z-50 bg-rose-600 text-slate-900 dark:text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl shadow-2xl border border-rose-400 flex items-center space-x-2 animate-bounce">
+        <div className="fixed bottom-20 right-6 z-50 bg-rose-600 text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl shadow-2xl border border-rose-400 flex items-center space-x-2 animate-bounce">
           <Sparkles className="w-4 h-4 text-rose-200" />
           <span>{toast}</span>
         </div>
@@ -374,7 +374,7 @@ export const TrebloReplica: React.FC = () => {
               </button>
               <button 
                 onClick={() => handleMakeMySong()}
-                className="text-xs sm:text-sm bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white font-semibold px-4 py-2 rounded-xl shadow-lg shadow-rose-900/30 transition-all transform hover:scale-105"
+                className="text-xs sm:text-sm bg-rose-600 hover:bg-rose-500 text-white font-semibold px-4 py-2 rounded-xl shadow-lg shadow-rose-900/30 transition-all transform hover:scale-105"
               >
                 Sign up
               </button>
@@ -398,7 +398,7 @@ export const TrebloReplica: React.FC = () => {
             </p>
 
             {/* Prompt Entry Point Box */}
-            <div className="w-full max-w-2xl bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700/80 rounded-2xl p-4 shadow-2xl backdrop-blur-xl relative group hover:border-rose-500/50 transition-all">
+            <div className="w-full max-w-2xl bg-white dark:bg-[#0d1322] border border-slate-300 dark:border-slate-700/80 rounded-2xl p-4 shadow-2xl backdrop-blur-xl relative group hover:border-rose-500/50 transition-all">
               <textarea
                 value={landingPrompt}
                 onChange={(e) => setLandingPrompt(e.target.value)}
@@ -791,13 +791,13 @@ export const TrebloReplica: React.FC = () => {
                     <div className="bg-white dark:bg-slate-900 p-1 rounded-xl flex items-center border border-slate-200 dark:border-slate-800 text-xs font-medium">
                       <button
                         onClick={() => setActiveTab('simple')}
-                        className={`px-3 py-1 rounded-lg transition-colors ${activeTab === 'simple' ? 'bg-rose-600 text-slate-900 dark:text-white font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
+                        className={`px-3 py-1 rounded-lg transition-colors ${activeTab === 'simple' ? 'bg-rose-600 text-white font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
                       >
                         Simple
                       </button>
                       <button
                         onClick={() => setActiveTab('advanced')}
-                        className={`px-3 py-1 rounded-lg transition-colors ${activeTab === 'advanced' ? 'bg-rose-600 text-slate-900 dark:text-white font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
+                        className={`px-3 py-1 rounded-lg transition-colors ${activeTab === 'advanced' ? 'bg-rose-600 text-white font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
                       >
                         Advanced
                       </button>
@@ -830,7 +830,7 @@ export const TrebloReplica: React.FC = () => {
                   {/* SIMPLE MODE INPUT */}
                   {activeTab === 'simple' && (
                     <div className="space-y-3 flex-1 flex flex-col">
-                      <div className="relative bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex-1 flex flex-col focus-within:border-rose-500/60 transition-colors">
+                      <div className="relative bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex-1 flex flex-col focus-within:border-rose-500/60 transition-colors">
                         <div className="flex items-center space-x-1.5 text-xs text-slate-500 dark:text-slate-400 mb-2">
                           <Sparkles className="w-3.5 h-3.5 text-rose-400" />
                           <span>Deskripsi Ide Lagu (Prompt)</span>
@@ -943,7 +943,7 @@ export const TrebloReplica: React.FC = () => {
                   <div className="flex items-center justify-between text-xs gap-1.5">
                     <button 
                       onClick={() => showToastMsg('Modal Filter Style & Modul')}
-                      className="bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white px-2.5 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shrink-0"
+                      className="bg-rose-600 hover:bg-rose-500 text-white px-2.5 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shrink-0"
                     >
                       <Filter className="w-3.5 h-3.5" />
                       <span>Filters</span>
@@ -987,7 +987,7 @@ export const TrebloReplica: React.FC = () => {
                               setSelectedSongId(song.id);
                               if (mobileTab === 'list') setMobileTab('detail');
                             }}
-                            className={`p-2.5 rounded-xl border cursor-pointer transition-all ${isSelected ? 'bg-white dark:bg-white/90 dark:bg-slate-900/90 border-rose-500/70 shadow-lg' : 'bg-slate-100 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:border-slate-700'}`}
+                            className={`p-2.5 rounded-xl border cursor-pointer transition-all ${isSelected ? 'bg-white dark:bg-[#0d1322] border-rose-500/70 shadow-lg' : 'bg-slate-100 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:border-slate-700'}`}
                           >
                             <div className="flex items-start justify-between space-x-2">
                               <div className="flex items-center space-x-2.5">
@@ -1035,7 +1035,7 @@ export const TrebloReplica: React.FC = () => {
                                     </button>
 
                                     {song.isNew && (
-                                      <span className="bg-rose-600 text-slate-900 dark:text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full uppercase">
+                                      <span className="bg-rose-600 text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full uppercase">
                                         New
                                       </span>
                                     )}
@@ -1132,7 +1132,7 @@ export const TrebloReplica: React.FC = () => {
                           setActivePlayerSongId(selectedSong.id);
                           setIsPlaying(!isPlaying);
                         }}
-                        className="bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center space-x-1.5 shadow-md"
+                        className="bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center space-x-1.5 shadow-md"
                       >
                         {isPlaying && activePlayerSongId === selectedSong.id ? (
                           <>
@@ -1177,7 +1177,7 @@ export const TrebloReplica: React.FC = () => {
                   {/* Section: Prompt */}
                   <div className="space-y-1">
                     <h4 className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Prompt</h4>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 leading-relaxed italic">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 leading-relaxed italic">
                       "{selectedSong.prompt}"
                     </p>
                   </div>
@@ -1198,7 +1198,7 @@ export const TrebloReplica: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex-1 overflow-y-auto text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-sans whitespace-pre-wrap">
+                    <div className="bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex-1 overflow-y-auto text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-sans whitespace-pre-wrap">
                       {selectedSong.lyrics}
                     </div>
                   </div>
@@ -1231,7 +1231,7 @@ export const TrebloReplica: React.FC = () => {
                       onClick={() => {
                         setIsPlaying(!isPlaying);
                       }}
-                      className="w-8 h-8 rounded-full bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white flex items-center justify-center shadow-md transition-transform active:scale-95"
+                      className="w-8 h-8 rounded-full bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center shadow-md transition-transform active:scale-95"
                     >
                       {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
                     </button>

@@ -245,7 +245,7 @@ export const PersonalNotes: React.FC<PersonalNotesProps> = ({
                   <span className="text-[10px] text-rose-300 font-bold px-2">Hapus catatan?</span>
                   <button
                     onClick={handleClearNote}
-                    className="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white font-bold text-[10px] transition-all cursor-pointer"
+                    className="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-[10px] transition-all cursor-pointer"
                   >
                     Ya, Hapus
                   </button>
@@ -300,8 +300,8 @@ export const PersonalNotes: React.FC<PersonalNotesProps> = ({
                 onClick={() => handleSave()}
                 className={`px-4 py-1.5 rounded-xl font-bold flex items-center gap-1.5 shadow-md transition-all cursor-pointer ${
                   isSaved
-                    ? 'bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 hover:bg-indigo-600 hover:text-slate-900 dark:text-white'
-                    : 'bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white animate-pulse'
+                    ? 'bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 hover:bg-indigo-600 hover:text-white'
+                    : 'bg-indigo-600 hover:bg-indigo-500 text-white animate-pulse'
                 }`}
               >
                 <Save className="w-3.5 h-3.5" />

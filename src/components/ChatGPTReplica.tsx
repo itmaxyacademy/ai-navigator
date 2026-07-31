@@ -586,7 +586,7 @@ export const ChatGPTReplica: React.FC = () => {
             {/* Bottom User Profile Card */}
             <div className="p-3 border-t border-neutral-800 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-slate-900 dark:text-white font-extrabold text-xs shadow-inner">
+                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-extrabold text-xs shadow-inner">
                   MA
                 </div>
                 <div className="text-left leading-tight">
@@ -770,7 +770,7 @@ export const ChatGPTReplica: React.FC = () => {
                         {inputPrompt.trim() && (
                           <button
                             onClick={handleSendMessage}
-                            className="p-2 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-full transition-all shadow-md"
+                            className="p-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full transition-all shadow-md"
                           >
                             <Send className="w-4 h-4" />
                           </button>
@@ -877,7 +877,7 @@ export const ChatGPTReplica: React.FC = () => {
                       />
                       <button
                         onClick={handleSendMessage}
-                        className="p-2 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-full"
+                        className="p-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full"
                       >
                         <Send className="w-4 h-4" />
                       </button>
@@ -1131,7 +1131,7 @@ export const ChatGPTReplica: React.FC = () => {
                     {inputPrompt.trim() && (
                       <button
                         onClick={handleSendMessage}
-                        className="w-8 h-8 rounded-full bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white flex items-center justify-center shadow-md"
+                        className="w-8 h-8 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center shadow-md"
                       >
                         <Send className="w-4 h-4" />
                       </button>
@@ -1284,7 +1284,7 @@ export const ChatGPTReplica: React.FC = () => {
                 {/* User Profile Footer */}
                 <div className="pt-2 border-t border-neutral-900 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-slate-900 dark:text-white font-bold text-[10px]">
+                    <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-[10px]">
                       MA
                     </div>
                     <div className="text-left leading-tight">

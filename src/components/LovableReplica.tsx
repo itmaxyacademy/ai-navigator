@@ -156,7 +156,7 @@ export const LovableReplica: React.FC = () => {
         setCurrentCodeSnippet(data.codeSnippet);
       } else if (mode === 'Bangun') {
         // Fallback code snippet if not extracted
-        setCurrentCodeSnippet(`// Default React + Tailwind Component\nexport default function GeneratedLanding() {\n  return (\n    <div className="p-8 text-center bg-white dark:bg-slate-900 text-slate-900 dark:text-white min-h-screen">\n      <h1 className="text-3xl font-bold">${promptToSubmit}</h1>\n    </div>\n  );\n}`);
+        setCurrentCodeSnippet(`// Default React + Tailwind Component\nexport default function GeneratedLanding() {\n  return (\n    <div className="p-8 text-center bg-white dark:bg-slate-900 text-white min-h-screen">\n      <h1 className="text-3xl font-bold">${promptToSubmit}</h1>\n    </div>\n  );\n}`);
       }
     } catch (err: any) {
       console.error('Lovable generate error:', err);
@@ -300,7 +300,7 @@ export const LovableReplica: React.FC = () => {
             onClick={handleOpenBannerModal}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1b1730]/80 border border-indigo-500/30 hover:border-indigo-400 text-xs text-slate-700 dark:text-slate-200 transition-all cursor-pointer group shadow-xl"
           >
-            <span className="px-2 py-0.5 rounded-full bg-blue-600 text-slate-900 dark:text-white text-[10px] font-extrabold uppercase tracking-wide">
+            <span className="px-2 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-extrabold uppercase tracking-wide">
               Baru
             </span>
             <span className="font-medium">Aplikasi Lovable kini berfungsi di ChatGPT dan Claude</span>
@@ -399,7 +399,7 @@ export const LovableReplica: React.FC = () => {
                     onClick={handleMicrophoneClick}
                     className={`p-2 rounded-xl transition-all cursor-pointer ${
                       isRecording
-                        ? 'bg-rose-600 text-slate-900 dark:text-white animate-pulse'
+                        ? 'bg-rose-600 text-white animate-pulse'
                         : 'bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-700 text-slate-600 dark:text-slate-300'
                     }`}
                     title="Suara ke Teks (Simulasi Web Speech API)"

@@ -328,7 +328,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               <button
                 onClick={handleDownloadPDF}
                 disabled={isDownloading}
-                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-slate-900 dark:text-white font-black text-xs sm:text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition-all cursor-pointer"
+                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white font-black text-xs sm:text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition-all cursor-pointer"
               >
                 {isDownloading ? (
                   <Loader2 className="w-4.5 h-4.5 animate-spin" />

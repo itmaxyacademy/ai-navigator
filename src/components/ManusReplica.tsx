@@ -199,7 +199,7 @@ export const ManusReplica: React.FC = () => {
       <header className="px-6 py-4 bg-white/90 backdrop-blur-md border-b border-slate-100 flex items-center justify-between z-30 shrink-0">
         {/* Logo */}
         <div onClick={handleResetToLanding} className="flex items-center gap-2 cursor-pointer group">
-          <div className="w-6 h-6 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-white flex items-center justify-center font-bold text-xs shadow-sm">
+          <div className="w-6 h-6 rounded-lg bg-white dark:bg-slate-900 text-white flex items-center justify-center font-bold text-xs shadow-sm">
             ✋
           </div>
           <span className="text-xl font-bold tracking-tight text-slate-900 font-sans">
@@ -302,7 +302,7 @@ export const ManusReplica: React.FC = () => {
                 disabled={!taskInput.trim() || isLoading}
                 className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
                   taskInput.trim()
-                    ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800 shadow-md'
+                    ? 'bg-white dark:bg-slate-900 text-white hover:bg-slate-100 dark:bg-slate-800 shadow-md'
                     : 'bg-slate-100 text-slate-600 dark:text-slate-300 cursor-not-allowed'
                 }`}
               >
@@ -317,7 +317,7 @@ export const ManusReplica: React.FC = () => {
               onClick={() => handleSelectChip('Create slides', 'Buatkan slide presentasi tentang strategi pemasaran digital AI 2026')}
               className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
                 taskType === 'Create slides'
-                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-200 dark:border-slate-900 shadow-sm'
+                  ? 'bg-white dark:bg-slate-900 text-white border-slate-200 dark:border-slate-900 shadow-sm'
                   : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-xs'
               }`}
             >
@@ -329,7 +329,7 @@ export const ManusReplica: React.FC = () => {
               onClick={() => handleSelectChip('Build website', 'Buatkan aplikasi web landing page interaktif untuk startup AI')}
               className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
                 taskType === 'Build website'
-                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-200 dark:border-slate-900 shadow-sm'
+                  ? 'bg-white dark:bg-slate-900 text-white border-slate-200 dark:border-slate-900 shadow-sm'
                   : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-xs'
               }`}
             >
@@ -341,7 +341,7 @@ export const ManusReplica: React.FC = () => {
               onClick={() => handleSelectChip('Design', 'Buatkan konsep desain UI/UX, skema warna HSL, dan panduan tipografi modern')}
               className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
                 taskType === 'Design'
-                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-200 dark:border-slate-900 shadow-sm'
+                  ? 'bg-white dark:bg-slate-900 text-white border-slate-200 dark:border-slate-900 shadow-sm'
                   : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-xs'
               }`}
             >
@@ -353,7 +353,7 @@ export const ManusReplica: React.FC = () => {
               onClick={() => handleSelectChip('Create games', 'Buatkan game web HTML5 Canvas sederhana kontrol keyboard player')}
               className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
                 taskType === 'Create games'
-                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-200 dark:border-slate-900 shadow-sm'
+                  ? 'bg-white dark:bg-slate-900 text-white border-slate-200 dark:border-slate-900 shadow-sm'
                   : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-xs'
               }`}
             >
@@ -562,7 +562,7 @@ export const ManusReplica: React.FC = () => {
                   <button
                     onClick={handleFollowUpSubmit}
                     disabled={!followUpInput.trim() || isLoading}
-                    className="w-8 h-8 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white flex items-center justify-center hover:bg-slate-100 dark:bg-slate-800 disabled:bg-slate-200 cursor-pointer transition-all"
+                    className="w-8 h-8 rounded-xl bg-white dark:bg-slate-900 text-white flex items-center justify-center hover:bg-slate-100 dark:bg-slate-800 disabled:bg-slate-200 cursor-pointer transition-all"
                   >
                     <ArrowUp className="w-4 h-4" />
                   </button>
@@ -657,7 +657,7 @@ export const ManusReplica: React.FC = () => {
             </div>
             <button
               onClick={() => setShowMetaBannerModal(false)}
-              className="w-full py-2.5 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-extrabold cursor-pointer"
+              className="w-full py-2.5 rounded-2xl bg-white dark:bg-slate-900 text-white text-xs font-extrabold cursor-pointer"
             >
               Tutup Pengumuman
             </button>

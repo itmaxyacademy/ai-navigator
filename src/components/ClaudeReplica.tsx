@@ -926,7 +926,7 @@ export const ClaudeReplica: React.FC = () => {
 
                       <button
                         onClick={() => handleSendPrompt()}
-                        className="p-1.5 bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white rounded-xl shadow transition-all flex items-center justify-center"
+                        className="p-1.5 bg-amber-600 hover:bg-amber-500 text-slate-950 rounded-xl shadow transition-all flex items-center justify-center"
                       >
                         <Send className="w-3.5 h-3.5" />
                       </button>
@@ -1059,7 +1059,7 @@ export const ClaudeReplica: React.FC = () => {
                 />
                 <button
                   onClick={() => handleSendPrompt()}
-                  className="p-1.5 bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white rounded-lg shadow"
+                  className="p-1.5 bg-amber-600 hover:bg-amber-500 text-slate-950 rounded-lg shadow"
                 >
                   <Send className="w-3.5 h-3.5" />
                 </button>
@@ -1138,7 +1138,7 @@ export const ClaudeReplica: React.FC = () => {
             <div className="flex justify-end pt-2 border-t border-neutral-700">
               <button
                 onClick={() => setActiveModal(null)}
-                className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white font-bold text-xs rounded-xl shadow transition-all"
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs rounded-xl shadow transition-all"
               >
                 Paham & Tutup
               </button>

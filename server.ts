@@ -3,7 +3,7 @@ import path from "path";
 import { GoogleGenAI } from "@google/genai";
 
 const app = express();
-const PORT = parseInt(process.env.PORT || "3000", 10);
+const DEFAULT_PORT = parseInt(process.env.PORT || "5173", 10);
 
 app.use(express.json());
 
@@ -1863,9 +1863,21 @@ async function start() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`AI Navigator server listening on http://0.0.0.0:${PORT}`);
-  });
+  const listenPort = (port: number) => {
+    const server = app.listen(port, "0.0.0.0", () => {
+      console.log(`AI Navigator server listening on http://localhost:${port}`);
+    });
+    server.on("error", (err: any) => {
+      if (err.code === "EADDRINUSE" && port === 5173) {
+        console.warn(`Port 5173 is in use, trying port 3000...`);
+        listenPort(3000);
+      } else {
+        console.error("Server error:", err);
+      }
+    });
+  };
+
+  listenPort(DEFAULT_PORT);
 }
 
 start();

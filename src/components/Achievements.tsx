@@ -139,7 +139,7 @@ export const Achievements: React.FC<AchievementsProps> = ({
             onClick={() => setFilterTab('all')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               filterTab === 'all'
-                ? 'bg-indigo-600 text-slate-900 dark:text-white shadow-md'
+                ? 'bg-indigo-600 text-white shadow-md'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
@@ -149,7 +149,7 @@ export const Achievements: React.FC<AchievementsProps> = ({
             onClick={() => setFilterTab('unlocked')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               filterTab === 'unlocked'
-                ? 'bg-emerald-600 text-slate-900 dark:text-white shadow-md'
+                ? 'bg-emerald-600 text-white shadow-md'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
@@ -159,7 +159,7 @@ export const Achievements: React.FC<AchievementsProps> = ({
             onClick={() => setFilterTab('locked')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               filterTab === 'locked'
-                ? 'bg-purple-600 text-slate-900 dark:text-white shadow-md'
+                ? 'bg-purple-600 text-white shadow-md'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >

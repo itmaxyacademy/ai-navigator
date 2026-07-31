@@ -306,7 +306,7 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
                 <button
                   onClick={() => setIsRunning(!isRunning)}
                   className={`p-4 rounded-full shadow-2xl transition-transform hover:scale-105 cursor-pointer ${
-                    isRunning ? 'bg-amber-500 hover:bg-amber-400 text-slate-950' : 'bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white'
+                    isRunning ? 'bg-amber-500 hover:bg-amber-400 text-slate-950' : 'bg-indigo-600 hover:bg-indigo-500 text-white'
                   }`}
                 >
                   {isRunning ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8 ml-1" />}
@@ -337,13 +337,13 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-sm text-slate-900 dark:text-white">Focus Timer</span>
                 {currentConfig.xpReward > 0 && (
-                  <span className="text-[10px] font-extrabold bg-indigo-950 border border-indigo-700 text-amber-300 px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 text-amber-400" />
+                  <span className="text-[10px] font-extrabold bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-amber-300 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-indigo-600 dark:text-amber-400" />
                     +{currentConfig.xpReward} Focus XP
                   </span>
                 )}
                 {completedBlocksCount > 0 && (
-                  <span className="text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 px-2 py-0.5 rounded-full">
                     Selesai: {completedBlocksCount} Sesi
                   </span>
                 )}
@@ -363,7 +363,7 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
               className={`px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-transform hover:scale-105 cursor-pointer shadow-md ${
                 isRunning
                   ? 'bg-amber-500 hover:bg-amber-400 text-slate-950'
-                  : 'bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white'
+                  : 'bg-indigo-600 hover:bg-indigo-500 text-white'
               }`}
             >
               {isRunning ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
@@ -473,7 +473,7 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
                     <button
                       onClick={() => setAmbientSound('binaural')}
                       className={`px-2.5 py-1 rounded-lg text-[11px] font-bold cursor-pointer ${
-                        ambientSound === 'binaural' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
+                        ambientSound === 'binaural' ? 'bg-indigo-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       Binaural Alpha (10Hz)
@@ -481,7 +481,7 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
                     <button
                       onClick={() => setAmbientSound('rain')}
                       className={`px-2.5 py-1 rounded-lg text-[11px] font-bold cursor-pointer ${
-                        ambientSound === 'rain' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
+                        ambientSound === 'rain' ? 'bg-indigo-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       Suara Hujan

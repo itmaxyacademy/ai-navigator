@@ -559,7 +559,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   </button>
                   <button
                     onClick={() => showToast('Gambar berhasil diunduh (PNG)!')}
-                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-slate-900 dark:text-white shadow-md"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-white shadow-md"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Unduh Gambar</span>
@@ -661,7 +661,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsVideoPlaying(!isVideoPlaying);
                       showToast(isVideoPlaying ? 'Video dipause' : 'Memutar pratinjau video AI...');
                     }}
-                    className="relative z-10 w-14 h-14 rounded-full bg-purple-600/90 hover:bg-purple-600 text-slate-900 dark:text-white flex items-center justify-center shadow-2xl hover:scale-105 transition-all cursor-pointer"
+                    className="relative z-10 w-14 h-14 rounded-full bg-purple-600/90 hover:bg-purple-600 text-white flex items-center justify-center shadow-2xl hover:scale-105 transition-all cursor-pointer"
                   >
                     {isVideoPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
                   </button>
@@ -690,7 +690,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <div className="flex items-center justify-end gap-2 text-xs">
                   <button
                     onClick={() => showToast('File video MP4 HD berhasil diunduh!')}
-                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-slate-900 dark:text-white shadow-md"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-white shadow-md"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Unduh Video MP4</span>
@@ -909,7 +909,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   </span>
                   <button
                     onClick={() => showToast('Musik MP3 berhasil diunduh!')}
-                    className="flex items-center gap-1 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
+                    className="flex items-center gap-1 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-xs font-bold text-white cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download MP3</span>
@@ -922,7 +922,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsMusicPlaying(!isMusicPlaying);
                       showToast(isMusicPlaying ? 'Musik paused' : 'Memutar musik AI...');
                     }}
-                    className="w-10 h-10 rounded-full bg-indigo-600 hover:bg-indigo-700 text-slate-900 dark:text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
+                    className="w-10 h-10 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
                   >
                     {isMusicPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
@@ -1033,7 +1033,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   </span>
                   <button
                     onClick={() => showToast('Audio hasil konversi berhasil diunduh!')}
-                    className="flex items-center gap-1 px-3 py-1 bg-rose-600 hover:bg-rose-700 rounded-lg text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
+                    className="flex items-center gap-1 px-3 py-1 bg-rose-600 hover:bg-rose-700 rounded-lg text-xs font-bold text-white cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download Audio</span>
@@ -1046,7 +1046,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsVoiceChangerPlaying(!isVoiceChangerPlaying);
                       showToast(isVoiceChangerPlaying ? 'Audio paused' : 'Memutar suara hasil konversi...');
                     }}
-                    className="w-10 h-10 rounded-full bg-rose-600 hover:bg-rose-700 text-slate-900 dark:text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
+                    className="w-10 h-10 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
                   >
                     {isVoiceChangerPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
@@ -1569,7 +1569,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                     <button
                       onClick={handleDownloadAudio}
-                      className="flex items-center gap-1 px-2.5 py-1 bg-purple-600 hover:bg-purple-700 rounded-lg text-xs font-bold text-slate-900 dark:text-white shadow-md cursor-pointer"
+                      className="flex items-center gap-1 px-2.5 py-1 bg-purple-600 hover:bg-purple-700 rounded-lg text-xs font-bold text-white shadow-md cursor-pointer"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>Download</span>
@@ -1590,7 +1590,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                     <button
                       onClick={togglePlayAudio}
-                      className="w-9 h-9 rounded-full bg-purple-600 hover:bg-purple-700 text-slate-900 dark:text-white flex items-center justify-center shadow-md transition-transform active:scale-90 cursor-pointer shrink-0"
+                      className="w-9 h-9 rounded-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center shadow-md transition-transform active:scale-90 cursor-pointer shrink-0"
                     >
                       {isPlaying ? (
                         <Pause className="w-4 h-4 fill-white" />
@@ -2092,8 +2092,8 @@ export const ElevenLabsReplica: React.FC = () => {
             }}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
               viewMode === 'desktop'
-                ? 'bg-purple-600 text-slate-900 dark:text-white shadow-md'
-                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
+                ? 'bg-purple-600 text-white shadow-md'
+                : 'text-slate-500 dark:text-slate-400 hover:text-white'
             }`}
           >
             <Monitor className="w-3.5 h-3.5" />
@@ -2103,8 +2103,8 @@ export const ElevenLabsReplica: React.FC = () => {
             onClick={() => setViewMode('mobile')}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
               viewMode === 'mobile'
-                ? 'bg-purple-600 text-slate-900 dark:text-white shadow-md'
-                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
+                ? 'bg-purple-600 text-white shadow-md'
+                : 'text-slate-500 dark:text-slate-400 hover:text-white'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -2385,7 +2385,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       className={`flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all shrink-0 cursor-pointer ${
                         isActive
                           ? 'bg-purple-600/20 text-purple-300 border border-purple-500/50 font-bold shadow-md'
-                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#141824]'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-white hover:bg-[#141824]'
                       }`}
                     >
                       <ToolIcon className="w-3.5 h-3.5" />
@@ -2465,7 +2465,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
                     isActive
                       ? 'bg-purple-600/20 text-purple-300 border border-purple-500/50 font-bold shadow-md'
-                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#141824]'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-white hover:bg-[#141824]'
                   }`}
                 >
                   <ToolIcon className="w-3 h-3" />

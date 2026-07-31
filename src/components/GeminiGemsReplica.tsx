@@ -443,7 +443,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
     <div className="w-full min-h-[750px] bg-[#0f1013] text-slate-800 dark:text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row relative shadow-2xl">
       {/* Global Toast Notification */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-blue-600 text-slate-900 dark:text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-2xl border border-blue-400 flex items-center space-x-2 animate-in fade-in">
+        <div className="fixed bottom-6 right-6 z-50 bg-blue-600 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-2xl border border-blue-400 flex items-center space-x-2 animate-in fade-in">
           <Sparkles className="w-4 h-4 text-blue-200" />
           <span>{toast}</span>
         </div>
@@ -545,7 +545,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
             onClick={() => showToastMsg('Profil Akun: Wahyudi (Maxy Academy)')}
             className="w-full flex items-center space-x-2.5 p-1.5 rounded-xl hover:bg-slate-100 dark:bg-slate-800/60 cursor-pointer transition-colors"
           >
-            <div className="w-7 h-7 rounded-full bg-indigo-700 border border-indigo-500 flex items-center justify-center text-slate-900 dark:text-white font-bold text-xs shrink-0">
+            <div className="w-7 h-7 rounded-full bg-indigo-700 border border-indigo-500 flex items-center justify-center text-white font-bold text-xs shrink-0">
               W
             </div>
             <div className="hidden lg:flex flex-col text-[11px] truncate">
@@ -634,7 +634,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                     <button
                       onClick={handleSendPrompt}
                       disabled={!chatInput.trim()}
-                      className="p-1.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-slate-900 dark:text-white rounded-lg transition-colors"
+                      className="p-1.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white rounded-lg transition-colors"
                     >
                       <Send className="w-4 h-4" />
                     </button>
@@ -865,7 +865,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                 {/* + Gem Baru Button */}
                 <button
                   onClick={handleOpenCreateForm}
-                  className="bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center space-x-1.5 shadow-md transition-all transform hover:scale-105"
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center space-x-1.5 shadow-md transition-all transform hover:scale-105"
                 >
                   <Plus className="w-4 h-4" />
                   <span>+ Gem Baru</span>
@@ -1007,7 +1007,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
               <button
                 onClick={handleSaveGem}
                 disabled={isSaving}
-                className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-slate-900 dark:text-white font-bold text-xs px-5 py-2 rounded-xl shadow-md transition-all"
+                className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold text-xs px-5 py-2 rounded-xl shadow-md transition-all"
               >
                 {isSaving ? 'Menyimpan...' : 'Simpan'}
               </button>
@@ -1124,7 +1124,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                   ) : (
                     <div className="bg-[#141622] border border-slate-300 dark:border-slate-700/80 rounded-2xl p-4 space-y-4 shadow-xl">
                       <div className="flex items-center space-x-3 pb-3 border-b border-slate-200 dark:border-slate-800">
-                        <div className="w-9 h-9 rounded-xl bg-blue-600 border border-blue-400 flex items-center justify-center font-bold text-slate-900 dark:text-white text-sm">
+                        <div className="w-9 h-9 rounded-xl bg-blue-600 border border-blue-400 flex items-center justify-center font-bold text-white text-sm">
                           {formName.charAt(0).toUpperCase()}
                         </div>
                         <div>
@@ -1135,7 +1135,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                         </div>
                       </div>
 
-                      <div className="bg-white dark:bg-white/90 dark:bg-slate-900/90 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-mono">
+                      <div className="bg-white dark:bg-[#0d1322] p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-mono">
                         <strong className="text-blue-300 block mb-1">Simulasi Peran System Instruction:</strong>
                         {formInstructions || 'Tuliskan petunjuk untuk melihat simulasi instruksi...'}
                       </div>
@@ -1207,7 +1207,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                     </span>
                   )}
 
-                  <div className={`p-4 rounded-2xl text-xs sm:text-sm leading-relaxed whitespace-pre-wrap ${msg.sender === 'user' ? 'bg-blue-600 text-slate-900 dark:text-white font-medium max-w-[85%] shadow-md' : 'bg-[#141620] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 w-full shadow-lg font-sans'}`}>
+                  <div className={`p-4 rounded-2xl text-xs sm:text-sm leading-relaxed whitespace-pre-wrap ${msg.sender === 'user' ? 'bg-blue-600 text-white font-medium max-w-[85%] shadow-md' : 'bg-[#141620] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 w-full shadow-lg font-sans'}`}>
                     {msg.text}
                   </div>
                 </div>
@@ -1250,7 +1250,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                     <button
                       onClick={handleSendPrompt}
                       disabled={!chatInput.trim() || isGenerating}
-                      className="p-1.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-slate-900 dark:text-white rounded-lg transition-colors"
+                      className="p-1.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white rounded-lg transition-colors"
                     >
                       <Send className="w-3.5 h-3.5" />
                     </button>

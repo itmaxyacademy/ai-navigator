@@ -676,7 +676,7 @@ export const CraiyonReplica: React.FC = () => {
                   <LayoutGrid className="w-3.5 h-3.5 text-orange-400" />
                   <span className="font-medium">Studio</span>
                 </div>
-                <span className="text-[10px] font-bold px-1.5 py-0.5 bg-indigo-600 text-slate-900 dark:text-white rounded-md">
+                <span className="text-[10px] font-bold px-1.5 py-0.5 bg-indigo-600 text-white rounded-md">
                   New
                 </span>
               </button>
@@ -907,7 +907,7 @@ export const CraiyonReplica: React.FC = () => {
                 </div>
                 <button
                   onClick={handleGenerate}
-                  className="px-3 py-1 bg-rose-800 hover:bg-rose-700 text-slate-900 dark:text-white font-bold rounded-lg shrink-0 transition-colors cursor-pointer"
+                  className="px-3 py-1 bg-rose-800 hover:bg-rose-700 text-white font-bold rounded-lg shrink-0 transition-colors cursor-pointer"
                 >
                   Coba Lagi
                 </button>
@@ -1391,7 +1391,7 @@ export const CraiyonReplica: React.FC = () => {
                     <LayoutGrid className="w-4 h-4 text-orange-400" />
                     <span className="font-medium">Studio</span>
                   </div>
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 bg-indigo-600 text-slate-900 dark:text-white rounded-md">
+                  <span className="text-[10px] font-bold px-1.5 py-0.5 bg-indigo-600 text-white rounded-md">
                     New
                   </span>
                 </button>

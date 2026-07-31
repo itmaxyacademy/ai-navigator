@@ -139,7 +139,7 @@ export const AllNotesModal: React.FC<AllNotesModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-100 dark:bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
       {/* Toast Alert */}
       {toastMsg && (
-        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-xl bg-indigo-600 text-slate-900 dark:text-white font-bold text-xs shadow-2xl border border-indigo-400 flex items-center gap-2 animate-bounce">
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-2xl border border-indigo-400 flex items-center gap-2 animate-bounce">
           <Sparkles className="w-4 h-4 text-amber-300" />
           <span>{toastMsg}</span>
         </div>
@@ -169,7 +169,7 @@ export const AllNotesModal: React.FC<AllNotesModalProps> = ({
             {notesList.length > 0 && (
               <button
                 onClick={handleExportAll}
-                className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
               >
                 <Download className="w-4 h-4" />
                 <span className="hidden sm:inline">Ekspor Semua (.txt)</span>
@@ -186,7 +186,7 @@ export const AllNotesModal: React.FC<AllNotesModalProps> = ({
         </div>
 
         {/* Search Bar */}
-        <div className="p-4 bg-white dark:bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800/80 flex items-center gap-3">
+        <div className="p-4 bg-white dark:bg-[#0d1322] border-b border-slate-200 dark:border-slate-800/80 flex items-center gap-3">
           <div className="relative flex-1">
             <Search className="w-4 h-4 text-slate-500 dark:text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
@@ -276,7 +276,7 @@ export const AllNotesModal: React.FC<AllNotesModalProps> = ({
                         onClose();
                         onSelectModule(currentSelectedNote.moduleId);
                       }}
-                      className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:text-white font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+                      className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 text-slate-700 dark:text-slate-200 hover:text-white font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
                     >
                       <span>Buka Modul</span>
                       <ExternalLink className="w-3.5 h-3.5" />

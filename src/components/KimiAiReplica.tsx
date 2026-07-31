@@ -397,7 +397,7 @@ export const KimiAiReplica: React.FC = () => {
       {/* Top Stage Control Header */}
       <div className="bg-[#16161a] border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between text-xs shrink-0 z-30">
         <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center font-extrabold text-slate-900 dark:text-white text-xs shadow-lg">
+          <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center font-extrabold text-white text-xs shadow-lg">
             K
           </div>
           <span className="font-extrabold text-slate-700 dark:text-slate-200">Kimi AI Studio Simulator</span>
@@ -408,25 +408,25 @@ export const KimiAiReplica: React.FC = () => {
         <div className="flex items-center space-x-1 bg-[#0a0a0c] p-1 rounded-xl border border-slate-200 dark:border-slate-800">
           <button
             onClick={() => setActiveStage('chat')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'chat' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'chat' ? 'bg-indigo-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 1: Chat Utama
           </button>
           <button
             onClick={() => setActiveStage('work')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'work' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'work' ? 'bg-indigo-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 2: Kimi Work
           </button>
           <button
             onClick={() => setActiveStage('code')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'code' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'code' ? 'bg-indigo-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 3: Kimi Code
           </button>
           <button
             onClick={() => setActiveStage('claw')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'claw' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'claw' ? 'bg-indigo-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 4: Kimi Claw
           </button>
@@ -435,7 +435,7 @@ export const KimiAiReplica: React.FC = () => {
 
       {/* Global Toast Banner */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-indigo-600 text-slate-900 dark:text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-2xl border border-indigo-400 flex items-center space-x-2 animate-bounce">
+        <div className="fixed bottom-6 right-6 z-50 bg-indigo-600 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-2xl border border-indigo-400 flex items-center space-x-2 animate-bounce">
           <Sparkles className="w-4 h-4 text-indigo-200" />
           <span>{toast}</span>
         </div>
@@ -581,7 +581,7 @@ export const KimiAiReplica: React.FC = () => {
             {!collapsedNav && (
               <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
                 <div className="flex items-center space-x-2 truncate">
-                  <div className="w-7 h-7 rounded-full bg-indigo-600 font-bold text-slate-900 dark:text-white flex items-center justify-center text-xs">
+                  <div className="w-7 h-7 rounded-full bg-indigo-600 font-bold text-white flex items-center justify-center text-xs">
                     M
                   </div>
                   <div className="truncate">
@@ -604,7 +604,7 @@ export const KimiAiReplica: React.FC = () => {
               <div className="flex-1 space-y-4 max-h-[480px] overflow-y-auto p-2">
                 {activeMessages.map((msg, idx) => (
                   <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-xl rounded-2xl p-4 text-xs leading-relaxed space-y-1.5 shadow-md ${msg.sender === 'user' ? 'bg-indigo-600 text-slate-900 dark:text-white rounded-tr-none' : 'bg-[#1b1b22] border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 rounded-tl-none'}`}>
+                    <div className={`max-w-xl rounded-2xl p-4 text-xs leading-relaxed space-y-1.5 shadow-md ${msg.sender === 'user' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-[#1b1b22] border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 rounded-tl-none'}`}>
                       <div className="font-bold text-[10px] text-indigo-300">
                         {msg.sender === 'user' ? 'Maxy Student' : '🤖 Kimi K2.5'}
                       </div>
@@ -703,7 +703,7 @@ export const KimiAiReplica: React.FC = () => {
                   <button
                     onClick={() => handleSendMainChat()}
                     disabled={isLoading}
-                    className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-slate-900 dark:text-white p-2.5 rounded-xl shadow-lg font-bold flex items-center space-x-1"
+                    className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white p-2.5 rounded-xl shadow-lg font-bold flex items-center space-x-1"
                   >
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -756,7 +756,7 @@ export const KimiAiReplica: React.FC = () => {
                       setActiveFeatureChip(sc.name);
                       showToast(`Tag Fitur Ditambahkan: [${sc.name}]`);
                     }}
-                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${activeFeatureChip === sc.name ? 'bg-indigo-600 text-slate-900 dark:text-white border-indigo-400' : 'bg-[#181820] hover:bg-[#22222c] border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white'}`}
+                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${activeFeatureChip === sc.name ? 'bg-indigo-600 text-white border-indigo-400' : 'bg-[#181820] hover:bg-[#22222c] border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-white'}`}
                   >
                     {sc.icon}
                     <span>{sc.name}</span>
@@ -809,13 +809,13 @@ export const KimiAiReplica: React.FC = () => {
             <div className="flex items-center space-x-2 bg-[#0e0e12] p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
               <button
                 onClick={() => setWorkTab('Work')}
-                className={`px-4 py-1.5 rounded-lg font-extrabold transition-all ${workTab === 'Work' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400'}`}
+                className={`px-4 py-1.5 rounded-lg font-extrabold transition-all ${workTab === 'Work' ? 'bg-indigo-600 text-white shadow' : 'text-slate-500 dark:text-slate-400'}`}
               >
                 🖥️ Work (Agentic Execution)
               </button>
               <button
                 onClick={() => setWorkTab('Chat')}
-                className={`px-4 py-1.5 rounded-lg font-bold transition-all ${workTab === 'Chat' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
+                className={`px-4 py-1.5 rounded-lg font-bold transition-all ${workTab === 'Chat' ? 'bg-indigo-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-white'}`}
               >
                 💬 Chat (Conversational)
               </button>
@@ -832,7 +832,7 @@ export const KimiAiReplica: React.FC = () => {
               <div className="space-y-4">
                 <button
                   onClick={handleNewWorkTask}
-                  className="w-full flex items-center space-x-2 p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white font-bold shadow transition-all"
+                  className="w-full flex items-center space-x-2 p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow transition-all"
                 >
                   <Plus className="w-4 h-4" />
                   <span>+ New task</span>
@@ -937,7 +937,7 @@ export const KimiAiReplica: React.FC = () => {
                           setWorkMode('Agent');
                           showToast('Mode: Agent (Agen otonom tunggal)');
                         }}
-                        className={`px-3 py-1 rounded-lg font-bold transition-all ${workMode === 'Agent' ? 'bg-indigo-600 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
+                        className={`px-3 py-1 rounded-lg font-bold transition-all ${workMode === 'Agent' ? 'bg-indigo-600 text-white' : 'text-slate-500 dark:text-slate-400'}`}
                       >
                         Agent
                       </button>
@@ -946,7 +946,7 @@ export const KimiAiReplica: React.FC = () => {
                           setWorkMode('Agent Swarm');
                           showToast('Mode: Agent Swarm (Multi-agent kolaboratif)');
                         }}
-                        className={`px-3 py-1 rounded-lg font-bold transition-all ${workMode === 'Agent Swarm' ? 'bg-purple-600 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
+                        className={`px-3 py-1 rounded-lg font-bold transition-all ${workMode === 'Agent Swarm' ? 'bg-purple-600 text-white' : 'text-slate-500 dark:text-slate-400'}`}
                       >
                         Agent Swarm
                       </button>
@@ -956,7 +956,7 @@ export const KimiAiReplica: React.FC = () => {
                   <button
                     onClick={handleRunWorkTask}
                     disabled={isWorkRunning}
-                    className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-slate-900 dark:text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center space-x-1.5"
+                    className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center space-x-1.5"
                   >
                     <span>{isWorkRunning ? 'Memproses...' : 'Kirim Ke Agent'}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -1005,7 +1005,7 @@ export const KimiAiReplica: React.FC = () => {
                 Konsol
               </button>
               <Globe className="w-4 h-4 text-slate-500 dark:text-slate-400 cursor-pointer" />
-              <div className="w-7 h-7 rounded-full bg-indigo-600 font-bold text-slate-900 dark:text-white flex items-center justify-center text-xs">
+              <div className="w-7 h-7 rounded-full bg-indigo-600 font-bold text-white flex items-center justify-center text-xs">
                 M
               </div>
             </div>
@@ -1027,14 +1027,14 @@ export const KimiAiReplica: React.FC = () => {
               <div className="bg-[#16161e] p-1 rounded-2xl border border-slate-200 dark:border-slate-800 inline-flex space-x-1 text-xs">
                 <button
                   onClick={() => setCodeTab('terminal')}
-                  className={`px-6 py-2 rounded-xl font-bold transition-all ${codeTab === 'terminal' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 dark:text-slate-400'}`}
+                  className={`px-6 py-2 rounded-xl font-bold transition-all ${codeTab === 'terminal' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 dark:text-slate-400'}`}
                 >
                   <Terminal className="w-4 h-4 inline mr-1.5" />
                   Terminal CLI
                 </button>
                 <button
                   onClick={() => setCodeTab('ide')}
-                  className={`px-6 py-2 rounded-xl font-bold transition-all ${codeTab === 'ide' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 dark:text-slate-400'}`}
+                  className={`px-6 py-2 rounded-xl font-bold transition-all ${codeTab === 'ide' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 dark:text-slate-400'}`}
                 >
                   <Code className="w-4 h-4 inline mr-1.5" />
                   IDE Editor
@@ -1082,7 +1082,7 @@ export const KimiAiReplica: React.FC = () => {
                       placeholder="Ketik perintah CLI (misal: git status, npm test, analyze architecture)..."
                       className="flex-1 bg-transparent text-xs text-slate-900 dark:text-white focus:outline-none"
                     />
-                    <button onClick={() => handleCliCommand()} className="bg-indigo-600 text-slate-900 dark:text-white px-3 py-1 rounded-lg text-[10px] font-bold">
+                    <button onClick={() => handleCliCommand()} className="bg-indigo-600 text-white px-3 py-1 rounded-lg text-[10px] font-bold">
                       Jalankan
                     </button>
                   </div>
@@ -1112,7 +1112,7 @@ export const KimiAiReplica: React.FC = () => {
                   <button
                     onClick={handleRunIdeCode}
                     disabled={isLoading}
-                    className="bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white px-3 py-1 rounded-lg text-xs font-bold shadow flex items-center space-x-1"
+                    className="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded-lg text-xs font-bold shadow flex items-center space-x-1"
                   >
                     <Play className="w-3.5 h-3.5" />
                     <span>Jalankan & Analisis Kode</span>
@@ -1216,7 +1216,7 @@ export const KimiAiReplica: React.FC = () => {
                       <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{card.desc}</p>
                     </div>
 
-                    <button className="w-full bg-[#252532] hover:bg-indigo-600 text-slate-900 dark:text-white font-bold text-xs py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 transition-colors">
+                    <button className="w-full bg-[#252532] hover:bg-indigo-600 text-white font-bold text-xs py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 transition-colors">
                       {card.btnText}
                     </button>
                   </div>
@@ -1247,7 +1247,7 @@ export const KimiAiReplica: React.FC = () => {
               <div className="space-y-3 max-h-56 overflow-y-auto p-1">
                 {clawMessages.map((cMsg, cidx) => (
                   <div key={cidx} className={`flex ${cMsg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-md rounded-2xl p-3 text-xs leading-relaxed ${cMsg.sender === 'user' ? 'bg-indigo-600 text-slate-900 dark:text-white rounded-tr-none' : 'bg-[#22222d] border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-tl-none'}`}>
+                    <div className={`max-w-md rounded-2xl p-3 text-xs leading-relaxed ${cMsg.sender === 'user' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-[#22222d] border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-tl-none'}`}>
                       <div className="font-bold text-[10px] text-indigo-300 mb-1">
                         {cMsg.sender === 'user' ? 'Maxy Student' : '🦞 OpenClaw'}
                       </div>
@@ -1269,7 +1269,7 @@ export const KimiAiReplica: React.FC = () => {
                 <button
                   onClick={handleSendClawChat}
                   disabled={isLoading}
-                  className="bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white px-4 py-2 rounded-xl text-xs font-bold shadow"
+                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow"
                 >
                   <Send className="w-3.5 h-3.5" />
                 </button>

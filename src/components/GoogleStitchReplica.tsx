@@ -142,7 +142,7 @@ export const GoogleStitchReplica: React.FC = () => {
       </div>
       {/* Top Header Navigation Bar */}
       <div className="h-14 border-b border-slate-200 dark:border-slate-800/80 bg-[#181a20]/90 backdrop-blur-md px-3 sm:px-4 flex items-center justify-between shrink-0 z-30">
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 max-w-full">
           <button 
             onClick={() => explainFeature('Side Navigation Menu', 'Header Control', 'Membuka menu navigasi utama Google Stitch, daftar proyek kanvas Maxy Academy, template, dan pengaturan akun.')}
             className="p-2 hover:bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
@@ -248,7 +248,7 @@ export const GoogleStitchReplica: React.FC = () => {
               {/* User Prompt Chip */}
               <div 
                 onClick={() => explainFeature('Catatan Warna UI (#ffb034)', 'Agent Memory', 'Agen AI mencatat bahwa warna primer Kinetic Academy disesuaikan ke Amber #ffb034.')}
-                className="bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 flex items-center justify-between gap-2 cursor-pointer hover:border-slate-300 dark:border-slate-700 transition-colors"
+                className="bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 flex items-center justify-between gap-2 cursor-pointer hover:border-slate-300 dark:border-slate-700 transition-colors"
               >
                 <div className="flex items-center gap-2 truncate">
                   <div className="w-5 h-5 rounded-full bg-cyan-600 text-slate-900 dark:text-white font-bold text-[10px] flex items-center justify-center">M</div>
@@ -329,7 +329,7 @@ export const GoogleStitchReplica: React.FC = () => {
               </div>
               <div className="space-y-3 bg-[#15171e] p-3 rounded-xl border border-slate-200 dark:border-slate-800">
                 <div className="grid grid-cols-3 gap-1.5">
-                  <div className="bg-indigo-600 h-10 rounded-lg p-1 text-[9px] font-bold text-slate-900 dark:text-white">Primary</div>
+                  <div className="bg-indigo-600 h-10 rounded-lg p-1 text-[9px] font-bold text-white">Primary</div>
                   <div className="bg-cyan-500 h-10 rounded-lg p-1 text-[9px] font-bold text-slate-950">Secondary</div>
                   <div className="bg-amber-500 h-10 rounded-lg p-1 text-[9px] font-bold text-slate-950">Tertiary</div>
                 </div>
@@ -341,7 +341,7 @@ export const GoogleStitchReplica: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex gap-1.5">
-                  <span className="px-2 py-0.5 bg-indigo-600 text-slate-900 dark:text-white rounded text-[10px] font-bold">Primary</span>
+                  <span className="px-2 py-0.5 bg-indigo-600 text-white rounded text-[10px] font-bold">Primary</span>
                   <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded text-[10px]">Inverted</span>
                   <span className="px-2 py-0.5 border border-slate-600 text-slate-600 dark:text-slate-300 rounded text-[10px]">Outlined</span>
                 </div>
@@ -374,7 +374,7 @@ export const GoogleStitchReplica: React.FC = () => {
                     <span className="text-slate-600 dark:text-slate-300">Attendance Status:</span>
                     <span className="text-amber-400 font-bold">Checked Out</span>
                   </div>
-                  <button className="w-full py-1.5 bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white font-bold rounded-lg text-center text-xs shadow-md">
+                  <button className="w-full py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg text-center text-xs shadow-md">
                     ➜ Check In Now
                   </button>
                 </div>
@@ -425,7 +425,7 @@ export const GoogleStitchReplica: React.FC = () => {
                 <p className="font-bold text-slate-800 dark:text-slate-100">Daily Attendance</p>
                 <p className="text-[10px] text-slate-500 dark:text-slate-400">Track your physical presence & daily hours.</p>
                 <div className="grid grid-cols-2 gap-1.5 my-1">
-                  <button className="py-1 bg-emerald-600 text-slate-900 dark:text-white rounded font-bold text-[10px]">➜ Check In</button>
+                  <button className="py-1 bg-emerald-600 text-white rounded font-bold text-[10px]">➜ Check In</button>
                   <button className="py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded text-[10px]">Check Out</button>
                 </div>
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 flex items-center gap-2">
@@ -558,7 +558,7 @@ export const GoogleStitchReplica: React.FC = () => {
               setPromptInput('Add an attendance history log to the attendance screen with filter dates...');
               explainFeature('Suggestion Pill 1', 'Quick Prompt', 'Menyisipkan perintah cepat untuk menambahkan log riwayat presisi.');
             }}
-            className="bg-white dark:bg-white/90 dark:bg-slate-900/90 hover:bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700/80 hover:border-cyan-500/80 rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 shadow-lg backdrop-blur-md transition-all"
+            className="bg-white dark:bg-[#0d1322] hover:bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700/80 hover:border-cyan-500/80 rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 shadow-lg backdrop-blur-md transition-all"
           >
             <span>Add an attendance history log to the...</span>
             <span className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-cyan-400 flex items-center justify-center">1</span>
@@ -569,7 +569,7 @@ export const GoogleStitchReplica: React.FC = () => {
               setPromptInput('Create a detailed view for a single warrior profile with stats...');
               explainFeature('Suggestion Pill 2', 'Quick Prompt', 'Menyisipkan perintah cepat untuk membuat rincian detail profil anggota.');
             }}
-            className="bg-white dark:bg-white/90 dark:bg-slate-900/90 hover:bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700/80 hover:border-cyan-500/80 rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 shadow-lg backdrop-blur-md transition-all"
+            className="bg-white dark:bg-[#0d1322] hover:bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700/80 hover:border-cyan-500/80 rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 shadow-lg backdrop-blur-md transition-all"
           >
             <span>Create a detailed view for a single n...</span>
             <span className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-cyan-400 flex items-center justify-center">2</span>

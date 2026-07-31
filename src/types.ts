@@ -132,6 +132,7 @@ export interface UserProgress {
   dailyMinutesHistory?: Record<string, number>; // dateStr -> minutes learned today
   completedCheckpoints?: string[]; // IDs of mini-quiz checkpoints completed
   moduleRevisits?: Record<number, number>; // moduleId -> count of times revisited/practiced
+  hasSeenCertPopup?: boolean; // track if user has seen certificate pop-up
   certName?: string;
   certEmail?: string;
   certRequested?: boolean;

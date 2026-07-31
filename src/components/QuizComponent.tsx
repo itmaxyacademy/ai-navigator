@@ -33,20 +33,29 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    // 1. Fetch questions from the actual module data
-    const pool = (module.content.quiz || []).map((q) => ({
-      id: q.id,
-      question: q.question,
-      options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
-      correctOptionId: q.correctAnswer.toString(),
-      explanation: q.explanation,
-    }));
+    // 1. Try to fetch questions from QUESTION_BANK (50 soal per modul)
+    const bankModule = QUESTION_BANK.modules.find((m) => m.moduleId === module.id);
+    let pool: BankQuestion[] = [];
 
-    // 2. Randomly pick questions
+    if (bankModule && bankModule.questions.length > 0) {
+      // Use question bank directly (already in BankQuestion format)
+      pool = bankModule.questions;
+    } else {
+      // Fallback: convert from module.content.quiz format
+      pool = (module.content.quiz || []).map((q) => ({
+        id: q.id,
+        question: q.question,
+        options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
+        correctOptionId: q.correctAnswer.toString(),
+        explanation: q.explanation,
+      }));
+    }
+
+    // 2. Shuffle the entire pool and pick exactly quizLength (default 10) questions
     const shuffledPool = shuffleArray(pool);
     const selected = shuffledPool.slice(0, quizLength);
 
-    // 3. Randomize the options for each selected question
+    // 3. Randomize the options order for each selected question
     const preparedQuestions = selected.map(q => ({
       ...q,
       options: shuffleArray(q.options)
@@ -107,14 +116,22 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
   };
 
   const handleRestart = () => {
-    // Reshuffle on restart for a completely new quiz experience
-    const pool = (module.content.quiz || []).map((q) => ({
-      id: q.id,
-      question: q.question,
-      options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
-      correctOptionId: q.correctAnswer.toString(),
-      explanation: q.explanation,
-    }));
+    // Reshuffle on restart for a completely new quiz experience from QUESTION_BANK
+    const bankModule = QUESTION_BANK.modules.find((m) => m.moduleId === module.id);
+    let pool: BankQuestion[] = [];
+
+    if (bankModule && bankModule.questions.length > 0) {
+      pool = bankModule.questions;
+    } else {
+      pool = (module.content.quiz || []).map((q) => ({
+        id: q.id,
+        question: q.question,
+        options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
+        correctOptionId: q.correctAnswer.toString(),
+        explanation: q.explanation,
+      }));
+    }
+
     const shuffledPool = shuffleArray(pool);
     const selected = shuffledPool.slice(0, quizLength);
     const preparedQuestions = selected.map(q => ({
@@ -181,7 +198,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
                     <span
                       className={`w-6 h-6 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 border mt-0.5 ${
                         isSelected
-                          ? 'bg-indigo-600 text-slate-900 dark:text-white border-indigo-400'
+                          ? 'bg-indigo-600 text-white border-indigo-400'
                           : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800'
                       }`}
                     >
@@ -208,7 +225,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
               <button
                 onClick={() => setCurrentQuestionIdx((prev) => prev + 1)}
                 disabled={!isAnsweredCurrent}
-                className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-slate-900 dark:text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md"
+                className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md"
               >
                 Pertanyaan Berikutnya <ArrowRight className="w-4 h-4" />
               </button>
@@ -216,7 +233,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
               <button
                 onClick={handleSubmitQuiz}
                 disabled={Object.keys(selectedAnswers).length < quizQuestions.length}
-                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-slate-900 dark:text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/30 flex items-center gap-2 cursor-pointer disabled:cursor-not-allowed"
+                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/30 flex items-center gap-2 cursor-pointer disabled:cursor-not-allowed"
               >
                 Selesaikan Kuis &amp; Kirim <Award className="w-4 h-4" />
               </button>
@@ -293,7 +310,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
             {onNextModule && (
               <button
                 onClick={onNextModule}
-                className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-600/30 cursor-pointer"
+                className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-600/30 cursor-pointer"
               >
                 Lanjut ke Modul Berikutnya <ArrowRight className="w-4 h-4" />
               </button>

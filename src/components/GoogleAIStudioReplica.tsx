@@ -342,7 +342,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
     <div className="w-full bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl flex flex-col min-h-[750px]">
       {/* Toast Notification Banner */}
       {toastMessage && (
-        <div className="fixed top-6 right-6 z-50 bg-indigo-600 text-slate-900 dark:text-white px-4 py-2.5 rounded-xl shadow-2xl border border-indigo-400 text-xs font-medium flex items-center gap-2 animate-bounce">
+        <div className="fixed top-6 right-6 z-50 bg-indigo-600 text-white px-4 py-2.5 rounded-xl shadow-2xl border border-indigo-400 text-xs font-medium flex items-center gap-2 animate-bounce">
           <Sparkles className="w-4 h-4 text-amber-300 animate-spin" />
           <span>{toastMessage}</span>
         </div>
@@ -587,7 +587,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         onClick={() => setGridFilterMode('models')}
                         className={`px-3 py-1 rounded-lg transition-all ${
                           gridFilterMode === 'models'
-                            ? 'bg-blue-600 text-slate-900 dark:text-white font-semibold shadow-md'
+                            ? 'bg-blue-600 text-white font-semibold shadow-md'
                             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                         }`}
                       >
@@ -597,7 +597,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         onClick={() => setGridFilterMode('agents')}
                         className={`px-3 py-1 rounded-lg transition-all ${
                           gridFilterMode === 'agents'
-                            ? 'bg-blue-600 text-slate-900 dark:text-white font-semibold shadow-md'
+                            ? 'bg-blue-600 text-white font-semibold shadow-md'
                             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                         }`}
                       >
@@ -700,7 +700,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
 
                 {/* Prompt Input Box & Toolbar */}
                 <div className="space-y-2 pt-2">
-                  <div className="relative rounded-2xl bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 focus-within:border-blue-500 transition-all p-3 shadow-xl">
+                  <div className="relative rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 focus-within:border-blue-500 transition-all p-3 shadow-xl">
                     <div className="flex items-center justify-between mb-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
                       <span className="capitalize text-blue-400 flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5" />
@@ -785,7 +785,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                       <button
                         onClick={() => handleRunPrompt(undefined, false)}
                         disabled={isGenerating}
-                        className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs shadow-md flex items-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md flex items-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
                       >
                         {isGenerating ? (
                           <>
@@ -827,7 +827,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         <span>Gemini AI Studio sedang mengolah request Anda...</span>
                       </div>
                     ) : playgroundOutput ? (
-                      <div className="p-4 rounded-2xl bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800/90 space-y-4 shadow-2xl">
+                      <div className="p-4 rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800/90 space-y-4 shadow-2xl">
                         {playgroundOutput.imageUrl && (
                           <div className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-700/80 shadow-2xl">
                             <img
@@ -883,7 +883,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                               setActiveTab('build_workspace');
                               showToast('Buka di Build Workspace');
                             }}
-                            className="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-slate-900 dark:text-white border border-blue-500/30 text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer"
+                            className="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer"
                           >
                             <span>Open in Workspace</span>
                             <ChevronRight className="w-3.5 h-3.5" />
@@ -896,7 +896,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
               </div>
 
               {/* Right Panel: RUN SETTINGS */}
-              <aside className="w-full lg:w-80 bg-white dark:bg-white/90 dark:bg-slate-900/90 border-l border-slate-200 dark:border-slate-800 p-5 space-y-6 overflow-y-auto shrink-0">
+              <aside className="w-full lg:w-80 bg-white dark:bg-[#0d1322] border-l border-slate-200 dark:border-slate-800 p-5 space-y-6 overflow-y-auto shrink-0">
                 <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-3">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
                     <Sliders className="w-4 h-4 text-blue-400" />
@@ -994,7 +994,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                           }}
                           className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-all ${
                             thinkingLevel === level
-                              ? 'bg-blue-600 text-slate-900 dark:text-white font-semibold'
+                              ? 'bg-blue-600 text-white font-semibold'
                               : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:bg-slate-800'
                           }`}
                         >
@@ -1180,7 +1180,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   </button>
                   <button
                     onClick={() => showToast('Aplikasi berhasil dipublikasikan ke Maxy Academy Cloud!')}
-                    className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white text-xs font-bold shadow-md transition-all"
+                    className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md transition-all"
                   >
                     Publish
                   </button>
@@ -1190,7 +1190,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
               {/* Workspace Main 2-Panel Split */}
               <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
                 {/* Left Panel: Chat & AI Iteration */}
-                <div className="w-full lg:w-[420px] bg-white dark:bg-white/90 dark:bg-slate-900/90 border-r border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between overflow-y-auto shrink-0 space-y-4">
+                <div className="w-full lg:w-[420px] bg-white dark:bg-[#0d1322] border-r border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between overflow-y-auto shrink-0 space-y-4">
                   {/* Chat History List */}
                   <div className="space-y-4 overflow-y-auto flex-1 pr-1">
                     {chatMessages.map((msg, idx) => (
@@ -1273,7 +1273,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                       </button>
                       <button
                         onClick={handleSendWorkspaceMessage}
-                        className="p-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white shadow-md transition-all"
+                        className="p-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white shadow-md transition-all"
                       >
                         <Send className="w-3.5 h-3.5" />
                       </button>
@@ -1291,7 +1291,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         onClick={() => setWorkspaceTab('preview')}
                         className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 ${
                           workspaceTab === 'preview'
-                            ? 'bg-blue-600 text-slate-900 dark:text-white font-bold shadow-md'
+                            ? 'bg-blue-600 text-white font-bold shadow-md'
                             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                         }`}
                       >
@@ -1302,7 +1302,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         onClick={() => setWorkspaceTab('code')}
                         className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 ${
                           workspaceTab === 'code'
-                            ? 'bg-blue-600 text-slate-900 dark:text-white font-bold shadow-md'
+                            ? 'bg-blue-600 text-white font-bold shadow-md'
                             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                         }`}
                       >
@@ -1407,7 +1407,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                             </p>
                             <button
                               onClick={() => showToast('Simulasi Pengujian Modul Berhasil!')}
-                              className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs shadow-md transition-all"
+                              className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition-all"
                             >
                               Uji Coba Simulator
                             </button>
@@ -1461,7 +1461,7 @@ export const MaxyAINavigator = () => {
   };
 
   return (
-    <div className="p-6 bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-white">
+    <div className="p-6 bg-slate-100 dark:bg-slate-950 text-white">
       <h1>Maxy AI Navigator Dashboard</h1>
       {/* Interactive Render */}
     </div>
@@ -1494,7 +1494,7 @@ export const MaxyAINavigator = () => {
 
                 <button
                   onClick={() => handleStartBuilding('Buat aplikasi baru dari scratch')}
-                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all"
+                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all"
                 >
                   <Plus className="w-4 h-4" />
                   <span>New App</span>
@@ -1574,8 +1574,8 @@ export const MaxyAINavigator = () => {
                       onClick={() => setGalleryFilter(cat)}
                       className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                         galleryFilter === cat
-                          ? 'bg-purple-600 text-slate-900 dark:text-white shadow-md'
-                          : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
+                          ? 'bg-purple-600 text-white shadow-md'
+                          : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-white'
                       }`}
                     >
                       {cat}
@@ -1610,7 +1610,7 @@ export const MaxyAINavigator = () => {
                           setActiveTab('build_workspace');
                           showToast(`Membuka remix "${item.title}"`);
                         }}
-                        className="px-3 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-slate-900 dark:text-white font-bold text-xs border border-purple-500/30 transition-all flex items-center gap-1.5"
+                        className="px-3 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white font-bold text-xs border border-purple-500/30 transition-all flex items-center gap-1.5"
                       >
                         <Wand2 className="w-3.5 h-3.5" />
                         <span>Remix App</span>

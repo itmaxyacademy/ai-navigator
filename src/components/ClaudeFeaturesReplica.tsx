@@ -609,7 +609,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                   <button
                     onClick={() => handleSendNavChat()}
                     disabled={isLoading}
-                    className="bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white p-2 rounded-xl font-bold shadow"
+                    className="bg-amber-600 hover:bg-amber-500 text-slate-950 p-2 rounded-xl font-bold shadow"
                   >
                     <Send className="w-3.5 h-3.5" />
                   </button>
@@ -700,7 +700,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
             </div>
             <button
               onClick={() => setShowArtifactModal(true)}
-              className="bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white font-extrabold text-xs px-4 py-2 rounded-xl shadow transition-colors flex items-center space-x-1.5"
+              className="bg-amber-600 hover:bg-amber-500 text-slate-950 font-extrabold text-xs px-4 py-2 rounded-xl shadow transition-colors flex items-center space-x-1.5"
             >
               <Plus className="w-4 h-4" />
               <span>Artefak baru</span>
@@ -769,7 +769,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                   <button
                     onClick={() => handleGenerateArtifact(true)}
                     disabled={isLoading}
-                    className="bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white px-4 py-2.5 rounded-xl font-bold text-xs shadow flex items-center space-x-1"
+                    className="bg-amber-600 hover:bg-amber-500 text-slate-950 px-4 py-2.5 rounded-xl font-bold text-xs shadow flex items-center space-x-1"
                   >
                     <span>Revisi</span>
                     <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
@@ -814,7 +814,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                   <button
                     onClick={() => handleGenerateArtifact(false)}
                     disabled={isLoading}
-                    className="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white rounded-xl text-xs font-bold shadow flex items-center space-x-1.5"
+                    className="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-slate-950 rounded-xl text-xs font-bold shadow flex items-center space-x-1.5"
                   >
                     <span>Generate Artefak</span>
                     {isLoading && <RefreshCw className="w-3.5 h-3.5 animate-spin" />}
@@ -920,7 +920,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     return (
                       <div key={idx} className="flex items-center space-x-3">
                         {isDone ? (
-                          <div className="w-6 h-6 rounded-full bg-blue-600 text-slate-900 dark:text-white flex items-center justify-center font-bold text-xs shrink-0">
+                          <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs shrink-0">
                             ✓
                           </div>
                         ) : isCurrent ? (
@@ -1001,7 +1001,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                         setShowFilePicker(false);
                         showToast(`Folder "${selectedFolder}" Terhubung ke Cowork!`);
                       }}
-                      className="px-5 py-1.5 bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white rounded-xl text-xs font-bold shadow"
+                      className="px-5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow"
                     >
                       Hubungkan Folder
                     </button>
@@ -1024,7 +1024,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
               <span className="text-slate-500 dark:text-slate-400">Claude Productivity Add-ins:</span>
               <button
                 onClick={() => setOfficeApp('excel')}
-                className={`px-3 py-1.5 rounded-xl flex items-center space-x-2 transition-all ${officeApp === 'excel' ? 'bg-emerald-700 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
+                className={`px-3 py-1.5 rounded-xl flex items-center space-x-2 transition-all ${officeApp === 'excel' ? 'bg-emerald-700 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
               >
                 <FileSpreadsheet className="w-4 h-4" />
                 <span>Claude for Excel</span>
@@ -1053,7 +1053,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     </span>
                     <button
                       onClick={handleAddStudentRow}
-                      className="text-xs bg-emerald-700 hover:bg-emerald-800 text-slate-900 dark:text-white font-bold px-3 py-1 rounded-lg shadow"
+                      className="text-xs bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1 rounded-lg shadow"
                     >
                       + Tambah Baris Siswa
                     </button>
@@ -1127,7 +1127,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
 
                   <div className="space-y-4">
                     {pptSlides.map((slide, sidx) => (
-                      <div key={sidx} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-6 min-h-[180px] flex flex-col justify-center space-y-3 shadow-lg border border-slate-200 dark:border-slate-800">
+                      <div key={sidx} className="bg-white dark:bg-slate-900 text-white rounded-2xl p-6 min-h-[180px] flex flex-col justify-center space-y-3 shadow-lg border border-slate-200 dark:border-slate-800">
                         <span className="text-orange-400 font-mono text-xs uppercase tracking-widest">Slide {sidx + 1}</span>
                         <h3 className="text-xl font-bold font-serif">{slide.title}</h3>
                         <p className="text-xs text-amber-200">{slide.subtitle}</p>
@@ -1201,7 +1201,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                 <button
                   onClick={() => handleOfficeSubmit()}
                   disabled={isLoading}
-                  className="bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white p-2 rounded-xl font-bold shadow"
+                  className="bg-amber-600 hover:bg-amber-500 text-slate-950 p-2 rounded-xl font-bold shadow"
                 >
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>

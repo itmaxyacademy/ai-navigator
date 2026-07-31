@@ -697,7 +697,7 @@ export const GeminiNotebookReplica: React.FC = () => {
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setIsPlayingAudio(false)}
-                className="px-3 py-1 bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white font-bold rounded-lg text-[11px]"
+                className="px-3 py-1 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-lg text-[11px]"
               >
                 Hentikan
               </button>
@@ -744,7 +744,7 @@ export const GeminiNotebookReplica: React.FC = () => {
 
                 {/* Search sources bar */}
                 <div className="relative">
-                  <div className="bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-2 space-y-2">
+                  <div className="bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-xl p-2 space-y-2">
                     <input
                       type="text"
                       value={searchSourceQuery}
@@ -791,7 +791,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                       onClick={() => handleToggleSource(source.id)}
                       className={`group p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                         source.checked
-                          ? 'bg-white dark:bg-white/90 dark:bg-slate-900/90 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100'
+                          ? 'bg-white dark:bg-[#0d1322] border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100'
                           : 'bg-slate-100 dark:bg-slate-950/40 border-slate-200 dark:border-slate-900 text-slate-500 opacity-60'
                       }`}
                     >
@@ -917,7 +917,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                   >
                     <div className={`max-w-xl rounded-2xl p-4 space-y-2 text-xs leading-relaxed shadow-md ${
                       msg.sender === 'user'
-                        ? 'bg-blue-600 text-slate-900 dark:text-white rounded-tr-none'
+                        ? 'bg-blue-600 text-white rounded-tr-none'
                         : 'bg-[#181c27] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 rounded-tl-none'
                     }`}>
                       <div className="flex items-center justify-between border-b border-white/10 pb-1 text-[10px] font-bold opacity-80">
@@ -982,7 +982,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                     <button
                       onClick={handleSendMessage}
                       disabled={!chatInput.trim() || isGenerating}
-                      className="p-2 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-xl transition-all shadow-md shrink-0"
+                      className="p-2 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-100 dark:bg-slate-800 text-white rounded-xl transition-all shadow-md shrink-0"
                     >
                       <Send className="w-4 h-4" />
                     </button>
@@ -1222,7 +1222,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                               setIsPlayingAudio(true);
                               setActiveAudioTitle(art.title);
                             }}
-                            className="p-1.5 rounded-full bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white shrink-0"
+                            className="p-1.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white shrink-0"
                           >
                             <Play className="w-3.5 h-3.5 fill-current" />
                           </button>
@@ -1295,7 +1295,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                       onClick={() => setChatGoal(mode)}
                       className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
                         chatGoal === mode
-                          ? 'bg-blue-600 text-slate-900 dark:text-white shadow-md'
+                          ? 'bg-blue-600 text-white shadow-md'
                           : 'bg-slate-100 dark:bg-slate-800/90 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-700'
                       }`}
                     >
@@ -1323,7 +1323,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                       onClick={() => setResponseLength(len)}
                       className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
                         responseLength === len
-                          ? 'bg-blue-600 text-slate-900 dark:text-white shadow-md'
+                          ? 'bg-blue-600 text-white shadow-md'
                           : 'bg-slate-100 dark:bg-slate-800/90 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-700'
                       }`}
                     >
@@ -1338,7 +1338,7 @@ export const GeminiNotebookReplica: React.FC = () => {
               <div className="pt-3 flex justify-end">
                 <button
                   onClick={() => setActiveModal(null)}
-                  className="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs shadow-lg transition-all"
+                  className="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg transition-all"
                 >
                   Save
                 </button>
@@ -1425,7 +1425,7 @@ export const GeminiNotebookReplica: React.FC = () => {
               <div className="pt-2 flex justify-end">
                 <button
                   onClick={() => setActiveModal(null)}
-                  className="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs shadow-lg transition-all"
+                  className="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg transition-all"
                 >
                   Done
                 </button>

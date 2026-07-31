@@ -337,7 +337,7 @@ export const MetaAIReplica: React.FC = () => {
             }}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition-all ${
               viewMode === 'desktop'
-                ? 'bg-purple-600 text-slate-900 dark:text-white shadow'
+                ? 'bg-purple-600 text-white shadow'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
@@ -351,7 +351,7 @@ export const MetaAIReplica: React.FC = () => {
             }}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition-all ${
               viewMode === 'mobile'
-                ? 'bg-purple-600 text-slate-900 dark:text-white shadow'
+                ? 'bg-purple-600 text-white shadow'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
@@ -492,7 +492,7 @@ export const MetaAIReplica: React.FC = () => {
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                   className="flex items-center gap-2.5 min-w-0 text-left flex-1"
                 >
-                  <div className="w-7 h-7 rounded-full bg-emerald-700/80 border border-emerald-500/50 flex items-center justify-center text-slate-900 dark:text-white font-bold text-xs shrink-0 overflow-hidden">
+                  <div className="w-7 h-7 rounded-full bg-emerald-700/80 border border-emerald-500/50 flex items-center justify-center text-white font-bold text-xs shrink-0 overflow-hidden">
                     <span className="text-[10px]">MA</span>
                   </div>
                   <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">
@@ -709,7 +709,7 @@ export const MetaAIReplica: React.FC = () => {
                         disabled={!inputPrompt.trim()}
                         className={`p-2.5 rounded-full transition-all shadow ${
                           inputPrompt.trim()
-                            ? 'bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white cursor-pointer'
+                            ? 'bg-purple-600 hover:bg-purple-500 text-white cursor-pointer'
                             : 'bg-indigo-900/60 text-slate-500 cursor-not-allowed'
                         }`}
                         title="Send Message"
@@ -841,7 +841,7 @@ export const MetaAIReplica: React.FC = () => {
                     <div
                       className={`p-4 rounded-2xl max-w-[88%] text-xs leading-relaxed ${
                         msg.sender === 'user'
-                          ? 'bg-purple-600 text-slate-900 dark:text-white rounded-br-none'
+                          ? 'bg-purple-600 text-white rounded-br-none'
                           : 'bg-[#1e1e22] border border-[#2b2b30] text-slate-700 dark:text-slate-200 rounded-bl-none space-y-2'
                       }`}
                     >
@@ -1007,7 +1007,7 @@ export const MetaAIReplica: React.FC = () => {
                   className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#27272a]"
                 >
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-emerald-700 flex items-center justify-center font-bold text-xs text-slate-900 dark:text-white">
+                    <div className="w-7 h-7 rounded-full bg-emerald-700 flex items-center justify-center font-bold text-xs text-white">
                       MA
                     </div>
                     <span className="text-xs font-semibold text-slate-900 dark:text-white">
@@ -1160,7 +1160,7 @@ export const MetaAIReplica: React.FC = () => {
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setActiveModalKey(null)}
-                className="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white font-bold text-xs rounded-xl shadow transition-colors"
+                className="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-xl shadow transition-colors"
               >
                 Saya Mengerti
               </button>
@@ -1218,7 +1218,7 @@ export const MetaAIReplica: React.FC = () => {
 
             <button
               onClick={() => setIsSettingsModalOpen(false)}
-              className="w-full py-2 bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white font-bold text-xs rounded-xl transition-colors"
+              className="w-full py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-xl transition-colors"
             >
               Tutup Pengaturan
             </button>

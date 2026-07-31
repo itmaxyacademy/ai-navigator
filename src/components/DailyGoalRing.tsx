@@ -173,7 +173,7 @@ export const DailyGoalRing: React.FC<DailyGoalRingProps> = ({
                       }}
                       className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-indigo-600 border-indigo-400 text-slate-900 dark:text-white shadow-md'
+                          ? 'bg-indigo-600 border-indigo-400 text-white shadow-md'
                           : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300'
                       }`}
                     >
@@ -201,7 +201,7 @@ export const DailyGoalRing: React.FC<DailyGoalRingProps> = ({
             {/* Close Button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all cursor-pointer"
+              className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all cursor-pointer"
             >
               Simpan & Tutup
             </button>

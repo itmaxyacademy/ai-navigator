@@ -87,7 +87,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               : 'border-emerald-500/60 hover:border-emerald-500 shadow-md'
           }`}>
             {/* Top Badge: PROMO SOFT LAUNCHING */}
-            <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-emerald-500 text-slate-900 dark:text-white font-black text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
+            <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-emerald-500 text-white font-black text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
               <Sparkles className="w-3.5 h-3.5" /> PROMO SOFT LAUNCHING
             </div>
 
@@ -217,7 +217,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
           </div>
 
           {/* CARD 3: TIER 2: FULL MENTORING & CAAI™ CERTIFICATION */}
-          <div className={`relative bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-white border-2 rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
+          <div className={`relative bg-slate-100 dark:bg-slate-950 text-white border-2 rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
             currentTier === 'tier2'
               ? 'border-amber-400 ring-2 ring-amber-400/50 shadow-2xl shadow-amber-500/20'
               : 'border-amber-500/60 hover:border-amber-400 shadow-xl'

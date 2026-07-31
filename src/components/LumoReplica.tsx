@@ -751,7 +751,7 @@ export const LumoReplica: React.FC = () => {
                         </div>
                         <button
                           onClick={() => handleSendMessage()}
-                          className="px-2.5 py-1 rounded-lg bg-rose-800 hover:bg-rose-700 text-slate-900 dark:text-white font-bold text-[10px] shrink-0"
+                          className="px-2.5 py-1 rounded-lg bg-rose-800 hover:bg-rose-700 text-white font-bold text-[10px] shrink-0"
                         >
                           Coba Lagi
                         </button>

@@ -933,7 +933,7 @@ export const GoogleFlowReplica: React.FC = () => {
                       disabled={!promptInput.trim() || isGenerating}
                       className={`p-1.5 rounded-xl transition-all ${
                         promptInput.trim()
-                          ? 'bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white shadow-md'
+                          ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-md'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600'
                       }`}
                     >
@@ -1228,7 +1228,7 @@ export const GoogleFlowReplica: React.FC = () => {
                   <button
                     onClick={() => setSoundOnHover(!soundOnHover)}
                     className={`px-3 py-1 rounded-xl font-bold transition-colors ${
-                      soundOnHover ? 'bg-blue-600 text-slate-900 dark:text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                      soundOnHover ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                     }`}
                   >
                     {soundOnHover ? 'On' : 'Off'}
@@ -1240,7 +1240,7 @@ export const GoogleFlowReplica: React.FC = () => {
                   <button
                     onClick={() => setReturnSilentVideos(!returnSilentVideos)}
                     className={`px-3 py-1 rounded-xl font-bold transition-colors ${
-                      returnSilentVideos ? 'bg-blue-600 text-slate-900 dark:text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                      returnSilentVideos ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                     }`}
                   >
                     {returnSilentVideos ? 'On' : 'Off'}
@@ -1252,7 +1252,7 @@ export const GoogleFlowReplica: React.FC = () => {
                   <button
                     onClick={() => setShowTileDetails(!showTileDetails)}
                     className={`px-3 py-1 rounded-xl font-bold transition-colors ${
-                      showTileDetails ? 'bg-blue-600 text-slate-900 dark:text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                      showTileDetails ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                     }`}
                   >
                     {showTileDetails ? 'On' : 'Off'}
@@ -1264,7 +1264,7 @@ export const GoogleFlowReplica: React.FC = () => {
                   <button
                     onClick={() => setClearPromptOnSubmit(!clearPromptOnSubmit)}
                     className={`px-3 py-1 rounded-xl font-bold transition-colors ${
-                      clearPromptOnSubmit ? 'bg-blue-600 text-slate-900 dark:text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                      clearPromptOnSubmit ? 'bg-blue-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                     }`}
                   >
                     {clearPromptOnSubmit ? 'On' : 'Off'}
@@ -1274,7 +1274,7 @@ export const GoogleFlowReplica: React.FC = () => {
 
               <button
                 onClick={() => setShowFilterModal(false)}
-                className="w-full py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white font-bold"
+                className="w-full py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold"
               >
                 Terapkan Filter
               </button>

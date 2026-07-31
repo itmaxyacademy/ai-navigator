@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Award, Flame, RotateCcw, Menu, X, Compass, Trophy, Sun, Moon, StickyNote, Lock, Crown, ShieldCheck, LogOut, Save, Download, Upload } from 'lucide-react';
+import { Sparkles, Award, Flame, Menu, X, Compass, Trophy, StickyNote, Lock, Crown, ShieldCheck, LogOut, Save, Download, Upload } from 'lucide-react';
 import { UserProgress } from '../types';
 import { getUserLevelInfo } from '../lib/gamification';
 import { DailyGoalRing } from './DailyGoalRing';
@@ -15,7 +15,6 @@ interface HeaderProps {
   activeTab: string;
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  onResetProgress: () => void;
   onLogout: () => void;
   onOpenCertificate: () => void;
   onOpenStreakModal: () => void;
@@ -37,7 +36,6 @@ export const Header: React.FC<HeaderProps> = ({
   onAddMinutes,
   onSelectTab,
   activeTab,
-  onResetProgress,
   onLogout,
   onOpenCertificate,
   onOpenStreakModal,
@@ -57,8 +55,8 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className={`sticky top-0 z-40 backdrop-blur-md border-b transition-colors duration-200 ${
       theme === 'light'
-        ? 'bg-white/95 border-slate-200 text-slate-900 shadow-sm'
-        : 'bg-white dark:bg-slate-900/95 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white'
+        ? 'bg-white/90 border-slate-200 text-slate-900 shadow-sm'
+        : 'bg-[#0d1322]/95 border-slate-800 text-white shadow-md'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-3">
@@ -76,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5 whitespace-nowrap">
                 <span className={`font-black text-base tracking-tight ${
-                  theme === 'light' ? 'text-slate-900' : 'text-slate-900 dark:text-white'
+                  theme === 'light' ? 'text-slate-900' : 'text-white'
                 }`}>
                   AI Navigator
                 </span>
@@ -88,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
                   Pemula
                 </span>
               </div>
-              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide">
+              <span className="text-[10px] text-slate-500 font-medium tracking-wide">
                 Maxy Academy
               </span>
             </div>
@@ -96,16 +94,16 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* 2. CENTER NAVIGATION (Segmented Pill Bar) */}
           <nav className={`hidden md:flex items-center gap-1 p-1 rounded-2xl border shrink-0 ${
-            theme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-slate-100 dark:bg-slate-950/80 border-slate-200 dark:border-slate-800'
+            theme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-slate-900/90 border-slate-800'
           }`}>
             <button
               onClick={() => onSelectTab('path')}
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === 'path'
-                  ? 'bg-indigo-600 text-slate-900 dark:text-white shadow-md shadow-indigo-600/30'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
                   : theme === 'light'
-                  ? 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-white dark:bg-slate-900'
+                  ? 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
             >
               <Compass className="w-3.5 h-3.5" />
@@ -231,7 +229,7 @@ export const Header: React.FC<HeaderProps> = ({
               ) : userTier === 'tier1' ? (
                 <button
                   onClick={onOpenUpgradeModal}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white font-extrabold text-xs transition-all hover:scale-105 cursor-pointer shadow-md shadow-indigo-600/20 whitespace-nowrap"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs transition-all hover:scale-105 cursor-pointer shadow-md shadow-indigo-600/20 whitespace-nowrap"
                 >
                   <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
                   <span>Tier 1 Full</span>
@@ -281,38 +279,14 @@ export const Header: React.FC<HeaderProps> = ({
             {allModulesCompleted && (
               <button
                 onClick={onOpenCertificate}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white font-extrabold text-xs shadow-md transition-all cursor-pointer whitespace-nowrap"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-md transition-all cursor-pointer whitespace-nowrap"
               >
                 <Award className="w-3.5 h-3.5 shrink-0" />
                 <span>Sertifikat</span>
               </button>
             )}
 
-            {/* Icon Button: Theme Toggle */}
-            <Tooltip
-              content={
-                <div className="space-y-0.5 text-center">
-                  <div className="font-bold text-xs">{theme === 'dark' ? 'Mode Terang' : 'Mode Gelap'}</div>
-                  <p className="text-[10px] text-slate-600 dark:text-slate-300">Klik untuk beralih tampilan</p>
-                </div>
-              }
-            >
-              <button
-                onClick={onToggleTheme}
-                aria-label="Toggle Theme"
-                className={`p-2 rounded-xl border transition-all hover:scale-105 cursor-pointer ${
-                  theme === 'light'
-                    ? 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'
-                    : 'bg-slate-100 dark:bg-slate-950 hover:bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
-                }`}
-              >
-                {theme === 'dark' ? (
-                  <Sun className="w-4 h-4 text-amber-400" />
-                ) : (
-                  <Moon className="w-4 h-4 text-indigo-600" />
-                )}
-              </button>
-            </Tooltip>
+
 
             {/* Hidden file input for Import JSON */}
             <input
@@ -323,115 +297,100 @@ export const Header: React.FC<HeaderProps> = ({
               className="hidden"
             />
 
-            {/* Icon Button: Manual Save */}
-            <Tooltip
-              content={
-                <div className="space-y-0.5 text-center">
-                  <div className="font-bold text-xs text-indigo-400">Save Progress</div>
-                  <p className="text-[10px] text-slate-600 dark:text-slate-300">Simpan manual data Anda</p>
-                </div>
-              }
-            >
-              <button
-                onClick={onManualSave}
-                aria-label="Save Progress"
-                className={`p-2 rounded-xl border transition-colors cursor-pointer ${
-                  theme === 'light'
-                    ? 'bg-slate-100 hover:bg-indigo-50 border-slate-300 text-slate-500 hover:text-indigo-600'
-                    : 'bg-slate-100 dark:bg-slate-950 hover:bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-indigo-400'
-                }`}
+            {/* ACTION BUTTONS GROUP */}
+            <div className={`flex items-center gap-1 p-1 rounded-2xl border ${
+              theme === 'light' 
+                ? 'bg-slate-100 border-slate-200' 
+                : 'bg-slate-900/50 border-slate-800/80'
+            }`}>
+              {/* Icon Button: Manual Save */}
+              <Tooltip
+                content={
+                  <div className="space-y-0.5 text-center">
+                    <div className="font-bold text-xs text-indigo-400">Save Progress</div>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-300">Simpan manual data Anda</p>
+                  </div>
+                }
               >
-                <Save className="w-4 h-4" />
-              </button>
-            </Tooltip>
+                <button
+                  onClick={onManualSave}
+                  aria-label="Save Progress"
+                  className={`p-1.5 rounded-xl transition-colors cursor-pointer ${
+                    theme === 'light'
+                      ? 'hover:bg-indigo-50 text-slate-500 hover:text-indigo-600'
+                      : 'hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-indigo-400'
+                  }`}
+                >
+                  <Save className="w-4 h-4" />
+                </button>
+              </Tooltip>
 
-            {/* Icon Button: Export JSON */}
-            <Tooltip
-              content={
-                <div className="space-y-0.5 text-center">
-                  <div className="font-bold text-xs text-emerald-400">Export Data</div>
-                  <p className="text-[10px] text-slate-600 dark:text-slate-300">Download file backup .json</p>
-                </div>
-              }
-            >
-              <button
-                onClick={onExportJSON}
-                aria-label="Export Data"
-                className={`p-2 rounded-xl border transition-colors cursor-pointer ${
-                  theme === 'light'
-                    ? 'bg-slate-100 hover:bg-emerald-50 border-slate-300 text-slate-500 hover:text-emerald-600'
-                    : 'bg-slate-100 dark:bg-slate-950 hover:bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-emerald-400'
-                }`}
+              {/* Icon Button: Export JSON */}
+              <Tooltip
+                content={
+                  <div className="space-y-0.5 text-center">
+                    <div className="font-bold text-xs text-emerald-400">Export Data</div>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-300">Download file backup .json</p>
+                  </div>
+                }
               >
-                <Download className="w-4 h-4" />
-              </button>
-            </Tooltip>
+                <button
+                  onClick={onExportJSON}
+                  aria-label="Export Data"
+                  className={`p-1.5 rounded-xl transition-colors cursor-pointer ${
+                    theme === 'light'
+                      ? 'hover:bg-emerald-50 text-slate-500 hover:text-emerald-600'
+                      : 'hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-emerald-400'
+                  }`}
+                >
+                  <Download className="w-4 h-4" />
+                </button>
+              </Tooltip>
 
-            {/* Icon Button: Import JSON */}
-            <Tooltip
-              content={
-                <div className="space-y-0.5 text-center">
-                  <div className="font-bold text-xs text-amber-400">Import Data</div>
-                  <p className="text-[10px] text-slate-600 dark:text-slate-300">Upload file backup .json</p>
-                </div>
-              }
-            >
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                aria-label="Import Data"
-                className={`p-2 rounded-xl border transition-colors cursor-pointer ${
-                  theme === 'light'
-                    ? 'bg-slate-100 hover:bg-amber-50 border-slate-300 text-slate-500 hover:text-amber-600'
-                    : 'bg-slate-100 dark:bg-slate-950 hover:bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-amber-400'
-                }`}
+              {/* Icon Button: Import JSON */}
+              <Tooltip
+                content={
+                  <div className="space-y-0.5 text-center">
+                    <div className="font-bold text-xs text-amber-400">Import Data</div>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-300">Upload file backup .json</p>
+                  </div>
+                }
               >
-                <Upload className="w-4 h-4" />
-              </button>
-            </Tooltip>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  aria-label="Import Data"
+                  className={`p-1.5 rounded-xl transition-colors cursor-pointer ${
+                    theme === 'light'
+                      ? 'hover:bg-amber-50 text-slate-500 hover:text-amber-600'
+                      : 'hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-amber-400'
+                  }`}
+                >
+                  <Upload className="w-4 h-4" />
+                </button>
+              </Tooltip>
 
-            {/* Icon Button: Reset Progress */}
-            <Tooltip
-              content={
-                <div className="space-y-0.5 text-center">
-                  <div className="font-bold text-xs text-rose-400">Reset Progres</div>
-                  <p className="text-[10px] text-slate-600 dark:text-slate-300">Reset data &amp; mulai dari awal</p>
-                </div>
-              }
-            >
-              <button
-                onClick={onResetProgress}
-                aria-label="Reset Progress"
-                className={`p-2 rounded-xl border transition-colors cursor-pointer ${
-                  theme === 'light'
-                    ? 'bg-slate-100 hover:bg-rose-50 border-slate-300 text-slate-500 hover:text-rose-600'
-                    : 'bg-slate-100 dark:bg-slate-950 hover:bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-rose-400'
-                }`}
+              {/* Icon Button: Logout */}
+              <Tooltip
+                content={
+                  <div className="space-y-0.5 text-center">
+                    <div className="font-bold text-xs text-rose-400">Keluar</div>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-300">Logout dari AI Navigator</p>
+                  </div>
+                }
               >
-                <RotateCcw className="w-4 h-4" />
-              </button>
-            </Tooltip>
-
-            {/* Icon Button: Logout */}
-            <Tooltip
-              content={
-                <div className="space-y-0.5 text-center">
-                  <div className="font-bold text-xs text-rose-400">Keluar</div>
-                  <p className="text-[10px] text-slate-600 dark:text-slate-300">Logout dari AI Navigator</p>
-                </div>
-              }
-            >
-              <button
-                onClick={onLogout}
-                aria-label="Logout"
-                className={`p-2 rounded-xl border transition-colors cursor-pointer ${
-                  theme === 'light'
-                    ? 'bg-slate-100 hover:bg-rose-50 border-slate-300 text-slate-500 hover:text-rose-600'
-                    : 'bg-slate-100 dark:bg-slate-950 hover:bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-rose-400'
-                }`}
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            </Tooltip>
+                <button
+                  onClick={onLogout}
+                  aria-label="Logout"
+                  className={`p-1.5 rounded-xl transition-colors cursor-pointer ${
+                    theme === 'light'
+                      ? 'hover:bg-rose-50 text-slate-500 hover:text-rose-600'
+                      : 'hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-rose-400'
+                  }`}
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </Tooltip>
+            </div>
 
           </div>
 
@@ -441,7 +400,7 @@ export const Header: React.FC<HeaderProps> = ({
             className={`lg:hidden p-2 rounded-xl border shrink-0 ${
               theme === 'light'
                 ? 'bg-slate-100 border-slate-200 text-slate-800'
-                : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
+                : 'bg-slate-900 border-slate-800 text-slate-200'
             }`}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -452,17 +411,19 @@ export const Header: React.FC<HeaderProps> = ({
       {/* MOBILE DRAWER */}
       {mobileMenuOpen && (
         <div className={`lg:hidden border-b px-4 py-4 space-y-3 ${
-          theme === 'light' ? 'bg-white border-slate-200 text-slate-900' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white'
+          theme === 'light' ? 'bg-white border-slate-200 text-slate-900 shadow-xl' : 'bg-[#0d1322] border-slate-800 text-white shadow-xl'
         }`}>
           {progress.userName && (
-            <div className="flex items-center gap-3 p-3 rounded-2xl border bg-slate-50 dark:bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-200 dark:border-slate-800">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-amber-500 flex items-center justify-center text-xs font-black text-slate-900 dark:text-white shrink-0 uppercase">
+            <div className={`flex items-center gap-3 p-3 rounded-2xl border ${
+              theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-900' : 'bg-slate-950 border-slate-800 text-white'
+            }`}>
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-amber-500 flex items-center justify-center text-xs font-black text-white shrink-0 uppercase">
                 {progress.userName.charAt(0)}
               </div>
               <div className="flex flex-col min-w-0">
                 <span className="text-xs font-extrabold truncate">{progress.userName}</span>
                 {progress.userEmail && (
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{progress.userEmail}</span>
+                  <span className={`text-[10px] truncate ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>{progress.userEmail}</span>
                 )}
               </div>
             </div>
@@ -473,7 +434,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onSelectTab('path');
                 setMobileMenuOpen(false);
               }}
-              className="p-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 bg-indigo-600 text-slate-900 dark:text-white"
+              className="p-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 bg-indigo-600 text-white shadow-md"
             >
               <Compass className="w-4 h-4" />
               Peta Belajar
@@ -486,7 +447,7 @@ export const Header: React.FC<HeaderProps> = ({
                   setMobileMenuOpen(false);
                 }}
                 className={`p-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border ${
-                  theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
+                  theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-800 text-slate-200'
                 }`}
               >
                 <StickyNote className="w-4 h-4 text-amber-500" />
@@ -495,22 +456,19 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </div>
 
-          <div className="flex items-center justify-between gap-2 p-3 rounded-2xl border bg-slate-50 dark:bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-200 dark:border-slate-800">
+          <div className={`flex items-center justify-between gap-2 p-3 rounded-2xl border ${
+            theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-900' : 'bg-slate-950 border-slate-800 text-white'
+          }`}>
             <div className="flex items-center gap-2">
               <Flame className="w-4 h-4 text-amber-500" />
               <span className="text-xs font-extrabold">{progress.streakDays} Hari Streak</span>
-              <span className="text-slate-500 dark:text-slate-400">•</span>
+              <span className="text-slate-400">•</span>
               <span className="text-xs font-extrabold text-indigo-600 dark:text-indigo-400">{progress.xp} XP</span>
             </div>
-            <button
-              onClick={onToggleTheme}
-              className="p-1.5 rounded-lg bg-slate-200 dark:bg-slate-100 dark:bg-slate-800 text-xs font-bold"
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-600" />}
-            </button>
+
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => {
                 onManualSave();
@@ -546,6 +504,18 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Upload className="w-4 h-4 text-amber-500" />
               Import
+            </button>
+            <button
+              onClick={() => {
+                onLogout();
+                setMobileMenuOpen(false);
+              }}
+              className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
+                theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-rose-500 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30'
+              }`}
+            >
+              <LogOut className="w-4 h-4 text-rose-500" />
+              Logout
             </button>
           </div>
 

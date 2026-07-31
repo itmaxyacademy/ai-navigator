@@ -523,7 +523,7 @@ export const DeepSeekReplica: React.FC = () => {
             }}
             className={`px-2.5 py-1 rounded-md text-xs font-medium flex items-center gap-1.5 transition-all ${
               viewMode === 'desktop'
-                ? 'bg-blue-600 text-slate-900 dark:text-white shadow-sm'
+                ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
@@ -537,7 +537,7 @@ export const DeepSeekReplica: React.FC = () => {
             }}
             className={`px-2.5 py-1 rounded-md text-xs font-medium flex items-center gap-1.5 transition-all ${
               viewMode === 'mobile'
-                ? 'bg-blue-600 text-slate-900 dark:text-white shadow-sm'
+                ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
@@ -785,7 +785,7 @@ export const DeepSeekReplica: React.FC = () => {
                       disabled={!inputPrompt.trim() || isLoading}
                       className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
                         inputPrompt.trim() && !isLoading
-                          ? 'bg-blue-600 text-slate-900 dark:text-white shadow-md hover:bg-blue-500'
+                          ? 'bg-blue-600 text-white shadow-md hover:bg-blue-500'
                           : 'bg-[#30333d] text-slate-500 cursor-not-allowed'
                       }`}
                     >
@@ -965,7 +965,7 @@ export const DeepSeekReplica: React.FC = () => {
 
                   {isLoading && (
                     <div className="flex items-center gap-3 animate-pulse">
-                      <div className="w-7 h-7 rounded-lg bg-blue-600/50 flex items-center justify-center text-xs text-slate-900 dark:text-white">
+                      <div className="w-7 h-7 rounded-lg bg-blue-600/50 flex items-center justify-center text-xs text-white">
                         <Atom className="w-4 h-4 animate-spin" />
                       </div>
                       <span className="text-xs text-slate-500 dark:text-slate-400">DeepSeek thinking...</span>
@@ -1047,7 +1047,7 @@ export const DeepSeekReplica: React.FC = () => {
                       disabled={!inputPrompt.trim() || isLoading}
                       className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
                         inputPrompt.trim() && !isLoading
-                          ? 'bg-blue-600 text-slate-900 dark:text-white shadow-md hover:bg-blue-500 scale-105'
+                          ? 'bg-blue-600 text-white shadow-md hover:bg-blue-500 scale-105'
                           : 'bg-[#30333d] text-slate-500 cursor-not-allowed'
                       }`}
                       title="Send Message"
@@ -1130,7 +1130,7 @@ export const DeepSeekReplica: React.FC = () => {
             <div className="pt-2 flex justify-end border-t border-slate-200 dark:border-slate-800">
               <button
                 onClick={() => setActiveModal(null)}
-                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-medium text-xs transition-colors shadow-md"
+                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition-colors shadow-md"
               >
                 Paham & Tutup
               </button>

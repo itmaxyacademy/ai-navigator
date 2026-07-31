@@ -185,7 +185,7 @@ export const StableDiffusionReplica: React.FC = () => {
           <button
             onClick={() => setDeviceMode('desktop')}
             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-md transition-all ${
-              deviceMode === 'desktop' ? 'bg-blue-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
+              deviceMode === 'desktop' ? 'bg-blue-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Laptop className="w-3.5 h-3.5" />
@@ -194,7 +194,7 @@ export const StableDiffusionReplica: React.FC = () => {
           <button
             onClick={() => setDeviceMode('mobile')}
             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-md transition-all ${
-              deviceMode === 'mobile' ? 'bg-blue-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
+              deviceMode === 'mobile' ? 'bg-blue-600 text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -210,10 +210,10 @@ export const StableDiffusionReplica: React.FC = () => {
         </div>
         <button
           onClick={() => explainFeature('Upgrade Membership', 'Subscription', 'Tingkatkan akun Maxy Academy Anda ke paket Pro untuk mendapatkan kredit tanpa batas dan bebas watermark!')}
-          className="relative px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs transition-all shadow flex items-center gap-1"
+          className="relative px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition-all shadow flex items-center gap-1"
         >
           <span>Upgrade</span>
-          <span className="absolute -top-2 -right-2 bg-rose-500 text-slate-900 dark:text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full shadow border border-white">
+          <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-full shadow border border-white">
             50% OFF
           </span>
         </button>
@@ -273,7 +273,7 @@ export const StableDiffusionReplica: React.FC = () => {
           {/* User Profile Avatar */}
           <div 
             onClick={() => explainFeature('User Profile (Maxy Academy)', 'User Account', 'Akun aktif: maxyacademy.one@gmail.com - Status: Free Member (20 Credits).')}
-            className="w-8 h-8 rounded-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-bold text-xs flex items-center justify-center cursor-pointer border border-slate-300 shadow-sm"
+            className="w-8 h-8 rounded-full bg-white dark:bg-slate-900 text-white font-bold text-xs flex items-center justify-center cursor-pointer border border-slate-300 shadow-sm"
           >
             M
           </div>
@@ -534,7 +534,7 @@ export const StableDiffusionReplica: React.FC = () => {
                   <button
                     onClick={handleGenerate}
                     disabled={isGenerating}
-                    className="w-10 h-10 bg-slate-400 hover:bg-blue-600 text-slate-900 dark:text-white rounded-full flex items-center justify-center transition-all shadow-md disabled:opacity-50"
+                    className="w-10 h-10 bg-slate-400 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-all shadow-md disabled:opacity-50"
                     title="Generate Image"
                   >
                     <ArrowUp className="w-5 h-5 font-bold" />
@@ -629,7 +629,7 @@ export const StableDiffusionReplica: React.FC = () => {
                       key={ratio}
                       onClick={() => setSelectedAspect(ratio)}
                       className={`flex-shrink-0 px-3 py-2 rounded-xl border text-center transition-all ${
-                        selectedAspect === ratio ? 'border-blue-600 bg-blue-600 text-slate-900 dark:text-white font-extrabold shadow' : 'border-slate-200 bg-slate-50 text-slate-700'
+                        selectedAspect === ratio ? 'border-blue-600 bg-blue-600 text-white font-extrabold shadow' : 'border-slate-200 bg-slate-50 text-slate-700'
                       }`}
                     >
                       <p className="text-xs">{ratio}</p>
@@ -721,7 +721,7 @@ export const StableDiffusionReplica: React.FC = () => {
                 <button
                   onClick={handleGenerate}
                   disabled={isGenerating}
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white font-extrabold rounded-xl text-xs shadow-lg transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-xl text-xs shadow-lg transition-all flex items-center justify-center gap-2"
                 >
                   <Zap className="w-4 h-4 fill-white" />
                   <span>{isGenerating ? 'Generating Images...' : 'Generate'}</span>
@@ -769,7 +769,7 @@ export const StableDiffusionReplica: React.FC = () => {
                   setSelectedModel('OpenAI GPT Image 2');
                   explainFeature('Model: GPT Image 2', 'Popular Models', 'Model perenderan gambar berbasis OpenAI GPT Image 2 untuk hasil estetika fotorealistik.');
                 }}
-                className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-md hover:border-blue-500 transition-all cursor-pointer group"
+                className="bg-white dark:bg-slate-900 text-white rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-md hover:border-blue-500 transition-all cursor-pointer group"
               >
                 <span className="text-[10px] font-bold text-amber-400 uppercase">Featured</span>
                 <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-blue-400">GPT Image 2</h4>
@@ -781,7 +781,7 @@ export const StableDiffusionReplica: React.FC = () => {
                   setSelectedModel('Seedream 5.0');
                   explainFeature('Model: Seedream 5.0', 'Popular Models', 'Seedream 5.0: Pencarian web real-time & kontrol pengeditan mikro presisi.');
                 }}
-                className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-md hover:border-blue-500 transition-all cursor-pointer group"
+                className="bg-white dark:bg-slate-900 text-white rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-md hover:border-blue-500 transition-all cursor-pointer group"
               >
                 <span className="text-[10px] font-bold text-sky-400 uppercase">PRO 5.0</span>
                 <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-blue-400">Seedream 5.0</h4>
@@ -805,7 +805,7 @@ export const StableDiffusionReplica: React.FC = () => {
                   setSelectedModel('Nano Banana Pro');
                   explainFeature('Model: Nano Banana Pro', 'Popular Models', 'Nano Banana Pro: Khusus untuk foto komersial produk 4K.');
                 }}
-                className="bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-white rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-md hover:border-blue-500 transition-all cursor-pointer group"
+                className="bg-slate-100 dark:bg-slate-950 text-white rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-md hover:border-blue-500 transition-all cursor-pointer group"
               >
                 <span className="text-[10px] font-bold text-emerald-400 uppercase">4K Product Ready</span>
                 <h4 className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-emerald-400">Nano Banana Pro</h4>
@@ -884,7 +884,7 @@ export const StableDiffusionReplica: React.FC = () => {
                     }`}
                   >
                     <span>OpenAI</span>
-                    <span className="px-1.5 py-0.5 bg-rose-500 text-slate-900 dark:text-white text-[9px] font-extrabold rounded-full">HOT</span>
+                    <span className="px-1.5 py-0.5 bg-rose-500 text-white text-[9px] font-extrabold rounded-full">HOT</span>
                   </button>
 
                   <button
@@ -1067,7 +1067,7 @@ export const StableDiffusionReplica: React.FC = () => {
                     <div className="relative w-full h-24 rounded-xl overflow-hidden">
                       <img src={st.image} alt={st.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                       {st.badge && (
-                        <span className="absolute top-1 left-1 bg-rose-500 text-slate-900 dark:text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded-md shadow">
+                        <span className="absolute top-1 left-1 bg-rose-500 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded-md shadow">
                           {st.badge}
                         </span>
                       )}
@@ -1147,7 +1147,7 @@ export const StableDiffusionReplica: React.FC = () => {
 
               <button
                 onClick={() => setActiveModal(null)}
-                className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white font-extrabold rounded-2xl text-xs shadow-lg transition-all"
+                className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-2xl text-xs shadow-lg transition-all"
               >
                 Tutup Penjelasan
               </button>

@@ -59,7 +59,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
 
           <button
             onClick={onAdvanceToQuiz}
-            className="shrink-0 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white font-bold text-xs flex items-center gap-2.5 shadow-lg shadow-indigo-600/25 transition-all hover:scale-105"
+            className="shrink-0 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-2.5 shadow-lg shadow-indigo-600/25 transition-all hover:scale-105"
           >
             <span>Lanjut ke Kuis Akhir</span>
             <ArrowRight className="w-4 h-4" />
@@ -77,7 +77,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
           {guide.bestPractices.map((practice, idx) => (
             <div
               key={idx}
-              className="p-4 rounded-2xl bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:border-slate-700 transition-all space-y-2 relative overflow-hidden"
+              className="p-4 rounded-2xl bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:border-slate-700 transition-all space-y-2 relative overflow-hidden"
             >
               <div className="w-7 h-7 rounded-lg bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold text-xs">
                 0{idx + 1}
@@ -192,7 +192,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
         </div>
         <button
           onClick={onAdvanceToQuiz}
-          className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white font-bold text-xs flex items-center gap-2 shadow-lg transition-all shrink-0"
+          className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition-all shrink-0"
         >
           <span>Mulai Kuis Sekarang</span>
           <ArrowRight className="w-4 h-4" />

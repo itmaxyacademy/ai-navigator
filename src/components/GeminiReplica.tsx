@@ -932,7 +932,7 @@ export const GeminiReplica: React.FC = () => {
                 {inputValue.trim() ? (
                   <button
                     type="submit"
-                    className="w-8 h-8 rounded-full bg-blue-600 hover:bg-blue-500 flex items-center justify-center text-slate-900 dark:text-white transition-colors"
+                    className="w-8 h-8 rounded-full bg-blue-600 hover:bg-blue-500 flex items-center justify-center text-white transition-colors"
                   >
                     <Send className="w-4 h-4" />
                   </button>

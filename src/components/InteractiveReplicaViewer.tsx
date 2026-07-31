@@ -232,7 +232,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
 
             {/* Special Interactive Controls Section per Module */}
             {module.id === 1 && (
-              <div className="p-4 bg-white dark:bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 space-y-3">
+              <div className="p-4 bg-white dark:bg-[#0d1322] border-b border-slate-200 dark:border-slate-800 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4" /> Formula RCTF Interactive Builder
@@ -295,7 +295,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                 </span>
                 <button
                   onClick={() => setShowArtifactPanel(!showArtifactPanel)}
-                  className="px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white font-bold text-xs transition-colors"
+                  className="px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs transition-colors"
                 >
                   {showArtifactPanel ? 'Sembunyikan Panel' : 'Tampilkan Panel Preview'}
                 </button>
@@ -315,13 +315,13 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                   </button>
                   <button
                     onClick={() => setCopilotStyle('balanced')}
-                    className={`px-2.5 py-1 rounded text-[11px] font-bold ${copilotStyle === 'balanced' ? 'bg-blue-600 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
+                    className={`px-2.5 py-1 rounded text-[11px] font-bold ${copilotStyle === 'balanced' ? 'bg-blue-600 text-white' : 'text-slate-500 dark:text-slate-400'}`}
                   >
                     Balanced
                   </button>
                   <button
                     onClick={() => setCopilotStyle('precise')}
-                    className={`px-2.5 py-1 rounded text-[11px] font-bold ${copilotStyle === 'precise' ? 'bg-emerald-600 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
+                    className={`px-2.5 py-1 rounded text-[11px] font-bold ${copilotStyle === 'precise' ? 'bg-emerald-600 text-white' : 'text-slate-500 dark:text-slate-400'}`}
                   >
                     Precise
                   </button>
@@ -337,7 +337,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                 </span>
                 <button
                   onClick={() => setShowThoughtAccordion(!showThoughtAccordion)}
-                  className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold rounded-lg transition-colors"
+                  className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors"
                 >
                   {showThoughtAccordion ? 'Tutup <thought>' : 'Buka <thought>'}
                 </button>
@@ -348,7 +348,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
             <div className="p-5 space-y-4 min-h-[360px] max-h-[480px] overflow-y-auto relative">
               {/* User Prompt Bubble */}
               <div className="flex justify-end">
-                <div className="bg-indigo-600 text-slate-900 dark:text-white rounded-2xl rounded-tr-none px-4 py-3 max-w-lg text-xs leading-relaxed shadow-md">
+                <div className="bg-indigo-600 text-white rounded-2xl rounded-tr-none px-4 py-3 max-w-lg text-xs leading-relaxed shadow-md">
                   <p className="font-semibold text-[10px] text-indigo-200 mb-1">
                     {module.id === 1 ? 'Prompt RCTF Terstruktur:' : 'Pengguna:'}
                   </p>
@@ -485,7 +485,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                   <button
                     onClick={handleExecutePrompt}
                     disabled={isLoading}
-                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white font-bold text-xs rounded-xl flex items-center gap-1.5 transition-all shadow-md shadow-indigo-600/30 shrink-0"
+                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 transition-all shadow-md shadow-indigo-600/30 shrink-0"
                   >
                     {isLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
                     Kirim

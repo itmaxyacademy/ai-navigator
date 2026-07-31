@@ -393,7 +393,7 @@ export const GammaReplica: React.FC = () => {
             {/* Card 1: Buat (Recommended) with Cat Mascot */}
             <div className="relative pt-6">
               {/* Black Cat Mascot Speech Bubble */}
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-[11px] font-bold px-3 py-1 rounded-2xl shadow-lg border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 whitespace-nowrap z-20">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 text-white text-[11px] font-bold px-3 py-1 rounded-2xl shadow-lg border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 whitespace-nowrap z-20">
                 <span>Tidak yakin? Mulai dari sini!</span>
               </div>
               <div className="absolute top-3 left-1/2 -translate-x-1/2 text-2xl z-10">🐱</div>
@@ -591,15 +591,15 @@ export const GammaReplica: React.FC = () => {
         <div className="flex-1 flex flex-col bg-[#f8fafc] overflow-hidden">
           {/* Top Bar Header */}
           <header className="px-6 py-3 bg-white border-b border-slate-200 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 min-w-0 flex-1">
               <button
                 onClick={handleBackNavigation}
-                className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
-                <span>Kembali</span>
+                <span className="hidden sm:inline">Kembali</span>
               </button>
-              <h3 className="text-xs sm:text-sm font-extrabold text-slate-800 truncate max-w-md">
+              <h3 className="text-xs sm:text-sm font-extrabold text-slate-800 truncate">
                 Presentasi Ringkas: Penyelarasan Langkah...
               </h3>
             </div>
@@ -637,7 +637,7 @@ export const GammaReplica: React.FC = () => {
                     <div className="pt-2 border-t border-slate-100 flex flex-wrap gap-2">
                       <button
                         onClick={() => setShowNotesModal(true)}
-                        className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                        className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
                       >
                         <Plus className="w-3.5 h-3.5" /> Paste Catatan Rapat
                       </button>

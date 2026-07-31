@@ -507,9 +507,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
   };
 
   return (
-    <div className="space-y-8 pb-16 min-h-screen p-3 sm:p-6 rounded-3xl font-sans text-slate-900 dark:text-slate-800 dark:text-slate-100 bg-slate-50 dark:bg-[#0a0e1a] dark:bg-[#0a0e1a]">
+    <div className="space-y-8 pb-16 min-h-screen p-3 sm:p-6 rounded-3xl font-sans text-slate-900 dark:text-slate-100 bg-slate-100/90 dark:bg-[#070b19]">
       {/* ---------------- TOP HERO BANNER ---------------- */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-[#0f172a] to-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-2xl text-slate-900 dark:text-white">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border border-slate-700/60 p-6 sm:p-8 shadow-2xl text-white">
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
 
@@ -531,27 +531,27 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                 alt="Maxy Academy Logo"
                 className="h-10 sm:h-12 w-auto object-contain shrink-0"
               />
-              <h1 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-                <span className="text-slate-900 dark:text-white font-extrabold">AI Navigator — </span>
+              <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                <span className="text-white font-extrabold">AI Navigator — </span>
                 <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">Platform Pembelajaran LLM Interaktif</span>
               </h1>
             </div>
-            <p className="text-slate-700 dark:text-slate-200 text-xs sm:text-sm leading-relaxed max-w-2xl font-medium">
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl font-medium">
               Kuasai 29 modul LLM modern dari dasar hingga mahir! Lewati setiap node zig-zag, dapatkan 3 bintang kuis, dan buka 7 Peti Karun Spesial dengan bonus tools AI eksklusif.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-3 text-xs">
-              <div className="flex items-center gap-2 bg-white dark:bg-white/90 dark:bg-slate-900/90 px-3.5 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">
+              <div className="flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-slate-700/60 text-slate-200">
                 <Trophy className="w-4 h-4 text-amber-400" />
                 <span>Progres: <strong className="text-amber-300">{completedCount}/{totalModules} Modul</strong> ({progressPercent}%)</span>
               </div>
-              <div className="flex items-center gap-2 bg-white dark:bg-white/90 dark:bg-slate-900/90 px-3.5 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">
+              <div className="flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-slate-700/60 text-slate-200">
                 <Clock className="w-4 h-4 text-indigo-400" />
                 <span>Sisa Waktu: <strong className="text-indigo-300">{timeCalc.formattedText}</strong></span>
               </div>
               <button
                 onClick={onOpenStreakModal}
-                className="flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950/90 hover:bg-indigo-900 px-3.5 py-2 rounded-2xl border border-indigo-200 dark:border-indigo-700/60 text-slate-700 dark:text-slate-200 transition-all cursor-pointer"
+                className="flex items-center gap-2 bg-indigo-950/80 hover:bg-indigo-900/90 px-3.5 py-2 rounded-2xl border border-indigo-700/60 text-slate-200 transition-all cursor-pointer"
               >
                 <Award className="w-4 h-4 text-emerald-400" />
                 <span>Lvl {levelInfo.level} ({levelInfo.title}): <strong className="text-amber-400">{progress.xp} XP</strong></span>
@@ -559,7 +559,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
               {onOpenAchievements && (
                 <button
                   onClick={onOpenAchievements}
-                  className="flex items-center gap-2 bg-amber-50 dark:bg-amber-950/90 hover:bg-amber-900 px-3.5 py-2 rounded-2xl border border-amber-200 dark:border-amber-700/60 text-amber-200 transition-all cursor-pointer hover:scale-105"
+                  className="flex items-center gap-2 bg-amber-950/80 hover:bg-amber-900/90 px-3.5 py-2 rounded-2xl border border-amber-700/60 text-amber-200 transition-all cursor-pointer hover:scale-105"
                 >
                   <Gift className="w-4 h-4 text-amber-400" />
                   <span>Peti Unlocked ({openedChestIds.length}/{TREASURE_CHESTS.length})</span>
@@ -569,18 +569,18 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
           </div>
 
           {/* Progress gauge card */}
-          <div className="md:col-span-4 bg-white dark:bg-white/90 dark:bg-slate-900/90 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 text-center space-y-3 shadow-xl">
-            <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
-              <span className="font-bold text-slate-600 dark:text-slate-300">Progres Kelulusan</span>
+          <div className="md:col-span-4 bg-slate-900/90 backdrop-blur-md rounded-3xl p-5 border border-slate-700/60 text-center space-y-3 shadow-xl">
+            <div className="flex justify-between items-center text-xs text-slate-300">
+              <span className="font-bold text-slate-200">Progres Kelulusan</span>
               <span className="font-black text-amber-400 text-sm">{progressPercent}%</span>
             </div>
-            <div className="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-200 dark:border-slate-800">
+            <div className="w-full bg-slate-950 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-800">
               <div
                 className="bg-gradient-to-r from-amber-500 via-indigo-500 to-emerald-400 h-full rounded-full transition-all duration-700 shadow-md"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+            <p className="text-[11px] text-slate-400 font-medium">
               {completedCount === totalModules
                 ? '🎉 Luar biasa! Semua 29 modul telah Anda kuasai! Klaim Sertifikat AI Master.'
                 : `Selesaikan ${totalModules - completedCount} modul lagi untuk klaim Sertifikat Kelulusan AI Master.`}
@@ -611,7 +611,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
             onClick={() => setViewMode('heatmap')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
               viewMode === 'heatmap'
-                ? 'bg-indigo-600 text-slate-900 dark:text-white shadow-md'
+                ? 'bg-indigo-600 text-white shadow-md'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
@@ -714,7 +714,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                       {onOpenCertificateModal && (
                         <button
                           onClick={onOpenCertificateModal}
-                          className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
+                          className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
                         >
                           <Award className="w-4 h-4" />
                           <span>Download Sertifikat & Transkrip</span>
@@ -785,9 +785,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                   // Check if a Checkpoint Milestone is placed after this module
                   const milestoneAfter = CHECKPOINT_MILESTONES.find(m => m.afterModuleId === module.id);
 
-                  // Calculate Star rating (1 to 3 stars if completed)
+                  // Calculate Star rating (1 to 3 stars if completed, based on 10-question quiz)
                   const starCount = isCompleted
-                    ? (score !== undefined ? Math.min(3, Math.max(1, Math.ceil((score / module.content.quiz.length) * 3))) : 3)
+                    ? (score !== undefined ? Math.min(3, Math.max(1, Math.ceil((score / 10) * 3))) : 3)
                     : 0;
 
                   return (
@@ -857,14 +857,14 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
 
                           {/* Node Circle Shape */}
                           <div
-                            className={`w-20 h-20 sm:w-22 sm:h-22 rounded-3xl flex flex-col items-center justify-center relative shadow-2xl transition-all border-4 ${
+                            className={`w-20 h-20 sm:w-22 sm:h-22 rounded-3xl flex flex-col items-center justify-center relative shadow-xl transition-all border-4 ${
                               isCompleted
-                                ? 'bg-gradient-to-b from-emerald-500 via-emerald-600 to-emerald-800 border-emerald-300 text-slate-900 dark:text-white shadow-emerald-500/30'
+                                ? 'bg-gradient-to-b from-emerald-500 via-emerald-600 to-emerald-800 border-emerald-300 text-white shadow-emerald-500/30'
                                 : isFreeTrialLocked
-                                ? 'bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border-amber-500/50 text-amber-400 shadow-amber-500/10'
+                                ? 'bg-white dark:bg-slate-900 border-amber-500/50 text-amber-500 dark:text-amber-400 shadow-amber-500/10'
                                 : isCurrent
                                 ? 'bg-gradient-to-b from-amber-400 via-amber-600 to-yellow-700 border-amber-200 text-slate-950 shadow-amber-400/50 ring-4 ring-amber-500/40'
-                                : 'bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 shadow-black/80'
+                                : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-400 dark:text-slate-600 shadow-sm'
                             }`}
                           >
                             {/* Shimmer top gloss */}
@@ -874,13 +874,13 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                             <div className="relative z-10">
                               {isFreeTrialLocked ? (
                                 <div className="flex flex-col items-center">
-                                  <Lock className="w-6 h-6 text-amber-400" />
-                                  <span className="text-[7px] font-black text-amber-300 uppercase tracking-tighter mt-0.5">Free Trial</span>
+                                  <Lock className="w-6 h-6 text-amber-500 dark:text-amber-400" />
+                                  <span className="text-[7px] font-black text-amber-600 dark:text-amber-300 uppercase tracking-tighter mt-0.5">Free Trial</span>
                                 </div>
                               ) : isLocked ? (
-                                <Lock className="w-7 h-7 text-slate-600" />
+                                <Lock className="w-7 h-7 text-slate-400 dark:text-slate-600" />
                               ) : isCompleted ? (
-                                <CheckCircle2 className="w-8 h-8 text-slate-900 dark:text-white drop-shadow-md" />
+                                <CheckCircle2 className="w-8 h-8 text-white drop-shadow-md" />
                               ) : (
                                 getModuleIcon(module.icon)
                               )}
@@ -891,17 +891,17 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                               isCompleted
                                 ? 'bg-emerald-950/90 text-emerald-200 border border-emerald-400/40'
                                 : isFreeTrialLocked
-                                ? 'bg-amber-50 dark:bg-amber-950/90 text-amber-300 border border-amber-500/50'
+                                ? 'bg-amber-50 dark:bg-amber-950/90 text-amber-700 dark:text-amber-300 border border-amber-500/50'
                                 : isCurrent
-                                ? 'bg-slate-100 dark:bg-slate-950/90 text-amber-300 border border-amber-400/60 font-bold'
-                                : 'bg-white dark:bg-slate-900 text-slate-600 border border-slate-200 dark:border-slate-800'
+                                ? 'bg-slate-950/90 text-amber-300 border border-amber-400/60 font-bold'
+                                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700'
                             }`}>
                               Modul {module.id}
                             </span>
                           </div>
 
                           {/* 3-Star Rating Indicator */}
-                          <div className="flex items-center gap-1 mt-2 bg-white dark:bg-white/90 dark:bg-slate-900/90 px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-800 shadow-md">
+                          <div className="flex items-center gap-1 mt-2 bg-white dark:bg-slate-900 px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-800 shadow-md">
                             {[1, 2, 3].map((starNum) => {
                               const hasStar = isCompleted && starNum <= starCount;
                               return (
@@ -910,7 +910,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                                   className={`w-3.5 h-3.5 ${
                                     hasStar
                                       ? 'text-amber-400 fill-amber-400 drop-shadow-[0_0_6px_#f59e0b]'
-                                      : 'text-slate-700'
+                                      : 'text-slate-300 dark:text-slate-700'
                                   }`}
                                 />
                               );
@@ -968,7 +968,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
 
                                   {/* Unopened Alert Badge */}
                                   {!isOpened && isPrereqDone && (
-                                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 rounded-full border-2 border-white text-[10px] font-black text-slate-900 dark:text-white flex items-center justify-center animate-pulse">
+                                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 rounded-full border-2 border-white text-[10px] font-black text-white flex items-center justify-center animate-pulse">
                                       !
                                     </div>
                                   )}
@@ -1046,7 +1046,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                       completedCount === totalModules ? 'text-amber-400' : 'text-slate-500'
                     }`}>
                       <Trophy className="w-4 h-4 text-amber-400" />
-                      🏆 Puncak Kelulusan AI Master
+                      Puncak Kelulusan AI Master
                     </span>
                     <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
                       {completedCount === totalModules
@@ -1141,13 +1141,13 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
         {/* Sidebar Column */}
         <div className="lg:col-span-5 xl:col-span-4 space-y-6 lg:sticky lg:top-24">
           {/* Sidebar Tab Controls Header */}
-          <div className="grid grid-cols-5 gap-1 p-1 bg-slate-100 dark:bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm">
+          <div className="grid grid-cols-5 gap-1 p-1 bg-slate-100 dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm">
             <button
               onClick={() => setSidebarTab('challenge')}
               className={`flex items-center justify-center gap-1 py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
                 sidebarTab === 'challenge'
                   ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-600 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
               }`}
             >
               <Flame className={`w-3 h-3 shrink-0 ${sidebarTab === 'challenge' ? 'text-slate-950 fill-slate-950' : 'text-amber-500'}`} />
@@ -1159,7 +1159,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
               className={`flex items-center justify-center gap-1 py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
                 sidebarTab === 'flashcards'
                   ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-600 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
               }`}
             >
               <Layers className={`w-3 h-3 shrink-0 ${sidebarTab === 'flashcards' ? 'text-slate-950' : 'text-amber-500'}`} />
@@ -1171,7 +1171,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
               className={`flex items-center justify-center gap-1 py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
                 sidebarTab === 'skills'
                   ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-600 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
               }`}
             >
               <Compass className={`w-3 h-3 shrink-0 ${sidebarTab === 'skills' ? 'text-slate-950' : 'text-amber-500'}`} />
@@ -1183,7 +1183,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
               className={`flex items-center justify-center gap-1 py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
                 sidebarTab === 'analytics'
                   ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-600 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
               }`}
             >
               <Zap className={`w-3 h-3 shrink-0 ${sidebarTab === 'analytics' ? 'text-slate-950' : 'text-amber-500'}`} />
@@ -1195,7 +1195,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
               className={`flex items-center justify-center gap-1 py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
                 sidebarTab === 'tips'
                   ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-600 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
               }`}
             >
               <BookOpen className={`w-3 h-3 shrink-0 ${sidebarTab === 'tips' ? 'text-slate-950' : 'text-amber-500'}`} />
@@ -1544,7 +1544,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                 </div>
 
                 {/* Certificate Stats Grid */}
-                <div className="grid grid-cols-3 gap-2 py-3 bg-white dark:bg-white/90 dark:bg-slate-900/90 rounded-2xl border border-slate-200 dark:border-slate-800 text-xs">
+                <div className="grid grid-cols-3 gap-2 py-3 bg-white dark:bg-[#0d1322] rounded-2xl border border-slate-200 dark:border-slate-800 text-xs">
                   <div>
                     <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">Modul Selesai</span>
                     <strong className="text-amber-400 font-black text-base">{totalModules}/{totalModules}</strong>

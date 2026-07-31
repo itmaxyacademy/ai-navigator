@@ -334,7 +334,7 @@ export const OpenArtReplica: React.FC = () => {
         {/* Workspace Dropdown */}
         <div className="hidden md:flex items-center gap-2 pl-3 border-l border-[#22242d]">
           <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#181a20] hover:bg-[#20232d] border border-[#2a2d39] rounded-lg cursor-pointer transition-colors text-slate-700 dark:text-slate-200">
-            <div className="w-4 h-4 rounded-full bg-purple-600 flex items-center justify-center text-[9px] font-bold text-slate-900 dark:text-white">
+            <div className="w-4 h-4 rounded-full bg-purple-600 flex items-center justify-center text-[9px] font-bold text-white">
               M
             </div>
             <span className="font-medium truncate max-w-[140px]">Maxy Academy's wor...</span>
@@ -1664,7 +1664,7 @@ export const OpenArtReplica: React.FC = () => {
           {/* Model Card */}
           <div className="p-3 bg-[#181b24] border border-[#2b2e3f] rounded-2xl flex items-center justify-between cursor-pointer">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-purple-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs">
+              <div className="w-8 h-8 rounded-xl bg-purple-600 flex items-center justify-center font-bold text-white text-xs">
                 ║║
               </div>
               <div>

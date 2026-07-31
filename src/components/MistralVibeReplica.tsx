@@ -281,7 +281,7 @@ export const MistralVibeReplica: React.FC = () => {
                 <div>
                   <button
                     onClick={() => setActiveStage('onboarding')}
-                    className="bg-black hover:bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-bold text-sm px-6 py-3.5 rounded-xl shadow-lg flex items-center space-x-2 transition-transform hover:scale-105"
+                    className="bg-black hover:bg-white dark:bg-slate-900 text-white font-bold text-sm px-6 py-3.5 rounded-xl shadow-lg flex items-center space-x-2 transition-transform hover:scale-105"
                   >
                     <span>Try it free</span>
                     <ArrowRight className="w-4 h-4 text-orange-400" />
@@ -675,7 +675,7 @@ export const MistralVibeReplica: React.FC = () => {
                         setIsConnected(!isConnected);
                         showToast(isConnected ? 'Koneksi Aplikasi Dibatalkan' : 'Aplikasi Terhubung Secara Sukses!');
                       }}
-                      className={`px-3 py-1 rounded-lg font-bold text-xs transition-all ${isConnected ? 'bg-emerald-950 border border-emerald-800 text-emerald-300 hover:bg-emerald-900' : 'bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white'}`}
+                      className={`px-3 py-1 rounded-lg font-bold text-xs transition-all ${isConnected ? 'bg-emerald-950 border border-emerald-800 text-emerald-300 hover:bg-emerald-900' : 'bg-blue-600 hover:bg-blue-500 text-white'}`}
                     >
                       {isConnected ? 'Connected ✓' : 'Connect'}
                     </button>

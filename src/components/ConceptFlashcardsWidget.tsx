@@ -146,21 +146,21 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
   };
 
   return (
-    <div className={`bg-white border-slate-200 text-slate-900 dark:bg-white dark:bg-slate-900 dark:border-slate-200 dark:border-slate-800 dark:text-slate-900 dark:text-white border rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
+    <div className={`bg-white border-slate-200 text-slate-900 dark:bg-[#0d1322] dark:border-slate-800 dark:text-white border rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
       {/* Widget Header */}
-      <div className="relative z-10 flex items-center justify-between border-b border-slate-200 dark:border-slate-200 dark:border-slate-800 pb-3 gap-2">
+      <div className="relative z-10 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="p-2.5 rounded-xl bg-indigo-500/10 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 shrink-0">
             <Layers className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight break-words">Flashcard Konsep AI</h3>
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight break-words">Flashcard Konsep AI</h3>
               <span className="text-[10px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 px-2 py-0.5 rounded-md uppercase tracking-wider shrink-0">
                 Kartu Istilah
               </span>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-500 dark:text-slate-400 truncate">
+            <p className="text-xs text-slate-600 dark:text-slate-400 truncate">
               Uji pemahaman istilah penting &amp; parameter LLM
             </p>
           </div>
@@ -186,8 +186,8 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
             onClick={() => handleSelectCategory(cat)}
             className={`px-3 py-1 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer border ${
               selectedCategory === cat
-                ? 'bg-indigo-600 border-indigo-500 text-slate-900 dark:text-white shadow-md'
-                : 'bg-slate-100 dark:bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white'
+                ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
+                : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white'
             }`}
           >
             {cat}
@@ -207,8 +207,8 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
             onClick={() => !isDebounced && setIsFlipped(!isFlipped)}
             className={`w-full min-h-[250px] p-5 rounded-2xl border cursor-pointer select-none transition-all duration-300 relative flex flex-col justify-between shadow-lg ${
               isFlipped
-                ? 'bg-white dark:bg-slate-900 dark:bg-slate-100 dark:bg-slate-950 border-indigo-500 text-slate-900 dark:text-white'
-                : 'bg-white dark:bg-slate-900 dark:bg-slate-100 dark:bg-slate-950 border-slate-300 dark:border-slate-700 dark:border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-slate-900 dark:text-white'
+                ? 'bg-white dark:bg-slate-900 dark:bg-slate-950 border-indigo-500 text-slate-900 dark:text-white'
+                : 'bg-white dark:bg-slate-900 dark:bg-slate-950 border-slate-300 dark:border-slate-700 dark:border-slate-800 hover:border-indigo-500 text-slate-900 dark:text-white'
             }`}
           >
             {/* Card Header Tag */}
@@ -304,7 +304,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
                     onClick={() => handleSetConfidence('need_review')}
                     className={`px-2.5 py-1 rounded-xl text-[10px] font-extrabold transition-all cursor-pointer border ${
                       currentConfidence === 'need_review'
-                        ? 'bg-rose-600 text-slate-900 dark:text-white border-rose-400'
+                        ? 'bg-rose-600 text-white border-rose-400'
                         : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-rose-300 hover:bg-slate-100 dark:bg-slate-800'
                     }`}
                   >
@@ -315,7 +315,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
                     onClick={() => handleSetConfidence('medium')}
                     className={`px-2.5 py-1 rounded-xl text-[10px] font-extrabold transition-all cursor-pointer border ${
                       currentConfidence === 'medium'
-                        ? 'bg-amber-600 text-slate-900 dark:text-white border-amber-400'
+                        ? 'bg-amber-600 text-white border-amber-400'
                         : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-amber-300 hover:bg-slate-100 dark:bg-slate-800'
                     }`}
                   >
@@ -326,7 +326,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
                     onClick={() => handleSetConfidence('mastered')}
                     className={`px-2.5 py-1 rounded-xl text-[10px] font-extrabold transition-all cursor-pointer border ${
                       currentConfidence === 'mastered'
-                        ? 'bg-emerald-600 text-slate-900 dark:text-white border-emerald-400'
+                        ? 'bg-emerald-600 text-white border-emerald-400'
                         : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-emerald-300 hover:bg-slate-100 dark:bg-slate-800'
                     }`}
                   >

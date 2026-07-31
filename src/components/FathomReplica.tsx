@@ -550,7 +550,7 @@ export const FathomReplica: React.FC = () => {
           {/* User Profile Icon */}
           <div 
             onClick={() => showToastMsg('Profil Pengguna: Wahyudi (Maxy Academy)')}
-            className="w-8 h-8 rounded-full bg-purple-700 border border-purple-500 flex items-center justify-center text-slate-900 dark:text-white font-bold text-xs cursor-pointer hover:ring-2 hover:ring-cyan-400 transition-all"
+            className="w-8 h-8 rounded-full bg-purple-700 border border-purple-500 flex items-center justify-center text-white font-bold text-xs cursor-pointer hover:ring-2 hover:ring-cyan-400 transition-all"
             title="Wahyudi (Maxy Academy)"
           >
             W
@@ -842,7 +842,7 @@ export const FathomReplica: React.FC = () => {
               className="inline-flex items-center space-x-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Kembali ke My Calls</span>
+              <span>Kembali <span className="hidden sm:inline">ke My Calls</span></span>
             </button>
 
             <div className="flex items-center space-x-3 text-[11px] text-slate-500 dark:text-slate-400">
