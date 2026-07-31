@@ -111,24 +111,41 @@ export default function App() {
 
   // Auth Guard: Sync user profile & active tier subscription from API Gateway api.maxy.academy
   useEffect(() => {
-    // Bypass auth on localhost / local dev to avoid redirect loop
-    const isLocalDev = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    // Check if running locally (localhost, 127.0.0.1, or local LAN IP like 192.168.x.x)
+    const isLocalDev = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' || 
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname.startsWith('192.168.') ||
+      window.location.hostname.startsWith('10.') ||
+      window.location.hostname.startsWith('172.')
+    );
 
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
 
-    if (isLocalDev) {
-      // On localhost, skip auth to prevent hanging if API is down or bypass login
+    if (isLocalDev && !token) {
+      // Best Practice: For local development, mock a premium user so all features are accessible
+      // without needing to login to the production server.
+      setProgress(prev => ({
+        ...prev,
+        userTier: 'tier2',
+        tier: 'tier2',
+        maxAllowedModuleId: 29,
+        paidTiers: ['tier1', 'tier2'],
+        hasTier1: true,
+        hasTier2: true,
+        userName: 'Local Developer',
+        userEmail: 'dev@localhost',
+        packageName: 'Local Development VIP'
+      }));
       setIsAuthValidating(false);
       return;
     }
 
     const getLandingUrl = () => {
-      if (typeof window === 'undefined') return 'https://ainavigator.maxy.academy?login=true';
-      const host = window.location.hostname;
-      if (host === 'ai.maxy.academy' || host === 'ainavigator.maxy.academy' || host.includes('maxy.academy')) return 'https://ainavigator.maxy.academy?login=true';
-      return `${window.location.origin}/?login=true`;
+      // Always redirect to the real login portal if unauthenticated
+      return 'https://ainavigator.maxy.academy?login=true';
     };
 
     const redirectToLogin = () => {
@@ -139,7 +156,7 @@ export default function App() {
       window.location.href = getLandingUrl();
     };
 
-    if (!token && !isLocalDev) {
+    if (!token) {
       redirectToLogin();
       return;
     }
@@ -248,10 +265,7 @@ export default function App() {
     localStorage.removeItem('maxy_access_token');
     localStorage.removeItem('maxy_refresh_token');
     localStorage.removeItem(STORAGE_KEY);
-    const host = window.location.hostname;
-    const target = (host === 'ai.maxy.academy' || host === 'ainavigator.maxy.academy' || host.includes('maxy.academy'))
-      ? 'https://ainavigator.maxy.academy?login=true'
-      : `${window.location.origin}/?login=true`;
+    const target = 'https://ainavigator.maxy.academy?login=true';
     window.location.href = target;
   };
 
