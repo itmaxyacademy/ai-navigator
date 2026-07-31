@@ -339,10 +339,10 @@ export const GoogleAIStudioReplica: React.FC = () => {
   ];
 
   return (
-    <div className="w-full bg-slate-950 text-slate-100 font-sans rounded-2xl border border-slate-800 overflow-hidden shadow-2xl flex flex-col min-h-[750px]">
+    <div className="w-full bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl flex flex-col min-h-[750px]">
       {/* Toast Notification Banner */}
       {toastMessage && (
-        <div className="fixed top-6 right-6 z-50 bg-indigo-600 text-white px-4 py-2.5 rounded-xl shadow-2xl border border-indigo-400 text-xs font-medium flex items-center gap-2 animate-bounce">
+        <div className="fixed top-6 right-6 z-50 bg-indigo-600 text-slate-900 dark:text-white px-4 py-2.5 rounded-xl shadow-2xl border border-indigo-400 text-xs font-medium flex items-center gap-2 animate-bounce">
           <Sparkles className="w-4 h-4 text-amber-300 animate-spin" />
           <span>{toastMessage}</span>
         </div>
@@ -351,19 +351,19 @@ export const GoogleAIStudioReplica: React.FC = () => {
       {/* Main Container Layout */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left Sidebar Navigation */}
-        <aside className="w-64 bg-slate-900 border-r border-slate-800/80 flex flex-col justify-between shrink-0 select-none">
+        <aside className="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800/80 flex flex-col justify-between shrink-0 select-none">
           <div className="p-4 space-y-6">
             {/* Logo / Header */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5 cursor-pointer">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-500 via-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-md">
-                  <Sparkles className="w-4 h-4 text-white" />
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-500 via-indigo-500 to-purple-500 flex items-center justify-center text-slate-900 dark:text-white font-bold shadow-md">
+                  <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
                 </div>
                 <div>
-                  <h1 className="text-sm font-bold text-white tracking-wide flex items-center gap-1">
+                  <h1 className="text-sm font-bold text-slate-900 dark:text-white tracking-wide flex items-center gap-1">
                     Google AI Studio
                   </h1>
-                  <p className="text-[10px] text-slate-400 font-medium">Maxy Academy Edition</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Maxy Academy Edition</p>
                 </div>
               </div>
             </div>
@@ -381,7 +381,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
                       activeTab === 'playground'
                         ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
                     }`}
                   >
                     <Terminal className="w-4 h-4" />
@@ -392,7 +392,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                       showToast('Riwayat prompt dibuka pada section Recent');
                       setActiveTab('playground');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50 transition-all"
                   >
                     <Clock className="w-4 h-4" />
                     <span>History</span>
@@ -418,7 +418,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
                       activeTab === 'my_apps'
                         ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
                     }`}
                   >
                     <LayoutGrid className="w-4 h-4" />
@@ -429,7 +429,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
                       activeTab === 'gallery'
                         ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
                     }`}
                   >
                     <Compass className="w-4 h-4" />
@@ -449,7 +449,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all ${
                       activeTab === 'dashboard'
                         ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
@@ -460,7 +460,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   </button>
                   <button
                     onClick={() => showToast('Membuka dokumentasi resmi Google AI Studio')}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50 transition-all"
                   >
                     <BookOpen className="w-4 h-4" />
                     <span>Documentation</span>
@@ -472,61 +472,61 @@ export const GoogleAIStudioReplica: React.FC = () => {
           </div>
 
           {/* User Profile at Bottom */}
-          <div className="p-3 border-t border-slate-800/80 bg-slate-900/80 flex items-center justify-between">
+          <div className="p-3 border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 flex items-center justify-between">
             <div className="flex items-center gap-2.5 overflow-hidden">
               <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-slate-950 font-bold text-xs">
                 M
               </div>
               <div className="truncate">
-                <p className="text-xs font-semibold text-slate-200 truncate">Maxy Academy</p>
+                <p className="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">Maxy Academy</p>
                 <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
                   PRO
                 </span>
               </div>
             </div>
             <div className="flex items-center gap-1 text-slate-500">
-              <Key className="w-3.5 h-3.5 hover:text-slate-300 cursor-pointer" onClick={() => setActiveTab('dashboard')} />
-              <Settings className="w-3.5 h-3.5 hover:text-slate-300 cursor-pointer" onClick={() => showToast('Pengaturan Akun Maxy Academy')} />
+              <Key className="w-3.5 h-3.5 hover:text-slate-600 dark:text-slate-300 cursor-pointer" onClick={() => setActiveTab('dashboard')} />
+              <Settings className="w-3.5 h-3.5 hover:text-slate-600 dark:text-slate-300 cursor-pointer" onClick={() => showToast('Pengaturan Akun Maxy Academy')} />
             </div>
           </div>
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 bg-slate-950 flex flex-col overflow-y-auto">
+        <main className="flex-1 bg-slate-100 dark:bg-slate-950 flex flex-col overflow-y-auto">
           {/* ========================================================= */}
           {/* VIEW 1: TAHAP 1 - PLAYGROUND (Main Prompting Screen)       */}
           {/* ========================================================= */}
           {activeTab === 'playground' && (
             <div className="flex-1 flex flex-col lg:flex-row min-h-0">
               {/* Left/Center Main Playground View */}
-              <div className="flex-1 p-5 sm:p-7 flex flex-col justify-between space-y-6 overflow-y-auto border-r border-slate-800/60">
+              <div className="flex-1 p-5 sm:p-7 flex flex-col justify-between space-y-6 overflow-y-auto border-r border-slate-200 dark:border-slate-800/60">
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-slate-800/60 pb-4">
+                <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/60 pb-4">
                   <div>
-                    <h2 className="text-xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                    <h2 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                       <Terminal className="w-5 h-5 text-blue-400" />
                       Playground
                     </h2>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Eksplorasi prompt, konfigurasikan model Gemini 3, dan bangun aplikasi secara interaktif.
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => showToast('Link Playground disalin ke clipboard!')}
-                      className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-all text-xs flex items-center gap-1.5"
+                      className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800 transition-all text-xs flex items-center gap-1.5"
                     >
                       <Share2 className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">Share</span>
                     </button>
                     <button
                       onClick={() => showToast('Mode Bandingkan (Compare) Diaktifkan')}
-                      className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-all text-xs flex items-center gap-1.5"
+                      className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800 transition-all text-xs flex items-center gap-1.5"
                     >
                       <Columns className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">Compare</span>
                     </button>
-                    <button className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-all">
+                    <button className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800 transition-all">
                       <MoreVertical className="w-4 h-4" />
                     </button>
                   </div>
@@ -546,7 +546,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                           if (errorMessage) setErrorMessage(null);
                           showToast(`Prompt "${item}" dimuat!`);
                         }}
-                        className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs flex items-center gap-2 transition-all group cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 text-xs flex items-center gap-2 transition-all group cursor-pointer"
                       >
                         <Clock className="w-3 h-3 text-slate-500 group-hover:text-blue-400" />
                         <span>{item}</span>
@@ -564,7 +564,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     </div>
                     <button
                       onClick={() => setErrorMessage(null)}
-                      className="text-rose-400 hover:text-white shrink-0 cursor-pointer"
+                      className="text-rose-400 hover:text-slate-900 dark:text-white shrink-0 cursor-pointer"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -574,7 +574,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 {/* Section Models Grid Mode */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
+                    <h3 className="text-sm font-bold text-slate-700 dark:text-slate-200 flex items-center gap-2">
                       <span>Pilih Mode Generasi</span>
                       <span className="text-[10px] bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded-full font-normal">
                         Gemini 3 Capability
@@ -582,13 +582,13 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     </h3>
 
                     {/* Toggle Models / Agents */}
-                    <div className="bg-slate-900 p-0.5 rounded-xl border border-slate-800 flex items-center text-xs">
+                    <div className="bg-white dark:bg-slate-900 p-0.5 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center text-xs">
                       <button
                         onClick={() => setGridFilterMode('models')}
                         className={`px-3 py-1 rounded-lg transition-all ${
                           gridFilterMode === 'models'
-                            ? 'bg-blue-600 text-white font-semibold shadow-md'
-                            : 'text-slate-400 hover:text-slate-200'
+                            ? 'bg-blue-600 text-slate-900 dark:text-white font-semibold shadow-md'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                         }`}
                       >
                         Models
@@ -597,8 +597,8 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         onClick={() => setGridFilterMode('agents')}
                         className={`px-3 py-1 rounded-lg transition-all ${
                           gridFilterMode === 'agents'
-                            ? 'bg-blue-600 text-white font-semibold shadow-md'
-                            : 'text-slate-400 hover:text-slate-200'
+                            ? 'bg-blue-600 text-slate-900 dark:text-white font-semibold shadow-md'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                         }`}
                       >
                         Agents
@@ -665,19 +665,19 @@ export const GoogleAIStudioReplica: React.FC = () => {
                           className={`p-3.5 rounded-2xl border cursor-pointer transition-all ${
                             isSelected
                               ? 'bg-blue-950/40 border-blue-500/80 shadow-lg shadow-blue-500/10 ring-1 ring-blue-500/50'
-                              : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700 hover:bg-slate-900'
+                              : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:border-slate-700 hover:bg-white dark:bg-slate-900'
                           }`}
                         >
                           <div className="flex items-center justify-between mb-2">
-                            <div className={`p-2 rounded-xl bg-slate-950 border border-slate-800 ${card.color}`}>
+                            <div className={`p-2 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 ${card.color}`}>
                               <IconComp className="w-4 h-4" />
                             </div>
                             {isSelected && (
                               <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping" />
                             )}
                           </div>
-                          <h4 className="text-xs font-bold text-slate-100 mb-1">{card.title}</h4>
-                          <p className="text-[11px] text-slate-400 leading-snug">{card.desc}</p>
+                          <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 mb-1">{card.title}</h4>
+                          <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">{card.desc}</p>
                         </div>
                       );
                     })}
@@ -685,12 +685,12 @@ export const GoogleAIStudioReplica: React.FC = () => {
 
                   {/* Start Building Button */}
                   <div className="pt-2 flex items-center justify-between">
-                    <p className="text-xs text-slate-400 italic">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 italic">
                       Mode Terpilih: <strong className="text-blue-300 capitalize">{selectedGridMode.replace('_', ' ')}</strong>
                     </p>
                     <button
                       onClick={() => handleStartBuilding()}
-                      className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-blue-500/20 border border-blue-400/30 flex items-center gap-2 transition-all cursor-pointer"
+                      className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-slate-900 dark:text-white font-bold text-xs shadow-lg shadow-blue-500/20 border border-blue-400/30 flex items-center gap-2 transition-all cursor-pointer"
                     >
                       <Sparkles className="w-4 h-4 text-amber-300" />
                       <span>Start building</span>
@@ -700,8 +700,8 @@ export const GoogleAIStudioReplica: React.FC = () => {
 
                 {/* Prompt Input Box & Toolbar */}
                 <div className="space-y-2 pt-2">
-                  <div className="relative rounded-2xl bg-slate-900/90 border border-slate-800 focus-within:border-blue-500 transition-all p-3 shadow-xl">
-                    <div className="flex items-center justify-between mb-1.5 text-[11px] font-semibold text-slate-400">
+                  <div className="relative rounded-2xl bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 focus-within:border-blue-500 transition-all p-3 shadow-xl">
+                    <div className="flex items-center justify-between mb-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
                       <span className="capitalize text-blue-400 flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5" />
                         Mode: {selectedGridMode.replace('_', ' ')}
@@ -733,16 +733,16 @@ export const GoogleAIStudioReplica: React.FC = () => {
                           : 'Start typing a prompt or app requirement to see what our models can do...'
                       }
                       rows={selectedGridMode === 'image_gen' ? 4 : 3}
-                      className="w-full bg-transparent text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none resize-none leading-relaxed"
+                      className="w-full bg-transparent text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-500 focus:outline-none resize-none leading-relaxed"
                     />
 
                     {/* Toolbar inside input box */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-800/80">
+                    <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-200 dark:border-slate-800/80">
                       <div className="flex flex-wrap items-center gap-2">
                         {/* Tools Button */}
                         <button
                           onClick={() => showToast('Tools dropdown: pilih Grounding Search, Maps, atau Custom Functions')}
-                          className="px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+                          className="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs flex items-center gap-1.5 transition-all cursor-pointer"
                         >
                           <Sliders className="w-3.5 h-3.5 text-blue-400" />
                           <span>Tools</span>
@@ -759,7 +759,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                                 setToolsState((prev) => ({ ...prev, groundingSearch: false }));
                                 showToast('Chip Grounding Search dihapus');
                               }}
-                              className="p-0.5 hover:bg-blue-900/80 rounded transition-all text-blue-400 hover:text-white cursor-pointer"
+                              className="p-0.5 hover:bg-blue-900/80 rounded transition-all text-blue-400 hover:text-slate-900 dark:text-white cursor-pointer"
                             >
                               <X className="w-3 h-3" />
                             </button>
@@ -768,14 +768,14 @@ export const GoogleAIStudioReplica: React.FC = () => {
 
                         <button
                           onClick={() => showToast('Gunakan perintah suara untuk merekam prompt')}
-                          className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all cursor-pointer"
+                          className="p-2 rounded-lg bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all cursor-pointer"
                         >
                           <Mic className="w-3.5 h-3.5" />
                         </button>
 
                         <button
                           onClick={() => showToast('Tambahkan file sampel/referensi ke prompt')}
-                          className="p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white transition-all cursor-pointer"
+                          className="p-2 rounded-lg bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all cursor-pointer"
                         >
                           <Paperclip className="w-3.5 h-3.5" />
                         </button>
@@ -785,7 +785,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                       <button
                         onClick={() => handleRunPrompt(undefined, false)}
                         disabled={isGenerating}
-                        className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md flex items-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs shadow-md flex items-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
                       >
                         {isGenerating ? (
                           <>
@@ -805,14 +805,14 @@ export const GoogleAIStudioReplica: React.FC = () => {
 
                 {/* Output / Response Panel in Playground */}
                 {(playgroundOutput || isGenerating) && (
-                  <div className="space-y-3 pt-4 border-t border-slate-800/80 animate-in fade-in">
+                  <div className="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-800/80 animate-in fade-in">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
                         <Sparkles className="w-4 h-4 text-amber-400" />
                         <span>Output Response</span>
                       </h3>
                       {playgroundOutput && (
-                        <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                        <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400">
                           <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30 font-mono">
                             {playgroundOutput.modelUsed}
                           </span>
@@ -822,14 +822,14 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     </div>
 
                     {isGenerating ? (
-                      <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800/80 flex items-center justify-center gap-3 text-slate-400 text-xs animate-pulse">
+                      <div className="p-6 rounded-2xl bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 flex items-center justify-center gap-3 text-slate-500 dark:text-slate-400 text-xs animate-pulse">
                         <RefreshCw className="w-5 h-5 text-blue-400 animate-spin" />
                         <span>Gemini AI Studio sedang mengolah request Anda...</span>
                       </div>
                     ) : playgroundOutput ? (
-                      <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 space-y-4 shadow-2xl">
+                      <div className="p-4 rounded-2xl bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800/90 space-y-4 shadow-2xl">
                         {playgroundOutput.imageUrl && (
-                          <div className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-700/80 shadow-2xl">
+                          <div className="w-full max-w-sm mx-auto rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-700/80 shadow-2xl">
                             <img
                               src={playgroundOutput.imageUrl}
                               alt="Generasi AI"
@@ -839,12 +839,12 @@ export const GoogleAIStudioReplica: React.FC = () => {
                           </div>
                         )}
 
-                        <div className="text-xs text-slate-200 leading-relaxed font-sans whitespace-pre-wrap bg-slate-950/80 p-4 rounded-xl border border-slate-800/80 font-mono overflow-x-auto max-h-[350px]">
+                        <div className="text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-sans whitespace-pre-wrap bg-slate-100 dark:bg-slate-950/80 p-4 rounded-xl border border-slate-200 dark:border-slate-800/80 font-mono overflow-x-auto max-h-[350px]">
                           {playgroundOutput.text}
                         </div>
 
                         {playgroundOutput.groundingSources && playgroundOutput.groundingSources.length > 0 && (
-                          <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                          <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-slate-800/80">
                             <span className="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
                               <Globe className="w-3 h-3" />
                               Sumber Grounding Google Search:
@@ -872,7 +872,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                               navigator.clipboard.writeText(playgroundOutput.text);
                               showToast('Respons disalin ke clipboard!');
                             }}
-                            className="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+                            className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-950 hover:bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 text-xs flex items-center gap-1.5 transition-all cursor-pointer"
                           >
                             <Copy className="w-3.5 h-3.5 text-blue-400" />
                             <span>Copy Output</span>
@@ -883,7 +883,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                               setActiveTab('build_workspace');
                               showToast('Buka di Build Workspace');
                             }}
-                            className="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer"
+                            className="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-slate-900 dark:text-white border border-blue-500/30 text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer"
                           >
                             <span>Open in Workspace</span>
                             <ChevronRight className="w-3.5 h-3.5" />
@@ -896,9 +896,9 @@ export const GoogleAIStudioReplica: React.FC = () => {
               </div>
 
               {/* Right Panel: RUN SETTINGS */}
-              <aside className="w-full lg:w-80 bg-slate-900/90 border-l border-slate-800 p-5 space-y-6 overflow-y-auto shrink-0">
-                <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+              <aside className="w-full lg:w-80 bg-white dark:bg-white/90 dark:bg-slate-900/90 border-l border-slate-200 dark:border-slate-800 p-5 space-y-6 overflow-y-auto shrink-0">
+                <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-3">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
                     <Sliders className="w-4 h-4 text-blue-400" />
                     Run Settings
                   </h3>
@@ -909,27 +909,27 @@ export const GoogleAIStudioReplica: React.FC = () => {
 
                 {/* Active Model Selector */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-200 block">Model</label>
+                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-200 block">Model</label>
                   <select
                     value={selectedModel}
                     onChange={(e) => {
                       setSelectedModel(e.target.value);
                       showToast(`Model diubah ke ${e.target.value}`);
                     }}
-                    className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-xs rounded-xl p-2.5 focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 text-xs rounded-xl p-2.5 focus:border-blue-500 focus:outline-none"
                   >
                     <option value="gemini-3-flash-preview">Gemini 3 Flash Preview</option>
                     <option value="gemini-3-pro">Gemini 3 Pro</option>
                     <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
                   </select>
-                  <p className="text-[11px] text-slate-400 leading-relaxed bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed bg-slate-100 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
                     Our most intelligent model built for speed, combining frontier intelligence with superior search and grounding.
                   </p>
                 </div>
 
                 {/* System Instructions */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-200 flex items-center justify-between">
+                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center justify-between">
                     <span>System instructions</span>
                     <span className="text-[10px] text-slate-500 font-normal">Optional</span>
                   </label>
@@ -938,7 +938,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     onChange={(e) => setSystemInstruction(e.target.value)}
                     placeholder="Optional tone and style instructions for the model..."
                     rows={3}
-                    className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-xs rounded-xl p-2.5 focus:border-blue-500 focus:outline-none resize-none leading-relaxed"
+                    className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 text-xs rounded-xl p-2.5 focus:border-blue-500 focus:outline-none resize-none leading-relaxed"
                   />
                   <p className="text-[10px] text-slate-500">
                     Atur peran khusus (seperti "Senior Software Architect") sebelum prompt diproses.
@@ -946,9 +946,9 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 </div>
 
                 {/* Temperature Slider */}
-                <div className="space-y-2.5 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                <div className="space-y-2.5 bg-slate-100 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-semibold text-slate-200">Temperature</label>
+                    <label className="text-xs font-semibold text-slate-700 dark:text-slate-200">Temperature</label>
                     <span className="text-xs font-bold text-blue-400 font-mono px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">
                       {temperature.toFixed(1)}
                     </span>
@@ -960,9 +960,9 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     step="0.1"
                     value={temperature}
                     onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                    className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                    className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
                   />
-                  <p className="text-[10px] text-slate-400 leading-normal">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-normal">
                     {temperature <= 0.3
                       ? '🔒 Rendah (0.0 - 0.3): Deterministik, konsisten, presisi koding.'
                       : temperature <= 1.2
@@ -973,17 +973,17 @@ export const GoogleAIStudioReplica: React.FC = () => {
 
                 {/* Thinking Level Dropdown */}
                 <div className="space-y-2 relative">
-                  <label className="text-xs font-semibold text-slate-200 block">Thinking level</label>
+                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-200 block">Thinking level</label>
                   <div
                     onClick={() => setIsThinkingOpen(!isThinkingOpen)}
-                    className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-xs rounded-xl p-2.5 flex items-center justify-between cursor-pointer hover:border-slate-700"
+                    className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 text-xs rounded-xl p-2.5 flex items-center justify-between cursor-pointer hover:border-slate-300 dark:border-slate-700"
                   >
                     <span className="font-semibold text-blue-300">{thinkingLevel}</span>
-                    <ChevronDown className="w-4 h-4 text-slate-400" />
+                    <ChevronDown className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   </div>
 
                   {isThinkingOpen && (
-                    <div className="absolute top-full left-0 right-0 mt-1 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl p-1 z-20 space-y-1">
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl p-1 z-20 space-y-1">
                       {(['High', 'Medium', 'Low'] as const).map((level) => (
                         <button
                           key={level}
@@ -994,8 +994,8 @@ export const GoogleAIStudioReplica: React.FC = () => {
                           }}
                           className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-all ${
                             thinkingLevel === level
-                              ? 'bg-blue-600 text-white font-semibold'
-                              : 'text-slate-300 hover:bg-slate-800'
+                              ? 'bg-blue-600 text-slate-900 dark:text-white font-semibold'
+                              : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:bg-slate-800'
                           }`}
                         >
                           <span>{level}</span>
@@ -1010,7 +1010,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 </div>
 
                 {/* Tools Section Toggles */}
-                <div className="space-y-3 pt-2 border-t border-slate-800/80">
+                <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800/80">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
                     Tools Toggle
                   </span>
@@ -1018,7 +1018,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   {/* Toggle 1: Structured outputs */}
                   <div className="flex items-center justify-between text-xs py-1">
                     <div>
-                      <span className="text-slate-200 font-medium block">Structured outputs</span>
+                      <span className="text-slate-700 dark:text-slate-200 font-medium block">Structured outputs</span>
                       <span className="text-[10px] text-slate-500">JSON Schema enforcement</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -1034,7 +1034,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                           showToast(`Structured outputs: ${!toolsState.structuredOutputs ? 'ON' : 'OFF'}`);
                         }}
                         className={`w-9 h-5 flex items-center rounded-full p-0.5 transition-all ${
-                          toolsState.structuredOutputs ? 'bg-blue-600 justify-end' : 'bg-slate-800 justify-start'
+                          toolsState.structuredOutputs ? 'bg-blue-600 justify-end' : 'bg-slate-100 dark:bg-slate-800 justify-start'
                         }`}
                       >
                         <div className="w-4 h-4 rounded-full bg-white shadow-sm" />
@@ -1045,7 +1045,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   {/* Toggle 2: Code execution */}
                   <div className="flex items-center justify-between text-xs py-1">
                     <div>
-                      <span className="text-slate-200 font-medium block">Code execution</span>
+                      <span className="text-slate-700 dark:text-slate-200 font-medium block">Code execution</span>
                       <span className="text-[10px] text-slate-500">Jalankan skrip Python/JS aman</span>
                     </div>
                     <button
@@ -1054,7 +1054,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         showToast(`Code execution: ${!toolsState.codeExecution ? 'ON' : 'OFF'}`);
                       }}
                       className={`w-9 h-5 flex items-center rounded-full p-0.5 transition-all ${
-                        toolsState.codeExecution ? 'bg-blue-600 justify-end' : 'bg-slate-800 justify-start'
+                        toolsState.codeExecution ? 'bg-blue-600 justify-end' : 'bg-slate-100 dark:bg-slate-800 justify-start'
                       }`}
                     >
                       <div className="w-4 h-4 rounded-full bg-white shadow-sm" />
@@ -1064,7 +1064,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   {/* Toggle 3: Function calling */}
                   <div className="flex items-center justify-between text-xs py-1">
                     <div>
-                      <span className="text-slate-200 font-medium block">Function calling</span>
+                      <span className="text-slate-700 dark:text-slate-200 font-medium block">Function calling</span>
                       <span className="text-[10px] text-slate-500">Panggil API eksternal</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -1080,7 +1080,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                           showToast(`Function calling: ${!toolsState.functionCalling ? 'ON' : 'OFF'}`);
                         }}
                         className={`w-9 h-5 flex items-center rounded-full p-0.5 transition-all ${
-                          toolsState.functionCalling ? 'bg-blue-600 justify-end' : 'bg-slate-800 justify-start'
+                          toolsState.functionCalling ? 'bg-blue-600 justify-end' : 'bg-slate-100 dark:bg-slate-800 justify-start'
                         }`}
                       >
                         <div className="w-4 h-4 rounded-full bg-white shadow-sm" />
@@ -1091,7 +1091,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   {/* Toggle 4: Grounding with Google Search */}
                   <div className="flex items-center justify-between text-xs py-1">
                     <div>
-                      <span className="text-slate-200 font-medium block">Grounding Google Search</span>
+                      <span className="text-slate-700 dark:text-slate-200 font-medium block">Grounding Google Search</span>
                       <span className="text-[10px] text-emerald-400 font-mono">Source: G Google Search</span>
                     </div>
                     <button
@@ -1102,7 +1102,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         showToast(`Grounding Search: ${nextVal ? 'ON' : 'OFF'}`);
                       }}
                       className={`w-9 h-5 flex items-center rounded-full p-0.5 transition-all ${
-                        toolsState.groundingSearch ? 'bg-blue-600 justify-end' : 'bg-slate-800 justify-start'
+                        toolsState.groundingSearch ? 'bg-blue-600 justify-end' : 'bg-slate-100 dark:bg-slate-800 justify-start'
                       }`}
                     >
                       <div className="w-4 h-4 rounded-full bg-white shadow-sm" />
@@ -1112,7 +1112,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   {/* Toggle 5: Grounding with Google Maps */}
                   <div className="flex items-center justify-between text-xs py-1">
                     <div>
-                      <span className="text-slate-200 font-medium block">Grounding Google Maps</span>
+                      <span className="text-slate-700 dark:text-slate-200 font-medium block">Grounding Google Maps</span>
                       <span className="text-[10px] text-slate-500">Lokasi & data spasial</span>
                     </div>
                     <button
@@ -1121,7 +1121,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         showToast(`Grounding Maps: ${!toolsState.groundingMaps ? 'ON' : 'OFF'}`);
                       }}
                       className={`w-9 h-5 flex items-center rounded-full p-0.5 transition-all ${
-                        toolsState.groundingMaps ? 'bg-blue-600 justify-end' : 'bg-slate-800 justify-start'
+                        toolsState.groundingMaps ? 'bg-blue-600 justify-end' : 'bg-slate-100 dark:bg-slate-800 justify-start'
                       }`}
                     >
                       <div className="w-4 h-4 rounded-full bg-white shadow-sm" />
@@ -1138,17 +1138,17 @@ export const GoogleAIStudioReplica: React.FC = () => {
           {activeTab === 'build_workspace' && (
             <div className="flex-1 flex flex-col min-h-0">
               {/* Workspace Top Header Bar */}
-              <div className="bg-slate-900 border-b border-slate-800 p-3 px-5 flex flex-wrap items-center justify-between gap-3 shrink-0">
+              <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-3 px-5 flex flex-wrap items-center justify-between gap-3 shrink-0">
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setActiveTab('playground')}
-                    className="px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 hover:bg-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                    className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 transition-all"
                   >
                     <ArrowLeft className="w-3.5 h-3.5 text-blue-400" />
                     <span>Back to start</span>
                   </button>
 
-                  <div className="h-4 w-[1px] bg-slate-800" />
+                  <div className="h-4 w-[1px] bg-slate-100 dark:bg-slate-800" />
 
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 rounded-lg bg-blue-600/30 border border-blue-500/40 flex items-center justify-center text-blue-400">
@@ -1157,7 +1157,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     <input
                       value={workspaceAppTitle}
                       onChange={(e) => setWorkspaceAppTitle(e.target.value)}
-                      className="bg-transparent text-sm font-bold text-white focus:outline-none border-b border-transparent focus:border-blue-500 px-1"
+                      className="bg-transparent text-sm font-bold text-slate-900 dark:text-white focus:outline-none border-b border-transparent focus:border-blue-500 px-1"
                     />
                   </div>
                 </div>
@@ -1166,21 +1166,21 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => showToast('Aplikasi di-Remix!')}
-                    className="px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 hover:bg-slate-800 text-slate-300 text-xs font-medium flex items-center gap-1.5"
+                    className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium flex items-center gap-1.5"
                   >
                     <Wand2 className="w-3.5 h-3.5 text-purple-400" />
                     <span>Remix</span>
                   </button>
                   <button
                     onClick={() => showToast('Link pembagian disalin ke clipboard!')}
-                    className="px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 hover:bg-slate-800 text-slate-300 text-xs font-medium flex items-center gap-1.5"
+                    className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium flex items-center gap-1.5"
                   >
                     <Share2 className="w-3.5 h-3.5 text-blue-400" />
                     <span>Share</span>
                   </button>
                   <button
                     onClick={() => showToast('Aplikasi berhasil dipublikasikan ke Maxy Academy Cloud!')}
-                    className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md transition-all"
+                    className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white text-xs font-bold shadow-md transition-all"
                   >
                     Publish
                   </button>
@@ -1190,20 +1190,20 @@ export const GoogleAIStudioReplica: React.FC = () => {
               {/* Workspace Main 2-Panel Split */}
               <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
                 {/* Left Panel: Chat & AI Iteration */}
-                <div className="w-full lg:w-[420px] bg-slate-900/90 border-r border-slate-800 p-4 flex flex-col justify-between overflow-y-auto shrink-0 space-y-4">
+                <div className="w-full lg:w-[420px] bg-white dark:bg-white/90 dark:bg-slate-900/90 border-r border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between overflow-y-auto shrink-0 space-y-4">
                   {/* Chat History List */}
                   <div className="space-y-4 overflow-y-auto flex-1 pr-1">
                     {chatMessages.map((msg, idx) => (
                       <div key={idx} className="space-y-2">
                         {msg.sender === 'user' ? (
-                          <div className="bg-blue-950/40 border border-blue-500/30 rounded-2xl p-3.5 text-xs text-slate-200">
+                          <div className="bg-blue-950/40 border border-blue-500/30 rounded-2xl p-3.5 text-xs text-slate-700 dark:text-slate-200">
                             <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider block mb-1">
                               User Prompt
                             </span>
                             <p className="leading-relaxed font-medium">{msg.text}</p>
                           </div>
                         ) : (
-                          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-xs text-slate-300 space-y-2 shadow-lg">
+                          <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 text-xs text-slate-600 dark:text-slate-300 space-y-2 shadow-lg">
                             <div className="flex items-center justify-between text-[10px]">
                               <span className="font-bold text-purple-400 flex items-center gap-1">
                                 <Sparkles className="w-3 h-3" />
@@ -1212,12 +1212,12 @@ export const GoogleAIStudioReplica: React.FC = () => {
                               <span className="text-slate-500 font-mono">{msg.duration || 'Ran for 10s'}</span>
                             </div>
 
-                            <p className="text-slate-200 font-semibold">{msg.text}</p>
+                            <p className="text-slate-700 dark:text-slate-200 font-semibold">{msg.text}</p>
 
                             {msg.bullets && (
                               <ul className="space-y-1.5 pt-1">
                                 {msg.bullets.map((b, bIdx) => (
-                                  <li key={bIdx} className="text-[11px] text-slate-400 flex items-start gap-2">
+                                  <li key={bIdx} className="text-[11px] text-slate-500 dark:text-slate-400 flex items-start gap-2">
                                     <span className="text-blue-400 font-bold">•</span>
                                     <span>{b}</span>
                                   </li>
@@ -1230,7 +1230,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     ))}
 
                     {isGenerating && (
-                      <div className="bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs text-slate-400 flex items-center gap-3 animate-pulse">
+                      <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-xs text-slate-500 dark:text-slate-400 flex items-center gap-3 animate-pulse">
                         <RefreshCw className="w-4 h-4 text-blue-400 animate-spin" />
                         <span>Gemini 3 sedang menulis kode & memperbarui preview...</span>
                       </div>
@@ -1238,7 +1238,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   </div>
 
                   {/* Quick-chip Suggestions & Chat Input */}
-                  <div className="space-y-3 pt-2 border-t border-slate-800">
+                  <div className="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-800">
                     <div className="flex flex-wrap gap-1.5">
                       {[
                         '+ AI Features',
@@ -1250,30 +1250,30 @@ export const GoogleAIStudioReplica: React.FC = () => {
                           onClick={() => {
                             setWorkspaceInput(`Tambahkan ${chip.replace('+', '')} ke dalam aplikasi`);
                           }}
-                          className="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 text-[11px] font-medium transition-all"
+                          className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-950 hover:bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-medium transition-all"
                         >
                           {chip}
                         </button>
                       ))}
                     </div>
 
-                    <div className="relative rounded-2xl bg-slate-950 border border-slate-800 p-2.5 flex items-center gap-2">
+                    <div className="relative rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-2.5 flex items-center gap-2">
                       <input
                         value={workspaceInput}
                         onChange={(e) => setWorkspaceInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSendWorkspaceMessage()}
                         placeholder="Make changes, add new features, ask for anything..."
-                        className="flex-1 bg-transparent text-xs text-slate-100 placeholder-slate-500 focus:outline-none"
+                        className="flex-1 bg-transparent text-xs text-slate-800 dark:text-slate-100 placeholder-slate-500 focus:outline-none"
                       />
-                      <button className="p-1.5 text-slate-500 hover:text-slate-300">
+                      <button className="p-1.5 text-slate-500 hover:text-slate-600 dark:text-slate-300">
                         <Mic className="w-3.5 h-3.5" />
                       </button>
-                      <button className="p-1.5 text-slate-500 hover:text-slate-300">
+                      <button className="p-1.5 text-slate-500 hover:text-slate-600 dark:text-slate-300">
                         <Paperclip className="w-3.5 h-3.5" />
                       </button>
                       <button
                         onClick={handleSendWorkspaceMessage}
-                        className="p-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white shadow-md transition-all"
+                        className="p-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white shadow-md transition-all"
                       >
                         <Send className="w-3.5 h-3.5" />
                       </button>
@@ -1282,17 +1282,17 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 </div>
 
                 {/* Right Panel: Live App Preview & Code Viewer */}
-                <div className="flex-1 bg-slate-950 flex flex-col overflow-hidden">
+                <div className="flex-1 bg-slate-100 dark:bg-slate-950 flex flex-col overflow-hidden">
                   {/* Preview Toolbar */}
-                  <div className="bg-slate-900/60 border-b border-slate-800 p-2.5 px-4 flex items-center justify-between">
+                  <div className="bg-white dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 p-2.5 px-4 flex items-center justify-between">
                     {/* Tabs: Preview vs Code */}
-                    <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+                    <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
                       <button
                         onClick={() => setWorkspaceTab('preview')}
                         className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 ${
                           workspaceTab === 'preview'
-                            ? 'bg-blue-600 text-white font-bold shadow-md'
-                            : 'text-slate-400 hover:text-slate-200'
+                            ? 'bg-blue-600 text-slate-900 dark:text-white font-bold shadow-md'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                         }`}
                       >
                         <span className="w-2 h-2 rounded-full bg-emerald-400" />
@@ -1302,8 +1302,8 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         onClick={() => setWorkspaceTab('code')}
                         className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 ${
                           workspaceTab === 'code'
-                            ? 'bg-blue-600 text-white font-bold shadow-md'
-                            : 'text-slate-400 hover:text-slate-200'
+                            ? 'bg-blue-600 text-slate-900 dark:text-white font-bold shadow-md'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                         }`}
                       >
                         <Code2 className="w-3.5 h-3.5" />
@@ -1314,11 +1314,11 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     {/* Controls right */}
                     <div className="flex items-center gap-2">
                       {/* Device Toggle */}
-                      <div className="bg-slate-950 p-1 rounded-xl border border-slate-800 flex items-center gap-1">
+                      <div className="bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-1">
                         <button
                           onClick={() => setDeviceMode('desktop')}
                           className={`p-1 rounded-lg transition-all ${
-                            deviceMode === 'desktop' ? 'bg-slate-800 text-blue-400' : 'text-slate-500'
+                            deviceMode === 'desktop' ? 'bg-slate-100 dark:bg-slate-800 text-blue-400' : 'text-slate-500'
                           }`}
                         >
                           <Monitor className="w-3.5 h-3.5" />
@@ -1326,7 +1326,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         <button
                           onClick={() => setDeviceMode('mobile')}
                           className={`p-1 rounded-lg transition-all ${
-                            deviceMode === 'mobile' ? 'bg-slate-800 text-blue-400' : 'text-slate-500'
+                            deviceMode === 'mobile' ? 'bg-slate-100 dark:bg-slate-800 text-blue-400' : 'text-slate-500'
                           }`}
                         >
                           <Smartphone className="w-3.5 h-3.5" />
@@ -1335,13 +1335,13 @@ export const GoogleAIStudioReplica: React.FC = () => {
 
                       <button
                         onClick={() => showToast('Memuat ulang Live Preview')}
-                        className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+                        className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                       >
                         <RotateCw className="w-3.5 h-3.5" />
                       </button>
                       <button
                         onClick={() => showToast('Mode Layar Penuh')}
-                        className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+                        className="p-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                       >
                         <Maximize2 className="w-3.5 h-3.5" />
                       </button>
@@ -1349,21 +1349,21 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   </div>
 
                   {/* Main Display Box */}
-                  <div className="flex-1 p-4 bg-slate-950 flex items-center justify-center overflow-auto">
+                  <div className="flex-1 p-4 bg-slate-100 dark:bg-slate-950 flex items-center justify-center overflow-auto">
                     {workspaceTab === 'preview' ? (
                       /* Live Interactive App Preview */
                       <div
-                        className={`transition-all bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col ${
+                        className={`transition-all bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col ${
                           deviceMode === 'mobile' ? 'w-[360px] h-[520px]' : 'w-full h-full min-h-[450px]'
                         }`}
                       >
                         {/* App Topbar */}
-                        <div className="bg-slate-950 border-b border-slate-800 p-3 flex items-center justify-between">
+                        <div className="bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-3 flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-rose-500" />
                             <div className="w-3 h-3 rounded-full bg-amber-500" />
                             <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                            <span className="text-xs font-bold text-slate-200 ml-2">
+                            <span className="text-xs font-bold text-slate-700 dark:text-slate-200 ml-2">
                               {workspaceAppTitle}
                             </span>
                           </div>
@@ -1378,36 +1378,36 @@ export const GoogleAIStudioReplica: React.FC = () => {
                             <span className="px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300 text-xs font-semibold inline-block">
                               Powered by Gemini 3
                             </span>
-                            <h3 className="text-xl font-black text-white">
+                            <h3 className="text-xl font-black text-slate-900 dark:text-white">
                               Maxy AI Navigator Platform
                             </h3>
-                            <p className="text-xs text-slate-300 max-w-md mx-auto leading-relaxed">
+                            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-md mx-auto leading-relaxed">
                               Selamat datang di hub pembelajaran LLM interaktif Maxy Academy. Pelajari 18 modul mulai dari prompt engineering hingga Google AI Studio.
                             </p>
                           </div>
 
                           <div className="grid grid-cols-2 gap-3 text-xs">
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                              <p className="text-slate-400 text-[10px]">Total Modul</p>
+                            <div className="p-3 rounded-xl bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1">
+                              <p className="text-slate-500 dark:text-slate-400 text-[10px]">Total Modul</p>
                               <p className="text-lg font-bold text-amber-400">18 Modul AI</p>
                             </div>
-                            <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                              <p className="text-slate-400 text-[10px]">Status Engine</p>
+                            <div className="p-3 rounded-xl bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1">
+                              <p className="text-slate-500 dark:text-slate-400 text-[10px]">Status Engine</p>
                               <p className="text-lg font-bold text-emerald-400">Active v3.6</p>
                             </div>
                           </div>
 
-                          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
-                            <h4 className="text-xs font-bold text-slate-200 flex items-center justify-between">
+                          <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3">
+                            <h4 className="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center justify-between">
                               <span>Modul Terbaru: Google AI Studio</span>
                               <Sparkles className="w-3.5 h-3.5 text-blue-400" />
                             </h4>
-                            <p className="text-[11px] text-slate-400 leading-relaxed">
+                            <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
                               Pelajari cara memanfaatkan Grounding, System Instructions, Temperature, dan Thinking Level untuk membuat app bertaraf dunia.
                             </p>
                             <button
                               onClick={() => showToast('Simulasi Pengujian Modul Berhasil!')}
-                              className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition-all"
+                              className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs shadow-md transition-all"
                             >
                               Uji Coba Simulator
                             </button>
@@ -1415,14 +1415,14 @@ export const GoogleAIStudioReplica: React.FC = () => {
                         </div>
 
                         {/* App Footer */}
-                        <div className="p-2.5 bg-slate-950 border-t border-slate-800 text-[10px] text-slate-500 text-center">
+                        <div className="p-2.5 bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 text-[10px] text-slate-500 text-center">
                           Build with ❤️ at Maxy Academy
                         </div>
                       </div>
                     ) : (
                       /* Live TypeScript Code Viewer */
-                      <div className="w-full h-full bg-slate-900 border border-slate-800 rounded-2xl p-4 overflow-auto font-mono text-xs text-slate-300 space-y-2">
-                        <div className="flex items-center justify-between border-b border-slate-800 pb-2 text-[11px] text-slate-500">
+                      <div className="w-full h-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 overflow-auto font-mono text-xs text-slate-600 dark:text-slate-300 space-y-2">
+                        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2 text-[11px] text-slate-500">
                           <span>App.tsx - Maxy AI Navigator</span>
                           <button
                             onClick={() => showToast('Kode TypeScript disalin!')}
@@ -1461,7 +1461,7 @@ export const MaxyAINavigator = () => {
   };
 
   return (
-    <div className="p-6 bg-slate-950 text-white">
+    <div className="p-6 bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-white">
       <h1>Maxy AI Navigator Dashboard</h1>
       {/* Interactive Render */}
     </div>
@@ -1481,20 +1481,20 @@ export const MaxyAINavigator = () => {
           {/* ========================================================= */}
           {activeTab === 'my_apps' && (
             <div className="p-6 space-y-6 max-w-5xl mx-auto w-full">
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <LayoutGrid className="w-5 h-5 text-blue-400" />
                     My Apps
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Daftar aplikasi buatan Anda di Google AI Studio Maxy Academy.
                   </p>
                 </div>
 
                 <button
                   onClick={() => handleStartBuilding('Buat aplikasi baru dari scratch')}
-                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all"
+                  className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs flex items-center gap-2 shadow-md transition-all"
                 >
                   <Plus className="w-4 h-4" />
                   <span>New App</span>
@@ -1502,8 +1502,8 @@ export const MaxyAINavigator = () => {
               </div>
 
               {/* Table / Cards List */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-                <div className="p-3 bg-slate-950 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400 font-semibold">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                <div className="p-3 bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-semibold">
                   <span>Aplikasi</span>
                   <span>Diperbarui</span>
                 </div>
@@ -1517,11 +1517,11 @@ export const MaxyAINavigator = () => {
                         setActiveTab('build_workspace');
                         showToast(`Membuka workspace "${app.name}"`);
                       }}
-                      className="p-4 hover:bg-slate-800/50 cursor-pointer transition-all flex items-center justify-between"
+                      className="p-4 hover:bg-slate-100 dark:bg-slate-800/50 cursor-pointer transition-all flex items-center justify-between"
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <h3 className="text-sm font-bold text-slate-100">{app.name}</h3>
+                          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100">{app.name}</h3>
                           <span
                             className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
                               app.status === 'Active'
@@ -1532,7 +1532,7 @@ export const MaxyAINavigator = () => {
                             {app.status}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-400">{app.description}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">{app.description}</p>
                       </div>
 
                       <div className="text-right text-xs text-slate-500">
@@ -1551,12 +1551,12 @@ export const MaxyAINavigator = () => {
           {/* ========================================================= */}
           {activeTab === 'gallery' && (
             <div className="p-6 space-y-6 max-w-5xl mx-auto w-full">
-              <div className="space-y-2 border-b border-slate-800 pb-4">
-                <h2 className="text-2xl font-black text-white flex items-center gap-2">
+              <div className="space-y-2 border-b border-slate-200 dark:border-slate-800 pb-4">
+                <h2 className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
                   <Compass className="w-6 h-6 text-purple-400" />
                   Community App Gallery
                 </h2>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   Temukan & remix aplikasi, game, dan proyek AI buatan komunitas Maxy Academy.
                 </p>
 
@@ -1574,8 +1574,8 @@ export const MaxyAINavigator = () => {
                       onClick={() => setGalleryFilter(cat)}
                       className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                         galleryFilter === cat
-                          ? 'bg-purple-600 text-white shadow-md'
-                          : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white'
+                          ? 'bg-purple-600 text-slate-900 dark:text-white shadow-md'
+                          : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
                       }`}
                     >
                       {cat}
@@ -1589,7 +1589,7 @@ export const MaxyAINavigator = () => {
                 {galleryItems.map((item) => (
                   <div
                     key={item.id}
-                    className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-purple-500/50 transition-all flex flex-col justify-between space-y-4"
+                    className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-purple-500/50 transition-all flex flex-col justify-between space-y-4"
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
@@ -1598,11 +1598,11 @@ export const MaxyAINavigator = () => {
                         </span>
                         <span className="text-[11px] text-slate-500">{item.remixes} remixes</span>
                       </div>
-                      <h3 className="text-base font-bold text-white">{item.title}</h3>
-                      <p className="text-xs text-slate-400 leading-relaxed">{item.description}</p>
+                      <h3 className="text-base font-bold text-slate-900 dark:text-white">{item.title}</h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{item.description}</p>
                     </div>
 
-                    <div className="pt-2 flex items-center justify-between border-t border-slate-800/80">
+                    <div className="pt-2 flex items-center justify-between border-t border-slate-200 dark:border-slate-800/80">
                       <span className="text-[10px] font-mono text-slate-500">{item.model}</span>
                       <button
                         onClick={() => {
@@ -1610,7 +1610,7 @@ export const MaxyAINavigator = () => {
                           setActiveTab('build_workspace');
                           showToast(`Membuka remix "${item.title}"`);
                         }}
-                        className="px-3 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white font-bold text-xs border border-purple-500/30 transition-all flex items-center gap-1.5"
+                        className="px-3 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-slate-900 dark:text-white font-bold text-xs border border-purple-500/30 transition-all flex items-center gap-1.5"
                       >
                         <Wand2 className="w-3.5 h-3.5" />
                         <span>Remix App</span>
@@ -1627,13 +1627,13 @@ export const MaxyAINavigator = () => {
           {/* ========================================================= */}
           {activeTab === 'dashboard' && (
             <div className="p-6 space-y-6 max-w-5xl mx-auto w-full">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <Key className="w-5 h-5 text-amber-400" />
                     API Keys Dashboard
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Kelola API Keys Gemini untuk project Maxy Academy Anda.
                   </p>
                 </div>
@@ -1648,29 +1648,29 @@ export const MaxyAINavigator = () => {
               </div>
 
               {/* API Key Table */}
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-                <div className="p-4 bg-slate-950 border-b border-slate-800 grid grid-cols-12 text-xs font-semibold text-slate-400">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                <div className="p-4 bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 grid grid-cols-12 text-xs font-semibold text-slate-500 dark:text-slate-400">
                   <span className="col-span-3">Key</span>
                   <span className="col-span-4">Project</span>
                   <span className="col-span-3">Dibuat</span>
                   <span className="col-span-2 text-right">Billing Tier</span>
                 </div>
 
-                <div className="p-4 grid grid-cols-12 text-xs text-slate-200 items-center border-b border-slate-800/80">
+                <div className="p-4 grid grid-cols-12 text-xs text-slate-700 dark:text-slate-200 items-center border-b border-slate-200 dark:border-slate-800/80">
                   <div className="col-span-3 font-mono text-amber-300 flex items-center gap-2">
                     <span>...g90g</span>
                     <button
                       onClick={() => showToast('API Key disalin!')}
-                      className="text-slate-500 hover:text-white"
+                      className="text-slate-500 hover:text-slate-900 dark:text-white"
                     >
                       <Copy className="w-3.5 h-3.5" />
                     </button>
                   </div>
                   <div className="col-span-4">
-                    <p className="font-bold text-white">MAXY Academy Task 1</p>
+                    <p className="font-bold text-slate-900 dark:text-white">MAXY Academy Task 1</p>
                     <p className="text-[10px] text-slate-500 font-mono">gen-lang-client-0345334223</p>
                   </div>
-                  <div className="col-span-3 text-slate-400">
+                  <div className="col-span-3 text-slate-500 dark:text-slate-400">
                     27 Jan 2026
                   </div>
                   <div className="col-span-2 text-right">

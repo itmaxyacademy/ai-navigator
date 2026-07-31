@@ -39,12 +39,12 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div className="relative bg-slate-900 border border-slate-800 rounded-3xl max-w-6xl w-full p-6 sm:p-8 space-y-6 shadow-2xl my-8 text-white animate-fadeIn">
+    <div className="fixed inset-0 z-50 bg-slate-100 dark:bg-slate-950/85 backdrop-blur-md overflow-y-auto p-4 sm:p-6 flex justify-center">
+      <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-6xl w-full p-5 sm:p-8 space-y-4 shadow-2xl text-slate-900 dark:text-white animate-fadeIn m-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2.5 text-slate-400 hover:text-white rounded-full bg-slate-800/80 hover:bg-slate-800 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-2.5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer z-10"
         >
           <X className="w-5 h-5" />
         </button>
@@ -55,23 +55,23 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             <Lock className="w-4 h-4 text-amber-400" />
             <span>
               {targetModuleId
-                ? `Modul ${targetModuleId} Terkunci (Batas Free Trial)`
+                ? (currentTier === 'free' ? `Modul ${targetModuleId} Terkunci (Batas Free Trial)` : `Modul ${targetModuleId} Terkunci (Batas Paket)`)
                 : 'Akses Kelas AI Navigator'}
             </span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-white">
+          <h2 className="text-xl sm:text-3xl font-black tracking-tight text-slate-900 dark:text-white mt-3">
             Upgrade Akses Pembelajaran <span className="text-amber-400">AI Navigator</span>
           </h2>
 
-          <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
             {targetModuleId ? (
               <>
-                Status Anda saat ini adalah <strong className="text-amber-400">Free Trial</strong> (hanya dapat mengakses Modul 1 & Modul 2). Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
+                Status Anda saat ini adalah <strong className="text-amber-400">{currentTier === 'free' ? 'Free Trial' : currentTier === 'tier1' ? 'Tier 1' : 'Tier 2'}</strong>{currentTier === 'free' ? ' (hanya dapat mengakses Modul 1 & Modul 2)' : ''}. Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-slate-900 dark:text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
               </>
             ) : (
               <>
-                Status Anda saat ini adalah <strong className="text-amber-400">Free Trial</strong>. Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
+                Status Anda saat ini adalah <strong className="text-amber-400">{currentTier === 'free' ? 'Free Trial' : currentTier === 'tier1' ? 'Tier 1' : 'Tier 2'}</strong>. Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-slate-900 dark:text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
               </>
             )}
           </p>
@@ -87,7 +87,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               : 'border-emerald-500/60 hover:border-emerald-500 shadow-md'
           }`}>
             {/* Top Badge: PROMO SOFT LAUNCHING */}
-            <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-emerald-500 text-white font-black text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
+            <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-emerald-500 text-slate-900 dark:text-white font-black text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
               <Sparkles className="w-3.5 h-3.5" /> PROMO SOFT LAUNCHING
             </div>
 
@@ -139,7 +139,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
 
             <button
               onClick={onClose}
-              className="w-full py-3.5 rounded-2xl font-black text-xs bg-slate-900 hover:bg-slate-800 text-white shadow-md transition-all cursor-pointer hover:scale-[1.02]"
+              className="w-full py-3.5 rounded-2xl font-black text-xs bg-white dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-md transition-all cursor-pointer hover:scale-[1.02]"
             >
               Coba Gratis (3 Hari)
             </button>
@@ -170,7 +170,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
 
               <div className="py-3 border-y border-slate-100 flex flex-col">
                 <div className="text-2xl sm:text-3xl font-black text-slate-900">{tier1Price}</div>
-                <div className="text-xs text-slate-400 font-medium line-through mt-0.5">
+                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium line-through mt-0.5">
                   Normal: {tier1FakePrice}
                 </div>
               </div>
@@ -217,7 +217,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
           </div>
 
           {/* CARD 3: TIER 2: FULL MENTORING & CAAI™ CERTIFICATION */}
-          <div className={`relative bg-slate-950 text-white border-2 rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
+          <div className={`relative bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-white border-2 rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
             currentTier === 'tier2'
               ? 'border-amber-400 ring-2 ring-amber-400/50 shadow-2xl shadow-amber-500/20'
               : 'border-amber-500/60 hover:border-amber-400 shadow-xl'
@@ -238,20 +238,20 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               </div>
 
               <div>
-                <h3 className="text-xl font-black text-white leading-tight">
+                <h3 className="text-xl font-black text-slate-900 dark:text-white leading-tight">
                   Tier 2: Full Mentoring &amp; CAAI™ Certification
                 </h3>
-                <p className="text-xs text-slate-300 mt-1 font-medium leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 font-medium leading-relaxed">
                   28 Hari (21 Hari Self-Paced + 7 Hari Mentoring) + Sertifikat CAAI™ Level 1 (28 JP)
                 </p>
               </div>
 
-              <div className="py-3 border-y border-slate-800 flex items-baseline gap-2">
+              <div className="py-3 border-y border-slate-200 dark:border-slate-800 flex items-baseline gap-2">
                 <span className="text-2xl sm:text-3xl font-black text-amber-400">{tier2Price}</span>
-                <span className="text-xs text-slate-400 font-medium line-through">{tier2FakePrice}</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium line-through">{tier2FakePrice}</span>
               </div>
 
-              <ul className="space-y-2.5 text-xs text-slate-200 font-medium">
+              <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-200 font-medium">
                 <li className="flex items-start gap-2">
                   <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3 h-3 text-amber-400" />
@@ -296,7 +296,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               disabled={currentTier === 'tier2' || isLoading}
               className={`w-full py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 currentTier === 'tier2' || isLoading
-                  ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-500 cursor-not-allowed'
                   : 'bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-xl shadow-amber-400/20 hover:scale-[1.02]'
               }`}
             >
@@ -311,13 +311,13 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
         </div>
 
         {/* Footer Note */}
-        <div className="pt-2 text-center text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-800">
+        <div className="pt-2 text-center text-xs text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-200 dark:border-slate-800">
           <span>
             🔒 Pembayaran aman &amp; otomatis mengaktifkan modul secara instant.
           </span>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white underline text-xs font-semibold cursor-pointer"
+            className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white underline text-xs font-semibold cursor-pointer"
           >
             Lanjutkan dengan Free Trial (Modul 1 &amp; 2)
           </button>

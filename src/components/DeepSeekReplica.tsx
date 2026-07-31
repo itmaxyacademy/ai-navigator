@@ -342,7 +342,7 @@ export const DeepSeekReplica: React.FC = () => {
 
   // Sidebar content component (used for both desktop and mobile drawer)
   const renderSidebarContent = () => (
-    <div className="flex flex-col h-full bg-[#18191c] text-slate-300 select-none border-r border-[#26272c]">
+    <div className="flex flex-col h-full bg-[#18191c] text-slate-600 dark:text-slate-300 select-none border-r border-[#26272c]">
       {/* Top Header: DeepSeek Logo & Controls */}
       <div className="p-3.5 flex items-center justify-between border-b border-[#26272c]/60">
         <div 
@@ -351,12 +351,12 @@ export const DeepSeekReplica: React.FC = () => {
         >
           {/* DeepSeek Logo Icon (Whale SVG) */}
           <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
-            <svg viewBox="0 0 24 24" className="w-4 h-4 text-white fill-current">
+            <svg viewBox="0 0 24 24" className="w-4 h-4 text-slate-900 dark:text-white fill-current">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-2.48 0-4.5-2.02-4.5-4.5S10.52 7.5 13 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/>
               <circle cx="13" cy="12" r="2"/>
             </svg>
           </div>
-          <span className="font-bold text-lg tracking-tight text-white font-sans group-hover:text-blue-400 transition-colors">
+          <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white font-sans group-hover:text-blue-400 transition-colors">
             deepseek
           </span>
         </div>
@@ -364,7 +364,7 @@ export const DeepSeekReplica: React.FC = () => {
         <div className="flex items-center gap-1">
           <button 
             onClick={() => openModal('search')}
-            className="p-1.5 rounded-lg hover:bg-[#282a30] text-slate-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg hover:bg-[#282a30] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
             title="Search"
           >
             <Search className="w-4 h-4" />
@@ -377,7 +377,7 @@ export const DeepSeekReplica: React.FC = () => {
                 setIsMobileSidebarOpen(false);
               }
             }}
-            className="p-1.5 rounded-lg hover:bg-[#282a30] text-slate-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg hover:bg-[#282a30] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
             title="Collapse Sidebar"
           >
             <PanelLeft className="w-4 h-4" />
@@ -393,10 +393,10 @@ export const DeepSeekReplica: React.FC = () => {
             openModal('new-chat');
             if (viewMode === 'mobile') setIsMobileSidebarOpen(false);
           }}
-          className="w-full py-2 px-3.5 rounded-full bg-[#282a30] hover:bg-[#32353e] text-slate-100 font-medium text-sm flex items-center gap-2 border border-slate-700/50 shadow-sm transition-all group"
+          className="w-full py-2 px-3.5 rounded-full bg-[#282a30] hover:bg-[#32353e] text-slate-800 dark:text-slate-100 font-medium text-sm flex items-center gap-2 border border-slate-300 dark:border-slate-700/50 shadow-sm transition-all group"
         >
           <div className="w-4 h-4 rounded-full border border-slate-400 flex items-center justify-center group-hover:border-white">
-            <Plus className="w-3 h-3 text-slate-200" />
+            <Plus className="w-3 h-3 text-slate-700 dark:text-slate-200" />
           </div>
           <span>New chat</span>
         </button>
@@ -417,7 +417,7 @@ export const DeepSeekReplica: React.FC = () => {
                   handleSendMessage(`Buka kembali sesi percakapan "${item.title}"`);
                   if (viewMode === 'mobile') setIsMobileSidebarOpen(false);
                 }}
-                className="px-2.5 py-2 rounded-lg hover:bg-[#24262c] text-slate-300 hover:text-white cursor-pointer transition-colors truncate flex items-center gap-2 group"
+                className="px-2.5 py-2 rounded-lg hover:bg-[#24262c] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white cursor-pointer transition-colors truncate flex items-center gap-2 group"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-slate-500 group-hover:text-blue-400 shrink-0" />
                 <span className="truncate">{item.title}</span>
@@ -431,13 +431,13 @@ export const DeepSeekReplica: React.FC = () => {
       <div className="relative p-3 border-t border-[#26272c] bg-[#151619]">
         {/* Profile Popup Menu */}
         {isProfileMenuOpen && (
-          <div className="absolute bottom-16 left-3 right-3 bg-[#23252b] border border-slate-700/80 rounded-xl shadow-2xl p-1.5 space-y-0.5 text-xs z-50 animate-in fade-in slide-in-from-bottom-2 duration-150">
+          <div className="absolute bottom-16 left-3 right-3 bg-[#23252b] border border-slate-300 dark:border-slate-700/80 rounded-xl shadow-2xl p-1.5 space-y-0.5 text-xs z-50 animate-in fade-in slide-in-from-bottom-2 duration-150">
             <button
               onClick={() => {
                 setIsProfileMenuOpen(false);
                 openModal('download-app');
               }}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-200 flex items-center gap-2.5 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
             >
               <Smartphone className="w-4 h-4 text-blue-400" />
               <span>Download mobile app</span>
@@ -447,9 +447,9 @@ export const DeepSeekReplica: React.FC = () => {
                 setIsProfileMenuOpen(false);
                 openModal('settings');
               }}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-200 flex items-center gap-2.5 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
             >
-              <Settings className="w-4 h-4 text-slate-400" />
+              <Settings className="w-4 h-4 text-slate-500 dark:text-slate-400" />
               <span>Settings</span>
             </button>
             <button
@@ -457,12 +457,12 @@ export const DeepSeekReplica: React.FC = () => {
                 setIsProfileMenuOpen(false);
                 openModal('help-feedback');
               }}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-200 flex items-center gap-2.5 transition-colors"
+              className="w-full text-left px-3 py-2 rounded-lg hover:bg-[#2d3038] text-slate-700 dark:text-slate-200 flex items-center gap-2.5 transition-colors"
             >
               <HelpCircle className="w-4 h-4 text-amber-400" />
               <span>Help & Feedback</span>
             </button>
-            <div className="my-1 border-t border-slate-700/60" />
+            <div className="my-1 border-t border-slate-300 dark:border-slate-700/60" />
             <button
               onClick={() => {
                 setIsProfileMenuOpen(false);
@@ -485,21 +485,21 @@ export const DeepSeekReplica: React.FC = () => {
           className="flex items-center justify-between p-1.5 rounded-lg hover:bg-[#24262c] cursor-pointer transition-colors"
         >
           <div className="flex items-center gap-2.5 overflow-hidden">
-            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-indigo-600 via-blue-600 to-sky-500 flex items-center justify-center font-semibold text-white text-xs shrink-0 shadow-md">
+            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-indigo-600 via-blue-600 to-sky-500 flex items-center justify-center font-semibold text-slate-900 dark:text-white text-xs shrink-0 shadow-md">
               MA
             </div>
-            <span className="text-xs font-medium text-slate-200 truncate">
+            <span className="text-xs font-medium text-slate-700 dark:text-slate-200 truncate">
               Maxy Academy
             </span>
           </div>
-          <MoreHorizontal className="w-4 h-4 text-slate-400 shrink-0 hover:text-white" />
+          <MoreHorizontal className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0 hover:text-slate-900 dark:text-white" />
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="relative w-full rounded-2xl border border-slate-800 bg-[#131417] overflow-hidden shadow-2xl text-slate-100 font-sans flex flex-col min-h-[720px] max-h-[880px]">
+    <div className="relative w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#131417] overflow-hidden shadow-2xl text-slate-800 dark:text-slate-100 font-sans flex flex-col min-h-[720px] max-h-[880px]">
       {/* Interactive Replica Top Control Bar */}
       <div className="bg-[#18191c] border-b border-[#26272c] px-4 py-2.5 flex items-center justify-between z-30 shrink-0">
         <div className="flex items-center gap-3">
@@ -508,14 +508,14 @@ export const DeepSeekReplica: React.FC = () => {
             <div className="w-3 h-3 rounded-full bg-amber-500/80" />
             <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
           </div>
-          <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 ml-2">
+          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 ml-2">
             <Atom className="w-4 h-4 text-blue-400 animate-pulse" />
             DeepSeek AI Replica (Maxy Academy)
           </span>
         </div>
 
         {/* Desktop / Mobile View Mode Switcher */}
-        <div className="flex items-center gap-2 bg-[#23252b] p-1 rounded-lg border border-slate-700/60">
+        <div className="flex items-center gap-2 bg-[#23252b] p-1 rounded-lg border border-slate-300 dark:border-slate-700/60">
           <button
             onClick={() => {
               setViewMode('desktop');
@@ -523,8 +523,8 @@ export const DeepSeekReplica: React.FC = () => {
             }}
             className={`px-2.5 py-1 rounded-md text-xs font-medium flex items-center gap-1.5 transition-all ${
               viewMode === 'desktop'
-                ? 'bg-blue-600 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-blue-600 text-slate-900 dark:text-white shadow-sm'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Monitor className="w-3.5 h-3.5" />
@@ -537,8 +537,8 @@ export const DeepSeekReplica: React.FC = () => {
             }}
             className={`px-2.5 py-1 rounded-md text-xs font-medium flex items-center gap-1.5 transition-all ${
               viewMode === 'mobile'
-                ? 'bg-blue-600 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-blue-600 text-slate-900 dark:text-white shadow-sm'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -551,7 +551,7 @@ export const DeepSeekReplica: React.FC = () => {
       {viewMode === 'mobile' ? (
         /* Mobile Device Outer Phone Frame Simulation */
         <div className="flex-1 flex items-center justify-center p-3 bg-[#0c0d0f] overflow-hidden">
-          <div className="relative w-full max-w-[380px] h-[670px] rounded-[36px] border-[6px] border-slate-800 bg-[#131417] overflow-hidden shadow-2xl flex flex-col">
+          <div className="relative w-full max-w-[380px] h-[670px] rounded-[36px] border-[6px] border-slate-200 dark:border-slate-800 bg-[#131417] overflow-hidden shadow-2xl flex flex-col">
             {/* Mobile Sidebar Overlay Drawer */}
             {isMobileSidebarOpen && (
               <div className="absolute inset-0 z-40 flex">
@@ -569,29 +569,29 @@ export const DeepSeekReplica: React.FC = () => {
             <div className="p-3 border-b border-[#26272c] bg-[#18191c] flex items-center justify-between z-20 shrink-0">
               <button
                 onClick={() => setIsMobileSidebarOpen(true)}
-                className="p-1.5 rounded-lg hover:bg-[#282a30] text-slate-300 transition-colors"
+                className="p-1.5 rounded-lg hover:bg-[#282a30] text-slate-600 dark:text-slate-300 transition-colors"
                 title="Open Navigation Drawer"
               >
-                <Menu className="w-5 h-5 text-slate-200" />
+                <Menu className="w-5 h-5 text-slate-700 dark:text-slate-200" />
               </button>
               <div className="flex items-center gap-1.5">
                 <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-white fill-current">
+                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-slate-900 dark:text-white fill-current">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-2.48 0-4.5-2.02-4.5-4.5S10.52 7.5 13 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/>
                   </svg>
                 </div>
-                <span className="font-bold text-sm text-white">deepseek</span>
+                <span className="font-bold text-sm text-slate-900 dark:text-white">deepseek</span>
               </div>
               <button
                 onClick={() => {
                   setMessages([]);
                   openModal('new-chat');
                 }}
-                className="p-1.5 rounded-lg hover:bg-[#282a30] text-slate-300 transition-colors"
+                className="p-1.5 rounded-lg hover:bg-[#282a30] text-slate-600 dark:text-slate-300 transition-colors"
                 title="New Chat"
               >
                 <div className="w-6 h-6 rounded-full border border-slate-500 flex items-center justify-center hover:border-white">
-                  <Plus className="w-3.5 h-3.5 text-slate-200" />
+                  <Plus className="w-3.5 h-3.5 text-slate-700 dark:text-slate-200" />
                 </div>
               </button>
             </div>
@@ -604,12 +604,12 @@ export const DeepSeekReplica: React.FC = () => {
                   {/* Whale Icon Header */}
                   <div className="flex items-center gap-2.5">
                     <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/25">
-                      <svg viewBox="0 0 24 24" className="w-5 h-5 text-white fill-current">
+                      <svg viewBox="0 0 24 24" className="w-5 h-5 text-slate-900 dark:text-white fill-current">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-2.48 0-4.5-2.02-4.5-4.5S10.52 7.5 13 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/>
                         <circle cx="13" cy="12" r="2"/>
                       </svg>
                     </div>
-                    <h1 className="text-xl font-bold tracking-tight text-white">
+                    <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                       Start chatting with {selectedMode === 'instant' ? 'Instant' : selectedMode === 'expert' ? 'Expert' : 'Vision'}
                     </h1>
                   </div>
@@ -623,8 +623,8 @@ export const DeepSeekReplica: React.FC = () => {
                       }}
                       className={`px-3 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1 transition-all ${
                         selectedMode === 'instant'
-                          ? 'bg-[#3b82f6] text-white shadow-md'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#3b82f6] text-slate-900 dark:text-white shadow-md'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       <Zap className="w-3 h-3" />
@@ -637,8 +637,8 @@ export const DeepSeekReplica: React.FC = () => {
                       }}
                       className={`px-3 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1 transition-all ${
                         selectedMode === 'expert'
-                          ? 'bg-[#3b82f6] text-white shadow-md'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#3b82f6] text-slate-900 dark:text-white shadow-md'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       <Gem className="w-3 h-3" />
@@ -651,8 +651,8 @@ export const DeepSeekReplica: React.FC = () => {
                       }}
                       className={`px-3 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1 transition-all ${
                         selectedMode === 'vision'
-                          ? 'bg-[#3b82f6] text-white shadow-md'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#3b82f6] text-slate-900 dark:text-white shadow-md'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       <ImageIcon className="w-3 h-3" />
@@ -667,18 +667,18 @@ export const DeepSeekReplica: React.FC = () => {
                     <div key={msg.id} className="space-y-2 animate-in fade-in duration-200">
                       {msg.sender === 'user' ? (
                         <div className="flex justify-end">
-                          <div className="bg-[#2b2d36] text-slate-100 px-3.5 py-2 rounded-2xl rounded-tr-sm max-w-[90%] text-xs leading-relaxed border border-slate-700/50">
+                          <div className="bg-[#2b2d36] text-slate-800 dark:text-slate-100 px-3.5 py-2 rounded-2xl rounded-tr-sm max-w-[90%] text-xs leading-relaxed border border-slate-300 dark:border-slate-700/50">
                             {msg.text}
                           </div>
                         </div>
                       ) : (
                         <div className="flex items-start gap-2.5">
                           <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center shrink-0 shadow-md mt-0.5">
-                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-white fill-current">
+                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-slate-900 dark:text-white fill-current">
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-2.48 0-4.5-2.02-4.5-4.5S10.52 7.5 13 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/>
                             </svg>
                           </div>
-                          <div className="flex-1 space-y-2 text-xs leading-relaxed text-slate-200">
+                          <div className="flex-1 space-y-2 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
                             {msg.thought && (
                               <div className="rounded-lg border border-blue-900/40 bg-blue-950/30 p-2 text-[11px] space-y-1">
                                 <button
@@ -695,7 +695,7 @@ export const DeepSeekReplica: React.FC = () => {
                                   {msg.showThought ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
                                 </button>
                                 {msg.showThought && (
-                                  <div className="p-2 rounded bg-[#111317] font-mono text-[10px] text-slate-300 whitespace-pre-line">
+                                  <div className="p-2 rounded bg-[#111317] font-mono text-[10px] text-slate-600 dark:text-slate-300 whitespace-pre-line">
                                     {msg.thought}
                                   </div>
                                 )}
@@ -710,7 +710,7 @@ export const DeepSeekReplica: React.FC = () => {
                     </div>
                   ))}
                   {isLoading && (
-                    <div className="flex items-center gap-2 animate-pulse text-xs text-slate-400">
+                    <div className="flex items-center gap-2 animate-pulse text-xs text-slate-500 dark:text-slate-400">
                       <Atom className="w-4 h-4 text-blue-400 animate-spin" />
                       <span>DeepSeek thinking...</span>
                     </div>
@@ -721,7 +721,7 @@ export const DeepSeekReplica: React.FC = () => {
 
             {/* Bottom Mobile Prompt Input Box */}
             <div className="p-3 bg-[#131417] border-t border-[#26272c]/60 shrink-0">
-              <div className="relative rounded-2xl bg-[#212328] border border-slate-700/60 p-2.5 shadow-xl transition-all">
+              <div className="relative rounded-2xl bg-[#212328] border border-slate-300 dark:border-slate-700/60 p-2.5 shadow-xl transition-all">
                 <div className="absolute top-2.5 right-2.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse block" />
                 </div>
@@ -736,9 +736,9 @@ export const DeepSeekReplica: React.FC = () => {
                   }}
                   placeholder="Message DeepSeek"
                   rows={2}
-                  className="w-full bg-transparent text-slate-100 placeholder-slate-400/80 text-xs focus:outline-none resize-none pr-6"
+                  className="w-full bg-transparent text-slate-800 dark:text-slate-100 placeholder-slate-400/80 text-xs focus:outline-none resize-none pr-6"
                 />
-                <div className="flex items-center justify-between pt-1.5 border-t border-slate-700/40 mt-1">
+                <div className="flex items-center justify-between pt-1.5 border-t border-slate-300 dark:border-slate-700/40 mt-1">
                   <div className="flex items-center gap-1.5">
                     <button
                       type="button"
@@ -749,7 +749,7 @@ export const DeepSeekReplica: React.FC = () => {
                       className={`px-2.5 py-0.5 rounded-full text-[10px] font-medium flex items-center gap-1 border ${
                         isDeepThinkActive
                           ? 'bg-blue-950/80 border-blue-500 text-blue-300'
-                          : 'bg-[#282a30] border-slate-700 text-slate-400'
+                          : 'bg-[#282a30] border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400'
                       }`}
                     >
                       <Atom className="w-3 h-3" />
@@ -764,7 +764,7 @@ export const DeepSeekReplica: React.FC = () => {
                       className={`px-2.5 py-0.5 rounded-full text-[10px] font-medium flex items-center gap-1 border ${
                         isSearchActive
                           ? 'bg-blue-950/80 border-blue-500 text-blue-300'
-                          : 'bg-[#282a30] border-slate-700 text-slate-400'
+                          : 'bg-[#282a30] border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400'
                       }`}
                     >
                       <Globe className="w-3 h-3" />
@@ -775,7 +775,7 @@ export const DeepSeekReplica: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => openModal('attachment')}
-                      className="p-1 rounded text-slate-400 hover:text-slate-100"
+                      className="p-1 rounded text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-100"
                     >
                       <Paperclip className="w-3.5 h-3.5" />
                     </button>
@@ -785,7 +785,7 @@ export const DeepSeekReplica: React.FC = () => {
                       disabled={!inputPrompt.trim() || isLoading}
                       className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
                         inputPrompt.trim() && !isLoading
-                          ? 'bg-blue-600 text-white shadow-md hover:bg-blue-500'
+                          ? 'bg-blue-600 text-slate-900 dark:text-white shadow-md hover:bg-blue-500'
                           : 'bg-[#30333d] text-slate-500 cursor-not-allowed'
                       }`}
                     >
@@ -813,7 +813,7 @@ export const DeepSeekReplica: React.FC = () => {
             {isSidebarCollapsed && (
               <button
                 onClick={() => setIsSidebarCollapsed(false)}
-                className="absolute top-3 left-3 z-30 p-2 rounded-lg bg-[#23252b] border border-slate-700/80 text-slate-300 hover:text-white hover:bg-[#2d3038] shadow-lg transition-all"
+                className="absolute top-3 left-3 z-30 p-2 rounded-lg bg-[#23252b] border border-slate-300 dark:border-slate-700/80 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#2d3038] shadow-lg transition-all"
                 title="Expand Sidebar"
               >
                 <PanelLeft className="w-4 h-4" />
@@ -828,12 +828,12 @@ export const DeepSeekReplica: React.FC = () => {
                   {/* Whale Icon Header */}
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-blue-500/25">
-                      <svg viewBox="0 0 24 24" className="w-6 h-6 text-white fill-current">
+                      <svg viewBox="0 0 24 24" className="w-6 h-6 text-slate-900 dark:text-white fill-current">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-2.48 0-4.5-2.02-4.5-4.5S10.52 7.5 13 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/>
                         <circle cx="13" cy="12" r="2"/>
                       </svg>
                     </div>
-                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
                       Start chatting with {selectedMode === 'instant' ? 'Instant' : selectedMode === 'expert' ? 'Expert' : 'Vision'}
                     </h1>
                   </div>
@@ -847,8 +847,8 @@ export const DeepSeekReplica: React.FC = () => {
                       }}
                       className={`px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all ${
                         selectedMode === 'instant'
-                          ? 'bg-[#3b82f6] text-white shadow-md'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#3b82f6] text-slate-900 dark:text-white shadow-md'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       <Zap className="w-3.5 h-3.5" />
@@ -861,8 +861,8 @@ export const DeepSeekReplica: React.FC = () => {
                       }}
                       className={`px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all ${
                         selectedMode === 'expert'
-                          ? 'bg-[#3b82f6] text-white shadow-md'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#3b82f6] text-slate-900 dark:text-white shadow-md'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       <Gem className="w-3.5 h-3.5" />
@@ -875,8 +875,8 @@ export const DeepSeekReplica: React.FC = () => {
                       }}
                       className={`px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all ${
                         selectedMode === 'vision'
-                          ? 'bg-[#3b82f6] text-white shadow-md'
-                          : 'text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#3b82f6] text-slate-900 dark:text-white shadow-md'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       <ImageIcon className="w-3.5 h-3.5" />
@@ -891,19 +891,19 @@ export const DeepSeekReplica: React.FC = () => {
                     <div key={msg.id} className="space-y-3 animate-in fade-in duration-200">
                       {msg.sender === 'user' ? (
                         <div className="flex justify-end">
-                          <div className="bg-[#2b2d36] text-slate-100 px-4 py-2.5 rounded-2xl rounded-tr-sm max-w-[85%] text-sm leading-relaxed shadow-sm border border-slate-700/50">
+                          <div className="bg-[#2b2d36] text-slate-800 dark:text-slate-100 px-4 py-2.5 rounded-2xl rounded-tr-sm max-w-[85%] text-sm leading-relaxed shadow-sm border border-slate-300 dark:border-slate-700/50">
                             {msg.text}
                           </div>
                         </div>
                       ) : (
                         <div className="flex items-start gap-3">
                           <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-500 flex items-center justify-center shrink-0 shadow-md mt-0.5">
-                            <svg viewBox="0 0 24 24" className="w-4 h-4 text-white fill-current">
+                            <svg viewBox="0 0 24 24" className="w-4 h-4 text-slate-900 dark:text-white fill-current">
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5c-2.48 0-4.5-2.02-4.5-4.5S10.52 7.5 13 7.5s4.5 2.02 4.5 4.5-2.02 4.5-4.5 4.5z"/>
                             </svg>
                           </div>
 
-                          <div className="flex-1 space-y-3 overflow-hidden text-sm leading-relaxed text-slate-200">
+                          <div className="flex-1 space-y-3 overflow-hidden text-sm leading-relaxed text-slate-700 dark:text-slate-200">
                             {msg.thought && (
                               <div className="rounded-xl border border-blue-900/40 bg-gradient-to-r from-blue-950/30 to-indigo-950/20 p-3 text-xs space-y-2">
                                 <button
@@ -924,7 +924,7 @@ export const DeepSeekReplica: React.FC = () => {
                                 </button>
 
                                 {msg.showThought && (
-                                  <div className="p-2.5 rounded-lg bg-[#111317] border border-blue-900/30 font-mono text-[11px] text-slate-300 whitespace-pre-line leading-relaxed">
+                                  <div className="p-2.5 rounded-lg bg-[#111317] border border-blue-900/30 font-mono text-[11px] text-slate-600 dark:text-slate-300 whitespace-pre-line leading-relaxed">
                                     {msg.thought}
                                   </div>
                                 )}
@@ -938,22 +938,22 @@ export const DeepSeekReplica: React.FC = () => {
                             <div className="flex items-center gap-2 pt-1 text-slate-500">
                               <button
                                 onClick={() => copyToClipboard(msg.id, msg.text)}
-                                className="p-1.5 rounded-md hover:bg-[#25272e] hover:text-slate-300 transition-colors"
+                                className="p-1.5 rounded-md hover:bg-[#25272e] hover:text-slate-600 dark:text-slate-300 transition-colors"
                                 title="Copy response"
                               >
                                 {copiedId === msg.id ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                               </button>
                               <button
                                 onClick={() => handleSendMessage("Bisa jelaskan kembali dengan contoh lebih detail?")}
-                                className="p-1.5 rounded-md hover:bg-[#25272e] hover:text-slate-300 transition-colors"
+                                className="p-1.5 rounded-md hover:bg-[#25272e] hover:text-slate-600 dark:text-slate-300 transition-colors"
                                 title="Regenerate"
                               >
                                 <RotateCcw className="w-3.5 h-3.5" />
                               </button>
-                              <button className="p-1.5 rounded-md hover:bg-[#25272e] hover:text-slate-300 transition-colors">
+                              <button className="p-1.5 rounded-md hover:bg-[#25272e] hover:text-slate-600 dark:text-slate-300 transition-colors">
                                 <ThumbsUp className="w-3.5 h-3.5" />
                               </button>
-                              <button className="p-1.5 rounded-md hover:bg-[#25272e] hover:text-slate-300 transition-colors">
+                              <button className="p-1.5 rounded-md hover:bg-[#25272e] hover:text-slate-600 dark:text-slate-300 transition-colors">
                                 <ThumbsDown className="w-3.5 h-3.5" />
                               </button>
                             </div>
@@ -965,10 +965,10 @@ export const DeepSeekReplica: React.FC = () => {
 
                   {isLoading && (
                     <div className="flex items-center gap-3 animate-pulse">
-                      <div className="w-7 h-7 rounded-lg bg-blue-600/50 flex items-center justify-center text-xs text-white">
+                      <div className="w-7 h-7 rounded-lg bg-blue-600/50 flex items-center justify-center text-xs text-slate-900 dark:text-white">
                         <Atom className="w-4 h-4 animate-spin" />
                       </div>
-                      <span className="text-xs text-slate-400">DeepSeek thinking...</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">DeepSeek thinking...</span>
                     </div>
                   )}
                 </div>
@@ -977,7 +977,7 @@ export const DeepSeekReplica: React.FC = () => {
 
             {/* Bottom DeepSeek Prompt Box */}
             <div className="p-4 bg-[#131417] border-t border-[#26272c]/40 shrink-0">
-              <div className="max-w-2xl mx-auto relative rounded-2xl bg-[#212328] border border-slate-700/60 p-3 shadow-xl transition-all focus-within:border-blue-500/80 focus-within:ring-1 focus-within:ring-blue-500/30">
+              <div className="max-w-2xl mx-auto relative rounded-2xl bg-[#212328] border border-slate-300 dark:border-slate-700/60 p-3 shadow-xl transition-all focus-within:border-blue-500/80 focus-within:ring-1 focus-within:ring-blue-500/30">
                 <div className="absolute top-3 right-3 flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 </div>
@@ -993,10 +993,10 @@ export const DeepSeekReplica: React.FC = () => {
                   }}
                   placeholder="Message DeepSeek"
                   rows={2}
-                  className="w-full bg-transparent text-slate-100 placeholder-slate-400/80 text-sm focus:outline-none resize-none pr-8"
+                  className="w-full bg-transparent text-slate-800 dark:text-slate-100 placeholder-slate-400/80 text-sm focus:outline-none resize-none pr-8"
                 />
 
-                <div className="flex items-center justify-between pt-2 border-t border-slate-700/40 mt-1">
+                <div className="flex items-center justify-between pt-2 border-t border-slate-300 dark:border-slate-700/40 mt-1">
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
@@ -1007,7 +1007,7 @@ export const DeepSeekReplica: React.FC = () => {
                       className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all border ${
                         isDeepThinkActive
                           ? 'bg-blue-950/60 border-blue-500/70 text-blue-300 shadow-sm'
-                          : 'bg-[#282a30] border-slate-700 text-slate-400 hover:text-slate-200'
+                          : 'bg-[#282a30] border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       <Atom className="w-3.5 h-3.5" />
@@ -1023,7 +1023,7 @@ export const DeepSeekReplica: React.FC = () => {
                       className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all border ${
                         isSearchActive
                           ? 'bg-blue-950/60 border-blue-500/70 text-blue-300 shadow-sm'
-                          : 'bg-[#282a30] border-slate-700 text-slate-400 hover:text-slate-200'
+                          : 'bg-[#282a30] border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                       }`}
                     >
                       <Globe className="w-3.5 h-3.5" />
@@ -1035,7 +1035,7 @@ export const DeepSeekReplica: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => openModal('attachment')}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-[#2e313a] transition-colors"
+                      className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-100 hover:bg-[#2e313a] transition-colors"
                       title="Attach File"
                     >
                       <Paperclip className="w-4 h-4" />
@@ -1047,7 +1047,7 @@ export const DeepSeekReplica: React.FC = () => {
                       disabled={!inputPrompt.trim() || isLoading}
                       className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
                         inputPrompt.trim() && !isLoading
-                          ? 'bg-blue-600 text-white shadow-md hover:bg-blue-500 scale-105'
+                          ? 'bg-blue-600 text-slate-900 dark:text-white shadow-md hover:bg-blue-500 scale-105'
                           : 'bg-[#30333d] text-slate-500 cursor-not-allowed'
                       }`}
                       title="Send Message"
@@ -1068,9 +1068,9 @@ export const DeepSeekReplica: React.FC = () => {
       {/* Explanatory Feature Modal Dialog (ChatGPT Simulator Style) */}
       {activeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-lg bg-[#1c1e23] border border-slate-700/80 rounded-2xl shadow-2xl p-6 space-y-5 text-slate-100 animate-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-lg bg-[#1c1e23] border border-slate-300 dark:border-slate-700/80 rounded-2xl shadow-2xl p-6 space-y-5 text-slate-800 dark:text-slate-100 animate-in zoom-in-95 duration-200">
             {/* Modal Header */}
-            <div className="flex items-start justify-between border-b border-slate-800 pb-4">
+            <div className="flex items-start justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-900/60 text-blue-300 border border-blue-700/50">
@@ -1082,32 +1082,32 @@ export const DeepSeekReplica: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   {activeModal.title}
                 </h3>
               </div>
               <button
                 onClick={() => setActiveModal(null)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="space-y-4 text-xs leading-relaxed text-slate-300">
-              <p className="bg-[#141518] p-3.5 rounded-xl border border-slate-800 text-slate-200">
+            <div className="space-y-4 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+              <p className="bg-[#141518] p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200">
                 {activeModal.description}
               </p>
 
               <div className="space-y-2">
-                <h4 className="font-semibold text-slate-200 flex items-center gap-1.5 text-xs">
+                <h4 className="font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1.5 text-xs">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   Fitur Utama & Keunggulan:
                 </h4>
                 <ul className="space-y-1.5 pl-1">
                   {activeModal.keyFeatures.map((feat, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-slate-300">
+                    <li key={idx} className="flex items-start gap-2 text-slate-600 dark:text-slate-300">
                       <span className="text-blue-400 font-bold">•</span>
                       <span>{feat}</span>
                     </li>
@@ -1127,10 +1127,10 @@ export const DeepSeekReplica: React.FC = () => {
             </div>
 
             {/* Modal Footer */}
-            <div className="pt-2 flex justify-end border-t border-slate-800">
+            <div className="pt-2 flex justify-end border-t border-slate-200 dark:border-slate-800">
               <button
                 onClick={() => setActiveModal(null)}
-                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs transition-colors shadow-md"
+                className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-medium text-xs transition-colors shadow-md"
               >
                 Paham & Tutup
               </button>

@@ -76,8 +76,16 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
   const handleVerifyCert = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!userName.trim() || !userEmail.trim()) {
-      alert('Mohon isi Nama Lengkap dan Email untuk verifikasi sertifikat!');
+    if (!userName.trim()) {
+      alert('Mohon isi Nama Lengkap untuk verifikasi sertifikat!');
+      return;
+    }
+    if (!userEmail.trim()) {
+      alert('Mohon isi Alamat Email untuk verifikasi sertifikat!');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.trim())) {
+      alert('Format email tidak valid. Mohon periksa kembali.');
       return;
     }
     setIsIssuing(true);
@@ -226,12 +234,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const totalPages = 1 + 1 + (part2Modules.length > 0 ? 1 : 0) + (part3Modules.length > 0 ? 1 : 0);
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-start justify-center p-4 overflow-y-auto">
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-4xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative animate-fadeIn my-8 text-white">
+    <div className="fixed inset-0 z-50 bg-slate-100 dark:bg-slate-950/85 backdrop-blur-md flex items-start justify-center p-4 overflow-y-auto">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-4xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative animate-fadeIn my-8 text-slate-900 dark:text-white">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2.5 text-slate-400 hover:text-white rounded-full bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer z-10"
+          className="absolute top-4 right-4 p-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer z-10"
         >
           <X className="w-5 h-5" />
         </button>
@@ -244,17 +252,17 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 <Award className="w-4 h-4 text-amber-400" />
                 <span>Request Sertifikat Kelulusan</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
                 Verifikasi Identitas <span className="text-amber-400">Sertifikat</span>
               </h2>
-              <p className="text-xs text-slate-300 font-medium max-w-md mx-auto">
+              <p className="text-xs text-slate-600 dark:text-slate-300 font-medium max-w-md mx-auto">
                 Silakan isi dan periksa kembali Nama &amp; Email Anda. Data ini akan dicetak secara sah pada <strong>Certificate of Completion &amp; Transkrip Kurikulum Modul</strong>.
               </p>
             </div>
 
-            <form onSubmit={handleVerifyCert} className="space-y-4 max-w-md mx-auto bg-slate-950 p-6 rounded-2xl border border-slate-800 text-xs">
+            <form onSubmit={handleVerifyCert} className="space-y-4 max-w-md mx-auto bg-slate-100 dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 text-xs">
               <div className="space-y-1">
-                <label className="font-bold text-slate-200 block flex items-center gap-1.5">
+                <label className="font-bold text-slate-700 dark:text-slate-200 block flex items-center gap-1.5">
                   <User className="w-3.5 h-3.5 text-amber-400" />
                   Nama Lengkap Penerima Sertifikat
                 </label>
@@ -263,13 +271,13 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   required
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-medium"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-medium"
                   placeholder="Ketik nama lengkap Anda..."
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-slate-200 block flex items-center gap-1.5">
+                <label className="font-bold text-slate-700 dark:text-slate-200 block flex items-center gap-1.5">
                   <Mail className="w-3.5 h-3.5 text-indigo-400" />
                   Alamat Email Siswa
                 </label>
@@ -278,7 +286,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   required
                   value={userEmail}
                   onChange={(e) => setUserEmail(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-medium"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-medium"
                   placeholder="nama@domain.com"
                 />
               </div>
@@ -286,7 +294,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               {progress.capstoneSubmission && (
                 <div className="p-3 rounded-xl bg-indigo-950/60 border border-indigo-800 text-indigo-200 text-[11px] space-y-0.5">
                   <span className="font-bold block text-indigo-300">📌 Capstone Submission Terhubung:</span>
-                  <p className="font-mono text-slate-300 truncate">"{progress.capstoneSubmission.title}"</p>
+                  <p className="font-mono text-slate-600 dark:text-slate-300 truncate">"{progress.capstoneSubmission.title}"</p>
                 </div>
               )}
 
@@ -304,14 +312,14 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
           /* Official Certificate & Transcript View */
           <div className="space-y-5">
             {/* Action Bar */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-800 pb-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Sertifikat Terverifikasi
                 </span>
                 <button
                   onClick={() => setIsVerified(false)}
-                  className="text-xs text-slate-400 hover:text-amber-400 underline font-medium cursor-pointer"
+                  className="text-xs text-slate-500 dark:text-slate-400 hover:text-amber-400 underline font-medium cursor-pointer"
                 >
                   Ubah Nama/Email
                 </button>
@@ -320,7 +328,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               <button
                 onClick={handleDownloadPDF}
                 disabled={isDownloading}
-                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white font-black text-xs sm:text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition-all cursor-pointer"
+                className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-slate-900 dark:text-white font-black text-xs sm:text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition-all cursor-pointer"
               >
                 {isDownloading ? (
                   <Loader2 className="w-4.5 h-4.5 animate-spin" />
@@ -336,7 +344,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             {/* ============ HALAMAN 1: SERTIFIKAT ============ */}
             <div
               ref={page1Ref}
-              className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-700"
+              className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
               style={{ aspectRatio: '850 / 600' }}
             >
               {bgImage ? (
@@ -446,7 +454,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   </div>
 
                   <div className="space-y-1 mt-4">
-                    <span className="text-[10px] text-slate-400 font-bold tracking-[0.3em] uppercase block">Maxy Academy — AI Navigator Program</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold tracking-[0.3em] uppercase block">Maxy Academy — AI Navigator Program</span>
                     <h2 className="text-3xl sm:text-4xl font-black text-slate-800 tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
                       CERTIFICATE
                     </h2>
@@ -483,7 +491,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             {/* ============ HALAMAN 2: TRANSKRIP PART 1 (FULL-WIDTH 1-COLUMN TABLE) ============ */}
             <div
               ref={page2Ref}
-              className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-700"
+              className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
               style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
             >
               <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '24px' }}>
@@ -540,7 +548,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             {part2Modules.length > 0 && (
               <div
                 ref={page3Ref}
-                className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-700"
+                className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
                 style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
               >
                 <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '24px' }}>
@@ -612,7 +620,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             {part3Modules.length > 0 && (
               <div
                 ref={page4Ref}
-                className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-700"
+                className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
                 style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
               >
                 <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '24px' }}>

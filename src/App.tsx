@@ -49,7 +49,7 @@ export default function App() {
           ...parsed,
           userTier: 'free',
           tier: 'free',
-          maxAllowedModuleId: 3,
+          maxAllowedModuleId: 2,
         };
       }
     } catch (e) {
@@ -111,9 +111,18 @@ export default function App() {
 
   // Auth Guard: Sync user profile & active tier subscription from API Gateway api.maxy.academy
   useEffect(() => {
+    // Bypass auth on localhost / local dev to avoid redirect loop
+    const isLocalDev = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
+
+    if (isLocalDev && !token) {
+      // On localhost without a token, skip auth and load with default free-tier
+      setIsAuthValidating(false);
+      return;
+    }
 
     const getLandingUrl = () => {
       if (typeof window === 'undefined') return 'https://ainavigator.maxy.academy?login=true';
@@ -145,7 +154,7 @@ export default function App() {
         const user = res.data.user;
         const rawTier = sub?.active_tier || sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
         const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
-        const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
+        const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 2);
         const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
         const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
         const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
@@ -639,6 +648,9 @@ export default function App() {
   // Advance to next module from quiz
   const handleNextModule = () => {
     if (!selectedModuleId) return;
+    const userTier = progress.userTier || 'free';
+    const maxModuleForTier = userTier === 'tier2' ? 29 : 22;
+    
     if (selectedModuleId < MODULES_DATA.length) {
       const nextId = selectedModuleId + 1;
       setSelectedModuleId(nextId);
@@ -647,12 +659,17 @@ export default function App() {
         currentModuleId: nextId,
         activeSection: 'overview',
       }));
-    } else {
-      // Completed all 29 modules! Trigger Capstone Modal first or Certificate
+    }
+    
+    // Check if user just completed all modules for their tier
+    const completedCount = progress.completedModules.length;
+    if (completedCount >= maxModuleForTier) {
       setActiveTab('path');
-      if (!progress.capstoneSubmission) {
+      if (userTier === 'tier2' && !progress.capstoneSubmission) {
+        // Tier 2: Must submit capstone first
         setCapstoneModalOpen(true);
       } else {
+        // Tier 1 or Tier 2 with capstone already submitted
         setCertificateOpen(true);
       }
     }
@@ -667,19 +684,63 @@ export default function App() {
     }
   };
 
+  // Data Management
+  const handleManualSave = () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    const token = localStorage.getItem('maxy_access_token');
+    if (token) {
+      saveCloudProgress(token, progress as unknown as Record<string, unknown>);
+    }
+    alert('Progres berhasil disimpan ke memori lokal & cloud!');
+  };
+
+  const handleExportJSON = () => {
+    const dataStr = JSON.stringify(progress, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ainavigator-progress-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportJSON = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const json = JSON.parse(event.target?.result as string);
+        if (json && typeof json === 'object') {
+          // Simple validation
+          setProgress((prev) => ({ ...prev, ...json }));
+          alert('Data berhasil di-import! Progres telah diperbarui.');
+        } else {
+          alert('Format file tidak valid.');
+        }
+      } catch (err) {
+        alert('Gagal membaca file JSON. Pastikan file valid.');
+      }
+    };
+    reader.readAsText(file);
+    // Reset input
+    e.target.value = '';
+  };
+
   const currentModule = MODULES_DATA.find((m) => m.id === selectedModuleId);
   const allModulesCompleted = progress.completedModules.length === MODULES_DATA.length;
 
   if (isAuthValidating) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
-        theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-950 text-white'
+        theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-white'
       }`}>
         <div className="w-12 h-12 rounded-2xl bg-[#ffb034]/20 border border-[#ffb034]/40 flex items-center justify-center mb-4 animate-pulse shadow-lg shadow-[#ffb034]/10">
           <Sparkles className="w-6 h-6 text-[#ffb034]" />
         </div>
         <div className={`flex items-center gap-2.5 text-xs font-bold ${
-          theme === 'light' ? 'text-slate-600' : 'text-slate-300'
+          theme === 'light' ? 'text-slate-600' : 'text-slate-600 dark:text-slate-300'
         }`}>
           <span className="w-4 h-4 border-2 border-[#ffb034] border-t-transparent rounded-full animate-spin" />
           <span>Memverifikasi Sesi AI Navigator...</span>
@@ -690,8 +751,8 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
-      theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-slate-950 text-slate-100'
-    } selection:bg-indigo-500 selection:text-white`}>
+      theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100'
+    } selection:bg-indigo-500 selection:text-slate-900 dark:text-white`}>
       {/* Header */}
       <Header
         progress={progress}
@@ -717,6 +778,9 @@ export default function App() {
         onOpenUpgradeModal={() => setUpgradeModalOpen(true)}
         onOpenCapstoneModal={() => setCapstoneModalOpen(true)}
         allModulesCompleted={allModulesCompleted}
+        onManualSave={handleManualSave}
+        onExportJSON={handleExportJSON}
+        onImportJSON={handleImportJSON}
       />
 
       {/* Main Container */}
@@ -821,7 +885,7 @@ export default function App() {
       />
 
       {/* Footer */}
-      <footer className="bg-slate-900 border-t border-slate-800 text-xs text-slate-400 py-6 mt-auto">
+      <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 py-6 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div className="flex items-center gap-2.5">
             <img
@@ -829,7 +893,7 @@ export default function App() {
               alt="Maxy Academy Logo"
               className="h-6 w-auto object-contain"
             />
-            <span className="font-bold text-slate-200">AI Navigator</span>
+            <span className="font-bold text-slate-700 dark:text-slate-200">AI Navigator</span>
             <span>— Platform Pembelajaran LLM Interaktif Maxy Academy</span>
           </div>
 

@@ -431,30 +431,30 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                     <ImageIcon className="w-5 h-5 text-purple-400" />
                     AI Image & Thumbnail Generator
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Sintesis aset visual, gambar pendukung modul, dan thumbnail promosi untuk Maxy Academy.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-1.5 text-xs">
                   <button
                     onClick={() => setImagePrompt('Banner utama modul Maxy Academy dengan maskot AI futuristik 3D')}
-                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-300 transition-colors"
+                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-600 dark:text-slate-300 transition-colors"
                   >
                     🎨 Banner Modul
                   </button>
                   <button
                     onClick={() => setImagePrompt('Robot Maskot Educator Maxy Academy dalam gaya 3D Render HD')}
-                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-300 transition-colors"
+                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-600 dark:text-slate-300 transition-colors"
                   >
                     🤖 Maskot AI
                   </button>
                   <button
                     onClick={() => setImagePrompt('Sertifikat kelulusan AI Software Engineer Maxy Academy ornamen emas')}
-                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-300 transition-colors"
+                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-600 dark:text-slate-300 transition-colors"
                   >
                     📜 Sertifikat
                   </button>
@@ -467,7 +467,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   value={imagePrompt}
                   onChange={(e) => setImagePrompt(e.target.value)}
                   placeholder="Deskripsikan gambar yang ingin dibuat..."
-                  className="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none resize-none min-h-[90px] leading-relaxed"
+                  className="w-full bg-transparent text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none resize-none min-h-[90px] leading-relaxed"
                 />
               </div>
 
@@ -477,7 +477,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   <select
                     value={imageStyle}
                     onChange={(e) => setImageStyle(e.target.value)}
-                    className="bg-[#181d2c] border border-[#2b334d] text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
+                    className="bg-[#181d2c] border border-[#2b334d] text-slate-900 dark:text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
                   >
                     <option value="Photorealistic 8K">📸 Photorealistic 8K</option>
                     <option value="Cinematic Lighting">🎬 Cinematic Lighting</option>
@@ -488,7 +488,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   <select
                     value={imageAspectRatio}
                     onChange={(e) => setImageAspectRatio(e.target.value)}
-                    className="bg-[#181d2c] border border-[#2b334d] text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
+                    className="bg-[#181d2c] border border-[#2b334d] text-slate-900 dark:text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
                   >
                     <option value="16:9 Landscape">🖥️ 16:9 Landscape</option>
                     <option value="1:1 Square">⬛ 1:1 Square</option>
@@ -499,7 +499,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleGenerateImage}
                   disabled={isGeneratingImage}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
                 >
                   {isGeneratingImage ? (
                     <>
@@ -520,7 +520,7 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedImageResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-purple-400" />
                     Hasil Gambar AI - {imageStyle}
                   </span>
@@ -535,7 +535,7 @@ export const ElevenLabsReplica: React.FC = () => {
                     <ImageIcon className="w-8 h-8 text-purple-300" />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="text-base font-extrabold text-white tracking-wide">
+                    <h3 className="text-base font-extrabold text-slate-900 dark:text-white tracking-wide">
                       MAXY ACADEMY AI STUDIO
                     </h3>
                     <p className="text-xs text-purple-200/80 max-w-md line-clamp-2">
@@ -543,7 +543,7 @@ export const ElevenLabsReplica: React.FC = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2 pt-2">
-                    <span className="px-2.5 py-1 rounded-lg bg-black/40 text-[10px] text-slate-300 font-mono border border-white/10">
+                    <span className="px-2.5 py-1 rounded-lg bg-black/40 text-[10px] text-slate-600 dark:text-slate-300 font-mono border border-white/10">
                       Resolution: 1920x1080 • Model: Eleven Labs Gen-3
                     </span>
                   </div>
@@ -552,14 +552,14 @@ export const ElevenLabsReplica: React.FC = () => {
                 <div className="flex items-center justify-end gap-2 text-xs">
                   <button
                     onClick={() => showToast('Prompt disalin ke clipboard!')}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#181d2c] hover:bg-[#232a3f] rounded-xl text-slate-300 border border-[#2b334d]"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#181d2c] hover:bg-[#232a3f] rounded-xl text-slate-600 dark:text-slate-300 border border-[#2b334d]"
                   >
                     <Copy className="w-3.5 h-3.5" />
                     <span>Salin Prompt</span>
                   </button>
                   <button
                     onClick={() => showToast('Gambar berhasil diunduh (PNG)!')}
-                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-white shadow-md"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-slate-900 dark:text-white shadow-md"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Unduh Gambar</span>
@@ -576,11 +576,11 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                     <Video className="w-5 h-5 text-purple-400" />
                     AI Video & Lip-Sync Studio
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Sintesis video karakter bergerak dan lip-sync vokal otomatis untuk materi pembelajaran Maxy Academy.
                   </p>
                 </div>
@@ -592,7 +592,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   value={videoPrompt}
                   onChange={(e) => setVideoPrompt(e.target.value)}
                   placeholder="Deskripsikan adegan video atau instruksi gerak karakter..."
-                  className="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none resize-none min-h-[90px] leading-relaxed"
+                  className="w-full bg-transparent text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none resize-none min-h-[90px] leading-relaxed"
                 />
               </div>
 
@@ -602,7 +602,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   <select
                     value={videoDuration}
                     onChange={(e) => setVideoDuration(Number(e.target.value))}
-                    className="bg-[#181d2c] border border-[#2b334d] text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
+                    className="bg-[#181d2c] border border-[#2b334d] text-slate-900 dark:text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
                   >
                     <option value={3}>⏱️ Durasi: 3 Detik</option>
                     <option value={5}>⏱️ Durasi: 5 Detik</option>
@@ -612,7 +612,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   <select
                     value={videoResolution}
                     onChange={(e) => setVideoResolution(e.target.value)}
-                    className="bg-[#181d2c] border border-[#2b334d] text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
+                    className="bg-[#181d2c] border border-[#2b334d] text-slate-900 dark:text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
                   >
                     <option value="1080p 30fps">📹 1080p 30fps Full HD</option>
                     <option value="4K 60fps">🎬 4K 60fps Ultra HD</option>
@@ -622,7 +622,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleGenerateVideo}
                   disabled={isGeneratingVideo}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
                 >
                   {isGeneratingVideo ? (
                     <>
@@ -643,7 +643,7 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedVideoResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <Video className="w-4 h-4 text-indigo-400" />
                     Hasil Video AI Studio - {videoResolution}
                   </span>
@@ -661,13 +661,13 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsVideoPlaying(!isVideoPlaying);
                       showToast(isVideoPlaying ? 'Video dipause' : 'Memutar pratinjau video AI...');
                     }}
-                    className="relative z-10 w-14 h-14 rounded-full bg-purple-600/90 hover:bg-purple-600 text-white flex items-center justify-center shadow-2xl hover:scale-105 transition-all cursor-pointer"
+                    className="relative z-10 w-14 h-14 rounded-full bg-purple-600/90 hover:bg-purple-600 text-slate-900 dark:text-white flex items-center justify-center shadow-2xl hover:scale-105 transition-all cursor-pointer"
                   >
                     {isVideoPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
                   </button>
 
                   <div className="relative z-10 text-center space-y-1 mt-3">
-                    <p className="text-xs font-bold text-white max-w-md">
+                    <p className="text-xs font-bold text-slate-900 dark:text-white max-w-md">
                       "{videoPrompt}"
                     </p>
                     <p className="text-[10px] text-purple-300 font-mono">
@@ -676,11 +676,11 @@ export const ElevenLabsReplica: React.FC = () => {
                   </div>
 
                   {/* Player Scrubber Bar Overlay */}
-                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-3 flex items-center gap-3 text-[11px] font-mono text-slate-300">
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-3 flex items-center gap-3 text-[11px] font-mono text-slate-600 dark:text-slate-300">
                     <button onClick={() => setIsVideoPlaying(!isVideoPlaying)} className="cursor-pointer">
                       {isVideoPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                     </button>
-                    <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                       <div className={`h-full bg-purple-500 transition-all ${isVideoPlaying ? 'w-3/4 animate-pulse' : 'w-1/3'}`} />
                     </div>
                     <span>0:0{videoDuration} / 0:0{videoDuration}</span>
@@ -690,7 +690,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <div className="flex items-center justify-end gap-2 text-xs">
                   <button
                     onClick={() => showToast('File video MP4 HD berhasil diunduh!')}
-                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-white shadow-md"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-700 font-bold rounded-xl text-slate-900 dark:text-white shadow-md"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Unduh Video MP4</span>
@@ -707,30 +707,30 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-amber-400" />
                     AI Sound Effects Generator (SFX)
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Sintesis efek suara mendalam dan realistis berbasis petunjuk naskah deskriptif.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-1.5 text-xs">
                   <button
                     onClick={() => setSfxPrompt('Suara petir dan hujan deras di malam hari')}
-                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-300 transition-colors"
+                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-600 dark:text-slate-300 transition-colors"
                   >
                     🌩️ Petir & Hujan
                   </button>
                   <button
                     onClick={() => setSfxPrompt('Suara tembakan senapan laser Sci-Fi futuristik')}
-                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-300 transition-colors"
+                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-600 dark:text-slate-300 transition-colors"
                   >
                     🔫 Sci-Fi Laser
                   </button>
                   <button
                     onClick={() => setSfxPrompt('Ketikan keyboard mekanik cepat di studio Maxy Academy')}
-                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-300 transition-colors"
+                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-600 dark:text-slate-300 transition-colors"
                   >
                     ⌨️ Keyboard Typing
                   </button>
@@ -743,13 +743,13 @@ export const ElevenLabsReplica: React.FC = () => {
                   value={sfxPrompt}
                   onChange={(e) => setSfxPrompt(e.target.value)}
                   placeholder="Jelaskan suara yang ingin Anda buat..."
-                  className="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none resize-none min-h-[90px] leading-relaxed"
+                  className="w-full bg-transparent text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none resize-none min-h-[90px] leading-relaxed"
                 />
               </div>
 
               {/* Duration Slider */}
               <div className="bg-[#0b0e16] border border-[#1e2436] rounded-2xl p-3 space-y-1.5">
-                <div className="flex justify-between text-xs text-slate-300 font-semibold">
+                <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                   <span>Durasi Efek Suara (1 - 22 detik):</span>
                   <span className="text-amber-400 font-mono">{sfxDuration} Detik</span>
                 </div>
@@ -768,7 +768,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleGenerateSfx}
                   disabled={isGeneratingSfx}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
                 >
                   {isGeneratingSfx ? (
                     <>
@@ -789,7 +789,7 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedSfxResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-amber-400" />
                     Hasil Efek Suara SFX - {sfxDuration} Detik
                   </span>
@@ -814,7 +814,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   </button>
 
                   <div className="flex-1 space-y-1">
-                    <div className="flex justify-between text-xs text-slate-300 font-semibold">
+                    <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                       <span className="truncate max-w-[200px]">"{sfxPrompt}"</span>
                       <span className="text-[10px] text-amber-400 font-mono">24-bit 48kHz WAV</span>
                     </div>
@@ -834,11 +834,11 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                     <Music className="w-5 h-5 text-indigo-400" />
                     AI Music & Instrumental Studio
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Gubah musik latar instrumental, jingle promosi, dan track audio atmosferik dengan AI.
                   </p>
                 </div>
@@ -850,7 +850,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   value={musicPrompt}
                   onChange={(e) => setMusicPrompt(e.target.value)}
                   placeholder="Deskripsikan gaya musik, alat musik, dan suasana lagu..."
-                  className="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none resize-none min-h-[90px] leading-relaxed"
+                  className="w-full bg-transparent text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none resize-none min-h-[90px] leading-relaxed"
                 />
               </div>
 
@@ -860,7 +860,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   <select
                     value={musicGenre}
                     onChange={(e) => setMusicGenre(e.target.value)}
-                    className="bg-[#181d2c] border border-[#2b334d] text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
+                    className="bg-[#181d2c] border border-[#2b334d] text-slate-900 dark:text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
                   >
                     <option value="Ambient Lofi">🎧 Ambient Lofi Chill</option>
                     <option value="Cinematic Orchestral">🎻 Cinematic Orchestral</option>
@@ -871,7 +871,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   <select
                     value={musicLength}
                     onChange={(e) => setMusicLength(e.target.value)}
-                    className="bg-[#181d2c] border border-[#2b334d] text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
+                    className="bg-[#181d2c] border border-[#2b334d] text-slate-900 dark:text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
                   >
                     <option value="30 Detik">⏱️ 30 Detik</option>
                     <option value="60 Detik">⏱️ 60 Detik</option>
@@ -882,7 +882,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleGenerateMusic}
                   disabled={isGeneratingMusic}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
                 >
                   {isGeneratingMusic ? (
                     <>
@@ -903,13 +903,13 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedMusicResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <Disc className="w-4 h-4 text-indigo-400 animate-spin" />
                     Hasil Komposisi Musik AI - Maxy Academy Soundtrack
                   </span>
                   <button
                     onClick={() => showToast('Musik MP3 berhasil diunduh!')}
-                    className="flex items-center gap-1 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-xs font-bold text-white cursor-pointer"
+                    className="flex items-center gap-1 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download MP3</span>
@@ -922,13 +922,13 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsMusicPlaying(!isMusicPlaying);
                       showToast(isMusicPlaying ? 'Musik paused' : 'Memutar musik AI...');
                     }}
-                    className="w-10 h-10 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
+                    className="w-10 h-10 rounded-full bg-indigo-600 hover:bg-indigo-700 text-slate-900 dark:text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
                   >
                     {isMusicPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
 
                   <div className="flex-1 space-y-1">
-                    <div className="flex justify-between text-xs text-slate-300 font-semibold">
+                    <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                       <span>"{musicPrompt}"</span>
                       <span className="text-[10px] text-indigo-400 font-mono">{musicGenre} • {musicLength}</span>
                     </div>
@@ -948,11 +948,11 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                     <Radio className="w-5 h-5 text-rose-400" />
                     AI Voice Changer (Speech-to-Speech)
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Ubah karakter vokal dari rekaman suara Anda menjadi pengisi suara AI Maxy Academy pilihan.
                   </p>
                 </div>
@@ -962,10 +962,10 @@ export const ElevenLabsReplica: React.FC = () => {
               <div className="border-2 border-dashed border-[#2b334d] hover:border-purple-500/50 rounded-2xl p-4 text-center bg-[#0b0e16] space-y-2 cursor-pointer transition-colors">
                 <Upload className="w-6 h-6 text-rose-400 mx-auto" />
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-white">
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">
                     File Input: <span className="text-rose-300 font-mono">{voiceChangerFile}</span>
                   </p>
-                  <p className="text-[10px] text-slate-400">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400">
                     Klik untuk mengganti berkas audio (MP3, WAV, M4A hingga 25MB)
                   </p>
                 </div>
@@ -974,11 +974,11 @@ export const ElevenLabsReplica: React.FC = () => {
               {/* Target Voice & Controls */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-xs">
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">Pilih Target Voice AI:</label>
+                  <label className="block text-slate-600 dark:text-slate-300 font-bold mb-1">Pilih Target Voice AI:</label>
                   <select
                     value={voiceChangerTarget}
                     onChange={(e) => setVoiceChangerTarget(e.target.value)}
-                    className="w-full bg-[#181d2c] border border-[#2b334d] text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
+                    className="w-full bg-[#181d2c] border border-[#2b334d] text-slate-900 dark:text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
                   >
                     <option value="Aria - Maxy Educator">🎙️ Aria - Maxy Educator</option>
                     <option value="Adam - Tech Narrator">👨‍💻 Adam - Tech Narrator</option>
@@ -988,7 +988,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-slate-300 font-bold mb-1">
+                  <label className="block text-slate-600 dark:text-slate-300 font-bold mb-1">
                     Pitch Shift Offset ({voiceChangerPitch} semitones):
                   </label>
                   <input
@@ -1006,7 +1006,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleConvertVoice}
                   disabled={isConvertingVoice}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
                 >
                   {isConvertingVoice ? (
                     <>
@@ -1027,13 +1027,13 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedVoiceChangerResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <Radio className="w-4 h-4 text-rose-400" />
                     Hasil Konversi Voice Changer - Target: {voiceChangerTarget}
                   </span>
                   <button
                     onClick={() => showToast('Audio hasil konversi berhasil diunduh!')}
-                    className="flex items-center gap-1 px-3 py-1 bg-rose-600 hover:bg-rose-700 rounded-lg text-xs font-bold text-white cursor-pointer"
+                    className="flex items-center gap-1 px-3 py-1 bg-rose-600 hover:bg-rose-700 rounded-lg text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download Audio</span>
@@ -1046,13 +1046,13 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsVoiceChangerPlaying(!isVoiceChangerPlaying);
                       showToast(isVoiceChangerPlaying ? 'Audio paused' : 'Memutar suara hasil konversi...');
                     }}
-                    className="w-10 h-10 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
+                    className="w-10 h-10 rounded-full bg-rose-600 hover:bg-rose-700 text-slate-900 dark:text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
                   >
                     {isVoiceChangerPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
 
                   <div className="flex-1 space-y-1">
-                    <div className="flex justify-between text-xs text-slate-300 font-semibold">
+                    <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                       <span>{voiceChangerFile} ➔ {voiceChangerTarget}</span>
                       <span className="text-[10px] text-rose-400 font-mono">100% Speech-to-Speech</span>
                     </div>
@@ -1072,11 +1072,11 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                     <Wand2 className="w-5 h-5 text-teal-400" />
                     AI Voice Isolator & Noise Remover
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Ekstrak vokal murni dan bersihkan noise latar belakang dari rekaman audio podcast atau kelas.
                   </p>
                 </div>
@@ -1086,10 +1086,10 @@ export const ElevenLabsReplica: React.FC = () => {
               <div className="border-2 border-dashed border-[#2b334d] hover:border-teal-500/50 rounded-2xl p-4 text-center bg-[#0b0e16] space-y-2 cursor-pointer transition-colors">
                 <Upload className="w-6 h-6 text-teal-400 mx-auto" />
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-white">
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">
                     Berkas Input: <span className="text-teal-300 font-mono">{isolatorFile}</span>
                   </p>
-                  <p className="text-[10px] text-slate-400">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400">
                     Klik untuk mengunggah berkas audio noisy (WAV, MP3, FLAC)
                   </p>
                 </div>
@@ -1097,7 +1097,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
               {/* Slider Controls */}
               <div className="bg-[#0b0e16] border border-[#1e2436] rounded-2xl p-3 space-y-1.5">
-                <div className="flex justify-between text-xs text-slate-300 font-semibold">
+                <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                   <span>Kekuatan Pembersihan Noise:</span>
                   <span className="text-teal-400 font-mono">{isolatorStrength}%</span>
                 </div>
@@ -1115,7 +1115,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleIsolateVoice}
                   disabled={isIsolatingVoice}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg transition-all text-xs active:scale-95 disabled:opacity-50"
                 >
                   {isIsolatingVoice ? (
                     <>
@@ -1136,13 +1136,13 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedIsolatorResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <Wand2 className="w-4 h-4 text-teal-400" />
                     Vokal Bersih Terisolasi - Reduced -28dB Noise
                   </span>
                   <button
                     onClick={() => showToast('File audio Vokal Bersih WAV diunduh!')}
-                    className="flex items-center gap-1 px-3 py-1 bg-teal-600 hover:bg-teal-700 rounded-lg text-xs font-bold text-white cursor-pointer"
+                    className="flex items-center gap-1 px-3 py-1 bg-teal-600 hover:bg-teal-700 rounded-lg text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download Clean WAV</span>
@@ -1155,13 +1155,13 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsIsolatorPlaying(!isIsolatorPlaying);
                       showToast(isIsolatorPlaying ? 'Audio paused' : 'Memutar vokal bersih...');
                     }}
-                    className="w-10 h-10 rounded-full bg-teal-600 hover:bg-teal-700 text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
+                    className="w-10 h-10 rounded-full bg-teal-600 hover:bg-teal-700 text-slate-900 dark:text-white font-bold flex items-center justify-center shadow-md shrink-0 cursor-pointer"
                   >
                     {isIsolatorPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
 
                   <div className="flex-1 space-y-1">
-                    <div className="flex justify-between text-xs text-slate-300 font-semibold">
+                    <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                       <span>{isolatorFile} ➔ Clean Vocal</span>
                       <span className="text-[10px] text-teal-400 font-mono">Noise Free</span>
                     </div>
@@ -1181,11 +1181,11 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="bg-[#111420] border border-[#21273b] rounded-3xl p-5 space-y-4 shadow-2xl relative">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                     <Zap className="w-5 h-5 text-amber-400" />
                     Audio Upscaler & Studio Quality Enhancer
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Tingkatkan bitrate, kejelasan frekuensi tinggi, dan kualitas studio audio rekaman Anda.
                   </p>
                 </div>
@@ -1195,10 +1195,10 @@ export const ElevenLabsReplica: React.FC = () => {
               <div className="border-2 border-dashed border-[#2b334d] hover:border-amber-500/50 rounded-2xl p-4 text-center bg-[#0b0e16] space-y-2 cursor-pointer transition-colors">
                 <Upload className="w-6 h-6 text-amber-400 mx-auto" />
                 <div className="space-y-0.5">
-                  <p className="text-xs font-bold text-white">
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">
                     File Input: <span className="text-amber-300 font-mono">{upscaleFile}</span> (128 kbps)
                   </p>
-                  <p className="text-[10px] text-slate-400">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400">
                     Klik untuk mengunggah berkas audio bitrate rendah
                   </p>
                 </div>
@@ -1206,11 +1206,11 @@ export const ElevenLabsReplica: React.FC = () => {
 
               {/* Quality Selector */}
               <div className="text-xs space-y-1">
-                <label className="block text-slate-300 font-bold">Target Kualitas Studio Master:</label>
+                <label className="block text-slate-600 dark:text-slate-300 font-bold">Target Kualitas Studio Master:</label>
                 <select
                   value={upscaleQuality}
                   onChange={(e) => setUpscaleQuality(e.target.value)}
-                  className="w-full bg-[#181d2c] border border-[#2b334d] text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
+                  className="w-full bg-[#181d2c] border border-[#2b334d] text-slate-900 dark:text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer"
                 >
                   <option value="48kHz / 24-bit Studio WAV">🎙️ 48kHz / 24-bit Studio WAV</option>
                   <option value="96kHz High-Res Master">⚡ 96kHz High-Res Master Audio</option>
@@ -1243,7 +1243,7 @@ export const ElevenLabsReplica: React.FC = () => {
             {generatedUpscaleResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-white flex items-center gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <Zap className="w-4 h-4 text-amber-400" />
                     Hasil Upscale Audio Studio Master - {upscaleQuality}
                   </span>
@@ -1268,7 +1268,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   </button>
 
                   <div className="flex-1 space-y-1">
-                    <div className="flex justify-between text-xs text-slate-300 font-semibold">
+                    <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
                       <span>128 kbps MP3 ➔ 2304 kbps Studio WAV</span>
                       <span className="text-[10px] text-amber-400 font-mono">High-Res Restoration</span>
                     </div>
@@ -1291,11 +1291,11 @@ export const ElevenLabsReplica: React.FC = () => {
               {/* Header Title & Quick Prompt Pills */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
+                  <h2 className="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                     <Volume2 className="w-5 h-5 text-purple-400" />
                     Text to Speech AI Studio
                   </h2>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     Ubah skrip teks Anda menjadi rekaman suara vokal manusia alami dengan emosi tinggi.
                   </p>
                 </div>
@@ -1310,7 +1310,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setErrorMessage(null);
                       showToast('Skrip sampel "Narrate a story" dimuat!');
                     }}
-                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-300 hover:text-white transition-colors cursor-pointer"
+                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
                   >
                     🎙️ Narrate a story
                   </button>
@@ -1323,7 +1323,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setErrorMessage(null);
                       showToast('Skrip sampel "Tell a joke" dimuat!');
                     }}
-                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-300 hover:text-white transition-colors cursor-pointer"
+                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
                   >
                     😄 Tell a joke
                   </button>
@@ -1336,7 +1336,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setErrorMessage(null);
                       showToast('Skrip sampel "Record an ad" dimuat!');
                     }}
-                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-300 hover:text-white transition-colors cursor-pointer"
+                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
                   >
                     📢 Record an ad
                   </button>
@@ -1349,7 +1349,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setErrorMessage(null);
                       showToast('Skrip sampel "Guide a meditation" dimuat!');
                     }}
-                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-300 hover:text-white transition-colors cursor-pointer"
+                    className="px-2.5 py-1 bg-[#1a1f30] hover:bg-[#252c45] rounded-xl border border-[#2d3652] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
                   >
                     🧘 Guide a meditation
                   </button>
@@ -1365,7 +1365,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   </div>
                   <button
                     onClick={() => setErrorMessage(null)}
-                    className="text-red-400 hover:text-white shrink-0 cursor-pointer"
+                    className="text-red-400 hover:text-slate-900 dark:text-white shrink-0 cursor-pointer"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -1381,11 +1381,11 @@ export const ElevenLabsReplica: React.FC = () => {
                     if (errorMessage) setErrorMessage(null);
                   }}
                   placeholder="Ketik skrip teks Anda di sini..."
-                  className="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none resize-none min-h-[110px] leading-relaxed font-sans"
+                  className="w-full bg-transparent text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none resize-none min-h-[110px] leading-relaxed font-sans"
                 />
                 <div className="flex items-center justify-between pt-2 border-t border-[#181e2e] text-[11px] font-mono">
-                  <span className="text-slate-400">Bahasa Indonesia / English (Multilingual Support)</span>
-                  <span className={scriptText.length > 2500 ? 'text-red-400 font-bold' : scriptText.length > 2000 ? 'text-amber-400' : 'text-slate-400'}>
+                  <span className="text-slate-500 dark:text-slate-400">Bahasa Indonesia / English (Multilingual Support)</span>
+                  <span className={scriptText.length > 2500 ? 'text-red-400 font-bold' : scriptText.length > 2000 ? 'text-amber-400' : 'text-slate-500 dark:text-slate-400'}>
                     {scriptText.length.toLocaleString()} / 2,500 characters
                   </span>
                 </div>
@@ -1399,14 +1399,14 @@ export const ElevenLabsReplica: React.FC = () => {
                     <select
                       value={selectedVoice}
                       onChange={(e) => setSelectedVoice(e.target.value)}
-                      className="w-full bg-[#181d2c] border border-[#2b334d] text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer appearance-none pr-8"
+                      className="w-full bg-[#181d2c] border border-[#2b334d] text-slate-900 dark:text-white rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none cursor-pointer appearance-none pr-8"
                     >
                       <option value="Aria - Maxy Educator">🎙️ Aria - Maxy Educator</option>
                       <option value="Adam - Tech Narrator">👨‍💻 Adam - Tech Narrator</option>
                       <option value="Serena - Warm Guide">🌸 Serena - Warm Guide</option>
                       <option value="Marcus - Executive Pitch">💼 Marcus - Executive Pitch</option>
                     </select>
-                    <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
+                    <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-3 top-3 pointer-events-none" />
                   </div>
 
                   {/* Model Selector */}
@@ -1420,7 +1420,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       <option value="Eleven Turbo v2.5">🚀 Eleven Turbo v2.5</option>
                       <option value="Eleven Flash v2.5">💥 Eleven Flash v2.5</option>
                     </select>
-                    <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none" />
+                    <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-3 top-3 pointer-events-none" />
                   </div>
 
                   {/* More Options Button */}
@@ -1429,7 +1429,7 @@ export const ElevenLabsReplica: React.FC = () => {
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border transition-colors cursor-pointer ${
                       showVoiceSettings
                         ? 'bg-purple-600/30 text-purple-300 border-purple-500/50'
-                        : 'bg-[#181d2c] hover:bg-[#232a3f] text-slate-300 border-[#2b334d]'
+                        : 'bg-[#181d2c] hover:bg-[#232a3f] text-slate-600 dark:text-slate-300 border-[#2b334d]'
                     }`}
                   >
                     <Sliders className="w-3.5 h-3.5 text-purple-400" />
@@ -1441,7 +1441,7 @@ export const ElevenLabsReplica: React.FC = () => {
                 <button
                   onClick={handleGenerateSpeech}
                   disabled={isGenerating}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-purple-600/30 transition-all active:scale-95 disabled:opacity-50 text-xs cursor-pointer"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-slate-900 dark:text-white font-bold rounded-xl shadow-lg shadow-purple-600/30 transition-all active:scale-95 disabled:opacity-50 text-xs cursor-pointer"
                 >
                   {isGenerating ? (
                     <>
@@ -1467,7 +1467,7 @@ export const ElevenLabsReplica: React.FC = () => {
                     </span>
                     <button
                       onClick={() => setShowVoiceSettings(false)}
-                      className="text-slate-400 hover:text-white cursor-pointer"
+                      className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white cursor-pointer"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -1476,7 +1476,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* Stability Slider */}
                     <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-[11px] text-slate-300">
+                      <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-300">
                         <span>Stability</span>
                         <span className="font-mono text-purple-400">{stability}%</span>
                       </div>
@@ -1496,7 +1496,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                     {/* Clarity / Similarity Slider */}
                     <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-[11px] text-slate-300">
+                      <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-300">
                         <span>Clarity + Similarity</span>
                         <span className="font-mono text-purple-400">{clarity}%</span>
                       </div>
@@ -1516,7 +1516,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                     {/* Style Exaggeration Slider */}
                     <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-[11px] text-slate-300">
+                      <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-300">
                         <span>Style Exaggeration</span>
                         <span className="font-mono text-purple-400">{styleExaggeration}%</span>
                       </div>
@@ -1549,10 +1549,10 @@ export const ElevenLabsReplica: React.FC = () => {
                       <Volume2 className="w-4 h-4" />
                     </div>
                     <div>
-                      <h3 className="text-xs font-bold text-white">
+                      <h3 className="text-xs font-bold text-slate-900 dark:text-white">
                         Generated Audio - {selectedVoice}
                       </h3>
-                      <p className="text-[10px] text-slate-400">
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400">
                         {selectedModel} • {scriptText.length} characters • MP3/WAV Studio Audio
                       </p>
                     </div>
@@ -1561,7 +1561,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handleShareLink}
-                      className="flex items-center gap-1 px-2.5 py-1 bg-[#181d2c] hover:bg-[#232a3f] rounded-lg text-xs text-slate-300 border border-[#2b334d] cursor-pointer"
+                      className="flex items-center gap-1 px-2.5 py-1 bg-[#181d2c] hover:bg-[#232a3f] rounded-lg text-xs text-slate-600 dark:text-slate-300 border border-[#2b334d] cursor-pointer"
                     >
                       <Share2 className="w-3 h-3" />
                       <span>Share</span>
@@ -1569,7 +1569,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                     <button
                       onClick={handleDownloadAudio}
-                      className="flex items-center gap-1 px-2.5 py-1 bg-purple-600 hover:bg-purple-700 rounded-lg text-xs font-bold text-white shadow-md cursor-pointer"
+                      className="flex items-center gap-1 px-2.5 py-1 bg-purple-600 hover:bg-purple-700 rounded-lg text-xs font-bold text-slate-900 dark:text-white shadow-md cursor-pointer"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>Download</span>
@@ -1583,14 +1583,14 @@ export const ElevenLabsReplica: React.FC = () => {
                     <button
                       onClick={handleRewind}
                       title="Rewind 10s"
-                      className="p-1.5 text-slate-400 hover:text-white cursor-pointer"
+                      className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white cursor-pointer"
                     >
                       <RotateCcw className="w-4 h-4" />
                     </button>
 
                     <button
                       onClick={togglePlayAudio}
-                      className="w-9 h-9 rounded-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center shadow-md transition-transform active:scale-90 cursor-pointer shrink-0"
+                      className="w-9 h-9 rounded-full bg-purple-600 hover:bg-purple-700 text-slate-900 dark:text-white flex items-center justify-center shadow-md transition-transform active:scale-90 cursor-pointer shrink-0"
                     >
                       {isPlaying ? (
                         <Pause className="w-4 h-4 fill-white" />
@@ -1602,7 +1602,7 @@ export const ElevenLabsReplica: React.FC = () => {
                     <button
                       onClick={handleForward}
                       title="Forward 10s"
-                      className="p-1.5 text-slate-400 hover:text-white cursor-pointer"
+                      className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white cursor-pointer"
                     >
                       <RotateCw className="w-4 h-4" />
                     </button>
@@ -1638,7 +1638,7 @@ export const ElevenLabsReplica: React.FC = () => {
                     })}
                   </div>
 
-                  <span className="text-[11px] font-mono text-slate-400 shrink-0">
+                  <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 shrink-0">
                     {formatTime(currentTime)} / {formatTime(audioDuration)}
                   </span>
                 </div>
@@ -2068,7 +2068,7 @@ export const ElevenLabsReplica: React.FC = () => {
   };
 
   return (
-    <div className="relative rounded-2xl border border-slate-800 bg-[#0a0c10] text-slate-100 overflow-hidden shadow-2xl font-sans">
+    <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#0a0c10] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl font-sans">
       {/* Top Device & Simulator Header */}
       <div className="bg-[#12151e] border-b border-[#212638] px-4 py-2.5 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -2077,7 +2077,7 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="w-3 h-3 rounded-full bg-amber-500/80" />
             <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
           </div>
-          <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5 ml-2">
+          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 ml-2">
             <Volume2 className="w-3.5 h-3.5 text-purple-400" />
             ElevenLabs Dashboard Simulator - Maxy Academy
           </span>
@@ -2092,8 +2092,8 @@ export const ElevenLabsReplica: React.FC = () => {
             }}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
               viewMode === 'desktop'
-                ? 'bg-purple-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-purple-600 text-slate-900 dark:text-white shadow-md'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
             }`}
           >
             <Monitor className="w-3.5 h-3.5" />
@@ -2103,8 +2103,8 @@ export const ElevenLabsReplica: React.FC = () => {
             onClick={() => setViewMode('mobile')}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
               viewMode === 'mobile'
-                ? 'bg-purple-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-purple-600 text-slate-900 dark:text-white shadow-md'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -2126,7 +2126,7 @@ export const ElevenLabsReplica: React.FC = () => {
         /* ================= DESKTOP VIEW ================= */
         <div className="flex min-h-[640px] bg-[#0a0c10]">
           {/* Sidebar Navigation */}
-          <aside className="w-64 bg-[#0f121a] border-r border-[#1e2333] flex flex-col justify-between p-3.5 shrink-0 text-xs text-slate-300 select-none">
+          <aside className="w-64 bg-[#0f121a] border-r border-[#1e2333] flex flex-col justify-between p-3.5 shrink-0 text-xs text-slate-600 dark:text-slate-300 select-none">
             <div className="space-y-4">
               {/* Workspace Switcher */}
               <div
@@ -2134,24 +2134,24 @@ export const ElevenLabsReplica: React.FC = () => {
                 className="flex items-center justify-between p-2 rounded-xl bg-[#161a26] border border-[#262c3f] hover:border-purple-500/50 cursor-pointer transition-all group"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white text-xs shadow-md">
+                  <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs shadow-md">
                     MA
                   </div>
                   <div className="space-y-0.5 text-left">
-                    <span className="font-bold text-white text-xs block truncate max-w-[120px]">
+                    <span className="font-bold text-slate-900 dark:text-white text-xs block truncate max-w-[120px]">
                       Maxy Academy
                     </span>
                     <span className="text-[10px] text-purple-400 font-mono block">Pro Workspace</span>
                   </div>
                 </div>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
+                <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white" />
               </div>
 
               {/* Main Navigation Items */}
               <div className="space-y-1">
                 <button
                   onClick={() => openModal('menu-home')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#1a1f2e] text-white font-semibold border border-purple-500/30 shadow-sm"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-[#1a1f2e] text-slate-900 dark:text-white font-semibold border border-purple-500/30 shadow-sm"
                 >
                   <Home className="w-3.5 h-3.5 text-purple-400" />
                   <span>Home</span>
@@ -2159,7 +2159,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('menu-voices')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-400 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Mic className="w-3.5 h-3.5 text-indigo-400" />
                   <span>Voices</span>
@@ -2167,7 +2167,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('menu-studio')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-400 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <FileText className="w-3.5 h-3.5 text-blue-400" />
                   <span>Studio</span>
@@ -2175,7 +2175,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('menu-flows')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-400 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Layers className="w-3.5 h-3.5 text-cyan-400" />
                   <span>Flows</span>
@@ -2183,7 +2183,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('menu-templates')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-400 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Layout className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Templates</span>
@@ -2191,7 +2191,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('menu-assets')}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-400 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#151926] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Folder className="w-3.5 h-3.5 text-amber-400" />
                   <span>Assets</span>
@@ -2206,7 +2206,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-tts')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-300 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Volume2 className="w-3.5 h-3.5 text-purple-400" />
                   <span>Text to Speech</span>
@@ -2214,7 +2214,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-sfx')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-300 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>Sound Effects</span>
@@ -2222,7 +2222,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-isolator')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-300 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Wand2 className="w-3.5 h-3.5 text-teal-400" />
                   <span>Voice Isolator</span>
@@ -2230,7 +2230,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-changer')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-300 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Radio className="w-3.5 h-3.5 text-rose-400" />
                   <span>Voice Changer</span>
@@ -2238,7 +2238,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-music')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-300 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Music className="w-3.5 h-3.5 text-indigo-400" />
                   <span>Music</span>
@@ -2246,7 +2246,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-stt')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-300 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <MessageSquare className="w-3.5 h-3.5 text-sky-400" />
                   <span>Speech to Text</span>
@@ -2254,7 +2254,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-dubbing')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-300 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Globe className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Dubbing</span>
@@ -2262,7 +2262,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('pinned-audiobooks')}
-                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-300 hover:text-white transition-all"
+                  className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-[#151926] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-all"
                 >
                   <Disc className="w-3.5 h-3.5 text-amber-400" />
                   <span>Audiobooks</span>
@@ -2273,7 +2273,7 @@ export const ElevenLabsReplica: React.FC = () => {
             {/* Bottom Sisa Quota Character Indicator */}
             <div className="pt-3 border-t border-[#1a1f2e] space-y-2">
               <div className="bg-[#141824] rounded-xl p-2.5 border border-[#21273b] space-y-1.5">
-                <div className="flex items-center justify-between text-[11px] font-semibold text-slate-300">
+                <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-300">
                   <span>Quota Characters</span>
                   <span className="text-purple-400 font-mono">
                     {remainingQuota.toLocaleString()} / {maxQuota.toLocaleString()}
@@ -2298,12 +2298,12 @@ export const ElevenLabsReplica: React.FC = () => {
                 onClick={() => openModal('topbar-search')}
                 className="relative max-w-sm w-full cursor-pointer"
               >
-                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+                <Search className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute left-3 top-2.5" />
                 <input
                   type="text"
                   placeholder="Search tools, voices, projects..."
                   readOnly
-                  className="w-full bg-[#161a26] border border-[#242b3f] rounded-xl pl-9 pr-12 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none cursor-pointer"
+                  className="w-full bg-[#161a26] border border-[#242b3f] rounded-xl pl-9 pr-12 py-1.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none cursor-pointer"
                 />
                 <span className="absolute right-2.5 top-2 text-[10px] font-mono text-slate-500 px-1.5 py-0.5 bg-[#0f121a] rounded border border-[#242b3f]">
                   ⌘K
@@ -2311,7 +2311,7 @@ export const ElevenLabsReplica: React.FC = () => {
               </div>
 
               {/* Action Buttons & Profile */}
-              <div className="flex items-center gap-3 text-xs text-slate-300 font-medium">
+              <div className="flex items-center gap-3 text-xs text-slate-600 dark:text-slate-300 font-medium">
                 <button
                   onClick={() => openModal('topbar-feedback')}
                   className="px-2.5 py-1 bg-[#161a26] hover:bg-[#202638] rounded-lg border border-[#242b3f] transition-colors"
@@ -2336,7 +2336,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                 <button
                   onClick={() => openModal('topbar-notifications')}
-                  className="p-1.5 bg-[#161a26] hover:bg-[#202638] rounded-lg border border-[#242b3f] text-slate-400 hover:text-white"
+                  className="p-1.5 bg-[#161a26] hover:bg-[#202638] rounded-lg border border-[#242b3f] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                 >
                   <Bell className="w-3.5 h-3.5" />
                 </button>
@@ -2346,11 +2346,11 @@ export const ElevenLabsReplica: React.FC = () => {
                   onClick={() => openModal('topbar-profile')}
                   className="flex items-center gap-2 pl-2 border-l border-[#21273b] cursor-pointer group"
                 >
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center font-bold text-white text-xs shadow-md">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs shadow-md">
                     M
                   </div>
                   <div className="hidden lg:block text-left">
-                    <span className="text-xs font-bold text-white block leading-tight group-hover:text-purple-300">
+                    <span className="text-xs font-bold text-slate-900 dark:text-white block leading-tight group-hover:text-purple-300">
                       Maxy Academy
                     </span>
                     <span className="text-[10px] text-emerald-400 block font-mono">Pro Plan</span>
@@ -2385,7 +2385,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       className={`flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all shrink-0 cursor-pointer ${
                         isActive
                           ? 'bg-purple-600/20 text-purple-300 border border-purple-500/50 font-bold shadow-md'
-                          : 'text-slate-400 hover:text-white hover:bg-[#141824]'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#141824]'
                       }`}
                     >
                       <ToolIcon className="w-3.5 h-3.5" />
@@ -2407,17 +2407,17 @@ export const ElevenLabsReplica: React.FC = () => {
         </div>
       ) : (
         /* ================= MOBILE VIEW ================= */
-        <div className="relative min-h-[640px] bg-[#080a0e] text-slate-100 p-4 space-y-4 max-w-sm mx-auto border-x border-[#1a1e2d] shadow-2xl">
+        <div className="relative min-h-[640px] bg-[#080a0e] text-slate-800 dark:text-slate-100 p-4 space-y-4 max-w-sm mx-auto border-x border-[#1a1e2d] shadow-2xl">
           {/* Mobile Header Bar */}
           <div className="flex items-center justify-between pb-3 border-b border-[#1c2030]">
             <div
               onClick={() => openModal('workspace-switcher')}
               className="flex items-center gap-2 cursor-pointer"
             >
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white text-xs">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs">
                 MA
               </div>
-              <span className="font-extrabold text-sm text-white tracking-tight">
+              <span className="font-extrabold text-sm text-slate-900 dark:text-white tracking-tight">
                 Maxy Academy
               </span>
             </div>
@@ -2425,7 +2425,7 @@ export const ElevenLabsReplica: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => openModal('topbar-notifications')}
-                className="p-1.5 bg-[#161a26] border border-[#242b3f] rounded-xl text-slate-300"
+                className="p-1.5 bg-[#161a26] border border-[#242b3f] rounded-xl text-slate-600 dark:text-slate-300"
               >
                 <Bell className="w-4 h-4" />
               </button>
@@ -2434,7 +2434,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   setIsMobileDrawerOpen(true);
                   openModal('mobile-drawer');
                 }}
-                className="p-1.5 bg-[#161a26] border border-[#242b3f] rounded-xl text-slate-300"
+                className="p-1.5 bg-[#161a26] border border-[#242b3f] rounded-xl text-slate-600 dark:text-slate-300"
               >
                 <Sliders className="w-4 h-4" />
               </button>
@@ -2465,7 +2465,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg transition-all shrink-0 cursor-pointer ${
                     isActive
                       ? 'bg-purple-600/20 text-purple-300 border border-purple-500/50 font-bold shadow-md'
-                      : 'text-slate-400 hover:text-white hover:bg-[#141824]'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#141824]'
                   }`}
                 >
                   <ToolIcon className="w-3 h-3" />
@@ -2488,7 +2488,7 @@ export const ElevenLabsReplica: React.FC = () => {
                   </span>
                   <button
                     onClick={() => setIsMobileDrawerOpen(false)}
-                    className="p-1 rounded-lg bg-[#181d2c] text-slate-300"
+                    className="p-1 rounded-lg bg-[#181d2c] text-slate-600 dark:text-slate-300"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -2500,7 +2500,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       openModal('menu-home');
                     }}
-                    className="w-full text-left py-2 px-3 bg-[#181d2c] rounded-xl text-white font-semibold"
+                    className="w-full text-left py-2 px-3 bg-[#181d2c] rounded-xl text-slate-900 dark:text-white font-semibold"
                   >
                     🏠 Home
                   </button>
@@ -2509,7 +2509,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       openModal('pinned-tts');
                     }}
-                    className="w-full text-left py-2 px-3 hover:bg-[#141826] rounded-xl text-slate-300"
+                    className="w-full text-left py-2 px-3 hover:bg-[#141826] rounded-xl text-slate-600 dark:text-slate-300"
                   >
                     🎙️ Text to Speech
                   </button>
@@ -2518,7 +2518,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       openModal('pinned-sfx');
                     }}
-                    className="w-full text-left py-2 px-3 hover:bg-[#141826] rounded-xl text-slate-300"
+                    className="w-full text-left py-2 px-3 hover:bg-[#141826] rounded-xl text-slate-600 dark:text-slate-300"
                   >
                     ✨ Sound Effects
                   </button>
@@ -2527,7 +2527,7 @@ export const ElevenLabsReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       openModal('pinned-isolator');
                     }}
-                    className="w-full text-left py-2 px-3 hover:bg-[#141826] rounded-xl text-slate-300"
+                    className="w-full text-left py-2 px-3 hover:bg-[#141826] rounded-xl text-slate-600 dark:text-slate-300"
                   >
                     🪄 Voice Isolator
                   </button>
@@ -2536,7 +2536,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
               <button
                 onClick={() => setIsMobileDrawerOpen(false)}
-                className="w-full py-2 bg-[#1d2235] text-slate-300 text-xs rounded-xl font-bold"
+                className="w-full py-2 bg-[#1d2235] text-slate-600 dark:text-slate-300 text-xs rounded-xl font-bold"
               >
                 Tutup Menu
               </button>
@@ -2555,13 +2555,13 @@ export const ElevenLabsReplica: React.FC = () => {
                 <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400">
                   {infoDictionary[activeModalKey].category}
                 </span>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   {infoDictionary[activeModalKey].title}
                 </h3>
               </div>
               <button
                 onClick={() => setActiveModalKey(null)}
-                className="p-1.5 rounded-full bg-[#1c2235] text-slate-400 hover:text-white transition-colors"
+                className="p-1.5 rounded-full bg-[#1c2235] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -2575,7 +2575,7 @@ export const ElevenLabsReplica: React.FC = () => {
             </div>
 
             {/* Description */}
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
               {infoDictionary[activeModalKey].description}
             </p>
 
@@ -2584,7 +2584,7 @@ export const ElevenLabsReplica: React.FC = () => {
               <span className="text-[11px] font-bold text-purple-300 block">
                 Fitur & Keunggulan Utama:
               </span>
-              <ul className="space-y-1 text-[11px] text-slate-300">
+              <ul className="space-y-1 text-[11px] text-slate-600 dark:text-slate-300">
                 {infoDictionary[activeModalKey].keyFeatures.map((feat, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="text-purple-400 font-bold">•</span>
@@ -2599,7 +2599,7 @@ export const ElevenLabsReplica: React.FC = () => {
               <span className="text-[11px] font-bold text-amber-300 block">
                 Cara Penggunaan:
               </span>
-              <p className="text-[11px] text-slate-200 leading-relaxed">
+              <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-relaxed">
                 {infoDictionary[activeModalKey].howToUse}
               </p>
             </div>
@@ -2607,7 +2607,7 @@ export const ElevenLabsReplica: React.FC = () => {
             {/* Close Button */}
             <button
               onClick={() => setActiveModalKey(null)}
-              className="w-full py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition-all"
+              className="w-full py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-slate-900 dark:text-white font-bold text-xs rounded-xl shadow-md transition-all"
             >
               Tutup Penjelasan
             </button>

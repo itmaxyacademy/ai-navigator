@@ -366,11 +366,11 @@ export const ChatGPTReplica: React.FC = () => {
         className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-neutral-700/70 transition-colors cursor-pointer group"
       >
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-full bg-neutral-800 flex items-center justify-center text-white shrink-0">
+          <div className="w-7 h-7 rounded-full bg-neutral-800 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
             <Sparkles className="w-4 h-4 text-emerald-400" />
           </div>
           <div className="text-left">
-            <span className="font-bold text-white block text-xs">ChatGPT Plus</span>
+            <span className="font-bold text-slate-900 dark:text-white block text-xs">ChatGPT Plus</span>
             <span className="text-[10px] text-neutral-400 block leading-tight">Our smartest model & more</span>
           </div>
         </div>
@@ -380,7 +380,7 @@ export const ChatGPTReplica: React.FC = () => {
             handleOpenModal('upgrade');
             setIsModelPickerOpen(false);
           }}
-          className="px-3 py-1 bg-neutral-700 hover:bg-neutral-600 text-white font-bold text-[11px] rounded-full border border-neutral-600 transition-colors shadow-sm"
+          className="px-3 py-1 bg-neutral-700 hover:bg-neutral-600 text-slate-900 dark:text-white font-bold text-[11px] rounded-full border border-neutral-600 transition-colors shadow-sm"
         >
           Upgrade
         </button>
@@ -395,17 +395,17 @@ export const ChatGPTReplica: React.FC = () => {
         className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-neutral-700/70 transition-colors cursor-pointer"
       >
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-full bg-black border border-neutral-700 flex items-center justify-center text-white shrink-0">
-            <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+          <div className="w-7 h-7 rounded-full bg-black border border-neutral-700 flex items-center justify-center text-slate-900 dark:text-white shrink-0">
+            <svg className="w-4 h-4 text-slate-900 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
               <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0813 4.7792-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4954 4.4953zM3.6 18.304a4.4707 4.4707 0 0 1-.5358-3.0141l.142.0852 4.7839 2.7582a.771.771 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0806.0806 0 0 1-.0332.0615L9.74 19.9502A4.4992 4.4992 0 0 1 3.6 18.304zm-1.3887-10.8a4.4707 4.4707 0 0 1 2.3453-1.9684v5.6726a.7806.7806 0 0 0 .3928.6765l5.8286 3.3638-2.0152 1.1638a.0806.0806 0 0 1-.0711 0l-4.8303-2.7866A4.4992 4.4992 0 0 1 2.2113 7.504zm15.4216 2.4552l-5.8333-3.3685 2.0152-1.1638a.0806.0806 0 0 1 .0711 0l4.8303 2.7866a4.4992 4.4992 0 0 1-.6731 8.1299v-5.7058a.7806.7806 0 0 0-.4102-.6784zm3.0335-3.0141a4.4707 4.4707 0 0 1 .5358 3.0141l-.142-.0852-4.7839-2.7582a.771.771 0 0 0-.7806 0l-5.838 3.3685V8.1519a.0806.0806 0 0 1 .0332-.0615l4.84-2.7914a4.4992 4.4992 0 0 1 6.1355 1.6433zM8.3065 12.863l-2.02-1.1638a.0806.0806 0 0 1-.038-.052V6.0646a4.504 4.504 0 0 1 7.3718-3.4545l-.1419.0813-4.7792 2.7582a.7948.7948 0 0 0-.3927.6813v6.7321zm2.1803-3.1382l2.3608-1.3651 2.3608 1.3651v2.7301l-2.3608 1.3652-2.3608-1.3652z"/>
             </svg>
           </div>
           <div className="text-left">
-            <span className="font-bold text-white block text-xs">ChatGPT</span>
+            <span className="font-bold text-slate-900 dark:text-white block text-xs">ChatGPT</span>
             <span className="text-[10px] text-neutral-400 block leading-tight">Great for everyday tasks</span>
           </div>
         </div>
-        <Check className="w-4 h-4 text-white" />
+        <Check className="w-4 h-4 text-slate-900 dark:text-white" />
       </div>
     </div>
   );
@@ -427,7 +427,7 @@ export const ChatGPTReplica: React.FC = () => {
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               viewMode === 'desktop'
                 ? 'bg-neutral-800 text-emerald-400 shadow-md border border-neutral-700'
-                : 'text-neutral-400 hover:text-white'
+                : 'text-neutral-400 hover:text-slate-900 dark:text-white'
             }`}
           >
             <Monitor className="w-3.5 h-3.5" />
@@ -441,7 +441,7 @@ export const ChatGPTReplica: React.FC = () => {
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               viewMode === 'mobile'
                 ? 'bg-neutral-800 text-emerald-400 shadow-md border border-neutral-700'
-                : 'text-neutral-400 hover:text-white'
+                : 'text-neutral-400 hover:text-slate-900 dark:text-white'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -452,7 +452,7 @@ export const ChatGPTReplica: React.FC = () => {
 
       {/* VIEW MODE 1: DESKTOP LAYOUT */}
       {viewMode === 'desktop' && (
-        <div className="flex h-[620px] w-full bg-[#171717] text-slate-100 rounded-2xl overflow-hidden font-sans border border-neutral-800 shadow-2xl relative">
+        <div className="flex h-[620px] w-full bg-[#171717] text-slate-800 dark:text-slate-100 rounded-2xl overflow-hidden font-sans border border-neutral-800 shadow-2xl relative">
           
           {/* LEFT SIDEBAR REPLICA */}
           <div className={`${
@@ -473,7 +473,7 @@ export const ChatGPTReplica: React.FC = () => {
                   title="Kembali ke halaman 'Where should we begin?'"
                 >
                   <div className="w-7 h-7 rounded-full bg-black border border-neutral-700 flex items-center justify-center shadow-md group-hover:border-neutral-500 transition-colors">
-                    <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <svg className="w-4 h-4 text-slate-900 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0813 4.7792-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4954 4.4953zM3.6 18.304a4.4707 4.4707 0 0 1-.5358-3.0141l.142.0852 4.7839 2.7582a.771.771 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0806.0806 0 0 1-.0332.0615L9.74 19.9502A4.4992 4.4992 0 0 1 3.6 18.304zm-1.3887-10.8a4.4707 4.4707 0 0 1 2.3453-1.9684v5.6726a.7806.7806 0 0 0 .3928.6765l5.8286 3.3638-2.0152 1.1638a.0806.0806 0 0 1-.0711 0l-4.8303-2.7866A4.4992 4.4992 0 0 1 2.2113 7.504zm15.4216 2.4552l-5.8333-3.3685 2.0152-1.1638a.0806.0806 0 0 1 .0711 0l4.8303 2.7866a4.4992 4.4992 0 0 1-.6731 8.1299v-5.7058a.7806.7806 0 0 0-.4102-.6784zm3.0335-3.0141a4.4707 4.4707 0 0 1 .5358 3.0141l-.142-.0852-4.7839-2.7582a.771.771 0 0 0-.7806 0l-5.838 3.3685V8.1519a.0806.0806 0 0 1 .0332-.0615l4.84-2.7914a4.4992 4.4992 0 0 1 6.1355 1.6433zM8.3065 12.863l-2.02-1.1638a.0806.0806 0 0 1-.038-.052V6.0646a4.504 4.504 0 0 1 7.3718-3.4545l-.1419.0813-4.7792 2.7582a.7948.7948 0 0 0-.3927.6813v6.7321zm2.1803-3.1382l2.3608-1.3651 2.3608 1.3651v2.7301l-2.3608 1.3652-2.3608-1.3652z"/>
                     </svg>
                   </div>
@@ -481,14 +481,14 @@ export const ChatGPTReplica: React.FC = () => {
                 <div className="flex items-center gap-1">
                   <button 
                     onClick={() => handleOpenModal('web-search')}
-                    className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors"
+                    className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
                     title="Search"
                   >
                     <Search className="w-4 h-4" />
                   </button>
                   <button 
                     onClick={() => setIsSidebarCollapsed(true)}
-                    className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors"
+                    className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
                     title="Collapse Sidebar"
                   >
                     <PanelLeft className="w-4 h-4" />
@@ -500,7 +500,7 @@ export const ChatGPTReplica: React.FC = () => {
               <nav className="space-y-0.5 text-xs font-medium">
                 <button
                   onClick={() => handleOpenModal('new-chat')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-neutral-800/80 hover:bg-neutral-800 text-white font-semibold transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-neutral-800/80 hover:bg-neutral-800 text-slate-900 dark:text-white font-semibold transition-colors group"
                 >
                   <SquarePen className="w-4 h-4 text-neutral-300 group-hover:text-emerald-400 transition-colors" />
                   <span>New chat</span>
@@ -508,7 +508,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('images')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-white transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group"
                 >
                   <ImageIcon className="w-4 h-4 text-neutral-400 group-hover:text-amber-400 transition-colors" />
                   <span>Images</span>
@@ -516,7 +516,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('library')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-white transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group"
                 >
                   <BookOpen className="w-4 h-4 text-neutral-400 group-hover:text-indigo-400 transition-colors" />
                   <span>Library</span>
@@ -524,7 +524,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('plugins')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-white transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group"
                 >
                   <Plug className="w-4 h-4 text-neutral-400 group-hover:text-purple-400 transition-colors" />
                   <span>Plugins</span>
@@ -532,7 +532,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('projects')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-white transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group"
                 >
                   <Folder className="w-4 h-4 text-neutral-400 group-hover:text-emerald-400 transition-colors" />
                   <span>Projects</span>
@@ -540,7 +540,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('codex')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-white transition-colors group"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-300 hover:text-slate-900 dark:text-white transition-colors group"
                 >
                   <Code className="w-4 h-4 text-neutral-400 group-hover:text-blue-400 transition-colors" />
                   <span>Codex</span>
@@ -548,7 +548,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('library')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-400 hover:text-white transition-colors"
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-neutral-800/60 text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
                   <MoreHorizontal className="w-4 h-4 text-neutral-400" />
                   <span>More</span>
@@ -566,7 +566,7 @@ export const ChatGPTReplica: React.FC = () => {
                       { sender: 'user', text: 'Permintaan Gambar Karakter Maskot AI' },
                       { sender: 'ai', text: 'Berikut adalah draf desain karakter maskot AI yang lucu & bersahabat untuk aplikasi edukasi.' }
                     ])}
-                    className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-300 hover:bg-neutral-800/50 truncate block hover:text-white"
+                    className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-300 hover:bg-neutral-800/50 truncate block hover:text-slate-900 dark:text-white"
                   >
                     Permintaan Gambar Karakter
                   </button>
@@ -575,7 +575,7 @@ export const ChatGPTReplica: React.FC = () => {
                       { sender: 'user', text: 'Analisis Strategi Marketing 2026' },
                       { sender: 'ai', text: 'Analisis strategi marketing digital dengan fokus pada TikTok & Instagram Reels.' }
                     ])}
-                    className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-400 hover:bg-neutral-800/50 truncate block hover:text-white"
+                    className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-400 hover:bg-neutral-800/50 truncate block hover:text-slate-900 dark:text-white"
                   >
                     Analisis Strategi Marketing
                   </button>
@@ -586,11 +586,11 @@ export const ChatGPTReplica: React.FC = () => {
             {/* Bottom User Profile Card */}
             <div className="p-3 border-t border-neutral-800 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-extrabold text-xs shadow-inner">
+                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-slate-900 dark:text-white font-extrabold text-xs shadow-inner">
                   MA
                 </div>
                 <div className="text-left leading-tight">
-                  <span className="text-xs font-bold text-white block">Maxy Academy</span>
+                  <span className="text-xs font-bold text-slate-900 dark:text-white block">Maxy Academy</span>
                   <span className="text-[10px] text-neutral-400 block">Free Plan</span>
                 </div>
               </div>
@@ -613,7 +613,7 @@ export const ChatGPTReplica: React.FC = () => {
                 {isSidebarCollapsed && (
                   <button
                     onClick={() => setIsSidebarCollapsed(false)}
-                    className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-lg transition-colors"
+                    className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
                     title="Expand Sidebar"
                   >
                     <PanelLeft className="w-4 h-4" />
@@ -623,7 +623,7 @@ export const ChatGPTReplica: React.FC = () => {
                 <div className="relative">
                   <button
                     onClick={() => setIsModelPickerOpen(!isModelPickerOpen)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-neutral-800 text-sm font-bold text-white transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-neutral-800 text-sm font-bold text-slate-900 dark:text-white transition-colors"
                   >
                     <span>{selectedModel}</span>
                     <ChevronDown className="w-4 h-4 text-neutral-400" />
@@ -652,7 +652,7 @@ export const ChatGPTReplica: React.FC = () => {
               {messages.length === 0 ? (
                 /* Starting View: "Where should we begin?" */
                 <div className="text-center space-y-6 my-auto">
-                  <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                     Where should we begin?
                   </h1>
 
@@ -671,7 +671,7 @@ export const ChatGPTReplica: React.FC = () => {
                         }
                       }}
                       placeholder="Ask anything"
-                      className="w-full bg-transparent text-sm text-white placeholder-neutral-400 focus:outline-none resize-none px-2 pt-1"
+                      className="w-full bg-transparent text-sm text-slate-900 dark:text-white placeholder-neutral-400 focus:outline-none resize-none px-2 pt-1"
                     />
 
                     {/* Bottom Bar Controls inside Capsule */}
@@ -696,7 +696,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                             <button
                               onClick={() => handleOpenModal('upload-file')}
-                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-white text-left font-medium"
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium"
                             >
                               <FileText className="w-4 h-4 text-emerald-400" />
                               <span>Upload file / Documents</span>
@@ -704,7 +704,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                             <button
                               onClick={() => handleOpenModal('create-image')}
-                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-white text-left font-medium"
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium"
                             >
                               <ImageIcon className="w-4 h-4 text-amber-400" />
                               <span>Create an image (DALL-E 3)</span>
@@ -712,7 +712,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                             <button
                               onClick={() => handleOpenModal('code-analysis')}
-                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-white text-left font-medium"
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium"
                             >
                               <BarChart3 className="w-4 h-4 text-indigo-400" />
                               <span>Code & Data analysis</span>
@@ -720,7 +720,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                             <button
                               onClick={() => handleOpenModal('web-search')}
-                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-white text-left font-medium"
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium"
                             >
                               <Globe className="w-4 h-4 text-cyan-400" />
                               <span>Web search / Browse</span>
@@ -728,7 +728,7 @@ export const ChatGPTReplica: React.FC = () => {
 
                             <button
                               onClick={() => handleOpenModal('reason-think')}
-                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-white text-left font-medium"
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium"
                             >
                               <Brain className="w-4 h-4 text-purple-400" />
                               <span>Reason / Think (o1/o3)</span>
@@ -737,7 +737,7 @@ export const ChatGPTReplica: React.FC = () => {
                             <div className="pt-1 border-t border-neutral-800">
                               <button
                                 onClick={() => handleOpenModal('plus-menu')}
-                                className="w-full text-center py-1.5 text-[10px] font-bold text-neutral-400 hover:text-white"
+                                className="w-full text-center py-1.5 text-[10px] font-bold text-neutral-400 hover:text-slate-900 dark:text-white"
                               >
                                 ℹ️ Penjelasan Lengkap Fitur (+)
                               </button>
@@ -751,7 +751,7 @@ export const ChatGPTReplica: React.FC = () => {
                         {/* Dictate (Microphone) Button */}
                         <button
                           onClick={() => handleOpenModal('dictate')}
-                          className="p-2 hover:bg-neutral-700/80 rounded-full text-neutral-300 hover:text-white transition-colors"
+                          className="p-2 hover:bg-neutral-700/80 rounded-full text-neutral-300 hover:text-slate-900 dark:text-white transition-colors"
                           title="Dictate (Speech to Text)"
                         >
                           <Mic className="w-4 h-4" />
@@ -770,7 +770,7 @@ export const ChatGPTReplica: React.FC = () => {
                         {inputPrompt.trim() && (
                           <button
                             onClick={handleSendMessage}
-                            className="p-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full transition-all shadow-md"
+                            className="p-2 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-full transition-all shadow-md"
                           >
                             <Send className="w-4 h-4" />
                           </button>
@@ -826,7 +826,7 @@ export const ChatGPTReplica: React.FC = () => {
                       <div
                         className={`max-w-xl rounded-2xl p-4 text-xs leading-relaxed space-y-2 ${
                           msg.sender === 'user'
-                            ? 'bg-neutral-700 text-white rounded-tr-none'
+                            ? 'bg-neutral-700 text-slate-900 dark:text-white rounded-tr-none'
                             : 'bg-[#2f2f2f] border border-neutral-700 text-neutral-200 rounded-tl-none'
                         }`}
                       >
@@ -837,7 +837,7 @@ export const ChatGPTReplica: React.FC = () => {
                           {msg.sender === 'ai' && (
                             <button
                               onClick={() => handleCopy(msg.text, idx)}
-                              className="text-neutral-400 hover:text-white flex items-center gap-1 text-[10px]"
+                              className="text-neutral-400 hover:text-slate-900 dark:text-white flex items-center gap-1 text-[10px]"
                             >
                               {copiedIndex === idx ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
                               {copiedIndex === idx ? 'Tersalin' : 'Salin'}
@@ -873,11 +873,11 @@ export const ChatGPTReplica: React.FC = () => {
                         onChange={(e) => setInputPrompt(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                         placeholder="Tulis balasan..."
-                        className="flex-1 bg-transparent text-xs text-white focus:outline-none placeholder-neutral-500"
+                        className="flex-1 bg-transparent text-xs text-slate-900 dark:text-white focus:outline-none placeholder-neutral-500"
                       />
                       <button
                         onClick={handleSendMessage}
-                        className="p-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full"
+                        className="p-2 bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white rounded-full"
                       >
                         <Send className="w-4 h-4" />
                       </button>
@@ -892,7 +892,7 @@ export const ChatGPTReplica: React.FC = () => {
 
       {/* VIEW MODE 2: MOBILE LAYOUT (Matches Uploaded Mobile Screenshots) */}
       {viewMode === 'mobile' && (
-        <div className="w-full max-w-[390px] mx-auto h-[640px] bg-black text-white rounded-[32px] border-4 border-neutral-800 shadow-2xl relative overflow-hidden flex flex-col justify-between font-sans select-none">
+        <div className="w-full max-w-[390px] mx-auto h-[640px] bg-black text-slate-900 dark:text-white rounded-[32px] border-4 border-neutral-800 shadow-2xl relative overflow-hidden flex flex-col justify-between font-sans select-none">
           
           {/* MOBILE TOP HEADER BAR (Image 1) */}
           <div className="h-14 px-4 bg-black border-b border-neutral-900 flex items-center justify-between shrink-0 z-20">
@@ -909,7 +909,7 @@ export const ChatGPTReplica: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setIsModelPickerOpen(!isModelPickerOpen)}
-                className="flex items-center gap-1 text-sm font-bold text-white hover:text-neutral-300 transition-colors"
+                className="flex items-center gap-1 text-sm font-bold text-slate-900 dark:text-white hover:text-neutral-300 transition-colors"
               >
                 <span>{selectedModel}</span>
                 <ChevronDown className="w-4 h-4 text-neutral-400" />
@@ -997,7 +997,7 @@ export const ChatGPTReplica: React.FC = () => {
                   <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div className={`max-w-[85%] rounded-2xl p-3 text-xs leading-relaxed ${
                       msg.sender === 'user'
-                        ? 'bg-neutral-800 text-white rounded-tr-none'
+                        ? 'bg-neutral-800 text-slate-900 dark:text-white rounded-tr-none'
                         : 'bg-neutral-900 border border-neutral-800 text-neutral-200 rounded-tl-none'
                     }`}>
                       <p className="whitespace-pre-line font-mono">{msg.text}</p>
@@ -1018,7 +1018,7 @@ export const ChatGPTReplica: React.FC = () => {
               
               {/* MOBILE (+) POPOVER MENU (Image 2) */}
               {isPlusMenuOpen && (
-                <div className="absolute bottom-16 left-0 w-60 bg-[#1c1c1e] border border-neutral-800 rounded-3xl p-2.5 shadow-2xl z-50 space-y-1 text-xs text-white animate-in fade-in slide-in-from-bottom-2">
+                <div className="absolute bottom-16 left-0 w-60 bg-[#1c1c1e] border border-neutral-800 rounded-3xl p-2.5 shadow-2xl z-50 space-y-1 text-xs text-slate-900 dark:text-white animate-in fade-in slide-in-from-bottom-2">
                   <button
                     onClick={() => handleOpenModal('camera')}
                     className="w-full flex items-center gap-3 p-2 rounded-2xl hover:bg-neutral-800 text-left transition-colors"
@@ -1089,7 +1089,7 @@ export const ChatGPTReplica: React.FC = () => {
                   onChange={(e) => setInputPrompt(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Ask anything"
-                  className="w-full bg-transparent text-xs text-white focus:outline-none placeholder-neutral-500 px-1"
+                  className="w-full bg-transparent text-xs text-slate-900 dark:text-white focus:outline-none placeholder-neutral-500 px-1"
                 />
 
                 <div className="flex items-center justify-between pt-1">
@@ -1105,7 +1105,7 @@ export const ChatGPTReplica: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <button 
                       onClick={() => handleOpenModal('plus-menu')}
-                      className="p-1.5 text-neutral-400 hover:text-white"
+                      className="p-1.5 text-neutral-400 hover:text-slate-900 dark:text-white"
                       title="Preset Tools"
                     >
                       <Wand2 className="w-4 h-4" />
@@ -1131,7 +1131,7 @@ export const ChatGPTReplica: React.FC = () => {
                     {inputPrompt.trim() && (
                       <button
                         onClick={handleSendMessage}
-                        className="w-8 h-8 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center shadow-md"
+                        className="w-8 h-8 rounded-full bg-emerald-600 hover:bg-emerald-500 text-slate-900 dark:text-white flex items-center justify-center shadow-md"
                       >
                         <Send className="w-4 h-4" />
                       </button>
@@ -1155,9 +1155,9 @@ export const ChatGPTReplica: React.FC = () => {
                       setInputPrompt('');
                       setIsMobileSidebarOpen(false);
                     }}
-                    className="w-7 h-7 rounded-full bg-black border border-neutral-800 flex items-center justify-center text-white"
+                    className="w-7 h-7 rounded-full bg-black border border-neutral-800 flex items-center justify-center text-slate-900 dark:text-white"
                   >
-                    <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <svg className="w-4 h-4 text-slate-900 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0813 4.7792-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4954 4.4953zM3.6 18.304a4.4707 4.4707 0 0 1-.5358-3.0141l.142.0852 4.7839 2.7582a.771.771 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0806.0806 0 0 1-.0332.0615L9.74 19.9502A4.4992 4.4992 0 0 1 3.6 18.304zm-1.3887-10.8a4.4707 4.4707 0 0 1 2.3453-1.9684v5.6726a.7806.7806 0 0 0 .3928.6765l5.8286 3.3638-2.0152 1.1638a.0806.0806 0 0 1-.0711 0l-4.8303-2.7866A4.4992 4.4992 0 0 1 2.2113 7.504zm15.4216 2.4552l-5.8333-3.3685 2.0152-1.1638a.0806.0806 0 0 1 .0711 0l4.8303 2.7866a4.4992 4.4992 0 0 1-.6731 8.1299v-5.7058a.7806.7806 0 0 0-.4102-.6784zm3.0335-3.0141a4.4707 4.4707 0 0 1 .5358 3.0141l-.142-.0852-4.7839-2.7582a.771.771 0 0 0-.7806 0l-5.838 3.3685V8.1519a.0806.0806 0 0 1 .0332-.0615l4.84-2.7914a4.4992 4.4992 0 0 1 6.1355 1.6433zM8.3065 12.863l-2.02-1.1638a.0806.0806 0 0 1-.038-.052V6.0646a4.504 4.504 0 0 1 7.3718-3.4545l-.1419.0813-4.7792 2.7582a.7948.7948 0 0 0-.3927.6813v6.7321zm2.1803-3.1382l2.3608-1.3651 2.3608 1.3651v2.7301l-2.3608 1.3652-2.3608-1.3652z"/>
                     </svg>
                   </button>
@@ -1182,7 +1182,7 @@ export const ChatGPTReplica: React.FC = () => {
                 <nav className="space-y-1 font-medium">
                   <button
                     onClick={() => { handleOpenModal('new-chat'); setIsMobileSidebarOpen(false); }}
-                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-neutral-900 text-white font-semibold text-xs"
+                    className="w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-neutral-900 text-slate-900 dark:text-white font-semibold text-xs"
                   >
                     <SquarePen className="w-4 h-4 text-neutral-300" />
                     <span>New chat</span>
@@ -1262,7 +1262,7 @@ export const ChatGPTReplica: React.FC = () => {
                         ]);
                         setIsMobileSidebarOpen(false);
                       }}
-                      className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-300 hover:bg-neutral-900 truncate block hover:text-white"
+                      className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-300 hover:bg-neutral-900 truncate block hover:text-slate-900 dark:text-white"
                     >
                       Permintaan Gambar Karakter
                     </button>
@@ -1274,7 +1274,7 @@ export const ChatGPTReplica: React.FC = () => {
                         ]);
                         setIsMobileSidebarOpen(false);
                       }}
-                      className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-400 hover:bg-neutral-900 truncate block hover:text-white"
+                      className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-400 hover:bg-neutral-900 truncate block hover:text-slate-900 dark:text-white"
                     >
                       Analisis Strategi Marketing
                     </button>
@@ -1284,11 +1284,11 @@ export const ChatGPTReplica: React.FC = () => {
                 {/* User Profile Footer */}
                 <div className="pt-2 border-t border-neutral-900 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-[10px]">
+                    <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-slate-900 dark:text-white font-bold text-[10px]">
                       MA
                     </div>
                     <div className="text-left leading-tight">
-                      <span className="text-xs font-bold text-white block">Maxy Academy</span>
+                      <span className="text-xs font-bold text-slate-900 dark:text-white block">Maxy Academy</span>
                       <span className="text-[10px] text-neutral-500 block">Free</span>
                     </div>
                   </div>
@@ -1321,7 +1321,7 @@ export const ChatGPTReplica: React.FC = () => {
                     {activeModal.category}
                   </span>
                 </div>
-                <h3 className="text-xl font-extrabold text-white flex items-center gap-2">
+                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-amber-400" />
                   {activeModal.title}
                 </h3>
@@ -1329,7 +1329,7 @@ export const ChatGPTReplica: React.FC = () => {
 
               <button
                 onClick={() => setActiveModal(null)}
-                className="p-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white rounded-full transition-colors"
+                className="p-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-slate-900 dark:text-white rounded-full transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1368,7 +1368,7 @@ export const ChatGPTReplica: React.FC = () => {
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setActiveModal(null)}
-                className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all"
+                className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-slate-900 dark:text-white text-xs font-bold rounded-xl shadow-lg transition-all"
               >
                 Saya Paham, Tutup Modal
               </button>

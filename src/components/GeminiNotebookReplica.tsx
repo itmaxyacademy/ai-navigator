@@ -512,32 +512,32 @@ export const GeminiNotebookReplica: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Device View Mode Switcher Header */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-extrabold shadow-lg shadow-blue-500/20">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-slate-900 dark:text-white font-extrabold shadow-lg shadow-blue-500/20">
             <BookOpen className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-base font-bold text-white">Gemini Notebook (NotebookLM) Simulator</h2>
+              <h2 className="text-base font-bold text-slate-900 dark:text-white">Gemini Notebook (NotebookLM) Simulator</h2>
               <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
                 Grounded AI Studio
               </span>
             </div>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Pengalaman interaktif riset berbasis data grounded untuk Maxy Academy.
             </p>
           </div>
         </div>
 
         {/* Desktop / Mobile View Mode Switcher */}
-        <div className="flex items-center gap-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+        <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800">
           <button
             onClick={() => setViewMode('desktop')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               viewMode === 'desktop'
-                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-slate-900 dark:text-white shadow-md'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Monitor className="w-3.5 h-3.5" />
@@ -547,8 +547,8 @@ export const GeminiNotebookReplica: React.FC = () => {
             onClick={() => setViewMode('mobile')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               viewMode === 'mobile'
-                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-slate-900 dark:text-white shadow-md'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -560,25 +560,25 @@ export const GeminiNotebookReplica: React.FC = () => {
       {/* ========================================================================= */}
       {/* MAIN NOTEBOOK APPLICATION FRAME                                           */}
       {/* ========================================================================= */}
-      <div className="relative rounded-3xl border border-slate-800 bg-[#12151c] text-slate-100 overflow-hidden shadow-2xl font-sans min-h-[680px]">
+      <div className="relative rounded-3xl border border-slate-200 dark:border-slate-800 bg-[#12151c] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl font-sans min-h-[680px]">
         {/* TOP BAR / NAVIGATION HEADER (Matching Screenshots) */}
-        <div className="bg-[#1a1e28] border-b border-slate-800/80 px-4 py-2.5 flex items-center justify-between gap-2 overflow-x-auto">
+        <div className="bg-[#1a1e28] border-b border-slate-200 dark:border-slate-800/80 px-4 py-2.5 flex items-center justify-between gap-2 overflow-x-auto">
           {/* Left Logo & Title */}
           <div className="flex items-center gap-2.5 shrink-0">
             {/* Gemini Spiral Logo */}
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 via-indigo-500 to-cyan-400 p-0.5 flex items-center justify-center shadow-md">
-              <div className="w-full h-full bg-slate-950 rounded-full flex items-center justify-center">
+              <div className="w-full h-full bg-slate-100 dark:bg-slate-950 rounded-full flex items-center justify-center">
                 <BrainCircuit className="w-4 h-4 text-cyan-300 animate-pulse" />
               </div>
             </div>
             
-            <span className="text-sm font-bold text-white tracking-tight truncate max-w-[180px] sm:max-w-xs">
+            <span className="text-sm font-bold text-slate-900 dark:text-white tracking-tight truncate max-w-[180px] sm:max-w-xs">
               {notebookTitle}
             </span>
 
             <button
               onClick={() => setIsShared(!isShared)}
-              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-300 border border-slate-700/60 transition-colors"
+              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700/60 transition-colors"
             >
               <span>{isShared ? '👥 Shared' : '🔒 Private'}</span>
             </button>
@@ -596,7 +596,7 @@ export const GeminiNotebookReplica: React.FC = () => {
 
             <button
               onClick={() => setExplanationModal(featureModalData['copy'])}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/60 transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700/60 transition-colors"
               title="Copy Link Notebook"
             >
               <Copy className="w-3.5 h-3.5 text-blue-400" />
@@ -605,7 +605,7 @@ export const GeminiNotebookReplica: React.FC = () => {
 
             <button
               onClick={() => setExplanationModal(featureModalData['analytics'])}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/60 transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700/60 transition-colors"
               title="Notebook Analytics"
             >
               <BarChart2 className="w-3.5 h-3.5 text-amber-400" />
@@ -614,7 +614,7 @@ export const GeminiNotebookReplica: React.FC = () => {
 
             <button
               onClick={() => setExplanationModal(featureModalData['share'])}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/60 transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700/60 transition-colors"
               title="Share Notebook"
             >
               <Share2 className="w-3.5 h-3.5 text-emerald-400" />
@@ -623,7 +623,7 @@ export const GeminiNotebookReplica: React.FC = () => {
 
             <button
               onClick={() => setExplanationModal(featureModalData['settings'])}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700/60 transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700/60 transition-colors"
               title="Notebook Settings"
             >
               <Settings className="w-3.5 h-3.5 text-purple-400" />
@@ -632,14 +632,14 @@ export const GeminiNotebookReplica: React.FC = () => {
 
             <button
               onClick={() => setExplanationModal(featureModalData['sources-panel'])}
-              className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+              className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg hover:bg-slate-100 dark:bg-slate-800"
               title="Panduan Fitur"
             >
               <Grid className="w-4 h-4" />
             </button>
 
             {/* User Avatar Maxy Academy */}
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-xs flex items-center justify-center border border-indigo-300/40 shadow-sm ml-1">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-slate-900 dark:text-white font-bold text-xs flex items-center justify-center border border-indigo-300/40 shadow-sm ml-1">
               MA
             </div>
           </div>
@@ -647,13 +647,13 @@ export const GeminiNotebookReplica: React.FC = () => {
 
         {/* MOBILE TABS (Shown only when viewMode === 'mobile') */}
         {viewMode === 'mobile' && (
-          <div className="bg-[#161a23] border-b border-slate-800 flex items-center justify-around text-xs font-bold text-slate-400 px-2 py-2">
+          <div className="bg-[#161a23] border-b border-slate-200 dark:border-slate-800 flex items-center justify-around text-xs font-bold text-slate-500 dark:text-slate-400 px-2 py-2">
             <button
               onClick={() => setMobileTab('sources')}
               className={`pb-1 px-3 border-b-2 transition-all ${
                 mobileTab === 'sources'
                   ? 'border-blue-400 text-blue-400 font-extrabold'
-                  : 'border-transparent hover:text-slate-200'
+                  : 'border-transparent hover:text-slate-700 dark:text-slate-200'
               }`}
             >
               Sources ({activeSourcesCount})
@@ -663,7 +663,7 @@ export const GeminiNotebookReplica: React.FC = () => {
               className={`pb-1 px-3 border-b-2 transition-all ${
                 mobileTab === 'chat'
                   ? 'border-blue-400 text-blue-400 font-extrabold'
-                  : 'border-transparent hover:text-slate-200'
+                  : 'border-transparent hover:text-slate-700 dark:text-slate-200'
               }`}
             >
               Chat
@@ -673,7 +673,7 @@ export const GeminiNotebookReplica: React.FC = () => {
               className={`pb-1 px-3 border-b-2 transition-all ${
                 mobileTab === 'studio'
                   ? 'border-blue-400 text-blue-400 font-extrabold'
-                  : 'border-transparent hover:text-slate-200'
+                  : 'border-transparent hover:text-slate-700 dark:text-slate-200'
               }`}
             >
               Studio ({studioArtifacts.length})
@@ -686,10 +686,10 @@ export const GeminiNotebookReplica: React.FC = () => {
           <div className="bg-gradient-to-r from-blue-900/90 via-indigo-900/90 to-purple-900/90 border-b border-blue-500/40 px-4 py-2.5 flex items-center justify-between gap-3 text-xs animate-fadeIn">
             <div className="flex items-center gap-2 overflow-hidden">
               <div className="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center shrink-0 animate-pulse">
-                <Mic className="w-3.5 h-3.5 text-white" />
+                <Mic className="w-3.5 h-3.5 text-slate-900 dark:text-white" />
               </div>
               <div className="truncate">
-                <span className="font-bold text-white block truncate">{activeAudioTitle}</span>
+                <span className="font-bold text-slate-900 dark:text-white block truncate">{activeAudioTitle}</span>
                 <span className="text-[10px] text-blue-200">Sedang Diputar · Audio Overview Podcast (2 Host AI)</span>
               </div>
             </div>
@@ -697,7 +697,7 @@ export const GeminiNotebookReplica: React.FC = () => {
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setIsPlayingAudio(false)}
-                className="px-3 py-1 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-lg text-[11px]"
+                className="px-3 py-1 bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white font-bold rounded-lg text-[11px]"
               >
                 Hentikan
               </button>
@@ -717,18 +717,18 @@ export const GeminiNotebookReplica: React.FC = () => {
             <div className={`${viewMode === 'desktop' ? 'lg:col-span-3' : 'w-full'} bg-[#151922] p-4 flex flex-col justify-between space-y-4`}>
               <div className="space-y-3">
                 {/* Panel Header */}
-                <div className="flex items-center justify-between pb-2 border-b border-slate-800/80">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800/80">
                   <div className="flex items-center gap-2">
-                    <h3 className="font-bold text-white text-sm">Sources</h3>
+                    <h3 className="font-bold text-slate-900 dark:text-white text-sm">Sources</h3>
                     <button
                       onClick={() => setExplanationModal(featureModalData['sources-panel'])}
-                      className="text-slate-400 hover:text-amber-400"
+                      className="text-slate-500 dark:text-slate-400 hover:text-amber-400"
                       title="Pelajari Sources Panel"
                     >
                       <Info className="w-3.5 h-3.5" />
                     </button>
                   </div>
-                  <span className="text-[11px] text-slate-400 font-mono">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                     {activeSourcesCount}/{sources.length} aktif
                   </span>
                 </div>
@@ -736,7 +736,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                 {/* + Add Sources Button */}
                 <button
                   onClick={() => setActiveModal('add-sources')}
-                  className="w-full py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white font-bold border border-slate-700/80 flex items-center justify-center gap-2 transition-all shadow-sm"
+                  className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-700 text-slate-900 dark:text-white font-bold border border-slate-300 dark:border-slate-700/80 flex items-center justify-center gap-2 transition-all shadow-sm"
                 >
                   <Plus className="w-4 h-4 text-blue-400" />
                   <span>Add sources</span>
@@ -744,34 +744,34 @@ export const GeminiNotebookReplica: React.FC = () => {
 
                 {/* Search sources bar */}
                 <div className="relative">
-                  <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-2 space-y-2">
+                  <div className="bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-2 space-y-2">
                     <input
                       type="text"
                       value={searchSourceQuery}
                       onChange={(e) => setSearchSourceQuery(e.target.value)}
                       placeholder="Search the web for new sources"
-                      className="w-full bg-transparent text-white placeholder-slate-500 focus:outline-none text-xs"
+                      className="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none text-xs"
                     />
-                    <div className="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800/60">
+                    <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-200 dark:border-slate-800/60">
                       <div className="flex items-center gap-1">
-                        <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">
+                        <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300">
                           🌐 Web ▾
                         </span>
-                        <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">
+                        <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300">
                           ⚡ Fast Research ▾
                         </span>
                       </div>
-                      <Search className="w-3.5 h-3.5 text-slate-400" />
+                      <Search className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                     </div>
                   </div>
                 </div>
 
                 {/* Select All Checkbox Header */}
-                <div className="flex items-center justify-between text-slate-400 pt-1 text-[11px]">
+                <div className="flex items-center justify-between text-slate-500 dark:text-slate-400 pt-1 text-[11px]">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handleToggleSelectAll}
-                      className="flex items-center gap-1.5 hover:text-white font-semibold"
+                      className="flex items-center gap-1.5 hover:text-slate-900 dark:text-white font-semibold"
                     >
                       {selectAll ? (
                         <CheckSquare className="w-4 h-4 text-blue-400" />
@@ -791,8 +791,8 @@ export const GeminiNotebookReplica: React.FC = () => {
                       onClick={() => handleToggleSource(source.id)}
                       className={`group p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2 ${
                         source.checked
-                          ? 'bg-slate-900/90 border-slate-700 text-slate-100'
-                          : 'bg-slate-950/40 border-slate-900 text-slate-500 opacity-60'
+                          ? 'bg-white dark:bg-white/90 dark:bg-slate-900/90 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100'
+                          : 'bg-slate-100 dark:bg-slate-950/40 border-slate-200 dark:border-slate-900 text-slate-500 opacity-60'
                       }`}
                     >
                       <div className="flex items-center gap-2 overflow-hidden">
@@ -803,7 +803,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                         }`}>
                           {source.type}
                         </span>
-                        <span className="truncate text-xs font-medium group-hover:text-white transition-colors">
+                        <span className="truncate text-xs font-medium group-hover:text-slate-900 dark:text-white transition-colors">
                           {source.title}
                         </span>
                       </div>
@@ -821,7 +821,7 @@ export const GeminiNotebookReplica: React.FC = () => {
               </div>
 
               {/* Bottom Info Footnote */}
-              <div className="pt-2 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800/80 text-[11px] text-slate-500 dark:text-slate-400 flex items-center justify-between">
                 <span>Total Grounded Sources: {sources.length}</span>
                 <button
                   onClick={() => setActiveModal('add-sources')}
@@ -839,12 +839,12 @@ export const GeminiNotebookReplica: React.FC = () => {
           {(viewMode === 'desktop' || mobileTab === 'chat') && (
             <div className={`${viewMode === 'desktop' ? 'lg:col-span-6' : 'w-full'} bg-[#12151d] p-4 sm:p-5 flex flex-col justify-between space-y-4`}>
               {/* Chat Header Controls */}
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800/80">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-white text-sm">Chat Grounded AI</h3>
+                  <h3 className="font-bold text-slate-900 dark:text-white text-sm">Chat Grounded AI</h3>
                   <button
                     onClick={() => setExplanationModal(featureModalData['configure-chat'])}
-                    className="text-slate-400 hover:text-amber-400"
+                    className="text-slate-500 dark:text-slate-400 hover:text-amber-400"
                     title="Pelajari Chat Grounded"
                   >
                     <Info className="w-3.5 h-3.5" />
@@ -855,7 +855,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                   {/* Configure Chat Button (Sliders icon) */}
                   <button
                     onClick={() => setActiveModal('configure-chat')}
-                    className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors flex items-center gap-1 text-xs"
+                    className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors flex items-center gap-1 text-xs"
                     title="Configure Chat"
                   >
                     <Sliders className="w-3.5 h-3.5 text-blue-400" />
@@ -864,7 +864,7 @@ export const GeminiNotebookReplica: React.FC = () => {
 
                   <button
                     onClick={() => setActiveModal('customize-exp')}
-                    className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                    className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors"
                   >
                     <MoreVertical className="w-3.5 h-3.5" />
                   </button>
@@ -872,34 +872,34 @@ export const GeminiNotebookReplica: React.FC = () => {
               </div>
 
               {/* Top Summary Header Banner (Image 1 replica) */}
-              <div className="bg-[#181c27] border border-slate-800/90 rounded-2xl p-4 space-y-3 shadow-lg">
+              <div className="bg-[#181c27] border border-slate-200 dark:border-slate-800/90 rounded-2xl p-4 space-y-3 shadow-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-xl">🇮🇩</span>
                     <button
                       onClick={() => setActiveModal('customize-exp')}
-                      className="px-3 py-1 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700/80 flex items-center gap-1.5"
+                      className="px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs border border-slate-300 dark:border-slate-700/80 flex items-center gap-1.5"
                     >
                       <Sparkles className="w-3.5 h-3.5 text-blue-400" />
                       <span>Customize</span>
                     </button>
                   </div>
 
-                  <span className="text-[10px] text-slate-400 font-mono">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
                     Updated Apr 20, 2026
                   </span>
                 </div>
 
                 <div className="space-y-1">
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                     {notebookTitle}
                   </h2>
-                  <p className="text-xs text-slate-400 font-medium">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                     {activeSourcesCount} sources · Maxy Academy Research Studio
                   </p>
                 </div>
 
-                <div className="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 text-xs text-slate-300 leading-relaxed max-h-28 overflow-y-auto">
+                <div className="bg-slate-100 dark:bg-slate-950/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800/80 text-xs text-slate-600 dark:text-slate-300 leading-relaxed max-h-28 overflow-y-auto">
                   {isCustomSummary ? customSummaryText : (
                     <>
                       Teks ini menyajikan analisis komprehensif mengenai transformasi <strong>Human Capital Indonesia 2045</strong> yang dikembangkan oleh <strong>Maxy Academy</strong>. Pembahasan berfokus pada efisiensi talenta digital, adopsi AI, standardisasi kurikulum SKKNI, serta optimasi strategi pengelolaan bakat.
@@ -917,8 +917,8 @@ export const GeminiNotebookReplica: React.FC = () => {
                   >
                     <div className={`max-w-xl rounded-2xl p-4 space-y-2 text-xs leading-relaxed shadow-md ${
                       msg.sender === 'user'
-                        ? 'bg-blue-600 text-white rounded-tr-none'
-                        : 'bg-[#181c27] border border-slate-800 text-slate-200 rounded-tl-none'
+                        ? 'bg-blue-600 text-slate-900 dark:text-white rounded-tr-none'
+                        : 'bg-[#181c27] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 rounded-tl-none'
                     }`}>
                       <div className="flex items-center justify-between border-b border-white/10 pb-1 text-[10px] font-bold opacity-80">
                         <span>{msg.sender === 'user' ? 'Maxy Academy' : 'Gemini NotebookLM'}</span>
@@ -932,7 +932,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                       </div>
 
                       {msg.citations && msg.citations.length > 0 && (
-                        <div className="pt-2 border-t border-slate-800 flex flex-wrap gap-1">
+                        <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex flex-wrap gap-1">
                           {msg.citations.map((cit, idx) => (
                             <span
                               key={idx}
@@ -949,7 +949,7 @@ export const GeminiNotebookReplica: React.FC = () => {
 
                 {isGenerating && (
                   <div className="flex justify-start">
-                    <div className="bg-[#181c27] border border-slate-800 rounded-2xl rounded-tl-none p-3 text-xs text-slate-400 flex items-center gap-2">
+                    <div className="bg-[#181c27] border border-slate-200 dark:border-slate-800 rounded-2xl rounded-tl-none p-3 text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
                       <RefreshCw className="w-4 h-4 animate-spin text-blue-400" />
                       <span>Gemini Notebook sedang menganalisis {activeSourcesCount} sumber...</span>
                     </div>
@@ -959,7 +959,7 @@ export const GeminiNotebookReplica: React.FC = () => {
 
               {/* Chat Input Bottom Bar (Matching Screenshots) */}
               <div className="relative pt-2">
-                <div className="bg-[#181c27] border border-slate-800 rounded-2xl p-3 space-y-2">
+                <div className="bg-[#181c27] border border-slate-200 dark:border-slate-800 rounded-2xl p-3 space-y-2">
                   <textarea
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
@@ -970,11 +970,11 @@ export const GeminiNotebookReplica: React.FC = () => {
                       }
                     }}
                     placeholder="Start typing..."
-                    className="w-full bg-transparent text-white placeholder-slate-500 focus:outline-none text-xs resize-none h-12"
+                    className="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none text-xs resize-none h-12"
                   />
 
-                  <div className="flex items-center justify-between pt-1 border-t border-slate-800/80 text-xs">
-                    <div className="flex items-center gap-2 text-slate-400">
+                  <div className="flex items-center justify-between pt-1 border-t border-slate-200 dark:border-slate-800/80 text-xs">
+                    <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                       <span className="text-[11px] font-mono">{activeSourcesCount} sources active</span>
                     </div>
@@ -982,7 +982,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                     <button
                       onClick={handleSendMessage}
                       disabled={!chatInput.trim() || isGenerating}
-                      className="p-2 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-800 text-white rounded-xl transition-all shadow-md shrink-0"
+                      className="p-2 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-xl transition-all shadow-md shrink-0"
                     >
                       <Send className="w-4 h-4" />
                     </button>
@@ -1002,18 +1002,18 @@ export const GeminiNotebookReplica: React.FC = () => {
             <div className={`${viewMode === 'desktop' ? 'lg:col-span-3' : 'w-full'} bg-[#151922] p-4 flex flex-col justify-between space-y-4`}>
               <div className="space-y-4">
                 {/* Panel Header */}
-                <div className="flex items-center justify-between pb-2 border-b border-slate-800/80">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800/80">
                   <div className="flex items-center gap-2">
-                    <h3 className="font-bold text-white text-sm">Studio</h3>
+                    <h3 className="font-bold text-slate-900 dark:text-white text-sm">Studio</h3>
                     <button
                       onClick={() => setExplanationModal(featureModalData['studio-tools'])}
-                      className="text-slate-400 hover:text-amber-400"
+                      className="text-slate-500 dark:text-slate-400 hover:text-amber-400"
                       title="Pelajari Studio Tools"
                     >
                       <Info className="w-3.5 h-3.5" />
                     </button>
                   </div>
-                  <span className="text-[11px] text-slate-400 font-mono">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                     9 Format Output
                   </span>
                 </div>
@@ -1023,24 +1023,24 @@ export const GeminiNotebookReplica: React.FC = () => {
                   {/* Audio Overview */}
                   <button
                     onClick={() => setExplanationModal(featureModalData['audio-overview'])}
-                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-800/90 hover:border-blue-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
+                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-200 dark:border-slate-800/90 hover:border-blue-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <Mic className="w-4 h-4 text-blue-400" />
-                      <span className="p-1 rounded bg-slate-800/80 text-slate-400 group-hover:text-amber-300">
+                      <span className="p-1 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-amber-300">
                         <Info className="w-3 h-3" />
                       </span>
                     </div>
                     <div>
-                      <span className="font-bold text-white text-[11px] block">Audio Overview</span>
-                      <span className="text-[9px] text-slate-400">Podcast 2 Host</span>
+                      <span className="font-bold text-slate-900 dark:text-white text-[11px] block">Audio Overview</span>
+                      <span className="text-[9px] text-slate-500 dark:text-slate-400">Podcast 2 Host</span>
                     </div>
                   </button>
 
                   {/* Slide Deck (BETA) */}
                   <button
                     onClick={() => setExplanationModal(featureModalData['slide-deck'])}
-                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-800/90 hover:border-amber-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
+                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-200 dark:border-slate-800/90 hover:border-amber-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <Layers className="w-4 h-4 text-amber-400" />
@@ -1048,106 +1048,106 @@ export const GeminiNotebookReplica: React.FC = () => {
                         <span className="text-[8px] font-extrabold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
                           BETA
                         </span>
-                        <span className="p-1 rounded bg-slate-800/80 text-slate-400 group-hover:text-amber-300">
+                        <span className="p-1 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-amber-300">
                           <Info className="w-3 h-3" />
                         </span>
                       </div>
                     </div>
                     <div>
-                      <span className="font-bold text-white text-[11px] block">Slide Deck</span>
-                      <span className="text-[9px] text-slate-400">Bahan Presentasi</span>
+                      <span className="font-bold text-slate-900 dark:text-white text-[11px] block">Slide Deck</span>
+                      <span className="text-[9px] text-slate-500 dark:text-slate-400">Bahan Presentasi</span>
                     </div>
                   </button>
 
                   {/* Video Overview */}
                   <button
                     onClick={() => setExplanationModal(featureModalData['video-overview'])}
-                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-800/90 hover:border-emerald-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
+                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-200 dark:border-slate-800/90 hover:border-emerald-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <Video className="w-4 h-4 text-emerald-400" />
-                      <span className="p-1 rounded bg-slate-800/80 text-slate-400 group-hover:text-amber-300">
+                      <span className="p-1 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-amber-300">
                         <Info className="w-3 h-3" />
                       </span>
                     </div>
                     <div>
-                      <span className="font-bold text-white text-[11px] block">Video Overview</span>
-                      <span className="text-[9px] text-slate-400">Ringkasan Visual</span>
+                      <span className="font-bold text-slate-900 dark:text-white text-[11px] block">Video Overview</span>
+                      <span className="text-[9px] text-slate-500 dark:text-slate-400">Ringkasan Visual</span>
                     </div>
                   </button>
 
                   {/* Mind Map */}
                   <button
                     onClick={() => setExplanationModal(featureModalData['mind-map'])}
-                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-800/90 hover:border-purple-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
+                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-200 dark:border-slate-800/90 hover:border-purple-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <BrainCircuit className="w-4 h-4 text-purple-400" />
-                      <span className="p-1 rounded bg-slate-800/80 text-slate-400 group-hover:text-amber-300">
+                      <span className="p-1 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-amber-300">
                         <Info className="w-3 h-3" />
                       </span>
                     </div>
                     <div>
-                      <span className="font-bold text-white text-[11px] block">Mind Map</span>
-                      <span className="text-[9px] text-slate-400">Peta Struktur Konsep</span>
+                      <span className="font-bold text-slate-900 dark:text-white text-[11px] block">Mind Map</span>
+                      <span className="text-[9px] text-slate-500 dark:text-slate-400">Peta Struktur Konsep</span>
                     </div>
                   </button>
 
                   {/* Reports */}
                   <button
                     onClick={() => setExplanationModal(featureModalData['reports'])}
-                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-800/90 hover:border-cyan-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
+                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-200 dark:border-slate-800/90 hover:border-cyan-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <FileText className="w-4 h-4 text-cyan-400" />
-                      <span className="p-1 rounded bg-slate-800/80 text-slate-400 group-hover:text-amber-300">
+                      <span className="p-1 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-amber-300">
                         <Info className="w-3 h-3" />
                       </span>
                     </div>
                     <div>
-                      <span className="font-bold text-white text-[11px] block">Reports</span>
-                      <span className="text-[9px] text-slate-400">Laporan Komprehensif</span>
+                      <span className="font-bold text-slate-900 dark:text-white text-[11px] block">Reports</span>
+                      <span className="text-[9px] text-slate-500 dark:text-slate-400">Laporan Komprehensif</span>
                     </div>
                   </button>
 
                   {/* Flashcards */}
                   <button
                     onClick={() => setExplanationModal(featureModalData['flashcards'])}
-                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-800/90 hover:border-rose-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
+                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-200 dark:border-slate-800/90 hover:border-rose-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <Award className="w-4 h-4 text-rose-400" />
-                      <span className="p-1 rounded bg-slate-800/80 text-slate-400 group-hover:text-amber-300">
+                      <span className="p-1 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-amber-300">
                         <Info className="w-3 h-3" />
                       </span>
                     </div>
                     <div>
-                      <span className="font-bold text-white text-[11px] block">Flashcards</span>
-                      <span className="text-[9px] text-slate-400">Latihan Mandiri</span>
+                      <span className="font-bold text-slate-900 dark:text-white text-[11px] block">Flashcards</span>
+                      <span className="text-[9px] text-slate-500 dark:text-slate-400">Latihan Mandiri</span>
                     </div>
                   </button>
 
                   {/* Quiz */}
                   <button
                     onClick={() => setExplanationModal(featureModalData['quiz'])}
-                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-800/90 hover:border-amber-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
+                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-200 dark:border-slate-800/90 hover:border-amber-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <HelpCircle className="w-4 h-4 text-amber-400" />
-                      <span className="p-1 rounded bg-slate-800/80 text-slate-400 group-hover:text-amber-300">
+                      <span className="p-1 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-amber-300">
                         <Info className="w-3 h-3" />
                       </span>
                     </div>
                     <div>
-                      <span className="font-bold text-white text-[11px] block">Quiz</span>
-                      <span className="text-[9px] text-slate-400">Uji Pemahaman</span>
+                      <span className="font-bold text-slate-900 dark:text-white text-[11px] block">Quiz</span>
+                      <span className="text-[9px] text-slate-500 dark:text-slate-400">Uji Pemahaman</span>
                     </div>
                   </button>
 
                   {/* Infographic (BETA) */}
                   <button
                     onClick={() => setExplanationModal(featureModalData['infographic'])}
-                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-800/90 hover:border-indigo-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
+                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-200 dark:border-slate-800/90 hover:border-indigo-500/50 text-left transition-all group flex flex-col justify-between h-20 cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <BarChart2 className="w-4 h-4 text-indigo-400" />
@@ -1155,39 +1155,39 @@ export const GeminiNotebookReplica: React.FC = () => {
                         <span className="text-[8px] font-extrabold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
                           BETA
                         </span>
-                        <span className="p-1 rounded bg-slate-800/80 text-slate-400 group-hover:text-amber-300">
+                        <span className="p-1 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-amber-300">
                           <Info className="w-3 h-3" />
                         </span>
                       </div>
                     </div>
                     <div>
-                      <span className="font-bold text-white text-[11px] block">Infographic</span>
-                      <span className="text-[9px] text-slate-400">Visual Statistik</span>
+                      <span className="font-bold text-slate-900 dark:text-white text-[11px] block">Infographic</span>
+                      <span className="text-[9px] text-slate-500 dark:text-slate-400">Visual Statistik</span>
                     </div>
                   </button>
 
                   {/* Data Table */}
                   <button
                     onClick={() => setExplanationModal(featureModalData['data-table'])}
-                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-800/90 hover:border-emerald-500/50 text-left transition-all group flex flex-col justify-between h-20 col-span-2 cursor-pointer"
+                    className="p-2.5 rounded-xl bg-[#1c212e] hover:bg-[#23293a] border border-slate-200 dark:border-slate-800/90 hover:border-emerald-500/50 text-left transition-all group flex flex-col justify-between h-20 col-span-2 cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
-                      <span className="p-1 rounded bg-slate-800/80 text-slate-400 group-hover:text-amber-300 flex items-center gap-1 text-[10px]">
+                      <span className="p-1 rounded bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-amber-300 flex items-center gap-1 text-[10px]">
                         <Info className="w-3 h-3" />
                         <span>Detail Fitur</span>
                       </span>
                     </div>
                     <div>
-                      <span className="font-bold text-white text-[11px] block">Data Table</span>
-                      <span className="text-[9px] text-slate-400">Eksport Matriks & Tabel Analitis</span>
+                      <span className="font-bold text-slate-900 dark:text-white text-[11px] block">Data Table</span>
+                      <span className="text-[9px] text-slate-500 dark:text-slate-400">Eksport Matriks & Tabel Analitis</span>
                     </div>
                   </button>
                 </div>
 
                 {/* Generated Artefacts List (Matching Image 1) */}
-                <div className="pt-3 border-t border-slate-800/80 space-y-2">
-                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                <div className="pt-3 border-t border-slate-200 dark:border-slate-800/80 space-y-2">
+                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                     Artefak & Catatan Tersimpan
                   </span>
 
@@ -1195,7 +1195,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                     {studioArtifacts.map((art) => (
                       <div
                         key={art.id}
-                        className="p-2.5 rounded-xl bg-[#181d28] border border-slate-800 flex items-center justify-between gap-2 hover:border-slate-700 transition-colors"
+                        className="p-2.5 rounded-xl bg-[#181d28] border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 hover:border-slate-300 dark:border-slate-700 transition-colors"
                       >
                         <div className="flex items-center gap-2 overflow-hidden">
                           {art.type === 'audio' ? (
@@ -1209,8 +1209,8 @@ export const GeminiNotebookReplica: React.FC = () => {
                           )}
 
                           <div className="truncate">
-                            <span className="font-bold text-white text-xs block truncate">{art.title}</span>
-                            <span className="text-[10px] text-slate-400">
+                            <span className="font-bold text-slate-900 dark:text-white text-xs block truncate">{art.title}</span>
+                            <span className="text-[10px] text-slate-500 dark:text-slate-400">
                               {art.duration ? `${art.duration} · ${art.sourcesCount} sources` : art.timeAgo}
                             </span>
                           </div>
@@ -1222,7 +1222,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                               setIsPlayingAudio(true);
                               setActiveAudioTitle(art.title);
                             }}
-                            className="p-1.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white shrink-0"
+                            className="p-1.5 rounded-full bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white shrink-0"
                           >
                             <Play className="w-3.5 h-3.5 fill-current" />
                           </button>
@@ -1261,31 +1261,31 @@ export const GeminiNotebookReplica: React.FC = () => {
       {/* ========================================================================= */}
       <AnimatePresence>
         {activeModal === 'configure-chat' && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-100 dark:bg-slate-950/80 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-[#181c26] border border-slate-700/80 rounded-3xl p-6 shadow-2xl text-slate-100 space-y-5"
+              className="relative w-full max-w-lg bg-[#181c26] border border-slate-300 dark:border-slate-700/80 rounded-3xl p-6 shadow-2xl text-slate-800 dark:text-slate-100 space-y-5"
             >
               {/* Header */}
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h3 className="text-xl font-extrabold text-white">Configure Chat</h3>
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">Configure Chat</h3>
                 <button
                   onClick={() => setActiveModal(null)}
-                  className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-slate-800"
+                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-full hover:bg-slate-100 dark:bg-slate-800"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Notebooks can be customized to help you achieve different goals: do research, help learn, show various perspectives, or converse in a particular style and tone.
               </p>
 
               {/* Goal / Style / Role Chips */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-white block">
+                <label className="text-xs font-bold text-slate-900 dark:text-white block">
                   Define your conversational goal, style, or role
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -1295,8 +1295,8 @@ export const GeminiNotebookReplica: React.FC = () => {
                       onClick={() => setChatGoal(mode)}
                       className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
                         chatGoal === mode
-                          ? 'bg-blue-600 text-white shadow-md'
-                          : 'bg-slate-800/90 text-slate-300 border border-slate-700 hover:bg-slate-700'
+                          ? 'bg-blue-600 text-slate-900 dark:text-white shadow-md'
+                          : 'bg-slate-100 dark:bg-slate-800/90 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-700'
                       }`}
                     >
                       {chatGoal === mode && <Check className="w-3.5 h-3.5" />}
@@ -1304,7 +1304,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                     </button>
                   ))}
                 </div>
-                <p className="text-[11px] text-slate-400 pt-1">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-1">
                   {chatGoal === 'Default' && 'Best for general purpose research and brainstorming tasks.'}
                   {chatGoal === 'Learning Guide' && 'Best for interactive tutoring, step-by-step explanations, and quiz questions.'}
                   {chatGoal === 'Custom' && 'Set custom role prompt for Maxy Academy HR Senior Advisor.'}
@@ -1312,8 +1312,8 @@ export const GeminiNotebookReplica: React.FC = () => {
               </div>
 
               {/* Choose Response Length */}
-              <div className="space-y-2 pt-2 border-t border-slate-800">
-                <label className="text-xs font-bold text-white block">
+              <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                <label className="text-xs font-bold text-slate-900 dark:text-white block">
                   Choose your response length
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -1323,8 +1323,8 @@ export const GeminiNotebookReplica: React.FC = () => {
                       onClick={() => setResponseLength(len)}
                       className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
                         responseLength === len
-                          ? 'bg-blue-600 text-white shadow-md'
-                          : 'bg-slate-800/90 text-slate-300 border border-slate-700 hover:bg-slate-700'
+                          ? 'bg-blue-600 text-slate-900 dark:text-white shadow-md'
+                          : 'bg-slate-100 dark:bg-slate-800/90 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 hover:bg-slate-700'
                       }`}
                     >
                       {responseLength === len && <Check className="w-3.5 h-3.5" />}
@@ -1338,7 +1338,7 @@ export const GeminiNotebookReplica: React.FC = () => {
               <div className="pt-3 flex justify-end">
                 <button
                   onClick={() => setActiveModal(null)}
-                  className="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg transition-all"
+                  className="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs shadow-lg transition-all"
                 >
                   Save
                 </button>
@@ -1353,30 +1353,30 @@ export const GeminiNotebookReplica: React.FC = () => {
       {/* ========================================================================= */}
       <AnimatePresence>
         {activeModal === 'customize-exp' && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-100 dark:bg-slate-950/80 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-[#181c26] border border-slate-700/80 rounded-3xl p-6 shadow-2xl text-slate-100 space-y-5"
+              className="relative w-full max-w-lg bg-[#181c26] border border-slate-300 dark:border-slate-700/80 rounded-3xl p-6 shadow-2xl text-slate-800 dark:text-slate-100 space-y-5"
             >
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h3 className="text-lg font-extrabold text-white truncate pr-4">
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 className="text-lg font-extrabold text-slate-900 dark:text-white truncate pr-4">
                   Customize the experience of &quot;{notebookTitle}&quot;
                 </h3>
                 <button
                   onClick={() => setActiveModal(null)}
-                  className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-slate-800"
+                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-full hover:bg-slate-100 dark:bg-slate-800"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Banner Upload Box */}
-              <div className="w-full h-36 bg-slate-900 border-2 border-dashed border-slate-700 rounded-2xl flex items-center justify-center relative overflow-hidden group">
+              <div className="w-full h-36 bg-white dark:bg-slate-900 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl flex items-center justify-center relative overflow-hidden group">
                 <div className="text-center space-y-2">
-                  <Upload className="w-8 h-8 text-slate-400 mx-auto" />
-                  <button className="px-4 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-600">
+                  <Upload className="w-8 h-8 text-slate-500 dark:text-slate-400 mx-auto" />
+                  <button className="px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs border border-slate-600">
                     Upload banner
                   </button>
                 </div>
@@ -1384,19 +1384,19 @@ export const GeminiNotebookReplica: React.FC = () => {
 
               {/* Notebook Title Input */}
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-400">Notebook title</label>
+                <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">Notebook title</label>
                 <input
                   type="text"
                   value={notebookTitle}
                   onChange={(e) => setNotebookTitle(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500 font-bold"
+                  className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 font-bold"
                 />
               </div>
 
               {/* Custom Summary Toggle */}
-              <div className="pt-2 border-t border-slate-800 space-y-3">
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white">Set custom notebook summary</span>
+                  <span className="text-xs font-bold text-slate-900 dark:text-white">Set custom notebook summary</span>
                   <button
                     onClick={() => setIsCustomSummary(!isCustomSummary)}
                     className={`w-11 h-6 rounded-full transition-colors relative p-1 ${
@@ -1409,7 +1409,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                   </button>
                 </div>
 
-                <p className="text-[11px] text-slate-400 leading-relaxed">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
                   By default, Gemini Notebook autogenerates a summary that refreshes every time you open the notebook. You can choose to override this by manually setting a custom summary.
                 </p>
 
@@ -1417,7 +1417,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                   <textarea
                     value={customSummaryText}
                     onChange={(e) => setCustomSummaryText(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 h-20"
+                    className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-blue-500 h-20"
                   />
                 )}
               </div>
@@ -1425,7 +1425,7 @@ export const GeminiNotebookReplica: React.FC = () => {
               <div className="pt-2 flex justify-end">
                 <button
                   onClick={() => setActiveModal(null)}
-                  className="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg transition-all"
+                  className="px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white font-bold text-xs shadow-lg transition-all"
                 >
                   Done
                 </button>
@@ -1440,38 +1440,38 @@ export const GeminiNotebookReplica: React.FC = () => {
       {/* ========================================================================= */}
       <AnimatePresence>
         {activeModal === 'add-sources' && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-100 dark:bg-slate-950/80 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-[#181c26] border border-slate-700/80 rounded-3xl p-6 shadow-2xl text-slate-100 space-y-5"
+              className="relative w-full max-w-lg bg-[#181c26] border border-slate-300 dark:border-slate-700/80 rounded-3xl p-6 shadow-2xl text-slate-800 dark:text-slate-100 space-y-5"
             >
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h3 className="text-base font-extrabold text-white">
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
                   Create Audio and Video Overviews from <span className="text-emerald-400">YouTube videos & Documents</span>
                 </h3>
                 <button
                   onClick={() => setActiveModal(null)}
-                  className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-slate-800"
+                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-full hover:bg-slate-100 dark:bg-slate-800"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Search Web Input */}
-              <div className="bg-slate-950 border border-blue-500/60 rounded-2xl p-3 space-y-2">
+              <div className="bg-slate-100 dark:bg-slate-950 border border-blue-500/60 rounded-2xl p-3 space-y-2">
                 <input
                   type="text"
                   placeholder="Search the web for new sources"
-                  className="w-full bg-transparent text-white placeholder-slate-500 focus:outline-none text-xs"
+                  className="w-full bg-transparent text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none text-xs"
                 />
-                <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-800">
+                <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-200 dark:border-slate-800">
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">
+                    <span className="px-2.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700">
                       🌐 Web ▾
                     </span>
-                    <span className="px-2.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">
+                    <span className="px-2.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700">
                       ⚡ Fast Research ▾
                     </span>
                   </div>
@@ -1480,9 +1480,9 @@ export const GeminiNotebookReplica: React.FC = () => {
               </div>
 
               {/* Drop files box */}
-              <div className="border-2 border-dashed border-slate-700 bg-slate-900/60 rounded-2xl p-6 text-center space-y-3">
-                <p className="text-sm font-bold text-white">or drop your files</p>
-                <p className="text-xs text-slate-400">pdf, images, docs, audio, and more</p>
+              <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 rounded-2xl p-6 text-center space-y-3">
+                <p className="text-sm font-bold text-slate-900 dark:text-white">or drop your files</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">pdf, images, docs, audio, and more</p>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
                   <button
@@ -1496,7 +1496,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                         setActiveModal(null);
                       }
                     }}
-                    className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-white flex items-center justify-center gap-1.5"
+                    className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white flex items-center justify-center gap-1.5"
                   >
                     <Upload className="w-3.5 h-3.5 text-blue-400" />
                     <span>Upload files</span>
@@ -1513,7 +1513,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                         setActiveModal(null);
                       }
                     }}
-                    className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-white flex items-center justify-center gap-1.5"
+                    className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white flex items-center justify-center gap-1.5"
                   >
                     <Globe className="w-3.5 h-3.5 text-rose-400" />
                     <span>Websites</span>
@@ -1521,7 +1521,7 @@ export const GeminiNotebookReplica: React.FC = () => {
 
                   <button
                     onClick={() => alert('Menghubungkan ke Google Drive Maxy Academy...')}
-                    className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-white flex items-center justify-center gap-1.5"
+                    className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white flex items-center justify-center gap-1.5"
                   >
                     <HardDrive className="w-3.5 h-3.5 text-amber-400" />
                     <span>Drive</span>
@@ -1538,7 +1538,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                         setActiveModal(null);
                       }
                     }}
-                    className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-white flex items-center justify-center gap-1.5"
+                    className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white flex items-center justify-center gap-1.5"
                   >
                     <Copy className="w-3.5 h-3.5 text-emerald-400" />
                     <span>Copied text</span>
@@ -1548,11 +1548,11 @@ export const GeminiNotebookReplica: React.FC = () => {
 
               {/* Progress Bar Limit */}
               <div className="space-y-1">
-                <div className="flex justify-between text-[11px] text-slate-400 font-mono">
+                <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                   <span>Kapasitas Sumber Dokumen</span>
                   <span>{sources.length} / 50</span>
                 </div>
-                <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                   <div
                     className="bg-blue-500 h-full rounded-full transition-all"
                     style={{ width: `${(sources.length / 50) * 100}%` }}
@@ -1569,31 +1569,31 @@ export const GeminiNotebookReplica: React.FC = () => {
       {/* ========================================================================= */}
       <AnimatePresence>
         {explanationModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-100 dark:bg-slate-950/80 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-[#181c26] border border-blue-500/40 rounded-3xl p-6 shadow-2xl text-slate-100 space-y-4"
+              className="relative w-full max-w-lg bg-[#181c26] border border-blue-500/40 rounded-3xl p-6 shadow-2xl text-slate-800 dark:text-slate-100 space-y-4"
             >
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-500/20 text-blue-300 border border-blue-500/30">
                     {explanationModal.badge}
                   </span>
-                  <span className="text-xs text-slate-400">{explanationModal.category}</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">{explanationModal.category}</span>
                 </div>
                 <button
                   onClick={() => setExplanationModal(null)}
-                  className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-slate-800"
+                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-full hover:bg-slate-100 dark:bg-slate-800"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <h3 className="text-xl font-extrabold text-white">{explanationModal.title}</h3>
+              <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">{explanationModal.title}</h3>
 
-              <p className="text-xs text-slate-300 leading-relaxed bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed bg-slate-100 dark:bg-slate-950/80 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800">
                 {explanationModal.description}
               </p>
 
@@ -1601,7 +1601,7 @@ export const GeminiNotebookReplica: React.FC = () => {
                 <h4 className="text-xs font-bold text-blue-300 flex items-center gap-1.5">
                   <Zap className="w-4 h-4 text-amber-400" /> Key Features & Capabilities:
                 </h4>
-                <ul className="space-y-1.5 text-xs text-slate-300">
+                <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
                   {explanationModal.keyFeatures.map((feat, i) => (
                     <li key={i} className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
@@ -1613,13 +1613,13 @@ export const GeminiNotebookReplica: React.FC = () => {
 
               <div className="p-3 bg-blue-950/40 border border-blue-800/60 rounded-2xl text-xs space-y-1">
                 <span className="font-bold text-blue-300">💡 Cara Mengaplikasikan:</span>
-                <p className="text-slate-300">{explanationModal.howToUse}</p>
+                <p className="text-slate-600 dark:text-slate-300">{explanationModal.howToUse}</p>
               </div>
 
               {explanationModal.actionButtonText && (
                 <button
                   onClick={() => handleModalAction(explanationModal.actionKey)}
-                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-lg transition-all border border-blue-400/40"
+                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-slate-900 dark:text-white font-extrabold text-xs shadow-lg transition-all border border-blue-400/40"
                 >
                   {explanationModal.actionButtonText}
                 </button>
@@ -1627,7 +1627,7 @@ export const GeminiNotebookReplica: React.FC = () => {
 
               <button
                 onClick={() => setExplanationModal(null)}
-                className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition-all border border-slate-700"
+                className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition-all border border-slate-300 dark:border-slate-700"
               >
                 Tutup
               </button>

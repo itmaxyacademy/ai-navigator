@@ -199,7 +199,7 @@ export const ManusReplica: React.FC = () => {
       <header className="px-6 py-4 bg-white/90 backdrop-blur-md border-b border-slate-100 flex items-center justify-between z-30 shrink-0">
         {/* Logo */}
         <div onClick={handleResetToLanding} className="flex items-center gap-2 cursor-pointer group">
-          <div className="w-6 h-6 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+          <div className="w-6 h-6 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-white flex items-center justify-center font-bold text-xs shadow-sm">
             ✋
           </div>
           <span className="text-xl font-bold tracking-tight text-slate-900 font-sans">
@@ -221,7 +221,7 @@ export const ManusReplica: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowAuthModal(true)}
-            className="px-4 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
+            className="px-4 py-1.5 rounded-full bg-white dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
           >
             Sign in
           </button>
@@ -244,7 +244,7 @@ export const ManusReplica: React.FC = () => {
               className="px-4 py-2 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200/80 text-slate-700 text-xs font-medium transition-all shadow-xs flex items-center gap-2 cursor-pointer group"
             >
               <span>Manus is now part of Meta — bringing AI to businesses worldwide</span>
-              <span className="text-slate-400 group-hover:translate-x-0.5 transition-transform">→</span>
+              <span className="text-slate-500 dark:text-slate-400 group-hover:translate-x-0.5 transition-transform">→</span>
             </button>
           </div>
 
@@ -278,7 +278,7 @@ export const ManusReplica: React.FC = () => {
                 <span>{attachedFile}</span>
                 <button
                   onClick={() => setAttachedFile(null)}
-                  className="text-slate-400 hover:text-slate-700 cursor-pointer"
+                  className="text-slate-500 dark:text-slate-400 hover:text-slate-700 cursor-pointer"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -302,8 +302,8 @@ export const ManusReplica: React.FC = () => {
                 disabled={!taskInput.trim() || isLoading}
                 className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
                   taskInput.trim()
-                    ? 'bg-slate-900 text-white hover:bg-slate-800 shadow-md'
-                    : 'bg-slate-100 text-slate-300 cursor-not-allowed'
+                    ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800 shadow-md'
+                    : 'bg-slate-100 text-slate-600 dark:text-slate-300 cursor-not-allowed'
                 }`}
               >
                 <ArrowUp className="w-4 h-4" />
@@ -317,7 +317,7 @@ export const ManusReplica: React.FC = () => {
               onClick={() => handleSelectChip('Create slides', 'Buatkan slide presentasi tentang strategi pemasaran digital AI 2026')}
               className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
                 taskType === 'Create slides'
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-200 dark:border-slate-900 shadow-sm'
                   : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-xs'
               }`}
             >
@@ -329,7 +329,7 @@ export const ManusReplica: React.FC = () => {
               onClick={() => handleSelectChip('Build website', 'Buatkan aplikasi web landing page interaktif untuk startup AI')}
               className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
                 taskType === 'Build website'
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-200 dark:border-slate-900 shadow-sm'
                   : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-xs'
               }`}
             >
@@ -341,7 +341,7 @@ export const ManusReplica: React.FC = () => {
               onClick={() => handleSelectChip('Design', 'Buatkan konsep desain UI/UX, skema warna HSL, dan panduan tipografi modern')}
               className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
                 taskType === 'Design'
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-200 dark:border-slate-900 shadow-sm'
                   : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-xs'
               }`}
             >
@@ -353,7 +353,7 @@ export const ManusReplica: React.FC = () => {
               onClick={() => handleSelectChip('Create games', 'Buatkan game web HTML5 Canvas sederhana kontrol keyboard player')}
               className={`px-4 py-2 rounded-full border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
                 taskType === 'Create games'
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
+                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-200 dark:border-slate-900 shadow-sm'
                   : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-xs'
               }`}
             >
@@ -368,7 +368,7 @@ export const ManusReplica: React.FC = () => {
                 className="px-4 py-2 rounded-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
               >
                 <span>More</span>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               </button>
 
               {/* More Dropdown Menu */}
@@ -459,7 +459,7 @@ export const ManusReplica: React.FC = () => {
                   <Terminal className="w-4 h-4 text-purple-600" />
                   <span>Log Langkah Eksekusi</span>
                 </h3>
-                <span className="text-[10px] font-mono text-slate-400">Manus Engine v2</span>
+                <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400">Manus Engine v2</span>
               </div>
 
               {/* Steps List */}
@@ -472,7 +472,7 @@ export const ManusReplica: React.FC = () => {
                         ? 'bg-slate-50 border-slate-200 text-slate-800 font-medium'
                         : step.status === 'in_progress'
                         ? 'bg-purple-50 border-purple-200 text-purple-900 font-bold shadow-xs'
-                        : 'bg-slate-50/50 border-slate-100 text-slate-400'
+                        : 'bg-slate-50/50 border-slate-100 text-slate-500 dark:text-slate-400'
                     }`}
                   >
                     <div className="flex items-start gap-2.5">
@@ -481,12 +481,12 @@ export const ManusReplica: React.FC = () => {
                       ) : step.status === 'in_progress' ? (
                         <Loader2 className="w-4 h-4 text-purple-600 animate-spin shrink-0 mt-0.5" />
                       ) : (
-                        <Circle className="w-4 h-4 text-slate-300 shrink-0 mt-0.5" />
+                        <Circle className="w-4 h-4 text-slate-600 dark:text-slate-300 shrink-0 mt-0.5" />
                       )}
                       <div className="space-y-0.5 flex-1">
                         <p>{step.text}</p>
                         {step.timestamp && (
-                          <span className="text-[10px] font-mono text-slate-400 block">{step.timestamp}</span>
+                          <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 block">{step.timestamp}</span>
                         )}
                       </div>
                     </div>
@@ -538,7 +538,7 @@ export const ManusReplica: React.FC = () => {
                     {activeResultText}
                   </div>
                 ) : (
-                  <div className="text-center text-slate-400 py-12 text-xs font-medium">
+                  <div className="text-center text-slate-500 dark:text-slate-400 py-12 text-xs font-medium">
                     Belum ada hasil untuk ditayangkan.
                   </div>
                 )}
@@ -562,7 +562,7 @@ export const ManusReplica: React.FC = () => {
                   <button
                     onClick={handleFollowUpSubmit}
                     disabled={!followUpInput.trim() || isLoading}
-                    className="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 disabled:bg-slate-200 cursor-pointer transition-all"
+                    className="w-8 h-8 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white flex items-center justify-center hover:bg-slate-100 dark:bg-slate-800 disabled:bg-slate-200 cursor-pointer transition-all"
                   >
                     <ArrowUp className="w-4 h-4" />
                   </button>
@@ -575,11 +575,11 @@ export const ManusReplica: React.FC = () => {
 
       {/* ---------------- MODAL 1: ATTACHMENT SIMULATION ---------------- */}
       {showAttachmentModal && (
-        <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
+        <div className="absolute inset-0 bg-slate-100 dark:bg-slate-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
           <div className="bg-white border border-slate-200 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <h3 className="text-sm font-extrabold text-slate-900">Pilih Lampiran Simulasi</h3>
-              <button onClick={() => setShowAttachmentModal(false)} className="p-1 text-slate-400 hover:text-slate-700">
+              <button onClick={() => setShowAttachmentModal(false)} className="p-1 text-slate-500 dark:text-slate-400 hover:text-slate-700">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -595,7 +595,7 @@ export const ManusReplica: React.FC = () => {
                   <FileText className="w-4 h-4 text-blue-600" />
                   <span>Spesifikasi_Kebutuhan_Proyek.pdf</span>
                 </div>
-                <span className="text-[10px] text-slate-400">PDF • 1.2 MB</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">PDF • 1.2 MB</span>
               </button>
 
               <button
@@ -606,7 +606,7 @@ export const ManusReplica: React.FC = () => {
                   <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
                   <span>Data_Analisis_Pasar_2026.csv</span>
                 </div>
-                <span className="text-[10px] text-slate-400">CSV • 450 KB</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">CSV • 450 KB</span>
               </button>
             </div>
             <button
@@ -621,7 +621,7 @@ export const ManusReplica: React.FC = () => {
 
       {/* ---------------- MODAL 2: AUTH SIMULATION ALERT ---------------- */}
       {showAuthModal && (
-        <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
+        <div className="absolute inset-0 bg-slate-100 dark:bg-slate-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
           <div className="bg-white border border-slate-200 rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl text-center">
             <div className="w-12 h-12 mx-auto rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-2xl font-bold">
               ✋
@@ -634,7 +634,7 @@ export const ManusReplica: React.FC = () => {
             </div>
             <button
               onClick={() => setShowAuthModal(false)}
-              className="w-full py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold transition-all cursor-pointer"
+              className="w-full py-2.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-extrabold transition-all cursor-pointer"
             >
               Mengerti & Lanjutkan
             </button>
@@ -644,7 +644,7 @@ export const ManusReplica: React.FC = () => {
 
       {/* ---------------- MODAL 3: META ANNOUNCEMENT BANNER MODAL ---------------- */}
       {showMetaBannerModal && (
-        <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
+        <div className="absolute inset-0 bg-slate-100 dark:bg-slate-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
           <div className="bg-white border border-slate-200 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl text-center">
             <div className="w-12 h-12 mx-auto rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center text-xl font-bold">
               ∞
@@ -657,7 +657,7 @@ export const ManusReplica: React.FC = () => {
             </div>
             <button
               onClick={() => setShowMetaBannerModal(false)}
-              className="w-full py-2.5 rounded-2xl bg-slate-900 text-white text-xs font-extrabold cursor-pointer"
+              className="w-full py-2.5 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs font-extrabold cursor-pointer"
             >
               Tutup Pengumuman
             </button>

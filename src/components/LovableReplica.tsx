@@ -156,7 +156,7 @@ export const LovableReplica: React.FC = () => {
         setCurrentCodeSnippet(data.codeSnippet);
       } else if (mode === 'Bangun') {
         // Fallback code snippet if not extracted
-        setCurrentCodeSnippet(`// Default React + Tailwind Component\nexport default function GeneratedLanding() {\n  return (\n    <div className="p-8 text-center bg-slate-900 text-white min-h-screen">\n      <h1 className="text-3xl font-bold">${promptToSubmit}</h1>\n    </div>\n  );\n}`);
+        setCurrentCodeSnippet(`// Default React + Tailwind Component\nexport default function GeneratedLanding() {\n  return (\n    <div className="p-8 text-center bg-white dark:bg-slate-900 text-slate-900 dark:text-white min-h-screen">\n      <h1 className="text-3xl font-bold">${promptToSubmit}</h1>\n    </div>\n  );\n}`);
       }
     } catch (err: any) {
       console.error('Lovable generate error:', err);
@@ -201,7 +201,7 @@ export const LovableReplica: React.FC = () => {
   };
 
   return (
-    <div className="relative rounded-2xl border border-slate-800 bg-[#07060f] text-slate-100 overflow-hidden shadow-2xl flex flex-col min-h-[750px] font-sans select-none">
+    <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#07060f] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl flex flex-col min-h-[750px] font-sans select-none">
       {/* Visual Ambient Background Gradient Layer */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-indigo-900/40 via-purple-900/30 via-pink-600/20 to-transparent blur-[120px] rounded-full opacity-80" />
@@ -209,32 +209,32 @@ export const LovableReplica: React.FC = () => {
       </div>
 
       {/* TOP NAVBAR */}
-      <header className="relative z-20 px-6 py-4 flex items-center justify-between border-b border-slate-800/40 bg-[#07060f]/60 backdrop-blur-md">
+      <header className="relative z-20 px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-800/40 bg-[#07060f]/60 backdrop-blur-md">
         {/* Left: Brand Logo */}
         <div
           onClick={() => setViewState('landing')}
           className="flex items-center gap-2 cursor-pointer group"
         >
           <span className="text-xl">❤️</span>
-          <span className="text-xl font-extrabold text-white tracking-tight group-hover:text-purple-300 transition-colors">
+          <span className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight group-hover:text-purple-300 transition-colors">
             Lovable
           </span>
         </div>
 
         {/* Center: Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-300">
+        <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600 dark:text-slate-300">
           <div className="relative">
             <button
               onClick={() => setIsNavDropdownOpen(isNavDropdownOpen === 'solusi' ? null : 'solusi')}
-              className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer"
+              className="flex items-center gap-1 hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
             >
               <span>Solusi</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
             </button>
             {isNavDropdownOpen === 'solusi' && (
-              <div className="absolute top-full left-0 mt-2 w-48 bg-[#141222] border border-slate-800 rounded-xl p-2 shadow-2xl space-y-1 text-xs">
-                <div className="p-2 hover:bg-slate-800/80 rounded-lg cursor-pointer" onClick={() => handleOpenNavSimulationModal('Solusi Landing Page')}>Landing Page Builder</div>
-                <div className="p-2 hover:bg-slate-800/80 rounded-lg cursor-pointer" onClick={() => handleOpenNavSimulationModal('Solusi Web App')}>Web Application</div>
+              <div className="absolute top-full left-0 mt-2 w-48 bg-[#141222] border border-slate-200 dark:border-slate-800 rounded-xl p-2 shadow-2xl space-y-1 text-xs">
+                <div className="p-2 hover:bg-slate-100 dark:bg-slate-800/80 rounded-lg cursor-pointer" onClick={() => handleOpenNavSimulationModal('Solusi Landing Page')}>Landing Page Builder</div>
+                <div className="p-2 hover:bg-slate-100 dark:bg-slate-800/80 rounded-lg cursor-pointer" onClick={() => handleOpenNavSimulationModal('Solusi Web App')}>Web Application</div>
               </div>
             )}
           </div>
@@ -242,34 +242,34 @@ export const LovableReplica: React.FC = () => {
           <div className="relative">
             <button
               onClick={() => setIsNavDropdownOpen(isNavDropdownOpen === 'sumber' ? null : 'sumber')}
-              className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer"
+              className="flex items-center gap-1 hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
             >
               <span>Sumber daya</span>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
             </button>
             {isNavDropdownOpen === 'sumber' && (
-              <div className="absolute top-full left-0 mt-2 w-48 bg-[#141222] border border-slate-800 rounded-xl p-2 shadow-2xl space-y-1 text-xs">
-                <div className="p-2 hover:bg-slate-800/80 rounded-lg cursor-pointer" onClick={() => handleOpenNavSimulationModal('Dokumentasi')}>Dokumentasi API</div>
-                <div className="p-2 hover:bg-slate-800/80 rounded-lg cursor-pointer" onClick={() => handleOpenNavSimulationModal('Panduan')}>Panduan Prompting</div>
+              <div className="absolute top-full left-0 mt-2 w-48 bg-[#141222] border border-slate-200 dark:border-slate-800 rounded-xl p-2 shadow-2xl space-y-1 text-xs">
+                <div className="p-2 hover:bg-slate-100 dark:bg-slate-800/80 rounded-lg cursor-pointer" onClick={() => handleOpenNavSimulationModal('Dokumentasi')}>Dokumentasi API</div>
+                <div className="p-2 hover:bg-slate-100 dark:bg-slate-800/80 rounded-lg cursor-pointer" onClick={() => handleOpenNavSimulationModal('Panduan')}>Panduan Prompting</div>
               </div>
             )}
           </div>
 
           <button
             onClick={() => handleOpenNavSimulationModal('Komunitas')}
-            className="hover:text-white transition-colors cursor-pointer"
+            className="hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
           >
             Komunitas
           </button>
           <button
             onClick={() => handleOpenNavSimulationModal('Harga')}
-            className="hover:text-white transition-colors cursor-pointer"
+            className="hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
           >
             Harga
           </button>
           <button
             onClick={() => handleOpenNavSimulationModal('Keamanan')}
-            className="hover:text-white transition-colors cursor-pointer"
+            className="hover:text-slate-900 dark:text-white transition-colors cursor-pointer"
           >
             Keamanan
           </button>
@@ -279,7 +279,7 @@ export const LovableReplica: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => handleOpenNavSimulationModal('Masuk')}
-            className="px-4 py-1.5 rounded-lg border border-slate-700/80 bg-slate-900/60 hover:bg-slate-800 text-white text-xs font-semibold transition-all cursor-pointer"
+            className="px-4 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700/80 bg-white dark:bg-slate-900/60 hover:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-semibold transition-all cursor-pointer"
           >
             Masuk
           </button>
@@ -298,28 +298,28 @@ export const LovableReplica: React.FC = () => {
           {/* Announcement Pill Banner */}
           <button
             onClick={handleOpenBannerModal}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1b1730]/80 border border-indigo-500/30 hover:border-indigo-400 text-xs text-slate-200 transition-all cursor-pointer group shadow-xl"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1b1730]/80 border border-indigo-500/30 hover:border-indigo-400 text-xs text-slate-700 dark:text-slate-200 transition-all cursor-pointer group shadow-xl"
           >
-            <span className="px-2 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-extrabold uppercase tracking-wide">
+            <span className="px-2 py-0.5 rounded-full bg-blue-600 text-slate-900 dark:text-white text-[10px] font-extrabold uppercase tracking-wide">
               Baru
             </span>
             <span className="font-medium">Aplikasi Lovable kini berfungsi di ChatGPT dan Claude</span>
-            <span className="group-hover:translate-x-0.5 transition-transform text-slate-400">→</span>
+            <span className="group-hover:translate-x-0.5 transition-transform text-slate-500 dark:text-slate-400">→</span>
           </button>
 
           {/* Headlines */}
           <div className="space-y-3 max-w-3xl">
-            <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
               Bangun sesuatu dengan Lovable
             </h1>
-            <p className="text-slate-300 text-base sm:text-lg font-medium leading-relaxed max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg font-medium leading-relaxed max-w-2xl mx-auto">
               Buat aplikasi dan situs web dengan mengobrol bersama AI
             </p>
           </div>
 
           {/* Central Input Box */}
           <div className="w-full max-w-2xl space-y-3">
-            <div className="relative bg-[#1a1728]/90 border border-slate-700/80 focus-within:border-purple-500 rounded-3xl p-4 transition-all shadow-2xl backdrop-blur-xl">
+            <div className="relative bg-[#1a1728]/90 border border-slate-300 dark:border-slate-700/80 focus-within:border-purple-500 rounded-3xl p-4 transition-all shadow-2xl backdrop-blur-xl">
               <textarea
                 value={inputPrompt}
                 onChange={(e) => setInputPrompt(e.target.value)}
@@ -331,15 +331,15 @@ export const LovableReplica: React.FC = () => {
                 }}
                 placeholder="Minta Lovable membuat halaman arahan untuk..."
                 rows={3}
-                className="w-full bg-transparent text-white text-sm sm:text-base placeholder-slate-400 focus:outline-none resize-none leading-relaxed"
+                className="w-full bg-transparent text-slate-900 dark:text-white text-sm sm:text-base placeholder-slate-400 focus:outline-none resize-none leading-relaxed"
               />
 
               {/* Bottom Control Row Inside Card */}
-              <div className="flex items-center justify-between pt-2 border-t border-slate-800/60">
+              <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800/60">
                 {/* Left Side: Circular Action Button */}
                 <button
                   onClick={() => handleGenerate('Buatkan landing page SaaS untuk alat otomatisasi alur kerja AI')}
-                  className="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center transition-colors cursor-pointer"
                   title="Gunakan Contoh Prompt Cepat"
                 >
                   <Sparkles className="w-4 h-4 text-purple-400" />
@@ -351,26 +351,26 @@ export const LovableReplica: React.FC = () => {
                   <div className="relative">
                     <button
                       onClick={() => setIsModeDropdownOpen(!isModeDropdownOpen)}
-                      className="px-3 py-1.5 rounded-xl bg-[#231f36] border border-slate-700/80 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 cursor-pointer"
+                      className="px-3 py-1.5 rounded-xl bg-[#231f36] border border-slate-300 dark:border-slate-700/80 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer"
                     >
                       <span>{mode}</span>
-                      <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                      <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                     </button>
 
                     {isModeDropdownOpen && (
-                      <div className="absolute right-0 bottom-full mb-2 w-48 bg-[#1a1728] border border-slate-700 rounded-xl shadow-2xl p-1.5 z-50 text-left space-y-1">
+                      <div className="absolute right-0 bottom-full mb-2 w-48 bg-[#1a1728] border border-slate-300 dark:border-slate-700 rounded-xl shadow-2xl p-1.5 z-50 text-left space-y-1">
                         <button
                           onClick={() => {
                             setMode('Bangun');
                             setIsModeDropdownOpen(false);
                           }}
                           className={`w-full text-left px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between cursor-pointer ${
-                            mode === 'Bangun' ? 'bg-purple-900/60 text-purple-200 font-bold' : 'text-slate-300 hover:bg-slate-800'
+                            mode === 'Bangun' ? 'bg-purple-900/60 text-purple-200 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:bg-slate-800'
                           }`}
                         >
                           <div>
                             <div className="font-bold">Bangun</div>
-                            <div className="text-[10px] text-slate-400">Generate kode aplikasi &amp; landing page</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Generate kode aplikasi &amp; landing page</div>
                           </div>
                           {mode === 'Bangun' && <Check className="w-4 h-4 text-purple-400" />}
                         </button>
@@ -381,12 +381,12 @@ export const LovableReplica: React.FC = () => {
                             setIsModeDropdownOpen(false);
                           }}
                           className={`w-full text-left px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between cursor-pointer ${
-                            mode === 'Chat' ? 'bg-purple-900/60 text-purple-200 font-bold' : 'text-slate-300 hover:bg-slate-800'
+                            mode === 'Chat' ? 'bg-purple-900/60 text-purple-200 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:bg-slate-800'
                           }`}
                         >
                           <div>
                             <div className="font-bold">Chat / Tanya</div>
-                            <div className="text-[10px] text-slate-400">Brainstorming &amp; rancang ide UI/UX</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Brainstorming &amp; rancang ide UI/UX</div>
                           </div>
                           {mode === 'Chat' && <Check className="w-4 h-4 text-purple-400" />}
                         </button>
@@ -399,8 +399,8 @@ export const LovableReplica: React.FC = () => {
                     onClick={handleMicrophoneClick}
                     className={`p-2 rounded-xl transition-all cursor-pointer ${
                       isRecording
-                        ? 'bg-rose-600 text-white animate-pulse'
-                        : 'bg-slate-800/80 hover:bg-slate-700 text-slate-300'
+                        ? 'bg-rose-600 text-slate-900 dark:text-white animate-pulse'
+                        : 'bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-700 text-slate-600 dark:text-slate-300'
                     }`}
                     title="Suara ke Teks (Simulasi Web Speech API)"
                   >
@@ -414,7 +414,7 @@ export const LovableReplica: React.FC = () => {
                     className={`p-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
                       inputPrompt.trim() && !isLoading
                         ? 'bg-white hover:bg-slate-200 text-slate-950 shadow-lg shadow-white/20'
-                        : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-500 cursor-not-allowed'
                     }`}
                     title="Kirim Prompt"
                   >
@@ -441,7 +441,7 @@ export const LovableReplica: React.FC = () => {
                 </div>
                 <button
                   onClick={() => setErrorMessage(null)}
-                  className="p-1 text-rose-300 hover:text-white"
+                  className="p-1 text-rose-300 hover:text-slate-900 dark:text-white"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -453,17 +453,17 @@ export const LovableReplica: React.FC = () => {
         /* WORKSPACE VIEW: BUILDER STUDIO */
         <div className="relative z-10 flex-1 flex flex-col overflow-hidden bg-[#0a0814]">
           {/* Workspace Top Toolbar */}
-          <div className="px-4 py-2.5 bg-[#120f22] border-b border-slate-800 flex items-center justify-between shrink-0">
+          <div className="px-4 py-2.5 bg-[#120f22] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setViewState('landing')}
-                className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
+                className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Kembali ke Home</span>
               </button>
 
-              <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-300">
+              <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
                 <span className="text-purple-400 font-bold">Lovable Workspace</span>
                 <span className="text-slate-600">•</span>
                 <span className="px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 text-[10px]">
@@ -473,11 +473,11 @@ export const LovableReplica: React.FC = () => {
             </div>
 
             {/* Middle: Tab Switcher (Preview / Code / Split) */}
-            <div className="flex items-center bg-[#1b1730] p-1 rounded-xl border border-slate-800">
+            <div className="flex items-center bg-[#1b1730] p-1 rounded-xl border border-slate-200 dark:border-slate-800">
               <button
                 onClick={() => setWorkspaceTab('split')}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  workspaceTab === 'split' ? 'bg-[#6149f6] text-white' : 'text-slate-400 hover:text-white'
+                  workspaceTab === 'split' ? 'bg-[#6149f6] text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
                 }`}
               >
                 Split View
@@ -485,7 +485,7 @@ export const LovableReplica: React.FC = () => {
               <button
                 onClick={() => setWorkspaceTab('code')}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  workspaceTab === 'code' ? 'bg-[#6149f6] text-white' : 'text-slate-400 hover:text-white'
+                  workspaceTab === 'code' ? 'bg-[#6149f6] text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
                 }`}
               >
                 Code
@@ -493,7 +493,7 @@ export const LovableReplica: React.FC = () => {
               <button
                 onClick={() => setWorkspaceTab('preview')}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  workspaceTab === 'preview' ? 'bg-[#6149f6] text-white' : 'text-slate-400 hover:text-white'
+                  workspaceTab === 'preview' ? 'bg-[#6149f6] text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
                 }`}
               >
                 Preview
@@ -504,7 +504,7 @@ export const LovableReplica: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopyCode}
-                className="px-3 py-1.5 rounded-lg bg-[#221d38] border border-slate-700 text-xs font-bold text-slate-200 hover:text-white flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-1.5 rounded-lg bg-[#221d38] border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer"
               >
                 {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copiedCode ? 'Tersalin' : 'Salin Kode'}</span>
@@ -518,7 +518,7 @@ export const LovableReplica: React.FC = () => {
             {(workspaceTab === 'split' || workspaceTab === 'code') && (
               <div
                 className={`${
-                  workspaceTab === 'split' ? 'w-1/2 border-r border-slate-800' : 'w-full'
+                  workspaceTab === 'split' ? 'w-1/2 border-r border-slate-200 dark:border-slate-800' : 'w-full'
                 } flex flex-col bg-[#0d0b1a] overflow-hidden`}
               >
                 {/* Chat History Messages */}
@@ -528,11 +528,11 @@ export const LovableReplica: React.FC = () => {
                       key={msg.id}
                       className={`p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed space-y-2 ${
                         msg.sender === 'user'
-                          ? 'bg-[#6149f6] text-white ml-auto max-w-lg'
-                          : 'bg-[#151226] border border-slate-800 text-slate-200 max-w-2xl'
+                          ? 'bg-[#6149f6] text-slate-900 dark:text-white ml-auto max-w-lg'
+                          : 'bg-[#151226] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 max-w-2xl'
                       }`}
                     >
-                      <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono">
+                      <div className="flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 font-mono">
                         <span>{msg.sender === 'user' ? 'Anda' : 'Lovable AI'}</span>
                         <span>{msg.timestamp}</span>
                       </div>
@@ -542,12 +542,12 @@ export const LovableReplica: React.FC = () => {
 
                   {/* Loading Indicator */}
                   {isLoading && (
-                    <div className="p-4 rounded-2xl bg-[#151226] border border-slate-800 text-xs text-purple-300 space-y-2 animate-pulse">
-                      <div className="flex items-center gap-2 font-bold text-white">
+                    <div className="p-4 rounded-2xl bg-[#151226] border border-slate-200 dark:border-slate-800 text-xs text-purple-300 space-y-2 animate-pulse">
+                      <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
                         <RefreshCw className="w-4 h-4 animate-spin text-purple-400" />
                         <span>Lovable Builder Sedang Bekerja...</span>
                       </div>
-                      <p className="text-slate-400 text-[11px] font-mono">{loadingStepText}</p>
+                      <p className="text-slate-500 dark:text-slate-400 text-[11px] font-mono">{loadingStepText}</p>
                     </div>
                   )}
 
@@ -556,8 +556,8 @@ export const LovableReplica: React.FC = () => {
 
                 {/* Code Preview Box */}
                 {currentCodeSnippet && (
-                  <div className="h-64 border-t border-slate-800 bg-[#080712] flex flex-col shrink-0">
-                    <div className="px-3 py-1.5 bg-[#120f22] border-b border-slate-800/80 flex items-center justify-between text-xs text-slate-400 font-mono">
+                  <div className="h-64 border-t border-slate-200 dark:border-slate-800 bg-[#080712] flex flex-col shrink-0">
+                    <div className="px-3 py-1.5 bg-[#120f22] border-b border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-mono">
                       <span className="flex items-center gap-1.5">
                         <Code2 className="w-3.5 h-3.5 text-purple-400" /> Component.tsx
                       </span>
@@ -575,8 +575,8 @@ export const LovableReplica: React.FC = () => {
                 )}
 
                 {/* Input Prompt Box at Bottom of Left Panel */}
-                <div className="p-3 bg-[#110e20] border-t border-slate-800 shrink-0">
-                  <div className="relative bg-[#1a1728] border border-slate-700 rounded-xl p-2 flex items-center gap-2">
+                <div className="p-3 bg-[#110e20] border-t border-slate-200 dark:border-slate-800 shrink-0">
+                  <div className="relative bg-[#1a1728] border border-slate-300 dark:border-slate-700 rounded-xl p-2 flex items-center gap-2">
                     <input
                       type="text"
                       value={inputPrompt}
@@ -585,12 +585,12 @@ export const LovableReplica: React.FC = () => {
                         if (e.key === 'Enter') handleGenerate();
                       }}
                       placeholder="Minta perubahan atau iterasi desain..."
-                      className="flex-1 bg-transparent text-white text-xs placeholder-slate-500 focus:outline-none"
+                      className="flex-1 bg-transparent text-slate-900 dark:text-white text-xs placeholder-slate-500 focus:outline-none"
                     />
                     <button
                       onClick={() => handleGenerate()}
                       disabled={!inputPrompt.trim() || isLoading}
-                      className="p-1.5 rounded-lg bg-[#6149f6] text-white hover:bg-[#523be3] disabled:bg-slate-800 disabled:text-slate-500 cursor-pointer"
+                      className="p-1.5 rounded-lg bg-[#6149f6] text-slate-900 dark:text-white hover:bg-[#523be3] disabled:bg-slate-100 dark:bg-slate-800 disabled:text-slate-500 cursor-pointer"
                     >
                       <Send className="w-3.5 h-3.5" />
                     </button>
@@ -607,12 +607,12 @@ export const LovableReplica: React.FC = () => {
                 } bg-[#080712] flex flex-col overflow-hidden`}
               >
                 {/* Device Responsiveness Toolbar */}
-                <div className="px-4 py-2 bg-[#120f22] border-b border-slate-800 flex items-center justify-between text-xs text-slate-400 shrink-0">
+                <div className="px-4 py-2 bg-[#120f22] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 shrink-0">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setPreviewDevice('desktop')}
                       className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
-                        previewDevice === 'desktop' ? 'bg-[#6149f6] text-white' : 'hover:bg-slate-800'
+                        previewDevice === 'desktop' ? 'bg-[#6149f6] text-slate-900 dark:text-white' : 'hover:bg-slate-100 dark:bg-slate-800'
                       }`}
                       title="Desktop Mode"
                     >
@@ -621,7 +621,7 @@ export const LovableReplica: React.FC = () => {
                     <button
                       onClick={() => setPreviewDevice('tablet')}
                       className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
-                        previewDevice === 'tablet' ? 'bg-[#6149f6] text-white' : 'hover:bg-slate-800'
+                        previewDevice === 'tablet' ? 'bg-[#6149f6] text-slate-900 dark:text-white' : 'hover:bg-slate-100 dark:bg-slate-800'
                       }`}
                       title="Tablet Mode"
                     >
@@ -630,7 +630,7 @@ export const LovableReplica: React.FC = () => {
                     <button
                       onClick={() => setPreviewDevice('mobile')}
                       className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
-                        previewDevice === 'mobile' ? 'bg-[#6149f6] text-white' : 'hover:bg-slate-800'
+                        previewDevice === 'mobile' ? 'bg-[#6149f6] text-slate-900 dark:text-white' : 'hover:bg-slate-100 dark:bg-slate-800'
                       }`}
                       title="Mobile Mode"
                     >
@@ -644,9 +644,9 @@ export const LovableReplica: React.FC = () => {
                 </div>
 
                 {/* Render Frame Container */}
-                <div className="flex-1 overflow-auto p-4 flex items-center justify-center bg-slate-950">
+                <div className="flex-1 overflow-auto p-4 flex items-center justify-center bg-slate-100 dark:bg-slate-950">
                   <div
-                    className={`bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 w-full ${
+                    className={`bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 w-full ${
                       previewDevice === 'desktop'
                         ? 'max-w-full h-full'
                         : previewDevice === 'tablet'
@@ -655,33 +655,33 @@ export const LovableReplica: React.FC = () => {
                     }`}
                   >
                     {/* Simulated Component Render */}
-                    <div className="h-full overflow-y-auto p-6 space-y-6 text-white font-sans bg-slate-950">
+                    <div className="h-full overflow-y-auto p-6 space-y-6 text-slate-900 dark:text-white font-sans bg-slate-100 dark:bg-slate-950">
                       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-900/60 border border-purple-500/30 text-purple-300 text-xs font-semibold">
                         <Sparkles className="w-3.5 h-3.5" /> Halaman Dihasilkan oleh Lovable AI
                       </div>
 
-                      <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+                      <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                         {history.find((m) => m.sender === 'user')?.text || 'Pratinjau Hasil Halaman Arahan'}
                       </h2>
 
-                      <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                      <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
                         Tampilan antarmuka berbasis React &amp; Tailwind CSS ini telah siap digunakan dan diintegrasikan ke proyek Anda.
                       </p>
 
-                      <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3 text-left">
+                      <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 text-left">
                         <div className="flex items-center gap-2 text-xs font-bold text-purple-300">
                           <Check className="w-4 h-4 text-emerald-400" /> Responsif Sempurna
                         </div>
-                        <p className="text-[11px] text-slate-400 leading-relaxed">
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
                           Tata letak fleksibel yang menyesuaikan secara otomatis dengan layar seluler, tablet, maupun komputer.
                         </p>
                       </div>
 
                       <div className="pt-4 flex items-center gap-3">
-                        <button className="px-4 py-2 rounded-xl bg-[#6149f6] text-white text-xs font-bold shadow-lg">
+                        <button className="px-4 py-2 rounded-xl bg-[#6149f6] text-slate-900 dark:text-white text-xs font-bold shadow-lg">
                           Mulai Uji Coba
                         </button>
-                        <button className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold">
+                        <button className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold">
                           Pelajari Selengkapnya
                         </button>
                       </div>
@@ -696,20 +696,20 @@ export const LovableReplica: React.FC = () => {
 
       {/* INFO / SIMULATION MODAL */}
       {isInfoModalOpen && (
-        <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div className="absolute inset-0 bg-slate-100 dark:bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
           <div className="bg-[#141224] border border-purple-800/80 rounded-2xl p-6 max-w-md w-full space-y-4 shadow-2xl text-center">
             <div className="w-12 h-12 mx-auto rounded-2xl bg-[#6149f6] flex items-center justify-center text-2xl shadow-lg">
               ❤️
             </div>
 
             <div className="space-y-2">
-              <h4 className="text-base font-extrabold text-white">{infoModalTitle}</h4>
-              <p className="text-xs text-slate-300 leading-relaxed">{infoModalContent}</p>
+              <h4 className="text-base font-extrabold text-slate-900 dark:text-white">{infoModalTitle}</h4>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{infoModalContent}</p>
             </div>
 
             <button
               onClick={() => setIsInfoModalOpen(false)}
-              className="w-full py-2.5 rounded-xl bg-[#6149f6] hover:bg-[#523be3] text-white text-xs font-extrabold transition-all cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-[#6149f6] hover:bg-[#523be3] text-slate-900 dark:text-white text-xs font-extrabold transition-all cursor-pointer"
             >
               Mengerti &amp; Tutup
             </button>

@@ -154,7 +154,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
     summary: 'Komponen UI Portal Siswa Maxy Academy dengan statistik modul, indikator kelulusan, dan tombol interaktif.',
     code: `export function MaxyStudentPortal() {
   return (
-    <div className="p-6 bg-[#18181b] text-white rounded-2xl border border-amber-500/30 font-sans">
+    <div className="p-6 bg-[#18181b] text-slate-900 dark:text-white rounded-2xl border border-amber-500/30 font-sans">
       <div className="flex justify-between items-center border-b border-neutral-800 pb-3 mb-4">
         <h2 className="text-base font-bold text-amber-400">✨ Maxy Student Portal</h2>
         <span className="bg-emerald-950 text-emerald-400 text-xs px-2.5 py-0.5 rounded-full border border-emerald-800">Status: Aktif</span>
@@ -162,7 +162,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
       <div className="grid grid-cols-2 gap-3 text-xs">
         <div className="bg-[#242427] p-3 rounded-xl border border-neutral-800">
           <div className="text-neutral-400">Progress Pembelajaran</div>
-          <div className="text-lg font-bold text-white mt-1">88% Complete</div>
+          <div className="text-lg font-bold text-slate-900 dark:text-white mt-1">88% Complete</div>
         </div>
         <div className="bg-[#242427] p-3 rounded-xl border border-neutral-800">
           <div className="text-neutral-400">Modul Selesai</div>
@@ -391,41 +391,41 @@ export const ClaudeFeaturesReplica: React.FC = () => {
   };
 
   return (
-    <div className="w-full min-h-[750px] bg-[#141416] text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-800 flex flex-col relative shadow-2xl">
+    <div className="w-full min-h-[750px] bg-[#141416] text-slate-800 dark:text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col relative shadow-2xl">
       
       {/* Top Navigation Bar Across All Stages */}
-      <div className="bg-[#1c1c20] border-b border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shrink-0 z-30">
+      <div className="bg-[#1c1c20] border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shrink-0 z-30">
         <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 rounded bg-gradient-to-tr from-amber-600 to-orange-600 flex items-center justify-center font-bold text-white text-xs shadow-md">
+          <div className="w-6 h-6 rounded bg-gradient-to-tr from-amber-600 to-orange-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs shadow-md">
             ✳
           </div>
-          <span className="font-extrabold text-slate-100 text-sm">Claude Features Studio</span>
+          <span className="font-extrabold text-slate-800 dark:text-slate-100 text-sm">Claude Features Studio</span>
           <span className="text-slate-500 text-xs hidden sm:inline">| Artifacts, Cowork & Office Extensions</span>
         </div>
 
         {/* Stage Switcher Controls */}
-        <div className="flex items-center space-x-1 bg-[#121214] p-1 rounded-xl border border-slate-800 text-xs">
+        <div className="flex items-center space-x-1 bg-[#121214] p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
           <button
             onClick={() => { setActiveStage('sidebar'); setSelectedNav('Obrolan'); }}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeStage === 'sidebar' ? 'bg-amber-700 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeStage === 'sidebar' ? 'bg-amber-700 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 1: Navigasi
           </button>
           <button
             onClick={() => setActiveStage('artifacts')}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeStage === 'artifacts' ? 'bg-amber-700 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeStage === 'artifacts' ? 'bg-amber-700 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 2: Artifacts
           </button>
           <button
             onClick={() => setActiveStage('cowork')}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeStage === 'cowork' ? 'bg-amber-700 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeStage === 'cowork' ? 'bg-amber-700 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 3: Cowork
           </button>
           <button
             onClick={() => setActiveStage('office')}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeStage === 'office' ? 'bg-amber-700 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all ${activeStage === 'office' ? 'bg-amber-700 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 4: Excel & PPT
           </button>
@@ -434,7 +434,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
 
       {/* Global Toast Banner */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-amber-600 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-2xl border border-amber-400 flex items-center space-x-2 animate-bounce">
+        <div className="fixed bottom-6 right-6 z-50 bg-amber-600 text-slate-900 dark:text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-2xl border border-amber-400 flex items-center space-x-2 animate-bounce">
           <Sparkles className="w-4 h-4 text-amber-200" />
           <span>{toast}</span>
         </div>
@@ -447,7 +447,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
             <AlertCircle className="w-4 h-4 text-rose-300" />
             <span>{errorMessage}</span>
           </div>
-          <button onClick={() => setErrorMessage(null)} className="hover:text-white font-bold">
+          <button onClick={() => setErrorMessage(null)} className="hover:text-slate-900 dark:text-white font-bold">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -459,15 +459,15 @@ export const ClaudeFeaturesReplica: React.FC = () => {
       {activeStage === 'sidebar' && (
         <div className="flex-1 flex flex-col md:flex-row bg-[#1b1b1e] overflow-hidden">
           {/* Left Claude Sidebar */}
-          <aside className="w-full md:w-64 bg-[#141416] border-r border-slate-800 p-3.5 flex flex-col justify-between shrink-0 text-xs space-y-4 overflow-y-auto">
+          <aside className="w-full md:w-64 bg-[#141416] border-r border-slate-200 dark:border-slate-800 p-3.5 flex flex-col justify-between shrink-0 text-xs space-y-4 overflow-y-auto">
             <div className="space-y-4">
               {/* Header Logo */}
               <div className="flex items-center justify-between px-1">
-                <span className="font-serif text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+                <span className="font-serif text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
                   <span className="text-amber-500 font-sans">✳</span> Claude
                 </span>
-                <div className="flex items-center space-x-1 text-slate-400">
-                  <button onClick={() => showToast('Pencarian riwayat obrolan aktif')} className="p-1 hover:text-white">
+                <div className="flex items-center space-x-1 text-slate-500 dark:text-slate-400">
+                  <button onClick={() => showToast('Pencarian riwayat obrolan aktif')} className="p-1 hover:text-slate-900 dark:text-white">
                     <Search className="w-4 h-4" />
                   </button>
                 </div>
@@ -476,20 +476,20 @@ export const ClaudeFeaturesReplica: React.FC = () => {
               {/* Chat Baru Button */}
               <button
                 onClick={handleStartNewChat}
-                className="w-full flex items-center space-x-2.5 p-2.5 rounded-xl border border-slate-700 bg-[#222226] hover:bg-[#2a2a30] text-slate-100 font-bold transition-all shadow-sm"
+                className="w-full flex items-center space-x-2.5 p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-[#222226] hover:bg-[#2a2a30] text-slate-800 dark:text-slate-100 font-bold transition-all shadow-sm"
               >
                 <Plus className="w-4 h-4 text-amber-500" />
                 <span>Chat baru</span>
               </button>
 
               {/* Main Navigation List */}
-              <div className="space-y-1 font-semibold text-slate-300">
+              <div className="space-y-1 font-semibold text-slate-600 dark:text-slate-300">
                 {[
                   { id: 'Obrolan', label: 'Obrolan', icon: <Bot className="w-4 h-4 text-amber-400" /> },
                   { id: 'Proyek', label: 'Proyek', icon: <Folder className="w-4 h-4 text-blue-400" /> },
                   { id: 'Artefak', label: 'Artefak', icon: <Layers className="w-4 h-4 text-emerald-400" /> },
                   { id: 'Kode', label: 'Kode', icon: <Code className="w-4 h-4 text-purple-400" />, badge: 'Tingkatkan' },
-                  { id: 'Sesuaikan', label: 'Sesuaikan', icon: <Settings className="w-4 h-4 text-slate-400" /> },
+                  { id: 'Sesuaikan', label: 'Sesuaikan', icon: <Settings className="w-4 h-4 text-slate-500 dark:text-slate-400" /> },
                   { id: 'Cowork & Add-ins', label: 'Cowork & Add-ins', icon: <Sparkles className="w-4 h-4 text-orange-400" /> }
                 ].map((item) => (
                   <button
@@ -499,7 +499,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                       if (item.id === 'Artefak') setActiveStage('artifacts');
                       else if (item.id === 'Cowork & Add-ins') setActiveStage('cowork');
                     }}
-                    className={`w-full flex items-center justify-between p-2 rounded-xl transition-all ${selectedNav === item.id ? 'bg-[#28282d] text-white font-bold' : 'hover:bg-slate-800/50 hover:text-slate-100'}`}
+                    className={`w-full flex items-center justify-between p-2 rounded-xl transition-all ${selectedNav === item.id ? 'bg-[#28282d] text-slate-900 dark:text-white font-bold' : 'hover:bg-slate-100 dark:bg-slate-800/50 hover:text-slate-800 dark:text-slate-100'}`}
                   >
                     <div className="flex items-center space-x-2.5">
                       {item.icon}
@@ -515,18 +515,18 @@ export const ClaudeFeaturesReplica: React.FC = () => {
               </div>
 
               {/* Terbaru (Recent Chat History) Section */}
-              <div className="pt-2 border-t border-slate-800 space-y-1">
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
                 <div className="flex items-center justify-between text-[10px] font-bold text-slate-500 uppercase tracking-wider px-1">
                   <span>Terbaru</span>
                   <Sliders className="w-3 h-3 text-slate-500" />
                 </div>
 
-                <div className="space-y-0.5 text-slate-400">
+                <div className="space-y-0.5 text-slate-500 dark:text-slate-400">
                   {recentsList.map((recent) => (
                     <div
                       key={recent.id}
                       onClick={() => handleSelectRecent(recent)}
-                      className={`p-2 rounded-lg cursor-pointer truncate text-[11px] transition-colors ${activeChatId === recent.id ? 'bg-[#28282d] text-amber-300 font-bold' : 'hover:bg-slate-800/50 hover:text-slate-200'}`}
+                      className={`p-2 rounded-lg cursor-pointer truncate text-[11px] transition-colors ${activeChatId === recent.id ? 'bg-[#28282d] text-amber-300 font-bold' : 'hover:bg-slate-100 dark:bg-slate-800/50 hover:text-slate-700 dark:text-slate-200'}`}
                     >
                       {recent.title}
                     </div>
@@ -536,17 +536,17 @@ export const ClaudeFeaturesReplica: React.FC = () => {
             </div>
 
             {/* Bottom User Profile Panel */}
-            <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
               <div className="flex items-center space-x-2.5 truncate">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-600 to-orange-700 font-bold text-white flex items-center justify-center text-xs">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-600 to-orange-700 font-bold text-slate-900 dark:text-white flex items-center justify-center text-xs">
                   MA
                 </div>
                 <div className="truncate">
-                  <div className="font-bold text-slate-200 truncate">Maxy Student</div>
+                  <div className="font-bold text-slate-700 dark:text-slate-200 truncate">Maxy Student</div>
                   <div className="text-[10px] text-slate-500">Paket gratis</div>
                 </div>
               </div>
-              <button onClick={() => showToast('Unduh aplikasi desktop Claude')} className="p-1.5 text-slate-400 hover:text-white rounded-lg">
+              <button onClick={() => showToast('Unduh aplikasi desktop Claude')} className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg">
                 <Download className="w-4 h-4" />
               </button>
             </div>
@@ -560,13 +560,13 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                 <div className="flex-1 space-y-3 overflow-y-auto max-h-[420px] p-2">
                   {activeMessages.length === 0 ? (
                     <div className="text-center py-16 space-y-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 text-white font-bold flex items-center justify-center text-xl mx-auto shadow-lg">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 text-slate-900 dark:text-white font-bold flex items-center justify-center text-xl mx-auto shadow-lg">
                         ✳
                       </div>
-                      <h2 className="text-xl sm:text-2xl font-serif text-white font-medium">
+                      <h2 className="text-xl sm:text-2xl font-serif text-slate-900 dark:text-white font-medium">
                         Halo, Maxy Student
                       </h2>
-                      <p className="text-xs text-slate-400 max-w-md mx-auto">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
                         Mulai percakapan baru dengan Claude 3.7 Sonnet. Tanyakan pertanyaan, minta analisis kode, atau draf dokumen.
                       </p>
                     </div>
@@ -576,7 +576,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                         key={idx}
                         className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                       >
-                        <div className={`max-w-xl rounded-2xl p-3.5 text-xs leading-relaxed space-y-1.5 shadow-md ${msg.sender === 'user' ? 'bg-amber-600 text-white rounded-tr-none' : 'bg-[#222226] border border-slate-800 text-slate-100 rounded-tl-none'}`}>
+                        <div className={`max-w-xl rounded-2xl p-3.5 text-xs leading-relaxed space-y-1.5 shadow-md ${msg.sender === 'user' ? 'bg-amber-600 text-slate-900 dark:text-white rounded-tr-none' : 'bg-[#222226] border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 rounded-tl-none'}`}>
                           <div className="font-bold text-[10px] text-amber-300">
                             {msg.sender === 'user' ? 'Maxy Student' : '✳ Claude 3.7 Sonnet'}
                           </div>
@@ -588,7 +588,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
 
                   {isLoading && (
                     <div className="flex justify-start">
-                      <div className="bg-[#222226] border border-slate-800 rounded-2xl rounded-tl-none p-3 text-xs text-amber-400 flex items-center space-x-2">
+                      <div className="bg-[#222226] border border-slate-200 dark:border-slate-800 rounded-2xl rounded-tl-none p-3 text-xs text-amber-400 flex items-center space-x-2">
                         <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                         <span>Claude sedang memproses jawaban via Gemini API...</span>
                       </div>
@@ -597,19 +597,19 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                 </div>
 
                 {/* Chat Input Bar */}
-                <div className="p-3 bg-[#222226] border border-slate-800 rounded-2xl flex items-center space-x-2 shadow-xl">
+                <div className="p-3 bg-[#222226] border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center space-x-2 shadow-xl">
                   <input
                     type="text"
                     value={navChatInput}
                     onChange={(e) => setNavChatInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSendNavChat()}
                     placeholder="Mulai percakapan dengan Claude..."
-                    className="flex-1 bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none px-2"
+                    className="flex-1 bg-transparent text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none px-2"
                   />
                   <button
                     onClick={() => handleSendNavChat()}
                     disabled={isLoading}
-                    className="bg-amber-600 hover:bg-amber-500 text-white p-2 rounded-xl font-bold shadow"
+                    className="bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white p-2 rounded-xl font-bold shadow"
                   >
                     <Send className="w-3.5 h-3.5" />
                   </button>
@@ -622,10 +622,10 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                   <span className="text-xs font-mono text-amber-400 uppercase tracking-widest bg-amber-950/60 border border-amber-800 px-3 py-1 rounded-full inline-block">
                     Navigasi Ekosistem Claude
                   </span>
-                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white">
                     Peta Fitur & Ruang Kerja Claude
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                     Klik salah satu kartu fitur di bawah ini untuk langsung berpindah ke tahap simulasi terkait.
                   </p>
                 </div>
@@ -658,7 +658,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     },
                     {
                       title: 'Sesuaikan (Customization)',
-                      icon: <Settings className="w-5 h-5 text-slate-400" />,
+                      icon: <Settings className="w-5 h-5 text-slate-500 dark:text-slate-400" />,
                       desc: 'Atur instruksi kustom, gaya bahasa, dan preferensi respon sesuai kebutuhan.',
                       action: () => showToast('Atur kustomisasi instruksi profil Claude Anda')
                     },
@@ -672,13 +672,13 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     <div
                       key={cidx}
                       onClick={card.action}
-                      className="bg-[#222227] border border-slate-800 hover:border-amber-500/60 p-4 rounded-2xl space-y-2 cursor-pointer transition-all hover:-translate-y-0.5 shadow-md"
+                      className="bg-[#222227] border border-slate-200 dark:border-slate-800 hover:border-amber-500/60 p-4 rounded-2xl space-y-2 cursor-pointer transition-all hover:-translate-y-0.5 shadow-md"
                     >
                       <div className="flex items-center space-x-2.5">
                         {card.icon}
-                        <h3 className="font-bold text-sm text-slate-100">{card.title}</h3>
+                        <h3 className="font-bold text-sm text-slate-800 dark:text-slate-100">{card.title}</h3>
                       </div>
-                      <p className="text-xs text-slate-400 leading-relaxed">{card.desc}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{card.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -693,14 +693,14 @@ export const ClaudeFeaturesReplica: React.FC = () => {
       {/* ========================================================= */}
       {activeStage === 'artifacts' && (
         <div className="flex-1 bg-[#18181b] flex flex-col overflow-y-auto">
-          <header className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-[#141416]">
+          <header className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-[#141416]">
             <div className="flex items-center space-x-2">
               <Layers className="w-5 h-5 text-amber-400" />
-              <h2 className="font-serif text-2xl font-bold text-white">Claude Artifacts Studio</h2>
+              <h2 className="font-serif text-2xl font-bold text-slate-900 dark:text-white">Claude Artifacts Studio</h2>
             </div>
             <button
               onClick={() => setShowArtifactModal(true)}
-              className="bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-xs px-4 py-2 rounded-xl shadow transition-colors flex items-center space-x-1.5"
+              className="bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white font-extrabold text-xs px-4 py-2 rounded-xl shadow transition-colors flex items-center space-x-1.5"
             >
               <Plus className="w-4 h-4" />
               <span>Artefak baru</span>
@@ -709,8 +709,8 @@ export const ClaudeFeaturesReplica: React.FC = () => {
 
           <div className="flex-1 max-w-4xl w-full mx-auto p-6 sm:p-10 flex flex-col space-y-6">
             {/* Artifact Workspace Container */}
-            <div className="bg-[#202025] border border-slate-700 rounded-3xl overflow-hidden shadow-2xl space-y-4 p-6">
-              <div className="flex items-center justify-between border-b border-slate-700 pb-3">
+            <div className="bg-[#202025] border border-slate-300 dark:border-slate-700 rounded-3xl overflow-hidden shadow-2xl space-y-4 p-6">
+              <div className="flex items-center justify-between border-b border-slate-300 dark:border-slate-700 pb-3">
                 <div className="flex items-center space-x-2">
                   <span className="w-3 h-3 rounded-full bg-red-500"></span>
                   <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
@@ -718,16 +718,16 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                   <span className="text-xs font-mono text-amber-300 ml-2 font-bold">{currentArtifact.title}</span>
                 </div>
 
-                <div className="flex items-center space-x-2 bg-[#141416] p-1 rounded-xl border border-slate-800 text-xs">
+                <div className="flex items-center space-x-2 bg-[#141416] p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
                   <button
                     onClick={() => setArtifactTab('preview')}
-                    className={`px-3 py-1 rounded-lg font-bold ${artifactTab === 'preview' ? 'bg-amber-600 text-white' : 'text-slate-400'}`}
+                    className={`px-3 py-1 rounded-lg font-bold ${artifactTab === 'preview' ? 'bg-amber-600 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
                   >
                     Pratinjau Live
                   </button>
                   <button
                     onClick={() => setArtifactTab('code')}
-                    className={`px-3 py-1 rounded-lg font-bold ${artifactTab === 'code' ? 'bg-amber-600 text-white' : 'text-slate-400'}`}
+                    className={`px-3 py-1 rounded-lg font-bold ${artifactTab === 'code' ? 'bg-amber-600 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
                   >
                     Tampilan Kode
                   </button>
@@ -742,21 +742,21 @@ export const ClaudeFeaturesReplica: React.FC = () => {
 
               {/* Artifact Tab Display */}
               {artifactTab === 'preview' ? (
-                <div className="bg-[#121214] p-6 rounded-2xl border border-slate-800 space-y-4 text-xs">
-                  <div className="p-4 bg-[#1b1b1e] rounded-xl border border-amber-500/30 font-mono text-slate-200 whitespace-pre-wrap">
+                <div className="bg-[#121214] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4 text-xs">
+                  <div className="p-4 bg-[#1b1b1e] rounded-xl border border-amber-500/30 font-mono text-slate-700 dark:text-slate-200 whitespace-pre-wrap">
                     {currentArtifact.code.substring(0, 400)}
                     {currentArtifact.code.length > 400 && '\n... [Kode lengkap tersedia di tab Tampilan Kode]'}
                   </div>
                 </div>
               ) : (
-                <pre className="bg-[#121214] p-4 rounded-2xl border border-slate-800 font-mono text-xs text-slate-300 overflow-x-auto max-h-96">
+                <pre className="bg-[#121214] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 font-mono text-xs text-slate-600 dark:text-slate-300 overflow-x-auto max-h-96">
                   {currentArtifact.code}
                 </pre>
               )}
 
               {/* Revision Box (Re-edit Option) */}
-              <div className="pt-3 border-t border-slate-700 space-y-2">
-                <span className="text-xs font-bold text-slate-300">💡 Minta Revisi / Edit Ulang Artefak Ini:</span>
+              <div className="pt-3 border-t border-slate-300 dark:border-slate-700 space-y-2">
+                <span className="text-xs font-bold text-slate-600 dark:text-slate-300">💡 Minta Revisi / Edit Ulang Artefak Ini:</span>
                 <div className="flex items-center space-x-2">
                   <input
                     type="text"
@@ -764,12 +764,12 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     onChange={(e) => setArtifactRevisionPrompt(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleGenerateArtifact(true)}
                     placeholder="Misal: Tambahkan tombol eksport PDF atau ganti tema menjadi dark luxury..."
-                    className="flex-1 bg-[#141416] border border-slate-700 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-amber-500"
+                    className="flex-1 bg-[#141416] border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                   />
                   <button
                     onClick={() => handleGenerateArtifact(true)}
                     disabled={isLoading}
-                    className="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2.5 rounded-xl font-bold text-xs shadow flex items-center space-x-1"
+                    className="bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white px-4 py-2.5 rounded-xl font-bold text-xs shadow flex items-center space-x-1"
                   >
                     <span>Revisi</span>
                     <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
@@ -782,39 +782,39 @@ export const ClaudeFeaturesReplica: React.FC = () => {
           {/* New Artifact Input Modal */}
           {showArtifactModal && (
             <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-              <div className="bg-[#202025] border border-slate-700 text-slate-100 w-full max-w-lg rounded-3xl p-6 shadow-2xl space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-700 pb-3">
-                  <h3 className="font-bold text-base text-white flex items-center space-x-2">
+              <div className="bg-[#202025] border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 w-full max-w-lg rounded-3xl p-6 shadow-2xl space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-300 dark:border-slate-700 pb-3">
+                  <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
                     <Sparkles className="w-4 h-4 text-amber-400" />
                     <span>Buat Artefak Baru dengan Gemini API</span>
                   </h3>
-                  <button onClick={() => setShowArtifactModal(false)} className="text-slate-400 hover:text-white">
+                  <button onClick={() => setShowArtifactModal(false)} className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
                 <div className="space-y-2 text-xs">
-                  <label className="font-bold text-slate-300">Deskripsikan Komponen / Dokumen yang Ingin Dibuat:</label>
+                  <label className="font-bold text-slate-600 dark:text-slate-300">Deskripsikan Komponen / Dokumen yang Ingin Dibuat:</label>
                   <textarea
                     value={artifactPrompt}
                     onChange={(e) => setArtifactPrompt(e.target.value)}
                     rows={4}
                     placeholder="Contoh: Buatkan komponen React kalkulator nilai siswa dengan antarmuka visual Tailwind..."
-                    className="w-full bg-[#141416] border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-amber-500 resize-none"
+                    className="w-full bg-[#141416] border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 resize-none"
                   />
                 </div>
 
                 <div className="flex justify-end space-x-2 pt-2">
                   <button
                     onClick={() => setShowArtifactModal(false)}
-                    className="px-4 py-2 border border-slate-700 rounded-xl text-xs font-bold text-slate-400 hover:text-white"
+                    className="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                   >
                     Batal
                   </button>
                   <button
                     onClick={() => handleGenerateArtifact(false)}
                     disabled={isLoading}
-                    className="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold shadow flex items-center space-x-1.5"
+                    className="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white rounded-xl text-xs font-bold shadow flex items-center space-x-1.5"
                   >
                     <span>Generate Artefak</span>
                     {isLoading && <RefreshCw className="w-3.5 h-3.5 animate-spin" />}
@@ -890,7 +890,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                 <button
                   onClick={handleRunCowork}
                   disabled={coworkRunning}
-                  className="bg-[#c25e38] hover:bg-[#a84c2b] disabled:opacity-50 text-white font-extrabold text-xs px-6 py-2.5 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center space-x-1.5"
+                  className="bg-[#c25e38] hover:bg-[#a84c2b] disabled:opacity-50 text-slate-900 dark:text-white font-extrabold text-xs px-6 py-2.5 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center space-x-1.5"
                 >
                   <span>Let's go</span>
                   <ArrowRight className="w-4 h-4" />
@@ -920,7 +920,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     return (
                       <div key={idx} className="flex items-center space-x-3">
                         {isDone ? (
-                          <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs shrink-0">
+                          <div className="w-6 h-6 rounded-full bg-blue-600 text-slate-900 dark:text-white flex items-center justify-center font-bold text-xs shrink-0">
                             ✓
                           </div>
                         ) : isCurrent ? (
@@ -928,11 +928,11 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                             ↻
                           </div>
                         ) : (
-                          <div className="w-6 h-6 rounded-full border-2 border-slate-300 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">
+                          <div className="w-6 h-6 rounded-full border-2 border-slate-300 text-slate-500 dark:text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">
                             {stepNum}
                           </div>
                         )}
-                        <span className={`font-semibold ${isDone ? 'text-slate-800 line-through' : isCurrent ? 'text-amber-700 font-bold' : 'text-slate-400'}`}>
+                        <span className={`font-semibold ${isDone ? 'text-slate-800 line-through' : isCurrent ? 'text-amber-700 font-bold' : 'text-slate-500 dark:text-slate-400'}`}>
                           {stepLabel}
                         </span>
                       </div>
@@ -958,7 +958,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     <Folder className="w-4 h-4 text-amber-600" />
                     <span>Select Folder for Cowork Context</span>
                   </div>
-                  <button onClick={() => setShowFilePicker(false)} className="text-slate-400 hover:text-slate-700">
+                  <button onClick={() => setShowFilePicker(false)} className="text-slate-500 dark:text-slate-400 hover:text-slate-700">
                     <X className="w-4 h-4" />
                   </button>
                 </div>
@@ -1001,7 +1001,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                         setShowFilePicker(false);
                         showToast(`Folder "${selectedFolder}" Terhubung ke Cowork!`);
                       }}
-                      className="px-5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow"
+                      className="px-5 py-1.5 bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white rounded-xl text-xs font-bold shadow"
                     >
                       Hubungkan Folder
                     </button>
@@ -1019,19 +1019,19 @@ export const ClaudeFeaturesReplica: React.FC = () => {
       {activeStage === 'office' && (
         <div className="flex-1 bg-[#121214] flex flex-col overflow-hidden">
           {/* Sub-tab Switcher Header */}
-          <div className="bg-[#18181c] border-b border-slate-800 px-6 py-3 flex items-center justify-between">
+          <div className="bg-[#18181c] border-b border-slate-200 dark:border-slate-800 px-6 py-3 flex items-center justify-between">
             <div className="flex items-center space-x-2 font-bold text-xs">
-              <span className="text-slate-400">Claude Productivity Add-ins:</span>
+              <span className="text-slate-500 dark:text-slate-400">Claude Productivity Add-ins:</span>
               <button
                 onClick={() => setOfficeApp('excel')}
-                className={`px-3 py-1.5 rounded-xl flex items-center space-x-2 transition-all ${officeApp === 'excel' ? 'bg-emerald-700 text-white shadow' : 'text-slate-400 hover:text-white'}`}
+                className={`px-3 py-1.5 rounded-xl flex items-center space-x-2 transition-all ${officeApp === 'excel' ? 'bg-emerald-700 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
               >
                 <FileSpreadsheet className="w-4 h-4" />
                 <span>Claude for Excel</span>
               </button>
               <button
                 onClick={() => setOfficeApp('powerpoint')}
-                className={`px-3 py-1.5 rounded-xl flex items-center space-x-2 transition-all ${officeApp === 'powerpoint' ? 'bg-orange-700 text-white shadow' : 'text-slate-400 hover:text-white'}`}
+                className={`px-3 py-1.5 rounded-xl flex items-center space-x-2 transition-all ${officeApp === 'powerpoint' ? 'bg-orange-700 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
               >
                 <Presentation className="w-4 h-4" />
                 <span>Claude for PowerPoint</span>
@@ -1053,7 +1053,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     </span>
                     <button
                       onClick={handleAddStudentRow}
-                      className="text-xs bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-1 rounded-lg shadow"
+                      className="text-xs bg-emerald-700 hover:bg-emerald-800 text-slate-900 dark:text-white font-bold px-3 py-1 rounded-lg shadow"
                     >
                       + Tambah Baris Siswa
                     </button>
@@ -1127,11 +1127,11 @@ export const ClaudeFeaturesReplica: React.FC = () => {
 
                   <div className="space-y-4">
                     {pptSlides.map((slide, sidx) => (
-                      <div key={sidx} className="bg-slate-900 text-white rounded-2xl p-6 min-h-[180px] flex flex-col justify-center space-y-3 shadow-lg border border-slate-800">
+                      <div key={sidx} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white rounded-2xl p-6 min-h-[180px] flex flex-col justify-center space-y-3 shadow-lg border border-slate-200 dark:border-slate-800">
                         <span className="text-orange-400 font-mono text-xs uppercase tracking-widest">Slide {sidx + 1}</span>
                         <h3 className="text-xl font-bold font-serif">{slide.title}</h3>
                         <p className="text-xs text-amber-200">{slide.subtitle}</p>
-                        <ul className="list-disc pl-4 space-y-1 text-xs text-slate-300">
+                        <ul className="list-disc pl-4 space-y-1 text-xs text-slate-600 dark:text-slate-300">
                           {slide.points.map((pt, pidx) => (
                             <li key={pidx}>{pt}</li>
                           ))}
@@ -1144,9 +1144,9 @@ export const ClaudeFeaturesReplica: React.FC = () => {
             </div>
 
             {/* Right Side Claude Add-in Panel */}
-            <div className="w-full md:w-80 bg-[#18181c] border-l border-slate-800 p-4 flex flex-col justify-between shrink-0 space-y-4 text-xs">
+            <div className="w-full md:w-80 bg-[#18181c] border-l border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between shrink-0 space-y-4 text-xs">
               <div className="space-y-3">
-                <div className="flex items-center space-x-2 font-bold text-amber-400 border-b border-slate-800 pb-2">
+                <div className="flex items-center space-x-2 font-bold text-amber-400 border-b border-slate-200 dark:border-slate-800 pb-2">
                   <Bot className="w-4 h-4" />
                   <span>Claude Side Panel ({officeApp === 'excel' ? 'Excel' : 'PPT'})</span>
                 </div>
@@ -1167,7 +1167,7 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                       key={qpidx}
                       onClick={() => handleOfficeSubmit(qp)}
                       disabled={isLoading}
-                      className="w-full text-left p-2 rounded-xl bg-[#222228] hover:bg-[#2a2a32] text-slate-300 transition-all border border-slate-800 text-[11px] font-medium"
+                      className="w-full text-left p-2 rounded-xl bg-[#222228] hover:bg-[#2a2a32] text-slate-600 dark:text-slate-300 transition-all border border-slate-200 dark:border-slate-800 text-[11px] font-medium"
                     >
                       {qp}
                     </button>
@@ -1176,9 +1176,9 @@ export const ClaudeFeaturesReplica: React.FC = () => {
 
                 {/* Chat History */}
                 {officeChat.length > 0 && (
-                  <div className="space-y-2 pt-2 border-t border-slate-800 max-h-48 overflow-y-auto">
+                  <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-slate-800 max-h-48 overflow-y-auto">
                     {officeChat.map((msg, midx) => (
-                      <div key={midx} className={`p-2.5 rounded-xl text-[11px] ${msg.role === 'user' ? 'bg-amber-950 text-amber-200 border border-amber-800 text-right' : 'bg-[#222228] text-slate-200 border border-slate-800'}`}>
+                      <div key={midx} className={`p-2.5 rounded-xl text-[11px] ${msg.role === 'user' ? 'bg-amber-950 text-amber-200 border border-amber-800 text-right' : 'bg-[#222228] text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800'}`}>
                         <div className="whitespace-pre-wrap">{msg.text}</div>
                       </div>
                     ))}
@@ -1196,12 +1196,12 @@ export const ClaudeFeaturesReplica: React.FC = () => {
                     if (e.key === 'Enter') handleOfficeSubmit();
                   }}
                   placeholder={`Minta Claude bantu di ${officeApp}...`}
-                  className="w-full bg-[#121214] border border-slate-800 rounded-xl p-2 text-xs text-white focus:outline-none focus:border-amber-500"
+                  className="w-full bg-[#121214] border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
                 />
                 <button
                   onClick={() => handleOfficeSubmit()}
                   disabled={isLoading}
-                  className="bg-amber-600 hover:bg-amber-500 text-white p-2 rounded-xl font-bold shadow"
+                  className="bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white p-2 rounded-xl font-bold shadow"
                 >
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>

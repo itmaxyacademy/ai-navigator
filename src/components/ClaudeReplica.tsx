@@ -331,7 +331,7 @@ export const ClaudeReplica: React.FC = () => {
           <button
             onClick={() => { setViewMode('desktop'); setIsMobileSidebarOpen(false); }}
             className={`px-3 py-1 rounded-lg font-bold flex items-center gap-1.5 transition-all ${
-              viewMode === 'desktop' ? 'bg-amber-600 text-white shadow' : 'text-neutral-400 hover:text-white'
+              viewMode === 'desktop' ? 'bg-amber-600 text-slate-900 dark:text-white shadow' : 'text-neutral-400 hover:text-slate-900 dark:text-white'
             }`}
           >
             <Monitor className="w-3.5 h-3.5" />
@@ -340,7 +340,7 @@ export const ClaudeReplica: React.FC = () => {
           <button
             onClick={() => setViewMode('mobile')}
             className={`px-3 py-1 rounded-lg font-bold flex items-center gap-1.5 transition-all ${
-              viewMode === 'mobile' ? 'bg-amber-600 text-white shadow' : 'text-neutral-400 hover:text-white'
+              viewMode === 'mobile' ? 'bg-amber-600 text-slate-900 dark:text-white shadow' : 'text-neutral-400 hover:text-slate-900 dark:text-white'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -371,7 +371,7 @@ export const ClaudeReplica: React.FC = () => {
                 <span className="text-xl font-serif tracking-tight font-bold text-neutral-100">Claude</span>
                 <button
                   onClick={() => handleOpenModal('new-chat')}
-                  className="p-1 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-lg transition-colors"
+                  className="p-1 text-neutral-400 hover:text-slate-900 dark:text-white hover:bg-neutral-800 rounded-lg transition-colors"
                   title="Penjelasan Claude Sidebar"
                 >
                   <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
@@ -381,7 +381,7 @@ export const ClaudeReplica: React.FC = () => {
               <div className="flex items-center gap-1 text-neutral-400">
                 <button 
                   onClick={() => handleOpenModal('chats')} 
-                  className="p-1.5 hover:bg-neutral-800 hover:text-white rounded-lg transition-colors"
+                  className="p-1.5 hover:bg-neutral-800 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
                 >
                   <Search className="w-4 h-4" />
                 </button>
@@ -395,7 +395,7 @@ export const ClaudeReplica: React.FC = () => {
                 ) : (
                   <button
                     onClick={() => setIsSidebarCollapsed(true)}
-                    className="p-1.5 hover:bg-neutral-800 hover:text-white text-neutral-400 rounded-lg transition-colors"
+                    className="p-1.5 hover:bg-neutral-800 hover:text-slate-900 dark:text-white text-neutral-400 rounded-lg transition-colors"
                     title="Collapse Sidebar"
                   >
                     <PanelLeft className="w-4 h-4" />
@@ -539,7 +539,7 @@ export const ClaudeReplica: React.FC = () => {
                       setMessages(item.messages);
                       if (viewMode === 'mobile') setIsMobileSidebarOpen(false);
                     }}
-                    className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-300 hover:bg-neutral-800/80 truncate block hover:text-white transition-colors group relative"
+                    className="w-full text-left px-3 py-1.5 rounded-lg text-xs text-neutral-300 hover:bg-neutral-800/80 truncate block hover:text-slate-900 dark:text-white transition-colors group relative"
                   >
                     <span className="truncate block pr-4">{item.title}</span>
                   </button>
@@ -629,11 +629,11 @@ export const ClaudeReplica: React.FC = () => {
               className="flex items-center justify-between cursor-pointer p-1.5 hover:bg-neutral-800 rounded-xl transition-colors"
             >
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-600 to-orange-700 text-white font-bold flex items-center justify-center text-xs shrink-0 shadow">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-600 to-orange-700 text-slate-900 dark:text-white font-bold flex items-center justify-center text-xs shrink-0 shadow">
                   MA
                 </div>
                 <div className="min-w-0 text-left">
-                  <div className="text-xs font-bold text-white truncate">Maxy Academy</div>
+                  <div className="text-xs font-bold text-slate-900 dark:text-white truncate">Maxy Academy</div>
                   <div className="text-[10px] text-neutral-400">Free plan</div>
                 </div>
               </div>
@@ -641,7 +641,7 @@ export const ClaudeReplica: React.FC = () => {
               <div className="flex items-center gap-1 text-neutral-400">
                 <button 
                   onClick={(e) => { e.stopPropagation(); handleOpenModal('user-profile'); }} 
-                  className="p-1 hover:text-white"
+                  className="p-1 hover:text-slate-900 dark:text-white"
                 >
                   <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
                 </button>
@@ -671,7 +671,7 @@ export const ClaudeReplica: React.FC = () => {
               {/* Sidebar Toggle Icon for Mobile or Collapsed */}
               <button
                 onClick={() => viewMode === 'mobile' ? setIsMobileSidebarOpen(!isMobileSidebarOpen) : setIsSidebarCollapsed(!isSidebarCollapsed)}
-                className="p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-xl transition-colors"
+                className="p-1.5 text-neutral-400 hover:text-slate-900 dark:text-white hover:bg-neutral-800 rounded-xl transition-colors"
                 title="Toggle Sidebar"
               >
                 <PanelLeft className="w-4 h-4" />
@@ -695,7 +695,7 @@ export const ClaudeReplica: React.FC = () => {
             <div className="flex items-center gap-2 text-neutral-400">
               <button
                 onClick={() => handleOpenModal('artifacts')}
-                className="p-1.5 hover:text-white hover:bg-neutral-800 rounded-lg text-xs flex items-center gap-1 text-amber-400"
+                className="p-1.5 hover:text-slate-900 dark:text-white hover:bg-neutral-800 rounded-lg text-xs flex items-center gap-1 text-amber-400"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Artifacts</span>
@@ -711,7 +711,7 @@ export const ClaudeReplica: React.FC = () => {
                 {/* Greeting Heading with Anthropic Orange Starburst */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 flex items-center justify-center text-white text-lg font-bold shadow-lg shadow-orange-500/20">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 flex items-center justify-center text-slate-900 dark:text-white text-lg font-bold shadow-lg shadow-orange-500/20">
                       ✳
                     </div>
                     <h1 className="text-2xl sm:text-3xl font-serif text-neutral-100 font-medium tracking-tight">
@@ -926,7 +926,7 @@ export const ClaudeReplica: React.FC = () => {
 
                       <button
                         onClick={() => handleSendPrompt()}
-                        className="p-1.5 bg-amber-600 hover:bg-amber-500 text-white rounded-xl shadow transition-all flex items-center justify-center"
+                        className="p-1.5 bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white rounded-xl shadow transition-all flex items-center justify-center"
                       >
                         <Send className="w-3.5 h-3.5" />
                       </button>
@@ -981,7 +981,7 @@ export const ClaudeReplica: React.FC = () => {
                     <div
                       className={`max-w-xl rounded-2xl p-4 text-xs leading-relaxed space-y-2 shadow-md ${
                         msg.sender === 'user'
-                          ? 'bg-amber-600/90 text-white rounded-tr-none'
+                          ? 'bg-amber-600/90 text-slate-900 dark:text-white rounded-tr-none'
                           : 'bg-[#262626] border border-neutral-700/80 text-neutral-100 rounded-tl-none'
                       }`}
                     >
@@ -999,7 +999,7 @@ export const ClaudeReplica: React.FC = () => {
                         {msg.sender === 'ai' && (
                           <button
                             onClick={() => handleCopyMessage(idx, msg.text)}
-                            className="text-neutral-400 hover:text-white flex items-center gap-1 text-[10px]"
+                            className="text-neutral-400 hover:text-slate-900 dark:text-white flex items-center gap-1 text-[10px]"
                           >
                             {copiedIndex === idx ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
                             {copiedIndex === idx ? 'Tersalin' : 'Salin'}
@@ -1059,7 +1059,7 @@ export const ClaudeReplica: React.FC = () => {
                 />
                 <button
                   onClick={() => handleSendPrompt()}
-                  className="p-1.5 bg-amber-600 hover:bg-amber-500 text-white rounded-lg shadow"
+                  className="p-1.5 bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white rounded-lg shadow"
                 >
                   <Send className="w-3.5 h-3.5" />
                 </button>
@@ -1094,7 +1094,7 @@ export const ClaudeReplica: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  <h3 className="text-lg font-bold text-white mt-1">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mt-1">
                     {activeModal.title}
                   </h3>
                 </div>
@@ -1102,7 +1102,7 @@ export const ClaudeReplica: React.FC = () => {
 
               <button
                 onClick={() => setActiveModal(null)}
-                className="p-1 text-neutral-400 hover:text-white hover:bg-neutral-700 rounded-lg transition-colors"
+                className="p-1 text-neutral-400 hover:text-slate-900 dark:text-white hover:bg-neutral-700 rounded-lg transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1138,7 +1138,7 @@ export const ClaudeReplica: React.FC = () => {
             <div className="flex justify-end pt-2 border-t border-neutral-700">
               <button
                 onClick={() => setActiveModal(null)}
-                className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs rounded-xl shadow transition-all"
+                className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-slate-900 dark:text-white font-bold text-xs rounded-xl shadow transition-all"
               >
                 Paham & Tutup
               </button>

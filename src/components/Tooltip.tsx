@@ -42,7 +42,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
       {isVisible && (
         <div
           role="tooltip"
-          className={`absolute z-50 ${positionClasses} w-64 p-3 bg-slate-900/95 backdrop-blur-md border border-slate-700/80 rounded-2xl shadow-2xl text-slate-200 text-xs leading-relaxed pointer-events-none animate-fadeIn`}
+          className={`absolute z-50 ${positionClasses} w-64 p-3 bg-white dark:bg-slate-900/95 backdrop-blur-md border border-slate-300 dark:border-slate-700/80 rounded-2xl shadow-2xl text-slate-700 dark:text-slate-200 text-xs leading-relaxed pointer-events-none animate-fadeIn`}
         >
           {/* Arrow */}
           <div className={`absolute w-0 h-0 border-4 ${arrowClasses}`} />

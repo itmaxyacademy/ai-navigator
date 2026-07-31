@@ -162,19 +162,19 @@ export const LeonardoAIReplica: React.FC = () => {
   ];
 
   return (
-    <div className="relative w-full rounded-2xl border border-[#232733] bg-[#0e0f12] text-slate-100 overflow-hidden shadow-2xl flex flex-col min-h-[720px] font-sans selection:bg-purple-600 selection:text-white">
+    <div className="relative w-full rounded-2xl border border-[#232733] bg-[#0e0f12] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl flex flex-col min-h-[720px] font-sans selection:bg-purple-600 selection:text-slate-900 dark:text-white">
 
       {/* Simulator Device View Mode Switcher Header Bar */}
-      <div className="bg-[#07080a] border-b border-[#232733] px-3 sm:px-4 py-2 flex items-center justify-between z-40 shrink-0 text-white">
+      <div className="bg-[#07080a] border-b border-[#232733] px-3 sm:px-4 py-2 flex items-center justify-between z-40 shrink-0 text-slate-900 dark:text-white">
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-purple-400" />
-          <span className="text-xs font-bold text-slate-200">Mode Tampilan Leonardo AI Simulator:</span>
+          <span className="text-xs font-bold text-slate-700 dark:text-slate-200">Mode Tampilan Leonardo AI Simulator:</span>
         </div>
         <div className="flex items-center bg-[#13151c] border border-[#232733] rounded-lg p-1 gap-1">
           <button
             onClick={() => setDeviceMode('desktop')}
             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-md transition-all ${
-              deviceMode === 'desktop' ? 'bg-purple-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'
+              deviceMode === 'desktop' ? 'bg-purple-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Laptop className="w-3.5 h-3.5" />
@@ -183,7 +183,7 @@ export const LeonardoAIReplica: React.FC = () => {
           <button
             onClick={() => setDeviceMode('mobile')}
             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-md transition-all ${
-              deviceMode === 'mobile' ? 'bg-purple-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'
+              deviceMode === 'mobile' ? 'bg-purple-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -213,7 +213,7 @@ export const LeonardoAIReplica: React.FC = () => {
                 className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 via-purple-600 to-indigo-600 flex items-center justify-center cursor-pointer shadow-lg hover:scale-105 transition-transform"
                 title="Leonardo.Ai Home"
               >
-                <Sparkles className="w-5 h-5 text-white" />
+                <Sparkles className="w-5 h-5 text-slate-900 dark:text-white" />
               </div>
 
               <div className="w-8 h-[1px] bg-[#232733] my-1" />
@@ -225,7 +225,7 @@ export const LeonardoAIReplica: React.FC = () => {
                   explainFeature('Home Menu', 'Navigation', 'Menampilkan dashboard utama Leonardo.Ai, rekomendasi blueprint terbaru, dan galeri karya komunitas.');
                 }}
                 className={`p-2.5 rounded-xl transition-all flex flex-col items-center gap-0.5 ${
-                  activeView === 'home' ? 'bg-[#1e2230] text-purple-400 border border-purple-500/30' : 'text-slate-400 hover:text-white hover:bg-[#181a24]'
+                  activeView === 'home' ? 'bg-[#1e2230] text-purple-400 border border-purple-500/30' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24]'
                 }`}
                 title="Home"
               >
@@ -235,7 +235,7 @@ export const LeonardoAIReplica: React.FC = () => {
 
               <button 
                 onClick={() => explainFeature('Personal Library', 'Asset Management', 'Tempat menyimpan seluruh koleksi gambar, model fine-tuned, dan aset 3D yang pernah Anda hasilkan di Maxy Academy.')}
-                className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
+                className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
                 title="Library"
               >
                 <LayoutGrid className="w-5 h-5" />
@@ -248,7 +248,7 @@ export const LeonardoAIReplica: React.FC = () => {
                   explainFeature('Image Generation Tool', 'AI Tools', 'Menu utama pembuatan gambar AI. Atur prompt, model fine-tuned, aspect ratio, dan jalankan pemicu generasi gambar.');
                 }}
                 className={`p-2.5 rounded-xl transition-all flex flex-col items-center gap-0.5 ${
-                  activeView === 'creation' ? 'bg-[#1e2230] text-purple-400 border border-purple-500/30' : 'text-slate-400 hover:text-white hover:bg-[#181a24]'
+                  activeView === 'creation' ? 'bg-[#1e2230] text-purple-400 border border-purple-500/30' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24]'
                 }`}
                 title="Image Generation"
               >
@@ -258,7 +258,7 @@ export const LeonardoAIReplica: React.FC = () => {
 
               <button 
                 onClick={() => explainFeature('Motion Video Generation', 'AI Tools', 'Fitur pembuat video AI pendek berdurasi 4-8 detik dari teks atau animasi dari gambar statis.')}
-                className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
+                className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
                 title="Video Generator"
               >
                 <Video className="w-5 h-5" />
@@ -267,17 +267,17 @@ export const LeonardoAIReplica: React.FC = () => {
 
               <button 
                 onClick={() => explainFeature('Audio & Sound FX Generator (New)', 'AI Tools', 'Fitur terbaru untuk menghasilkan efek suara, latar audio ambient, dan musik latar menggunakan AI.')}
-                className="relative p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
+                className="relative p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
                 title="Audio Generator"
               >
                 <Volume2 className="w-5 h-5" />
                 <span className="text-[9px] font-medium">Audio</span>
-                <span className="absolute top-1 right-1 bg-purple-600 text-[8px] font-extrabold px-1 rounded text-white">NEW</span>
+                <span className="absolute top-1 right-1 bg-purple-600 text-[8px] font-extrabold px-1 rounded text-slate-900 dark:text-white">NEW</span>
               </button>
 
               <button 
                 onClick={() => explainFeature('3D Texture & Asset Generator', 'AI Tools', 'Menghasilkan tekstur UV map dan aset model 3D realistis siap pakai untuk game engine seperti Unreal & Unity.')}
-                className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
+                className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
                 title="3D Generator"
               >
                 <Box className="w-5 h-5" />
@@ -286,7 +286,7 @@ export const LeonardoAIReplica: React.FC = () => {
 
               <button 
                 onClick={() => explainFeature('Flow State Workflow Builder', 'AI Tools', 'Kanvas pemrosesan node-based untuk menggabungkan prompt, inpainting, upscaling, dan kontrol pose secara visual.')}
-                className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
+                className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
                 title="Flow State"
               >
                 <GitBranch className="w-5 h-5" />
@@ -295,7 +295,7 @@ export const LeonardoAIReplica: React.FC = () => {
 
               <button 
                 onClick={() => explainFeature('Blueprints Gallery', 'AI Tools', 'Kumpulan template panduan gaya visual siap pakai untuk fotografi produk, gaya komik, dan karakter 3D.')}
-                className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
+                className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
                 title="Blueprints"
               >
                 <Layers className="w-5 h-5" />
@@ -304,7 +304,7 @@ export const LeonardoAIReplica: React.FC = () => {
 
               <button 
                 onClick={() => explainFeature('Universal AI Upscaler', 'AI Tools', 'Meningkatkan kejernihan dan detail gambar hingga resolusi 8K tanpa kehilangan ketajaman.')}
-                className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
+                className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24] transition-all flex flex-col items-center gap-0.5"
                 title="Upscaler"
               >
                 <Maximize2 className="w-5 h-5" />
@@ -316,7 +316,7 @@ export const LeonardoAIReplica: React.FC = () => {
             <div className="flex flex-col items-center gap-3 w-full">
               <button 
                 onClick={() => explainFeature('More Menu (...)', 'Navigation', 'Pilihan alat tambahan seperti Realtime Canvas, Canvas Editor, dan pelatihan model custom (Train Fine-Tuned Model).')}
-                className="p-2 text-slate-400 hover:text-white hover:bg-[#181a24] rounded-xl"
+                className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24] rounded-xl"
                 title="More Options"
               >
                 <MoreHorizontal className="w-5 h-5" />
@@ -324,7 +324,7 @@ export const LeonardoAIReplica: React.FC = () => {
 
               <button 
                 onClick={() => explainFeature('Settings', 'User Account', 'Pengaturan antarmuka, preferensi bahasa, notifikasi, serta manajemen API key Leonardo.Ai.')}
-                className="p-2 text-slate-400 hover:text-white hover:bg-[#181a24] rounded-xl"
+                className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#181a24] rounded-xl"
                 title="Settings"
               >
                 <Settings className="w-5 h-5" />
@@ -346,7 +346,7 @@ export const LeonardoAIReplica: React.FC = () => {
               {/* User Avatar */}
               <div 
                 onClick={() => explainFeature('Profil Pengguna VizSmartWeb3348', 'User Profile', 'Akun pengguna terhubung: maxyacademy.one@gmail.com dengan paket Free Tier Aktivasi.')}
-                className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-extrabold text-xs flex items-center justify-center cursor-pointer border border-purple-400/40 shadow"
+                className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-slate-900 dark:text-white font-extrabold text-xs flex items-center justify-center cursor-pointer border border-purple-400/40 shadow"
                 title="Profile Account"
               >
                 V
@@ -365,13 +365,13 @@ export const LeonardoAIReplica: React.FC = () => {
                 <>
                   <div 
                     onClick={() => explainFeature('LEONARDO.AI Logo Mobile', 'Brand', 'Halaman utama Leonardo.Ai versi seluler.')}
-                    className="font-black text-lg text-white tracking-wider cursor-pointer"
+                    className="font-black text-lg text-slate-900 dark:text-white tracking-wider cursor-pointer"
                   >
                     LEONARDO.AI
                   </div>
                   <button 
                     onClick={() => setIsMobileDrawerOpen(true)}
-                    className="p-2 bg-[#1b1e29] border border-[#232733] rounded-xl text-slate-200 hover:text-white"
+                    className="p-2 bg-[#1b1e29] border border-[#232733] rounded-xl text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:text-white"
                   >
                     <Menu className="w-5 h-5" />
                   </button>
@@ -381,21 +381,21 @@ export const LeonardoAIReplica: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <button 
                       onClick={() => setActiveView('home')}
-                      className="p-1.5 bg-[#1b1e29] border border-[#232733] rounded-lg text-slate-300"
+                      className="p-1.5 bg-[#1b1e29] border border-[#232733] rounded-lg text-slate-600 dark:text-slate-300"
                     >
                       <ArrowLeft className="w-4 h-4" />
                     </button>
-                    <span className="font-extrabold text-white text-sm">LEO</span>
+                    <span className="font-extrabold text-slate-900 dark:text-white text-sm">LEO</span>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <button 
                       onClick={() => explainFeature('Tipe Generasi Mobile', 'Creation', 'Pilihan mode generasi aktif (Gambar / Video).')}
-                      className="px-2.5 py-1 bg-[#1b1e29] border border-[#232733] text-xs font-semibold text-slate-200 rounded-lg flex items-center gap-1"
+                      className="px-2.5 py-1 bg-[#1b1e29] border border-[#232733] text-xs font-semibold text-slate-700 dark:text-slate-200 rounded-lg flex items-center gap-1"
                     >
                       <ImageIcon className="w-3.5 h-3.5 text-purple-400" />
                       <span>Image</span>
-                      <ChevronDown className="w-3 h-3 text-slate-400" />
+                      <ChevronDown className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                     </button>
 
                     <button 
@@ -408,7 +408,7 @@ export const LeonardoAIReplica: React.FC = () => {
 
                     <button 
                       onClick={() => explainFeature('Progress Memulai (0/6)', 'Onboarding', 'Selesaikan 6 langkah pengenalan fitur untuk mendapatkan bonus 50 Token ekstra!')}
-                      className="px-2 py-1 bg-[#1e2230] text-[10px] font-bold text-slate-300 rounded-lg border border-[#232733]"
+                      className="px-2 py-1 bg-[#1e2230] text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-lg border border-[#232733]"
                     >
                       Get Started 0/6
                     </button>
@@ -430,7 +430,7 @@ export const LeonardoAIReplica: React.FC = () => {
                   style={{ backgroundImage: `url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80')` }}
                 />
 
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight uppercase drop-shadow-lg z-10">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight uppercase drop-shadow-lg z-10">
                   YOURS TO CREATE
                 </h1>
 
@@ -439,7 +439,7 @@ export const LeonardoAIReplica: React.FC = () => {
                   <div className="bg-[#141720]/90 backdrop-blur-md border border-purple-500/30 rounded-2xl p-2 sm:p-2.5 shadow-2xl flex items-center gap-2">
                     <button 
                       onClick={() => explainFeature('Tambahkan Gambar Referensi (Image Prompt)', 'Prompt Input', 'Mengunggah gambar acuan untuk mengarahkan komposisi, pose, atau gaya visual AI.')}
-                      className="p-2 bg-[#1c202d] hover:bg-[#252a3b] rounded-xl text-slate-400 hover:text-white transition-colors shrink-0"
+                      className="p-2 bg-[#1c202d] hover:bg-[#252a3b] rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors shrink-0"
                       title="Upload Image Reference"
                     >
                       <ImageIcon className="w-5 h-5" />
@@ -450,7 +450,7 @@ export const LeonardoAIReplica: React.FC = () => {
                       value={promptInput}
                       onChange={(e) => setPromptInput(e.target.value)}
                       placeholder="Type a prompt..."
-                      className="flex-1 bg-transparent text-xs sm:text-sm text-slate-100 placeholder-slate-500 outline-none px-2"
+                      className="flex-1 bg-transparent text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-500 outline-none px-2"
                     />
 
                     {/* AI Prompt Sparkles Assistant Button */}
@@ -468,7 +468,7 @@ export const LeonardoAIReplica: React.FC = () => {
                     <button 
                       onClick={handleGenerate}
                       disabled={isGenerating}
-                      className="px-4 py-2 bg-[#1e1a38] hover:bg-[#28224d] text-slate-300 hover:text-white font-bold rounded-xl text-xs border border-purple-500/40 transition-all flex items-center gap-1.5 shrink-0"
+                      className="px-4 py-2 bg-[#1e1a38] hover:bg-[#28224d] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white font-bold rounded-xl text-xs border border-purple-500/40 transition-all flex items-center gap-1.5 shrink-0"
                     >
                       <span>{isGenerating ? 'Generating...' : 'Generate'}</span>
                     </button>
@@ -493,8 +493,8 @@ export const LeonardoAIReplica: React.FC = () => {
                         >
                           <Dices className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
                           <div>
-                            <p className="text-xs font-bold text-white">New Random Prompt</p>
-                            <p className="text-[10px] text-slate-400">Generate a random prompt with AI.</p>
+                            <p className="text-xs font-bold text-slate-900 dark:text-white">New Random Prompt</p>
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400">Generate a random prompt with AI.</p>
                           </div>
                         </button>
 
@@ -508,8 +508,8 @@ export const LeonardoAIReplica: React.FC = () => {
                         >
                           <Sparkles className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
                           <div>
-                            <p className="text-xs font-bold text-white">Improve Prompt</p>
-                            <p className="text-[10px] text-slate-400">Improve your current prompt.</p>
+                            <p className="text-xs font-bold text-slate-900 dark:text-white">Improve Prompt</p>
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400">Improve your current prompt.</p>
                           </div>
                         </button>
 
@@ -522,8 +522,8 @@ export const LeonardoAIReplica: React.FC = () => {
                         >
                           <Edit className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
                           <div>
-                            <p className="text-xs font-bold text-white">Edit With AI</p>
-                            <p className="text-[10px] text-slate-400">Use AI to make quick changes to your prompt.</p>
+                            <p className="text-xs font-bold text-slate-900 dark:text-white">Edit With AI</p>
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400">Use AI to make quick changes to your prompt.</p>
                           </div>
                         </button>
 
@@ -536,13 +536,13 @@ export const LeonardoAIReplica: React.FC = () => {
                         >
                           <FileText className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
                           <div>
-                            <p className="text-xs font-bold text-white">Describe With AI</p>
-                            <p className="text-[10px] text-slate-400">Upload an image and generate its description.</p>
+                            <p className="text-xs font-bold text-slate-900 dark:text-white">Describe With AI</p>
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400">Upload an image and generate its description.</p>
                           </div>
                         </button>
 
                         <div className="pt-1 border-t border-[#232733] text-center">
-                          <span className="text-[10px] text-slate-400 font-bold bg-[#1e2230] px-3 py-1 rounded-full inline-block">
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold bg-[#1e2230] px-3 py-1 rounded-full inline-block">
                             99 Prompts Available
                           </span>
                         </div>
@@ -561,10 +561,10 @@ export const LeonardoAIReplica: React.FC = () => {
                     }}
                     className="flex flex-col items-center gap-1 group"
                   >
-                    <div className="w-12 h-12 rounded-full bg-[#181b26] border border-[#232733] group-hover:border-purple-500 flex items-center justify-center text-slate-300 group-hover:text-purple-300 transition-all shadow-lg">
+                    <div className="w-12 h-12 rounded-full bg-[#181b26] border border-[#232733] group-hover:border-purple-500 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:text-purple-300 transition-all shadow-lg">
                       <ImageIcon className="w-5 h-5" />
                     </div>
-                    <span className="text-[11px] font-medium text-slate-300">Image</span>
+                    <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">Image</span>
                   </button>
 
                   <button 
@@ -574,10 +574,10 @@ export const LeonardoAIReplica: React.FC = () => {
                     }}
                     className="flex flex-col items-center gap-1 group"
                   >
-                    <div className="w-12 h-12 rounded-full bg-[#181b26] border border-[#232733] group-hover:border-purple-500 flex items-center justify-center text-slate-300 group-hover:text-purple-300 transition-all shadow-lg">
+                    <div className="w-12 h-12 rounded-full bg-[#181b26] border border-[#232733] group-hover:border-purple-500 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:text-purple-300 transition-all shadow-lg">
                       <Video className="w-5 h-5" />
                     </div>
-                    <span className="text-[11px] font-medium text-slate-300">Video</span>
+                    <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">Video</span>
                   </button>
 
                   <button 
@@ -587,11 +587,11 @@ export const LeonardoAIReplica: React.FC = () => {
                     }}
                     className="flex flex-col items-center gap-1 group relative"
                   >
-                    <div className="w-12 h-12 rounded-full bg-[#181b26] border border-[#232733] group-hover:border-purple-500 flex items-center justify-center text-slate-300 group-hover:text-purple-300 transition-all shadow-lg">
+                    <div className="w-12 h-12 rounded-full bg-[#181b26] border border-[#232733] group-hover:border-purple-500 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:text-purple-300 transition-all shadow-lg">
                       <Volume2 className="w-5 h-5" />
                     </div>
-                    <span className="text-[11px] font-medium text-slate-300">Audio</span>
-                    <span className="absolute -top-1 bg-[#161922] border border-[#232733] text-white text-[8px] font-bold px-1 rounded-full">New</span>
+                    <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">Audio</span>
+                    <span className="absolute -top-1 bg-[#161922] border border-[#232733] text-slate-900 dark:text-white text-[8px] font-bold px-1 rounded-full">New</span>
                   </button>
 
                   <button 
@@ -601,10 +601,10 @@ export const LeonardoAIReplica: React.FC = () => {
                     }}
                     className="flex flex-col items-center gap-1 group"
                   >
-                    <div className="w-12 h-12 rounded-full bg-[#181b26] border border-[#232733] group-hover:border-purple-500 flex items-center justify-center text-slate-300 group-hover:text-purple-300 transition-all shadow-lg">
+                    <div className="w-12 h-12 rounded-full bg-[#181b26] border border-[#232733] group-hover:border-purple-500 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:text-purple-300 transition-all shadow-lg">
                       <Box className="w-5 h-5" />
                     </div>
-                    <span className="text-[11px] font-medium text-slate-300">3D</span>
+                    <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">3D</span>
                   </button>
 
                   <button 
@@ -614,10 +614,10 @@ export const LeonardoAIReplica: React.FC = () => {
                     }}
                     className="flex flex-col items-center gap-1 group"
                   >
-                    <div className="w-12 h-12 rounded-full bg-[#181b26] border border-[#232733] group-hover:border-purple-500 flex items-center justify-center text-slate-300 group-hover:text-purple-300 transition-all shadow-lg">
+                    <div className="w-12 h-12 rounded-full bg-[#181b26] border border-[#232733] group-hover:border-purple-500 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:text-purple-300 transition-all shadow-lg">
                       <Layers className="w-5 h-5" />
                     </div>
-                    <span className="text-[11px] font-medium text-slate-300">Blueprints</span>
+                    <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">Blueprints</span>
                   </button>
                 </div>
               </div>
@@ -625,7 +625,7 @@ export const LeonardoAIReplica: React.FC = () => {
               {/* Featured Blueprints Horizontal Carousel (Matches Screenshot 1 & 4) */}
               <div className="px-4 sm:px-8 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-bold text-white tracking-wide">Featured Blueprints</h2>
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-wide">Featured Blueprints</h2>
                   <button 
                     onClick={() => explainFeature('View All Blueprints', 'Gallery', 'Menampilkan seluruh koleksi 50+ preset blueprint terbaik untuk berbagai industri.')}
                     className="text-xs font-semibold text-purple-400 hover:text-purple-300 flex items-center gap-1"
@@ -655,7 +655,7 @@ export const LeonardoAIReplica: React.FC = () => {
                         <span className="text-[10px] font-bold text-purple-300 bg-purple-950/80 border border-purple-500/40 px-2 py-0.5 rounded-full w-max mb-1">
                           {bp.tag}
                         </span>
-                        <h3 className="text-sm font-extrabold text-white leading-tight">{bp.title}</h3>
+                        <h3 className="text-sm font-extrabold text-slate-900 dark:text-white leading-tight">{bp.title}</h3>
                       </div>
                     </div>
                   ))}
@@ -664,7 +664,7 @@ export const LeonardoAIReplica: React.FC = () => {
 
               {/* Community Creations Section (Matches Screenshot 1) */}
               <div className="px-4 sm:px-8 space-y-4 pt-4 border-t border-[#1d202b]">
-                <h2 className="text-lg font-bold text-white tracking-wide">Community Creations</h2>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-wide">Community Creations</h2>
 
                 {/* Filter tags row */}
                 <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
@@ -677,8 +677,8 @@ export const LeonardoAIReplica: React.FC = () => {
                       }}
                       className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all border ${
                         communityFilter === tag 
-                          ? 'bg-purple-600 text-white border-purple-500 shadow-md' 
-                          : 'bg-[#181b26] text-slate-400 border-[#232733] hover:text-white'
+                          ? 'bg-purple-600 text-slate-900 dark:text-white border-purple-500 shadow-md' 
+                          : 'bg-[#181b26] text-slate-500 dark:text-slate-400 border-[#232733] hover:text-slate-900 dark:text-white'
                       }`}
                     >
                       {tag}
@@ -701,7 +701,7 @@ export const LeonardoAIReplica: React.FC = () => {
                     >
                       <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent p-2.5 flex items-end opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span className="text-[11px] font-bold text-white truncate">{item.title}</span>
+                        <span className="text-[11px] font-bold text-slate-900 dark:text-white truncate">{item.title}</span>
                       </div>
                     </div>
                   ))}
@@ -722,7 +722,7 @@ export const LeonardoAIReplica: React.FC = () => {
                 <div className="flex items-center justify-between pb-2 border-b border-[#232733]">
                   <button 
                     onClick={() => setActiveView('home')}
-                    className="text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1"
+                    className="text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white flex items-center gap-1"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Back to Feed</span>
@@ -732,17 +732,17 @@ export const LeonardoAIReplica: React.FC = () => {
 
                 {/* Model Selector Dropdown (Screenshot 2) */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-slate-300 flex items-center justify-between">
+                  <label className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center justify-between">
                     <span>Model</span>
                     <HelpCircle 
                       onClick={() => explainFeature('Model AI Selection', 'Settings', 'Pilih model dasar AI untuk menentukan karakter rendering (Auto, Lucid Origin, Leonardo Phoenix, SDXL).')}
-                      className="w-3.5 h-3.5 text-slate-500 cursor-pointer hover:text-slate-300" 
+                      className="w-3.5 h-3.5 text-slate-500 cursor-pointer hover:text-slate-600 dark:text-slate-300" 
                     />
                   </label>
                   <select 
                     value={selectedModel}
                     onChange={(e) => setSelectedModel(e.target.value)}
-                    className="w-full bg-[#1c202d] border border-[#2b3042] text-xs text-white rounded-xl p-2.5 focus:border-purple-500 outline-none font-medium"
+                    className="w-full bg-[#1c202d] border border-[#2b3042] text-xs text-slate-900 dark:text-white rounded-xl p-2.5 focus:border-purple-500 outline-none font-medium"
                   >
                     <option value="Auto">Auto (Recommended)</option>
                     <option value="Lucid Origin">Lucid Origin</option>
@@ -754,11 +754,11 @@ export const LeonardoAIReplica: React.FC = () => {
 
                 {/* Style Selector Dropdown (Screenshot 2) */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-slate-300">Style</label>
+                  <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">Style</label>
                   <select 
                     value={selectedStyle}
                     onChange={(e) => setSelectedStyle(e.target.value)}
-                    className="w-full bg-[#1c202d] border border-[#2b3042] text-xs text-white rounded-xl p-2.5 focus:border-purple-500 outline-none font-medium"
+                    className="w-full bg-[#1c202d] border border-[#2b3042] text-xs text-slate-900 dark:text-white rounded-xl p-2.5 focus:border-purple-500 outline-none font-medium"
                   >
                     <option value="Dynamic">Dynamic</option>
                     <option value="Cinematic">Cinematic</option>
@@ -770,11 +770,11 @@ export const LeonardoAIReplica: React.FC = () => {
 
                 {/* Image Dimensions & Aspect Ratios (Screenshot 2) */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-300 flex items-center justify-between">
+                  <label className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center justify-between">
                     <span>Image Dimensions</span>
                     <HelpCircle 
                       onClick={() => explainFeature('Image Dimensions', 'Settings', 'Pilih rasio aspek gambar: 2:3 untuk portrait, 1:1 untuk sosmed, 16:9 untuk banner desktop.')}
-                      className="w-3.5 h-3.5 text-slate-500 cursor-pointer hover:text-slate-300" 
+                      className="w-3.5 h-3.5 text-slate-500 cursor-pointer hover:text-slate-600 dark:text-slate-300" 
                     />
                   </label>
 
@@ -791,7 +791,7 @@ export const LeonardoAIReplica: React.FC = () => {
                         className={`py-2 text-xs font-bold rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${
                           selectedAspect === item.ratio 
                             ? 'bg-purple-950/80 border-purple-500 text-purple-300 shadow-lg' 
-                            : 'bg-[#1c202d] border-[#2b3042] text-slate-400 hover:text-white'
+                            : 'bg-[#1c202d] border-[#2b3042] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
                         }`}
                       >
                         <span>{item.label}</span>
@@ -808,11 +808,11 @@ export const LeonardoAIReplica: React.FC = () => {
 
                 {/* Number of Generations (Screenshot 2) */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-slate-300 flex items-center justify-between">
+                  <label className="text-xs font-semibold text-slate-600 dark:text-slate-300 flex items-center justify-between">
                     <span>Number of generations</span>
                     <HelpCircle 
                       onClick={() => explainFeature('Jumlah Generasi', 'Settings', 'Tentukan berapa banyak variasi gambar yang diproduksi sekaligus (1, 2, 3, atau 4 gambar).')}
-                      className="w-3.5 h-3.5 text-slate-500 cursor-pointer hover:text-slate-300" 
+                      className="w-3.5 h-3.5 text-slate-500 cursor-pointer hover:text-slate-600 dark:text-slate-300" 
                     />
                   </label>
                   <div className="flex items-center gap-1.5">
@@ -822,8 +822,8 @@ export const LeonardoAIReplica: React.FC = () => {
                         onClick={() => setGenerationCount(num)}
                         className={`flex-1 py-2 text-xs font-bold rounded-xl border transition-all ${
                           generationCount === num 
-                            ? 'bg-purple-600 text-white border-purple-500 shadow-md' 
-                            : 'bg-[#1c202d] border-[#2b3042] text-slate-400'
+                            ? 'bg-purple-600 text-slate-900 dark:text-white border-purple-500 shadow-md' 
+                            : 'bg-[#1c202d] border-[#2b3042] text-slate-500 dark:text-slate-400'
                         }`}
                       >
                         {num}
@@ -849,12 +849,12 @@ export const LeonardoAIReplica: React.FC = () => {
                       ❖
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-white">Private Mode</p>
-                      <p className="text-[10px] text-slate-400">Disembunyikan dari publik</p>
+                      <p className="text-xs font-bold text-slate-900 dark:text-white">Private Mode</p>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400">Disembunyikan dari publik</p>
                     </div>
                   </div>
                   <div className={`w-8 h-4 rounded-full p-0.5 transition-colors ${privateMode ? 'bg-[#00e699]' : 'bg-slate-700'}`}>
-                    <div className={`w-3 h-3 rounded-full bg-slate-950 transition-transform ${privateMode ? 'translate-x-4' : ''}`} />
+                    <div className={`w-3 h-3 rounded-full bg-slate-100 dark:bg-slate-950 transition-transform ${privateMode ? 'translate-x-4' : ''}`} />
                   </div>
                 </div>
 
@@ -867,7 +867,7 @@ export const LeonardoAIReplica: React.FC = () => {
                     setGenerationCount(1);
                     explainFeature('Reset Parameter Selesai', 'Settings', 'Semua pengaturan telah dikembalikan ke standar bawaan.');
                   }}
-                  className="w-full py-2 bg-[#181a24] hover:bg-[#202533] border border-[#232733] text-slate-400 hover:text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                  className="w-full py-2 bg-[#181a24] hover:bg-[#202533] border border-[#232733] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>Reset to Defaults</span>
@@ -882,7 +882,7 @@ export const LeonardoAIReplica: React.FC = () => {
                   <div className="flex gap-3">
                     <button 
                       onClick={() => explainFeature('Gambar Referensi', 'Prompt', 'Unggah gambar acuan untuk mengarahkan gaya AI.')}
-                      className="p-3 bg-[#1c202d] border border-[#2b3042] rounded-xl text-slate-400 hover:text-white shrink-0"
+                      className="p-3 bg-[#1c202d] border border-[#2b3042] rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white shrink-0"
                     >
                       <ImageIcon className="w-5 h-5" />
                     </button>
@@ -891,7 +891,7 @@ export const LeonardoAIReplica: React.FC = () => {
                       value={promptInput}
                       onChange={(e) => setPromptInput(e.target.value)}
                       placeholder="Enter your prompt here..."
-                      className="flex-1 bg-transparent text-xs sm:text-sm text-slate-100 placeholder-slate-500 outline-none min-h-[90px] resize-none leading-relaxed"
+                      className="flex-1 bg-transparent text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-500 outline-none min-h-[90px] resize-none leading-relaxed"
                     />
                   </div>
 
@@ -900,7 +900,7 @@ export const LeonardoAIReplica: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <button 
                         onClick={() => explainFeature('Add Image Button', 'Prompt', 'Menambahkan elemen referensi visual tambahan.')}
-                        className="px-3 py-1.5 bg-[#1c202d] border border-[#2b3042] text-xs font-bold text-slate-300 rounded-xl flex items-center gap-1 hover:text-white"
+                        className="px-3 py-1.5 bg-[#1c202d] border border-[#2b3042] text-xs font-bold text-slate-600 dark:text-slate-300 rounded-xl flex items-center gap-1 hover:text-slate-900 dark:text-white"
                       >
                         <ImageIcon className="w-3.5 h-3.5 text-purple-400" />
                         <span>Add</span>
@@ -911,7 +911,7 @@ export const LeonardoAIReplica: React.FC = () => {
                           setIsPromptPopoverOpen(!isPromptPopoverOpen);
                           explainFeature('Magic Sparkle Helper', 'Prompt', 'Pilihan perbaikan prompt AI otomatis.');
                         }}
-                        className="p-1.5 bg-[#1c202d] border border-[#2b3042] rounded-xl text-purple-400 hover:text-white"
+                        className="p-1.5 bg-[#1c202d] border border-[#2b3042] rounded-xl text-purple-400 hover:text-slate-900 dark:text-white"
                       >
                         <Sparkles className="w-4 h-4" />
                       </button>
@@ -921,7 +921,7 @@ export const LeonardoAIReplica: React.FC = () => {
                     <button 
                       onClick={handleGenerate}
                       disabled={isGenerating}
-                      className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-purple-700 hover:from-indigo-500 hover:to-purple-600 text-white font-extrabold rounded-xl text-xs shadow-xl transition-all flex items-center gap-2"
+                      className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-purple-700 hover:from-indigo-500 hover:to-purple-600 text-slate-900 dark:text-white font-extrabold rounded-xl text-xs shadow-xl transition-all flex items-center gap-2"
                     >
                       <span>{isGenerating ? 'Generating...' : 'Generate'}</span>
                       <div className="w-4 h-4 rounded-full bg-purple-900 border border-purple-400 flex items-center justify-center text-[9px]">
@@ -942,8 +942,8 @@ export const LeonardoAIReplica: React.FC = () => {
                       }}
                       className={`px-4 py-2 text-xs font-bold rounded-xl transition-all border ${
                         activeTab === tab 
-                          ? 'bg-purple-600 text-white border-purple-500 shadow-md' 
-                          : 'bg-[#141720] text-slate-400 border-[#202432] hover:text-white'
+                          ? 'bg-purple-600 text-slate-900 dark:text-white border-purple-500 shadow-md' 
+                          : 'bg-[#141720] text-slate-500 dark:text-slate-400 border-[#202432] hover:text-slate-900 dark:text-white'
                       }`}
                     >
                       {tab} {tab === 'Audio' && <span className="ml-1 bg-purple-900 text-purple-300 text-[8px] px-1 rounded">New</span>}
@@ -958,8 +958,8 @@ export const LeonardoAIReplica: React.FC = () => {
                       <Zap className="w-5 h-5 fill-[#00e699]" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-white">You are currently on a free plan.</p>
-                      <p className="text-[11px] text-slate-400">Upgrade for additional tokens, private generations, and much more!</p>
+                      <p className="text-xs font-bold text-slate-900 dark:text-white">You are currently on a free plan.</p>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">Upgrade for additional tokens, private generations, and much more!</p>
                     </div>
                   </div>
 
@@ -974,7 +974,7 @@ export const LeonardoAIReplica: React.FC = () => {
                 {/* Generated Results Section Header (Matches Screenshot 2 & 7) */}
                 <div className="space-y-4 pt-2">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-bold text-slate-300">Yesterday</h3>
+                    <h3 className="text-sm font-bold text-slate-600 dark:text-slate-300">Yesterday</h3>
                     <span className="text-xs text-slate-500">1 image generated</span>
                   </div>
 
@@ -983,7 +983,7 @@ export const LeonardoAIReplica: React.FC = () => {
                     
                     {/* Prompt Header & Tags */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#202432] pb-3">
-                      <p className="text-xs text-slate-200 line-clamp-2 max-w-xl font-medium">
+                      <p className="text-xs text-slate-700 dark:text-slate-200 line-clamp-2 max-w-xl font-medium">
                         "{promptInput}"
                       </p>
 
@@ -999,28 +999,28 @@ export const LeonardoAIReplica: React.FC = () => {
                           <span>Iterate</span>
                         </button>
 
-                        <span className="px-2.5 py-1 bg-[#1e2230] border border-[#232733] text-[10px] font-bold text-slate-300 rounded-lg">
+                        <span className="px-2.5 py-1 bg-[#1e2230] border border-[#232733] text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-lg">
                           Lucid Origin
                         </span>
 
-                        <span className="px-2.5 py-1 bg-[#1e2230] border border-[#232733] text-[10px] font-bold text-slate-300 rounded-lg">
+                        <span className="px-2.5 py-1 bg-[#1e2230] border border-[#232733] text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-lg">
                           1024×1024
                         </span>
 
-                        <span className="px-2.5 py-1 bg-[#1e2230] border border-[#232733] text-[10px] font-bold text-slate-300 rounded-lg">
+                        <span className="px-2.5 py-1 bg-[#1e2230] border border-[#232733] text-[10px] font-bold text-slate-600 dark:text-slate-300 rounded-lg">
                           Dynamic
                         </span>
                       </div>
                     </div>
 
                     {/* Feedback Rating Section (Matches Screenshot 7) */}
-                    <div className="flex items-center justify-between text-xs text-slate-400">
+                    <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                       <span>How was this output?</span>
                       <div className="flex items-center gap-2">
                         <button 
                           onClick={() => setThumbsFeedback('up')}
                           className={`p-1.5 rounded-lg border transition-all ${
-                            thumbsFeedback === 'up' ? 'bg-emerald-500/20 border-emerald-500 text-[#00e699]' : 'bg-[#1c202d] border-[#2b3042] hover:text-white'
+                            thumbsFeedback === 'up' ? 'bg-emerald-500/20 border-emerald-500 text-[#00e699]' : 'bg-[#1c202d] border-[#2b3042] hover:text-slate-900 dark:text-white'
                           }`}
                         >
                           <ThumbsUp className="w-3.5 h-3.5" />
@@ -1029,7 +1029,7 @@ export const LeonardoAIReplica: React.FC = () => {
                         <button 
                           onClick={() => setThumbsFeedback('down')}
                           className={`p-1.5 rounded-lg border transition-all ${
-                            thumbsFeedback === 'down' ? 'bg-rose-500/20 border-rose-500 text-rose-400' : 'bg-[#1c202d] border-[#2b3042] hover:text-white'
+                            thumbsFeedback === 'down' ? 'bg-rose-500/20 border-rose-500 text-rose-400' : 'bg-[#1c202d] border-[#2b3042] hover:text-slate-900 dark:text-white'
                           }`}
                         >
                           <ThumbsDown className="w-3.5 h-3.5" />
@@ -1049,14 +1049,14 @@ export const LeonardoAIReplica: React.FC = () => {
                       <div className="absolute top-3 right-3 flex items-center gap-1.5">
                         <button 
                           onClick={() => explainFeature('Download High Resolution', 'Export', 'Mengunduh gambar kualitas 8K tanpa watermark.')}
-                          className="p-2 bg-black/70 hover:bg-black rounded-xl text-white backdrop-blur-md shadow-lg"
+                          className="p-2 bg-black/70 hover:bg-black rounded-xl text-slate-900 dark:text-white backdrop-blur-md shadow-lg"
                           title="Download"
                         >
                           <Download className="w-4 h-4" />
                         </button>
                         <button 
                           onClick={() => explainFeature('Salin Tautan Gambar', 'Share', 'Menyalin tautan bagikan gambar ke papan klip.')}
-                          className="p-2 bg-black/70 hover:bg-black rounded-xl text-white backdrop-blur-md shadow-lg"
+                          className="p-2 bg-black/70 hover:bg-black rounded-xl text-slate-900 dark:text-white backdrop-blur-md shadow-lg"
                           title="Share"
                         >
                           <Share2 className="w-4 h-4" />
@@ -1066,13 +1066,13 @@ export const LeonardoAIReplica: React.FC = () => {
 
                     {/* Footer Wrap message & Back to top button (Matches Screenshot 7) */}
                     <div className="pt-6 border-t border-[#202432] flex flex-col items-center gap-3 text-center">
-                      <p className="text-xs text-slate-400 font-medium">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                         That's a wrap! Time to generate more <span className="text-purple-400 font-bold">magic</span>.
                       </p>
 
                       <button 
                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                        className="px-4 py-2 bg-[#1c202d] hover:bg-[#252a3b] border border-[#2b3042] rounded-xl text-xs font-bold text-slate-300 flex items-center gap-1.5"
+                        className="px-4 py-2 bg-[#1c202d] hover:bg-[#252a3b] border border-[#2b3042] rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1.5"
                       >
                         <ArrowUp className="w-3.5 h-3.5" />
                         <span>Back to top</span>
@@ -1098,15 +1098,15 @@ export const LeonardoAIReplica: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="w-80 max-w-[85vw] h-full bg-[#13151c] border-r border-[#232733] p-5 flex flex-col justify-between overflow-y-auto text-slate-100"
+              className="w-80 max-w-[85vw] h-full bg-[#13151c] border-r border-[#232733] p-5 flex flex-col justify-between overflow-y-auto text-slate-800 dark:text-slate-100"
             >
               <div className="space-y-6">
                 {/* Header Title + Close Button */}
                 <div className="flex items-center justify-between border-b border-[#232733] pb-4">
-                  <span className="font-black text-xl text-white tracking-wide">LEONARDO.AI</span>
+                  <span className="font-black text-xl text-slate-900 dark:text-white tracking-wide">LEONARDO.AI</span>
                   <button 
                     onClick={() => setIsMobileDrawerOpen(false)}
-                    className="p-2 rounded-xl bg-[#1b1e29] text-slate-400 hover:text-white"
+                    className="p-2 rounded-xl bg-[#1b1e29] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -1115,15 +1115,15 @@ export const LeonardoAIReplica: React.FC = () => {
                 {/* Profile Card (Screenshot 5) */}
                 <div className="p-3 bg-[#181b26] border border-[#232733] rounded-2xl flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-extrabold flex items-center justify-center text-sm shadow">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-slate-900 dark:text-white font-extrabold flex items-center justify-center text-sm shadow">
                       V
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-white">VizSmartWeb3348</p>
-                      <p className="text-[10px] text-slate-400">Free Tier Account</p>
+                      <p className="text-xs font-bold text-slate-900 dark:text-white">VizSmartWeb3348</p>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400">Free Tier Account</p>
                     </div>
                   </div>
-                  <ChevronDown className="w-4 h-4 text-slate-400" />
+                  <ChevronDown className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 </div>
 
                 {/* Token Balance Pill */}
@@ -1145,7 +1145,7 @@ export const LeonardoAIReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                     }}
                     className={`w-full p-3 rounded-2xl text-xs font-bold flex items-center gap-3 transition-all ${
-                      activeView === 'home' ? 'bg-[#1e2230] text-purple-300 border border-purple-500/40' : 'text-slate-300 hover:bg-[#181b26]'
+                      activeView === 'home' ? 'bg-[#1e2230] text-purple-300 border border-purple-500/40' : 'text-slate-600 dark:text-slate-300 hover:bg-[#181b26]'
                     }`}
                   >
                     <Compass className="w-4 h-4 text-purple-400" />
@@ -1157,9 +1157,9 @@ export const LeonardoAIReplica: React.FC = () => {
                       explainFeature('Library', 'Navigation', 'Koleksi aset tersimpan.');
                       setIsMobileDrawerOpen(false);
                     }}
-                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-300 hover:bg-[#181b26] flex items-center gap-3"
+                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-[#181b26] flex items-center gap-3"
                   >
-                    <LayoutGrid className="w-4 h-4 text-slate-400" />
+                    <LayoutGrid className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Library</span>
                   </button>
 
@@ -1173,7 +1173,7 @@ export const LeonardoAIReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                     }}
                     className={`w-full p-3 rounded-2xl text-xs font-bold flex items-center gap-3 transition-all ${
-                      activeView === 'creation' ? 'bg-[#1e2230] text-purple-300 border border-purple-500/40' : 'text-slate-300 hover:bg-[#181b26]'
+                      activeView === 'creation' ? 'bg-[#1e2230] text-purple-300 border border-purple-500/40' : 'text-slate-600 dark:text-slate-300 hover:bg-[#181b26]'
                     }`}
                   >
                     <ImageIcon className="w-4 h-4 text-purple-400" />
@@ -1185,9 +1185,9 @@ export const LeonardoAIReplica: React.FC = () => {
                       explainFeature('Video Generator', 'AI Tools', 'Membuat animasi video dari gambar.');
                       setIsMobileDrawerOpen(false);
                     }}
-                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-300 hover:bg-[#181b26] flex items-center gap-3"
+                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-[#181b26] flex items-center gap-3"
                   >
-                    <Video className="w-4 h-4 text-slate-400" />
+                    <Video className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Video</span>
                   </button>
 
@@ -1196,13 +1196,13 @@ export const LeonardoAIReplica: React.FC = () => {
                       explainFeature('Audio Generator (New)', 'AI Tools', 'Membuat trek suara buatan AI.');
                       setIsMobileDrawerOpen(false);
                     }}
-                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-300 hover:bg-[#181b26] flex items-center justify-between"
+                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-[#181b26] flex items-center justify-between"
                   >
                     <div className="flex items-center gap-3">
-                      <Volume2 className="w-4 h-4 text-slate-400" />
+                      <Volume2 className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                       <span>Audio</span>
                     </div>
-                    <span className="bg-purple-600 text-white text-[8px] font-bold px-1.5 py-0.5 rounded">New</span>
+                    <span className="bg-purple-600 text-slate-900 dark:text-white text-[8px] font-bold px-1.5 py-0.5 rounded">New</span>
                   </button>
 
                   <button 
@@ -1210,9 +1210,9 @@ export const LeonardoAIReplica: React.FC = () => {
                       explainFeature('3D Generator', 'AI Tools', 'Generasi model 3D.');
                       setIsMobileDrawerOpen(false);
                     }}
-                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-300 hover:bg-[#181b26] flex items-center gap-3"
+                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-[#181b26] flex items-center gap-3"
                   >
-                    <Box className="w-4 h-4 text-slate-400" />
+                    <Box className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>3D</span>
                   </button>
 
@@ -1221,9 +1221,9 @@ export const LeonardoAIReplica: React.FC = () => {
                       explainFeature('Flow State', 'AI Tools', 'Alur kerja visual AI.');
                       setIsMobileDrawerOpen(false);
                     }}
-                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-300 hover:bg-[#181b26] flex items-center gap-3"
+                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-[#181b26] flex items-center gap-3"
                   >
-                    <GitBranch className="w-4 h-4 text-slate-400" />
+                    <GitBranch className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Flow State</span>
                   </button>
 
@@ -1232,9 +1232,9 @@ export const LeonardoAIReplica: React.FC = () => {
                       explainFeature('Blueprints Gallery', 'AI Tools', 'Galeri gaya blueprint.');
                       setIsMobileDrawerOpen(false);
                     }}
-                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-300 hover:bg-[#181b26] flex items-center gap-3"
+                    className="w-full p-3 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-[#181b26] flex items-center gap-3"
                   >
-                    <Layers className="w-4 h-4 text-slate-400" />
+                    <Layers className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Blueprints</span>
                   </button>
                 </div>
@@ -1257,12 +1257,12 @@ export const LeonardoAIReplica: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-[#141720] border border-purple-500/40 rounded-3xl p-6 shadow-2xl text-slate-100 space-y-5"
+              className="relative w-full max-w-lg bg-[#141720] border border-purple-500/40 rounded-3xl p-6 shadow-2xl text-slate-800 dark:text-slate-100 space-y-5"
             >
               {/* Close Button */}
               <button 
                 onClick={() => setActiveModal(null)} 
-                className="absolute top-4 right-4 p-2 rounded-full bg-[#1c202d] text-slate-400 hover:text-white"
+                className="absolute top-4 right-4 p-2 rounded-full bg-[#1c202d] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1274,11 +1274,11 @@ export const LeonardoAIReplica: React.FC = () => {
 
               {/* Title & Description */}
               <div className="space-y-2">
-                <h3 className="text-xl font-black text-white flex items-center gap-2">
+                <h3 className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-purple-400" />
                   {activeModal.title}
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                   {activeModal.description}
                 </p>
               </div>
@@ -1289,7 +1289,7 @@ export const LeonardoAIReplica: React.FC = () => {
                   <p className="text-xs font-bold text-purple-300">Rincian Parameter Menu:</p>
                   <ul className="space-y-1">
                     {activeModal.parameters.map((param, index) => (
-                      <li key={index} className="text-[11px] text-slate-300 flex items-start gap-1.5">
+                      <li key={index} className="text-[11px] text-slate-600 dark:text-slate-300 flex items-start gap-1.5">
                         <span className="text-purple-400 font-bold">•</span>
                         <span>{param}</span>
                       </li>
@@ -1304,7 +1304,7 @@ export const LeonardoAIReplica: React.FC = () => {
                   <p className="text-xs font-bold text-emerald-400">Cara Penggunaan:</p>
                   <ul className="space-y-1">
                     {activeModal.usageGuide.map((step, index) => (
-                      <li key={index} className="text-[11px] text-slate-300 leading-normal">
+                      <li key={index} className="text-[11px] text-slate-600 dark:text-slate-300 leading-normal">
                         {step}
                       </li>
                     ))}
@@ -1315,7 +1315,7 @@ export const LeonardoAIReplica: React.FC = () => {
               {/* Close Action */}
               <button
                 onClick={() => setActiveModal(null)}
-                className="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold rounded-2xl text-xs shadow-lg transition-all"
+                className="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-slate-900 dark:text-white font-extrabold rounded-2xl text-xs shadow-lg transition-all"
               >
                 Mengerti & Lanjutkan
               </button>
@@ -1328,7 +1328,7 @@ export const LeonardoAIReplica: React.FC = () => {
       <div className="absolute bottom-4 right-4 z-40">
         <button 
           onClick={() => explainFeature('Dukungan Pelanggan & Bantuan AI', 'Support', 'Membuka obrolan langsung dengan tim dukungan pelanggan atau bot bantuan Leonardo.Ai.')}
-          className="w-12 h-12 rounded-full bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform border border-purple-400/40"
+          className="w-12 h-12 rounded-full bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform border border-purple-400/40"
           title="Leonardo Support Chat"
         >
           <MessageSquare className="w-5 h-5 fill-white" />

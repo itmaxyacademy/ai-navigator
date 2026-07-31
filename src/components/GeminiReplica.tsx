@@ -368,7 +368,7 @@ export const GeminiReplica: React.FC = () => {
               setIsMobileSidebarOpen(false);
             }}
             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
-              viewMode === 'desktop' ? 'bg-neutral-700 text-white shadow-sm' : 'text-neutral-400 hover:text-neutral-200'
+              viewMode === 'desktop' ? 'bg-neutral-700 text-slate-900 dark:text-white shadow-sm' : 'text-neutral-400 hover:text-neutral-200'
             }`}
           >
             <Monitor className="w-3.5 h-3.5" />
@@ -377,7 +377,7 @@ export const GeminiReplica: React.FC = () => {
           <button
             onClick={() => setViewMode('mobile')}
             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
-              viewMode === 'mobile' ? 'bg-neutral-700 text-white shadow-sm' : 'text-neutral-400 hover:text-neutral-200'
+              viewMode === 'mobile' ? 'bg-neutral-700 text-slate-900 dark:text-white shadow-sm' : 'text-neutral-400 hover:text-neutral-200'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -431,7 +431,7 @@ export const GeminiReplica: React.FC = () => {
               {/* Avatar Profile */}
               <button
                 onClick={() => setIsSettingsMenuOpen(true)}
-                className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-white text-[11px] font-bold border border-amber-400/40"
+                className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-slate-900 dark:text-white text-[11px] font-bold border border-amber-400/40"
               >
                 MA
               </button>
@@ -468,7 +468,7 @@ export const GeminiReplica: React.FC = () => {
               {viewMode === 'mobile' ? (
                 <button
                   onClick={() => setIsMobileSidebarOpen(false)}
-                  className="p-1 text-neutral-400 hover:text-white rounded-lg"
+                  className="p-1 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -589,7 +589,7 @@ export const GeminiReplica: React.FC = () => {
               className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-neutral-800 transition-colors text-left"
             >
               <div className="flex items-center gap-2.5 overflow-hidden">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-white text-[11px] font-bold border border-amber-400/40 flex-shrink-0">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-slate-900 dark:text-white text-[11px] font-bold border border-amber-400/40 flex-shrink-0">
                   MA
                 </div>
                 <div className="truncate">
@@ -619,7 +619,7 @@ export const GeminiReplica: React.FC = () => {
             <div className="absolute top-4 left-4 z-10">
               <button
                 onClick={() => setIsSidebarCollapsed(false)}
-                className="p-2 text-neutral-400 hover:text-white rounded-xl bg-[#1e1f20] hover:bg-neutral-800 border border-neutral-800 shadow-md transition-colors"
+                className="p-2 text-neutral-400 hover:text-slate-900 dark:text-white rounded-xl bg-[#1e1f20] hover:bg-neutral-800 border border-neutral-800 shadow-md transition-colors"
                 title="Expand Sidebar"
               >
                 <PanelLeft className="w-4 h-4" />
@@ -632,14 +632,14 @@ export const GeminiReplica: React.FC = () => {
             <div className="absolute top-4 right-4 z-10 flex items-center gap-3">
               <button
                 onClick={() => handleOpenModal('import-memory')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-medium shadow-md hover:opacity-90 transition-opacity"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-slate-900 dark:text-white text-xs font-medium shadow-md hover:opacity-90 transition-opacity"
               >
                 <Sparkles className="w-3.5 h-3.5 fill-current" />
                 <span>Upgrade</span>
               </button>
               <button
                 onClick={() => setIsSettingsMenuOpen(!isSettingsMenuOpen)}
-                className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-white text-xs font-bold shadow-md hover:ring-2 hover:ring-amber-400/50 transition-all"
+                className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-slate-900 dark:text-white text-xs font-bold shadow-md hover:ring-2 hover:ring-amber-400/50 transition-all"
               >
                 MA
               </button>
@@ -706,7 +706,7 @@ export const GeminiReplica: React.FC = () => {
                   >
                     {msg.sender === 'gemini' && (
                       <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-black flex-shrink-0 mt-1">
-                        <Sparkles className="w-4 h-4 text-white" />
+                        <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
                       </div>
                     )}
                     <div
@@ -932,7 +932,7 @@ export const GeminiReplica: React.FC = () => {
                 {inputValue.trim() ? (
                   <button
                     type="submit"
-                    className="w-8 h-8 rounded-full bg-blue-600 hover:bg-blue-500 flex items-center justify-center text-white transition-colors"
+                    className="w-8 h-8 rounded-full bg-blue-600 hover:bg-blue-500 flex items-center justify-center text-slate-900 dark:text-white transition-colors"
                   >
                     <Send className="w-4 h-4" />
                   </button>
@@ -1197,7 +1197,7 @@ export const GeminiReplica: React.FC = () => {
               </div>
               <button
                 onClick={() => setActiveModal(null)}
-                className="p-1 text-neutral-400 hover:text-white rounded-lg"
+                className="p-1 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1234,7 +1234,7 @@ export const GeminiReplica: React.FC = () => {
             {/* Close / Try Button */}
             <button
               onClick={() => setActiveModal(null)}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium text-xs hover:opacity-90 transition-opacity shadow-lg"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-slate-900 dark:text-white font-medium text-xs hover:opacity-90 transition-opacity shadow-lg"
             >
               Paham, Lanjutkan Eksplorasi
             </button>

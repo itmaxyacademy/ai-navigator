@@ -16,6 +16,29 @@ export interface QuizQuestion {
   explanation: string;
 }
 
+export interface BankQuestionOption {
+  id: string;
+  text: string;
+}
+
+export interface BankQuestion {
+  id: string;
+  question: string;
+  options: BankQuestionOption[];
+  correctOptionId: string;
+  explanation: string;
+}
+
+export interface ModuleQuestionBank {
+  moduleId: number;
+  moduleName: string;
+  questions: BankQuestion[];
+}
+
+export interface QuestionBankDatabase {
+  modules: ModuleQuestionBank[];
+}
+
 export interface LLMAdvantage {
   title: string;
   description: string;
@@ -82,6 +105,7 @@ export interface CapstoneSubmission {
   name: string;
   email: string;
   title: string;
+  capstoneUrl: string; // Link URL or text description of the capstone project
   submittedAt: string;
 }
 

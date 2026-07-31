@@ -146,7 +146,7 @@ export const FathomReplica: React.FC = () => {
       participantsCount: 2,
       participants: [
         { name: 'Developer Tim', avatarBg: 'bg-slate-700', initial: 'D' },
-        { name: 'Fathom Bot', avatarBg: 'bg-[#0f172a]', initial: 'F' }
+        { name: 'Fathom Bot', avatarBg: 'bg-slate-50 dark:bg-[#0f172a]', initial: 'F' }
       ],
       summary: {
         objective: 'Sesi koordinasi internal (Peringatan: Tidak ada rekaman suara yang terdeteksi).',
@@ -475,17 +475,17 @@ export const FathomReplica: React.FC = () => {
   });
 
   return (
-    <div className="w-full min-h-[750px] bg-[#0d0f12] text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-800 flex flex-col relative shadow-2xl">
+    <div className="w-full min-h-[750px] bg-[#0d0f12] text-slate-800 dark:text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col relative shadow-2xl">
       {/* Global Toast Banner */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-cyan-600 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-2xl border border-cyan-400 flex items-center space-x-2 animate-bounce">
+        <div className="fixed bottom-6 right-6 z-50 bg-cyan-600 text-slate-900 dark:text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-2xl border border-cyan-400 flex items-center space-x-2 animate-bounce">
           <Sparkles className="w-4 h-4 text-cyan-200" />
           <span>{toast}</span>
         </div>
       )}
 
       {/* GLOBAL HEADER */}
-      <header className="h-14 bg-[#12151a] border-b border-slate-800/90 px-4 sm:px-6 flex items-center justify-between shrink-0">
+      <header className="h-14 bg-[#12151a] border-b border-slate-200 dark:border-slate-800/90 px-4 sm:px-6 flex items-center justify-between shrink-0">
         <div className="flex items-center space-x-4 sm:space-x-6">
           {/* Fathom Logo */}
           <div 
@@ -496,9 +496,9 @@ export const FathomReplica: React.FC = () => {
             className="flex items-center space-x-2 cursor-pointer group"
           >
             <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-md shadow-cyan-950/50 group-hover:scale-105 transition-transform">
-              <Zap className="w-5 h-5 text-white fill-current" />
+              <Zap className="w-5 h-5 text-slate-900 dark:text-white fill-current" />
             </div>
-            <span className="text-lg font-black tracking-wider text-white font-mono">FATHOM</span>
+            <span className="text-lg font-black tracking-wider text-slate-900 dark:text-white font-mono">FATHOM</span>
           </div>
 
           {/* Search Call Recordings */}
@@ -508,9 +508,9 @@ export const FathomReplica: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search Call Recordings"
-              className="w-full bg-[#1b2028] border border-slate-700/70 rounded-xl py-1.5 px-3 pl-9 text-xs text-slate-200 placeholder-slate-400 focus:outline-none focus:border-cyan-500 transition-colors"
+              className="w-full bg-[#1b2028] border border-slate-300 dark:border-slate-700/70 rounded-xl py-1.5 px-3 pl-9 text-xs text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-cyan-500 transition-colors"
             />
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute left-3 top-2.5" />
           </div>
         </div>
 
@@ -525,7 +525,7 @@ export const FathomReplica: React.FC = () => {
 
           <button 
             onClick={() => showToastMsg('Pengaturan Akun & Notetaker')}
-            className="p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg text-xs flex items-center space-x-1"
+            className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800 rounded-lg text-xs flex items-center space-x-1"
             title="Settings"
           >
             <Settings className="w-4 h-4" />
@@ -534,7 +534,7 @@ export const FathomReplica: React.FC = () => {
 
           <button 
             onClick={() => showToastMsg('Help & Feedback Center')}
-            className="p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg text-xs flex items-center space-x-1"
+            className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800 rounded-lg text-xs flex items-center space-x-1"
             title="Help & Feedback"
           >
             <HelpCircle className="w-4 h-4" />
@@ -542,7 +542,7 @@ export const FathomReplica: React.FC = () => {
           </button>
 
           {/* Rewards Badge */}
-          <div className="bg-slate-800 border border-slate-700/80 px-2.5 py-1 rounded-lg flex items-center space-x-1 text-xs font-bold text-amber-400 shadow-inner">
+          <div className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700/80 px-2.5 py-1 rounded-lg flex items-center space-x-1 text-xs font-bold text-amber-400 shadow-inner">
             <Star className="w-3.5 h-3.5 fill-amber-400" />
             <span>45</span>
           </div>
@@ -550,7 +550,7 @@ export const FathomReplica: React.FC = () => {
           {/* User Profile Icon */}
           <div 
             onClick={() => showToastMsg('Profil Pengguna: Wahyudi (Maxy Academy)')}
-            className="w-8 h-8 rounded-full bg-purple-700 border border-purple-500 flex items-center justify-center text-white font-bold text-xs cursor-pointer hover:ring-2 hover:ring-cyan-400 transition-all"
+            className="w-8 h-8 rounded-full bg-purple-700 border border-purple-500 flex items-center justify-center text-slate-900 dark:text-white font-bold text-xs cursor-pointer hover:ring-2 hover:ring-cyan-400 transition-all"
             title="Wahyudi (Maxy Academy)"
           >
             W
@@ -562,14 +562,14 @@ export const FathomReplica: React.FC = () => {
       {activeStage === 'my-calls' && (
         <div className="flex-1 flex flex-col bg-[#0b0d10] overflow-hidden">
           {/* Sub Navigation Bar */}
-          <div className="px-6 pt-3 pb-0 border-b border-slate-800/80 flex items-center justify-between bg-[#111419] shrink-0 overflow-x-auto">
-            <div className="flex items-center space-x-6 text-xs font-bold text-slate-400">
+          <div className="px-6 pt-3 pb-0 border-b border-slate-200 dark:border-slate-800/80 flex items-center justify-between bg-[#111419] shrink-0 overflow-x-auto">
+            <div className="flex items-center space-x-6 text-xs font-bold text-slate-500 dark:text-slate-400">
               <button
                 onClick={() => {
                   setNavTab('my-calls');
                   showToastMsg('Menampilkan My Calls');
                 }}
-                className={`pb-3 border-b-2 transition-colors ${navTab === 'my-calls' ? 'border-cyan-400 text-cyan-400' : 'border-transparent hover:text-slate-200'}`}
+                className={`pb-3 border-b-2 transition-colors ${navTab === 'my-calls' ? 'border-cyan-400 text-cyan-400' : 'border-transparent hover:text-slate-700 dark:text-slate-200'}`}
               >
                 My Calls
               </button>
@@ -579,7 +579,7 @@ export const FathomReplica: React.FC = () => {
                   setNavTab('team-calls');
                   showToastMsg('Team Calls: Rekaman rapat milik seluruh tim Maxy Academy');
                 }}
-                className={`pb-3 border-b-2 transition-colors ${navTab === 'team-calls' ? 'border-cyan-400 text-cyan-400' : 'border-transparent hover:text-slate-200'}`}
+                className={`pb-3 border-b-2 transition-colors ${navTab === 'team-calls' ? 'border-cyan-400 text-cyan-400' : 'border-transparent hover:text-slate-700 dark:text-slate-200'}`}
               >
                 Team Calls
               </button>
@@ -589,7 +589,7 @@ export const FathomReplica: React.FC = () => {
                   setNavTab('playlists');
                   showToastMsg('Playlists: Kumpulan potongan rekaman dikurasi untuk topik tertentu');
                 }}
-                className={`pb-3 border-b-2 transition-colors ${navTab === 'playlists' ? 'border-cyan-400 text-cyan-400' : 'border-transparent hover:text-slate-200'}`}
+                className={`pb-3 border-b-2 transition-colors ${navTab === 'playlists' ? 'border-cyan-400 text-cyan-400' : 'border-transparent hover:text-slate-700 dark:text-slate-200'}`}
               >
                 Playlists
               </button>
@@ -599,7 +599,7 @@ export const FathomReplica: React.FC = () => {
                   setNavTab('alerts');
                   showToastMsg('Alerts: Notifikasi otomatis saat kata kunci tertentu disebut dalam rapat');
                 }}
-                className={`pb-3 border-b-2 transition-colors ${navTab === 'alerts' ? 'border-cyan-400 text-cyan-400' : 'border-transparent hover:text-slate-200'}`}
+                className={`pb-3 border-b-2 transition-colors ${navTab === 'alerts' ? 'border-cyan-400 text-cyan-400' : 'border-transparent hover:text-slate-700 dark:text-slate-200'}`}
               >
                 Alerts
               </button>
@@ -609,7 +609,7 @@ export const FathomReplica: React.FC = () => {
                   setNavTab('deals');
                   showToastMsg('Deals: Integrasi rekaman rapat dengan data penjualan / CRM');
                 }}
-                className={`pb-3 border-b-2 transition-colors ${navTab === 'deals' ? 'border-cyan-400 text-cyan-400' : 'border-transparent hover:text-slate-200'}`}
+                className={`pb-3 border-b-2 transition-colors ${navTab === 'deals' ? 'border-cyan-400 text-cyan-400' : 'border-transparent hover:text-slate-700 dark:text-slate-200'}`}
               >
                 Deals
               </button>
@@ -622,15 +622,15 @@ export const FathomReplica: React.FC = () => {
             <div className="lg:col-span-8 p-4 sm:p-6 overflow-y-auto space-y-6">
               {/* Group Month: June */}
               <div>
-                <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wider mb-4 flex items-center space-x-2">
+                <h3 className="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-4 flex items-center space-x-2">
                   <Calendar className="w-4 h-4 text-cyan-400" />
                   <span>June</span>
                 </h3>
 
                 {filteredMeetings.length === 0 ? (
-                  <div className="bg-[#141820] border border-slate-800 rounded-2xl p-8 text-center space-y-2">
+                  <div className="bg-[#141820] border border-slate-200 dark:border-slate-800 rounded-2xl p-8 text-center space-y-2">
                     <Video className="w-8 h-8 text-slate-600 mx-auto" />
-                    <p className="text-sm font-semibold text-slate-300">Tidak ada rekaman rapat yang sesuai dengan filter/pencarian ini.</p>
+                    <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">Tidak ada rekaman rapat yang sesuai dengan filter/pencarian ini.</p>
                     <p className="text-xs text-slate-500">Coba ubah tab navigasi atau kata kunci di kolom pencarian.</p>
                   </div>
                 ) : (
@@ -642,16 +642,16 @@ export const FathomReplica: React.FC = () => {
                           setSelectedCallId(call.id);
                           setActiveStage('call-detail');
                         }}
-                        className="bg-[#141820] border border-slate-800 hover:border-cyan-500/60 rounded-xl overflow-hidden cursor-pointer group transition-all transform hover:-translate-y-1 shadow-lg flex flex-col justify-between"
+                        className="bg-[#141820] border border-slate-200 dark:border-slate-800 hover:border-cyan-500/60 rounded-xl overflow-hidden cursor-pointer group transition-all transform hover:-translate-y-1 shadow-lg flex flex-col justify-between"
                       >
                       {/* Card Thumbnail Box */}
-                      <div className="h-32 bg-slate-900 relative flex items-center justify-center p-3 border-b border-slate-800/80">
+                      <div className="h-32 bg-white dark:bg-slate-900 relative flex items-center justify-center p-3 border-b border-slate-200 dark:border-slate-800/80">
                         {/* Participants Avatar Grid */}
                         <div className="flex items-center space-x-2">
                           {call.participants.map((p, idx) => (
                             <div 
                               key={idx}
-                              className={`w-10 h-10 rounded-full ${p.avatarBg} border-2 border-slate-800 flex items-center justify-center font-bold text-white text-xs shadow-md group-hover:scale-110 transition-transform`}
+                              className={`w-10 h-10 rounded-full ${p.avatarBg} border-2 border-slate-200 dark:border-slate-800 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs shadow-md group-hover:scale-110 transition-transform`}
                               title={p.name}
                             >
                               {p.initial}
@@ -668,17 +668,17 @@ export const FathomReplica: React.FC = () => {
                         )}
 
                         {/* Duration Badge */}
-                        <div className="absolute bottom-2 right-2 bg-slate-950/90 border border-slate-700/80 text-[10px] font-bold text-slate-200 px-2 py-0.5 rounded shadow">
+                        <div className="absolute bottom-2 right-2 bg-slate-100 dark:bg-slate-950/90 border border-slate-300 dark:border-slate-700/80 text-[10px] font-bold text-slate-700 dark:text-slate-200 px-2 py-0.5 rounded shadow">
                           {call.durationMins} mins
                         </div>
                       </div>
 
                       {/* Card Info Details */}
                       <div className="p-3">
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-100 group-hover:text-cyan-300 line-clamp-2 leading-snug mb-2">
+                        <h4 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-cyan-300 line-clamp-2 leading-snug mb-2">
                           {call.title}
                         </h4>
-                        <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium">
+                        <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                           <span>{call.date}</span>
                           <span className="text-cyan-400/80 font-bold group-hover:underline">Buka Detail &gt;</span>
                         </div>
@@ -690,28 +690,28 @@ export const FathomReplica: React.FC = () => {
               </div>
 
               {/* Info Note on Navigation Tabs */}
-              <div className="bg-[#12161f] border border-slate-800 rounded-xl p-4 text-xs text-slate-400 space-y-2">
-                <h4 className="font-bold text-slate-200 flex items-center space-x-2">
+              <div className="bg-[#12161f] border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-xs text-slate-500 dark:text-slate-400 space-y-2">
+                <h4 className="font-bold text-slate-700 dark:text-slate-200 flex items-center space-x-2">
                   <Info className="w-4 h-4 text-cyan-400" />
                   <span>Panduan Navigasi Tambahan Fathom:</span>
                 </h4>
-                <ul className="list-disc list-inside space-y-1 text-slate-400 text-[11px] leading-relaxed">
-                  <li><strong className="text-slate-300">Team Calls:</strong> Membuka akses rekaman rapat kolektif milik seluruh anggota tim Maxy Academy.</li>
-                  <li><strong className="text-slate-300">Playlists:</strong> Kumpulan potongan klip rekaman penting yang dapat dikelompokkan berdasarkan materi pelatihan.</li>
-                  <li><strong className="text-slate-300">Alerts:</strong> Notifikasi otomatis saat frasa penting (seperti "kendala", "anggaran", "bug") disebutkan.</li>
-                  <li><strong className="text-slate-300">Deals:</strong> Integrasi cerdas hasil percakapan rapat langsung dengan status pipeline penjualan/CRM.</li>
+                <ul className="list-disc list-inside space-y-1 text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed">
+                  <li><strong className="text-slate-600 dark:text-slate-300">Team Calls:</strong> Membuka akses rekaman rapat kolektif milik seluruh anggota tim Maxy Academy.</li>
+                  <li><strong className="text-slate-600 dark:text-slate-300">Playlists:</strong> Kumpulan potongan klip rekaman penting yang dapat dikelompokkan berdasarkan materi pelatihan.</li>
+                  <li><strong className="text-slate-600 dark:text-slate-300">Alerts:</strong> Notifikasi otomatis saat frasa penting (seperti "kendala", "anggaran", "bug") disebutkan.</li>
+                  <li><strong className="text-slate-600 dark:text-slate-300">Deals:</strong> Integrasi cerdas hasil percakapan rapat langsung dengan status pipeline penjualan/CRM.</li>
                 </ul>
               </div>
             </div>
 
             {/* RIGHT "ASK FATHOM" ACCOUNT-LEVEL PANEL */}
-            <div className="lg:col-span-4 border-l border-slate-800/80 bg-[#101318] p-4 flex flex-col justify-between overflow-y-auto">
+            <div className="lg:col-span-4 border-l border-slate-200 dark:border-slate-800/80 bg-[#101318] p-4 flex flex-col justify-between overflow-y-auto">
               <div className="space-y-4">
                 {/* Panel Header */}
-                <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
                   <div className="flex items-center space-x-2">
                     <Sparkles className="w-4 h-4 text-cyan-400" />
-                    <span className="text-xs font-bold text-slate-200 uppercase tracking-wider">ASK FATHOM</span>
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">ASK FATHOM</span>
                   </div>
                   <span className="text-[10px] bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded font-mono">Cross-Meeting Assistant</span>
                 </div>
@@ -729,7 +729,7 @@ export const FathomReplica: React.FC = () => {
                   <div className="space-y-3 pt-2">
                     {globalAskMessages.map((msg, idx) => (
                       <div key={idx} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                        <div className={`text-xs p-2.5 rounded-xl max-w-[90%] leading-relaxed ${msg.sender === 'user' ? 'bg-cyan-600 text-white font-medium' : 'bg-slate-800/90 text-slate-200 border border-slate-700'}`}>
+                        <div className={`text-xs p-2.5 rounded-xl max-w-[90%] leading-relaxed ${msg.sender === 'user' ? 'bg-cyan-600 text-slate-900 dark:text-white font-medium' : 'bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700'}`}>
                           {msg.text}
                         </div>
                       </div>
@@ -750,7 +750,7 @@ export const FathomReplica: React.FC = () => {
                       <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
                       <span>{askError}</span>
                     </div>
-                    <button onClick={() => setAskError(null)} className="text-rose-400 hover:text-white">
+                    <button onClick={() => setAskError(null)} className="text-rose-400 hover:text-slate-900 dark:text-white">
                       <X className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -758,11 +758,11 @@ export const FathomReplica: React.FC = () => {
 
                 {/* Quick Chips Ready-to-Use Questions */}
                 <div className="space-y-2 pt-2">
-                  <span className="text-[11px] font-bold text-slate-400 block">Pertanyaan Cepat Lintas-Rapat:</span>
+                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">Pertanyaan Cepat Lintas-Rapat:</span>
 
                   <button
                     onClick={() => handleGlobalAskSubmit('Summarize my meetings from this week')}
-                    className="w-full text-left bg-[#181d26] hover:bg-[#202733] border border-slate-700/80 rounded-xl p-2.5 text-xs text-slate-200 transition-colors flex items-center justify-between group"
+                    className="w-full text-left bg-[#181d26] hover:bg-[#202733] border border-slate-300 dark:border-slate-700/80 rounded-xl p-2.5 text-xs text-slate-700 dark:text-slate-200 transition-colors flex items-center justify-between group"
                   >
                     <span>Summarize my meetings from this week</span>
                     <Sparkles className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400" />
@@ -770,7 +770,7 @@ export const FathomReplica: React.FC = () => {
 
                   <button
                     onClick={() => handleGlobalAskSubmit('Things recently mentioned as urgent')}
-                    className="w-full text-left bg-[#181d26] hover:bg-[#202733] border border-slate-700/80 rounded-xl p-2.5 text-xs text-slate-200 transition-colors flex items-center justify-between group"
+                    className="w-full text-left bg-[#181d26] hover:bg-[#202733] border border-slate-300 dark:border-slate-700/80 rounded-xl p-2.5 text-xs text-slate-700 dark:text-slate-200 transition-colors flex items-center justify-between group"
                   >
                     <span>Things recently mentioned as urgent</span>
                     <Sparkles className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400" />
@@ -778,7 +778,7 @@ export const FathomReplica: React.FC = () => {
 
                   <button
                     onClick={() => handleGlobalAskSubmit("Things I promised I'd do by this week")}
-                    className="w-full text-left bg-[#181d26] hover:bg-[#202733] border border-slate-700/80 rounded-xl p-2.5 text-xs text-slate-200 transition-colors flex items-center justify-between group"
+                    className="w-full text-left bg-[#181d26] hover:bg-[#202733] border border-slate-300 dark:border-slate-700/80 rounded-xl p-2.5 text-xs text-slate-700 dark:text-slate-200 transition-colors flex items-center justify-between group"
                   >
                     <span>Things I promised I'd do by this week</span>
                     <Sparkles className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400" />
@@ -787,7 +787,7 @@ export const FathomReplica: React.FC = () => {
               </div>
 
               {/* Bottom Input Field & Scope Selector */}
-              <div className="pt-4 border-t border-slate-800 space-y-2 mt-4">
+              <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-2 mt-4">
                 <div className="relative">
                   <textarea
                     value={globalAskInput}
@@ -800,23 +800,23 @@ export const FathomReplica: React.FC = () => {
                     }}
                     placeholder="Ask anything..."
                     rows={2}
-                    className="w-full bg-[#181d26] border border-slate-700 rounded-xl p-2.5 pr-10 text-xs text-slate-100 placeholder-slate-500 resize-none focus:outline-none focus:border-cyan-500"
+                    className="w-full bg-[#181d26] border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 pr-10 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-500 resize-none focus:outline-none focus:border-cyan-500"
                   />
                   <button
                     onClick={() => handleGlobalAskSubmit()}
                     disabled={!globalAskInput.trim()}
-                    className="absolute right-2 bottom-3 p-1.5 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 text-white rounded-lg transition-colors"
+                    className="absolute right-2 bottom-3 p-1.5 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 text-slate-900 dark:text-white rounded-lg transition-colors"
                   >
                     <Send className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] text-slate-400">
+                <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
                   <span>Scope Pencarian:</span>
                   <select
                     value={globalAskScope}
                     onChange={(e) => setGlobalAskScope(e.target.value)}
-                    className="bg-[#181d26] border border-slate-700 rounded-lg px-2 py-0.5 text-xs text-cyan-300 font-bold focus:outline-none"
+                    className="bg-[#181d26] border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-0.5 text-xs text-cyan-300 font-bold focus:outline-none"
                   >
                     <option value="My Calls">My Calls</option>
                     <option value="Team Calls">Team Calls</option>
@@ -833,7 +833,7 @@ export const FathomReplica: React.FC = () => {
       {activeStage === 'call-detail' && (
         <div className="flex-1 flex flex-col bg-[#0b0d10] overflow-hidden">
           {/* Back Navigation Bar */}
-          <div className="h-10 bg-[#12161e] border-b border-slate-800 px-4 sm:px-6 flex items-center justify-between shrink-0">
+          <div className="h-10 bg-[#12161e] border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 flex items-center justify-between shrink-0">
             <button
               onClick={() => {
                 setActiveStage('my-calls');
@@ -845,28 +845,28 @@ export const FathomReplica: React.FC = () => {
               <span>Kembali ke My Calls</span>
             </button>
 
-            <div className="flex items-center space-x-3 text-[11px] text-slate-400">
+            <div className="flex items-center space-x-3 text-[11px] text-slate-500 dark:text-slate-400">
               <span>Waktu Rapat: {selectedCall.time}</span>
               <span>•</span>
-              <span className="font-mono bg-slate-800 px-2 py-0.5 rounded text-slate-300">ID: {selectedCall.uniqueId}</span>
+              <span className="font-mono bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-slate-600 dark:text-slate-300">ID: {selectedCall.uniqueId}</span>
             </div>
           </div>
 
           {/* Main Call Detail Layout Grid (Left Video & Tabs + Right Action Items) */}
           <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
             {/* LEFT AREA: Video Player & Tabs (Cols 8) */}
-            <div className="lg:col-span-8 flex flex-col border-r border-slate-800 overflow-y-auto bg-[#0d0f13]">
+            <div className="lg:col-span-8 flex flex-col border-r border-slate-200 dark:border-slate-800 overflow-y-auto bg-[#0d0f13]">
               {/* VIDEO PLAYER AREA */}
-              <div className="bg-black p-3 sm:p-4 border-b border-slate-800 flex flex-col space-y-3">
+              <div className="bg-black p-3 sm:p-4 border-b border-slate-200 dark:border-slate-800 flex flex-col space-y-3">
                 {/* Participants Grid Screen */}
-                <div className="w-full h-48 sm:h-64 bg-[#14171d] rounded-xl border border-slate-800 relative overflow-hidden flex items-center justify-center p-4">
+                <div className="w-full h-48 sm:h-64 bg-[#14171d] rounded-xl border border-slate-200 dark:border-slate-800 relative overflow-hidden flex items-center justify-center p-4">
                   <div className="grid grid-cols-3 gap-3 w-full h-full max-w-lg">
                     {selectedCall.participants.map((p, idx) => (
-                      <div key={idx} className={`rounded-xl ${p.avatarBg} border border-slate-700/80 flex flex-col items-center justify-center relative shadow-md`}>
-                        <div className="w-12 h-12 rounded-full bg-slate-900/60 border border-slate-600 flex items-center justify-center font-bold text-white text-base shadow">
+                      <div key={idx} className={`rounded-xl ${p.avatarBg} border border-slate-300 dark:border-slate-700/80 flex flex-col items-center justify-center relative shadow-md`}>
+                        <div className="w-12 h-12 rounded-full bg-white dark:bg-slate-900/60 border border-slate-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-base shadow">
                           {p.initial}
                         </div>
-                        <span className="text-[10px] font-bold text-slate-200 mt-2 bg-slate-950/80 px-2 py-0.5 rounded truncate max-w-[90%]">
+                        <span className="text-[10px] font-bold text-slate-700 dark:text-slate-200 mt-2 bg-slate-100 dark:bg-slate-950/80 px-2 py-0.5 rounded truncate max-w-[90%]">
                           {p.name}
                         </span>
                       </div>
@@ -874,29 +874,29 @@ export const FathomReplica: React.FC = () => {
                   </div>
 
                   {/* Top Bar Info Overlay */}
-                  <div className="absolute top-2 left-3 text-[10px] text-slate-400 font-mono flex items-center space-x-2 bg-slate-950/80 px-2.5 py-1 rounded-md border border-slate-800">
+                  <div className="absolute top-2 left-3 text-[10px] text-slate-500 dark:text-slate-400 font-mono flex items-center space-x-2 bg-slate-100 dark:bg-slate-950/80 px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800">
                     <Clock className="w-3 h-3 text-cyan-400" />
                     <span>{selectedCall.time} | {selectedCall.uniqueId}</span>
                   </div>
                 </div>
 
                 {/* Video Controls Bar */}
-                <div className="flex items-center justify-between text-xs text-slate-300 pt-1 px-1">
+                <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-300 pt-1 px-1">
                   <div className="flex items-center space-x-3">
                     <button
                       onClick={() => setIsPlaying(!isPlaying)}
-                      className="p-1.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg transition-colors"
+                      className="p-1.5 bg-cyan-600 hover:bg-cyan-500 text-slate-900 dark:text-white rounded-lg transition-colors"
                     >
                       {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
                     </button>
-                    <span className="font-mono text-xs text-slate-300">
+                    <span className="font-mono text-xs text-slate-600 dark:text-slate-300">
                       {Math.floor((playerProgress * selectedCall.durationMins * 60) / 100 / 60)}:
                       {String(Math.floor((playerProgress * selectedCall.durationMins * 60) / 100 % 60)).padStart(2, '0')} / {selectedCall.durationMins}:00
                     </span>
                   </div>
 
                   {/* Progress Bar */}
-                  <div className="flex-1 mx-4 bg-slate-800 h-2 rounded-full overflow-hidden cursor-pointer relative" onClick={(e) => {
+                  <div className="flex-1 mx-4 bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden cursor-pointer relative" onClick={(e) => {
                     const rect = e.currentTarget.getBoundingClientRect();
                     const clickX = e.clientX - rect.left;
                     setPlayerProgress(Math.floor((clickX / rect.width) * 100));
@@ -912,11 +912,11 @@ export const FathomReplica: React.FC = () => {
                         setPlaybackSpeed(speeds[nextIdx]);
                         showToastMsg(`Kecepatan putar: ${speeds[nextIdx]}`);
                       }}
-                      className="text-xs bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold px-2 py-1 rounded border border-slate-700"
+                      className="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold px-2 py-1 rounded border border-slate-300 dark:border-slate-700"
                     >
                       {playbackSpeed}
                     </button>
-                    <button onClick={() => showToastMsg('Fullscreen video')} className="p-1 text-slate-400 hover:text-white">
+                    <button onClick={() => showToastMsg('Fullscreen video')} className="p-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">
                       <Maximize className="w-4 h-4" />
                     </button>
                   </div>
@@ -924,25 +924,25 @@ export const FathomReplica: React.FC = () => {
               </div>
 
               {/* TABS HEADER: SUMMARY | TRANSCRIPT | ASK FATHOM */}
-              <div className="bg-[#12161e] border-b border-slate-800 px-4 pt-3 flex items-center justify-between shrink-0">
+              <div className="bg-[#12161e] border-b border-slate-200 dark:border-slate-800 px-4 pt-3 flex items-center justify-between shrink-0">
                 <div className="flex items-center space-x-6 text-xs font-bold">
                   <button
                     onClick={() => setDetailTab('summary')}
-                    className={`pb-3 border-b-2 transition-colors ${detailTab === 'summary' ? 'border-cyan-400 text-cyan-400' : 'text-slate-400 hover:text-slate-200 border-transparent'}`}
+                    className={`pb-3 border-b-2 transition-colors ${detailTab === 'summary' ? 'border-cyan-400 text-cyan-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 border-transparent'}`}
                   >
                     SUMMARY
                   </button>
 
                   <button
                     onClick={() => setDetailTab('transcript')}
-                    className={`pb-3 border-b-2 transition-colors ${detailTab === 'transcript' ? 'border-cyan-400 text-cyan-400' : 'text-slate-400 hover:text-slate-200 border-transparent'}`}
+                    className={`pb-3 border-b-2 transition-colors ${detailTab === 'transcript' ? 'border-cyan-400 text-cyan-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 border-transparent'}`}
                   >
                     TRANSCRIPT
                   </button>
 
                   <button
                     onClick={() => setDetailTab('ask-fathom')}
-                    className={`pb-3 border-b-2 transition-colors ${detailTab === 'ask-fathom' ? 'border-cyan-400 text-cyan-400' : 'text-slate-400 hover:text-slate-200 border-transparent'}`}
+                    className={`pb-3 border-b-2 transition-colors ${detailTab === 'ask-fathom' ? 'border-cyan-400 text-cyan-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 border-transparent'}`}
                   >
                     ASK FATHOM
                   </button>
@@ -968,21 +968,21 @@ export const FathomReplica: React.FC = () => {
                       <select
                         value={summaryMode}
                         onChange={(e) => setSummaryMode(e.target.value)}
-                        className="bg-slate-900 border border-slate-700 text-cyan-300 font-bold text-xs px-2.5 py-1.5 rounded-lg focus:outline-none"
+                        className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-cyan-300 font-bold text-xs px-2.5 py-1.5 rounded-lg focus:outline-none"
                       >
                         <option value="Enhanced">Enhanced Summary</option>
                         <option value="Executive">Executive Brief</option>
                         <option value="Standard">Standard Bullets</option>
                       </select>
 
-                      <button onClick={() => showToastMsg('Pengaturan format summary')} className="p-1.5 bg-slate-900 border border-slate-700 rounded-lg text-slate-400 hover:text-slate-200">
+                      <button onClick={() => showToastMsg('Pengaturan format summary')} className="p-1.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200">
                         <Settings className="w-3.5 h-3.5" />
                       </button>
 
                       <select
                         value={summaryLang}
                         onChange={(e) => setSummaryLang(e.target.value)}
-                        className="bg-slate-900 border border-slate-700 text-slate-200 font-semibold text-xs px-2 py-1.5 rounded-lg focus:outline-none"
+                        className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs px-2 py-1.5 rounded-lg focus:outline-none"
                       >
                         <option value="ID">ID Bahasa Indonesia</option>
                         <option value="EN">EN English</option>
@@ -991,7 +991,7 @@ export const FathomReplica: React.FC = () => {
 
                     <button
                       onClick={handleCopySummary}
-                      className="bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1.5 shadow-sm transition-colors"
+                      className="bg-cyan-600 hover:bg-cyan-500 text-slate-900 dark:text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1.5 shadow-sm transition-colors"
                     >
                       {copiedSummary ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
                       <span>{copiedSummary ? 'Copied!' : 'Copy Summary'}</span>
@@ -1000,19 +1000,19 @@ export const FathomReplica: React.FC = () => {
 
                   {/* Generating State or Ready Summary */}
                   {!isNoteReady ? (
-                    <div className="bg-[#12161f] border border-slate-800 rounded-xl p-6 text-center space-y-3">
-                      <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden max-w-md mx-auto">
+                    <div className="bg-[#12161f] border border-slate-200 dark:border-slate-800 rounded-xl p-6 text-center space-y-3">
+                      <div className="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden max-w-md mx-auto">
                         <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-full transition-all duration-300" style={{ width: `${generatingProgress}%` }}></div>
                       </div>
-                      <p className="text-xs text-slate-400 font-medium animate-pulse">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium animate-pulse">
                         Please wait, AI note is generating... ({generatingProgress}%)
                       </p>
                     </div>
                   ) : (
-                    <div className="bg-[#121620] border border-slate-800 rounded-2xl p-5 space-y-5 text-xs sm:text-sm text-slate-200 leading-relaxed shadow-inner">
+                    <div className="bg-[#121620] border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-5 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed shadow-inner">
                       {/* Section 1: Tujuan Rapat */}
                       <div>
-                        <h4 className="text-sm sm:text-base font-extrabold text-white mb-1 flex items-center space-x-2">
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mb-1 flex items-center space-x-2">
                           <Zap className="w-4 h-4 text-cyan-400" />
                           <span>Tujuan Rapat</span>
                         </h4>
@@ -1023,15 +1023,15 @@ export const FathomReplica: React.FC = () => {
 
                       {/* Section 2: Pokok-Pokok Penting */}
                       <div>
-                        <h4 className="text-sm sm:text-base font-extrabold text-white mb-3 flex items-center space-x-2">
+                        <h4 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mb-3 flex items-center space-x-2">
                           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                           <span>Pokok-Pokok Penting</span>
                         </h4>
                         <div className="space-y-3">
                           {selectedCall.summary.keyPoints.map((pt, idx) => (
-                            <div key={idx} className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl space-y-1">
+                            <div key={idx} className="bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-3 rounded-xl space-y-1">
                               <h5 className="font-bold text-cyan-300 text-xs sm:text-sm">{pt.topic}</h5>
-                              <p className="text-slate-300 text-xs leading-relaxed">{pt.details}</p>
+                              <p className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">{pt.details}</p>
                             </div>
                           ))}
                         </div>
@@ -1052,14 +1052,14 @@ export const FathomReplica: React.FC = () => {
                         value={transcriptSearch}
                         onChange={(e) => setTranscriptSearch(e.target.value)}
                         placeholder="Search Transcript"
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl py-1.5 px-3 pl-9 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+                        className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl py-1.5 px-3 pl-9 text-xs text-slate-700 dark:text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
                       />
                       <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-2.5" />
                     </div>
 
                     <button
                       onClick={handleCopyTranscript}
-                      className="bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1.5 shadow-sm transition-colors"
+                      className="bg-cyan-600 hover:bg-cyan-500 text-slate-900 dark:text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1.5 shadow-sm transition-colors"
                     >
                       {copiedTranscript ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
                       <span>{copiedTranscript ? 'Copied!' : 'Copy Transcript'}</span>
@@ -1074,12 +1074,12 @@ export const FathomReplica: React.FC = () => {
                       </div>
                     ) : (
                       filteredTranscript.map((tr, idx) => (
-                        <div key={idx} className="bg-[#121620] border border-slate-800/80 rounded-2xl p-3.5 space-y-1 hover:border-slate-700 transition-colors">
+                        <div key={idx} className="bg-[#121620] border border-slate-200 dark:border-slate-800/80 rounded-2xl p-3.5 space-y-1 hover:border-slate-300 dark:border-slate-700 transition-colors">
                           <div className="flex items-center justify-between text-xs">
                             <span className="font-bold text-cyan-300">{tr.speaker}</span>
                             <span className="font-mono text-[11px] text-slate-500">@ {tr.time}</span>
                           </div>
-                          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed pt-1">
+                          <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed pt-1">
                             {tr.text}
                           </p>
                         </div>
@@ -1093,10 +1093,10 @@ export const FathomReplica: React.FC = () => {
               {detailTab === 'ask-fathom' && (
                 <div className="p-4 sm:p-6 space-y-5">
                   <div className="text-center space-y-2 py-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 mx-auto flex items-center justify-center text-white shadow-lg">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 mx-auto flex items-center justify-center text-slate-900 dark:text-white shadow-lg">
                       <Sparkles className="w-5 h-5" />
                     </div>
-                    <h3 className="text-sm sm:text-base font-bold text-white">
+                    <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
                       Hi, what can I tell you about this meeting?
                     </h3>
                   </div>
@@ -1105,13 +1105,13 @@ export const FathomReplica: React.FC = () => {
                   <div className="flex flex-wrap gap-2 justify-center">
                     <button
                       onClick={() => handleCallAskSubmit('Why was this meeting scheduled?')}
-                      className="bg-[#181d26] hover:bg-[#202733] border border-slate-700 text-xs text-slate-200 px-3 py-1.5 rounded-xl transition-colors font-medium"
+                      className="bg-[#181d26] hover:bg-[#202733] border border-slate-300 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-xl transition-colors font-medium"
                     >
                       Why was this meeting scheduled?
                     </button>
                     <button
                       onClick={() => handleCallAskSubmit('What would help make progress?')}
-                      className="bg-[#181d26] hover:bg-[#202733] border border-slate-700 text-xs text-slate-200 px-3 py-1.5 rounded-xl transition-colors font-medium"
+                      className="bg-[#181d26] hover:bg-[#202733] border border-slate-300 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-200 px-3 py-1.5 rounded-xl transition-colors font-medium"
                     >
                       What would help make progress?
                     </button>
@@ -1122,7 +1122,7 @@ export const FathomReplica: React.FC = () => {
                     <div className="space-y-3 pt-3">
                       {callAskMessages.map((msg, idx) => (
                         <div key={idx} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
-                          <div className={`text-xs p-3 rounded-xl max-w-[85%] leading-relaxed ${msg.sender === 'user' ? 'bg-cyan-600 text-white font-medium' : 'bg-slate-800 text-slate-200 border border-slate-700'}`}>
+                          <div className={`text-xs p-3 rounded-xl max-w-[85%] leading-relaxed ${msg.sender === 'user' ? 'bg-cyan-600 text-slate-900 dark:text-white font-medium' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700'}`}>
                             {msg.text}
                           </div>
                         </div>
@@ -1145,12 +1145,12 @@ export const FathomReplica: React.FC = () => {
                       onChange={(e) => setCallAskInput(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleCallAskSubmit()}
                       placeholder="Ask Fathom AI..."
-                      className="w-full bg-[#181d26] border border-slate-700 rounded-xl py-2 px-3 pr-10 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+                      className="w-full bg-[#181d26] border border-slate-300 dark:border-slate-700 rounded-xl py-2 px-3 pr-10 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
                     />
                     <button
                       onClick={() => handleCallAskSubmit()}
                       disabled={!callAskInput.trim()}
-                      className="absolute right-2 top-3.5 p-1 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 text-white rounded-lg transition-colors"
+                      className="absolute right-2 top-3.5 p-1 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 text-slate-900 dark:text-white rounded-lg transition-colors"
                     >
                       <Send className="w-3.5 h-3.5" />
                     </button>
@@ -1162,21 +1162,21 @@ export const FathomReplica: React.FC = () => {
             {/* RIGHT PANEL: ACTION ITEMS (Cols 4) */}
             <div className="lg:col-span-4 bg-[#101318] p-4 sm:p-5 flex flex-col space-y-4 overflow-y-auto border-t lg:border-t-0">
               {/* Meeting Header Title */}
-              <div className="pb-3 border-b border-slate-800 space-y-1">
+              <div className="pb-3 border-b border-slate-200 dark:border-slate-800 space-y-1">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-sm font-extrabold text-white leading-tight">
+                  <h2 className="text-sm font-extrabold text-slate-900 dark:text-white leading-tight">
                     {selectedCall.title}
                   </h2>
                   <div className="flex items-center space-x-1">
-                    <button onClick={() => showToastMsg('Link rapat disalin ke clipboard')} className="p-1 text-slate-400 hover:text-white" title="Share">
+                    <button onClick={() => showToastMsg('Link rapat disalin ke clipboard')} className="p-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white" title="Share">
                       <Share2 className="w-3.5 h-3.5" />
                     </button>
-                    <button onClick={() => showToastMsg('Menu titik tiga')} className="p-1 text-slate-400 hover:text-white" title="Options">
+                    <button onClick={() => showToastMsg('Menu titik tiga')} className="p-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white" title="Options">
                       <MoreHorizontal className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
-                <p className="text-[11px] text-slate-400 font-medium">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                   {selectedCall.fullDate}
                 </p>
               </div>
@@ -1184,11 +1184,11 @@ export const FathomReplica: React.FC = () => {
               {/* Action Items Title & Export Buttons */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-1.5 text-xs font-extrabold text-slate-200 tracking-wider">
+                  <div className="flex items-center space-x-1.5 text-xs font-extrabold text-slate-700 dark:text-slate-200 tracking-wider">
                     <CheckSquare className="w-4 h-4 text-cyan-400" />
                     <span>ACTION ITEMS</span>
                   </div>
-                  <span className="text-[10px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded font-mono">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded font-mono">
                     {selectedCall.actionItems.filter(a => a.isCompleted).length}/{selectedCall.actionItems.length}
                   </span>
                 </div>
@@ -1196,7 +1196,7 @@ export const FathomReplica: React.FC = () => {
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={handleCopyFor}
-                    className="flex-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs py-1.5 rounded-lg font-bold flex items-center justify-center space-x-1 transition-colors"
+                    className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-lg font-bold flex items-center justify-center space-x-1 transition-colors"
                   >
                     <Copy className="w-3 h-3 text-cyan-400" />
                     <span>{copiedForState ? 'Copied!' : 'Copy for ...'}</span>
@@ -1218,7 +1218,7 @@ export const FathomReplica: React.FC = () => {
                   <div
                     key={item.id}
                     onClick={() => toggleActionItem(selectedCall.id, item.id)}
-                    className={`p-3 rounded-xl border cursor-pointer transition-all flex items-start space-x-2.5 ${item.isCompleted ? 'bg-slate-950/40 border-slate-800/60 opacity-60' : 'bg-[#151a22] border-slate-800 hover:border-cyan-500/50'}`}
+                    className={`p-3 rounded-xl border cursor-pointer transition-all flex items-start space-x-2.5 ${item.isCompleted ? 'bg-slate-100 dark:bg-slate-950/40 border-slate-200 dark:border-slate-800/60 opacity-60' : 'bg-[#151a22] border-slate-200 dark:border-slate-800 hover:border-cyan-500/50'}`}
                   >
                     <div className="mt-0.5 shrink-0">
                       {item.isCompleted ? (
@@ -1229,17 +1229,17 @@ export const FathomReplica: React.FC = () => {
                     </div>
 
                     <div className="space-y-1.5 text-xs flex-1">
-                      <p className={`leading-relaxed font-medium ${item.isCompleted ? 'line-through text-slate-500' : 'text-slate-100'}`}>
+                      <p className={`leading-relaxed font-medium ${item.isCompleted ? 'line-through text-slate-500' : 'text-slate-800 dark:text-slate-100'}`}>
                         {item.text}
                       </p>
 
-                      <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+                      <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-1">
                         <span className="flex items-center space-x-1 text-cyan-400/90 font-mono">
                           <Sparkles className="w-3 h-3 text-cyan-400" />
                           <span>{item.timestamp}</span>
                         </span>
 
-                        <span className="bg-slate-800/80 px-2 py-0.5 rounded text-slate-300 font-bold">
+                        <span className="bg-slate-100 dark:bg-slate-800/80 px-2 py-0.5 rounded text-slate-600 dark:text-slate-300 font-bold">
                           👤 {item.assignee}
                         </span>
                       </div>

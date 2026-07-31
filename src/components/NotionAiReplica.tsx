@@ -199,7 +199,7 @@ export const NotionAiReplica: React.FC = () => {
       {/* ---------------- TOP NAVIGATION BAR & TAB SWITCHER ---------------- */}
       <header className="px-5 py-3 bg-white border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 z-30 shrink-0">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-xs">
+          <div className="w-7 h-7 rounded-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-white flex items-center justify-center font-bold text-sm shadow-xs">
             🦏
           </div>
           <span className="text-base font-extrabold text-slate-900 tracking-tight">
@@ -251,15 +251,15 @@ export const NotionAiReplica: React.FC = () => {
       {activeTab === 'builder' && (
         <div className="flex-1 bg-[#4d4d4d]/90 p-6 sm:p-12 flex items-center justify-center relative overflow-y-auto min-h-[600px]">
           {/* Simulated Browser Top Bar */}
-          <div className="absolute top-0 left-0 right-0 h-9 bg-[#2d2d2d] border-b border-slate-700 px-4 flex items-center justify-between text-xs text-slate-400">
+          <div className="absolute top-0 left-0 right-0 h-9 bg-[#2d2d2d] border-b border-slate-300 dark:border-slate-700 px-4 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-rose-500" />
               <div className="w-3 h-3 rounded-full bg-amber-500" />
               <div className="w-3 h-3 rounded-full bg-emerald-500" />
-              <span className="ml-3 font-semibold text-slate-300">Acme / Notion AI Workspace</span>
+              <span className="ml-3 font-semibold text-slate-600 dark:text-slate-300">Acme / Notion AI Workspace</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-[11px] hover:text-white cursor-pointer">Personalize</span>
+              <span className="text-[11px] hover:text-slate-900 dark:text-white cursor-pointer">Personalize</span>
             </div>
           </div>
 
@@ -291,7 +291,7 @@ export const NotionAiReplica: React.FC = () => {
                 <button className="p-1.5 rounded-full hover:bg-slate-200 text-slate-500 transition-colors cursor-pointer">
                   ←
                 </button>
-                <button className="p-1.5 rounded-full hover:bg-slate-200 text-slate-400 transition-colors cursor-pointer">
+                <button className="p-1.5 rounded-full hover:bg-slate-200 text-slate-500 dark:text-slate-400 transition-colors cursor-pointer">
                   <Info className="w-4 h-4" />
                 </button>
               </div>
@@ -321,7 +321,7 @@ export const NotionAiReplica: React.FC = () => {
                   <button
                     onClick={handleBuilderSubmit}
                     disabled={builderLoading || !builderPrompt.trim()}
-                    className="w-7 h-7 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition-all cursor-pointer disabled:bg-slate-300 shadow-sm"
+                    className="w-7 h-7 rounded-full bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white flex items-center justify-center transition-all cursor-pointer disabled:bg-slate-300 shadow-sm"
                     title="Generate with Notion AI"
                   >
                     {builderLoading ? (
@@ -448,7 +448,7 @@ export const NotionAiReplica: React.FC = () => {
               <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
                 Introduction
               </h1>
-              <div className="flex items-center gap-3 text-xs text-slate-400 font-medium">
+              <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-medium">
                 <span>By Product Team</span>
                 <span>•</span>
                 <span>Draft Document</span>
@@ -464,7 +464,7 @@ export const NotionAiReplica: React.FC = () => {
                 onClick={() => setIsTextSelected(!isTextSelected)}
                 className={`px-3 py-1 rounded-xl font-bold cursor-pointer transition-colors ${
                   isTextSelected
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-blue-600 text-slate-900 dark:text-white'
                     : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
                 }`}
               >
@@ -503,7 +503,7 @@ export const NotionAiReplica: React.FC = () => {
                     <button
                       onClick={() => handleApplyEditorAi()}
                       disabled={editorLoading}
-                      className="w-6 h-6 rounded-full bg-slate-200 hover:bg-blue-600 hover:text-white text-slate-600 flex items-center justify-center transition-all cursor-pointer"
+                      className="w-6 h-6 rounded-full bg-slate-200 hover:bg-blue-600 hover:text-slate-900 dark:text-white text-slate-600 flex items-center justify-center transition-all cursor-pointer"
                     >
                       {editorLoading ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -515,7 +515,7 @@ export const NotionAiReplica: React.FC = () => {
 
                   {/* Dropdown Menu Header */}
                   <div className="pt-2 px-1">
-                    <span className="text-[10px] font-bold uppercase text-slate-400 tracking-wider block mb-1">
+                    <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 tracking-wider block mb-1">
                       Edit or review selection
                     </span>
 
@@ -561,7 +561,7 @@ export const NotionAiReplica: React.FC = () => {
                           <Mic className="w-3.5 h-3.5 text-indigo-600" />
                           <span>Change tone</span>
                         </div>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                       </button>
 
                       <button
@@ -594,7 +594,7 @@ export const NotionAiReplica: React.FC = () => {
                   <div className="flex items-center gap-2 pt-1">
                     <button
                       onClick={handleAcceptEdit}
-                      className="px-3 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                      className="px-3 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-slate-900 dark:text-white text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
                     >
                       <Check className="w-3.5 h-3.5" />
                       <span>Accept</span>
@@ -654,7 +654,7 @@ export const NotionAiReplica: React.FC = () => {
                 <div className="flex flex-wrap items-center gap-3">
                   <button
                     onClick={() => setShowSimulatedAuthModal(true)}
-                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer"
+                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white text-xs font-bold shadow-sm transition-all cursor-pointer"
                   >
                     Get Notion free
                   </button>
@@ -669,7 +669,7 @@ export const NotionAiReplica: React.FC = () => {
 
                 {/* Trusted Logos Bar */}
                 <div className="pt-4 space-y-2">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                  <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                     Trusted by teams at
                   </span>
                   <div className="flex items-center gap-6 text-slate-700 font-extrabold text-xs">
@@ -691,7 +691,7 @@ export const NotionAiReplica: React.FC = () => {
                   </div>
                   <div className="space-y-1">
                     <span className="text-xs font-extrabold text-slate-900 block">Notion AI Engine</span>
-                    <span className="text-[10px] text-slate-400 font-medium">Built in Workspace</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Built in Workspace</span>
                   </div>
                 </div>
               </div>
@@ -791,7 +791,7 @@ export const NotionAiReplica: React.FC = () => {
                   </div>
                   <button
                     onClick={() => setActiveFeatureDemo(null)}
-                    className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer"
+                    className="p-1 text-slate-500 dark:text-slate-400 hover:text-slate-700 cursor-pointer"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -804,7 +804,7 @@ export const NotionAiReplica: React.FC = () => {
                       key={i}
                       className={`p-3 rounded-2xl text-xs font-medium max-w-xl leading-relaxed ${
                         msg.sender === 'user'
-                          ? 'bg-blue-600 text-white ml-auto'
+                          ? 'bg-blue-600 text-slate-900 dark:text-white ml-auto'
                           : 'bg-white border border-slate-200 text-slate-800'
                       }`}
                     >
@@ -834,7 +834,7 @@ export const NotionAiReplica: React.FC = () => {
                   <button
                     onClick={handleSendFeatureMessage}
                     disabled={featureLoading || !featureInput.trim()}
-                    className="w-8 h-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center disabled:bg-slate-200 cursor-pointer transition-all"
+                    className="w-8 h-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-slate-900 dark:text-white flex items-center justify-center disabled:bg-slate-200 cursor-pointer transition-all"
                   >
                     <Send className="w-3.5 h-3.5" />
                   </button>
@@ -847,7 +847,7 @@ export const NotionAiReplica: React.FC = () => {
 
       {/* ---------------- MODAL SIMULASI MAXY ACADEMY ---------------- */}
       {showSimulatedAuthModal && (
-        <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
+        <div className="fixed inset-0 bg-slate-100 dark:bg-slate-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
           <div className="bg-white border border-slate-200 rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl text-center">
             <div className="w-12 h-12 mx-auto rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center text-2xl font-bold">
               🦏
@@ -860,7 +860,7 @@ export const NotionAiReplica: React.FC = () => {
             </div>
             <button
               onClick={() => setShowSimulatedAuthModal(false)}
-              className="w-full py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold transition-all cursor-pointer"
+              className="w-full py-2.5 rounded-2xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-extrabold transition-all cursor-pointer"
             >
               Mengerti & Lanjutkan
             </button>

@@ -310,7 +310,7 @@ export const MetaAIReplica: React.FC = () => {
   };
 
   return (
-    <div className="relative rounded-2xl border border-[#27272a] bg-[#121214] text-slate-100 overflow-hidden shadow-2xl font-sans">
+    <div className="relative rounded-2xl border border-[#27272a] bg-[#121214] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl font-sans">
       {/* Top Header Bar for Simulator View Controls */}
       <div className="bg-[#18181b] border-b border-[#27272a] px-4 py-2.5 flex items-center justify-between text-xs">
         <div className="flex items-center gap-2">
@@ -320,7 +320,7 @@ export const MetaAIReplica: React.FC = () => {
               <div className="w-2 h-2 rounded-full bg-gradient-to-tr from-purple-400 to-fuchsia-400" />
             </div>
           </div>
-          <span className="font-bold text-white tracking-wide flex items-center gap-1.5">
+          <span className="font-bold text-slate-900 dark:text-white tracking-wide flex items-center gap-1.5">
             Meta AI Replica (Llama 3.3)
           </span>
           <span className="hidden sm:inline-block px-2 py-0.5 rounded bg-purple-950/80 text-purple-300 border border-purple-800/60 text-[10px]">
@@ -337,8 +337,8 @@ export const MetaAIReplica: React.FC = () => {
             }}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition-all ${
               viewMode === 'desktop'
-                ? 'bg-purple-600 text-white shadow'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-purple-600 text-slate-900 dark:text-white shadow'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Laptop className="w-3.5 h-3.5" />
@@ -351,8 +351,8 @@ export const MetaAIReplica: React.FC = () => {
             }}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition-all ${
               viewMode === 'mobile'
-                ? 'bg-purple-600 text-white shadow'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-purple-600 text-slate-900 dark:text-white shadow'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -390,7 +390,7 @@ export const MetaAIReplica: React.FC = () => {
 
                 <button
                   onClick={() => setIsSidebarOpen(false)}
-                  className="p-1.5 hover:bg-[#27272a] text-slate-400 hover:text-white rounded-lg transition-colors"
+                  className="p-1.5 hover:bg-[#27272a] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
                   title="Collapse Sidebar"
                 >
                   <PanelLeft className="w-4 h-4" />
@@ -404,10 +404,10 @@ export const MetaAIReplica: React.FC = () => {
                     handleNewChat();
                     handleOpenModal('new-chat');
                   }}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-200 hover:bg-[#27272a] transition-colors text-left"
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#27272a] transition-colors text-left"
                 >
                   <div className="flex items-center gap-3">
-                    <Plus className="w-4 h-4 text-slate-300" />
+                    <Plus className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                     <span>New chat</span>
                   </div>
                   <span className="text-[10px] text-slate-500 font-normal">⇧⌘O</span>
@@ -415,10 +415,10 @@ export const MetaAIReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('search')}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#27272a] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
                   <div className="flex items-center gap-3">
-                    <Search className="w-4 h-4 text-slate-400" />
+                    <Search className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Search</span>
                   </div>
                   <span className="text-[10px] text-slate-500 font-normal">⌘K</span>
@@ -426,33 +426,33 @@ export const MetaAIReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('media')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#27272a] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <ImageIcon className="w-4 h-4 text-slate-400" />
+                  <ImageIcon className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Media</span>
                 </button>
 
                 <button
                   onClick={() => handleOpenModal('artifacts')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#27272a] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <LayoutGrid className="w-4 h-4 text-slate-400" />
+                  <LayoutGrid className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Artifacts</span>
                 </button>
 
                 <button
                   onClick={() => handleOpenModal('scheduled')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#27272a] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <Calendar className="w-4 h-4 text-slate-400" />
+                  <Calendar className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Scheduled</span>
                 </button>
 
                 <button
                   onClick={() => handleOpenModal('vibes')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#27272a] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <Play className="w-4 h-4 text-slate-400" />
+                  <Play className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Vibes</span>
                 </button>
               </div>
@@ -468,7 +468,7 @@ export const MetaAIReplica: React.FC = () => {
                     handleOpenModal('history-1');
                     handleSendPrompt('Jelaskan Panduan Lingkungan Maxy AI Hub');
                   }}
-                  className="w-full text-left px-3 py-2 rounded-xl text-slate-300 hover:bg-[#27272a] hover:text-white transition-colors text-xs truncate block"
+                  className="w-full text-left px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-xs truncate block"
                 >
                   Panduan Lingkungan Maxy AI ...
                 </button>
@@ -478,7 +478,7 @@ export const MetaAIReplica: React.FC = () => {
                     handleOpenModal('history-2');
                     handleSendPrompt('Buatkan Storyboard Komik Maxy Academy');
                   }}
-                  className="w-full text-left px-3 py-2 rounded-xl text-slate-300 hover:bg-[#27272a] hover:text-white transition-colors text-xs truncate block"
+                  className="w-full text-left px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] hover:text-slate-900 dark:text-white transition-colors text-xs truncate block"
                 >
                   Storyboard Komik Maxy Acad...
                 </button>
@@ -492,17 +492,17 @@ export const MetaAIReplica: React.FC = () => {
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                   className="flex items-center gap-2.5 min-w-0 text-left flex-1"
                 >
-                  <div className="w-7 h-7 rounded-full bg-emerald-700/80 border border-emerald-500/50 flex items-center justify-center text-white font-bold text-xs shrink-0 overflow-hidden">
+                  <div className="w-7 h-7 rounded-full bg-emerald-700/80 border border-emerald-500/50 flex items-center justify-center text-slate-900 dark:text-white font-bold text-xs shrink-0 overflow-hidden">
                     <span className="text-[10px]">MA</span>
                   </div>
-                  <span className="text-xs font-semibold text-slate-200 truncate">
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">
                     {userProfile.username}
                   </span>
                 </button>
 
                 <button
                   onClick={() => handleOpenModal('profile-menu')}
-                  className="p-1.5 hover:bg-[#3f3f46] text-slate-400 hover:text-white rounded-lg transition-colors shrink-0"
+                  className="p-1.5 hover:bg-[#3f3f46] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors shrink-0"
                   title="Notifications"
                 >
                   <Bell className="w-4 h-4" />
@@ -517,9 +517,9 @@ export const MetaAIReplica: React.FC = () => {
                       setIsProfileMenuOpen(false);
                       handleOpenModal('profile-menu');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
                   >
-                    <User className="w-4 h-4 text-slate-400" />
+                    <User className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>View profile</span>
                   </button>
 
@@ -528,9 +528,9 @@ export const MetaAIReplica: React.FC = () => {
                       setIsProfileMenuOpen(false);
                       setIsSettingsModalOpen(true);
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
                   >
-                    <Settings className="w-4 h-4 text-slate-400" />
+                    <Settings className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Settings</span>
                   </button>
 
@@ -539,10 +539,10 @@ export const MetaAIReplica: React.FC = () => {
                       setIsProfileMenuOpen(false);
                       alert('Pintasan Keyboard:\n- New chat: ⇧⌘O\n- Search: ⌘K\n- Shortcuts: ⌘/');
                     }}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Keyboard className="w-4 h-4 text-slate-400" />
+                      <Keyboard className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                       <span>Keyboard shortcuts</span>
                     </div>
                     <span className="text-[10px] text-slate-500">⌘/</span>
@@ -555,10 +555,10 @@ export const MetaAIReplica: React.FC = () => {
                       setIsProfileMenuOpen(false);
                       handleOpenModal('vibes');
                     }}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Play className="w-4 h-4 text-slate-400" />
+                      <Play className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                       <span>Vibes.ai</span>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
@@ -569,10 +569,10 @@ export const MetaAIReplica: React.FC = () => {
                       setIsProfileMenuOpen(false);
                       handleOpenModal('ai-demos');
                     }}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
                   >
                     <div className="flex items-center gap-2.5">
-                      <LayoutGrid className="w-4 h-4 text-slate-400" />
+                      <LayoutGrid className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                       <span>AI Demos</span>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
@@ -583,9 +583,9 @@ export const MetaAIReplica: React.FC = () => {
                       setIsProfileMenuOpen(false);
                       handleOpenModal('ai-identification');
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#2c2c32] transition-colors text-left font-medium"
                   >
-                    <Eye className="w-4 h-4 text-slate-400" />
+                    <Eye className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>AI identification</span>
                   </button>
 
@@ -619,7 +619,7 @@ export const MetaAIReplica: React.FC = () => {
         {viewMode === 'desktop' && !isSidebarOpen && (
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className="absolute top-3 left-3 z-20 p-2 bg-[#18181b] border border-[#27272a] hover:bg-[#27272a] text-slate-300 rounded-xl shadow-lg transition-colors"
+            className="absolute top-3 left-3 z-20 p-2 bg-[#18181b] border border-[#27272a] hover:bg-[#27272a] text-slate-600 dark:text-slate-300 rounded-xl shadow-lg transition-colors"
             title="Open Sidebar"
           >
             <PanelLeft className="w-4 h-4" />
@@ -638,7 +638,7 @@ export const MetaAIReplica: React.FC = () => {
                 onClick={() => setIsMobileDrawerOpen(true)}
                 className={`${
                   viewMode === 'mobile' ? 'block' : 'lg:hidden block'
-                } p-2 hover:bg-[#27272a] rounded-xl text-slate-300 transition-colors`}
+                } p-2 hover:bg-[#27272a] rounded-xl text-slate-600 dark:text-slate-300 transition-colors`}
                 title="Open Sidebar Navigation"
               >
                 <PanelLeft className="w-4 h-4" />
@@ -651,7 +651,7 @@ export const MetaAIReplica: React.FC = () => {
             {messages.length === 0 ? (
               <div className="w-full space-y-6 text-center animate-in fade-in duration-300">
                 {/* Headline Text (Matching Screenshots) */}
-                <h1 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-snug font-sans">
+                <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white tracking-tight leading-snug font-sans">
                   Where should we start?
                 </h1>
 
@@ -670,7 +670,7 @@ export const MetaAIReplica: React.FC = () => {
                       }}
                       placeholder="Ask Meta AI..."
                       rows={2}
-                      className="w-full bg-transparent border-none focus:outline-none text-sm text-slate-100 placeholder-slate-400 resize-none font-sans"
+                      className="w-full bg-transparent border-none focus:outline-none text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 resize-none font-sans"
                     />
 
                     {/* Green Active Dot Icon */}
@@ -685,7 +685,7 @@ export const MetaAIReplica: React.FC = () => {
                         setIsMediaModalOpen(true);
                         handleOpenModal('add-media-modal');
                       }}
-                      className="p-2 hover:bg-[#323238] rounded-full text-slate-300 hover:text-white transition-colors border border-[#3a3a42] bg-[#1a1a1d]"
+                      className="p-2 hover:bg-[#323238] rounded-full text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors border border-[#3a3a42] bg-[#1a1a1d]"
                       title="Add media and files"
                     >
                       <Plus className="w-4 h-4" />
@@ -699,7 +699,7 @@ export const MetaAIReplica: React.FC = () => {
                           setSelectedMode(nextMode);
                           handleOpenModal('instant-mode');
                         }}
-                        className="px-3 py-1 bg-[#1a1a1d] hover:bg-[#323238] text-slate-300 hover:text-white text-xs font-medium rounded-full border border-[#3a3a42] transition-colors"
+                        className="px-3 py-1 bg-[#1a1a1d] hover:bg-[#323238] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white text-xs font-medium rounded-full border border-[#3a3a42] transition-colors"
                       >
                         {selectedMode}
                       </button>
@@ -709,7 +709,7 @@ export const MetaAIReplica: React.FC = () => {
                         disabled={!inputPrompt.trim()}
                         className={`p-2.5 rounded-full transition-all shadow ${
                           inputPrompt.trim()
-                            ? 'bg-purple-600 hover:bg-purple-500 text-white cursor-pointer'
+                            ? 'bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white cursor-pointer'
                             : 'bg-indigo-900/60 text-slate-500 cursor-not-allowed'
                         }`}
                         title="Send Message"
@@ -738,8 +738,8 @@ export const MetaAIReplica: React.FC = () => {
                       }}
                       className={`px-4 py-1.5 rounded-full font-medium text-xs border transition-all ${
                         activeChip === chip.key
-                          ? 'bg-[#323238] text-white border-[#4f4f58]'
-                          : 'bg-[#1e1e22] text-slate-300 border-[#2b2b30] hover:bg-[#28282e]'
+                          ? 'bg-[#323238] text-slate-900 dark:text-white border-[#4f4f58]'
+                          : 'bg-[#1e1e22] text-slate-600 dark:text-slate-300 border-[#2b2b30] hover:bg-[#28282e]'
                       }`}
                     >
                       {chip.label}
@@ -756,7 +756,7 @@ export const MetaAIReplica: React.FC = () => {
                     <div className="w-9 h-9 rounded-xl bg-indigo-950/80 border border-indigo-800/50 flex items-center justify-center text-indigo-400 group-hover:text-indigo-300">
                       <Dumbbell className="w-4 h-4" />
                     </div>
-                    <p className="text-xs font-medium text-slate-200 leading-snug">
+                    <p className="text-xs font-medium text-slate-700 dark:text-slate-200 leading-snug">
                       Create a 20-min daily workout
                     </p>
                   </button>
@@ -768,7 +768,7 @@ export const MetaAIReplica: React.FC = () => {
                     <div className="w-9 h-9 rounded-xl bg-purple-950/80 border border-purple-800/50 flex items-center justify-center text-purple-400 group-hover:text-purple-300">
                       <Utensils className="w-4 h-4" />
                     </div>
-                    <p className="text-xs font-medium text-slate-200 leading-snug">
+                    <p className="text-xs font-medium text-slate-700 dark:text-slate-200 leading-snug">
                       Make a trending seasonal recipe
                     </p>
                   </button>
@@ -780,7 +780,7 @@ export const MetaAIReplica: React.FC = () => {
                     <div className="w-9 h-9 rounded-xl bg-fuchsia-950/80 border border-fuchsia-800/50 flex items-center justify-center text-fuchsia-400 group-hover:text-fuchsia-300">
                       <Mail className="w-4 h-4" />
                     </div>
-                    <p className="text-xs font-medium text-slate-200 leading-snug">
+                    <p className="text-xs font-medium text-slate-700 dark:text-slate-200 leading-snug">
                       Recap my calendar and email
                     </p>
                   </button>
@@ -792,7 +792,7 @@ export const MetaAIReplica: React.FC = () => {
                     <div className="w-9 h-9 rounded-xl bg-indigo-950/80 border border-indigo-800/50 flex items-center justify-center text-indigo-400 group-hover:text-indigo-300">
                       <Search className="w-4 h-4" />
                     </div>
-                    <p className="text-xs font-medium text-slate-200 leading-snug">
+                    <p className="text-xs font-medium text-slate-700 dark:text-slate-200 leading-snug">
                       Audit my paid subscriptions
                     </p>
                   </button>
@@ -804,7 +804,7 @@ export const MetaAIReplica: React.FC = () => {
                     <div className="w-9 h-9 rounded-xl bg-purple-950/80 border border-purple-800/50 flex items-center justify-center text-purple-400 group-hover:text-purple-300">
                       <Zap className="w-4 h-4" />
                     </div>
-                    <p className="text-xs font-medium text-slate-200 leading-snug">
+                    <p className="text-xs font-medium text-slate-700 dark:text-slate-200 leading-snug">
                       Explain sci-fi cars with real physics
                     </p>
                   </button>
@@ -816,7 +816,7 @@ export const MetaAIReplica: React.FC = () => {
                     <div className="w-9 h-9 rounded-xl bg-fuchsia-950/80 border border-fuchsia-800/50 flex items-center justify-center text-fuchsia-400 group-hover:text-fuchsia-300">
                       <Utensils className="w-4 h-4" />
                     </div>
-                    <p className="text-xs font-medium text-slate-200 leading-snug">
+                    <p className="text-xs font-medium text-slate-700 dark:text-slate-200 leading-snug">
                       Build a high-protein meal plan
                     </p>
                   </button>
@@ -832,7 +832,7 @@ export const MetaAIReplica: React.FC = () => {
                       msg.sender === 'user' ? 'items-end' : 'items-start'
                     } space-y-1 animate-in fade-in duration-200`}
                   >
-                    <div className="flex items-center gap-2 text-[10px] text-slate-400 px-1">
+                    <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 px-1">
                       <span>{msg.sender === 'user' ? userProfile.username : 'Meta AI'}</span>
                       {msg.modelUsed && <span className="text-purple-400">({msg.modelUsed})</span>}
                       <span>• {msg.timestamp}</span>
@@ -841,17 +841,17 @@ export const MetaAIReplica: React.FC = () => {
                     <div
                       className={`p-4 rounded-2xl max-w-[88%] text-xs leading-relaxed ${
                         msg.sender === 'user'
-                          ? 'bg-purple-600 text-white rounded-br-none'
-                          : 'bg-[#1e1e22] border border-[#2b2b30] text-slate-200 rounded-bl-none space-y-2'
+                          ? 'bg-purple-600 text-slate-900 dark:text-white rounded-br-none'
+                          : 'bg-[#1e1e22] border border-[#2b2b30] text-slate-700 dark:text-slate-200 rounded-bl-none space-y-2'
                       }`}
                     >
                       <div className="whitespace-pre-wrap font-sans">{msg.text}</div>
 
                       {msg.sender === 'meta' && (
-                        <div className="flex items-center gap-3 pt-2 text-slate-400 border-t border-[#2b2b30] text-[11px]">
+                        <div className="flex items-center gap-3 pt-2 text-slate-500 dark:text-slate-400 border-t border-[#2b2b30] text-[11px]">
                           <button
                             onClick={() => handleCopyMessage(idx, msg.text)}
-                            className="hover:text-white flex items-center gap-1 transition-colors"
+                            className="hover:text-slate-900 dark:text-white flex items-center gap-1 transition-colors"
                           >
                             {copiedIndex === idx ? (
                               <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -860,13 +860,13 @@ export const MetaAIReplica: React.FC = () => {
                             )}
                             <span>{copiedIndex === idx ? 'Tersalin' : 'Salin'}</span>
                           </button>
-                          <button className="hover:text-white">
+                          <button className="hover:text-slate-900 dark:text-white">
                             <ThumbsUp className="w-3.5 h-3.5" />
                           </button>
-                          <button className="hover:text-white">
+                          <button className="hover:text-slate-900 dark:text-white">
                             <ThumbsDown className="w-3.5 h-3.5" />
                           </button>
-                          <button className="hover:text-white">
+                          <button className="hover:text-slate-900 dark:text-white">
                             <RotateCcw className="w-3.5 h-3.5" />
                           </button>
                         </div>
@@ -906,11 +906,11 @@ export const MetaAIReplica: React.FC = () => {
                         <div className="w-2.5 h-2.5 rounded-full bg-fuchsia-400" />
                       </div>
                     </div>
-                    <span className="font-bold text-base text-white">Meta AI</span>
+                    <span className="font-bold text-base text-slate-900 dark:text-white">Meta AI</span>
                   </div>
                   <button
                     onClick={() => setIsMobileDrawerOpen(false)}
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-white"
+                    className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -922,7 +922,7 @@ export const MetaAIReplica: React.FC = () => {
                       handleNewChat();
                       handleOpenModal('new-chat');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-200 hover:bg-[#27272a]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#27272a]"
                   >
                     <Plus className="w-4 h-4" />
                     <span>New chat</span>
@@ -932,7 +932,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('search');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#27272a]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a]"
                   >
                     <Search className="w-4 h-4" />
                     <span>Search</span>
@@ -942,7 +942,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('media');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#27272a]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a]"
                   >
                     <ImageIcon className="w-4 h-4" />
                     <span>Media</span>
@@ -952,7 +952,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('artifacts');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#27272a]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a]"
                   >
                     <LayoutGrid className="w-4 h-4" />
                     <span>Artifacts</span>
@@ -962,7 +962,7 @@ export const MetaAIReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('scheduled');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#27272a]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a]"
                   >
                     <Calendar className="w-4 h-4" />
                     <span>Scheduled</span>
@@ -981,7 +981,7 @@ export const MetaAIReplica: React.FC = () => {
                       handleOpenModal('history-1');
                       handleSendPrompt('Jelaskan Panduan Lingkungan Maxy AI Hub');
                     }}
-                    className="w-full text-left px-3 py-2 rounded-xl text-slate-300 hover:bg-[#27272a] truncate block"
+                    className="w-full text-left px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] truncate block"
                   >
                     Panduan Lingkungan Maxy AI ...
                   </button>
@@ -991,7 +991,7 @@ export const MetaAIReplica: React.FC = () => {
                       handleOpenModal('history-2');
                       handleSendPrompt('Buatkan Storyboard Komik Maxy Academy');
                     }}
-                    className="w-full text-left px-3 py-2 rounded-xl text-slate-300 hover:bg-[#27272a] truncate block"
+                    className="w-full text-left px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#27272a] truncate block"
                   >
                     Storyboard Komik Maxy Acad...
                   </button>
@@ -1007,14 +1007,14 @@ export const MetaAIReplica: React.FC = () => {
                   className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#27272a]"
                 >
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-emerald-700 flex items-center justify-center font-bold text-xs text-white">
+                    <div className="w-7 h-7 rounded-full bg-emerald-700 flex items-center justify-center font-bold text-xs text-slate-900 dark:text-white">
                       MA
                     </div>
-                    <span className="text-xs font-semibold text-white">
+                    <span className="text-xs font-semibold text-slate-900 dark:text-white">
                       {userProfile.username}
                     </span>
                   </div>
-                  <Bell className="w-4 h-4 text-slate-400" />
+                  <Bell className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 </button>
               </div>
             </div>
@@ -1031,14 +1031,14 @@ export const MetaAIReplica: React.FC = () => {
             {/* Header */}
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-bold text-white tracking-tight">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
                   Add media and files
                 </h3>
-                <p className="text-xs text-slate-400">Upload whatever you want</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Upload whatever you want</p>
               </div>
               <button
                 onClick={() => setIsMediaModalOpen(false)}
-                className="p-1.5 rounded-full hover:bg-[#33333b] text-slate-400 hover:text-white transition-colors"
+                className="p-1.5 rounded-full hover:bg-[#33333b] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1046,10 +1046,10 @@ export const MetaAIReplica: React.FC = () => {
 
             {/* Drag and Drop Zone */}
             <div className="border-2 border-dashed border-[#3a3a44] hover:border-purple-500/80 bg-[#19191c] rounded-2xl p-6 text-center space-y-2 cursor-pointer transition-colors group">
-              <div className="w-10 h-10 rounded-full bg-[#28282e] flex items-center justify-center mx-auto text-slate-300 group-hover:text-purple-400 group-hover:bg-purple-950/40 transition-colors">
+              <div className="w-10 h-10 rounded-full bg-[#28282e] flex items-center justify-center mx-auto text-slate-600 dark:text-slate-300 group-hover:text-purple-400 group-hover:bg-purple-950/40 transition-colors">
                 <Upload className="w-5 h-5" />
               </div>
-              <p className="text-xs text-slate-300 font-medium">
+              <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                 Click to browse, or drag & drop here
               </p>
             </div>
@@ -1061,8 +1061,8 @@ export const MetaAIReplica: React.FC = () => {
                   onClick={() => setUploadTab('recent')}
                   className={`pb-1 transition-colors relative ${
                     uploadTab === 'recent'
-                      ? 'text-white font-bold'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'text-slate-900 dark:text-white font-bold'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                   }`}
                 >
                   Recent uploads
@@ -1074,8 +1074,8 @@ export const MetaAIReplica: React.FC = () => {
                   onClick={() => setUploadTab('creations')}
                   className={`pb-1 transition-colors relative ${
                     uploadTab === 'creations'
-                      ? 'text-white font-bold'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'text-slate-900 dark:text-white font-bold'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
                   }`}
                 >
                   Creations
@@ -1101,7 +1101,7 @@ export const MetaAIReplica: React.FC = () => {
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                     />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[10px] text-white font-medium p-1 text-center">
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[10px] text-slate-900 dark:text-white font-medium p-1 text-center">
                       Select
                     </div>
                   </div>
@@ -1123,7 +1123,7 @@ export const MetaAIReplica: React.FC = () => {
                 <span className="px-2.5 py-1 text-[10px] font-bold bg-purple-950/80 text-purple-300 border border-purple-800/60 rounded-full uppercase tracking-wider">
                   {modalData[activeModalKey].badge}
                 </span>
-                <h3 className="text-base font-bold text-white leading-snug pt-1">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white leading-snug pt-1">
                   {modalData[activeModalKey].title}
                 </h3>
                 <p className="text-xs text-purple-400 font-medium">
@@ -1133,18 +1133,18 @@ export const MetaAIReplica: React.FC = () => {
 
               <button
                 onClick={() => setActiveModalKey(null)}
-                className="p-1.5 rounded-full hover:bg-[#2e2e35] text-slate-400 hover:text-white transition-colors"
+                className="p-1.5 rounded-full hover:bg-[#2e2e35] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="space-y-3 pt-1 text-xs text-slate-300 leading-relaxed border-t border-[#2d2d34]">
+            <div className="space-y-3 pt-1 text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-[#2d2d34]">
               <p>{modalData[activeModalKey].description}</p>
 
               <div className="space-y-1.5">
-                <p className="font-bold text-white text-xs">Keunggulan & Fitur Utama:</p>
-                <ul className="list-disc list-inside space-y-1 text-slate-300 pl-1">
+                <p className="font-bold text-slate-900 dark:text-white text-xs">Keunggulan & Fitur Utama:</p>
+                <ul className="list-disc list-inside space-y-1 text-slate-600 dark:text-slate-300 pl-1">
                   {modalData[activeModalKey].keyFeatures.map((feat, i) => (
                     <li key={i}>{feat}</li>
                   ))}
@@ -1153,14 +1153,14 @@ export const MetaAIReplica: React.FC = () => {
 
               <div className="p-3 bg-[#151518] rounded-xl border border-[#2b2b32] space-y-1">
                 <p className="font-bold text-purple-300 text-[11px]">Cara Menggunakan:</p>
-                <p className="text-[11px] text-slate-300">{modalData[activeModalKey].howToUse}</p>
+                <p className="text-[11px] text-slate-600 dark:text-slate-300">{modalData[activeModalKey].howToUse}</p>
               </div>
             </div>
 
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setActiveModalKey(null)}
-                className="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-xl shadow transition-colors"
+                className="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white font-bold text-xs rounded-xl shadow transition-colors"
               >
                 Saya Mengerti
               </button>
@@ -1178,11 +1178,11 @@ export const MetaAIReplica: React.FC = () => {
             <div className="flex items-center justify-between border-b border-[#2d2d34] pb-3">
               <div className="flex items-center gap-2">
                 <Settings className="w-4 h-4 text-purple-400" />
-                <h3 className="font-bold text-white text-sm">Pengaturan Meta AI</h3>
+                <h3 className="font-bold text-slate-900 dark:text-white text-sm">Pengaturan Meta AI</h3>
               </div>
               <button
                 onClick={() => setIsSettingsModalOpen(false)}
-                className="p-1 rounded-full hover:bg-[#2d2d34] text-slate-400 hover:text-white"
+                className="p-1 rounded-full hover:bg-[#2d2d34] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1191,8 +1191,8 @@ export const MetaAIReplica: React.FC = () => {
             <div className="space-y-3 text-xs">
               <div className="flex items-center justify-between p-2.5 bg-[#17171a] rounded-xl border border-[#28282e]">
                 <div>
-                  <p className="font-semibold text-white">Akun Pengguna</p>
-                  <p className="text-[10px] text-slate-400">{userProfile.username}</p>
+                  <p className="font-semibold text-slate-900 dark:text-white">Akun Pengguna</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400">{userProfile.username}</p>
                 </div>
                 <span className="text-[10px] bg-purple-900/60 text-purple-300 px-2 py-0.5 rounded border border-purple-700/50">
                   Meta Verified
@@ -1201,16 +1201,16 @@ export const MetaAIReplica: React.FC = () => {
 
               <div className="flex items-center justify-between p-2.5 bg-[#17171a] rounded-xl border border-[#28282e]">
                 <div>
-                  <p className="font-semibold text-white">Model Mesin Default</p>
-                  <p className="text-[10px] text-slate-400">Llama 3.3 70B Open Source</p>
+                  <p className="font-semibold text-slate-900 dark:text-white">Model Mesin Default</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400">Llama 3.3 70B Open Source</p>
                 </div>
                 <span className="text-[10px] text-emerald-400 font-bold">Aktif</span>
               </div>
 
               <div className="flex items-center justify-between p-2.5 bg-[#17171a] rounded-xl border border-[#28282e]">
                 <div>
-                  <p className="font-semibold text-white">Watermarking Digital</p>
-                  <p className="text-[10px] text-slate-400">SynthID & C2PA Metadata</p>
+                  <p className="font-semibold text-slate-900 dark:text-white">Watermarking Digital</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400">SynthID & C2PA Metadata</p>
                 </div>
                 <span className="text-[10px] text-purple-300 font-bold">On</span>
               </div>
@@ -1218,7 +1218,7 @@ export const MetaAIReplica: React.FC = () => {
 
             <button
               onClick={() => setIsSettingsModalOpen(false)}
-              className="w-full py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-xl transition-colors"
+              className="w-full py-2 bg-purple-600 hover:bg-purple-500 text-slate-900 dark:text-white font-bold text-xs rounded-xl transition-colors"
             >
               Tutup Pengaturan
             </button>

@@ -290,7 +290,7 @@ export const PerplexityReplica: React.FC = () => {
             onClick={() => setViewMode('desktop')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               viewMode === 'desktop'
-                ? 'bg-neutral-800 text-white shadow-md'
+                ? 'bg-neutral-800 text-slate-900 dark:text-white shadow-md'
                 : 'text-neutral-400 hover:text-neutral-200'
             }`}
           >
@@ -301,7 +301,7 @@ export const PerplexityReplica: React.FC = () => {
             onClick={() => setViewMode('mobile')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               viewMode === 'mobile'
-                ? 'bg-neutral-800 text-white shadow-md'
+                ? 'bg-neutral-800 text-slate-900 dark:text-white shadow-md'
                 : 'text-neutral-400 hover:text-neutral-200'
             }`}
           >
@@ -333,7 +333,7 @@ export const PerplexityReplica: React.FC = () => {
                   >
                     <Menu className="w-5 h-5" />
                   </button>
-                  <div className="flex items-center gap-1.5 font-bold text-white tracking-tight">
+                  <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white tracking-tight">
                     <span className="text-cyan-400 text-lg font-mono">✳</span>
                     <span className="text-sm font-semibold">perplexity</span>
                   </div>
@@ -342,7 +342,7 @@ export const PerplexityReplica: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleOpenModal('category-menu')}
-                    className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-lg transition-colors"
+                    className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
                   >
                     <Glasses className="w-4 h-4" />
                   </button>
@@ -365,11 +365,11 @@ export const PerplexityReplica: React.FC = () => {
                       <div className="flex items-center justify-between px-1">
                         <div className="flex items-center gap-2">
                           <span className="text-cyan-400 text-xl font-bold font-mono">✳</span>
-                          <span className="font-bold text-white text-base">perplexity</span>
+                          <span className="font-bold text-slate-900 dark:text-white text-base">perplexity</span>
                         </div>
                         <button
                           onClick={() => setIsMobileSidebarOpen(false)}
-                          className="p-1 text-neutral-400 hover:text-white rounded-lg hover:bg-neutral-800"
+                          className="p-1 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg hover:bg-neutral-800"
                         >
                           <X className="w-5 h-5" />
                         </button>
@@ -381,7 +381,7 @@ export const PerplexityReplica: React.FC = () => {
                           setIsMobileSidebarOpen(false);
                           handleOpenModal('new-search');
                         }}
-                        className="w-full bg-[#212121] hover:bg-neutral-800 border border-neutral-700/60 text-white rounded-xl py-2.5 px-3 flex items-center gap-2 font-medium text-xs shadow-sm transition-colors"
+                        className="w-full bg-[#212121] hover:bg-neutral-800 border border-neutral-700/60 text-slate-900 dark:text-white rounded-xl py-2.5 px-3 flex items-center gap-2 font-medium text-xs shadow-sm transition-colors"
                       >
                         <Plus className="w-4 h-4 text-neutral-300" />
                         <span>New</span>
@@ -439,25 +439,25 @@ export const PerplexityReplica: React.FC = () => {
                             <div className="ml-8 space-y-1 my-1 border-l border-neutral-800 pl-2 text-[11px] text-neutral-400">
                               <button
                                 onClick={() => handleOpenModal('customize')}
-                                className="w-full text-left py-1 px-2 hover:text-white rounded hover:bg-neutral-800/50"
+                                className="w-full text-left py-1 px-2 hover:text-slate-900 dark:text-white rounded hover:bg-neutral-800/50"
                               >
                                 Connectors
                               </button>
                               <button
                                 onClick={() => handleOpenModal('customize')}
-                                className="w-full text-left py-1 px-2 hover:text-white rounded hover:bg-neutral-800/50"
+                                className="w-full text-left py-1 px-2 hover:text-slate-900 dark:text-white rounded hover:bg-neutral-800/50"
                               >
                                 Skills
                               </button>
                               <button
                                 onClick={() => handleOpenModal('customize')}
-                                className="w-full text-left py-1 px-2 hover:text-white rounded hover:bg-neutral-800/50"
+                                className="w-full text-left py-1 px-2 hover:text-slate-900 dark:text-white rounded hover:bg-neutral-800/50"
                               >
                                 Workflows
                               </button>
                               <button
                                 onClick={() => handleOpenModal('customize')}
-                                className="w-full text-left py-1 px-2 hover:text-white rounded hover:bg-neutral-800/50"
+                                className="w-full text-left py-1 px-2 hover:text-slate-900 dark:text-white rounded hover:bg-neutral-800/50"
                               >
                                 Memory
                               </button>
@@ -490,11 +490,11 @@ export const PerplexityReplica: React.FC = () => {
                     {/* Mobile Drawer Bottom User */}
                     <div className="pt-3 border-t border-neutral-800 flex items-center justify-between">
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-cyan-600 to-teal-500 text-white font-bold text-[10px] flex items-center justify-center shrink-0">
+                        <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-cyan-600 to-teal-500 text-slate-900 dark:text-white font-bold text-[10px] flex items-center justify-center shrink-0">
                           {userProfile.avatarText}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-semibold text-white truncate">{userProfile.name}</p>
+                          <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">{userProfile.name}</p>
                           <p className="text-[10px] text-neutral-400 truncate">{userProfile.username}</p>
                         </div>
                       </div>
@@ -504,7 +504,7 @@ export const PerplexityReplica: React.FC = () => {
                           setIsMobileSidebarOpen(false);
                           handleOpenModal('account-settings');
                         }}
-                        className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-lg transition-colors"
+                        className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
                       >
                         <Settings className="w-4 h-4" />
                       </button>
@@ -529,7 +529,7 @@ export const PerplexityReplica: React.FC = () => {
                   <div className="space-y-4 pb-20">
                     {searchHistory.map((item, idx) => (
                       <div key={idx} className="bg-[#1c1c1c] border border-neutral-800/80 rounded-2xl p-3.5 space-y-2 text-xs">
-                        <div className="font-semibold text-white flex items-center gap-2">
+                        <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
                           <span className="text-cyan-400 font-mono text-sm">Q:</span>
                           <span>{item.query}</span>
                         </div>
@@ -579,7 +579,7 @@ export const PerplexityReplica: React.FC = () => {
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => setIsMobilePlusMenuOpen(true)}
-                        className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors"
+                        className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
                         title="Upload & Connectors"
                       >
                         <Plus className="w-4 h-4" />
@@ -596,7 +596,7 @@ export const PerplexityReplica: React.FC = () => {
 
                       <button
                         onClick={() => handleOpenModal('computer')}
-                        className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors"
+                        className="p-1.5 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
                       >
                         <Monitor className="w-3.5 h-3.5" />
                       </button>
@@ -606,14 +606,14 @@ export const PerplexityReplica: React.FC = () => {
                       <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                       <button
                         onClick={() => setIsMobileModelPickerOpen(true)}
-                        className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-lg transition-colors flex items-center gap-1"
+                        className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors flex items-center gap-1"
                         title="Select Model"
                       >
                         <Sparkles className="w-4 h-4 text-cyan-400" />
                       </button>
                       <button
                         onClick={() => alert('Mode mikrofon aktif.')}
-                        className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-lg transition-colors"
+                        className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
                       >
                         <Mic className="w-4 h-4" />
                       </button>
@@ -639,13 +639,13 @@ export const PerplexityReplica: React.FC = () => {
                   <div className="bg-[#181818] border-t border-neutral-800 rounded-t-3xl max-h-[92%] overflow-y-auto w-full p-4 text-neutral-100 shadow-2xl relative space-y-4 animate-in slide-in-from-bottom duration-200">
                     {/* Header Row */}
                     <div className="flex items-center justify-between pb-1">
-                      <button className="flex items-center gap-1 text-sm font-semibold text-white hover:text-neutral-300">
+                      <button className="flex items-center gap-1 text-sm font-semibold text-slate-900 dark:text-white hover:text-neutral-300">
                         <span>Account</span>
                         <ChevronDown className="w-4 h-4 text-neutral-400" />
                       </button>
                       <button
                         onClick={() => setIsMobileAccountSettingsOpen(false)}
-                        className="w-7 h-7 rounded-full bg-neutral-800/80 flex items-center justify-center text-neutral-400 hover:text-white transition-colors"
+                        className="w-7 h-7 rounded-full bg-neutral-800/80 flex items-center justify-center text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -660,11 +660,11 @@ export const PerplexityReplica: React.FC = () => {
                           {userProfile.avatarUrl ? (
                             <img src={userProfile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
                           ) : (
-                            <span className="text-white font-bold text-sm">{userProfile.avatarText}</span>
+                            <span className="text-slate-900 dark:text-white font-bold text-sm">{userProfile.avatarText}</span>
                           )}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-sm font-semibold text-white truncate">{userProfile.name}</p>
+                          <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">{userProfile.name}</p>
                           <p className="text-xs text-neutral-400 truncate">{userProfile.username}</p>
                         </div>
                       </div>
@@ -717,7 +717,7 @@ export const PerplexityReplica: React.FC = () => {
 
                     {/* Your Subscription */}
                     <div className="space-y-2 pt-1 pb-2">
-                      <h4 className="text-xs font-semibold text-white">Your Subscription</h4>
+                      <h4 className="text-xs font-semibold text-slate-900 dark:text-white">Your Subscription</h4>
                       
                       <div className="flex items-start justify-between gap-2">
                         <div className="space-y-1">
@@ -757,7 +757,7 @@ export const PerplexityReplica: React.FC = () => {
                     <div className="flex items-center justify-end pb-1">
                       <button
                         onClick={() => setIsMobilePlusMenuOpen(false)}
-                        className="w-7 h-7 rounded-full bg-neutral-800/80 flex items-center justify-center text-neutral-400 hover:text-white transition-colors"
+                        className="w-7 h-7 rounded-full bg-neutral-800/80 flex items-center justify-center text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -773,7 +773,7 @@ export const PerplexityReplica: React.FC = () => {
                         className="w-full flex items-center gap-3 px-3 py-3 hover:bg-neutral-800/80 rounded-xl transition-colors text-left"
                       >
                         <Paperclip className="w-4 h-4 text-neutral-300" />
-                        <span className="font-medium text-white text-xs">Upload files or images</span>
+                        <span className="font-medium text-slate-900 dark:text-white text-xs">Upload files or images</span>
                       </button>
 
                       <button
@@ -785,7 +785,7 @@ export const PerplexityReplica: React.FC = () => {
                       >
                         <div className="flex items-center gap-3">
                           <Plug className="w-4 h-4 text-neutral-300" />
-                          <span className="font-medium text-white text-xs">Connectors</span>
+                          <span className="font-medium text-slate-900 dark:text-white text-xs">Connectors</span>
                         </div>
                         <ChevronRight className="w-4 h-4 text-neutral-500" />
                       </button>
@@ -799,7 +799,7 @@ export const PerplexityReplica: React.FC = () => {
                       >
                         <div className="flex items-center gap-3">
                           <Folder className="w-4 h-4 text-neutral-300" />
-                          <span className="font-medium text-white text-xs">Spaces</span>
+                          <span className="font-medium text-slate-900 dark:text-white text-xs">Spaces</span>
                         </div>
                         <ChevronRight className="w-4 h-4 text-neutral-500" />
                       </button>
@@ -816,7 +816,7 @@ export const PerplexityReplica: React.FC = () => {
                     <div className="flex items-center justify-end pb-1">
                       <button
                         onClick={() => setIsMobileSearchModeOpen(false)}
-                        className="w-7 h-7 rounded-full bg-neutral-800/80 flex items-center justify-center text-neutral-400 hover:text-white transition-colors"
+                        className="w-7 h-7 rounded-full bg-neutral-800/80 flex items-center justify-center text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -833,7 +833,7 @@ export const PerplexityReplica: React.FC = () => {
                       >
                         <div className="flex items-center gap-3">
                           <Search className="w-4 h-4 text-neutral-300" />
-                          <span className="font-medium text-white text-xs">Search</span>
+                          <span className="font-medium text-slate-900 dark:text-white text-xs">Search</span>
                         </div>
                         {selectedSearchMode === 'Search' && <Check className="w-4 h-4 text-teal-400" />}
                       </button>
@@ -879,7 +879,7 @@ export const PerplexityReplica: React.FC = () => {
                       >
                         <div className="flex items-center gap-3">
                           <BookOpen className="w-4 h-4 text-neutral-300" />
-                          <span className="font-medium text-white text-xs">Learn step by step</span>
+                          <span className="font-medium text-slate-900 dark:text-white text-xs">Learn step by step</span>
                         </div>
                         {selectedSearchMode === 'Learn step by step' && <Check className="w-4 h-4 text-teal-400" />}
                       </button>
@@ -896,7 +896,7 @@ export const PerplexityReplica: React.FC = () => {
                     <div className="flex items-center justify-end pb-1">
                       <button
                         onClick={() => setIsMobileModelPickerOpen(false)}
-                        className="w-7 h-7 rounded-full bg-neutral-800/80 flex items-center justify-center text-neutral-400 hover:text-white transition-colors"
+                        className="w-7 h-7 rounded-full bg-neutral-800/80 flex items-center justify-center text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -974,7 +974,7 @@ export const PerplexityReplica: React.FC = () => {
                     </div>
                     <button
                       onClick={() => setIsSidebarCollapsed(true)}
-                      className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-lg transition-colors"
+                      className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
                       title="Collapse Sidebar"
                     >
                       <PanelLeft className="w-4 h-4" />
@@ -984,7 +984,7 @@ export const PerplexityReplica: React.FC = () => {
                   {/* New Button */}
                   <button
                     onClick={() => handleOpenModal('new-search')}
-                    className="w-full bg-[#1e1f20] hover:bg-neutral-800 border border-neutral-700/60 text-white rounded-xl py-2 px-3 flex items-center gap-2 font-medium text-xs shadow-sm transition-colors"
+                    className="w-full bg-[#1e1f20] hover:bg-neutral-800 border border-neutral-700/60 text-slate-900 dark:text-white rounded-xl py-2 px-3 flex items-center gap-2 font-medium text-xs shadow-sm transition-colors"
                   >
                     <Plus className="w-4 h-4 text-neutral-300" />
                     <span>New</span>
@@ -994,7 +994,7 @@ export const PerplexityReplica: React.FC = () => {
                   <div className="space-y-0.5 text-xs">
                     <button
                       onClick={() => handleOpenModal('computer')}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-white transition-colors text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left"
                     >
                       <Monitor className="w-4 h-4 text-neutral-400" />
                       <span>Computer</span>
@@ -1002,7 +1002,7 @@ export const PerplexityReplica: React.FC = () => {
 
                     <button
                       onClick={() => handleOpenModal('spaces')}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-white transition-colors text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left"
                     >
                       <Folder className="w-4 h-4 text-neutral-400" />
                       <span>Spaces</span>
@@ -1010,7 +1010,7 @@ export const PerplexityReplica: React.FC = () => {
 
                     <button
                       onClick={() => handleOpenModal('artifacts')}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-white transition-colors text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left"
                     >
                       <LayoutGrid className="w-4 h-4 text-neutral-400" />
                       <span>Artifacts</span>
@@ -1020,7 +1020,7 @@ export const PerplexityReplica: React.FC = () => {
                     <div>
                       <button
                         onClick={() => setIsCustomizeExpanded(!isCustomizeExpanded)}
-                        className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-white transition-colors text-left"
+                        className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left"
                       >
                         <div className="flex items-center gap-2.5">
                           <Settings className="w-4 h-4 text-neutral-400" />
@@ -1032,25 +1032,25 @@ export const PerplexityReplica: React.FC = () => {
                         <div className="ml-8 space-y-1 my-1 border-l border-neutral-800 pl-2 text-[11px] text-neutral-400">
                           <button
                             onClick={() => handleOpenModal('customize')}
-                            className="w-full text-left py-1 px-2 hover:text-white rounded hover:bg-neutral-800/50"
+                            className="w-full text-left py-1 px-2 hover:text-slate-900 dark:text-white rounded hover:bg-neutral-800/50"
                           >
                             Connectors
                           </button>
                           <button
                             onClick={() => handleOpenModal('customize')}
-                            className="w-full text-left py-1 px-2 hover:text-white rounded hover:bg-neutral-800/50"
+                            className="w-full text-left py-1 px-2 hover:text-slate-900 dark:text-white rounded hover:bg-neutral-800/50"
                           >
                             Skills
                           </button>
                           <button
                             onClick={() => handleOpenModal('customize')}
-                            className="w-full text-left py-1 px-2 hover:text-white rounded hover:bg-neutral-800/50"
+                            className="w-full text-left py-1 px-2 hover:text-slate-900 dark:text-white rounded hover:bg-neutral-800/50"
                           >
                             Workflows
                           </button>
                           <button
                             onClick={() => handleOpenModal('customize')}
-                            className="w-full text-left py-1 px-2 hover:text-white rounded hover:bg-neutral-800/50"
+                            className="w-full text-left py-1 px-2 hover:text-slate-900 dark:text-white rounded hover:bg-neutral-800/50"
                           >
                             Memory
                           </button>
@@ -1062,7 +1062,7 @@ export const PerplexityReplica: React.FC = () => {
                     <div className="pt-2 border-t border-neutral-800/60">
                       <button
                         onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
-                        className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-white transition-colors text-left"
+                        className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-neutral-300 hover:bg-neutral-800/80 hover:text-slate-900 dark:text-white transition-colors text-left"
                       >
                         <div className="flex items-center gap-2.5">
                           <Clock className="w-4 h-4 text-neutral-400" />
@@ -1083,7 +1083,7 @@ export const PerplexityReplica: React.FC = () => {
                 <div className="space-y-2 pt-2 border-t border-neutral-800">
                   <button
                     onClick={() => handleOpenModal('account-settings')}
-                    className="w-full px-3 py-1.5 rounded-xl border border-neutral-700/60 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
+                    className="w-full px-3 py-1.5 rounded-xl border border-neutral-700/60 hover:bg-neutral-800 text-neutral-300 hover:text-slate-900 dark:text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
                   >
                     <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400" />
                     <span>Upgrade plan</span>
@@ -1094,7 +1094,7 @@ export const PerplexityReplica: React.FC = () => {
                       onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
                       className="flex items-center gap-2 min-w-0 hover:bg-neutral-800 p-1 rounded-xl transition-colors text-left"
                     >
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-600 to-teal-500 text-white font-bold text-[9px] flex items-center justify-center shrink-0">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-600 to-teal-500 text-slate-900 dark:text-white font-bold text-[9px] flex items-center justify-center shrink-0">
                         {userProfile.avatarText}
                       </div>
                       <span className="text-xs font-medium text-neutral-200 truncate max-w-[90px]">
@@ -1105,7 +1105,7 @@ export const PerplexityReplica: React.FC = () => {
 
                     <button
                       onClick={() => alert('Notifikasi: Tidak ada pemberitahuan baru.')}
-                      className="p-1 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-lg transition-colors"
+                      className="p-1 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
                     >
                       <Bell className="w-3.5 h-3.5" />
                     </button>
@@ -1121,7 +1121,7 @@ export const PerplexityReplica: React.FC = () => {
                     {isSidebarCollapsed && (
                       <button
                         onClick={() => setIsSidebarCollapsed(false)}
-                        className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-lg transition-colors"
+                        className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
                         title="Expand Sidebar"
                       >
                         <PanelLeft className="w-4 h-4" />
@@ -1138,14 +1138,14 @@ export const PerplexityReplica: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleOpenModal('category-menu')}
-                      className="p-2 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-xl transition-colors"
+                      className="p-2 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-xl transition-colors"
                       title="Anonymous Mode"
                     >
                       <Glasses className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
-                      className="p-2 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-xl transition-colors"
+                      className="p-2 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-xl transition-colors"
                       title="Category Menu"
                     >
                       <Menu className="w-4 h-4" />
@@ -1158,7 +1158,7 @@ export const PerplexityReplica: React.FC = () => {
                   {searchHistory.length === 0 ? (
                     <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4 my-auto">
                       <span className="text-xs font-semibold text-neutral-500 uppercase tracking-widest">Search</span>
-                      <h1 className="text-3xl font-normal text-white tracking-tight">
+                      <h1 className="text-3xl font-normal text-slate-900 dark:text-white tracking-tight">
                         What do you want to know?
                       </h1>
                     </div>
@@ -1167,7 +1167,7 @@ export const PerplexityReplica: React.FC = () => {
                       {searchHistory.map((item, idx) => (
                         <div key={idx} className="bg-[#1a1a1a] border border-neutral-800/80 rounded-2xl p-5 space-y-3 shadow-lg">
                           <div className="flex items-center justify-between text-xs text-neutral-400 border-b border-neutral-800/60 pb-2">
-                            <span className="font-semibold text-white text-base">Q: {item.query}</span>
+                            <span className="font-semibold text-slate-900 dark:text-white text-base">Q: {item.query}</span>
                             <span className="text-[10px]">{item.timestamp}</span>
                           </div>
                           <div className="text-neutral-200 leading-relaxed whitespace-pre-line text-xs">
@@ -1187,7 +1187,7 @@ export const PerplexityReplica: React.FC = () => {
                                   className="p-2 bg-[#212121] hover:bg-neutral-800 rounded-xl border border-neutral-700/60 text-cyan-300 text-xs flex items-center justify-between gap-1 transition-colors"
                                 >
                                   <div className="min-w-0">
-                                    <p className="font-medium truncate text-white text-[11px]">{src.title}</p>
+                                    <p className="font-medium truncate text-slate-900 dark:text-white text-[11px]">{src.title}</p>
                                     <p className="text-[10px] text-neutral-400 truncate">{src.domain}</p>
                                   </div>
                                   <ExternalLink className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
@@ -1223,7 +1223,7 @@ export const PerplexityReplica: React.FC = () => {
                         <div className="relative">
                           <button
                             onClick={() => setIsPlusMenuOpen(!isPlusMenuOpen)}
-                            className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-xl transition-colors"
+                            className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-xl transition-colors"
                             title="Attachments / Connectors"
                           >
                             <Plus className="w-4 h-4" />
@@ -1428,7 +1428,7 @@ export const PerplexityReplica: React.FC = () => {
 
                         <button
                           onClick={() => alert('Mode input suara aktif.')}
-                          className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-white rounded-xl transition-colors"
+                          className="p-1.5 hover:bg-neutral-800 text-neutral-400 hover:text-slate-900 dark:text-white rounded-xl transition-colors"
                           title="Voice Input"
                         >
                           <Mic className="w-4 h-4" />
@@ -1493,11 +1493,11 @@ export const PerplexityReplica: React.FC = () => {
                       {/* Profile Card Header */}
                       <div className="p-2 bg-[#262626] rounded-xl border border-neutral-700/60 space-y-1.5">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-cyan-600 to-teal-500 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-md">
+                          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-cyan-600 to-teal-500 text-slate-900 dark:text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-md">
                             {userProfile.avatarText}
                           </div>
                           <div className="min-w-0">
-                            <p className="font-semibold text-white truncate text-xs">{userProfile.name}</p>
+                            <p className="font-semibold text-slate-900 dark:text-white truncate text-xs">{userProfile.name}</p>
                             <p className="text-[10px] text-neutral-400 truncate">{userProfile.email}</p>
                           </div>
                         </div>
@@ -1618,7 +1618,7 @@ export const PerplexityReplica: React.FC = () => {
                     </span>
                   )}
                 </div>
-                <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-cyan-400" />
                   {activeModal.title}
                 </h3>
@@ -1626,7 +1626,7 @@ export const PerplexityReplica: React.FC = () => {
 
               <button
                 onClick={() => setActiveModal(null)}
-                className="p-1.5 hover:bg-neutral-800 rounded-xl text-neutral-400 hover:text-white transition-colors"
+                className="p-1.5 hover:bg-neutral-800 rounded-xl text-neutral-400 hover:text-slate-900 dark:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1657,7 +1657,7 @@ export const PerplexityReplica: React.FC = () => {
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setActiveModal(null)}
-                className="px-5 py-2 bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-lg transition-all"
+                className="px-5 py-2 bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-slate-900 dark:text-white font-bold text-xs rounded-xl shadow-lg transition-all"
               >
                 Tutup Panduan
               </button>

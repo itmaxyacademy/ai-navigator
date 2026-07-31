@@ -59,10 +59,10 @@ export const FloatingXpNotification: React.FC<FloatingXpNotificationProps> = ({
               onAnimationComplete={() => {
                 setTimeout(() => onDismiss(item.id), 2500);
               }}
-              className={`pointer-events-auto flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-gradient-to-r ${bgGradient} border-2 ${borderColor} shadow-2xl shadow-indigo-500/20 text-white backdrop-blur-md cursor-pointer hover:scale-105 transition-transform`}
+              className={`pointer-events-auto flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-gradient-to-r ${bgGradient} border-2 ${borderColor} shadow-2xl shadow-indigo-500/20 text-slate-900 dark:text-white backdrop-blur-md cursor-pointer hover:scale-105 transition-transform`}
               onClick={() => onDismiss(item.id)}
             >
-              <div className="p-2 rounded-xl bg-slate-950/40 border border-white/20 shrink-0">
+              <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-950/40 border border-white/20 shrink-0">
                 <Icon className={`w-6 h-6 ${textColor} animate-bounce`} />
               </div>
 
@@ -73,7 +73,7 @@ export const FloatingXpNotification: React.FC<FloatingXpNotificationProps> = ({
                   </span>
                   <CheckCircle2 className="w-4 h-4 text-emerald-300 shrink-0" />
                 </div>
-                <span className="text-xs font-extrabold text-slate-100 opacity-90 drop-shadow">
+                <span className="text-xs font-extrabold text-slate-800 dark:text-slate-100 opacity-90 drop-shadow">
                   {item.label}
                 </span>
               </div>

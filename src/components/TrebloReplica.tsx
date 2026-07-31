@@ -334,10 +334,10 @@ export const TrebloReplica: React.FC = () => {
   });
 
   return (
-    <div className="w-full min-h-[750px] bg-[#0c0a09] text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-800 flex flex-col relative shadow-2xl">
+    <div className="w-full min-h-[750px] bg-[#0c0a09] text-slate-800 dark:text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col relative shadow-2xl">
       {/* Toast Banner Notification */}
       {toast && (
-        <div className="fixed bottom-20 right-6 z-50 bg-rose-600 text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl shadow-2xl border border-rose-400 flex items-center space-x-2 animate-bounce">
+        <div className="fixed bottom-20 right-6 z-50 bg-rose-600 text-slate-900 dark:text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl shadow-2xl border border-rose-400 flex items-center space-x-2 animate-bounce">
           <Sparkles className="w-4 h-4 text-rose-200" />
           <span>{toast}</span>
         </div>
@@ -345,18 +345,18 @@ export const TrebloReplica: React.FC = () => {
 
       {/* TAHAP 1: LANDING PAGE */}
       {stage === 'landing' && (
-        <div className="w-full flex-1 flex flex-col bg-[#0d090a] text-slate-100 relative overflow-y-auto">
+        <div className="w-full flex-1 flex flex-col bg-[#0d090a] text-slate-800 dark:text-slate-100 relative overflow-y-auto">
           {/* Top Navbar */}
-          <nav className="w-full px-6 py-4 flex items-center justify-between border-b border-slate-800/80 bg-[#0d090a]/90 backdrop-blur-md sticky top-0 z-30">
+          <nav className="w-full px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 bg-[#0d090a]/90 backdrop-blur-md sticky top-0 z-30">
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-2.5 cursor-pointer">
                 <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-rose-600 to-pink-500 flex items-center justify-center shadow-lg shadow-rose-900/40">
-                  <Music className="w-5 h-5 text-white" />
+                  <Music className="w-5 h-5 text-slate-900 dark:text-white" />
                 </div>
-                <span className="text-xl font-black tracking-wider text-white">Treblo</span>
+                <span className="text-xl font-black tracking-wider text-slate-900 dark:text-white">Treblo</span>
               </div>
 
-              <div className="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-300">
+              <div className="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600 dark:text-slate-300">
                 <a href="#explore" onClick={(e) => { e.preventDefault(); showToastMsg('Menu Explore diklik'); }} className="hover:text-rose-400 transition-colors">Explore</a>
                 <a href="#styles" onClick={(e) => { e.preventDefault(); showToastMsg('Menu Styles diklik'); }} className="hover:text-rose-400 transition-colors">Styles</a>
                 <a href="#developers" onClick={(e) => { e.preventDefault(); showToastMsg('Menu Developers API diklik'); }} className="hover:text-rose-400 transition-colors">Developers</a>
@@ -368,13 +368,13 @@ export const TrebloReplica: React.FC = () => {
             <div className="flex items-center space-x-3">
               <button 
                 onClick={() => handleMakeMySong()}
-                className="text-xs sm:text-sm text-slate-300 hover:text-white px-3.5 py-2 rounded-lg font-medium transition-colors"
+                className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white px-3.5 py-2 rounded-lg font-medium transition-colors"
               >
                 Log in
               </button>
               <button 
                 onClick={() => handleMakeMySong()}
-                className="text-xs sm:text-sm bg-rose-600 hover:bg-rose-500 text-white font-semibold px-4 py-2 rounded-xl shadow-lg shadow-rose-900/30 transition-all transform hover:scale-105"
+                className="text-xs sm:text-sm bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white font-semibold px-4 py-2 rounded-xl shadow-lg shadow-rose-900/30 transition-all transform hover:scale-105"
               >
                 Sign up
               </button>
@@ -388,33 +388,33 @@ export const TrebloReplica: React.FC = () => {
               <span>Ditenagai Treblo AI Engine v3 — Modul #19 Maxy Academy</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white uppercase mb-4 leading-none drop-shadow-xl">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 dark:text-white uppercase mb-4 leading-none drop-shadow-xl">
               TURN ANY IDEA <br />
               INTO A <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-400 to-amber-300">FULL SONG.</span>
             </h1>
 
-            <p className="text-sm sm:text-lg text-slate-300 max-w-xl mb-10 font-medium">
+            <p className="text-sm sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl mb-10 font-medium">
               Hit songs by you, in any style. And it's actually free.
             </p>
 
             {/* Prompt Entry Point Box */}
-            <div className="w-full max-w-2xl bg-slate-900/90 border border-slate-700/80 rounded-2xl p-4 shadow-2xl backdrop-blur-xl relative group hover:border-rose-500/50 transition-all">
+            <div className="w-full max-w-2xl bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700/80 rounded-2xl p-4 shadow-2xl backdrop-blur-xl relative group hover:border-rose-500/50 transition-all">
               <textarea
                 value={landingPrompt}
                 onChange={(e) => setLandingPrompt(e.target.value)}
                 placeholder="A country song about my WiFi going out mid-meeting..."
                 rows={3}
-                className="w-full bg-transparent text-slate-100 text-sm sm:text-base placeholder-slate-500 resize-none focus:outline-none pr-2"
+                className="w-full bg-transparent text-slate-800 dark:text-slate-100 text-sm sm:text-base placeholder-slate-500 resize-none focus:outline-none pr-2"
               />
 
-              <div className="flex items-center justify-between pt-3 border-t border-slate-800/80 mt-2">
+              <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-800/80 mt-2">
                 <button
                   onClick={() => {
                     setStage('workspace');
                     setActiveTab('advanced');
                     showToastMsg('Membuka mode ADVANCED di Workspace...');
                   }}
-                  className="inline-flex items-center space-x-1.5 text-xs font-semibold text-slate-400 hover:text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition-colors uppercase tracking-wider"
+                  className="inline-flex items-center space-x-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-100 dark:bg-slate-800 transition-colors uppercase tracking-wider"
                 >
                   <Sliders className="w-3.5 h-3.5 text-rose-400" />
                   <span>ADVANCED</span>
@@ -422,7 +422,7 @@ export const TrebloReplica: React.FC = () => {
 
                 <button
                   onClick={handleMakeMySong}
-                  className="inline-flex items-center space-x-2 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-rose-950/80 transition-all transform hover:scale-[1.02] active:scale-95"
+                  className="inline-flex items-center space-x-2 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-slate-900 dark:text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-rose-950/80 transition-all transform hover:scale-[1.02] active:scale-95"
                 >
                   <span>Make my song</span>
                   <ArrowRight className="w-4 h-4" />
@@ -430,13 +430,13 @@ export const TrebloReplica: React.FC = () => {
               </div>
             </div>
 
-            <p className="text-xs text-slate-400 mt-3 italic">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 italic">
               💡 Deskripsikan ide lagu dalam bahasa natural — Treblo akan otomatis menghasilkan lirik & aransemen musik sekaligus!
             </p>
 
             {/* Featured Song Showcase Grid */}
             <div className="w-full mt-16 text-left">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 flex items-center space-x-2">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-4 flex items-center space-x-2">
                 <Headphones className="w-4 h-4 text-rose-400" />
                 <span>Contoh Hasil Lagu Komunitas Maxy Academy</span>
               </h3>
@@ -449,14 +449,14 @@ export const TrebloReplica: React.FC = () => {
                     setActivePlayerSongId('song-1');
                     setIsPlaying(true);
                   }}
-                  className="bg-slate-900/80 border border-slate-800 hover:border-rose-500/50 rounded-xl p-3 flex items-center space-x-3 cursor-pointer group transition-all"
+                  className="bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-rose-500/50 rounded-xl p-3 flex items-center space-x-3 cursor-pointer group transition-all"
                 >
                   <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-800 flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
-                    <Music className="w-6 h-6 text-white" />
+                    <Music className="w-6 h-6 text-slate-900 dark:text-white" />
                   </div>
                   <div className="overflow-hidden">
-                    <h4 className="text-sm font-semibold text-white group-hover:text-rose-400 truncate">WiFi Putus Saat Coding</h4>
-                    <p className="text-xs text-slate-400 truncate">Country Pop • Maxy Academy</p>
+                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-rose-400 truncate">WiFi Putus Saat Coding</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Country Pop • Maxy Academy</p>
                     <span className="inline-block mt-1 text-[10px] bg-rose-950 text-rose-300 px-2 py-0.5 rounded font-medium">Click to Play</span>
                   </div>
                 </div>
@@ -468,14 +468,14 @@ export const TrebloReplica: React.FC = () => {
                     setActivePlayerSongId('song-2');
                     setIsPlaying(true);
                   }}
-                  className="bg-slate-900/80 border border-slate-800 hover:border-rose-500/50 rounded-xl p-3 flex items-center space-x-3 cursor-pointer group transition-all"
+                  className="bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-rose-500/50 rounded-xl p-3 flex items-center space-x-3 cursor-pointer group transition-all"
                 >
                   <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-rose-600 to-pink-800 flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
-                    <Sparkles className="w-6 h-6 text-white" />
+                    <Sparkles className="w-6 h-6 text-slate-900 dark:text-white" />
                   </div>
                   <div className="overflow-hidden">
-                    <h4 className="text-sm font-semibold text-white group-hover:text-rose-400 truncate">Irama Prompting Gemini</h4>
-                    <p className="text-xs text-slate-400 truncate">Synthwave • Maxy Academy</p>
+                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-rose-400 truncate">Irama Prompting Gemini</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Synthwave • Maxy Academy</p>
                     <span className="inline-block mt-1 text-[10px] bg-rose-950 text-rose-300 px-2 py-0.5 rounded font-medium">Click to Play</span>
                   </div>
                 </div>
@@ -487,14 +487,14 @@ export const TrebloReplica: React.FC = () => {
                     setActivePlayerSongId('song-3');
                     setIsPlaying(true);
                   }}
-                  className="bg-slate-900/80 border border-slate-800 hover:border-rose-500/50 rounded-xl p-3 flex items-center space-x-3 cursor-pointer group transition-all"
+                  className="bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-rose-500/50 rounded-xl p-3 flex items-center space-x-3 cursor-pointer group transition-all"
                 >
                   <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-emerald-600 to-teal-800 flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform">
-                    <Headphones className="w-6 h-6 text-white" />
+                    <Headphones className="w-6 h-6 text-slate-900 dark:text-white" />
                   </div>
                   <div className="overflow-hidden">
-                    <h4 className="text-sm font-semibold text-white group-hover:text-rose-400 truncate">Melodi Belajar AI</h4>
-                    <p className="text-xs text-slate-400 truncate">Lofi Chill • Maxy Academy</p>
+                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-rose-400 truncate">Melodi Belajar AI</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Lofi Chill • Maxy Academy</p>
                     <span className="inline-block mt-1 text-[10px] bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded font-medium">Instrumental</span>
                   </div>
                 </div>
@@ -506,10 +506,10 @@ export const TrebloReplica: React.FC = () => {
 
       {/* TAHAP 2: CREATE WORKSPACE */}
       {stage === 'workspace' && (
-        <div className="w-full flex-1 flex flex-col bg-[#0f0d0e] text-slate-100 overflow-hidden relative">
+        <div className="w-full flex-1 flex flex-col bg-[#0f0d0e] text-slate-800 dark:text-slate-100 overflow-hidden relative">
           {/* Top Alert Banner */}
           {showTopBanner && (
-            <div className="w-full bg-gradient-to-r from-rose-600 to-pink-600 px-4 py-2 text-xs font-semibold text-white flex items-center justify-between shadow-md shrink-0">
+            <div className="w-full bg-gradient-to-r from-rose-600 to-pink-600 px-4 py-2 text-xs font-semibold text-slate-900 dark:text-white flex items-center justify-between shadow-md shrink-0">
               <div className="flex items-center space-x-2 mx-auto">
                 <Sparkles className="w-3.5 h-3.5 text-rose-200 animate-pulse" />
                 <span>Treblo is now available on iOS and Android.</span>
@@ -534,57 +534,57 @@ export const TrebloReplica: React.FC = () => {
           {/* Main Workspace Layout */}
           <div className="flex-1 flex overflow-hidden relative">
             {/* LEFT SIDEBAR */}
-            <aside className="w-56 bg-[#141012] border-r border-slate-800/80 flex flex-col shrink-0 hidden md:flex">
+            <aside className="w-56 bg-[#141012] border-r border-slate-200 dark:border-slate-800/80 flex flex-col shrink-0 hidden md:flex">
               {/* Logo & Collapse Header */}
-              <div className="p-4 border-b border-slate-800/60 flex items-center justify-between">
+              <div className="p-4 border-b border-slate-200 dark:border-slate-800/60 flex items-center justify-between">
                 <div 
                   onClick={() => setStage('landing')}
                   className="flex items-center space-x-2 cursor-pointer group"
                   title="Kembali ke Landing Page"
                 >
                   <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-rose-600 to-pink-500 flex items-center justify-center">
-                    <Music className="w-4 h-4 text-white" />
+                    <Music className="w-4 h-4 text-slate-900 dark:text-white" />
                   </div>
-                  <span className="font-extrabold text-base tracking-wider text-white group-hover:text-rose-400 transition-colors">Treblo</span>
+                  <span className="font-extrabold text-base tracking-wider text-slate-900 dark:text-white group-hover:text-rose-400 transition-colors">Treblo</span>
                 </div>
                 <button 
                   onClick={() => showToastMsg('Sidebar collapsed')}
-                  className="text-slate-400 hover:text-slate-200 p-1 rounded-md hover:bg-slate-800"
+                  className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 p-1 rounded-md hover:bg-slate-100 dark:bg-slate-800"
                 >
                   <ChevronDown className="w-4 h-4 rotate-90" />
                 </button>
               </div>
 
               {/* Main Nav Items */}
-              <div className="p-3 space-y-1 text-xs font-medium border-b border-slate-800/60">
+              <div className="p-3 space-y-1 text-xs font-medium border-b border-slate-200 dark:border-slate-800/60">
                 <button 
                   onClick={() => setStage('landing')}
-                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/50 transition-colors"
                 >
-                  <Home className="w-4 h-4 text-slate-400" />
+                  <Home className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Home</span>
                 </button>
 
                 <button 
                   onClick={() => showToastMsg('Membuka fitur Search')}
-                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/50 transition-colors"
                 >
-                  <Search className="w-4 h-4 text-slate-400" />
+                  <Search className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Search</span>
                 </button>
 
                 <button 
                   onClick={() => showToastMsg('Membuka form Feedback')}
-                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/50 transition-colors"
                 >
-                  <MessageSquare className="w-4 h-4 text-slate-400" />
+                  <MessageSquare className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Feedback</span>
                 </button>
 
                 {/* Radio Menu with Listener Badge */}
                 <button 
                   onClick={() => showToastMsg('Radio Streaming Treblo: 26 Pendengar Aktif')}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/50 transition-colors"
                 >
                   <div className="flex items-center space-x-3">
                     <Radio className="w-4 h-4 text-rose-400 animate-pulse" />
@@ -606,20 +606,20 @@ export const TrebloReplica: React.FC = () => {
 
               {/* Your Library Section */}
               <div className="flex-1 p-3 overflow-y-auto space-y-3">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-400">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
                   <span>Your Library</span>
                   <button 
                     onClick={() => showToastMsg('Playlist baru ditambahkan!')}
-                    className="text-slate-400 hover:text-white flex items-center space-x-1 text-[11px] bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700"
+                    className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white flex items-center space-x-1 text-[11px] bg-slate-100 dark:bg-slate-800/60 px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700"
                   >
                     <span>+ Playlist</span>
                   </button>
                 </div>
 
-                <div className="space-y-1.5 text-xs text-slate-300">
-                  <div className="bg-slate-900 border border-slate-800 rounded-lg p-2 flex items-center justify-between text-slate-300">
-                    <span className="font-semibold text-slate-200">My Music</span>
-                    <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 flex items-center justify-between text-slate-600 dark:text-slate-300">
+                    <span className="font-semibold text-slate-700 dark:text-slate-200">My Music</span>
+                    <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   </div>
 
                   <div className="flex items-center space-x-2 pt-1">
@@ -628,16 +628,16 @@ export const TrebloReplica: React.FC = () => {
                         setIsPlaying(!isPlaying);
                         showToastMsg(isPlaying ? 'Playback di-pause' : 'Memutar semua koleksi');
                       }}
-                      className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs py-1.5 rounded-md font-medium flex items-center justify-center space-x-1"
+                      className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-md font-medium flex items-center justify-center space-x-1"
                     >
                       <Play className="w-3 h-3 fill-current text-rose-400" />
                       <span>Play</span>
                     </button>
                     <button 
                       onClick={() => showToastMsg('Shuffle koleksi lagu')}
-                      className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs py-1.5 rounded-md font-medium flex items-center justify-center space-x-1"
+                      className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-md font-medium flex items-center justify-center space-x-1"
                     >
-                      <Disc className="w-3 h-3 text-slate-400" />
+                      <Disc className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                       <span>Shuffle</span>
                     </button>
                   </div>
@@ -646,15 +646,15 @@ export const TrebloReplica: React.FC = () => {
                     <input
                       type="text"
                       placeholder="Search..."
-                      className="w-full bg-slate-900 border border-slate-800 rounded-md py-1 px-2 pl-7 text-[11px] text-slate-200 placeholder-slate-500 focus:outline-none"
+                      className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md py-1 px-2 pl-7 text-[11px] text-slate-700 dark:text-slate-200 placeholder-slate-500 focus:outline-none"
                     />
                     <Search className="w-3 h-3 text-slate-500 absolute left-2 top-2.5" />
                   </div>
 
-                  <div className="space-y-1 pt-2 border-t border-slate-800/60">
+                  <div className="space-y-1 pt-2 border-t border-slate-200 dark:border-slate-800/60">
                     <button 
                       onClick={() => showToastMsg('Membuka profil Maxy Academy')}
-                      className="w-full flex items-center space-x-2.5 px-2 py-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-800/40 text-xs"
+                      className="w-full flex items-center space-x-2.5 px-2 py-1.5 rounded-md text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/40 text-xs"
                     >
                       <User className="w-3.5 h-3.5 text-rose-400" />
                       <span>Your Profile</span>
@@ -664,7 +664,7 @@ export const TrebloReplica: React.FC = () => {
                         setShowLikedOnly(!showLikedOnly);
                         showToastMsg(showLikedOnly ? 'Menampilkan semua lagu' : 'Menampilkan Liked Songs');
                       }}
-                      className={`w-full flex items-center space-x-2.5 px-2 py-1.5 rounded-md text-xs transition-colors ${showLikedOnly ? 'bg-rose-950/80 text-rose-300 font-bold' : 'text-slate-400 hover:text-white hover:bg-slate-800/40'}`}
+                      className={`w-full flex items-center space-x-2.5 px-2 py-1.5 rounded-md text-xs transition-colors ${showLikedOnly ? 'bg-rose-950/80 text-rose-300 font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/40'}`}
                     >
                       <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
                       <span>Liked Songs</span>
@@ -674,8 +674,8 @@ export const TrebloReplica: React.FC = () => {
               </div>
 
               {/* Social Icons & Footer Links */}
-              <div className="p-3 border-t border-slate-800/60 text-[11px] text-slate-500 space-y-2">
-                <div className="flex items-center space-x-3 text-slate-400">
+              <div className="p-3 border-t border-slate-200 dark:border-slate-800/60 text-[11px] text-slate-500 space-y-2">
+                <div className="flex items-center space-x-3 text-slate-500 dark:text-slate-400">
                   <button onClick={() => showToastMsg('Discord Maxy Community')} title="Discord"><MessageSquare className="w-3.5 h-3.5 hover:text-rose-400" /></button>
                   <button onClick={() => showToastMsg('X (Twitter)')} title="Twitter"><Globe className="w-3.5 h-3.5 hover:text-rose-400" /></button>
                   <button onClick={() => showToastMsg('Dokumentasi API Treblo')} title="API Docs"><FileText className="w-3.5 h-3.5 hover:text-rose-400" /></button>
@@ -695,17 +695,17 @@ export const TrebloReplica: React.FC = () => {
             {/* MAIN CONTENT AREA */}
             <main className="flex-1 flex flex-col overflow-hidden bg-[#0e0c0d]">
               {/* Workspace Header */}
-              <header className="h-12 border-b border-slate-800/80 px-4 flex items-center justify-between shrink-0 bg-[#120f11]">
+              <header className="h-12 border-b border-slate-200 dark:border-slate-800/80 px-4 flex items-center justify-between shrink-0 bg-[#120f11]">
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-1 text-slate-400">
+                  <div className="flex items-center space-x-1 text-slate-500 dark:text-slate-400">
                     <button 
                       onClick={() => setStage('landing')}
-                      className="p-1 hover:bg-slate-800 rounded text-slate-300"
+                      className="p-1 hover:bg-slate-100 dark:bg-slate-800 rounded text-slate-600 dark:text-slate-300"
                       title="Kembali"
                     >
                       &lt;
                     </button>
-                    <button className="p-1 hover:bg-slate-800 rounded text-slate-500 opacity-50" disabled>&gt;</button>
+                    <button className="p-1 hover:bg-slate-100 dark:bg-slate-800 rounded text-slate-500 opacity-50" disabled>&gt;</button>
                   </div>
 
                   {/* Project Title (Editable) */}
@@ -718,12 +718,12 @@ export const TrebloReplica: React.FC = () => {
                         onBlur={() => setIsEditingTitle(false)}
                         onKeyDown={(e) => e.key === 'Enter' && setIsEditingTitle(false)}
                         autoFocus
-                        className="bg-slate-900 text-rose-300 text-xs font-bold px-2 py-0.5 rounded border border-rose-500 focus:outline-none"
+                        className="bg-white dark:bg-slate-900 text-rose-300 text-xs font-bold px-2 py-0.5 rounded border border-rose-500 focus:outline-none"
                       />
                     ) : (
                       <span 
                         onClick={() => setIsEditingTitle(true)}
-                        className="text-xs sm:text-sm font-bold text-slate-200 cursor-pointer hover:text-rose-400 flex items-center space-x-1"
+                        className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 cursor-pointer hover:text-rose-400 flex items-center space-x-1"
                         title="Klik untuk ubah judul proyek"
                       >
                         <span>{projectTitle}</span>
@@ -735,7 +735,7 @@ export const TrebloReplica: React.FC = () => {
 
                 {/* Right Header Icons */}
                 <div className="flex items-center space-x-3">
-                  <button onClick={() => showToastMsg('Notifikasi sistem')} className="text-slate-400 hover:text-slate-200 relative">
+                  <button onClick={() => showToastMsg('Notifikasi sistem')} className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 relative">
                     <Bell className="w-4 h-4" />
                     <span className="w-1.5 h-1.5 bg-rose-500 rounded-full absolute -top-0.5 -right-0.5"></span>
                   </button>
@@ -750,7 +750,7 @@ export const TrebloReplica: React.FC = () => {
               </header>
 
               {/* Mobile View Switcher Tab Bar */}
-              <div className="flex md:hidden bg-slate-900 border-b border-slate-800 text-xs font-semibold text-slate-400">
+              <div className="flex md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-500 dark:text-slate-400">
                 <button 
                   onClick={() => setMobileTab('editor')}
                   className={`flex-1 py-2 text-center border-b-2 ${mobileTab === 'editor' ? 'border-rose-500 text-rose-400' : 'border-transparent'}`}
@@ -774,7 +774,7 @@ export const TrebloReplica: React.FC = () => {
               {/* Responsive 3-Panel Grid Workspace */}
               <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden">
                 {/* PANEL TENGAH: AREA GENERATE (Cols 1-4 on Desktop) */}
-                <div className={`md:col-span-4 border-r border-slate-800/80 p-4 overflow-y-auto flex flex-col space-y-4 bg-[#110e10] ${mobileTab === 'editor' ? 'block' : 'hidden md:block'}`}>
+                <div className={`md:col-span-4 border-r border-slate-200 dark:border-slate-800/80 p-4 overflow-y-auto flex flex-col space-y-4 bg-[#110e10] ${mobileTab === 'editor' ? 'block' : 'hidden md:block'}`}>
                   {/* Model Notice Box */}
                   <div className="bg-amber-950/40 border border-amber-800/60 rounded-xl p-3 text-xs text-amber-200/90 space-y-1">
                     <div className="flex items-center space-x-1.5 font-bold text-amber-300">
@@ -788,27 +788,27 @@ export const TrebloReplica: React.FC = () => {
 
                   {/* Mode Tabs (Simple / Advanced) */}
                   <div className="flex items-center justify-between pt-1">
-                    <div className="bg-slate-900 p-1 rounded-xl flex items-center border border-slate-800 text-xs font-medium">
+                    <div className="bg-white dark:bg-slate-900 p-1 rounded-xl flex items-center border border-slate-200 dark:border-slate-800 text-xs font-medium">
                       <button
                         onClick={() => setActiveTab('simple')}
-                        className={`px-3 py-1 rounded-lg transition-colors ${activeTab === 'simple' ? 'bg-rose-600 text-white font-bold shadow-sm' : 'text-slate-400 hover:text-slate-200'}`}
+                        className={`px-3 py-1 rounded-lg transition-colors ${activeTab === 'simple' ? 'bg-rose-600 text-slate-900 dark:text-white font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
                       >
                         Simple
                       </button>
                       <button
                         onClick={() => setActiveTab('advanced')}
-                        className={`px-3 py-1 rounded-lg transition-colors ${activeTab === 'advanced' ? 'bg-rose-600 text-white font-bold shadow-sm' : 'text-slate-400 hover:text-slate-200'}`}
+                        className={`px-3 py-1 rounded-lg transition-colors ${activeTab === 'advanced' ? 'bg-rose-600 text-slate-900 dark:text-white font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
                       >
                         Advanced
                       </button>
                     </div>
 
                     <div className="flex items-center space-x-2 text-xs">
-                      <span className="text-slate-400 text-[11px]">Model</span>
+                      <span className="text-slate-500 dark:text-slate-400 text-[11px]">Model</span>
                       <select
                         value={selectedModel}
                         onChange={(e) => setSelectedModel(e.target.value)}
-                        className="bg-slate-900 border border-slate-800 text-rose-300 font-semibold px-2 py-1 rounded-lg text-xs focus:outline-none"
+                        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-rose-300 font-semibold px-2 py-1 rounded-lg text-xs focus:outline-none"
                       >
                         <option value="v3">v3</option>
                         <option value="v2">v2 Legacy</option>
@@ -830,8 +830,8 @@ export const TrebloReplica: React.FC = () => {
                   {/* SIMPLE MODE INPUT */}
                   {activeTab === 'simple' && (
                     <div className="space-y-3 flex-1 flex flex-col">
-                      <div className="relative bg-slate-900/90 border border-slate-800 rounded-xl p-3 flex-1 flex flex-col focus-within:border-rose-500/60 transition-colors">
-                        <div className="flex items-center space-x-1.5 text-xs text-slate-400 mb-2">
+                      <div className="relative bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex-1 flex flex-col focus-within:border-rose-500/60 transition-colors">
+                        <div className="flex items-center space-x-1.5 text-xs text-slate-500 dark:text-slate-400 mb-2">
                           <Sparkles className="w-3.5 h-3.5 text-rose-400" />
                           <span>Deskripsi Ide Lagu (Prompt)</span>
                         </div>
@@ -840,12 +840,12 @@ export const TrebloReplica: React.FC = () => {
                           onChange={(e) => setWorkspacePrompt(e.target.value)}
                           placeholder="Contoh: a country song about my WiFi going out mid-meeting..."
                           rows={5}
-                          className="w-full flex-1 bg-transparent text-xs sm:text-sm text-slate-100 placeholder-slate-500 resize-none focus:outline-none"
+                          className="w-full flex-1 bg-transparent text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-500 resize-none focus:outline-none"
                         />
                         <div className="flex items-center justify-end pt-2">
                           <button 
                             onClick={() => showToastMsg('Fitur unggah file musik/audio contoh')}
-                            className="text-slate-400 hover:text-slate-200 p-1.5 rounded-md hover:bg-slate-800"
+                            className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 p-1.5 rounded-md hover:bg-slate-100 dark:bg-slate-800"
                             title="Upload audio reference"
                           >
                             <Upload className="w-4 h-4" />
@@ -859,35 +859,35 @@ export const TrebloReplica: React.FC = () => {
                   {activeTab === 'advanced' && (
                     <div className="space-y-3 flex-1 flex flex-col text-xs">
                       <div>
-                        <label className="block text-[11px] font-semibold text-slate-300 mb-1">Judul Manual (Custom Song Title)</label>
+                        <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1">Judul Manual (Custom Song Title)</label>
                         <input
                           type="text"
                           value={customTitleInput}
                           onChange={(e) => setCustomTitleInput(e.target.value)}
                           placeholder="e.g. WiFi Putus di Maxy Academy"
-                          className="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500"
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-[11px] font-semibold text-slate-300 mb-1">Genre & Style Tags</label>
+                        <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1">Genre & Style Tags</label>
                         <input
                           type="text"
                           value={customStyle}
                           onChange={(e) => setCustomStyle(e.target.value)}
                           placeholder="e.g. country pop, bro-country, acoustic guitar, male vocals"
-                          className="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-rose-300 focus:outline-none focus:border-rose-500"
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-xs text-rose-300 focus:outline-none focus:border-rose-500"
                         />
                       </div>
 
                       <div className="flex-1 flex flex-col">
-                        <label className="block text-[11px] font-semibold text-slate-300 mb-1">Kustom Lirik Lagu (Lyrics)</label>
+                        <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1">Kustom Lirik Lagu (Lyrics)</label>
                         <textarea
                           value={customLyricsInput}
                           onChange={(e) => setCustomLyricsInput(e.target.value)}
                           placeholder="[Verse 1] Tulis lirik kustom di sini..."
                           rows={5}
-                          className="w-full flex-1 bg-slate-900 border border-slate-800 rounded-lg p-2 text-xs text-slate-200 placeholder-slate-500 resize-none focus:outline-none focus:border-rose-500 font-mono"
+                          className="w-full flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-xs text-slate-700 dark:text-slate-200 placeholder-slate-500 resize-none focus:outline-none focus:border-rose-500 font-mono"
                         />
                       </div>
                     </div>
@@ -900,15 +900,15 @@ export const TrebloReplica: React.FC = () => {
                         <Info className="w-4 h-4 text-rose-400 shrink-0" />
                         <span>{errorMessage}</span>
                       </div>
-                      <button onClick={() => setErrorMessage(null)} className="p-1 hover:text-white">
+                      <button onClick={() => setErrorMessage(null)} className="p-1 hover:text-slate-900 dark:text-white">
                         <X className="w-3.5 h-3.5 text-rose-300" />
                       </button>
                     </div>
                   )}
 
                   {/* Instrumental Toggle */}
-                  <div className="flex items-center justify-between bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
-                    <span className="text-xs font-semibold text-slate-300">Instrumental</span>
+                  <div className="flex items-center justify-between bg-white dark:bg-slate-900/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
+                    <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">Instrumental</span>
                     <button
                       onClick={() => setIsInstrumental(!isInstrumental)}
                       className={`w-11 h-6 rounded-full transition-colors p-0.5 flex items-center ${isInstrumental ? 'bg-rose-600 justify-end' : 'bg-slate-700 justify-start'}`}
@@ -921,7 +921,7 @@ export const TrebloReplica: React.FC = () => {
                   <button
                     onClick={handleGenerateSong}
                     disabled={isGenerating}
-                    className="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-bold text-sm py-3 rounded-xl shadow-lg shadow-rose-950/80 flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50"
+                    className="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-slate-900 dark:text-white font-bold text-sm py-3 rounded-xl shadow-lg shadow-rose-950/80 flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50"
                   >
                     {isGenerating ? (
                       <>
@@ -930,7 +930,7 @@ export const TrebloReplica: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <Sparkles className="w-4 h-4 text-white" />
+                        <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
                         <span>Generate</span>
                       </>
                     )}
@@ -938,12 +938,12 @@ export const TrebloReplica: React.FC = () => {
                 </div>
 
                 {/* PANEL TENGAH-KANAN: DAFTAR HASIL LAGU (Cols 5-8 on Desktop) */}
-                <div className={`md:col-span-4 border-r border-slate-800/80 p-3 flex flex-col space-y-3 bg-[#0e0c0d] overflow-y-auto ${mobileTab === 'list' ? 'block' : 'hidden md:block'}`}>
+                <div className={`md:col-span-4 border-r border-slate-200 dark:border-slate-800/80 p-3 flex flex-col space-y-3 bg-[#0e0c0d] overflow-y-auto ${mobileTab === 'list' ? 'block' : 'hidden md:block'}`}>
                   {/* Filters Bar */}
                   <div className="flex items-center justify-between text-xs gap-1.5">
                     <button 
                       onClick={() => showToastMsg('Modal Filter Style & Modul')}
-                      className="bg-rose-600 hover:bg-rose-500 text-white px-2.5 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shrink-0"
+                      className="bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white px-2.5 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shrink-0"
                     >
                       <Filter className="w-3.5 h-3.5" />
                       <span>Filters</span>
@@ -951,7 +951,7 @@ export const TrebloReplica: React.FC = () => {
 
                     <button 
                       onClick={() => setShowLikedOnly(!showLikedOnly)}
-                      className={`px-2.5 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shrink-0 border border-slate-800 transition-colors ${showLikedOnly ? 'bg-rose-950 text-rose-300 border-rose-700' : 'bg-slate-900 text-slate-300'}`}
+                      className={`px-2.5 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shrink-0 border border-slate-200 dark:border-slate-800 transition-colors ${showLikedOnly ? 'bg-rose-950 text-rose-300 border-rose-700' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300'}`}
                     >
                       <Heart className={`w-3.5 h-3.5 ${showLikedOnly ? 'fill-rose-500 text-rose-500' : ''}`} />
                       <span>Liked</span>
@@ -963,7 +963,7 @@ export const TrebloReplica: React.FC = () => {
                         value={listSearch}
                         onChange={(e) => setListSearch(e.target.value)}
                         placeholder="Search titles, style"
-                        className="w-full bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 pl-6 text-[11px] text-slate-200 placeholder-slate-500 focus:outline-none"
+                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg py-1 px-2 pl-6 text-[11px] text-slate-700 dark:text-slate-200 placeholder-slate-500 focus:outline-none"
                       />
                       <Search className="w-3 h-3 text-slate-500 absolute left-2 top-2" />
                     </div>
@@ -987,7 +987,7 @@ export const TrebloReplica: React.FC = () => {
                               setSelectedSongId(song.id);
                               if (mobileTab === 'list') setMobileTab('detail');
                             }}
-                            className={`p-2.5 rounded-xl border cursor-pointer transition-all ${isSelected ? 'bg-slate-900/90 border-rose-500/70 shadow-lg' : 'bg-slate-950/60 border-slate-800/80 hover:border-slate-700'}`}
+                            className={`p-2.5 rounded-xl border cursor-pointer transition-all ${isSelected ? 'bg-white dark:bg-white/90 dark:bg-slate-900/90 border-rose-500/70 shadow-lg' : 'bg-slate-100 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:border-slate-700'}`}
                           >
                             <div className="flex items-start justify-between space-x-2">
                               <div className="flex items-center space-x-2.5">
@@ -1019,10 +1019,10 @@ export const TrebloReplica: React.FC = () => {
                                         onKeyDown={(e) => e.key === 'Enter' && saveRenameSong(song.id)}
                                         onClick={(e) => e.stopPropagation()}
                                         autoFocus
-                                        className="bg-slate-900 border border-rose-500 text-xs text-rose-300 font-bold px-1.5 py-0.5 rounded focus:outline-none"
+                                        className="bg-white dark:bg-slate-900 border border-rose-500 text-xs text-rose-300 font-bold px-1.5 py-0.5 rounded focus:outline-none"
                                       />
                                     ) : (
-                                      <span className="text-xs font-bold text-white hover:text-rose-400 transition-colors">
+                                      <span className="text-xs font-bold text-slate-900 dark:text-white hover:text-rose-400 transition-colors">
                                         {song.title}
                                       </span>
                                     )}
@@ -1035,29 +1035,29 @@ export const TrebloReplica: React.FC = () => {
                                     </button>
 
                                     {song.isNew && (
-                                      <span className="bg-rose-600 text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full uppercase">
+                                      <span className="bg-rose-600 text-slate-900 dark:text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full uppercase">
                                         New
                                       </span>
                                     )}
                                   </div>
 
-                                  <p className="text-[10px] text-slate-400 line-clamp-1 mt-0.5 font-mono">
+                                  <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5 font-mono">
                                     {song.style}
                                   </p>
                                 </div>
                               </div>
 
-                              <span className="text-[11px] font-mono text-slate-400 shrink-0">
+                              <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 shrink-0">
                                 {song.duration}
                               </span>
                             </div>
 
                             {/* Prompt preview snippet */}
-                            <p className="text-[10px] text-slate-400 italic line-clamp-1 mt-1.5 pl-11">
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400 italic line-clamp-1 mt-1.5 pl-11">
                               "{song.prompt}"
                             </p>
 
-                            <div className="flex items-center justify-between pt-2 mt-2 border-t border-slate-800/40 text-slate-400 text-xs">
+                            <div className="flex items-center justify-between pt-2 mt-2 border-t border-slate-200 dark:border-slate-800/40 text-slate-500 dark:text-slate-400 text-xs">
                               <span className="text-[10px] text-slate-500">{song.createdAt}</span>
 
                               <div className="flex items-center space-x-2">
@@ -1073,7 +1073,7 @@ export const TrebloReplica: React.FC = () => {
                                     e.stopPropagation();
                                     showToastMsg('Menu opsi lagu');
                                   }}
-                                  className="p-1 hover:text-slate-200"
+                                  className="p-1 hover:text-slate-700 dark:text-slate-200"
                                 >
                                   •••
                                 </button>
@@ -1091,25 +1091,25 @@ export const TrebloReplica: React.FC = () => {
                   {/* Top Bar of Detail */}
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-base font-bold text-white flex items-center space-x-2">
+                      <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                         <span>{selectedSong.title}</span>
                         <button onClick={(e) => startRenameSong(selectedSong, e)} className="text-slate-500 hover:text-rose-400">
                           <Edit2 className="w-3.5 h-3.5" />
                         </button>
                       </h3>
-                      <span className="text-xs text-slate-400">{selectedSong.createdAt}</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">{selectedSong.createdAt}</span>
                     </div>
 
                     <button 
                       onClick={() => setMobileTab('list')}
-                      className="p-1 text-slate-400 hover:text-white rounded-md hover:bg-slate-800 md:hidden"
+                      className="p-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-md hover:bg-slate-100 dark:bg-slate-800 md:hidden"
                     >
                       <X className="w-4 h-4" />
                     </button>
                   </div>
 
                   {/* Visual Waveform Box */}
-                  <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3 shadow-inner">
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-3 shadow-inner">
                     <div className="h-16 flex items-end justify-between space-x-1 px-2">
                       {selectedSong.waveform.map((val, idx) => (
                         <div
@@ -1120,19 +1120,19 @@ export const TrebloReplica: React.FC = () => {
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-between text-xs font-mono text-slate-400">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
                       <span>0:00</span>
                       <span>{selectedSong.duration}</span>
                     </div>
 
                     {/* Action buttons */}
-                    <div className="flex items-center justify-between pt-2 border-t border-slate-800/80">
+                    <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800/80">
                       <button
                         onClick={() => {
                           setActivePlayerSongId(selectedSong.id);
                           setIsPlaying(!isPlaying);
                         }}
-                        className="bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center space-x-1.5 shadow-md"
+                        className="bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center space-x-1.5 shadow-md"
                       >
                         {isPlaying && activePlayerSongId === selectedSong.id ? (
                           <>
@@ -1149,25 +1149,25 @@ export const TrebloReplica: React.FC = () => {
 
                       <button 
                         onClick={() => showToastMsg('Tautan lagu disalin ke clipboard')}
-                        className="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-2 rounded-lg flex items-center space-x-1"
+                        className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium px-3 py-2 rounded-lg flex items-center space-x-1"
                       >
-                        <Share2 className="w-3.5 h-3.5 text-slate-400" />
+                        <Share2 className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                         <span>Share</span>
                       </button>
 
                       <button 
                         onClick={() => showToastMsg('Membuka audio editor')}
-                        className="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium px-3 py-2 rounded-lg flex items-center space-x-1"
+                        className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium px-3 py-2 rounded-lg flex items-center space-x-1"
                       >
                         <span>Edit</span>
-                        <ChevronDown className="w-3 h-3 text-slate-400" />
+                        <ChevronDown className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                       </button>
 
                       <div className="flex items-center space-x-1">
-                        <button onClick={() => showToastMsg('Mengunduh file MP3')} className="p-2 text-slate-400 hover:text-white" title="Download">
+                        <button onClick={() => showToastMsg('Mengunduh file MP3')} className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white" title="Download">
                           <Download className="w-4 h-4" />
                         </button>
-                        <button onClick={() => showToastMsg('Info metadata lagu')} className="p-2 text-slate-400 hover:text-white" title="Info">
+                        <button onClick={() => showToastMsg('Info metadata lagu')} className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white" title="Info">
                           <Info className="w-4 h-4" />
                         </button>
                       </div>
@@ -1176,8 +1176,8 @@ export const TrebloReplica: React.FC = () => {
 
                   {/* Section: Prompt */}
                   <div className="space-y-1">
-                    <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Prompt</h4>
-                    <p className="text-xs text-slate-300 bg-slate-900/90 border border-slate-800 rounded-lg p-2.5 leading-relaxed italic">
+                    <h4 className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Prompt</h4>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 leading-relaxed italic">
                       "{selectedSong.prompt}"
                     </p>
                   </div>
@@ -1185,11 +1185,11 @@ export const TrebloReplica: React.FC = () => {
                   {/* Section: Lyrics */}
                   <div className="space-y-2 flex-1 flex flex-col">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Lyrics</h4>
+                      <h4 className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Lyrics</h4>
                       <div className="flex items-center space-x-2">
                         <button 
                           onClick={handleCopyLyrics}
-                          className="text-slate-400 hover:text-rose-400 text-xs flex items-center space-x-1 bg-slate-800/80 px-2 py-1 rounded"
+                          className="text-slate-500 dark:text-slate-400 hover:text-rose-400 text-xs flex items-center space-x-1 bg-slate-100 dark:bg-slate-800/80 px-2 py-1 rounded"
                           title="Salin lirik"
                         >
                           {copiedLyrics ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
@@ -1198,7 +1198,7 @@ export const TrebloReplica: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-3 flex-1 overflow-y-auto text-xs text-slate-200 leading-relaxed font-sans whitespace-pre-wrap">
+                    <div className="bg-white dark:bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex-1 overflow-y-auto text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-sans whitespace-pre-wrap">
                       {selectedSong.lyrics}
                     </div>
                   </div>
@@ -1206,19 +1206,19 @@ export const TrebloReplica: React.FC = () => {
               </div>
 
               {/* PERSISTENT BOTTOM AUDIO PLAYER */}
-              <div className="h-16 bg-[#161214] border-t border-slate-800/90 px-4 flex items-center justify-between shrink-0 text-xs z-20">
+              <div className="h-16 bg-[#161214] border-t border-slate-200 dark:border-slate-800/90 px-4 flex items-center justify-between shrink-0 text-xs z-20">
                 {/* Left: Song Info */}
                 <div className="flex items-center space-x-3 w-1/4">
                   <div className={`w-10 h-10 rounded-lg ${activePlayerSong.coverColor} flex items-center justify-center shrink-0 shadow-md`}>
-                    <Music className="w-5 h-5 text-white" />
+                    <Music className="w-5 h-5 text-slate-900 dark:text-white" />
                   </div>
                   <div className="overflow-hidden">
-                    <h5 className="font-bold text-white text-xs truncate">{activePlayerSong.title}</h5>
-                    <p className="text-[10px] text-slate-400 truncate">Maxy Academy Student</p>
+                    <h5 className="font-bold text-slate-900 dark:text-white text-xs truncate">{activePlayerSong.title}</h5>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">Maxy Academy Student</p>
                   </div>
                   <button 
                     onClick={(e) => toggleLike(activePlayerSong.id, e)}
-                    className="text-slate-400 hover:text-rose-400 p-1"
+                    className="text-slate-500 dark:text-slate-400 hover:text-rose-400 p-1"
                   >
                     <Heart className={`w-4 h-4 ${activePlayerSong.isLiked ? 'fill-rose-500 text-rose-500' : ''}`} />
                   </button>
@@ -1231,13 +1231,13 @@ export const TrebloReplica: React.FC = () => {
                       onClick={() => {
                         setIsPlaying(!isPlaying);
                       }}
-                      className="w-8 h-8 rounded-full bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center shadow-md transition-transform active:scale-95"
+                      className="w-8 h-8 rounded-full bg-rose-600 hover:bg-rose-500 text-slate-900 dark:text-white flex items-center justify-center shadow-md transition-transform active:scale-95"
                     >
                       {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
                     </button>
                   </div>
 
-                  <div className="w-full flex items-center space-x-2 text-[10px] font-mono text-slate-400">
+                  <div className="w-full flex items-center space-x-2 text-[10px] font-mono text-slate-500 dark:text-slate-400">
                     <span>0:{playerProgress < 10 ? `0${playerProgress}` : playerProgress}</span>
                     <div 
                       onClick={(e) => {
@@ -1246,7 +1246,7 @@ export const TrebloReplica: React.FC = () => {
                         const pct = Math.round((clickX / rect.width) * 100);
                         setPlayerProgress(pct);
                       }}
-                      className="flex-1 h-1.5 bg-slate-800 rounded-full cursor-pointer relative overflow-hidden"
+                      className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full cursor-pointer relative overflow-hidden"
                     >
                       <div 
                         style={{ width: `${playerProgress}%` }}
@@ -1262,7 +1262,7 @@ export const TrebloReplica: React.FC = () => {
                   <div className="flex items-center space-x-1.5">
                     <button 
                       onClick={() => setIsMuted(!isMuted)}
-                      className="text-slate-400 hover:text-white"
+                      className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                     >
                       {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4" />}
                     </button>
@@ -1275,13 +1275,13 @@ export const TrebloReplica: React.FC = () => {
                         setVolume(Number(e.target.value));
                         setIsMuted(false);
                       }}
-                      className="w-16 accent-rose-500 h-1 bg-slate-800 rounded-lg cursor-pointer"
+                      className="w-16 accent-rose-500 h-1 bg-slate-100 dark:bg-slate-800 rounded-lg cursor-pointer"
                     />
                   </div>
 
                   <button 
                     onClick={() => setStage('landing')}
-                    className="text-slate-500 hover:text-white p-1"
+                    className="text-slate-500 hover:text-slate-900 dark:text-white p-1"
                     title="Tutup Player / Kembali ke Landing Page"
                   >
                     <X className="w-4 h-4" />

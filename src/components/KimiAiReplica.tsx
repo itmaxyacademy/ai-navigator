@@ -393,40 +393,40 @@ export const KimiAiReplica: React.FC = () => {
   };
 
   return (
-    <div className="w-full min-h-[750px] bg-[#0e0e11] text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-800 flex flex-col relative shadow-2xl">
+    <div className="w-full min-h-[750px] bg-[#0e0e11] text-slate-800 dark:text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col relative shadow-2xl">
       {/* Top Stage Control Header */}
-      <div className="bg-[#16161a] border-b border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between text-xs shrink-0 z-30">
+      <div className="bg-[#16161a] border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between text-xs shrink-0 z-30">
         <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center font-extrabold text-white text-xs shadow-lg">
+          <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center font-extrabold text-slate-900 dark:text-white text-xs shadow-lg">
             K
           </div>
-          <span className="font-extrabold text-slate-200">Kimi AI Studio Simulator</span>
+          <span className="font-extrabold text-slate-700 dark:text-slate-200">Kimi AI Studio Simulator</span>
           <span className="text-slate-500 hidden sm:inline">| Work, Code CLI, OpenClaw & Thinking Engine</span>
         </div>
 
         {/* Stage Switcher Buttons */}
-        <div className="flex items-center space-x-1 bg-[#0a0a0c] p-1 rounded-xl border border-slate-800">
+        <div className="flex items-center space-x-1 bg-[#0a0a0c] p-1 rounded-xl border border-slate-200 dark:border-slate-800">
           <button
             onClick={() => setActiveStage('chat')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'chat' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'chat' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 1: Chat Utama
           </button>
           <button
             onClick={() => setActiveStage('work')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'work' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'work' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 2: Kimi Work
           </button>
           <button
             onClick={() => setActiveStage('code')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'code' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'code' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 3: Kimi Code
           </button>
           <button
             onClick={() => setActiveStage('claw')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'claw' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'claw' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 4: Kimi Claw
           </button>
@@ -435,7 +435,7 @@ export const KimiAiReplica: React.FC = () => {
 
       {/* Global Toast Banner */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-indigo-600 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-2xl border border-indigo-400 flex items-center space-x-2 animate-bounce">
+        <div className="fixed bottom-6 right-6 z-50 bg-indigo-600 text-slate-900 dark:text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-2xl border border-indigo-400 flex items-center space-x-2 animate-bounce">
           <Sparkles className="w-4 h-4 text-indigo-200" />
           <span>{toast}</span>
         </div>
@@ -448,7 +448,7 @@ export const KimiAiReplica: React.FC = () => {
             <AlertCircle className="w-4 h-4 text-rose-300" />
             <span>{errorMessage}</span>
           </div>
-          <button onClick={() => setErrorMessage(null)} className="hover:text-white font-bold">
+          <button onClick={() => setErrorMessage(null)} className="hover:text-slate-900 dark:text-white font-bold">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -460,20 +460,20 @@ export const KimiAiReplica: React.FC = () => {
       {activeStage === 'chat' && (
         <div className="flex-1 flex flex-col md:flex-row bg-[#121216] overflow-hidden">
           {/* Sidebar Left */}
-          <aside className={`bg-[#0d0d10] border-r border-slate-800 p-3 flex flex-col justify-between shrink-0 transition-all ${collapsedNav ? 'w-16' : 'w-full md:w-64'}`}>
+          <aside className={`bg-[#0d0d10] border-r border-slate-200 dark:border-slate-800 p-3 flex flex-col justify-between shrink-0 transition-all ${collapsedNav ? 'w-16' : 'w-full md:w-64'}`}>
             <div className="space-y-4">
               {/* Header Logo + Toggle */}
               <div className="flex items-center justify-between px-1">
                 <div className="flex items-center space-x-2">
-                  <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-500 font-black text-white flex items-center justify-center text-sm shadow">
+                  <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-500 font-black text-slate-900 dark:text-white flex items-center justify-center text-sm shadow">
                     K
                   </div>
-                  {!collapsedNav && <span className="font-extrabold text-base text-white tracking-wider">KIMI</span>}
+                  {!collapsedNav && <span className="font-extrabold text-base text-slate-900 dark:text-white tracking-wider">KIMI</span>}
                 </div>
 
                 <button
                   onClick={() => setCollapsedNav(!collapsedNav)}
-                  className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/60"
+                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg hover:bg-slate-100 dark:bg-slate-800/60"
                 >
                   <Layers className="w-4 h-4" />
                 </button>
@@ -482,14 +482,14 @@ export const KimiAiReplica: React.FC = () => {
               {/* Obrolan Baru Button */}
               <button
                 onClick={handleStartNewChat}
-                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-[#1d1d24] hover:bg-[#252530] text-slate-100 font-bold border border-slate-700/60 shadow-sm transition-all text-xs"
+                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-[#1d1d24] hover:bg-[#252530] text-slate-800 dark:text-slate-100 font-bold border border-slate-300 dark:border-slate-700/60 shadow-sm transition-all text-xs"
               >
                 <div className="flex items-center space-x-2">
                   <Plus className="w-4 h-4 text-indigo-400" />
                   {!collapsedNav && <span>Obrolan baru</span>}
                 </div>
                 {!collapsedNav && (
-                  <span className="text-[10px] font-mono bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700">
+                  <span className="text-[10px] font-mono bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-700">
                     Ctrl K
                   </span>
                 )}
@@ -503,7 +503,7 @@ export const KimiAiReplica: React.FC = () => {
                     <div
                       key={thread.id}
                       onClick={() => handleSelectThread(thread)}
-                      className={`p-2 rounded-lg cursor-pointer truncate text-[11px] transition-colors ${activeThreadId === thread.id ? 'bg-indigo-950/80 text-indigo-300 font-bold border border-indigo-800/60' : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'}`}
+                      className={`p-2 rounded-lg cursor-pointer truncate text-[11px] transition-colors ${activeThreadId === thread.id ? 'bg-indigo-950/80 text-indigo-300 font-bold border border-indigo-800/60' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/50 hover:text-slate-700 dark:text-slate-200'}`}
                     >
                       💬 {thread.title}
                     </div>
@@ -513,7 +513,7 @@ export const KimiAiReplica: React.FC = () => {
 
               {/* Navigation Menu Feature Chips */}
               {!collapsedNav && (
-                <div className="space-y-1 font-semibold text-xs text-slate-300 pt-2 border-t border-slate-800">
+                <div className="space-y-1 font-semibold text-xs text-slate-600 dark:text-slate-300 pt-2 border-t border-slate-200 dark:border-slate-800">
                   <div className="text-[10px] font-bold text-slate-500 uppercase px-1 mb-1">Fitur Pintar</div>
                   {[
                     { label: 'Klaster', icon: <Layers className="w-4 h-4 text-purple-400" /> },
@@ -529,7 +529,7 @@ export const KimiAiReplica: React.FC = () => {
                         setActiveFeatureChip(nav.label);
                         showToast(`Tag Fitur Aktif: [${nav.label}]`);
                       }}
-                      className={`w-full flex items-center justify-between p-2 rounded-xl transition-all text-left ${activeFeatureChip === nav.label ? 'bg-indigo-950 text-indigo-300 font-bold border border-indigo-700' : 'hover:bg-slate-800/50 hover:text-white'}`}
+                      className={`w-full flex items-center justify-between p-2 rounded-xl transition-all text-left ${activeFeatureChip === nav.label ? 'bg-indigo-950 text-indigo-300 font-bold border border-indigo-700' : 'hover:bg-slate-100 dark:bg-slate-800/50 hover:text-slate-900 dark:text-white'}`}
                     >
                       <div className="flex items-center space-x-2.5">
                         {nav.icon}
@@ -543,11 +543,11 @@ export const KimiAiReplica: React.FC = () => {
 
               {/* Advanced Products Section */}
               {!collapsedNav && (
-                <div className="pt-2 border-t border-slate-800 space-y-1 text-xs font-bold">
+                <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1 text-xs font-bold">
                   <div className="text-[10px] font-bold text-slate-500 uppercase px-1">Produk Lanjutan</div>
                   <button
                     onClick={() => setActiveStage('work')}
-                    className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-slate-800/50 text-slate-200"
+                    className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200"
                   >
                     <div className="flex items-center space-x-2.5">
                       <Bot className="w-4 h-4 text-indigo-400" />
@@ -560,7 +560,7 @@ export const KimiAiReplica: React.FC = () => {
 
                   <button
                     onClick={() => setActiveStage('code')}
-                    className="w-full flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-800/50 text-slate-200"
+                    className="w-full flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200"
                   >
                     <Code className="w-4 h-4 text-purple-400" />
                     <span>Kimi Code</span>
@@ -568,7 +568,7 @@ export const KimiAiReplica: React.FC = () => {
 
                   <button
                     onClick={() => setActiveStage('claw')}
-                    className="w-full flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-800/50 text-slate-200"
+                    className="w-full flex items-center space-x-2.5 p-2 rounded-xl hover:bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200"
                   >
                     <Cpu className="w-4 h-4 text-rose-400" />
                     <span>Kimi Claw</span>
@@ -579,18 +579,18 @@ export const KimiAiReplica: React.FC = () => {
 
             {/* Bottom User Profile */}
             {!collapsedNav && (
-              <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
                 <div className="flex items-center space-x-2 truncate">
-                  <div className="w-7 h-7 rounded-full bg-indigo-600 font-bold text-white flex items-center justify-center text-xs">
+                  <div className="w-7 h-7 rounded-full bg-indigo-600 font-bold text-slate-900 dark:text-white flex items-center justify-center text-xs">
                     M
                   </div>
                   <div className="truncate">
-                    <div className="font-bold text-slate-200 truncate">Maxy Student</div>
+                    <div className="font-bold text-slate-700 dark:text-slate-200 truncate">Maxy Student</div>
                     <div className="text-[10px] text-slate-500">K3 Credits</div>
                   </div>
                 </div>
 
-                <button onClick={() => showToast('Unduh aplikasi desktop Kimi')} className="p-1.5 text-slate-400 hover:text-white rounded-lg">
+                <button onClick={() => showToast('Unduh aplikasi desktop Kimi')} className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg">
                   <Download className="w-4 h-4" />
                 </button>
               </div>
@@ -604,7 +604,7 @@ export const KimiAiReplica: React.FC = () => {
               <div className="flex-1 space-y-4 max-h-[480px] overflow-y-auto p-2">
                 {activeMessages.map((msg, idx) => (
                   <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-xl rounded-2xl p-4 text-xs leading-relaxed space-y-1.5 shadow-md ${msg.sender === 'user' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-[#1b1b22] border border-slate-800 text-slate-100 rounded-tl-none'}`}>
+                    <div className={`max-w-xl rounded-2xl p-4 text-xs leading-relaxed space-y-1.5 shadow-md ${msg.sender === 'user' ? 'bg-indigo-600 text-slate-900 dark:text-white rounded-tr-none' : 'bg-[#1b1b22] border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 rounded-tl-none'}`}>
                       <div className="font-bold text-[10px] text-indigo-300">
                         {msg.sender === 'user' ? 'Maxy Student' : '🤖 Kimi K2.5'}
                       </div>
@@ -615,7 +615,7 @@ export const KimiAiReplica: React.FC = () => {
 
                 {isLoading && (
                   <div className="flex justify-start">
-                    <div className="bg-[#1b1b22] border border-slate-800 rounded-2xl rounded-tl-none p-3 text-xs text-indigo-400 flex items-center space-x-2">
+                    <div className="bg-[#1b1b22] border border-slate-200 dark:border-slate-800 rounded-2xl rounded-tl-none p-3 text-xs text-indigo-400 flex items-center space-x-2">
                       <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                       <span>Kimi K2.5 sedang berpikir ({chatMode} Mode)...</span>
                     </div>
@@ -624,10 +624,10 @@ export const KimiAiReplica: React.FC = () => {
               </div>
             ) : (
               <div className="my-auto space-y-6 text-center">
-                <h1 className="text-4xl sm:text-6xl font-black tracking-widest text-white font-mono drop-shadow-md">
+                <h1 className="text-4xl sm:text-6xl font-black tracking-widest text-slate-900 dark:text-white font-mono drop-shadow-md">
                   KIMI
                 </h1>
-                <p className="text-xs text-slate-400 max-w-md mx-auto">
+                <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
                   Tanyakan apapun atau pilih inspirasi di bawah untuk mulai berdiskusi dengan Kimi K2.5.
                 </p>
               </div>
@@ -635,11 +635,11 @@ export const KimiAiReplica: React.FC = () => {
 
             {/* Input Box Bar */}
             <div className="space-y-4">
-              <div className="bg-[#1c1c24] border border-slate-700/80 rounded-3xl p-4 shadow-2xl space-y-3 text-left relative">
+              <div className="bg-[#1c1c24] border border-slate-300 dark:border-slate-700/80 rounded-3xl p-4 shadow-2xl space-y-3 text-left relative">
                 {activeFeatureChip && (
                   <div className="inline-flex items-center space-x-1.5 bg-indigo-950 border border-indigo-700 px-2.5 py-0.5 rounded-full text-[10px] text-indigo-300 font-bold">
                     <span>Tag Fitur: {activeFeatureChip}</span>
-                    <button onClick={() => setActiveFeatureChip(null)} className="hover:text-white">
+                    <button onClick={() => setActiveFeatureChip(null)} className="hover:text-slate-900 dark:text-white">
                       <X className="w-3 h-3" />
                     </button>
                   </div>
@@ -651,12 +651,12 @@ export const KimiAiReplica: React.FC = () => {
                   onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), handleSendMainChat())}
                   placeholder='Ketik "/" untuk memanggil plugin dan skill, atau masukkan pertanyaan...'
                   rows={2}
-                  className="w-full bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none resize-none font-medium"
+                  className="w-full bg-transparent text-sm text-slate-800 dark:text-slate-100 placeholder-slate-500 focus:outline-none resize-none font-medium"
                 />
 
-                <div className="flex items-center justify-between pt-2 border-t border-slate-800">
+                <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800">
                   <div className="flex items-center space-x-2">
-                    <button onClick={() => showToast('Tambah Lampiran File')} className="p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800/60">
+                    <button onClick={() => showToast('Tambah Lampiran File')} className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl bg-slate-100 dark:bg-slate-800/60">
                       <Plus className="w-4 h-4" />
                     </button>
 
@@ -664,25 +664,25 @@ export const KimiAiReplica: React.FC = () => {
                     <div className="relative">
                       <button
                         onClick={() => setShowModeDropdown(!showModeDropdown)}
-                        className="flex items-center space-x-1 px-3 py-1.5 bg-[#141418] border border-slate-700 rounded-xl text-xs font-bold text-slate-300 hover:text-white"
+                        className="flex items-center space-x-1 px-3 py-1.5 bg-[#141418] border border-slate-300 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white"
                       >
                         <span>Instan</span>
                         <span className="text-indigo-400 font-bold ml-1">{chatMode}</span>
-                        <ChevronDown className="w-3.5 h-3.5 ml-1 text-slate-400" />
+                        <ChevronDown className="w-3.5 h-3.5 ml-1 text-slate-500 dark:text-slate-400" />
                       </button>
 
                       {showModeDropdown && (
-                        <div className="absolute left-0 mt-2 w-48 bg-[#181820] border border-slate-700 rounded-2xl shadow-2xl p-2 z-40 text-xs space-y-1">
+                        <div className="absolute left-0 mt-2 w-48 bg-[#181820] border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl p-2 z-40 text-xs space-y-1">
                           <div
                             onClick={() => {
                               setChatMode('Instan');
                               setShowModeDropdown(false);
                               showToast('Mode: Instan (Respon super cepat)');
                             }}
-                            className={`p-2 rounded-xl cursor-pointer hover:bg-slate-800 ${chatMode === 'Instan' ? 'bg-indigo-950 text-indigo-300 font-bold' : 'text-slate-300'}`}
+                            className={`p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:bg-slate-800 ${chatMode === 'Instan' ? 'bg-indigo-950 text-indigo-300 font-bold' : 'text-slate-600 dark:text-slate-300'}`}
                           >
                             <div className="font-bold">Instan</div>
-                            <div className="text-[10px] text-slate-400">Kecepatan tinggi, cocok untuk pertanyaan umum.</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Kecepatan tinggi, cocok untuk pertanyaan umum.</div>
                           </div>
                           <div
                             onClick={() => {
@@ -690,10 +690,10 @@ export const KimiAiReplica: React.FC = () => {
                               setShowModeDropdown(false);
                               showToast('Mode: Tinggi (Respon mendalam dengan K2.5)');
                             }}
-                            className={`p-2 rounded-xl cursor-pointer hover:bg-slate-800 ${chatMode === 'Tinggi' ? 'bg-indigo-950 text-indigo-300 font-bold' : 'text-slate-300'}`}
+                            className={`p-2 rounded-xl cursor-pointer hover:bg-slate-100 dark:bg-slate-800 ${chatMode === 'Tinggi' ? 'bg-indigo-950 text-indigo-300 font-bold' : 'text-slate-600 dark:text-slate-300'}`}
                           >
                             <div className="font-bold">Tinggi</div>
-                            <div className="text-[10px] text-slate-400">Penalaran mendalam untuk tugas kompleks.</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400">Penalaran mendalam untuk tugas kompleks.</div>
                           </div>
                         </div>
                       )}
@@ -703,7 +703,7 @@ export const KimiAiReplica: React.FC = () => {
                   <button
                     onClick={() => handleSendMainChat()}
                     disabled={isLoading}
-                    className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white p-2.5 rounded-xl shadow-lg font-bold flex items-center space-x-1"
+                    className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-slate-900 dark:text-white p-2.5 rounded-xl shadow-lg font-bold flex items-center space-x-1"
                   >
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -713,7 +713,7 @@ export const KimiAiReplica: React.FC = () => {
                 <div className="relative pt-1">
                   <button
                     onClick={() => setShowProjectDropdown(!showProjectDropdown)}
-                    className="inline-flex items-center space-x-1.5 text-xs text-slate-400 hover:text-slate-200 font-bold"
+                    className="inline-flex items-center space-x-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 font-bold"
                   >
                     <Folder className="w-3.5 h-3.5 text-indigo-400" />
                     <span>{selectedProject}</span>
@@ -721,7 +721,7 @@ export const KimiAiReplica: React.FC = () => {
                   </button>
 
                   {showProjectDropdown && (
-                    <div className="absolute left-0 bottom-8 w-56 bg-[#181820] border border-slate-700 rounded-2xl shadow-2xl p-2 z-40 text-xs space-y-1">
+                    <div className="absolute left-0 bottom-8 w-56 bg-[#181820] border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl p-2 z-40 text-xs space-y-1">
                       {['Pilih proyek', 'Maxy AI Curriculum', 'Research & Case Studies', 'Student Assignments'].map((proj, pidx) => (
                         <div
                           key={pidx}
@@ -730,7 +730,7 @@ export const KimiAiReplica: React.FC = () => {
                             setShowProjectDropdown(false);
                             showToast(`Proyek dipilih: ${proj}`);
                           }}
-                          className="p-2 rounded-xl hover:bg-slate-800 cursor-pointer text-slate-300 font-medium"
+                          className="p-2 rounded-xl hover:bg-slate-100 dark:bg-slate-800 cursor-pointer text-slate-600 dark:text-slate-300 font-medium"
                         >
                           {proj}
                         </div>
@@ -756,7 +756,7 @@ export const KimiAiReplica: React.FC = () => {
                       setActiveFeatureChip(sc.name);
                       showToast(`Tag Fitur Ditambahkan: [${sc.name}]`);
                     }}
-                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${activeFeatureChip === sc.name ? 'bg-indigo-600 text-white border-indigo-400' : 'bg-[#181820] hover:bg-[#22222c] border-slate-800 text-slate-300 hover:text-white'}`}
+                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${activeFeatureChip === sc.name ? 'bg-indigo-600 text-slate-900 dark:text-white border-indigo-400' : 'bg-[#181820] hover:bg-[#22222c] border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white'}`}
                   >
                     {sc.icon}
                     <span>{sc.name}</span>
@@ -765,9 +765,9 @@ export const KimiAiReplica: React.FC = () => {
               </div>
 
               {/* Section "Jelajahi inspirasi" */}
-              <div className="bg-[#14141a] border border-slate-800 rounded-2xl p-4 text-xs space-y-3">
+              <div className="bg-[#14141a] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-xs space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-slate-300 flex items-center space-x-2">
+                  <span className="font-bold text-slate-600 dark:text-slate-300 flex items-center space-x-2">
                     <Sparkles className="w-4 h-4 text-amber-400" />
                     <span>Jelajahi inspirasi</span>
                   </span>
@@ -787,7 +787,7 @@ export const KimiAiReplica: React.FC = () => {
                         setChatInput(insp);
                         showToast(`Input diisi: "${insp}"`);
                       }}
-                      className="min-w-[200px] bg-[#1d1d26] hover:bg-[#262632] border border-slate-700/60 p-3 rounded-xl cursor-pointer text-slate-300 font-medium transition-all shrink-0 hover:border-indigo-500"
+                      className="min-w-[200px] bg-[#1d1d26] hover:bg-[#262632] border border-slate-300 dark:border-slate-700/60 p-3 rounded-xl cursor-pointer text-slate-600 dark:text-slate-300 font-medium transition-all shrink-0 hover:border-indigo-500"
                     >
                       {insp}
                     </div>
@@ -805,17 +805,17 @@ export const KimiAiReplica: React.FC = () => {
       {activeStage === 'work' && (
         <div className="flex-1 bg-[#121216] flex flex-col overflow-hidden">
           {/* Top Switcher Tab: Work / Chat */}
-          <div className="bg-[#18181f] border-b border-slate-800 px-6 py-2.5 flex items-center justify-between">
-            <div className="flex items-center space-x-2 bg-[#0e0e12] p-1 rounded-xl border border-slate-800 text-xs">
+          <div className="bg-[#18181f] border-b border-slate-200 dark:border-slate-800 px-6 py-2.5 flex items-center justify-between">
+            <div className="flex items-center space-x-2 bg-[#0e0e12] p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
               <button
                 onClick={() => setWorkTab('Work')}
-                className={`px-4 py-1.5 rounded-lg font-extrabold transition-all ${workTab === 'Work' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400'}`}
+                className={`px-4 py-1.5 rounded-lg font-extrabold transition-all ${workTab === 'Work' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400'}`}
               >
                 🖥️ Work (Agentic Execution)
               </button>
               <button
                 onClick={() => setWorkTab('Chat')}
-                className={`px-4 py-1.5 rounded-lg font-bold transition-all ${workTab === 'Chat' ? 'bg-indigo-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}
+                className={`px-4 py-1.5 rounded-lg font-bold transition-all ${workTab === 'Chat' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'}`}
               >
                 💬 Chat (Conversational)
               </button>
@@ -828,43 +828,43 @@ export const KimiAiReplica: React.FC = () => {
           {/* Body Split Screen */}
           <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
             {/* Sidebar Dalam Work */}
-            <aside className="w-full md:w-64 bg-[#0c0c0f] border-r border-slate-800 p-3.5 flex flex-col justify-between shrink-0 text-xs overflow-y-auto space-y-4">
+            <aside className="w-full md:w-64 bg-[#0c0c0f] border-r border-slate-200 dark:border-slate-800 p-3.5 flex flex-col justify-between shrink-0 text-xs overflow-y-auto space-y-4">
               <div className="space-y-4">
                 <button
                   onClick={handleNewWorkTask}
-                  className="w-full flex items-center space-x-2 p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow transition-all"
+                  className="w-full flex items-center space-x-2 p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white font-bold shadow transition-all"
                 >
                   <Plus className="w-4 h-4" />
                   <span>+ New task</span>
                 </button>
 
-                <div className="space-y-1 font-semibold text-slate-300">
-                  <div onClick={() => showToast('Kimi Skills Store')} className="p-2 rounded-xl hover:bg-slate-800/50 cursor-pointer flex items-center space-x-2">
+                <div className="space-y-1 font-semibold text-slate-600 dark:text-slate-300">
+                  <div onClick={() => showToast('Kimi Skills Store')} className="p-2 rounded-xl hover:bg-slate-100 dark:bg-slate-800/50 cursor-pointer flex items-center space-x-2">
                     <Wrench className="w-4 h-4 text-sky-400" />
                     <span>Skills</span>
                   </div>
-                  <div onClick={() => showToast('WebBridge: Akses File Lokal Komputer')} className="p-2 rounded-xl hover:bg-slate-800/50 cursor-pointer flex items-center space-x-2">
+                  <div onClick={() => showToast('WebBridge: Akses File Lokal Komputer')} className="p-2 rounded-xl hover:bg-slate-100 dark:bg-slate-800/50 cursor-pointer flex items-center space-x-2">
                     <HardDrive className="w-4 h-4 text-emerald-400" />
                     <span>WebBridge</span>
                   </div>
-                  <div onClick={() => showToast('Cron job: Tugas Terjadwal Berulang')} className="p-2 rounded-xl hover:bg-slate-800/50 cursor-pointer flex items-center space-x-2">
+                  <div onClick={() => showToast('Cron job: Tugas Terjadwal Berulang')} className="p-2 rounded-xl hover:bg-slate-100 dark:bg-slate-800/50 cursor-pointer flex items-center space-x-2">
                     <Clock className="w-4 h-4 text-amber-400" />
                     <span>Cron job</span>
                   </div>
                 </div>
 
                 {/* Section Project */}
-                <div className="pt-2 border-t border-slate-800 space-y-1">
+                <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
                   <div className="text-[10px] font-bold text-slate-500 uppercase px-1">Project</div>
                   {['Buat program kecil', 'Organisir dokumen Maxy', 'Galeri foto & video'].map((projName, pidx) => (
-                    <div key={pidx} className="p-2 rounded-lg hover:bg-slate-800/50 cursor-pointer text-slate-300 truncate font-medium">
+                    <div key={pidx} className="p-2 rounded-lg hover:bg-slate-100 dark:bg-slate-800/50 cursor-pointer text-slate-600 dark:text-slate-300 truncate font-medium">
                       📁 {projName}
                     </div>
                   ))}
                 </div>
 
                 {/* Section TASKS with status colors */}
-                <div className="pt-2 border-t border-slate-800 space-y-1">
+                <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
                   <div className="text-[10px] font-bold text-slate-500 uppercase px-1">TASKS</div>
                   {tasks.map((t) => (
                     <div
@@ -873,7 +873,7 @@ export const KimiAiReplica: React.FC = () => {
                         if (t.result) setActiveTaskResult(t.result);
                         showToast(`Melihat status task: ${t.name}`);
                       }}
-                      className="p-2 rounded-lg hover:bg-slate-800/50 cursor-pointer text-slate-300 truncate flex items-center space-x-2"
+                      className="p-2 rounded-lg hover:bg-slate-100 dark:bg-slate-800/50 cursor-pointer text-slate-600 dark:text-slate-300 truncate flex items-center space-x-2"
                     >
                       <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${t.status === 'in_progress' ? 'bg-blue-400 animate-pulse' : t.status === 'pending' ? 'bg-yellow-400' : 'bg-emerald-400'}`}></span>
                       <span className="truncate text-[11px] font-medium">{t.name}</span>
@@ -882,7 +882,7 @@ export const KimiAiReplica: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-slate-800 font-bold text-slate-400 text-[10px]">
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 font-bold text-slate-500 dark:text-slate-400 text-[10px]">
                 Moonshot AI Workspace
               </div>
             </aside>
@@ -898,37 +898,37 @@ export const KimiAiReplica: React.FC = () => {
                   <div className="inline-block bg-indigo-950 text-indigo-400 border border-indigo-800 text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider">
                     {workTab === 'Work' ? 'Agentic Workspace Active' : 'Chat Mode Active'}
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white">
                     Let's take something off your plate
                   </h2>
                 </div>
               </div>
 
               {/* Agent Prompt Input Box */}
-              <div className="bg-[#181820] border border-slate-700 rounded-3xl p-4 shadow-2xl space-y-4">
+              <div className="bg-[#181820] border border-slate-300 dark:border-slate-700 rounded-3xl p-4 shadow-2xl space-y-4">
                 <textarea
                   value={workInput}
                   onChange={(e) => setWorkInput(e.target.value)}
                   rows={4}
                   placeholder="Deskripsikan tugas multi-langkah yang ingin Anda selesaikan secara otonom..."
-                  className="w-full bg-transparent text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none resize-none font-mono leading-relaxed"
+                  className="w-full bg-transparent text-xs sm:text-sm text-slate-700 dark:text-slate-200 placeholder-slate-500 focus:outline-none resize-none font-mono leading-relaxed"
                 />
 
                 {/* Toolbar bawah input */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800">
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
                   <div className="flex items-center space-x-2">
-                    <button onClick={() => showToast('Tambah File / Folder')} className="p-2 text-slate-400 hover:text-white rounded-xl bg-slate-800/60">
+                    <button onClick={() => showToast('Tambah File / Folder')} className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-xl bg-slate-100 dark:bg-slate-800/60">
                       <Plus className="w-4 h-4" />
                     </button>
 
                     {/* Toggle Mode Ask vs Agent vs Agent Swarm */}
-                    <div className="flex items-center bg-[#0e0e12] p-1 rounded-xl border border-slate-800 text-xs">
+                    <div className="flex items-center bg-[#0e0e12] p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
                       <button
                         onClick={() => {
                           setWorkMode('Ask');
                           showToast('Mode: Ask (Tanya jawab biasa)');
                         }}
-                        className={`px-3 py-1 rounded-lg font-bold transition-all ${workMode === 'Ask' ? 'bg-slate-700 text-white' : 'text-slate-400'}`}
+                        className={`px-3 py-1 rounded-lg font-bold transition-all ${workMode === 'Ask' ? 'bg-slate-700 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
                       >
                         ✓ Ask
                       </button>
@@ -937,7 +937,7 @@ export const KimiAiReplica: React.FC = () => {
                           setWorkMode('Agent');
                           showToast('Mode: Agent (Agen otonom tunggal)');
                         }}
-                        className={`px-3 py-1 rounded-lg font-bold transition-all ${workMode === 'Agent' ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}
+                        className={`px-3 py-1 rounded-lg font-bold transition-all ${workMode === 'Agent' ? 'bg-indigo-600 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
                       >
                         Agent
                       </button>
@@ -946,7 +946,7 @@ export const KimiAiReplica: React.FC = () => {
                           setWorkMode('Agent Swarm');
                           showToast('Mode: Agent Swarm (Multi-agent kolaboratif)');
                         }}
-                        className={`px-3 py-1 rounded-lg font-bold transition-all ${workMode === 'Agent Swarm' ? 'bg-purple-600 text-white' : 'text-slate-400'}`}
+                        className={`px-3 py-1 rounded-lg font-bold transition-all ${workMode === 'Agent Swarm' ? 'bg-purple-600 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}
                       >
                         Agent Swarm
                       </button>
@@ -956,7 +956,7 @@ export const KimiAiReplica: React.FC = () => {
                   <button
                     onClick={handleRunWorkTask}
                     disabled={isWorkRunning}
-                    className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center space-x-1.5"
+                    className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-slate-900 dark:text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center space-x-1.5"
                   >
                     <span>{isWorkRunning ? 'Memproses...' : 'Kirim Ke Agent'}</span>
                     <ArrowRight className="w-4 h-4" />
@@ -970,7 +970,7 @@ export const KimiAiReplica: React.FC = () => {
 
               {/* Task Result Box */}
               {activeTaskResult && (
-                <div className="p-4 bg-[#1b1b26] border border-indigo-700/60 rounded-2xl text-xs text-slate-200 font-mono space-y-2 animate-fade-in shadow-xl">
+                <div className="p-4 bg-[#1b1b26] border border-indigo-200 dark:border-indigo-700/60 rounded-2xl text-xs text-slate-700 dark:text-slate-200 font-mono space-y-2 animate-fade-in shadow-xl">
                   <div className="font-bold text-indigo-400 flex items-center space-x-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                     <span>Laporan Eksekusi Tugas Kimi Work</span>
@@ -989,23 +989,23 @@ export const KimiAiReplica: React.FC = () => {
       {activeStage === 'code' && (
         <div className="flex-1 bg-[#0a0a0d] flex flex-col overflow-y-auto">
           {/* Navbar Kimi Code */}
-          <nav className="bg-[#121218] border-b border-slate-800 px-6 py-3 flex items-center justify-between">
+          <nav className="bg-[#121218] border-b border-slate-200 dark:border-slate-800 px-6 py-3 flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <span className="font-extrabold text-base text-white tracking-wider font-mono">KIMI Code</span>
+              <span className="font-extrabold text-base text-slate-900 dark:text-white tracking-wider font-mono">KIMI Code</span>
             </div>
 
-            <div className="flex items-center space-x-6 text-xs font-bold text-slate-300">
-              <button onClick={() => showToast('Manfaat Keanggotaan Kimi Code')} className="hover:text-white">
+            <div className="flex items-center space-x-6 text-xs font-bold text-slate-600 dark:text-slate-300">
+              <button onClick={() => showToast('Manfaat Keanggotaan Kimi Code')} className="hover:text-slate-900 dark:text-white">
                 Manfaat Keanggotaan
               </button>
-              <button onClick={() => showToast('Dokumentasi Kimi Code CLI')} className="hover:text-white">
+              <button onClick={() => showToast('Dokumentasi Kimi Code CLI')} className="hover:text-slate-900 dark:text-white">
                 Dokumen
               </button>
-              <button onClick={() => showToast('Konsol Kimi Code API')} className="hover:text-white">
+              <button onClick={() => showToast('Konsol Kimi Code API')} className="hover:text-slate-900 dark:text-white">
                 Konsol
               </button>
-              <Globe className="w-4 h-4 text-slate-400 cursor-pointer" />
-              <div className="w-7 h-7 rounded-full bg-indigo-600 font-bold text-white flex items-center justify-center text-xs">
+              <Globe className="w-4 h-4 text-slate-500 dark:text-slate-400 cursor-pointer" />
+              <div className="w-7 h-7 rounded-full bg-indigo-600 font-bold text-slate-900 dark:text-white flex items-center justify-center text-xs">
                 M
               </div>
             </div>
@@ -1014,27 +1014,27 @@ export const KimiAiReplica: React.FC = () => {
           {/* Content Area */}
           <div className="flex-1 max-w-4xl w-full mx-auto p-6 sm:p-10 flex flex-col justify-center space-y-8">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
                 Satu langganan, bebas menulis di semua perangkat
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
                 Akses lingkungan coding Kimi CLI dan IDE terintegrasi untuk refactoring & eksplorasi codebase.
               </p>
             </div>
 
             {/* Toggle Tab: Terminal / IDE */}
             <div className="flex justify-center">
-              <div className="bg-[#16161e] p-1 rounded-2xl border border-slate-800 inline-flex space-x-1 text-xs">
+              <div className="bg-[#16161e] p-1 rounded-2xl border border-slate-200 dark:border-slate-800 inline-flex space-x-1 text-xs">
                 <button
                   onClick={() => setCodeTab('terminal')}
-                  className={`px-6 py-2 rounded-xl font-bold transition-all ${codeTab === 'terminal' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400'}`}
+                  className={`px-6 py-2 rounded-xl font-bold transition-all ${codeTab === 'terminal' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 dark:text-slate-400'}`}
                 >
                   <Terminal className="w-4 h-4 inline mr-1.5" />
                   Terminal CLI
                 </button>
                 <button
                   onClick={() => setCodeTab('ide')}
-                  className={`px-6 py-2 rounded-xl font-bold transition-all ${codeTab === 'ide' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400'}`}
+                  className={`px-6 py-2 rounded-xl font-bold transition-all ${codeTab === 'ide' ? 'bg-indigo-600 text-slate-900 dark:text-white shadow-lg' : 'text-slate-500 dark:text-slate-400'}`}
                 >
                   <Code className="w-4 h-4 inline mr-1.5" />
                   IDE Editor
@@ -1045,14 +1045,14 @@ export const KimiAiReplica: React.FC = () => {
             {/* Window Replica */}
             {codeTab === 'terminal' ? (
               /* Terminal View */
-              <div className="bg-[#0e0e12] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl font-mono text-xs">
+              <div className="bg-[#0e0e12] border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-2xl font-mono text-xs">
                 {/* Window Bar */}
-                <div className="bg-[#181820] px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+                <div className="bg-[#181820] px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <span className="w-3 h-3 rounded-full bg-red-500"></span>
                     <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
                     <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
-                    <span className="text-slate-400 ml-2 font-bold">Kimi CLI Terminal</span>
+                    <span className="text-slate-500 dark:text-slate-400 ml-2 font-bold">Kimi CLI Terminal</span>
                   </div>
                   <span className="text-[10px] text-indigo-400 bg-indigo-950 px-2 py-0.5 rounded border border-indigo-800">
                     Model: K2.7 Code
@@ -1060,9 +1060,9 @@ export const KimiAiReplica: React.FC = () => {
                 </div>
 
                 {/* Terminal Body */}
-                <div className="p-6 space-y-4 text-slate-200 min-h-[250px] max-h-[350px] overflow-y-auto">
+                <div className="p-6 space-y-4 text-slate-700 dark:text-slate-200 min-h-[250px] max-h-[350px] overflow-y-auto">
                   {cliOutput.map((line, idx) => (
-                    <div key={idx} className="whitespace-pre-wrap leading-relaxed text-slate-300">
+                    <div key={idx} className="whitespace-pre-wrap leading-relaxed text-slate-600 dark:text-slate-300">
                       {line}
                     </div>
                   ))}
@@ -1072,7 +1072,7 @@ export const KimiAiReplica: React.FC = () => {
                   )}
 
                   {/* CLI Custom Input */}
-                  <div className="pt-2 border-t border-slate-800 flex items-center space-x-2">
+                  <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center space-x-2">
                     <span className="text-indigo-400 font-bold">$</span>
                     <input
                       type="text"
@@ -1080,15 +1080,15 @@ export const KimiAiReplica: React.FC = () => {
                       onChange={(e) => setCliInput(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleCliCommand()}
                       placeholder="Ketik perintah CLI (misal: git status, npm test, analyze architecture)..."
-                      className="flex-1 bg-transparent text-xs text-white focus:outline-none"
+                      className="flex-1 bg-transparent text-xs text-slate-900 dark:text-white focus:outline-none"
                     />
-                    <button onClick={() => handleCliCommand()} className="bg-indigo-600 text-white px-3 py-1 rounded-lg text-[10px] font-bold">
+                    <button onClick={() => handleCliCommand()} className="bg-indigo-600 text-slate-900 dark:text-white px-3 py-1 rounded-lg text-[10px] font-bold">
                       Jalankan
                     </button>
                   </div>
 
                   {/* Sample Clickable Commands */}
-                  <div className="pt-2 border-t border-slate-800/60 space-y-2">
+                  <div className="pt-2 border-t border-slate-200 dark:border-slate-800/60 space-y-2">
                     <div className="text-[10px] text-slate-500 uppercase font-bold">Klik perintah contoh:</div>
                     <div className="flex flex-wrap gap-2">
                       {['introduce yourself', 'npm run build', 'analyze codebase'].map((cmd, cidx) => (
@@ -1106,13 +1106,13 @@ export const KimiAiReplica: React.FC = () => {
               </div>
             ) : (
               /* IDE View */
-              <div className="bg-[#0e0e12] border border-slate-800 rounded-3xl overflow-hidden shadow-2xl font-mono text-xs flex flex-col space-y-3 p-4">
-                <div className="bg-[#181820] px-4 py-2 rounded-xl border border-slate-800 flex items-center justify-between text-slate-400">
+              <div className="bg-[#0e0e12] border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-2xl font-mono text-xs flex flex-col space-y-3 p-4">
+                <div className="bg-[#181820] px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between text-slate-500 dark:text-slate-400">
                   <span>Kimi IDE Editor - Maxy Workspace</span>
                   <button
                     onClick={handleRunIdeCode}
                     disabled={isLoading}
-                    className="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded-lg text-xs font-bold shadow flex items-center space-x-1"
+                    className="bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white px-3 py-1 rounded-lg text-xs font-bold shadow flex items-center space-x-1"
                   >
                     <Play className="w-3.5 h-3.5" />
                     <span>Jalankan & Analisis Kode</span>
@@ -1123,11 +1123,11 @@ export const KimiAiReplica: React.FC = () => {
                   value={ideCodeInput}
                   onChange={(e) => setIdeCodeInput(e.target.value)}
                   rows={8}
-                  className="w-full bg-[#070709] border border-slate-800 rounded-2xl p-4 text-xs font-mono text-emerald-300 focus:outline-none focus:border-indigo-500 resize-none leading-relaxed"
+                  className="w-full bg-[#070709] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-xs font-mono text-emerald-300 focus:outline-none focus:border-indigo-500 resize-none leading-relaxed"
                 />
 
                 {ideExplanation && (
-                  <div className="p-4 bg-[#14141c] border border-indigo-800 rounded-2xl text-xs text-slate-200 font-sans space-y-1">
+                  <div className="p-4 bg-[#14141c] border border-indigo-800 rounded-2xl text-xs text-slate-700 dark:text-slate-200 font-sans space-y-1">
                     <strong className="text-indigo-400 block font-bold">💡 Analisis Kimi Code IDE:</strong>
                     <div className="whitespace-pre-wrap">{ideExplanation}</div>
                   </div>
@@ -1172,8 +1172,8 @@ export const KimiAiReplica: React.FC = () => {
 
             {/* Section Mulai Deployment */}
             <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <h3 className="font-bold text-base text-white">Mulai Deployment</h3>
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 className="font-bold text-base text-slate-900 dark:text-white">Mulai Deployment</h3>
                 <button onClick={() => showToast('Menghubungkan ke OpenClaw eksisting...')} className="text-xs text-indigo-400 hover:underline flex items-center space-x-1">
                   <span>Tautkan OpenClaw yang sudah ada</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -1208,15 +1208,15 @@ export const KimiAiReplica: React.FC = () => {
                   <div
                     key={card.id}
                     onClick={() => handleDeployClaw(card.id as any)}
-                    className={`bg-[#1a1a22] border p-5 rounded-2xl space-y-4 cursor-pointer transition-all hover:-translate-y-1 shadow-lg flex flex-col justify-between ${selectedDeployOption === card.id ? 'border-indigo-500 bg-indigo-950/40 ring-2 ring-indigo-500/20' : 'border-slate-800 hover:border-slate-600'}`}
+                    className={`bg-[#1a1a22] border p-5 rounded-2xl space-y-4 cursor-pointer transition-all hover:-translate-y-1 shadow-lg flex flex-col justify-between ${selectedDeployOption === card.id ? 'border-indigo-500 bg-indigo-950/40 ring-2 ring-indigo-500/20' : 'border-slate-200 dark:border-slate-800 hover:border-slate-600'}`}
                   >
                     <div className="space-y-3">
                       <div>{card.icon}</div>
-                      <h4 className="font-bold text-sm text-white">{card.title}</h4>
-                      <p className="text-xs text-slate-400 leading-relaxed">{card.desc}</p>
+                      <h4 className="font-bold text-sm text-slate-900 dark:text-white">{card.title}</h4>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{card.desc}</p>
                     </div>
 
-                    <button className="w-full bg-[#252532] hover:bg-indigo-600 text-white font-bold text-xs py-2.5 rounded-xl border border-slate-700 transition-colors">
+                    <button className="w-full bg-[#252532] hover:bg-indigo-600 text-slate-900 dark:text-white font-bold text-xs py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 transition-colors">
                       {card.btnText}
                     </button>
                   </div>
@@ -1233,11 +1233,11 @@ export const KimiAiReplica: React.FC = () => {
             </div>
 
             {/* Interactive OpenClaw Chat Box (Visible after deployment or option selected) */}
-            <div className="bg-[#181822] border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div className="bg-[#181822] border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
                 <div className="flex items-center space-x-2">
                   <span className="text-xl">🦞</span>
-                  <h4 className="font-bold text-sm text-white">Mengobrol dengan OpenClaw Agent</h4>
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">Mengobrol dengan OpenClaw Agent</h4>
                 </div>
                 <span className="text-[10px] font-mono text-rose-400 bg-rose-950 border border-rose-800 px-2.5 py-0.5 rounded-full">
                   K2.6 Thinking Active
@@ -1247,7 +1247,7 @@ export const KimiAiReplica: React.FC = () => {
               <div className="space-y-3 max-h-56 overflow-y-auto p-1">
                 {clawMessages.map((cMsg, cidx) => (
                   <div key={cidx} className={`flex ${cMsg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-md rounded-2xl p-3 text-xs leading-relaxed ${cMsg.sender === 'user' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-[#22222d] border border-slate-700 text-slate-200 rounded-tl-none'}`}>
+                    <div className={`max-w-md rounded-2xl p-3 text-xs leading-relaxed ${cMsg.sender === 'user' ? 'bg-indigo-600 text-slate-900 dark:text-white rounded-tr-none' : 'bg-[#22222d] border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-tl-none'}`}>
                       <div className="font-bold text-[10px] text-indigo-300 mb-1">
                         {cMsg.sender === 'user' ? 'Maxy Student' : '🦞 OpenClaw'}
                       </div>
@@ -1257,19 +1257,19 @@ export const KimiAiReplica: React.FC = () => {
                 ))}
               </div>
 
-              <div className="flex items-center space-x-2 pt-2 border-t border-slate-800">
+              <div className="flex items-center space-x-2 pt-2 border-t border-slate-200 dark:border-slate-800">
                 <input
                   type="text"
                   value={clawChatInput}
                   onChange={(e) => setClawChatInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendClawChat()}
                   placeholder="Kirim pesan ke OpenClaw..."
-                  className="flex-1 bg-[#121218] border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"
+                  className="flex-1 bg-[#121218] border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500"
                 />
                 <button
                   onClick={handleSendClawChat}
                   disabled={isLoading}
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow"
+                  className="bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white px-4 py-2 rounded-xl text-xs font-bold shadow"
                 >
                   <Send className="w-3.5 h-3.5" />
                 </button>

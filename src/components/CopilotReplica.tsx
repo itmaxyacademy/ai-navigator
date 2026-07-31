@@ -377,12 +377,12 @@ export const CopilotReplica: React.FC = () => {
   };
 
   return (
-    <div className="relative rounded-2xl border border-[#1e2638] bg-[#0b0f19] text-slate-100 overflow-hidden shadow-2xl font-sans">
+    <div className="relative rounded-2xl border border-[#1e2638] bg-[#0b0f19] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl font-sans">
       {/* Top Header Bar for Simulator Controls & Device Switcher */}
       <div className="bg-[#0e1320] border-b border-[#1d2538] px-4 py-2.5 flex items-center justify-between text-xs">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-bold text-white tracking-wide flex items-center gap-1.5">
+          <span className="font-bold text-slate-900 dark:text-white tracking-wide flex items-center gap-1.5">
             <Bot className="w-4 h-4 text-cyan-400" />
             Microsoft Copilot Replica
           </span>
@@ -400,8 +400,8 @@ export const CopilotReplica: React.FC = () => {
             }}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition-all ${
               viewMode === 'desktop'
-                ? 'bg-cyan-600 text-white shadow'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-cyan-600 text-slate-900 dark:text-white shadow'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Laptop className="w-3.5 h-3.5" />
@@ -414,8 +414,8 @@ export const CopilotReplica: React.FC = () => {
             }}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition-all ${
               viewMode === 'mobile'
-                ? 'bg-cyan-600 text-white shadow'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-cyan-600 text-slate-900 dark:text-white shadow'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -435,12 +435,12 @@ export const CopilotReplica: React.FC = () => {
             <div className="space-y-4">
               {/* Header Title with Sidebar Toggle */}
               <div className="flex items-center justify-between px-2 pt-1">
-                <span className="font-bold text-lg text-white tracking-tight flex items-center gap-2">
+                <span className="font-bold text-lg text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                   Copilot
                 </span>
                 <button
                   onClick={() => setIsSidebarOpen(false)}
-                  className="p-1.5 hover:bg-[#151c2e] text-slate-400 hover:text-white rounded-lg transition-colors"
+                  className="p-1.5 hover:bg-[#151c2e] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors"
                   title="Toggle Sidebar"
                 >
                   <PanelLeft className="w-4 h-4" />
@@ -454,26 +454,26 @@ export const CopilotReplica: React.FC = () => {
                     handleNewChat();
                     handleOpenModal('new-chat');
                   }}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-200 hover:bg-[#131a2b] transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#131a2b] transition-colors text-left"
                 >
-                  <Plus className="w-4 h-4 text-slate-300" />
+                  <Plus className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                   <span>New chat</span>
                 </button>
 
                 <button
                   onClick={() => handleOpenModal('library')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <Bookmark className="w-4 h-4 text-slate-400" />
+                  <Bookmark className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Library</span>
                 </button>
 
                 <button
                   onClick={() => handleOpenModal('tasks-preview')}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
                   <div className="flex items-center gap-3">
-                    <CheckSquare className="w-4 h-4 text-slate-400" />
+                    <CheckSquare className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Tasks</span>
                   </div>
                   <span className="px-1.5 py-0.5 text-[9px] font-bold bg-[#1d273e] text-cyan-300 rounded border border-[#2b3a5c]">
@@ -483,13 +483,13 @@ export const CopilotReplica: React.FC = () => {
 
                 <button
                   onClick={() => handleOpenModal('projects')}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
                   <div className="flex items-center gap-3">
-                    <Folder className="w-4 h-4 text-slate-400" />
+                    <Folder className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                     <span>Projects</span>
                   </div>
-                  <Plus className="w-3.5 h-3.5 text-slate-400 hover:text-white" />
+                  <Plus className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white" />
                 </button>
               </div>
 
@@ -499,25 +499,25 @@ export const CopilotReplica: React.FC = () => {
               <div className="space-y-1 text-xs font-medium">
                 <button
                   onClick={() => handleOpenModal('discover')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <Compass className="w-4 h-4 text-slate-400" />
+                  <Compass className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Discover</span>
                 </button>
 
                 <button
                   onClick={() => handleOpenModal('imagine')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <ImageIcon className="w-4 h-4 text-slate-400" />
+                  <ImageIcon className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Imagine</span>
                 </button>
 
                 <button
                   onClick={() => handleOpenModal('experiments')}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b] hover:text-white transition-colors text-left"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] hover:text-slate-900 dark:text-white transition-colors text-left"
                 >
-                  <LayoutGrid className="w-4 h-4 text-slate-400" />
+                  <LayoutGrid className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span>Experiments</span>
                 </button>
               </div>
@@ -526,8 +526,8 @@ export const CopilotReplica: React.FC = () => {
 
               {/* Fictional Recents Item (Matching Screenshot 1) */}
               <div className="space-y-1 text-xs">
-                <div className="px-3 py-2 rounded-xl text-slate-300 hover:bg-[#131a2b] flex items-center justify-between group cursor-pointer transition-colors">
-                  <span className="truncate text-slate-300 text-[11px] font-normal">
+                <div className="px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b] flex items-center justify-between group cursor-pointer transition-colors">
+                  <span className="truncate text-slate-600 dark:text-slate-300 text-[11px] font-normal">
                     Negative Keywords Report for Pro...
                   </span>
                   <MoreVertical className="w-3.5 h-3.5 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
@@ -542,18 +542,18 @@ export const CopilotReplica: React.FC = () => {
                   onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
                   className="flex items-center gap-2.5 min-w-0 text-left"
                 >
-                  <div className="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-white font-bold text-xs shrink-0">
+                  <div className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white font-bold text-xs shrink-0">
                     A
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-white truncate">{userProfile.name}</p>
-                    <p className="text-[10px] text-slate-400 truncate">{userProfile.plan}</p>
+                    <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">{userProfile.name}</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{userProfile.plan}</p>
                   </div>
                 </button>
 
                 <button
                   onClick={() => handleOpenModal('account-settings')}
-                  className="px-2.5 py-1 bg-transparent border border-slate-700 hover:border-slate-500 text-slate-200 text-[10px] font-semibold rounded-lg transition-colors shrink-0"
+                  className="px-2.5 py-1 bg-transparent border border-slate-300 dark:border-slate-700 hover:border-slate-500 text-slate-700 dark:text-slate-200 text-[10px] font-semibold rounded-lg transition-colors shrink-0"
                 >
                   Upgrade
                 </button>
@@ -563,8 +563,8 @@ export const CopilotReplica: React.FC = () => {
               {isAccountMenuOpen && (
                 <div className="absolute bottom-14 left-0 w-64 bg-[#0f1422] border border-[#232d45] rounded-2xl p-3 shadow-2xl z-50 text-xs space-y-2 animate-in fade-in slide-in-from-bottom-2 duration-150">
                   <div className="space-y-0.5 px-1 py-1">
-                    <p className="font-semibold text-white text-xs">{userProfile.name}</p>
-                    <p className="text-[10px] text-slate-400 truncate">{userProfile.email}</p>
+                    <p className="font-semibold text-slate-900 dark:text-white text-xs">{userProfile.name}</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{userProfile.email}</p>
                   </div>
 
                   <div className="border-b border-[#1a2336]" />
@@ -575,7 +575,7 @@ export const CopilotReplica: React.FC = () => {
                         setIsAccountMenuOpen(false);
                         setIsSettingsModalOpen(true);
                       }}
-                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-200 hover:bg-[#1a2336] transition-colors"
+                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-[#1a2336] transition-colors"
                     >
                       Settings
                     </button>
@@ -584,7 +584,7 @@ export const CopilotReplica: React.FC = () => {
                         setIsAccountMenuOpen(false);
                         handleOpenModal('account-settings');
                       }}
-                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-200 hover:bg-[#1a2336] transition-colors"
+                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-[#1a2336] transition-colors"
                     >
                       Memory
                     </button>
@@ -593,7 +593,7 @@ export const CopilotReplica: React.FC = () => {
                         setIsAccountMenuOpen(false);
                         handleOpenModal('account-settings');
                       }}
-                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-200 hover:bg-[#1a2336] transition-colors"
+                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-[#1a2336] transition-colors"
                     >
                       Reminders
                     </button>
@@ -602,7 +602,7 @@ export const CopilotReplica: React.FC = () => {
                         setIsAccountMenuOpen(false);
                         alert('Terima kasih atas masukan Anda!');
                       }}
-                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-200 hover:bg-[#1a2336] transition-colors"
+                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-[#1a2336] transition-colors"
                     >
                       Give feedback
                     </button>
@@ -613,13 +613,13 @@ export const CopilotReplica: React.FC = () => {
                   <div className="space-y-0.5">
                     <button
                       onClick={() => alert('Munduh aplikasi seluler Microsoft Copilot.')}
-                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-300 hover:bg-[#1a2336] transition-colors"
+                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-[#1a2336] transition-colors"
                     >
                       Download mobile app
                     </button>
                     <button
                       onClick={() => alert('Mengunduh aplikasi Mac Microsoft Copilot.')}
-                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-300 hover:bg-[#1a2336] transition-colors"
+                      className="w-full text-left px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-[#1a2336] transition-colors"
                     >
                       Download Mac app
                     </button>
@@ -627,8 +627,8 @@ export const CopilotReplica: React.FC = () => {
 
                   {/* Banner Card */}
                   <div className="p-2.5 bg-[#172036] rounded-xl border border-[#2b3859] space-y-1">
-                    <p className="font-bold text-white text-[11px]">Get the best of Copilot</p>
-                    <p className="text-[10px] text-slate-300 leading-tight">
+                    <p className="font-bold text-slate-900 dark:text-white text-[11px]">Get the best of Copilot</p>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-300 leading-tight">
                       Higher limits, cloud storage, and Microsoft apps with Copilot built in
                     </p>
                   </div>
@@ -638,12 +638,12 @@ export const CopilotReplica: React.FC = () => {
                       setIsAccountMenuOpen(false);
                       alert('Sesi keluar berhasil diformat.');
                     }}
-                    className="w-full py-2 bg-[#1b2338] hover:bg-[#232d47] text-slate-200 font-semibold text-center rounded-xl transition-colors"
+                    className="w-full py-2 bg-[#1b2338] hover:bg-[#232d47] text-slate-700 dark:text-slate-200 font-semibold text-center rounded-xl transition-colors"
                   >
                     Sign out
                   </button>
 
-                  <div className="flex items-center justify-center gap-3 text-[10px] text-slate-400 pt-1">
+                  <div className="flex items-center justify-center gap-3 text-[10px] text-slate-500 dark:text-slate-400 pt-1">
                     <button className="hover:underline">Privacy</button>
                     <span>•</span>
                     <button className="hover:underline">Terms</button>
@@ -660,7 +660,7 @@ export const CopilotReplica: React.FC = () => {
         {viewMode === 'desktop' && !isSidebarOpen && (
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className="absolute top-3 left-3 z-20 p-2 bg-[#0d1322] border border-[#1e273e] hover:bg-[#161f36] text-slate-300 rounded-xl shadow-lg transition-colors"
+            className="absolute top-3 left-3 z-20 p-2 bg-[#0d1322] border border-[#1e273e] hover:bg-[#161f36] text-slate-600 dark:text-slate-300 rounded-xl shadow-lg transition-colors"
             title="Open Sidebar"
           >
             <PanelLeft className="w-4 h-4" />
@@ -679,7 +679,7 @@ export const CopilotReplica: React.FC = () => {
               {(viewMode === 'mobile' || viewMode === 'desktop') && (
                 <button
                   onClick={() => setIsMobileDrawerOpen(true)}
-                  className={`${viewMode === 'mobile' ? 'block' : 'lg:hidden block'} p-2 hover:bg-[#131b2e] rounded-xl text-slate-300 transition-colors`}
+                  className={`${viewMode === 'mobile' ? 'block' : 'lg:hidden block'} p-2 hover:bg-[#131b2e] rounded-xl text-slate-600 dark:text-slate-300 transition-colors`}
                   title="Open Navigation"
                 >
                   <PanelLeft className="w-4 h-4" />
@@ -696,7 +696,7 @@ export const CopilotReplica: React.FC = () => {
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
                 isTemporaryChat
                   ? 'bg-cyan-950/80 border-cyan-500/60 text-cyan-200'
-                  : 'bg-[#111726] border-[#1f2a42] text-slate-300 hover:bg-[#182136]'
+                  : 'bg-[#111726] border-[#1f2a42] text-slate-600 dark:text-slate-300 hover:bg-[#182136]'
               }`}
             >
               <div className="w-3.5 h-3.5 rounded-full border border-dashed border-cyan-400 flex items-center justify-center text-[8px]">
@@ -713,7 +713,7 @@ export const CopilotReplica: React.FC = () => {
             {messages.length === 0 ? (
               <div className="w-full space-y-6 text-center animate-in fade-in duration-300">
                 {/* Greeting Header */}
-                <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-snug">
+                <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight leading-snug">
                   Nice to see you, Maxy Academy. What's new?
                 </h1>
 
@@ -732,7 +732,7 @@ export const CopilotReplica: React.FC = () => {
                       }}
                       placeholder="Message Copilot"
                       rows={2}
-                      className="w-full bg-transparent border-none focus:outline-none text-sm text-slate-100 placeholder-slate-400 resize-none"
+                      className="w-full bg-transparent border-none focus:outline-none text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 resize-none"
                     />
 
                     {/* Copilot Robot Head Avatar (Green Circle Icon - Screenshot 1) */}
@@ -747,7 +747,7 @@ export const CopilotReplica: React.FC = () => {
                       {/* Plus Button (+) */}
                       <button
                         onClick={() => setIsPlusMenuOpen(!isPlusMenuOpen)}
-                        className="p-1.5 hover:bg-[#1e2a45] rounded-xl text-slate-300 hover:text-white transition-colors border border-[#233152]"
+                        className="p-1.5 hover:bg-[#1e2a45] rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors border border-[#233152]"
                         title="Add media or research tools"
                       >
                         <Plus className="w-4 h-4" />
@@ -756,17 +756,17 @@ export const CopilotReplica: React.FC = () => {
                       {/* Model Selector Dropdown Button */}
                       <button
                         onClick={() => setIsModelMenuOpen(!isModelMenuOpen)}
-                        className="flex items-center gap-1.5 px-3 py-1 bg-[#192238] hover:bg-[#212e4c] rounded-xl text-slate-200 text-xs font-medium border border-[#273659] transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1 bg-[#192238] hover:bg-[#212e4c] rounded-xl text-slate-700 dark:text-slate-200 text-xs font-medium border border-[#273659] transition-colors"
                       >
                         <span>{selectedModel.name}</span>
-                        <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                        <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                       </button>
 
                       {/* Send Button if text entered */}
                       {inputPrompt.trim() && (
                         <button
                           onClick={() => handleSendPrompt()}
-                          className="p-1.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl transition-all shadow"
+                          className="p-1.5 bg-cyan-600 hover:bg-cyan-500 text-slate-900 dark:text-white rounded-xl transition-all shadow"
                         >
                           <Send className="w-3.5 h-3.5" />
                         </button>
@@ -780,9 +780,9 @@ export const CopilotReplica: React.FC = () => {
                               setIsPlusMenuOpen(false);
                               handleOpenModal('plus-add-files');
                             }}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-200 transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
                           >
-                            <Paperclip className="w-4 h-4 text-slate-300" />
+                            <Paperclip className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                             <span>Add images or files</span>
                           </button>
 
@@ -791,9 +791,9 @@ export const CopilotReplica: React.FC = () => {
                               setIsPlusMenuOpen(false);
                               handleOpenModal('imagine');
                             }}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-200 transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
                           >
-                            <ImageIcon className="w-4 h-4 text-slate-300" />
+                            <ImageIcon className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                             <span>Generate image</span>
                           </button>
 
@@ -802,10 +802,10 @@ export const CopilotReplica: React.FC = () => {
                               setIsPlusMenuOpen(false);
                               handleOpenModal('plus-deep-research');
                             }}
-                            className="w-full flex items-center justify-between px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-200 transition-colors text-left"
+                            className="w-full flex items-center justify-between px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
                           >
                             <div className="flex items-center gap-2.5">
-                              <Globe className="w-4 h-4 text-slate-300" />
+                              <Globe className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                               <span>Start deep research</span>
                             </div>
                             <span className="px-1.5 py-0.5 text-[9px] bg-[#1a2642] text-cyan-300 rounded border border-[#2b3f6e]">
@@ -818,10 +818,10 @@ export const CopilotReplica: React.FC = () => {
                               setIsPlusMenuOpen(false);
                               handleOpenModal('plus-create-podcast');
                             }}
-                            className="w-full flex items-center justify-between px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-200 transition-colors text-left"
+                            className="w-full flex items-center justify-between px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
                           >
                             <div className="flex items-center gap-2.5">
-                              <Headphones className="w-4 h-4 text-slate-300" />
+                              <Headphones className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                               <span>Create a podcast</span>
                             </div>
                             <span className="px-1.5 py-0.5 text-[9px] bg-[#1a2642] text-cyan-300 rounded border border-[#2b3f6e]">
@@ -834,9 +834,9 @@ export const CopilotReplica: React.FC = () => {
                               setIsPlusMenuOpen(false);
                               handleOpenModal('plus-take-quiz');
                             }}
-                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-200 transition-colors text-left"
+                            className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
                           >
-                            <BookOpen className="w-4 h-4 text-slate-300" />
+                            <BookOpen className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                             <span>Take a quiz</span>
                           </button>
 
@@ -847,13 +847,13 @@ export const CopilotReplica: React.FC = () => {
                               setIsPlusMenuOpen(false);
                               handleOpenModal('plus-use-connectors');
                             }}
-                            className="w-full flex items-center justify-between px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-200 transition-colors text-left"
+                            className="w-full flex items-center justify-between px-3 py-2 hover:bg-[#1a2338] rounded-xl text-slate-700 dark:text-slate-200 transition-colors text-left"
                           >
                             <div className="flex items-center gap-2.5">
-                              <Sliders className="w-4 h-4 text-slate-300" />
+                              <Sliders className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                               <span>Use connectors</span>
                             </div>
-                            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                            <ChevronRight className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                           </button>
                         </div>
                       )}
@@ -874,11 +874,11 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full text-left p-2.5 hover:bg-[#1a2338] rounded-xl transition-colors space-y-0.5"
                           >
-                            <div className="flex items-center gap-2 font-bold text-white">
+                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
                               <Sparkles className="w-4 h-4 text-cyan-400" />
                               <span>Smart</span>
                             </div>
-                            <p className="text-[10px] text-slate-400 pl-6">
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400 pl-6">
                               Thinks deeply or quickly based on the task
                             </p>
                           </button>
@@ -896,11 +896,11 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full text-left p-2.5 hover:bg-[#1a2338] rounded-xl transition-colors space-y-0.5"
                           >
-                            <div className="flex items-center gap-2 font-bold text-white">
+                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
                               <Brain className="w-4 h-4 text-purple-400" />
                               <span>Think deeper</span>
                             </div>
-                            <p className="text-[10px] text-slate-400 pl-6">
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400 pl-6">
                               Better for more complex topics
                             </p>
                           </button>
@@ -918,11 +918,11 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full text-left p-2.5 hover:bg-[#1a2338] rounded-xl transition-colors space-y-0.5"
                           >
-                            <div className="flex items-center gap-2 font-bold text-white">
+                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
                               <BookOpen className="w-4 h-4 text-emerald-400" />
                               <span>Study and learn</span>
                             </div>
-                            <p className="text-[10px] text-slate-400 pl-6">
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400 pl-6">
                               Quizzes, guided learning, and more
                             </p>
                           </button>
@@ -940,11 +940,11 @@ export const CopilotReplica: React.FC = () => {
                             }}
                             className="w-full text-left p-2.5 hover:bg-[#1a2338] rounded-xl transition-colors space-y-0.5"
                           >
-                            <div className="flex items-center gap-2 font-bold text-white">
+                            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
                               <Search className="w-4 h-4 text-amber-400" />
                               <span>Search</span>
                             </div>
-                            <p className="text-[10px] text-slate-400 pl-6">
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400 pl-6">
                               Answers with enhanced references
                             </p>
                           </button>
@@ -955,7 +955,7 @@ export const CopilotReplica: React.FC = () => {
                     {/* Copilot Voice Mode Trigger Icon (Waveform - Screenshot 1) */}
                     <button
                       onClick={() => handleOpenModal('copilot-voice')}
-                      className="p-1.5 hover:bg-[#1e2a45] text-slate-300 hover:text-cyan-300 rounded-xl transition-colors"
+                      className="p-1.5 hover:bg-[#1e2a45] text-slate-600 dark:text-slate-300 hover:text-cyan-300 rounded-xl transition-colors"
                       title="Copilot Voice Mode"
                     >
                       <Volume2 className="w-4 h-4" />
@@ -978,7 +978,7 @@ export const CopilotReplica: React.FC = () => {
                     <button
                       key={idx}
                       onClick={() => handleSendPrompt(chip)}
-                      className="px-3.5 py-2 bg-[#121826] hover:bg-[#1a2338] border border-[#212c45] text-slate-300 rounded-xl transition-all text-xs font-normal shadow-sm hover:text-white"
+                      className="px-3.5 py-2 bg-[#121826] hover:bg-[#1a2338] border border-[#212c45] text-slate-600 dark:text-slate-300 rounded-xl transition-all text-xs font-normal shadow-sm hover:text-slate-900 dark:text-white"
                     >
                       {chip}
                     </button>
@@ -995,7 +995,7 @@ export const CopilotReplica: React.FC = () => {
                       msg.sender === 'user' ? 'items-end' : 'items-start'
                     } space-y-1 animate-in fade-in duration-200`}
                   >
-                    <div className="flex items-center gap-2 text-[10px] text-slate-400 px-1">
+                    <div className="flex items-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 px-1">
                       <span>{msg.sender === 'user' ? userProfile.name : 'Microsoft Copilot'}</span>
                       {msg.modelUsed && <span className="text-cyan-400">({msg.modelUsed})</span>}
                       <span>• {msg.timestamp}</span>
@@ -1004,18 +1004,18 @@ export const CopilotReplica: React.FC = () => {
                     <div
                       className={`p-4 rounded-2xl max-w-[88%] text-xs leading-relaxed ${
                         msg.sender === 'user'
-                          ? 'bg-cyan-600 text-white rounded-br-none'
-                          : 'bg-[#121826] border border-[#212c45] text-slate-200 rounded-bl-none space-y-2'
+                          ? 'bg-cyan-600 text-slate-900 dark:text-white rounded-br-none'
+                          : 'bg-[#121826] border border-[#212c45] text-slate-700 dark:text-slate-200 rounded-bl-none space-y-2'
                       }`}
                     >
                       <div className="whitespace-pre-wrap">{msg.text}</div>
 
                       {/* Bot Response Interactive Actions */}
                       {msg.sender === 'copilot' && (
-                        <div className="flex items-center gap-2 pt-2 border-t border-[#1b253b] text-slate-400">
+                        <div className="flex items-center gap-2 pt-2 border-t border-[#1b253b] text-slate-500 dark:text-slate-400">
                           <button
                             onClick={() => handleCopyMessage(idx, msg.text)}
-                            className="p-1 hover:text-white rounded transition-colors"
+                            className="p-1 hover:text-slate-900 dark:text-white rounded transition-colors"
                             title="Copy message"
                           >
                             {copiedIndex === idx ? (
@@ -1024,15 +1024,15 @@ export const CopilotReplica: React.FC = () => {
                               <Copy className="w-3.5 h-3.5" />
                             )}
                           </button>
-                          <button className="p-1 hover:text-white rounded transition-colors">
+                          <button className="p-1 hover:text-slate-900 dark:text-white rounded transition-colors">
                             <ThumbsUp className="w-3.5 h-3.5" />
                           </button>
-                          <button className="p-1 hover:text-white rounded transition-colors">
+                          <button className="p-1 hover:text-slate-900 dark:text-white rounded transition-colors">
                             <ThumbsDown className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => handleSendPrompt('Silakan persingkat poin di atas.')}
-                            className="p-1 hover:text-white rounded transition-colors"
+                            className="p-1 hover:text-slate-900 dark:text-white rounded transition-colors"
                             title="Regenerate"
                           >
                             <RotateCcw className="w-3.5 h-3.5" />
@@ -1044,7 +1044,7 @@ export const CopilotReplica: React.FC = () => {
                 ))}
 
                 {isTyping && (
-                  <div className="flex items-center gap-2 p-3 bg-[#121826] border border-[#212c45] rounded-2xl w-fit text-xs text-slate-400 animate-pulse">
+                  <div className="flex items-center gap-2 p-3 bg-[#121826] border border-[#212c45] rounded-2xl w-fit text-xs text-slate-500 dark:text-slate-400 animate-pulse">
                     <Bot className="w-4 h-4 text-cyan-400 animate-spin" />
                     <span>Copilot sedang berpikir...</span>
                   </div>
@@ -1054,13 +1054,13 @@ export const CopilotReplica: React.FC = () => {
           </div>
 
           {/* Footer Disclaimer */}
-          <div className="text-center text-[11px] text-slate-400 pt-2 border-t border-[#161f33]">
+          <div className="text-center text-[11px] text-slate-500 dark:text-slate-400 pt-2 border-t border-[#161f33]">
             Copilot is an AI and may make mistakes. Your{' '}
-            <button onClick={() => handleOpenModal('temporary-chat')} className="underline hover:text-slate-200">
+            <button onClick={() => handleOpenModal('temporary-chat')} className="underline hover:text-slate-700 dark:text-slate-200">
               conversation activity
             </button>
             , which includes content you share, now helps train AI.{' '}
-            <button onClick={() => handleOpenModal('temporary-chat')} className="underline hover:text-slate-200">
+            <button onClick={() => handleOpenModal('temporary-chat')} className="underline hover:text-slate-700 dark:text-slate-200">
               Opt out
             </button>
             .
@@ -1081,10 +1081,10 @@ export const CopilotReplica: React.FC = () => {
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-lg text-white">Copilot</span>
+                  <span className="font-bold text-lg text-slate-900 dark:text-white">Copilot</span>
                   <button
                     onClick={() => setIsMobileDrawerOpen(false)}
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-white"
+                    className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -1096,7 +1096,7 @@ export const CopilotReplica: React.FC = () => {
                       handleNewChat();
                       handleOpenModal('new-chat');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-200 hover:bg-[#131a2b]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-[#131a2b]"
                   >
                     <Plus className="w-4 h-4" />
                     <span>New chat</span>
@@ -1106,7 +1106,7 @@ export const CopilotReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('library');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b]"
                   >
                     <Bookmark className="w-4 h-4" />
                     <span>Library</span>
@@ -1116,7 +1116,7 @@ export const CopilotReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('tasks-preview');
                     }}
-                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b]"
+                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b]"
                   >
                     <div className="flex items-center gap-3">
                       <CheckSquare className="w-4 h-4" />
@@ -1136,7 +1136,7 @@ export const CopilotReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('discover');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b]"
                   >
                     <Compass className="w-4 h-4" />
                     <span>Discover</span>
@@ -1146,7 +1146,7 @@ export const CopilotReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('imagine');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b]"
                   >
                     <ImageIcon className="w-4 h-4" />
                     <span>Imagine</span>
@@ -1156,7 +1156,7 @@ export const CopilotReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                       handleOpenModal('experiments');
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:bg-[#131a2b]"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-[#131a2b]"
                   >
                     <LayoutGrid className="w-4 h-4" />
                     <span>Experiments</span>
@@ -1173,15 +1173,15 @@ export const CopilotReplica: React.FC = () => {
                   className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-[#131a2b]"
                 >
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center font-bold text-xs text-white">
+                    <div className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-xs text-slate-900 dark:text-white">
                       A
                     </div>
                     <div className="text-left">
-                      <p className="text-xs font-semibold text-white">{userProfile.name}</p>
-                      <p className="text-[10px] text-slate-400">{userProfile.plan}</p>
+                      <p className="text-xs font-semibold text-slate-900 dark:text-white">{userProfile.name}</p>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400">{userProfile.plan}</p>
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 border border-slate-700 text-[10px] rounded text-slate-300">
+                  <span className="px-2 py-0.5 border border-slate-300 dark:border-slate-700 text-[10px] rounded text-slate-600 dark:text-slate-300">
                     Upgrade
                   </span>
                 </button>
@@ -1198,41 +1198,41 @@ export const CopilotReplica: React.FC = () => {
         <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
           <div className="bg-[#0f1422] border border-[#232d45] rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl relative text-xs">
             <div className="flex items-center justify-between pb-2 border-b border-[#1b253b]">
-              <span className="font-bold text-white tracking-wider text-xs">SETTINGS</span>
+              <span className="font-bold text-slate-900 dark:text-white tracking-wider text-xs">SETTINGS</span>
               <button
                 onClick={() => setIsSettingsModalOpen(false)}
-                className="p-1 rounded-full hover:bg-[#1b253b] text-slate-400 hover:text-white"
+                className="p-1 rounded-full hover:bg-[#1b253b] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="space-y-0.5">
-              <p className="font-semibold text-white text-sm">{userProfile.name}</p>
-              <p className="text-[11px] text-slate-400">{userProfile.email}</p>
+              <p className="font-semibold text-slate-900 dark:text-white text-sm">{userProfile.name}</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">{userProfile.email}</p>
             </div>
 
             <div className="space-y-2.5 pt-1">
               <div className="flex items-center justify-between py-1">
-                <span className="text-slate-300">Voice language</span>
+                <span className="text-slate-600 dark:text-slate-300">Voice language</span>
                 <span className="font-mono text-[10px] text-cyan-300 bg-[#172238] px-2 py-0.5 rounded">
                   AUTO-DETECT
                 </span>
               </div>
               <div className="flex items-center justify-between py-1">
-                <span className="text-slate-300">Voice</span>
+                <span className="text-slate-600 dark:text-slate-300">Voice</span>
                 <span className="font-mono text-[10px] text-cyan-300 bg-[#172238] px-2 py-0.5 rounded">
                   WAVE
                 </span>
               </div>
               <div className="flex items-center justify-between py-1">
-                <span className="text-slate-300">Language</span>
+                <span className="text-slate-600 dark:text-slate-300">Language</span>
                 <span className="font-mono text-[10px] text-cyan-300 bg-[#172238] px-2 py-0.5 rounded">
                   EN
                 </span>
               </div>
               <div className="flex items-center justify-between py-1">
-                <span className="text-slate-300">Theme</span>
+                <span className="text-slate-600 dark:text-slate-300">Theme</span>
                 <span className="font-mono text-[10px] text-cyan-300 bg-[#172238] px-2 py-0.5 rounded">
                   NIGHT
                 </span>
@@ -1242,39 +1242,39 @@ export const CopilotReplica: React.FC = () => {
 
               <button
                 onClick={() => handleOpenModal('plus-use-connectors')}
-                className="w-full text-left py-1 text-slate-300 hover:text-white"
+                className="w-full text-left py-1 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white"
               >
                 Connectors
               </button>
               <button
                 onClick={() => handleOpenModal('account-settings')}
-                className="w-full text-left py-1 text-slate-300 hover:text-white"
+                className="w-full text-left py-1 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white"
               >
                 Memory
               </button>
               <button
                 onClick={() => handleOpenModal('account-settings')}
-                className="w-full text-left py-1 text-slate-300 hover:text-white"
+                className="w-full text-left py-1 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white"
               >
                 Reminders
               </button>
               <button
                 onClick={() => alert('Terima kasih atas masukan Anda!')}
-                className="w-full text-left py-1 text-slate-300 hover:text-white"
+                className="w-full text-left py-1 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white"
               >
                 Give feedback
               </button>
               <button
                 onClick={() => handleOpenModal('account-settings')}
-                className="w-full text-left py-1 text-slate-300 hover:text-white"
+                className="w-full text-left py-1 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white"
               >
                 About
               </button>
             </div>
 
             <div className="p-3 bg-[#172036] rounded-2xl border border-[#2b3859] space-y-1">
-              <p className="font-bold text-white">Get the best of Copilot</p>
-              <p className="text-[10px] text-slate-300 leading-normal">
+              <p className="font-bold text-slate-900 dark:text-white">Get the best of Copilot</p>
+              <p className="text-[10px] text-slate-600 dark:text-slate-300 leading-normal">
                 Higher limits, cloud storage, and Microsoft apps with Copilot built in
               </p>
             </div>
@@ -1284,12 +1284,12 @@ export const CopilotReplica: React.FC = () => {
                 setIsSettingsModalOpen(false);
                 alert('Sesi keluar berhasil.');
               }}
-              className="w-full py-2.5 bg-[#1b2338] hover:bg-[#232d47] text-white font-semibold text-center rounded-xl transition-colors"
+              className="w-full py-2.5 bg-[#1b2338] hover:bg-[#232d47] text-slate-900 dark:text-white font-semibold text-center rounded-xl transition-colors"
             >
               Sign out
             </button>
 
-            <div className="flex items-center justify-center gap-3 text-[10px] text-slate-400 pt-1">
+            <div className="flex items-center justify-center gap-3 text-[10px] text-slate-500 dark:text-slate-400 pt-1">
               <button className="hover:underline">Privacy</button>
               <span>•</span>
               <button className="hover:underline">Terms</button>
@@ -1312,31 +1312,31 @@ export const CopilotReplica: React.FC = () => {
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
                   {modalData[activeModalKey].badge}
                 </span>
-                <h3 className="text-base font-bold text-white pt-1">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white pt-1">
                   {modalData[activeModalKey].title}
                 </h3>
-                <span className="text-[10px] text-slate-400 block font-medium">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">
                   Kategori: {modalData[activeModalKey].category}
                 </span>
               </div>
 
               <button
                 onClick={() => setActiveModalKey(null)}
-                className="w-7 h-7 rounded-full bg-[#1b253d] flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+                className="w-7 h-7 rounded-full bg-[#1b253d] flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Description */}
-            <p className="text-slate-300 leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
               {modalData[activeModalKey].description}
             </p>
 
             {/* Key Features List */}
             <div className="bg-[#131b2d] p-3.5 rounded-2xl border border-[#202c48] space-y-2">
               <p className="font-bold text-cyan-300 text-[11px]">Keunggulan Utama Fitur:</p>
-              <ul className="space-y-1.5 text-slate-300">
+              <ul className="space-y-1.5 text-slate-600 dark:text-slate-300">
                 {modalData[activeModalKey].keyFeatures.map((feat, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="text-cyan-400 font-bold">•</span>
@@ -1349,7 +1349,7 @@ export const CopilotReplica: React.FC = () => {
             {/* How To Use Box */}
             <div className="bg-emerald-950/40 p-3 rounded-2xl border border-emerald-500/30 space-y-1">
               <p className="font-bold text-emerald-300 text-[11px]">Cara Menggunakan:</p>
-              <p className="text-slate-200 text-[11px] leading-relaxed">
+              <p className="text-slate-700 dark:text-slate-200 text-[11px] leading-relaxed">
                 {modalData[activeModalKey].howToUse}
               </p>
             </div>
@@ -1357,7 +1357,7 @@ export const CopilotReplica: React.FC = () => {
             {/* Close Button */}
             <button
               onClick={() => setActiveModalKey(null)}
-              className="w-full py-2.5 bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white font-bold rounded-xl transition-all shadow-md text-xs"
+              className="w-full py-2.5 bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-slate-900 dark:text-white font-bold rounded-xl transition-all shadow-md text-xs"
             >
               Saya Mengerti (Tutup Panduan)
             </button>

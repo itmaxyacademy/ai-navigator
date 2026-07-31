@@ -314,7 +314,7 @@ export const OpenArtReplica: React.FC = () => {
               setIsSidebarCollapsed(!isSidebarCollapsed);
             }
           }}
-          className="p-1.5 hover:bg-[#1f212a] rounded-lg text-slate-300 transition-colors"
+          className="p-1.5 hover:bg-[#1f212a] rounded-lg text-slate-600 dark:text-slate-300 transition-colors"
           title="Toggle Navigation"
         >
           <Menu className="w-5 h-5" />
@@ -322,44 +322,44 @@ export const OpenArtReplica: React.FC = () => {
 
         <div className="flex items-center gap-1.5 cursor-pointer" onClick={() => setActiveTab('home')}>
           {/* OpenArt Infinity Logo */}
-          <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-[#10b981] via-[#06b6d4] to-[#a855f7] flex items-center justify-center text-white font-extrabold shadow-sm">
+          <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-[#10b981] via-[#06b6d4] to-[#a855f7] flex items-center justify-center text-slate-900 dark:text-white font-extrabold shadow-sm">
             <span className="text-sm leading-none font-bold">∞</span>
           </div>
-          <span className="font-extrabold text-sm text-white tracking-wide">OpenArt</span>
-          <span className="text-[10px] bg-[#222530] text-slate-300 font-semibold px-1.5 py-0.5 rounded border border-[#333745]">
+          <span className="font-extrabold text-sm text-slate-900 dark:text-white tracking-wide">OpenArt</span>
+          <span className="text-[10px] bg-[#222530] text-slate-600 dark:text-slate-300 font-semibold px-1.5 py-0.5 rounded border border-[#333745]">
             Free
           </span>
         </div>
 
         {/* Workspace Dropdown */}
         <div className="hidden md:flex items-center gap-2 pl-3 border-l border-[#22242d]">
-          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#181a20] hover:bg-[#20232d] border border-[#2a2d39] rounded-lg cursor-pointer transition-colors text-slate-200">
-            <div className="w-4 h-4 rounded-full bg-purple-600 flex items-center justify-center text-[9px] font-bold text-white">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#181a20] hover:bg-[#20232d] border border-[#2a2d39] rounded-lg cursor-pointer transition-colors text-slate-700 dark:text-slate-200">
+            <div className="w-4 h-4 rounded-full bg-purple-600 flex items-center justify-center text-[9px] font-bold text-slate-900 dark:text-white">
               M
             </div>
             <span className="font-medium truncate max-w-[140px]">Maxy Academy's wor...</span>
-            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+            <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
           </div>
 
           <span className="text-slate-500">•</span>
-          <span className="text-slate-300 font-medium capitalize">Create • {activeTab}</span>
+          <span className="text-slate-600 dark:text-slate-300 font-medium capitalize">Create • {activeTab}</span>
         </div>
       </div>
 
       {/* Right Navbar Actions */}
       <div className="flex items-center gap-2">
-        <button className="hidden lg:flex items-center gap-1 text-slate-400 hover:text-white px-2 py-1 rounded-lg hover:bg-[#1c1e26]">
+        <button className="hidden lg:flex items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white px-2 py-1 rounded-lg hover:bg-[#1c1e26]">
           <span>Previous version</span>
           <ExternalLink className="w-3 h-3" />
         </button>
 
-        <button className="hidden sm:flex items-center gap-1 text-slate-400 hover:text-white px-2 py-1 rounded-lg hover:bg-[#1c1e26]">
+        <button className="hidden sm:flex items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white px-2 py-1 rounded-lg hover:bg-[#1c1e26]">
           <HelpCircle className="w-3.5 h-3.5" />
           <span>Help</span>
           <ChevronDown className="w-3 h-3" />
         </button>
 
-        <button className="relative p-1.5 text-slate-300 hover:text-white hover:bg-[#1c1e26] rounded-lg">
+        <button className="relative p-1.5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#1c1e26] rounded-lg">
           <Gift className="w-4 h-4" />
           <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
         </button>
@@ -380,7 +380,7 @@ export const OpenArtReplica: React.FC = () => {
             alt="Maxy Academy"
             className="w-7 h-7 rounded-full object-cover border border-purple-500/50"
           />
-          <ChevronDown className="w-3 h-3 text-slate-400" />
+          <ChevronDown className="w-3 h-3 text-slate-500 dark:text-slate-400" />
         </div>
       </div>
     </div>
@@ -394,14 +394,14 @@ export const OpenArtReplica: React.FC = () => {
       <div className="w-56 bg-[#121318] border-r border-[#22242d] flex flex-col justify-between shrink-0 select-none text-xs p-2.5 space-y-4 overflow-y-auto">
         <div className="space-y-4">
           {/* Workspace Box */}
-          <div className="flex items-center justify-between p-2 rounded-xl bg-[#1a1c23] border border-[#2b2e3a] text-slate-200 hover:border-purple-500/50 transition-colors cursor-pointer">
+          <div className="flex items-center justify-between p-2 rounded-xl bg-[#1a1c23] border border-[#2b2e3a] text-slate-700 dark:text-slate-200 hover:border-purple-500/50 transition-colors cursor-pointer">
             <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-md bg-cyan-600 flex items-center justify-center font-bold text-white text-[10px]">
+              <div className="w-5 h-5 rounded-md bg-cyan-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-[10px]">
                 P
               </div>
               <span className="font-semibold text-xs">Personal Project</span>
             </div>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-500 dark:text-slate-400" />
           </div>
 
           {/* Home Link */}
@@ -409,11 +409,11 @@ export const OpenArtReplica: React.FC = () => {
             onClick={() => setActiveTab('home')}
             className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
               activeTab === 'home'
-                ? 'bg-gradient-to-r from-pink-600/30 to-purple-600/30 text-white border border-pink-500/50'
-                : 'text-slate-400 hover:text-white hover:bg-[#1a1c23]'
+                ? 'bg-gradient-to-r from-pink-600/30 to-purple-600/30 text-slate-900 dark:text-white border border-pink-500/50'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23]'
             }`}
           >
-            <Home className="w-4 h-4 text-slate-300" />
+            <Home className="w-4 h-4 text-slate-600 dark:text-slate-300" />
             <span>Home</span>
           </button>
 
@@ -428,8 +428,8 @@ export const OpenArtReplica: React.FC = () => {
               onClick={() => setActiveTab('director')}
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
                 activeTab === 'director'
-                  ? 'bg-gradient-to-r from-pink-600/30 to-purple-600/30 text-white border border-pink-500/50'
-                  : 'text-slate-300 hover:text-white hover:bg-[#1a1c23]'
+                  ? 'bg-gradient-to-r from-pink-600/30 to-purple-600/30 text-slate-900 dark:text-white border border-pink-500/50'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23]'
               }`}
             >
               <Film className="w-4 h-4 text-pink-400" />
@@ -443,8 +443,8 @@ export const OpenArtReplica: React.FC = () => {
                 onClick={() => setActiveTab('video')}
                 className={`flex items-center gap-2 p-2 rounded-xl border text-xs font-medium transition-all ${
                   activeTab === 'video'
-                    ? 'bg-purple-900/40 border-pink-500/80 text-white shadow-sm'
-                    : 'bg-[#181a20] border-[#252834] text-slate-300 hover:bg-[#20232c]'
+                    ? 'bg-purple-900/40 border-pink-500/80 text-slate-900 dark:text-white shadow-sm'
+                    : 'bg-[#181a20] border-[#252834] text-slate-600 dark:text-slate-300 hover:bg-[#20232c]'
                 }`}
               >
                 <Video className="w-3.5 h-3.5 text-cyan-400" />
@@ -456,8 +456,8 @@ export const OpenArtReplica: React.FC = () => {
                 onClick={() => setActiveTab('image')}
                 className={`flex items-center gap-2 p-2 rounded-xl border text-xs font-medium transition-all ${
                   activeTab === 'image'
-                    ? 'bg-purple-900/40 border-pink-500/80 text-white shadow-sm'
-                    : 'bg-[#181a20] border-[#252834] text-slate-300 hover:bg-[#20232c]'
+                    ? 'bg-purple-900/40 border-pink-500/80 text-slate-900 dark:text-white shadow-sm'
+                    : 'bg-[#181a20] border-[#252834] text-slate-600 dark:text-slate-300 hover:bg-[#20232c]'
                 }`}
               >
                 <ImageIcon className="w-3.5 h-3.5 text-pink-400" />
@@ -469,8 +469,8 @@ export const OpenArtReplica: React.FC = () => {
                 onClick={() => setActiveTab('world')}
                 className={`flex items-center gap-2 p-2 rounded-xl border text-xs font-medium transition-all ${
                   activeTab === 'world'
-                    ? 'bg-purple-900/40 border-pink-500/80 text-white shadow-sm'
-                    : 'bg-[#181a20] border-[#252834] text-slate-300 hover:bg-[#20232c]'
+                    ? 'bg-purple-900/40 border-pink-500/80 text-slate-900 dark:text-white shadow-sm'
+                    : 'bg-[#181a20] border-[#252834] text-slate-600 dark:text-slate-300 hover:bg-[#20232c]'
                 }`}
               >
                 <Globe className="w-3.5 h-3.5 text-amber-400" />
@@ -482,8 +482,8 @@ export const OpenArtReplica: React.FC = () => {
                 onClick={() => setActiveTab('character')}
                 className={`flex items-center gap-2 p-2 rounded-xl border text-xs font-medium transition-all ${
                   activeTab === 'character'
-                    ? 'bg-purple-900/40 border-pink-500/80 text-white shadow-sm'
-                    : 'bg-[#181a20] border-[#252834] text-slate-300 hover:bg-[#20232c]'
+                    ? 'bg-purple-900/40 border-pink-500/80 text-slate-900 dark:text-white shadow-sm'
+                    : 'bg-[#181a20] border-[#252834] text-slate-600 dark:text-slate-300 hover:bg-[#20232c]'
                 }`}
               >
                 <User className="w-3.5 h-3.5 text-emerald-400" />
@@ -495,8 +495,8 @@ export const OpenArtReplica: React.FC = () => {
                 onClick={() => setActiveTab('audio')}
                 className={`flex items-center gap-2 p-2 rounded-xl border text-xs font-medium transition-all ${
                   activeTab === 'audio'
-                    ? 'bg-purple-900/40 border-pink-500/80 text-white shadow-sm'
-                    : 'bg-[#181a20] border-[#252834] text-slate-300 hover:bg-[#20232c]'
+                    ? 'bg-purple-900/40 border-pink-500/80 text-slate-900 dark:text-white shadow-sm'
+                    : 'bg-[#181a20] border-[#252834] text-slate-600 dark:text-slate-300 hover:bg-[#20232c]'
                 }`}
               >
                 <Volume2 className="w-3.5 h-3.5 text-purple-400" />
@@ -506,7 +506,7 @@ export const OpenArtReplica: React.FC = () => {
               {/* MCP */}
               <button
                 onClick={() => openInfo('mcp')}
-                className="flex items-center gap-2 p-2 rounded-xl border border-[#252834] bg-[#181a20] text-slate-300 hover:bg-[#20232c] text-xs font-medium transition-all"
+                className="flex items-center gap-2 p-2 rounded-xl border border-[#252834] bg-[#181a20] text-slate-600 dark:text-slate-300 hover:bg-[#20232c] text-xs font-medium transition-all"
               >
                 <Cpu className="w-3.5 h-3.5 text-blue-400" />
                 <span>MCP</span>
@@ -521,30 +521,30 @@ export const OpenArtReplica: React.FC = () => {
             </span>
             <button
               onClick={() => openInfo('assets-director')}
-              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#1a1c23] transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23] transition-colors"
             >
-              <Film className="w-3.5 h-3.5 text-slate-400" />
+              <Film className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               <span>Director Projects</span>
             </button>
             <button
               onClick={() => openInfo('assets-characters')}
-              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#1a1c23] transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23] transition-colors"
             >
-              <User className="w-3.5 h-3.5 text-slate-400" />
+              <User className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               <span>Characters & Worlds</span>
             </button>
             <button
               onClick={() => openInfo('assets-brandkit')}
-              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#1a1c23] transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23] transition-colors"
             >
-              <Box className="w-3.5 h-3.5 text-slate-400" />
+              <Box className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               <span>Brand Kit</span>
             </button>
             <button
               onClick={() => openInfo('assets-media')}
-              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#1a1c23] transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23] transition-colors"
             >
-              <Folder className="w-3.5 h-3.5 text-slate-400" />
+              <Folder className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               <span>Media</span>
             </button>
           </div>
@@ -556,23 +556,23 @@ export const OpenArtReplica: React.FC = () => {
             </span>
             <button
               onClick={() => openInfo('inspire-templates')}
-              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#1a1c23] transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23] transition-colors"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <span>Templates</span>
             </button>
             <button
               onClick={() => openInfo('inspire-tutorials')}
-              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#1a1c23] transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23] transition-colors"
             >
-              <Compass className="w-3.5 h-3.5 text-slate-400" />
+              <Compass className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               <span>Tutorials</span>
             </button>
             <button
               onClick={() => openInfo('inspire-blog')}
-              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#1a1c23] transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23] transition-colors"
             >
-              <MessageSquare className="w-3.5 h-3.5 text-slate-400" />
+              <MessageSquare className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
               <span>Blog</span>
             </button>
           </div>
@@ -587,14 +587,14 @@ export const OpenArtReplica: React.FC = () => {
             </div>
             <button
               onClick={() => openInfo('pinned-motionsync')}
-              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#1a1c23] transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23] transition-colors"
             >
               <Wrench className="w-3.5 h-3.5 text-cyan-400" />
               <span>Motion Sync</span>
             </button>
             <button
               onClick={() => openInfo('pinned-lipsync')}
-              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-[#1a1c23] transition-colors"
+              className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#1a1c23] transition-colors"
             >
               <Mic className="w-3.5 h-3.5 text-purple-400" />
               <span>Lip-Sync</span>
@@ -611,19 +611,19 @@ export const OpenArtReplica: React.FC = () => {
 
     return (
       <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex justify-start animate-in fade-in duration-200">
-        <div className="w-72 h-full bg-[#13151b] border-r border-[#262936] text-slate-200 p-4 space-y-5 overflow-y-auto flex flex-col justify-between">
+        <div className="w-72 h-full bg-[#13151b] border-r border-[#262936] text-slate-700 dark:text-slate-200 p-4 space-y-5 overflow-y-auto flex flex-col justify-between">
           <div className="space-y-4">
             {/* Drawer Header */}
             <div className="flex items-center justify-between border-b border-[#262936] pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#10b981] to-[#a855f7] flex items-center justify-center text-white font-extrabold text-sm">
+                <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#10b981] to-[#a855f7] flex items-center justify-center text-slate-900 dark:text-white font-extrabold text-sm">
                   ∞
                 </div>
-                <span className="font-extrabold text-base text-white">OpenArt</span>
+                <span className="font-extrabold text-base text-slate-900 dark:text-white">OpenArt</span>
               </div>
               <button
                 onClick={() => setIsMobileDrawerOpen(false)}
-                className="p-1.5 rounded-lg hover:bg-[#202430] text-slate-400 hover:text-white"
+                className="p-1.5 rounded-lg hover:bg-[#202430] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -637,22 +637,22 @@ export const OpenArtReplica: React.FC = () => {
                   alt="Maxy Academy"
                   className="w-8 h-8 rounded-full object-cover border border-purple-500"
                 />
-                <span className="font-bold text-xs text-white truncate max-w-[130px]">
+                <span className="font-bold text-xs text-slate-900 dark:text-white truncate max-w-[130px]">
                   Maxy Academy
                 </span>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-400" />
+              <ChevronRight className="w-4 h-4 text-slate-500 dark:text-slate-400" />
             </div>
 
             {/* Personal Project Row */}
             <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#1c1f2a] border border-[#2d3142]">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-md bg-cyan-600 flex items-center justify-center font-bold text-white text-xs">
+                <div className="w-6 h-6 rounded-md bg-cyan-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs">
                   P
                 </div>
-                <span className="font-semibold text-xs text-white">Personal Project</span>
+                <span className="font-semibold text-xs text-slate-900 dark:text-white">Personal Project</span>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-400" />
+              <ChevronRight className="w-4 h-4 text-slate-500 dark:text-slate-400" />
             </div>
 
             {/* Main Links */}
@@ -662,9 +662,9 @@ export const OpenArtReplica: React.FC = () => {
                   setActiveTab('home');
                   setIsMobileDrawerOpen(false);
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-[#1c1f2a] font-medium"
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#1c1f2a] font-medium"
               >
-                <Home className="w-4 h-4 text-slate-400" />
+                <Home className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 <span>Home</span>
               </button>
 
@@ -673,7 +673,7 @@ export const OpenArtReplica: React.FC = () => {
                   setActiveTab('director');
                   setIsMobileDrawerOpen(false);
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-[#1c1f2a] font-medium"
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#1c1f2a] font-medium"
               >
                 <Film className="w-4 h-4 text-pink-400" />
                 <span>Director</span>
@@ -681,7 +681,7 @@ export const OpenArtReplica: React.FC = () => {
 
               {/* Create Sub-Grid Box */}
               <div className="bg-[#181a22] border border-[#282b3a] rounded-2xl p-3 space-y-2.5">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                   Create
                 </span>
                 <div className="grid grid-cols-2 gap-2">
@@ -691,7 +691,7 @@ export const OpenArtReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                     }}
                     className={`flex items-center gap-2 p-2 rounded-xl text-xs font-semibold ${
-                      activeTab === 'video' ? 'bg-purple-900/50 text-white border border-pink-500' : 'bg-[#20232f] text-slate-200'
+                      activeTab === 'video' ? 'bg-purple-900/50 text-slate-900 dark:text-white border border-pink-500' : 'bg-[#20232f] text-slate-700 dark:text-slate-200'
                     }`}
                   >
                     <Video className="w-4 h-4 text-cyan-400" />
@@ -704,7 +704,7 @@ export const OpenArtReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                     }}
                     className={`flex flex-row items-center gap-2 p-2 rounded-xl text-xs font-semibold border ${
-                      activeTab === 'image' ? 'bg-pink-950/60 text-white border-pink-500' : 'bg-[#20232f] border-transparent text-slate-200'
+                      activeTab === 'image' ? 'bg-pink-950/60 text-slate-900 dark:text-white border-pink-500' : 'bg-[#20232f] border-transparent text-slate-700 dark:text-slate-200'
                     }`}
                   >
                     <ImageIcon className="w-4 h-4 text-pink-400" />
@@ -717,7 +717,7 @@ export const OpenArtReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                     }}
                     className={`flex items-center gap-2 p-2 rounded-xl text-xs font-semibold ${
-                      activeTab === 'world' ? 'bg-purple-900/50 text-white border border-pink-500' : 'bg-[#20232f] text-slate-200'
+                      activeTab === 'world' ? 'bg-purple-900/50 text-slate-900 dark:text-white border border-pink-500' : 'bg-[#20232f] text-slate-700 dark:text-slate-200'
                     }`}
                   >
                     <Globe className="w-4 h-4 text-amber-400" />
@@ -730,7 +730,7 @@ export const OpenArtReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                     }}
                     className={`flex items-center gap-2 p-2 rounded-xl text-xs font-semibold ${
-                      activeTab === 'character' ? 'bg-purple-900/50 text-white border border-pink-500' : 'bg-[#20232f] text-slate-200'
+                      activeTab === 'character' ? 'bg-purple-900/50 text-slate-900 dark:text-white border border-pink-500' : 'bg-[#20232f] text-slate-700 dark:text-slate-200'
                     }`}
                   >
                     <User className="w-4 h-4 text-emerald-400" />
@@ -743,7 +743,7 @@ export const OpenArtReplica: React.FC = () => {
                       setIsMobileDrawerOpen(false);
                     }}
                     className={`flex items-center gap-2 p-2 rounded-xl text-xs font-semibold ${
-                      activeTab === 'audio' ? 'bg-purple-900/50 text-white border border-pink-500' : 'bg-[#20232f] text-slate-200'
+                      activeTab === 'audio' ? 'bg-purple-900/50 text-slate-900 dark:text-white border border-pink-500' : 'bg-[#20232f] text-slate-700 dark:text-slate-200'
                     }`}
                   >
                     <Volume2 className="w-4 h-4 text-purple-400" />
@@ -755,7 +755,7 @@ export const OpenArtReplica: React.FC = () => {
                       openInfo('mcp');
                       setIsMobileDrawerOpen(false);
                     }}
-                    className="flex items-center gap-2 p-2 rounded-xl text-xs font-semibold bg-[#20232f] text-slate-200"
+                    className="flex items-center gap-2 p-2 rounded-xl text-xs font-semibold bg-[#20232f] text-slate-700 dark:text-slate-200"
                   >
                     <Cpu className="w-4 h-4 text-blue-400" />
                     <span>MCP</span>
@@ -765,7 +765,7 @@ export const OpenArtReplica: React.FC = () => {
 
               {/* ASSETS SECTION IN MOBILE DRAWER */}
               <div className="bg-[#181a22] border border-[#282b3a] rounded-2xl p-3 space-y-1.5">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                   Assets
                 </span>
                 <button
@@ -773,9 +773,9 @@ export const OpenArtReplica: React.FC = () => {
                     openInfo('assets-director');
                     setIsMobileDrawerOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#222532]"
+                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#222532]"
                 >
-                  <Film className="w-3.5 h-3.5 text-slate-400" />
+                  <Film className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>Director Projects</span>
                 </button>
                 <button
@@ -783,9 +783,9 @@ export const OpenArtReplica: React.FC = () => {
                     openInfo('assets-characters');
                     setIsMobileDrawerOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#222532]"
+                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#222532]"
                 >
-                  <User className="w-3.5 h-3.5 text-slate-400" />
+                  <User className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>Characters & Worlds</span>
                 </button>
                 <button
@@ -793,9 +793,9 @@ export const OpenArtReplica: React.FC = () => {
                     openInfo('assets-brandkit');
                     setIsMobileDrawerOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#222532]"
+                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#222532]"
                 >
-                  <Box className="w-3.5 h-3.5 text-slate-400" />
+                  <Box className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>Brand Kit</span>
                 </button>
                 <button
@@ -803,16 +803,16 @@ export const OpenArtReplica: React.FC = () => {
                     openInfo('assets-media');
                     setIsMobileDrawerOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#222532]"
+                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#222532]"
                 >
-                  <Folder className="w-3.5 h-3.5 text-slate-400" />
+                  <Folder className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>Media</span>
                 </button>
               </div>
 
               {/* INSPIRE SECTION IN MOBILE DRAWER */}
               <div className="bg-[#181a22] border border-[#282b3a] rounded-2xl p-3 space-y-1.5">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                   Inspire
                 </span>
                 <button
@@ -820,7 +820,7 @@ export const OpenArtReplica: React.FC = () => {
                     openInfo('inspire-templates');
                     setIsMobileDrawerOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#222532]"
+                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#222532]"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>Templates</span>
@@ -830,9 +830,9 @@ export const OpenArtReplica: React.FC = () => {
                     openInfo('inspire-tutorials');
                     setIsMobileDrawerOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#222532]"
+                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#222532]"
                 >
-                  <Compass className="w-3.5 h-3.5 text-slate-400" />
+                  <Compass className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>Tutorials</span>
                 </button>
                 <button
@@ -840,16 +840,16 @@ export const OpenArtReplica: React.FC = () => {
                     openInfo('inspire-blog');
                     setIsMobileDrawerOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#222532]"
+                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#222532]"
                 >
-                  <MessageSquare className="w-3.5 h-3.5 text-slate-400" />
+                  <MessageSquare className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                   <span>Blog</span>
                 </button>
               </div>
 
               {/* PINNED TOOLS SECTION IN MOBILE DRAWER */}
               <div className="bg-[#181a22] border border-[#282b3a] rounded-2xl p-3 space-y-1.5">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                   Pinned Tools
                 </span>
                 <button
@@ -857,7 +857,7 @@ export const OpenArtReplica: React.FC = () => {
                     openInfo('pinned-motionsync');
                     setIsMobileDrawerOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#222532]"
+                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#222532]"
                 >
                   <Wrench className="w-3.5 h-3.5 text-cyan-400" />
                   <span>Motion Sync</span>
@@ -867,19 +867,19 @@ export const OpenArtReplica: React.FC = () => {
                     openInfo('pinned-lipsync');
                     setIsMobileDrawerOpen(false);
                   }}
-                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#222532]"
+                  className="w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white hover:bg-[#222532]"
                 >
                   <Mic className="w-3.5 h-3.5 text-purple-400" />
                   <span>Lip-Sync</span>
                 </button>
               </div>
 
-              <button className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white font-medium">
+              <button className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white font-medium">
                 <HelpCircle className="w-4 h-4" />
                 <span>Email Us</span>
               </button>
 
-              <button className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:text-white font-medium">
+              <button className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white font-medium">
                 <Info className="w-4 h-4" />
                 <span>Terms & Policies</span>
               </button>
@@ -887,11 +887,11 @@ export const OpenArtReplica: React.FC = () => {
           </div>
 
           {/* Social Icons Footer */}
-          <div className="pt-4 border-t border-[#262936] flex items-center justify-around text-slate-400">
-            <button className="p-2 rounded-lg hover:bg-[#202430] hover:text-white">X</button>
-            <button className="p-2 rounded-lg hover:bg-[#202430] hover:text-white">🎮</button>
-            <button className="p-2 rounded-lg hover:bg-[#202430] hover:text-white">▶</button>
-            <button className="p-2 rounded-lg hover:bg-[#202430] hover:text-white">📸</button>
+          <div className="pt-4 border-t border-[#262936] flex items-center justify-around text-slate-500 dark:text-slate-400">
+            <button className="p-2 rounded-lg hover:bg-[#202430] hover:text-slate-900 dark:text-white">X</button>
+            <button className="p-2 rounded-lg hover:bg-[#202430] hover:text-slate-900 dark:text-white">🎮</button>
+            <button className="p-2 rounded-lg hover:bg-[#202430] hover:text-slate-900 dark:text-white">▶</button>
+            <button className="p-2 rounded-lg hover:bg-[#202430] hover:text-slate-900 dark:text-white">📸</button>
           </div>
         </div>
       </div>
@@ -900,10 +900,10 @@ export const OpenArtReplica: React.FC = () => {
 
   // Render Mobile Bottom Sticky Navbar (Screenshots 1 - 6)
   const renderMobileBottomNav = () => (
-    <div className="md:hidden absolute bottom-0 left-0 right-0 h-16 bg-[#0f1015]/95 backdrop-blur-md border-t border-[#222532] flex items-center justify-around z-40 px-2 text-[10px] font-semibold text-slate-400 select-none">
+    <div className="md:hidden absolute bottom-0 left-0 right-0 h-16 bg-[#0f1015]/95 backdrop-blur-md border-t border-[#222532] flex items-center justify-around z-40 px-2 text-[10px] font-semibold text-slate-500 dark:text-slate-400 select-none">
       <button
         onClick={() => setActiveTab('home')}
-        className={`flex flex-col items-center gap-1 ${activeTab === 'home' ? 'text-white font-bold' : 'hover:text-white'}`}
+        className={`flex flex-col items-center gap-1 ${activeTab === 'home' ? 'text-slate-900 dark:text-white font-bold' : 'hover:text-slate-900 dark:text-white'}`}
       >
         <Home className="w-5 h-5" />
         <span>Home</span>
@@ -911,7 +911,7 @@ export const OpenArtReplica: React.FC = () => {
 
       <button
         onClick={() => openInfo('inspire-templates')}
-        className="flex flex-col items-center gap-1 hover:text-white transition-colors"
+        className="flex flex-col items-center gap-1 hover:text-slate-900 dark:text-white transition-colors"
       >
         <Sparkles className="w-5 h-5 text-amber-400" />
         <span>Inspire</span>
@@ -922,15 +922,15 @@ export const OpenArtReplica: React.FC = () => {
         onClick={() => setActiveTab('image')}
         className="flex flex-col items-center gap-1 -mt-5"
       >
-        <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-600 via-pink-600 to-rose-500 flex items-center justify-center text-white shadow-lg shadow-pink-500/40 border-2 border-[#13141a]">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-600 via-pink-600 to-rose-500 flex items-center justify-center text-slate-900 dark:text-white shadow-lg shadow-pink-500/40 border-2 border-[#13141a]">
           <Sparkles className="w-6 h-6 animate-pulse" />
         </div>
-        <span className="text-white font-bold">Create</span>
+        <span className="text-slate-900 dark:text-white font-bold">Create</span>
       </button>
 
       <button
         onClick={() => openInfo('pinned-motionsync')}
-        className="flex flex-col items-center gap-1 hover:text-white transition-colors"
+        className="flex flex-col items-center gap-1 hover:text-slate-900 dark:text-white transition-colors"
       >
         <Wrench className="w-5 h-5 text-cyan-400" />
         <span>Tools</span>
@@ -938,9 +938,9 @@ export const OpenArtReplica: React.FC = () => {
 
       <button
         onClick={() => openInfo('assets-media')}
-        className="flex flex-col items-center gap-1 hover:text-white transition-colors"
+        className="flex flex-col items-center gap-1 hover:text-slate-900 dark:text-white transition-colors"
       >
-        <Folder className="w-5 h-5 text-slate-300" />
+        <Folder className="w-5 h-5 text-slate-600 dark:text-slate-300" />
         <span>Assets</span>
       </button>
     </div>
@@ -954,7 +954,7 @@ export const OpenArtReplica: React.FC = () => {
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
           activeTab === 'video'
             ? 'bg-white text-black shadow-md'
-            : 'text-slate-400 hover:text-white'
+            : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
         }`}
       >
         <Video className="w-3.5 h-3.5" />
@@ -966,7 +966,7 @@ export const OpenArtReplica: React.FC = () => {
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
           activeTab === 'image'
             ? 'bg-white text-black shadow-md'
-            : 'text-slate-400 hover:text-white'
+            : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
         }`}
       >
         <ImageIcon className="w-3.5 h-3.5" />
@@ -978,7 +978,7 @@ export const OpenArtReplica: React.FC = () => {
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
           activeTab === 'character'
             ? 'bg-white text-black shadow-md'
-            : 'text-slate-400 hover:text-white'
+            : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
         }`}
       >
         <User className="w-3.5 h-3.5" />
@@ -990,7 +990,7 @@ export const OpenArtReplica: React.FC = () => {
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
           activeTab === 'world'
             ? 'bg-white text-black shadow-md'
-            : 'text-slate-400 hover:text-white'
+            : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
         }`}
       >
         <Globe className="w-3.5 h-3.5" />
@@ -1002,7 +1002,7 @@ export const OpenArtReplica: React.FC = () => {
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
           activeTab === 'audio'
             ? 'bg-white text-black shadow-md'
-            : 'text-slate-400 hover:text-white'
+            : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
         }`}
       >
         <Volume2 className="w-3.5 h-3.5" />
@@ -1023,10 +1023,10 @@ export const OpenArtReplica: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ChevronLeftIcon onClick={() => setActiveTab('home')} />
-              <h2 className="text-base font-extrabold text-white">Create Image</h2>
-              <Info className="w-4 h-4 text-slate-400 cursor-pointer" onClick={() => openInfo('model-select')} />
+              <h2 className="text-base font-extrabold text-slate-900 dark:text-white">Create Image</h2>
+              <Info className="w-4 h-4 text-slate-500 dark:text-slate-400 cursor-pointer" onClick={() => openInfo('model-select')} />
             </div>
-            <Folder className="w-4 h-4 text-slate-400 cursor-pointer" />
+            <Folder className="w-4 h-4 text-slate-500 dark:text-slate-400 cursor-pointer" />
           </div>
 
           {/* Sub Tab Switcher Pills */}
@@ -1035,8 +1035,8 @@ export const OpenArtReplica: React.FC = () => {
               onClick={() => setImageSubTab('create')}
               className={`py-2 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 transition-all ${
                 imageSubTab === 'create'
-                  ? 'bg-gradient-to-r from-purple-800 to-pink-800 text-white shadow-md border border-pink-500/50'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-gradient-to-r from-purple-800 to-pink-800 text-slate-900 dark:text-white shadow-md border border-pink-500/50'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5 text-pink-400" />
@@ -1047,8 +1047,8 @@ export const OpenArtReplica: React.FC = () => {
               onClick={() => setImageSubTab('variations')}
               className={`py-2 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 transition-all ${
                 imageSubTab === 'variations'
-                  ? 'bg-gradient-to-r from-purple-800 to-pink-800 text-white shadow-md border border-pink-500/50'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-gradient-to-r from-purple-800 to-pink-800 text-slate-900 dark:text-white shadow-md border border-pink-500/50'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
               }`}
             >
               <ImageIcon className="w-3.5 h-3.5 text-purple-400" />
@@ -1062,22 +1062,22 @@ export const OpenArtReplica: React.FC = () => {
             className="p-3 bg-[#181b24] border border-[#2b2e3f] hover:border-purple-500/60 rounded-2xl flex items-center justify-between cursor-pointer transition-colors"
           >
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center font-bold text-white text-xs">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs">
                 G
               </div>
               <div className="text-left">
-                <span className="text-[10px] text-slate-400 font-semibold block uppercase">Model</span>
-                <span className="text-xs font-extrabold text-white block">{selectedImageModel}</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold block uppercase">Model</span>
+                <span className="text-xs font-extrabold text-slate-900 dark:text-white block">{selectedImageModel}</span>
               </div>
             </div>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-500 dark:text-slate-400" />
           </div>
 
           {/* Describe Your Image Box */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs font-bold text-white">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
               <span>Describe your image</span>
-              <Maximize2 className="w-3.5 h-3.5 text-slate-400" />
+              <Maximize2 className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
             </div>
 
             <div className="bg-[#171a23] border border-[#2a2e3e] rounded-2xl p-3 space-y-3 relative focus-within:border-purple-500 transition-colors">
@@ -1090,8 +1090,8 @@ export const OpenArtReplica: React.FC = () => {
                     <div className="w-5 h-5 rounded-md bg-indigo-500 border border-black" />
                   </div>
                   <div>
-                    <span className="text-xs font-extrabold text-white block leading-tight">Add visual references</span>
-                    <span className="text-[9px] text-slate-300 block">JPEG/PNG/WEBP/GIF, 20 MB max</span>
+                    <span className="text-xs font-extrabold text-slate-900 dark:text-white block leading-tight">Add visual references</span>
+                    <span className="text-[9px] text-slate-600 dark:text-slate-300 block">JPEG/PNG/WEBP/GIF, 20 MB max</span>
                   </div>
                 </div>
                 <span className="text-[10px] text-pink-300 bg-pink-950 px-1.5 py-0.5 rounded border border-pink-700/50">
@@ -1105,16 +1105,16 @@ export const OpenArtReplica: React.FC = () => {
                 value={promptText}
                 onChange={(e) => setPromptText(e.target.value)}
                 placeholder="What do you want to see? Example: 'A cat sitting on a table, warm morning light.'"
-                className="w-full bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none resize-none pt-1"
+                className="w-full bg-transparent text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none resize-none pt-1"
               />
 
               {/* Bottom Tools inside Prompt Box */}
-              <div className="flex items-center justify-between pt-2 border-t border-[#252838] text-slate-400 text-xs">
+              <div className="flex items-center justify-between pt-2 border-t border-[#252838] text-slate-500 dark:text-slate-400 text-xs">
                 <div className="flex items-center gap-2">
-                  <button className="p-1.5 hover:bg-[#252838] rounded-lg hover:text-white" title="Crop & Ratio">
+                  <button className="p-1.5 hover:bg-[#252838] rounded-lg hover:text-slate-900 dark:text-white" title="Crop & Ratio">
                     <Maximize2 className="w-3.5 h-3.5" />
                   </button>
-                  <button className="p-1.5 hover:bg-[#252838] rounded-lg hover:text-white" title="Style Brush">
+                  <button className="p-1.5 hover:bg-[#252838] rounded-lg hover:text-slate-900 dark:text-white" title="Style Brush">
                     <Wand2 className="w-3.5 h-3.5" />
                   </button>
                   <button 
@@ -1128,7 +1128,7 @@ export const OpenArtReplica: React.FC = () => {
 
                 {/* Auto Polish Switch */}
                 <div className="flex items-center gap-2 cursor-pointer" onClick={() => setAutoPolish(!autoPolish)}>
-                  <span className="text-[11px] font-semibold text-slate-300">Auto Polish</span>
+                  <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">Auto Polish</span>
                   <div className={`w-8 h-4 rounded-full p-0.5 transition-colors ${autoPolish ? 'bg-pink-600' : 'bg-[#2b2e3e]'}`}>
                     <div className={`w-3 h-3 rounded-full bg-white transition-transform ${autoPolish ? 'translate-x-4' : ''}`} />
                   </div>
@@ -1139,11 +1139,11 @@ export const OpenArtReplica: React.FC = () => {
 
           {/* Output Format Picker */}
           <div className="p-3 bg-[#181b24] border border-[#2b2e3f] rounded-2xl flex items-center justify-between text-xs cursor-pointer hover:bg-[#1f222e]">
-            <div className="flex items-center gap-2 text-slate-300">
+            <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
               <SlidersHorizontal className="w-4 h-4 text-purple-400" />
               <span>Output</span>
             </div>
-            <span className="font-extrabold text-white">4:3 | 1K</span>
+            <span className="font-extrabold text-slate-900 dark:text-white">4:3 | 1K</span>
           </div>
         </div>
 
@@ -1151,17 +1151,17 @@ export const OpenArtReplica: React.FC = () => {
         <div className="pt-2 space-y-3 border-t border-[#222430]">
           <div className="flex items-center justify-between gap-3">
             {/* Quantity Stepper */}
-            <div className="flex items-center gap-3 bg-[#181b24] border border-[#2b2e3f] rounded-2xl px-3 py-2 text-xs font-extrabold text-white">
+            <div className="flex items-center gap-3 bg-[#181b24] border border-[#2b2e3f] rounded-2xl px-3 py-2 text-xs font-extrabold text-slate-900 dark:text-white">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="text-slate-400 hover:text-white px-1"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white px-1"
               >
                 -
               </button>
               <span>{quantity} / 4</span>
               <button
                 onClick={() => setQuantity(Math.min(4, quantity + 1))}
-                className="text-slate-400 hover:text-white px-1"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white px-1"
               >
                 +
               </button>
@@ -1171,7 +1171,7 @@ export const OpenArtReplica: React.FC = () => {
             <button
               onClick={() => handleGenerate(80)}
               disabled={isGenerating}
-              className="flex-1 py-3 bg-gradient-to-r from-[#d946ef] via-[#c026d3] to-[#a855f7] hover:brightness-110 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2 transition-all"
+              className="flex-1 py-3 bg-gradient-to-r from-[#d946ef] via-[#c026d3] to-[#a855f7] hover:brightness-110 text-slate-900 dark:text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2 transition-all"
             >
               {isGenerating ? (
                 <>
@@ -1195,9 +1195,9 @@ export const OpenArtReplica: React.FC = () => {
       {/* Right Gallery / Inspiration Column */}
       <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 overflow-y-auto space-y-5">
         {/* Gallery Top Filter Bar */}
-        <div className="flex items-center justify-between text-xs text-slate-400 pb-2 border-b border-[#1f222d]">
+        <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pb-2 border-b border-[#1f222d]">
           <div className="flex items-center gap-2">
-            <button className="p-1.5 hover:bg-[#1a1d26] rounded-lg text-white">
+            <button className="p-1.5 hover:bg-[#1a1d26] rounded-lg text-slate-900 dark:text-white">
               <LayoutGrid className="w-4 h-4" />
             </button>
             <button className="p-1.5 hover:bg-[#1a1d26] rounded-lg">
@@ -1216,10 +1216,10 @@ export const OpenArtReplica: React.FC = () => {
         {/* Hero Banner (Turn your ideas into polished visuals) */}
         <div className="p-6 rounded-3xl bg-gradient-to-r from-purple-950/60 via-pink-950/40 to-indigo-950/60 border border-purple-800/40 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="space-y-2 text-left">
-            <h1 className="text-2xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               Create <span className="text-pink-400">Image</span>
             </h1>
-            <p className="text-xs text-slate-300 max-w-sm">
+            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-sm">
               Turn your ideas into polished visuals in seconds using Nano Banana Pro or SDXL engine.
             </p>
           </div>
@@ -1248,13 +1248,13 @@ export const OpenArtReplica: React.FC = () => {
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute top-2 right-2 bg-black/70 backdrop-blur px-2 py-0.5 rounded-md text-[10px] text-slate-300 font-mono">
+                <div className="absolute top-2 right-2 bg-black/70 backdrop-blur px-2 py-0.5 rounded-md text-[10px] text-slate-600 dark:text-slate-300 font-mono">
                   {item.model}
                 </div>
               </div>
               <div className="p-1 space-y-1 text-left">
-                <span className="text-xs font-semibold text-white block truncate">{item.title}</span>
-                <span className="text-[10px] text-slate-400 block">{item.timestamp}</span>
+                <span className="text-xs font-semibold text-slate-900 dark:text-white block truncate">{item.title}</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 block">{item.timestamp}</span>
               </div>
             </div>
           ))}
@@ -1273,10 +1273,10 @@ export const OpenArtReplica: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ChevronLeftIcon onClick={() => setActiveTab('home')} />
-              <h2 className="text-base font-extrabold text-white">Frame to Video</h2>
-              <Info className="w-4 h-4 text-slate-400 cursor-pointer" onClick={() => openInfo('model-select')} />
+              <h2 className="text-base font-extrabold text-slate-900 dark:text-white">Frame to Video</h2>
+              <Info className="w-4 h-4 text-slate-500 dark:text-slate-400 cursor-pointer" onClick={() => openInfo('model-select')} />
             </div>
-            <Folder className="w-4 h-4 text-slate-400 cursor-pointer" />
+            <Folder className="w-4 h-4 text-slate-500 dark:text-slate-400 cursor-pointer" />
           </div>
 
           {/* Sub Tab Switcher Pills */}
@@ -1285,8 +1285,8 @@ export const OpenArtReplica: React.FC = () => {
               onClick={() => setVideoSubTab('start_end')}
               className={`py-2 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 transition-all ${
                 videoSubTab === 'start_end'
-                  ? 'bg-gradient-to-r from-purple-800 to-pink-800 text-white shadow-md border border-pink-500/50'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-gradient-to-r from-purple-800 to-pink-800 text-slate-900 dark:text-white shadow-md border border-pink-500/50'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
               }`}
             >
               <Video className="w-3.5 h-3.5 text-cyan-400" />
@@ -1297,8 +1297,8 @@ export const OpenArtReplica: React.FC = () => {
               onClick={() => setVideoSubTab('text_ref')}
               className={`py-2 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 transition-all ${
                 videoSubTab === 'text_ref'
-                  ? 'bg-gradient-to-r from-purple-800 to-pink-800 text-white shadow-md border border-pink-500/50'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-gradient-to-r from-purple-800 to-pink-800 text-slate-900 dark:text-white shadow-md border border-pink-500/50'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
               }`}
             >
               <Film className="w-3.5 h-3.5 text-pink-400" />
@@ -1312,42 +1312,42 @@ export const OpenArtReplica: React.FC = () => {
             className="p-3 bg-[#181b24] border border-[#2b2e3f] hover:border-purple-500/60 rounded-2xl flex items-center justify-between cursor-pointer transition-colors"
           >
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-white text-xs">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs">
                 S
               </div>
               <div className="text-left">
-                <span className="text-[10px] text-slate-400 font-semibold block uppercase">Model</span>
-                <span className="text-xs font-extrabold text-white block">{selectedVideoModel}</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold block uppercase">Model</span>
+                <span className="text-xs font-extrabold text-slate-900 dark:text-white block">{selectedVideoModel}</span>
               </div>
             </div>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-500 dark:text-slate-400" />
           </div>
 
           {/* Set Start & End Frame Section */}
           <div className="space-y-2 text-left">
-            <span className="text-xs font-extrabold text-white block">Set start & end frame</span>
+            <span className="text-xs font-extrabold text-slate-900 dark:text-white block">Set start & end frame</span>
             
             <div className="grid grid-cols-2 gap-2 relative">
               {/* Start Frame Box */}
               <div className="p-4 bg-[#171a23] border border-dashed border-[#2f3346] hover:border-purple-500 rounded-2xl flex flex-col items-center justify-center text-center space-y-1.5 cursor-pointer min-h-[110px]">
-                <div className="w-8 h-8 rounded-full bg-[#222634] flex items-center justify-center text-slate-300">
+                <div className="w-8 h-8 rounded-full bg-[#222634] flex items-center justify-center text-slate-600 dark:text-slate-300">
                   <ImageIcon className="w-4 h-4" />
                 </div>
-                <span className="text-xs font-bold text-white block">Add a start frame</span>
+                <span className="text-xs font-bold text-slate-900 dark:text-white block">Add a start frame</span>
                 <span className="text-[10px] text-purple-400 font-semibold underline">History</span>
               </div>
 
               {/* Swap Icon Divider */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-[#202330] border border-[#303448] flex items-center justify-center text-slate-400 z-10">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-[#202330] border border-[#303448] flex items-center justify-center text-slate-500 dark:text-slate-400 z-10">
                 ⇆
               </div>
 
               {/* End Frame Box */}
               <div className="p-4 bg-[#171a23] border border-dashed border-[#2f3346] hover:border-purple-500 rounded-2xl flex flex-col items-center justify-center text-center space-y-1.5 cursor-pointer min-h-[110px]">
-                <div className="w-8 h-8 rounded-full bg-[#222634] flex items-center justify-center text-slate-300">
+                <div className="w-8 h-8 rounded-full bg-[#222634] flex items-center justify-center text-slate-600 dark:text-slate-300">
                   <ImageIcon className="w-4 h-4" />
                 </div>
-                <span className="text-xs font-bold text-slate-400 block">Add an end frame</span>
+                <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block">Add an end frame</span>
                 <span className="text-[10px] text-slate-500 font-semibold">History</span>
               </div>
             </div>
@@ -1355,9 +1355,9 @@ export const OpenArtReplica: React.FC = () => {
 
           {/* Describe Your Video Box */}
           <div className="space-y-2 text-left">
-            <div className="flex items-center justify-between text-xs font-bold text-white">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
               <span>Describe your video</span>
-              <Maximize2 className="w-3.5 h-3.5 text-slate-400" />
+              <Maximize2 className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
             </div>
 
             <div className="bg-[#171a23] border border-[#2a2e3e] rounded-2xl p-3 space-y-2">
@@ -1366,7 +1366,7 @@ export const OpenArtReplica: React.FC = () => {
                 value={promptText}
                 onChange={(e) => setPromptText(e.target.value)}
                 placeholder="Describe scene transitions, camera movement trajectories, or character actions with text..."
-                className="w-full bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none resize-none"
+                className="w-full bg-transparent text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none resize-none"
               />
             </div>
           </div>
@@ -1375,16 +1375,16 @@ export const OpenArtReplica: React.FC = () => {
         {/* Bottom Generate Button */}
         <div className="pt-2 space-y-3 border-t border-[#222430]">
           <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 bg-[#181b24] border border-[#2b2e3f] rounded-2xl px-3 py-2 text-xs font-extrabold text-white">
-              <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-slate-400 hover:text-white px-1">-</button>
+            <div className="flex items-center gap-3 bg-[#181b24] border border-[#2b2e3f] rounded-2xl px-3 py-2 text-xs font-extrabold text-slate-900 dark:text-white">
+              <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white px-1">-</button>
               <span>{quantity} / 4</span>
-              <button onClick={() => setQuantity(Math.min(4, quantity + 1))} className="text-slate-400 hover:text-white px-1">+</button>
+              <button onClick={() => setQuantity(Math.min(4, quantity + 1))} className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white px-1">+</button>
             </div>
 
             <button
               onClick={() => handleGenerate(400)}
               disabled={isGenerating}
-              className="flex-1 py-3 bg-gradient-to-r from-[#d946ef] via-[#c026d3] to-[#a855f7] hover:brightness-110 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2 transition-all"
+              className="flex-1 py-3 bg-gradient-to-r from-[#d946ef] via-[#c026d3] to-[#a855f7] hover:brightness-110 text-slate-900 dark:text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2 transition-all"
             >
               {isGenerating ? (
                 <>
@@ -1406,9 +1406,9 @@ export const OpenArtReplica: React.FC = () => {
 
       {/* Right Gallery Column */}
       <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 overflow-y-auto space-y-5">
-        <div className="flex items-center justify-between text-xs text-slate-400 pb-2 border-b border-[#1f222d]">
+        <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pb-2 border-b border-[#1f222d]">
           <div className="flex items-center gap-2">
-            <button className="p-1.5 hover:bg-[#1a1d26] rounded-lg text-white"><LayoutGrid className="w-4 h-4" /></button>
+            <button className="p-1.5 hover:bg-[#1a1d26] rounded-lg text-slate-900 dark:text-white"><LayoutGrid className="w-4 h-4" /></button>
             <button className="p-1.5 hover:bg-[#1a1d26] rounded-lg"><Tag className="w-4 h-4" /></button>
             <button className="p-1.5 hover:bg-[#1a1d26] rounded-lg"><FolderHeart className="w-4 h-4" /></button>
           </div>
@@ -1418,10 +1418,10 @@ export const OpenArtReplica: React.FC = () => {
         {/* Hero Video Banner */}
         <div className="p-6 rounded-3xl bg-gradient-to-r from-indigo-950/60 via-purple-950/40 to-cyan-950/60 border border-cyan-800/40 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="space-y-2 text-left">
-            <h1 className="text-2xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               Frame to <span className="text-cyan-400">Video</span>
             </h1>
-            <p className="text-xs text-slate-300 max-w-sm">
+            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-sm">
               Bring still images to life with motion trajectories using Seedance 2.0.
             </p>
           </div>
@@ -1445,7 +1445,7 @@ export const OpenArtReplica: React.FC = () => {
           <div className="relative h-64 rounded-2xl overflow-hidden border border-[#252836] bg-black group cursor-pointer">
             <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" alt="Clouds" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-left">
-              <span className="font-extrabold text-xs text-white">Cumulus Cloud Animation</span>
+              <span className="font-extrabold text-xs text-slate-900 dark:text-white">Cumulus Cloud Animation</span>
               <span className="text-[10px] text-cyan-300">Seedance 2.0 • 4s</span>
             </div>
           </div>
@@ -1453,7 +1453,7 @@ export const OpenArtReplica: React.FC = () => {
           <div className="relative h-64 rounded-2xl overflow-hidden border border-[#252836] bg-black group cursor-pointer">
             <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80" alt="Dog" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-left">
-              <span className="font-extrabold text-xs text-white">Dog Walking on Wet Street</span>
+              <span className="font-extrabold text-xs text-slate-900 dark:text-white">Dog Walking on Wet Street</span>
               <span className="text-[10px] text-cyan-300">Seedance 2.0 • 4s</span>
             </div>
           </div>
@@ -1461,7 +1461,7 @@ export const OpenArtReplica: React.FC = () => {
           <div className="relative h-64 rounded-2xl overflow-hidden border border-[#252836] bg-black group cursor-pointer">
             <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" alt="Portal" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-left">
-              <span className="font-extrabold text-xs text-white">Sci-Fi Portal Gate</span>
+              <span className="font-extrabold text-xs text-slate-900 dark:text-white">Sci-Fi Portal Gate</span>
               <span className="text-[10px] text-cyan-300">Seedance 2.0 • 4s</span>
             </div>
           </div>
@@ -1479,8 +1479,8 @@ export const OpenArtReplica: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ChevronLeftIcon onClick={() => setActiveTab('home')} />
-              <h2 className="text-base font-extrabold text-white">Character</h2>
-              <Info className="w-4 h-4 text-slate-400 cursor-pointer" />
+              <h2 className="text-base font-extrabold text-slate-900 dark:text-white">Character</h2>
+              <Info className="w-4 h-4 text-slate-500 dark:text-slate-400 cursor-pointer" />
             </div>
           </div>
 
@@ -1488,7 +1488,7 @@ export const OpenArtReplica: React.FC = () => {
           <div className="grid grid-cols-2 gap-2">
             <div className="p-3 bg-[#181b24] border border-[#2b2e3f] hover:border-emerald-500 rounded-2xl flex flex-col items-center justify-center text-center space-y-1 cursor-pointer">
               <User className="w-5 h-5 text-emerald-400" />
-              <span className="text-xs font-bold text-white">Create Character +</span>
+              <span className="text-xs font-bold text-slate-900 dark:text-white">Create Character +</span>
             </div>
 
             <div className="p-3 bg-[#181b24] border border-[#2b2e3f] hover:border-emerald-500 rounded-2xl flex flex-col items-center justify-center text-center space-y-1 cursor-pointer">
@@ -1497,23 +1497,23 @@ export const OpenArtReplica: React.FC = () => {
                 <div className="w-4 h-4 rounded-full bg-blue-500" />
                 <div className="w-4 h-4 rounded-full bg-amber-500" />
               </div>
-              <span className="text-xs font-bold text-white">Browse Library ›</span>
+              <span className="text-xs font-bold text-slate-900 dark:text-white">Browse Library ›</span>
             </div>
           </div>
 
           {/* Quick Starts Cards */}
           <div className="space-y-2 text-left">
-            <span className="text-xs font-extrabold text-white block">Quick Starts</span>
+            <span className="text-xs font-extrabold text-slate-900 dark:text-white block">Quick Starts</span>
             <div className="grid grid-cols-2 gap-2">
               <div className="relative h-32 rounded-2xl overflow-hidden border border-[#2b2e3f] group cursor-pointer">
                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Beach Girl" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                 <div className="absolute top-1.5 left-1.5 bg-amber-500 text-black px-1.5 py-0.5 rounded text-[9px] font-extrabold">New</div>
-                <div className="absolute bottom-1.5 left-1.5 right-1.5 text-[11px] font-extrabold text-white truncate drop-shadow">Create Character</div>
+                <div className="absolute bottom-1.5 left-1.5 right-1.5 text-[11px] font-extrabold text-slate-900 dark:text-white truncate drop-shadow">Create Character</div>
               </div>
 
               <div className="relative h-32 rounded-2xl overflow-hidden border border-[#2b2e3f] group cursor-pointer">
                 <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=400&q=80" alt="Dog Glasses" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                <div className="absolute bottom-1.5 left-1.5 bg-pink-600/90 text-white px-2 py-0.5 rounded-full text-[9px] font-bold">@fluffy in glasses ✨</div>
+                <div className="absolute bottom-1.5 left-1.5 bg-pink-600/90 text-slate-900 dark:text-white px-2 py-0.5 rounded-full text-[9px] font-bold">@fluffy in glasses ✨</div>
               </div>
             </div>
           </div>
@@ -1528,10 +1528,10 @@ export const OpenArtReplica: React.FC = () => {
       <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 overflow-y-auto space-y-5">
         <div className="p-6 rounded-3xl bg-gradient-to-r from-emerald-950/60 via-purple-950/40 to-indigo-950/60 border border-emerald-800/40 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="space-y-2 text-left">
-            <h1 className="text-2xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               Create <span className="text-emerald-400">Character</span>
             </h1>
-            <p className="text-xs text-slate-300 max-w-sm">
+            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-sm">
               Design original consistent characters from any idea or image.
             </p>
           </div>
@@ -1553,7 +1553,7 @@ export const OpenArtReplica: React.FC = () => {
               <div className="h-44 rounded-xl overflow-hidden bg-black">
                 <img src={c.url} alt={c.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
               </div>
-              <span className="text-xs font-bold text-white block text-center">{c.name}</span>
+              <span className="text-xs font-bold text-slate-900 dark:text-white block text-center">{c.name}</span>
             </div>
           ))}
         </div>
@@ -1570,15 +1570,15 @@ export const OpenArtReplica: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ChevronLeftIcon onClick={() => setActiveTab('home')} />
-              <h2 className="text-base font-extrabold text-white">World</h2>
-              <Info className="w-4 h-4 text-slate-400 cursor-pointer" />
+              <h2 className="text-base font-extrabold text-slate-900 dark:text-white">World</h2>
+              <Info className="w-4 h-4 text-slate-500 dark:text-slate-400 cursor-pointer" />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div className="p-3 bg-[#181b24] border border-[#2b2e3f] hover:border-amber-500 rounded-2xl flex flex-col items-center justify-center text-center space-y-1 cursor-pointer">
               <Globe className="w-5 h-5 text-amber-400" />
-              <span className="text-xs font-bold text-white">Create World +</span>
+              <span className="text-xs font-bold text-slate-900 dark:text-white">Create World +</span>
             </div>
 
             <div className="p-3 bg-[#181b24] border border-[#2b2e3f] hover:border-amber-500 rounded-2xl flex flex-col items-center justify-center text-center space-y-1 cursor-pointer">
@@ -1586,21 +1586,21 @@ export const OpenArtReplica: React.FC = () => {
                 <div className="w-4 h-4 rounded-full bg-amber-500" />
                 <div className="w-4 h-4 rounded-full bg-cyan-500" />
               </div>
-              <span className="text-xs font-bold text-white">Browse Library ›</span>
+              <span className="text-xs font-bold text-slate-900 dark:text-white">Browse Library ›</span>
             </div>
           </div>
 
           <div className="space-y-2 text-left">
-            <span className="text-xs font-extrabold text-white block">Quick Starts</span>
+            <span className="text-xs font-extrabold text-slate-900 dark:text-white block">Quick Starts</span>
             <div className="grid grid-cols-2 gap-2">
               <div className="relative h-32 rounded-2xl overflow-hidden border border-[#2b2e3f] group cursor-pointer">
                 <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Futuristic City" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                <div className="absolute bottom-1.5 left-1.5 bg-black/70 backdrop-blur text-white px-2 py-0.5 rounded-full text-[9px] font-bold">Futuristic city ✨</div>
+                <div className="absolute bottom-1.5 left-1.5 bg-black/70 backdrop-blur text-slate-900 dark:text-white px-2 py-0.5 rounded-full text-[9px] font-bold">Futuristic city ✨</div>
               </div>
 
               <div className="relative h-32 rounded-2xl overflow-hidden border border-[#2b2e3f] group cursor-pointer">
                 <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=400&q=80" alt="Santorini" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                <div className="absolute bottom-1.5 left-1.5 bg-cyan-600/90 text-white px-2 py-0.5 rounded-full text-[9px] font-bold">3D World Cam</div>
+                <div className="absolute bottom-1.5 left-1.5 bg-cyan-600/90 text-slate-900 dark:text-white px-2 py-0.5 rounded-full text-[9px] font-bold">3D World Cam</div>
               </div>
             </div>
           </div>
@@ -1615,10 +1615,10 @@ export const OpenArtReplica: React.FC = () => {
       <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 overflow-y-auto space-y-5">
         <div className="p-6 rounded-3xl bg-gradient-to-r from-amber-950/60 via-purple-950/40 to-cyan-950/60 border border-amber-800/40 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="space-y-2 text-left">
-            <h1 className="text-2xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               Create <span className="text-amber-400">World</span>
             </h1>
-            <p className="text-xs text-slate-300 max-w-sm">
+            <p className="text-xs text-slate-600 dark:text-slate-300 max-w-sm">
               Build immersive worlds from any idea or image.
             </p>
           </div>
@@ -1638,7 +1638,7 @@ export const OpenArtReplica: React.FC = () => {
               <div className="h-40 rounded-xl overflow-hidden bg-black">
                 <img src={w.url} alt={w.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
               </div>
-              <span className="text-xs font-bold text-white block text-center truncate">{w.title}</span>
+              <span className="text-xs font-bold text-slate-900 dark:text-white block text-center truncate">{w.title}</span>
             </div>
           ))}
         </div>
@@ -1655,36 +1655,36 @@ export const OpenArtReplica: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ChevronLeftIcon onClick={() => setActiveTab('home')} />
-              <h2 className="text-base font-extrabold text-white">Create voice-over</h2>
-              <Info className="w-4 h-4 text-slate-400 cursor-pointer" />
+              <h2 className="text-base font-extrabold text-slate-900 dark:text-white">Create voice-over</h2>
+              <Info className="w-4 h-4 text-slate-500 dark:text-slate-400 cursor-pointer" />
             </div>
-            <Folder className="w-4 h-4 text-slate-400 cursor-pointer" />
+            <Folder className="w-4 h-4 text-slate-500 dark:text-slate-400 cursor-pointer" />
           </div>
 
           {/* Model Card */}
           <div className="p-3 bg-[#181b24] border border-[#2b2e3f] rounded-2xl flex items-center justify-between cursor-pointer">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-purple-600 flex items-center justify-center font-bold text-white text-xs">
+              <div className="w-8 h-8 rounded-xl bg-purple-600 flex items-center justify-center font-bold text-slate-900 dark:text-white text-xs">
                 ║║
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 font-semibold block uppercase">Audio Model</span>
-                <span className="text-xs font-extrabold text-white block">{selectedAudioModel}</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold block uppercase">Audio Model</span>
+                <span className="text-xs font-extrabold text-slate-900 dark:text-white block">{selectedAudioModel}</span>
               </div>
             </div>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
+            <ChevronRight className="w-4 h-4 text-slate-500 dark:text-slate-400" />
           </div>
 
           {/* Prompt Box */}
           <div className="space-y-2">
-            <span className="text-xs font-extrabold text-white block">Prompt</span>
+            <span className="text-xs font-extrabold text-slate-900 dark:text-white block">Prompt</span>
             <div className="bg-[#171a23] border border-[#2a2e3e] rounded-2xl p-3 space-y-3">
               <textarea
                 rows={4}
                 value={audioPromptText}
                 onChange={(e) => setAudioPromptText(e.target.value)}
                 placeholder="Enter your voice-over prompt..."
-                className="w-full bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none resize-none"
+                className="w-full bg-transparent text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none resize-none"
               />
               <div className="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-[#252838]">
                 <Trash2 className="w-3.5 h-3.5 hover:text-rose-400 cursor-pointer" onClick={() => setAudioPromptText('')} />
@@ -1699,7 +1699,7 @@ export const OpenArtReplica: React.FC = () => {
               <button
                 key={p}
                 onClick={() => setAudioPromptText(`[${p}] Welcome to Maxy Academy AI Studio. Today we explore OpenArt features.`)}
-                className="p-2.5 bg-[#181b24] border border-[#2b2e3f] hover:border-purple-500 rounded-xl font-medium text-slate-300 text-left truncate"
+                className="p-2.5 bg-[#181b24] border border-[#2b2e3f] hover:border-purple-500 rounded-xl font-medium text-slate-600 dark:text-slate-300 text-left truncate"
               >
                 ≡ {p}
               </button>
@@ -1708,18 +1708,18 @@ export const OpenArtReplica: React.FC = () => {
 
           {/* Voice Selector */}
           <div className="space-y-2">
-            <span className="text-xs font-extrabold text-white block">Voice</span>
+            <span className="text-xs font-extrabold text-slate-900 dark:text-white block">Voice</span>
             <div className="p-3 bg-[#181b24] border border-[#2b2e3f] hover:border-purple-500 rounded-2xl flex items-center justify-between cursor-pointer">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-300 to-amber-500 flex items-center justify-center font-extrabold text-black text-sm">
                   T
                 </div>
                 <div>
-                  <span className="text-xs font-extrabold text-white block">{selectedVoice}</span>
-                  <span className="text-[10px] text-slate-400 block truncate max-w-[180px]">social_media · female · central...</span>
+                  <span className="text-xs font-extrabold text-slate-900 dark:text-white block">{selectedVoice}</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 block truncate max-w-[180px]">social_media · female · central...</span>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-slate-400" />
+              <ChevronRight className="w-4 h-4 text-slate-500 dark:text-slate-400" />
             </div>
           </div>
         </div>
@@ -1729,7 +1729,7 @@ export const OpenArtReplica: React.FC = () => {
           <button
             onClick={() => handleGenerate(5)}
             disabled={isGenerating}
-            className="w-full py-3 bg-gradient-to-r from-[#d946ef] via-[#c026d3] to-[#a855f7] hover:brightness-110 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2 transition-all"
+            className="w-full py-3 bg-gradient-to-r from-[#d946ef] via-[#c026d3] to-[#a855f7] hover:brightness-110 text-slate-900 dark:text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2 transition-all"
           >
             {isGenerating ? (
               <>
@@ -1754,12 +1754,12 @@ export const OpenArtReplica: React.FC = () => {
           <Folder className="w-10 h-10" />
         </div>
         <div className="space-y-1">
-          <h3 className="text-sm font-extrabold text-white">Nothing here yet</h3>
-          <p className="text-xs text-slate-400 max-w-xs">Generate your first voice-over file to see audio waveforms here.</p>
+          <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">Nothing here yet</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs">Generate your first voice-over file to see audio waveforms here.</p>
         </div>
         <button
           onClick={() => handleGenerate(5)}
-          className="px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 text-white font-extrabold text-xs rounded-full shadow-lg flex items-center gap-1.5"
+          className="px-5 py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 text-slate-900 dark:text-white font-extrabold text-xs rounded-full shadow-lg flex items-center gap-1.5"
         >
           <span>✨ Go Generate</span>
           <ChevronRight className="w-4 h-4" />
@@ -1773,40 +1773,40 @@ export const OpenArtReplica: React.FC = () => {
     <div className="flex-1 bg-[#0d0e12] p-6 overflow-y-auto space-y-8 text-center">
       {/* Hero Header */}
       <div className="max-w-2xl mx-auto space-y-4 pt-4">
-        <h1 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+        <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           What would you like <br />
           to create today? <span className="inline-block">🪄</span>
         </h1>
 
         {/* Quick Tool Pills */}
         <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-          <button onClick={() => setActiveTab('director')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-white flex items-center gap-1.5">
+          <button onClick={() => setActiveTab('director')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
             <Film className="w-3.5 h-3.5 text-pink-400" />
             <span>Director</span>
             <span className="text-[9px] bg-emerald-500 text-black px-1.5 py-0.2 rounded font-extrabold">NEW</span>
           </button>
 
-          <button onClick={() => setActiveTab('video')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-white flex items-center gap-1.5">
+          <button onClick={() => setActiveTab('video')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
             <Video className="w-3.5 h-3.5 text-cyan-400" />
             <span>Video v</span>
           </button>
 
-          <button onClick={() => setActiveTab('image')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-white flex items-center gap-1.5">
+          <button onClick={() => setActiveTab('image')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
             <ImageIcon className="w-3.5 h-3.5 text-pink-400" />
             <span>Image v</span>
           </button>
 
-          <button onClick={() => setActiveTab('character')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-white flex items-center gap-1.5">
+          <button onClick={() => setActiveTab('character')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
             <User className="w-3.5 h-3.5 text-emerald-400" />
             <span>Character v</span>
           </button>
 
-          <button onClick={() => setActiveTab('world')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-white flex items-center gap-1.5">
+          <button onClick={() => setActiveTab('world')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
             <Globe className="w-3.5 h-3.5 text-amber-400" />
             <span>World v</span>
           </button>
 
-          <button onClick={() => setActiveTab('audio')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-white flex items-center gap-1.5">
+          <button onClick={() => setActiveTab('audio')} className="px-3.5 py-2 bg-[#181a24] hover:bg-[#202330] border border-[#2a2d3f] rounded-2xl text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
             <Volume2 className="w-3.5 h-3.5 text-purple-400" />
             <span>Audio v</span>
           </button>
@@ -1818,14 +1818,14 @@ export const OpenArtReplica: React.FC = () => {
         <div className="relative h-44 rounded-3xl overflow-hidden border border-[#252838] bg-black group cursor-pointer p-4 flex flex-col justify-between">
           <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Discount" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform" />
           <span className="relative z-10 self-start bg-black/70 backdrop-blur text-amber-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-amber-500/40">Upgrade to unlock</span>
-          <span className="relative z-10 font-extrabold text-sm text-white leading-tight">Up to 40% OFF for the hottest models</span>
+          <span className="relative z-10 font-extrabold text-sm text-slate-900 dark:text-white leading-tight">Up to 40% OFF for the hottest models</span>
         </div>
 
         <div className="relative h-44 rounded-3xl overflow-hidden border border-[#252838] bg-black group cursor-pointer p-4 flex flex-col justify-between">
           <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80" alt="Seedance" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform" />
           <span className="relative z-10 self-start bg-black/70 backdrop-blur text-cyan-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-cyan-500/40">Try Now</span>
           <div>
-            <span className="relative z-10 font-extrabold text-sm text-white block">Seedance 2.0 Mini</span>
+            <span className="relative z-10 font-extrabold text-sm text-slate-900 dark:text-white block">Seedance 2.0 Mini</span>
             <span className="relative z-10 text-[11px] text-cyan-300 block font-semibold">2x Faster · 50% Cheaper</span>
           </div>
         </div>
@@ -1833,13 +1833,13 @@ export const OpenArtReplica: React.FC = () => {
         <div className="relative h-44 rounded-3xl overflow-hidden border border-[#252838] bg-black group cursor-pointer p-4 flex flex-col justify-between">
           <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="GPT Image" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform" />
           <span className="relative z-10 self-start bg-black/70 backdrop-blur text-pink-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-pink-500/40">Try Now</span>
-          <span className="relative z-10 font-extrabold text-sm text-white leading-tight">GPT Image 2.0 — A New Era of Image Generation</span>
+          <span className="relative z-10 font-extrabold text-sm text-slate-900 dark:text-white leading-tight">GPT Image 2.0 — A New Era of Image Generation</span>
         </div>
 
         <div className="relative h-44 rounded-3xl overflow-hidden border border-[#252838] bg-black group cursor-pointer p-4 flex flex-col justify-between">
           <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80" alt="Video Model" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform" />
           <span className="relative z-10 self-start bg-black/70 backdrop-blur text-purple-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-purple-500/40">Try Now</span>
-          <span className="relative z-10 font-extrabold text-sm text-white leading-tight">Seedance 2.0 — World's Most Powerful Video Model</span>
+          <span className="relative z-10 font-extrabold text-sm text-slate-900 dark:text-white leading-tight">Seedance 2.0 — World's Most Powerful Video Model</span>
         </div>
       </div>
 
@@ -1854,7 +1854,7 @@ export const OpenArtReplica: React.FC = () => {
   // Helper Chevron Icon
   function ChevronLeftIcon({ onClick }: { onClick: () => void }) {
     return (
-      <button onClick={onClick} className="p-1 rounded-lg hover:bg-[#202330] text-slate-400 hover:text-white">
+      <button onClick={onClick} className="p-1 rounded-lg hover:bg-[#202330] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">
         <ArrowLeft className="w-4 h-4" />
       </button>
     );
@@ -1866,7 +1866,7 @@ export const OpenArtReplica: React.FC = () => {
       <div className="flex items-center justify-between p-2.5 bg-[#121318] border border-[#222432] rounded-2xl shadow-md text-xs">
         <div className="flex items-center gap-2 px-1">
           <Sparkles className="w-4 h-4 text-pink-400" />
-          <span className="font-bold text-slate-200">OpenArt Studio Replica:</span>
+          <span className="font-bold text-slate-700 dark:text-slate-200">OpenArt Studio Replica:</span>
         </div>
         <div className="flex items-center gap-1 bg-black/60 p-1 rounded-xl border border-[#2a2d3e]">
           <button
@@ -1875,7 +1875,7 @@ export const OpenArtReplica: React.FC = () => {
               setIsMobileDrawerOpen(false);
             }}
             className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-              viewMode === 'desktop' ? 'bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+              viewMode === 'desktop' ? 'bg-gradient-to-r from-pink-600 to-purple-600 text-slate-900 dark:text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
             }`}
           >
             Desktop View
@@ -1885,7 +1885,7 @@ export const OpenArtReplica: React.FC = () => {
               setViewMode('mobile');
             }}
             className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
-              viewMode === 'mobile' ? 'bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+              viewMode === 'mobile' ? 'bg-gradient-to-r from-pink-600 to-purple-600 text-slate-900 dark:text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
             }`}
           >
             Mobile View
@@ -1929,21 +1929,21 @@ export const OpenArtReplica: React.FC = () => {
                   <span className="text-[10px] font-bold text-pink-400 uppercase tracking-wider block">
                     {activeModal.category}
                   </span>
-                  <h3 className="text-base font-extrabold text-white">{activeModal.title}</h3>
+                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white">{activeModal.title}</h3>
                 </div>
                 <button
                   onClick={() => setActiveModal(null)}
-                  className="p-1.5 rounded-lg hover:bg-[#202330] text-slate-400 hover:text-white"
+                  className="p-1.5 rounded-lg hover:bg-[#202330] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <p className="text-xs text-slate-300 leading-relaxed">{activeModal.description}</p>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{activeModal.description}</p>
 
               <div className="space-y-2 bg-[#1a1d29] p-3 rounded-2xl border border-[#2b2e40]">
-                <span className="text-[11px] font-extrabold text-white block">✨ Fitur Utama:</span>
-                <ul className="space-y-1 text-xs text-slate-300 list-disc list-inside">
+                <span className="text-[11px] font-extrabold text-slate-900 dark:text-white block">✨ Fitur Utama:</span>
+                <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-300 list-disc list-inside">
                   {activeModal.keyFeatures.map((f, i) => (
                     <li key={i}>{f}</li>
                   ))}
@@ -1957,7 +1957,7 @@ export const OpenArtReplica: React.FC = () => {
 
               <button
                 onClick={() => setActiveModal(null)}
-                className="w-full py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 text-white font-extrabold text-xs rounded-xl shadow-lg"
+                className="w-full py-2.5 bg-gradient-to-r from-pink-600 to-purple-600 text-slate-900 dark:text-white font-extrabold text-xs rounded-xl shadow-lg"
               >
                 Mengerti
               </button>

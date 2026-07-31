@@ -63,14 +63,14 @@ export const MiniQuizCheckpoint: React.FC<MiniQuizCheckpointProps> = ({
 
   if (isAlreadyCompleted) {
     return (
-      <div className="bg-slate-900 border border-emerald-500/40 rounded-3xl p-5 shadow-lg flex items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900 border border-emerald-500/40 rounded-3xl p-5 shadow-lg flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 shrink-0">
             <CheckCircle2 className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h4 className="text-sm font-extrabold text-white">{title}</h4>
+              <h4 className="text-sm font-extrabold text-slate-900 dark:text-white">{title}</h4>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 +25 XP Diklaim
               </span>
@@ -83,7 +83,7 @@ export const MiniQuizCheckpoint: React.FC<MiniQuizCheckpointProps> = ({
 
         <button
           onClick={handleReset}
-          className="text-xs font-semibold text-slate-400 hover:text-white underline cursor-pointer shrink-0"
+          className="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white underline cursor-pointer shrink-0"
         >
           Coba Lagi
         </button>
@@ -92,7 +92,7 @@ export const MiniQuizCheckpoint: React.FC<MiniQuizCheckpointProps> = ({
   }
 
   return (
-    <div className="bg-slate-900 border-2 border-indigo-500/30 hover:border-indigo-500/50 rounded-3xl p-6 shadow-xl space-y-4 transition-all">
+    <div className="bg-white dark:bg-slate-900 border-2 border-indigo-500/30 hover:border-indigo-500/50 rounded-3xl p-6 shadow-xl space-y-4 transition-all">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/20 pb-3">
         <div className="flex items-center gap-2.5">
@@ -105,7 +105,7 @@ export const MiniQuizCheckpoint: React.FC<MiniQuizCheckpointProps> = ({
                 Mid-Module Checkpoint
               </span>
             </div>
-            <h3 className="text-sm sm:text-base font-extrabold text-white">{title}</h3>
+            <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">{title}</h3>
           </div>
         </div>
 
@@ -117,7 +117,7 @@ export const MiniQuizCheckpoint: React.FC<MiniQuizCheckpointProps> = ({
 
       {/* Question */}
       <div className="space-y-3">
-        <p className="text-sm font-bold text-slate-100 leading-relaxed">
+        <p className="text-sm font-bold text-slate-800 dark:text-slate-100 leading-relaxed">
           {question.question}
         </p>
 
@@ -125,7 +125,7 @@ export const MiniQuizCheckpoint: React.FC<MiniQuizCheckpointProps> = ({
         <div className="grid grid-cols-1 gap-2.5 pt-1">
           {question.options.map((opt, idx) => {
             let optionStyle =
-              'bg-slate-950/80 hover:bg-slate-800/90 border-slate-800 text-slate-200';
+              'bg-slate-100 dark:bg-slate-950/80 hover:bg-slate-100 dark:bg-slate-800/90 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200';
 
             if (isSubmitted) {
               if (idx === question.correctAnswer) {
@@ -133,7 +133,7 @@ export const MiniQuizCheckpoint: React.FC<MiniQuizCheckpointProps> = ({
               } else if (idx === selectedOption) {
                 optionStyle = 'bg-rose-950/90 border-rose-500 text-rose-100 font-bold';
               } else {
-                optionStyle = 'bg-slate-950/40 border-slate-900 text-slate-500 opacity-60';
+                optionStyle = 'bg-slate-100 dark:bg-slate-950/40 border-slate-200 dark:border-slate-900 text-slate-500 opacity-60';
               }
             }
 
@@ -144,7 +144,7 @@ export const MiniQuizCheckpoint: React.FC<MiniQuizCheckpointProps> = ({
                 onClick={() => handleSubmit(idx)}
                 className={`w-full p-3.5 rounded-2xl border text-left text-xs font-medium transition-all flex items-start gap-3 cursor-pointer ${optionStyle}`}
               >
-                <span className="w-5 h-5 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                <span className="w-5 h-5 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">
                   {String.fromCharCode(65 + idx)}
                 </span>
                 <span className="flex-1 leading-normal">{opt}</span>

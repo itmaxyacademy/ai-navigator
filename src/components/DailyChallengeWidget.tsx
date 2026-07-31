@@ -187,9 +187,9 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
   };
 
   return (
-    <div className={`bg-white border-slate-200 text-slate-900 dark:bg-slate-900 dark:border-slate-800 dark:text-white border rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
+    <div className={`bg-white border-slate-200 text-slate-900 dark:bg-white dark:bg-slate-900 dark:border-slate-200 dark:border-slate-800 dark:text-slate-900 dark:text-white border rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
       {/* Widget Header */}
-      <div className="relative z-10 space-y-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+      <div className="relative z-10 space-y-2 border-b border-slate-200 dark:border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex items-start justify-between gap-2 flex-wrap">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="p-2 rounded-xl bg-indigo-500/10 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800/80 text-indigo-600 dark:text-indigo-400 shrink-0">
@@ -197,14 +197,14 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white tracking-tight whitespace-nowrap">
+                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight whitespace-nowrap">
                   Tantangan Kuis Harian
                 </h3>
                 <span className="text-[9px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 px-1.5 py-0.5 rounded-md uppercase tracking-wider shrink-0">
                   DAILY QUIZ
                 </span>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-400 truncate font-medium">
+              <p className="text-xs text-slate-600 dark:text-slate-500 dark:text-slate-400 truncate font-medium">
                 {challengeSet.title}
               </p>
             </div>
@@ -212,15 +212,15 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
 
           {/* Streak & Countdown Info */}
           <div className="flex items-center gap-2 shrink-0 pt-0.5">
-            <div className="flex items-center gap-1.5 bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-xl">
+            <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-2.5 py-1 rounded-xl">
               <Flame className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
               <div className="text-left">
-                <span className="text-[8px] font-bold text-slate-400 block leading-none">STREAK</span>
+                <span className="text-[8px] font-bold text-slate-500 dark:text-slate-400 block leading-none">STREAK</span>
                 <span className="text-xs font-black text-indigo-300 leading-none whitespace-nowrap">{currentStreak} Hari</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-1 bg-slate-950 border border-slate-800 px-2.5 py-1 rounded-xl text-xs text-slate-300 font-mono whitespace-nowrap">
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-2.5 py-1 rounded-xl text-xs text-slate-600 dark:text-slate-300 font-mono whitespace-nowrap">
               <Clock className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
               <span>
                 {String(timeLeft.hours).padStart(2, '0')}:
@@ -235,7 +235,7 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
       {/* Main Body: Completed vs Active Quiz */}
       {completedData && !showReviewMode ? (
         /* COMPLETED CARD VIEW */
-        <div className="relative z-10 bg-slate-950 border border-slate-800 rounded-xl p-5 text-center space-y-4">
+        <div className="relative z-10 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-5 text-center space-y-4">
           <div className="w-12 h-12 mx-auto rounded-full bg-indigo-950 border border-indigo-800 flex items-center justify-center text-indigo-400">
             <CheckCircle2 className="w-7 h-7" />
           </div>
@@ -244,26 +244,26 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
             <span className="text-xs font-extrabold uppercase tracking-wider text-indigo-400 block">
               Tantangan Hari Ini Selesai
             </span>
-            <h4 className="text-base sm:text-lg font-black text-white break-words">
+            <h4 className="text-base sm:text-lg font-black text-slate-900 dark:text-white break-words">
               Skor Anda: {completedData.score} dari {completedData.totalQuestions} Benar
             </h4>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Anda berhasil mengklaim <strong className="text-indigo-300">+{completedData.xpEarned} XP</strong> hari ini.
             </p>
           </div>
 
           {/* Metrics summary */}
           <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto pt-1">
-            <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl space-y-0.5">
-              <span className="text-[10px] text-slate-400 font-semibold block">Bonus Streak</span>
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl space-y-0.5">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold block">Bonus Streak</span>
               <span className="text-xs font-black text-indigo-300 flex items-center justify-center gap-1">
                 <Flame className="w-3.5 h-3.5 text-indigo-400" />
                 +{Math.min(completedData.streak * 2, 10)} XP
               </span>
             </div>
-            <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl space-y-0.5">
-              <span className="text-[10px] text-slate-400 font-semibold block">Tantangan Baru</span>
-              <span className="text-xs font-black text-slate-300">Besok Pagi</span>
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl space-y-0.5">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold block">Tantangan Baru</span>
+              <span className="text-xs font-black text-slate-600 dark:text-slate-300">Besok Pagi</span>
             </div>
           </div>
 
@@ -271,9 +271,9 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
           <div className="pt-2 flex items-center justify-center gap-2">
             <button
               onClick={() => setShowReviewMode(true)}
-              className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-extrabold text-white transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-extrabold text-slate-900 dark:text-white transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <HelpCircle className="w-3.5 h-3.5 text-white" />
+              <HelpCircle className="w-3.5 h-3.5 text-slate-900 dark:text-white" />
               <span>Review Pembahasan</span>
             </button>
           </div>
@@ -290,7 +290,7 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
               </span>
               <button
                 onClick={() => setShowReviewMode(false)}
-                className="text-xs font-bold text-indigo-300 hover:text-white underline cursor-pointer"
+                className="text-xs font-bold text-indigo-300 hover:text-slate-900 dark:text-white underline cursor-pointer"
               >
                 Kembali
               </button>
@@ -298,12 +298,12 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
           )}
 
           {/* Progress Indicator */}
-          <div className="flex items-center justify-between text-xs text-slate-400 flex-wrap gap-2">
+          <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 flex-wrap gap-2">
             <div className="flex items-center gap-2 min-w-0">
               <span className="font-mono font-bold text-indigo-300 bg-indigo-950 border border-indigo-800 px-2.5 py-0.5 rounded-full text-[10px]">
                 {currentQuestion.topic}
               </span>
-              <span className="text-xs font-bold text-slate-300">
+              <span className="text-xs font-bold text-slate-600 dark:text-slate-300">
                 Soal {currentQuestionIdx + 1} / {challengeSet.questions.length}
               </span>
             </div>
@@ -318,7 +318,7 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
                       ? 'bg-indigo-400 scale-110'
                       : i < currentQuestionIdx
                       ? 'bg-emerald-500'
-                      : 'bg-slate-800'
+                      : 'bg-slate-100 dark:bg-slate-800'
                   }`}
                 />
               ))}
@@ -326,8 +326,8 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
           </div>
 
           {/* Question Box */}
-          <div className="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
-            <h4 className="text-sm sm:text-base font-extrabold text-white leading-snug break-words">
+          <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-3">
+            <h4 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white leading-snug break-words">
               {currentQuestion.question}
             </h4>
 
@@ -338,7 +338,7 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
                 const isCorrect = optIdx === currentQuestion.correctIndex;
                 const reviewUserAns = completedData?.userAnswers?.[currentQuestionIdx];
 
-                let optionStyle = 'bg-slate-900 border-slate-800 text-slate-200 hover:border-indigo-500';
+                let optionStyle = 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:border-indigo-500';
 
                 if (showReviewMode) {
                   if (optIdx === currentQuestion.correctIndex) {
@@ -352,7 +352,7 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
                   } else if (isSelected) {
                     optionStyle = 'bg-rose-950 border-rose-500 text-rose-200 font-extrabold';
                   } else {
-                    optionStyle = 'bg-slate-900/40 border-slate-800/60 text-slate-500 opacity-60';
+                    optionStyle = 'bg-white dark:bg-slate-50/80 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800/60 text-slate-500 opacity-60';
                   }
                 }
 
@@ -366,7 +366,7 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
                     } ${optionStyle}`}
                   >
                     <div className="flex items-start gap-2.5 min-w-0">
-                      <span className="w-5 h-5 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
+                      <span className="w-5 h-5 rounded-lg bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
                         {String.fromCharCode(65 + optIdx)}
                       </span>
                       <span className="leading-relaxed break-words min-w-0">{opt}</span>
@@ -397,7 +397,7 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
                   <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
                   <span>Pembahasan Penjelasan:</span>
                 </div>
-                <p className="leading-relaxed text-xs text-slate-300 break-words">
+                <p className="leading-relaxed text-xs text-slate-600 dark:text-slate-300 break-words">
                   {currentQuestion.explanation}
                 </p>
               </motion.div>
@@ -411,14 +411,14 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
                 <button
                   disabled={currentQuestionIdx === 0}
                   onClick={() => setCurrentQuestionIdx((p) => p - 1)}
-                  className="px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white disabled:opacity-40 cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white disabled:opacity-40 cursor-pointer"
                 >
                   Sebelumnya
                 </button>
                 <button
                   disabled={currentQuestionIdx === challengeSet.questions.length - 1}
                   onClick={() => setCurrentQuestionIdx((p) => p + 1)}
-                  className="px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white disabled:opacity-40 cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white disabled:opacity-40 cursor-pointer"
                 >
                   Selanjutnya
                 </button>
@@ -430,8 +430,8 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
                   onClick={handleNextQuestion}
                   className={`px-5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-2 transition-all shadow-md ${
                     selectedOptionIdx !== null && !isProcessing
-                      ? 'bg-indigo-600 hover:bg-indigo-500 text-white cursor-pointer'
-                      : 'bg-slate-950 border border-slate-800 text-slate-500 cursor-not-allowed'
+                      ? 'bg-indigo-600 hover:bg-indigo-500 text-slate-900 dark:text-white cursor-pointer'
+                      : 'bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 cursor-not-allowed'
                   }`}
                 >
                   <span>

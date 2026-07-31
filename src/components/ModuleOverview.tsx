@@ -6,6 +6,7 @@ import {
   Code, MessageCircle, Wand2, Workflow, Coins, Download, ArrowRight, CheckCircle2, Star
 } from 'lucide-react';
 import { CourseModule } from '../types';
+import { MODULES_DATA } from '../data/modulesData';
 import { MiniQuizCheckpoint } from './MiniQuizCheckpoint';
 import { getSectionCheckpointQuestion } from '../lib/miniQuizData';
 
@@ -65,13 +66,13 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
   return (
     <div className="space-y-8">
       {/* Header Info Card */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-              Modul {module.id} dari 13
+              Modul {module.id} dari {MODULES_DATA.length}
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
               {overview.developer} ({overview.releaseYear})
             </span>
           </div>
@@ -83,7 +84,7 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
         </div>
 
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
             {module.title}
           </h1>
           <p className="text-sm sm:text-base text-indigo-300 font-medium mt-1">
@@ -91,14 +92,14 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
           </p>
         </div>
 
-        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed pt-2 border-t border-slate-800/80">
+        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed pt-2 border-t border-slate-200 dark:border-slate-800/80">
           {overview.description}
         </p>
       </div>
 
       {/* Key Advantages Grid */}
       <div className="space-y-4">
-        <h2 className="text-lg font-bold text-white flex items-center gap-2">
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-amber-400" />
           Keunggulan Utama & Fitur Unggulan
         </h2>
@@ -107,13 +108,13 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
           {overview.keyAdvantages.map((adv, idx) => (
             <div
               key={idx}
-              className="bg-slate-900/80 border border-slate-800 hover:border-slate-700 p-5 rounded-2xl space-y-2 transition-all hover:scale-[1.01]"
+              className="bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:border-slate-700 p-5 rounded-2xl space-y-2 transition-all hover:scale-[1.01]"
             >
-              <div className="w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center border border-slate-800 shadow-inner">
+              <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-950 flex items-center justify-center border border-slate-200 dark:border-slate-800 shadow-inner">
                 {renderAdvantageIcon(adv.icon)}
               </div>
-              <h3 className="font-bold text-sm text-white">{adv.title}</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">{adv.title}</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 {adv.description}
               </p>
             </div>
@@ -124,14 +125,14 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
       {/* Use Cases & Unique Capabilities side-by-side */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Best For */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <Target className="w-4 h-4 text-emerald-400" />
             Paling Cocok Digunakan Untuk:
           </h3>
           <ul className="space-y-2">
             {overview.bestFor.map((item, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-xs text-slate-300">
+              <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span>{item}</span>
               </li>
@@ -140,14 +141,14 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
         </div>
 
         {/* Unique Capabilities */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-amber-400" />
             Kemampuan Unik:
           </h3>
           <ul className="space-y-2">
             {overview.uniqueCapabilities.map((item, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-xs text-slate-300">
+              <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 mt-1.5" />
                 <span>{item}</span>
               </li>
@@ -171,7 +172,7 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
       <div className="pt-4 flex justify-end">
         <button
           onClick={onAdvanceToReplica}
-          className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all"
+          className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-slate-900 dark:text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all"
         >
           Lanjut ke Tampilan Interaktif Simulasi <ArrowRight className="w-4 h-4" />
         </button>

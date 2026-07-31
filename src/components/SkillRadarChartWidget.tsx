@@ -129,21 +129,21 @@ export const SkillRadarChartWidget: React.FC<SkillRadarChartWidgetProps> = ({
   const activeRecModule = modules.find((m) => m.id === activeDomain.recommendationModuleId);
 
   return (
-    <div className={`bg-white border-slate-200 text-slate-900 dark:bg-slate-900 dark:border-slate-800 dark:text-white border rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
+    <div className={`bg-white border-slate-200 text-slate-900 dark:bg-white dark:bg-slate-900 dark:border-slate-200 dark:border-slate-800 dark:text-slate-900 dark:text-white border rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden space-y-4 ${className}`}>
       {/* Header */}
-      <div className="relative z-10 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 gap-2">
+      <div className="relative z-10 flex items-center justify-between border-b border-slate-200 dark:border-slate-200 dark:border-slate-800 pb-3 gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="p-2.5 rounded-xl bg-indigo-500/10 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 shrink-0">
             <Target className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight break-words">Radar Kompetensi AI</h3>
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-900 dark:text-white tracking-tight break-words">Radar Kompetensi AI</h3>
               <span className="text-[10px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 px-2 py-0.5 rounded-md uppercase tracking-wider shrink-0">
                 Pemetaan Skill
               </span>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 truncate">
+            <p className="text-xs text-slate-600 dark:text-slate-500 dark:text-slate-400 truncate">
               Evaluasi tingkat keahlian dalam 5 bidang utama LLM
             </p>
           </div>
@@ -163,8 +163,8 @@ export const SkillRadarChartWidget: React.FC<SkillRadarChartWidgetProps> = ({
                 if (active && payload && payload.length) {
                   const data = payload[0].payload;
                   return (
-                    <div className="bg-slate-950 border border-slate-800 p-2.5 rounded-xl shadow-xl text-xs space-y-1">
-                      <p className="font-extrabold text-white">{data.fullDomain}</p>
+                    <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl shadow-xl text-xs space-y-1">
+                      <p className="font-extrabold text-slate-900 dark:text-white">{data.fullDomain}</p>
                       <p className="text-indigo-300 font-bold">Skor: {data.score}/100 ({data.levelLabel})</p>
                     </div>
                   );
@@ -186,8 +186,8 @@ export const SkillRadarChartWidget: React.FC<SkillRadarChartWidgetProps> = ({
               onClick={() => setSelectedDomainKey(ds.key)}
               className={`p-2 rounded-xl border text-left transition-all cursor-pointer ${
                 isSelected
-                  ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
-                  : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                  ? 'bg-indigo-600 border-indigo-500 text-slate-900 dark:text-white shadow-md'
+                  : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
               }`}
             >
               <span className="text-[10px] font-bold block truncate">{ds.shortDomain}</span>
@@ -198,25 +198,25 @@ export const SkillRadarChartWidget: React.FC<SkillRadarChartWidgetProps> = ({
       </div>
 
       {/* Active Domain Detail & Recommendation Box */}
-      <div className="bg-slate-950 border border-slate-800 rounded-xl p-3.5 space-y-2">
+      <div className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 space-y-2">
         <div className="flex items-center justify-between text-xs flex-wrap gap-2">
-          <span className="font-extrabold text-white">{activeDomain.domain}</span>
+          <span className="font-extrabold text-slate-900 dark:text-white">{activeDomain.domain}</span>
           <span className="font-mono text-xs font-bold text-indigo-300 bg-indigo-950 border border-indigo-800 px-2 py-0.5 rounded-md">
             Status: {activeDomain.levelLabel} ({activeDomain.score}/100)
           </span>
         </div>
 
         {activeRecModule && (
-          <div className="flex items-center justify-between pt-1 border-t border-slate-800 gap-2 flex-wrap">
-            <div className="text-xs text-slate-300 min-w-0">
-              <span className="text-slate-400">Rekomendasi Modul: </span>
-              <strong className="text-white">{activeRecModule.title}</strong>
+          <div className="flex items-center justify-between pt-1 border-t border-slate-200 dark:border-slate-800 gap-2 flex-wrap">
+            <div className="text-xs text-slate-600 dark:text-slate-300 min-w-0">
+              <span className="text-slate-500 dark:text-slate-400">Rekomendasi Modul: </span>
+              <strong className="text-slate-900 dark:text-white">{activeRecModule.title}</strong>
             </div>
 
             {onSelectModule && (
               <button
                 onClick={() => onSelectModule(activeRecModule.id)}
-                className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-extrabold text-white flex items-center gap-1 transition-all cursor-pointer shrink-0"
+                className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-extrabold text-slate-900 dark:text-white flex items-center gap-1 transition-all cursor-pointer shrink-0"
               >
                 <span>Buka Modul</span>
                 <ChevronRight className="w-3.5 h-3.5" />
