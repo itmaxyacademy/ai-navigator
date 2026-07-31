@@ -33,9 +33,14 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    // 1. Fetch questions for this module from the centralized bank
-    const bankModule = QUESTION_BANK.modules.find(m => m.moduleId === module.id);
-    const pool = bankModule?.questions || [];
+    // 1. Fetch questions from the actual module data
+    const pool = (module.quiz || []).map((q) => ({
+      id: q.id,
+      question: q.question,
+      options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
+      correctOptionId: q.correctAnswer.toString(),
+      explanation: q.explanation,
+    }));
 
     // 2. Randomly pick questions
     const shuffledPool = shuffleArray(pool);
@@ -103,8 +108,13 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
 
   const handleRestart = () => {
     // Reshuffle on restart for a completely new quiz experience
-    const bankModule = QUESTION_BANK.modules.find(m => m.moduleId === module.id);
-    const pool = bankModule?.questions || [];
+    const pool = (module.quiz || []).map((q) => ({
+      id: q.id,
+      question: q.question,
+      options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
+      correctOptionId: q.correctAnswer.toString(),
+      explanation: q.explanation,
+    }));
     const shuffledPool = shuffleArray(pool);
     const selected = shuffledPool.slice(0, quizLength);
     const preparedQuestions = selected.map(q => ({
@@ -161,15 +171,15 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
                 <button
                   key={opt.id}
                   onClick={() => handleSelectOption(opt.id)}
-                  className={`w-full text-left p-4 rounded-xl border text-xs sm:text-sm font-medium transition-all flex items-center justify-between ${
+                  className={`w-full text-left p-4 rounded-xl border text-xs sm:text-sm font-medium transition-all flex items-center justify-between min-h-[4rem] h-auto ${
                     isSelected
                       ? 'bg-indigo-950 border-indigo-500 text-slate-900 dark:text-white ring-1 ring-indigo-500/50 shadow-md'
                       : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-slate-300 dark:border-slate-700 hover:bg-white dark:bg-slate-900'
                   }`}
                 >
-                  <span className="flex items-center gap-3">
+                  <span className="flex items-start gap-3 w-full">
                     <span
-                      className={`w-6 h-6 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 border ${
+                      className={`w-6 h-6 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 border mt-0.5 ${
                         isSelected
                           ? 'bg-indigo-600 text-slate-900 dark:text-white border-indigo-400'
                           : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800'
@@ -177,7 +187,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
                     >
                       {String.fromCharCode(65 + optIdx)}
                     </span>
-                    <span>{opt.text}</span>
+                    <span className="break-words whitespace-normal leading-relaxed flex-1">{opt.text}</span>
                   </span>
                 </button>
               );

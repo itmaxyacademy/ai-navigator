@@ -119,7 +119,7 @@ export default function App() {
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
 
     if (isLocalDev) {
-      // On localhost, skip auth to prevent hanging if API is down
+      // On localhost, skip auth to prevent hanging if API is down or bypass login
       setIsAuthValidating(false);
       return;
     }
@@ -139,7 +139,7 @@ export default function App() {
       window.location.href = getLandingUrl();
     };
 
-    if (!token) {
+    if (!token && !isLocalDev) {
       redirectToLogin();
       return;
     }
