@@ -123,8 +123,7 @@ export default function App() {
     const tokenFromUrl = urlParams.get('token');
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
 
-    // On localhost without a valid token: bypass auth entirely with mock VIP user
-    if (isLocalDev && !token) {
+    const setLocalDevUser = () => {
       setProgress(prev => ({
         ...prev,
         userTier: 'tier2',
@@ -137,6 +136,11 @@ export default function App() {
         packageName: 'Local Dev — VIP Access'
       }));
       setIsAuthValidating(false);
+    };
+
+    // On localhost without a valid token: bypass auth entirely with mock VIP user
+    if (isLocalDev && !token) {
+      setLocalDevUser();
       return;
     }
 
@@ -146,10 +150,14 @@ export default function App() {
     };
 
     const redirectToLogin = () => {
-      setIsAuthValidating(false);
       localStorage.removeItem('maxy_access_token');
       localStorage.removeItem('maxy_refresh_token');
       localStorage.removeItem(STORAGE_KEY);
+      if (isLocalDev) {
+        setLocalDevUser();
+        return;
+      }
+      setIsAuthValidating(false);
       window.location.href = getLandingUrl();
     };
 
@@ -251,6 +259,8 @@ export default function App() {
         // Invalid or expired token
         redirectToLogin();
       }
+    }).catch(() => {
+      redirectToLogin();
     });
   }, []);
 
@@ -262,6 +272,16 @@ export default function App() {
     localStorage.removeItem('maxy_access_token');
     localStorage.removeItem('maxy_refresh_token');
     localStorage.removeItem(STORAGE_KEY);
+    const isLocalDev = typeof window !== 'undefined' && (
+      window.location.hostname === 'localhost' || 
+      window.location.hostname === '127.0.0.1' ||
+      window.location.hostname.startsWith('192.168.') ||
+      window.location.hostname.startsWith('10.')
+    );
+    if (isLocalDev) {
+      window.location.reload();
+      return;
+    }
     const target = 'https://ainavigator.maxy.academy?login=true';
     window.location.href = target;
   };
