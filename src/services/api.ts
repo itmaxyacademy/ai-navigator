@@ -34,7 +34,16 @@ async function fetchWithAuth(url: string, options: RequestInit = {}): Promise<Re
   }
   options.headers = headers;
 
-  let res = await fetch(url, options);
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+  options.signal = controller.signal;
+
+  let res;
+  try {
+    res = await fetch(url, options);
+  } finally {
+    clearTimeout(timeoutId);
+  }
 
   if (res.status === 401) {
     const newToken = await refreshAccessToken();
@@ -42,7 +51,14 @@ async function fetchWithAuth(url: string, options: RequestInit = {}): Promise<Re
       const retryHeaders = new Headers(options.headers || {});
       retryHeaders.set('Authorization', `Bearer ${newToken}`);
       options.headers = retryHeaders;
-      res = await fetch(url, options);
+      const retryController = new AbortController();
+      const retryTimeoutId = setTimeout(() => retryController.abort(), 10000);
+      options.signal = retryController.signal;
+      try {
+        res = await fetch(url, options);
+      } finally {
+        clearTimeout(retryTimeoutId);
+      }
     }
   }
 

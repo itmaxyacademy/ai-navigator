@@ -118,8 +118,8 @@ export default function App() {
     const tokenFromUrl = urlParams.get('token');
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
 
-    if (isLocalDev && !token) {
-      // On localhost without a token, skip auth and load with default free-tier
+    if (isLocalDev) {
+      // On localhost, skip auth to prevent hanging if API is down
       setIsAuthValidating(false);
       return;
     }
