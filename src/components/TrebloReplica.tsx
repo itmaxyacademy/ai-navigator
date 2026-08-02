@@ -166,23 +166,11 @@ export const TrebloReplica: React.FC = () => {
     showToastMsg('✨ Mengirim prompt ke Treblo Gemini AI Engine...');
 
     try {
-      const res = await fetch('/api/generate-song', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: promptText.trim() || currentTitle.trim() || 'Lagu AI Treblo',
-          mode: currentMode === 'advanced' ? 'custom' : 'simple',
-          isInstrumental: currentInstrumental,
-          customLyrics: currentLyrics,
-          customStyle: currentStyle,
-          customTitle: currentTitle,
-        }),
-      });
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || 'Terjadi kesalahan pada server saat membuat lagu.');
-      }
+      // Simulasi delay API backend
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Sengaja throw error agar masuk ke blok fallback pembuat lagu lokal
+      throw new Error('Trigger fallback lokal');
 
       const data = await res.json();
       const versions = data.versions || [];

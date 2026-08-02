@@ -5,7 +5,7 @@ import {
   Columns, MoreVertical, LayoutGrid, Compass, Clock, BookOpen, ExternalLink,
   Key, Shield, CreditCard, Copy, ArrowLeft, RefreshCw, FileText, CheckCircle2,
   Wand2, Zap, Layers, MessageSquare, Mic, Paperclip, Dices, Globe, Eye,
-  Settings, Folder, Box, ChevronRight, HelpCircle, User, Sparkle
+  Settings, Folder, Box, ChevronRight, HelpCircle, User, Sparkle, Menu
 } from 'lucide-react';
 
 interface AppItem {
@@ -31,10 +31,12 @@ interface GalleryItem {
 export const GoogleAIStudioReplica: React.FC = () => {
   // Main view state in sidebar: 'playground' | 'build_workspace' | 'my_apps' | 'gallery' | 'dashboard'
   const [activeTab, setActiveTab] = useState<'playground' | 'build_workspace' | 'my_apps' | 'gallery' | 'dashboard'>('playground');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   // Stage toggle inside Playground: 'playground' (Tahap 1) vs 'build_workspace' (Tahap 2)
   const [selectedGridMode, setSelectedGridMode] = useState<string>('featured');
   const [gridFilterMode, setGridFilterMode] = useState<'models' | 'agents'>('models');
+  const [playgroundMobileTab, setPlaygroundMobileTab] = useState<'prompt' | 'settings'>('prompt');
 
   // Prompt Inputs & Loading & Error States
   const [playgroundPrompt, setPlaygroundPrompt] = useState<string>(
@@ -127,25 +129,15 @@ export const GoogleAIStudioReplica: React.FC = () => {
     showToast(`🚀 Memproses request dengan model ${selectedModel}...`);
 
     try {
-      const res = await fetch('/api/gemini-playground', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: promptToUse,
-          model: selectedModel,
-          systemInstruction,
-          temperature,
-          thinkingLevel,
-          tools: toolsState,
-          mode: selectedGridMode,
-        }),
-      });
+      // Simulasi delay API backend
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Gagal memproses request dari API.');
-      }
+      const data = {
+        text: `Ini adalah respons hasil simulasi dari ${selectedModel} untuk instruksi Anda:\n\n"${promptToUse}"\n\nSemua parameter seperti Temperature (${temperature}) dan Thinking Level (${thinkingLevel}) telah diterapkan pada simulasi ini.`,
+        modelUsed: selectedModel,
+        groundingSources: [],
+        imageUrl: undefined
+      };
 
       const outputData = {
         text: data.text || 'Tidak ada teks respons yang diterima.',
@@ -222,22 +214,10 @@ export const GoogleAIStudioReplica: React.FC = () => {
     ]);
 
     try {
-      const res = await fetch('/api/gemini-playground', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: msg,
-          model: selectedModel,
-          systemInstruction,
-          temperature,
-          thinkingLevel,
-          tools: toolsState,
-          mode: 'code_chat',
-        }),
-      });
+      // Simulasi delay API
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
-      const data = await res.json();
-      const responseText = data.text || 'Langkah iterasi berhasil diselesaikan.';
+      const responseText = 'Langkah iterasi simulasi berhasil diselesaikan. Kode telah diperbarui sesuai instruksi.';
 
       setChatMessages((prev) => [
         ...prev,
@@ -348,10 +328,34 @@ export const GoogleAIStudioReplica: React.FC = () => {
         </div>
       )}
 
+      {/* Mobile Header */}
+      <div className="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800/80 p-3 flex items-center justify-between z-10 relative">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center shadow-md">
+            <Sparkles className="w-3 h-3 text-white" />
+          </div>
+          <span className="text-sm font-bold text-slate-900 dark:text-white tracking-wide">Google AI Studio</span>
+        </div>
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="p-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300"
+        >
+          {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
       {/* Main Container Layout */}
-      <div className="flex flex-1 overflow-hidden min-w-0">
+      <div className="flex flex-1 overflow-hidden min-w-0 relative">
+        {/* Mobile Overlay */}
+        {isMobileMenuOpen && (
+          <div 
+            className="absolute inset-0 bg-black/50 z-40 lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+
         {/* Left Sidebar Navigation */}
-        <aside className="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800/80 flex flex-col justify-between shrink-0 select-none">
+        <aside className={`w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800/80 flex-col justify-between shrink-0 select-none absolute lg:relative z-50 h-full transition-transform ${isMobileMenuOpen ? 'translate-x-0 flex shadow-2xl' : '-translate-x-full lg:translate-x-0 hidden lg:flex'}`}>
           <div className="p-4 space-y-6">
             {/* Logo / Header */}
             <div className="flex items-center justify-between">
@@ -377,7 +381,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 </p>
                 <div className="space-y-0.5">
                   <button
-                    onClick={() => setActiveTab('playground')}
+                    onClick={() => { setActiveTab('playground'); setIsMobileMenuOpen(false); }}
                     className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
                       activeTab === 'playground'
                         ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
@@ -391,6 +395,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     onClick={() => {
                       showToast('Riwayat prompt dibuka pada section Recent');
                       setActiveTab('playground');
+                      setIsMobileMenuOpen(false);
                     }}
                     className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50 transition-all flex-wrap max-w-full"
                   >
@@ -407,14 +412,14 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 </p>
                 <div className="space-y-0.5">
                   <button
-                    onClick={() => handleStartBuilding('Buat aplikasi web baru dengan Gemini AI')}
+                    onClick={() => { handleStartBuilding('Buat aplikasi web baru dengan Gemini AI'); setIsMobileMenuOpen(false); }}
                     className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-gradient-to-r from-blue-600/30 to-indigo-600/30 text-blue-300 hover:from-blue-600/40 hover:to-indigo-600/40 border border-blue-500/30 transition-all font-semibold flex-wrap max-w-full"
                   >
                     <Plus className="w-4 h-4 text-blue-400" />
                     <span>+ New app</span>
                   </button>
                   <button
-                    onClick={() => setActiveTab('my_apps')}
+                    onClick={() => { setActiveTab('my_apps'); setIsMobileMenuOpen(false); }}
                     className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
                       activeTab === 'my_apps'
                         ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
@@ -425,7 +430,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     <span>My apps</span>
                   </button>
                   <button
-                    onClick={() => setActiveTab('gallery')}
+                    onClick={() => { setActiveTab('gallery'); setIsMobileMenuOpen(false); }}
                     className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
                       activeTab === 'gallery'
                         ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
@@ -445,7 +450,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 </p>
                 <div className="space-y-0.5">
                   <button
-                    onClick={() => setActiveTab('dashboard')}
+                    onClick={() => { setActiveTab('dashboard'); setIsMobileMenuOpen(false); }}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all ${
                       activeTab === 'dashboard'
                         ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
@@ -459,7 +464,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
                   </button>
                   <button
-                    onClick={() => showToast('Membuka dokumentasi resmi Google AI Studio')}
+                    onClick={() => { showToast('Membuka dokumentasi resmi Google AI Studio'); setIsMobileMenuOpen(false); }}
                     className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50 transition-all flex-wrap max-w-full"
                   >
                     <BookOpen className="w-4 h-4" />
@@ -498,20 +503,40 @@ export const GoogleAIStudioReplica: React.FC = () => {
           {/* ========================================================= */}
           {activeTab === 'playground' && (
             <div className="flex-1 flex flex-col lg:flex-row min-h-0">
+              {/* Mobile Tab Switcher */}
+              <div className="lg:hidden p-4 border-b border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0d1322] shrink-0">
+                <div className="flex items-center bg-slate-100 dark:bg-slate-950 rounded-xl p-1">
+                  <button
+                    onClick={() => setPlaygroundMobileTab('prompt')}
+                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-2 ${playgroundMobileTab === 'prompt' ? 'bg-white dark:bg-slate-800 shadow text-blue-500' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                  >
+                    <Terminal className="w-4 h-4" />
+                    Prompt & Chat
+                  </button>
+                  <button
+                    onClick={() => setPlaygroundMobileTab('settings')}
+                    className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-2 ${playgroundMobileTab === 'settings' ? 'bg-white dark:bg-slate-800 shadow text-blue-500' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                  >
+                    <Sliders className="w-4 h-4" />
+                    Run Settings
+                  </button>
+                </div>
+              </div>
+
               {/* Left/Center Main Playground View */}
-              <div className="flex-1 p-5 sm:p-7 flex flex-col justify-between space-y-6 overflow-y-auto border-r border-slate-200 dark:border-slate-800/60">
+              <div className={`flex-1 p-5 sm:p-7 flex-col justify-between space-y-6 overflow-y-auto border-r border-slate-200 dark:border-slate-800/60 ${playgroundMobileTab === 'prompt' ? 'flex' : 'hidden lg:flex'}`}>
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/60 pb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800/60 pb-4">
                   <div>
                     <h2 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2 flex-wrap max-w-full">
                       <Terminal className="w-5 h-5 text-blue-400" />
                       Playground
                     </h2>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                       Eksplorasi prompt, konfigurasikan model Gemini 3, dan bangun aplikasi secara interaktif.
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 flex-wrap max-w-full">
+                  <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={() => showToast('Link Playground disalin ke clipboard!')}
                       className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800 transition-all text-xs flex items-center gap-1.5 flex-wrap max-w-full"
@@ -896,7 +921,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
               </div>
 
               {/* Right Panel: RUN SETTINGS */}
-              <aside className="w-full lg:w-80 bg-white dark:bg-[#0d1322] border-l border-slate-200 dark:border-slate-800 p-5 space-y-6 overflow-y-auto shrink-0">
+              <aside className={`w-full lg:w-80 bg-white dark:bg-[#0d1322] border-l border-slate-200 dark:border-slate-800 p-5 space-y-6 overflow-y-auto shrink-0 ${playgroundMobileTab === 'settings' ? 'block' : 'hidden lg:block'}`}>
                 <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-3">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2 flex-wrap max-w-full">
                     <Sliders className="w-4 h-4 text-blue-400" />
