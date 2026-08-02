@@ -222,7 +222,7 @@ export const GammaReplica: React.FC = () => {
       {flowStage === 'landing' && (
         <div className="flex-1 flex flex-col bg-white">
           {/* Header Bar */}
-          <header className="px-8 py-5 flex items-center justify-between border-b border-slate-100 bg-white">
+          <header className="px-5 sm:px-8 py-4 flex items-center justify-between border-b border-slate-100 bg-white">
             <div className="flex items-center gap-8">
               <span className="text-2xl font-black tracking-wider text-[#0e3073]">GAMMA</span>
               <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
@@ -232,11 +232,11 @@ export const GammaReplica: React.FC = () => {
                 <button onClick={() => setInfoModal({ title: 'Harga Paket', content: 'Mulai secara gratis dengan kredit awal, lalu upgrade ke Paket Plus/Pro untuk fitur tanpa batas.' })} className="hover:text-slate-900 cursor-pointer">Harga</button>
               </nav>
             </div>
-            <div className="flex items-center gap-4 flex-wrap max-w-full">
-              <button onClick={() => setFlowStage('onboarding')} className="text-sm font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">Masuk</button>
+            <div className="flex items-center gap-3">
+              <button onClick={() => setFlowStage('onboarding')} className="hidden sm:block text-sm font-semibold text-slate-700 hover:text-slate-900 cursor-pointer">Masuk</button>
               <button
                 onClick={() => setFlowStage('onboarding')}
-                className="px-5 py-2.5 rounded-full bg-[#0e44b8] hover:bg-[#0b3899] text-slate-900 dark:text-white text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
+                className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#0e44b8] hover:bg-[#0b3899] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer whitespace-nowrap"
               >
                 Mulai secara gratis
               </button>
@@ -485,16 +485,17 @@ export const GammaReplica: React.FC = () => {
 
       {/* ---------------- STAGE 4: AGENT INPUT ("Buat dengan Agent") ---------------- */}
       {flowStage === 'agent_input' && (
-        <div className="relative flex-1 flex flex-col bg-[#1b3022] overflow-hidden p-6 sm:p-10">
-          {/* Scenic Forest Nature Wallpaper Background Simulation */}
-          <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/80 via-slate-950/85 to-black/90 pointer-events-none" />
-          <div className="absolute -top-20 -right-20 w-96 h-96 bg-emerald-600/20 rounded-full blur-[100px] pointer-events-none" />
+        <div className="relative flex-1 flex flex-col bg-[#0f172a] overflow-hidden p-6 sm:p-10">
+          {/* Sleek Dark Background Simulation */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-[#131b2f] to-slate-950 pointer-events-none" />
+          <div className="absolute top-1/4 -right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
 
           {/* Top Left Navigation */}
           <div className="relative z-20 flex items-center justify-between mb-6">
             <button
               onClick={handleBackNavigation}
-              className="px-4 py-1.5 rounded-full bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 hover:bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 flex-wrap max-w-full"
+              className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Kembali</span>
@@ -502,60 +503,67 @@ export const GammaReplica: React.FC = () => {
           </div>
 
           {/* Centered Agent Input Card Modal */}
-          <div className="relative z-20 max-w-2xl mx-auto w-full my-auto bg-white dark:bg-slate-900/70 border border-slate-300 dark:border-slate-700/60 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6 text-center">
-            <div className="space-y-2">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <div className="relative z-20 max-w-2xl mx-auto w-full my-auto bg-slate-900/80 border border-slate-700/60 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6 text-center">
+            <div className="space-y-3">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                 Buat dengan Agent
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium max-w-xl mx-auto">
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-medium max-w-xl mx-auto">
                 Ubah ide, catatan, dan file Anda menjadi presentasi, dokumen, dan unggahan sosial. Agent melakukan penelitian, mengutip sumber-sumbernya, dan membentuk narasinya.
               </p>
             </div>
 
             {/* Main Interactive Input Container */}
-            <div className="bg-white border-2 border-blue-500 rounded-2xl p-4 shadow-xl text-left space-y-3">
+            <div className="bg-slate-950/50 border border-slate-700 focus-within:border-blue-500 rounded-2xl p-4 shadow-inner text-left space-y-3 transition-colors">
               <textarea
                 value={promptText}
                 onChange={(e) => setPromptText(e.target.value)}
                 placeholder="Deskripsikan ide presentasi, dokumen, atau topik yang ingin dibuat..."
                 rows={4}
-                className="w-full bg-transparent text-slate-900 text-sm font-medium placeholder-slate-400 focus:outline-none resize-none leading-relaxed"
+                className="w-full bg-transparent text-white text-sm sm:text-base font-medium placeholder-slate-500 focus:outline-none resize-none leading-relaxed"
               />
 
               {/* Attached File/Notes Tag Badge */}
               {(pastedNotesText || attachedFileName) && (
-                <div className="flex items-center gap-2 p-2 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs font-bold flex-wrap max-w-full">
-                  <FileText className="w-4 h-4 text-blue-600" />
-                  <span className="break-words whitespace-normal leading-snug max-w-xs">{attachedFileName || 'Catatan rapat terlampir'}</span>
+                <div className="flex items-center gap-2 p-2 rounded-xl bg-blue-900/30 border border-blue-800/50 text-blue-300 text-xs font-bold w-fit">
+                  <FileText className="w-4 h-4 text-blue-400" />
+                  <span className="truncate max-w-[200px]">{attachedFileName || 'Catatan rapat terlampir'}</span>
                   <button
                     onClick={() => {
                       setPastedNotesText('');
                       setAttachedFileName(null);
                     }}
-                    className="ml-auto text-slate-500 dark:text-slate-400 hover:text-rose-600 cursor-pointer"
+                    className="ml-2 text-slate-400 hover:text-rose-400 cursor-pointer"
                   >
                     <X className="w-4 h-4" />
                   </button>
                 </div>
               )}
 
+              {/* Quick Prompt Suggestions */}
+              {!promptText && !pastedNotesText && !attachedFileName && (
+                <div className="pt-2 flex flex-wrap gap-2">
+                  <button onClick={() => setPromptText('Buatkan presentasi tentang strategi pemasaran digital tahun 2024 untuk startup SaaS')} className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors text-left">
+                    🚀 Strategi Pemasaran Digital
+                  </button>
+                  <button onClick={() => setPromptText('Bantu saya merancang laporan evaluasi kinerja karyawan akhir tahun yang profesional')} className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors text-left">
+                    📊 Laporan Kinerja
+                  </button>
+                  <button onClick={() => setPromptText('Buat slide perkenalan perusahaan (Company Profile) yang elegan dan ringkas')} className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors text-left">
+                    🏢 Profil Perusahaan
+                  </button>
+                </div>
+              )}
+
               {/* Bottom Control Bar Inside Box */}
-              <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                <div className="flex items-center gap-2 flex-wrap max-w-full">
+              <div className="flex items-center justify-between pt-3 border-t border-slate-800/60 mt-2">
+                <div className="flex items-center gap-2">
                   <button
                     onClick={() => setShowNotesModal(true)}
-                    className="px-3 py-1.5 rounded-xl border border-dashed border-slate-300 hover:border-blue-400 bg-slate-50 text-slate-600 hover:text-blue-600 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer flex-wrap max-w-full"
+                    className="px-3 py-1.5 rounded-xl border border-dashed border-slate-600 hover:border-blue-500 bg-slate-900/50 text-slate-400 hover:text-blue-400 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
-                    <span>Catatan rapat</span>
-                  </button>
-
-                  <button
-                    onClick={() => setShowNotesModal(true)}
-                    className="p-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
-                    title="Tambah Sumber"
-                  >
-                    <Plus className="w-4 h-4" />
+                    <span className="hidden sm:inline">Catatan rapat</span>
                   </button>
                 </div>
 
@@ -563,9 +571,9 @@ export const GammaReplica: React.FC = () => {
                 <button
                   onClick={handleInitialSubmit}
                   disabled={!promptText.trim() || isLoading}
-                  className="w-9 h-9 rounded-full bg-[#0e44b8] hover:bg-[#0b3899] text-slate-900 dark:text-white flex items-center justify-center transition-all cursor-pointer shadow-md disabled:bg-slate-300 disabled:cursor-not-allowed"
+                  className="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center transition-all cursor-pointer shadow-lg shadow-blue-900/20 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed disabled:shadow-none"
                 >
-                  <Play className="w-4 h-4 fill-current ml-0.5" />
+                  <Play className="w-4 h-4 fill-current ml-1" />
                 </button>
               </div>
             </div>
@@ -573,11 +581,11 @@ export const GammaReplica: React.FC = () => {
             {/* Error Message */}
             {errorMessage && (
               <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-800 text-rose-200 text-xs flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2 flex-wrap max-w-full">
+                <div className="flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
-                <button onClick={() => setErrorMessage(null)} className="p-1 text-rose-300 hover:text-slate-900 dark:text-white">
+                <button onClick={() => setErrorMessage(null)} className="p-1 text-rose-300 hover:text-white">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -630,7 +638,26 @@ export const GammaReplica: React.FC = () => {
                       : 'bg-white border border-slate-200 text-slate-800 shadow-sm space-y-3'
                   }`}
                 >
-                  <p className="whitespace-pre-wrap">{msg.text}</p>
+                  {msg.sender === 'agent' && msg.text.includes('**Slide') ? (
+                    <div className="space-y-4">
+                      <p className="whitespace-pre-wrap text-slate-600 dark:text-slate-300 font-medium">{msg.text.split('**Slide')[0]}</p>
+                      <div className="flex overflow-x-auto gap-4 pb-4 snap-x hide-scrollbar">
+                        {msg.text.split('**Slide').slice(1).map((slideText, idx) => (
+                          <div key={idx} className="shrink-0 w-[280px] sm:w-[320px] h-[180px] sm:h-[200px] rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 p-5 shadow-2xl snap-center flex flex-col relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                            <div className="text-white/60 text-[10px] font-bold mb-2 uppercase tracking-wider flex items-center gap-2">
+                              <Layout className="w-3 h-3" /> Slide {slideText.split(':')[0]}
+                            </div>
+                            <div className="text-white text-sm sm:text-base font-semibold line-clamp-4 leading-relaxed mt-2">
+                              {slideText.substring(slideText.indexOf(':') + 1).replace(/\*/g, '').trim()}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="whitespace-pre-wrap">{msg.text}</p>
+                  )}
 
                   {/* Inline Action if Agent asks for notes */}
                   {msg.sender === 'agent' && msg.text.includes('melihat catatan') && (
