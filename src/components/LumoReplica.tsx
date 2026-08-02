@@ -348,10 +348,11 @@ export const LumoReplica: React.FC = () => {
           {/* Sidebar Toggle Button */}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 rounded-lg bg-white dark:bg-slate-900/60 hover:bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors cursor-pointer"
+            className="p-2 rounded-lg bg-white dark:bg-slate-900/60 hover:bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors cursor-pointer z-50 relative"
             title="Toggle Sidebar"
           >
-            <PanelLeft className="w-4 h-4" />
+            {isSidebarOpen ? <X className="w-4 h-4 md:hidden" /> : <PanelLeft className="w-4 h-4 md:hidden" />}
+            <PanelLeft className="w-4 h-4 hidden md:block" />
           </button>
         </div>
 
@@ -377,8 +378,8 @@ export const LumoReplica: React.FC = () => {
         {/* Lumo Sidebar */}
         <aside
           className={`${
-            isSidebarOpen ? 'w-64' : 'w-0 hidden'
-          } bg-[#11101a] border-r border-slate-200 dark:border-slate-800/80 flex flex-col justify-between transition-all duration-300 shrink-0 z-10 p-3`}
+            isSidebarOpen ? 'w-full sm:w-64 absolute sm:relative h-full shadow-2xl sm:shadow-none left-0 top-0' : 'w-0 hidden'
+          } bg-[#11101a] border-r border-slate-200 dark:border-slate-800/80 flex flex-col justify-between transition-all duration-300 shrink-0 z-40 sm:z-10 p-3`}
         >
           {/* Sidebar Top Header & Nav */}
           <div className="space-y-4 min-w-0 overflow-y-auto">
