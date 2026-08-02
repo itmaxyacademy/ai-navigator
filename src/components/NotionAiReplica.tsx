@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Sparkles,
   ArrowUp,
@@ -30,18 +30,32 @@ import {
 
 export const NotionAiReplica: React.FC = () => {
   // Global View Selector
-  const [activeTab, setActiveTab] = useState<'builder' | 'editor' | 'landing'>('builder');
+  const [activeTab, setActiveTab] = useState<'builder' | 'editor' | 'landing'>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('notion_tab');
+    if (tab === 'builder' || tab === 'editor' || tab === 'landing') return tab;
+    return 'builder';
+  });
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('notion_tab', activeTab);
+    window.history.replaceState({}, '', url.toString());
+  }, [activeTab]);
+
+  // Load saved state from localStorage
+  const savedState = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('notion_ai_state') || '{}') : {};
 
   // ==========================================
   // BAGIAN 1: MODAL BUILDER STATE
   // ==========================================
   const [builderPrompt, setBuilderPrompt] = useState<string>(
-    "Create a database for all marketing team members. Add information like their birthday, which office they're in, and their hobbies."
+    savedState.builderPrompt || "Create a database for all marketing team members. Add information like their birthday, which office they're in, and their hobbies."
   );
-  const [selectedTaskType, setSelectedTaskType] = useState<string>('default');
+  const [selectedTaskType, setSelectedTaskType] = useState<string>(savedState.selectedTaskType || 'default');
   const [builderLoading, setBuilderLoading] = useState<boolean>(false);
   const [builderError, setBuilderError] = useState<string | null>(null);
-  const [builderResult, setBuilderResult] = useState<string | null>(null);
+  const [builderResult, setBuilderResult] = useState<string | null>(savedState.builderResult || null);
 
   const handleChipClick = (taskName: string, examplePrompt: string) => {
     setSelectedTaskType(taskName);
@@ -85,15 +99,15 @@ export const NotionAiReplica: React.FC = () => {
   // BAGIAN 2: INLINE AI EDITOR STATE
   // ==========================================
   const [originalText, setOriginalText] = useState<string>(
-    "Creating alignment on product teams is essential for successful product development. Everyone on the team must be on the same page and working towards the same goal in order to create a successful product. This blog post will discuss how to create alignment on product teams, including the importance of understanding customer needs, developing a shared vision, and creating an atmosphere of collaboration."
+    savedState.originalText || "Creating alignment on product teams is essential for successful product development. Everyone on the team must be on the same page and working towards the same goal in order to create a successful product. This blog post will discuss how to create alignment on product teams, including the importance of understanding customer needs, developing a shared vision, and creating an atmosphere of collaboration."
   );
-  const [selectedText, setSelectedText] = useState<string>(originalText);
-  const [isTextSelected, setIsTextSelected] = useState<boolean>(true);
-  const [editorInstruction, setEditorInstruction] = useState<string>('');
-  const [aiEditedText, setAiEditedText] = useState<string | null>(null);
+  const [selectedText, setSelectedText] = useState<string>(savedState.selectedText || savedState.originalText || "Creating alignment on product teams is essential for successful product development. Everyone on the team must be on the same page and working towards the same goal in order to create a successful product. This blog post will discuss how to create alignment on product teams, including the importance of understanding customer needs, developing a shared vision, and creating an atmosphere of collaboration.");
+  const [isTextSelected, setIsTextSelected] = useState<boolean>(savedState.isTextSelected ?? true);
+  const [editorInstruction, setEditorInstruction] = useState<string>(savedState.editorInstruction || '');
+  const [aiEditedText, setAiEditedText] = useState<string | null>(savedState.aiEditedText || null);
   const [editorLoading, setEditorLoading] = useState<boolean>(false);
   const [editorError, setEditorError] = useState<string | null>(null);
-  const [lastInstructionUsed, setLastInstructionUsed] = useState<string>('');
+  const [lastInstructionUsed, setLastInstructionUsed] = useState<string>(savedState.lastInstructionUsed || '');
 
   const handleApplyEditorAi = async (instructionToUse?: string) => {
     const inst = instructionToUse || editorInstruction || 'Improve writing';
@@ -142,11 +156,25 @@ export const NotionAiReplica: React.FC = () => {
   // ==========================================
   // BAGIAN 3: FEATURE LANDING PAGE STATE
   // ==========================================
-  const [activeFeatureDemo, setActiveFeatureDemo] = useState<'Search' | 'Generate' | 'Analyze' | 'Chat' | null>(null);
-  const [featureInput, setFeatureInput] = useState<string>('');
-  const [featureMessages, setFeatureMessages] = useState<Array<{ sender: 'user' | 'ai'; text: string }>>([]);
+  const [activeFeatureDemo, setActiveFeatureDemo] = useState<'Search' | 'Generate' | 'Analyze' | 'Chat' | null>(savedState.activeFeatureDemo || null);
+  const [featureInput, setFeatureInput] = useState<string>(savedState.featureInput || '');
+  const [featureMessages, setFeatureMessages] = useState<Array<{ sender: 'user' | 'ai'; text: string }>>(savedState.featureMessages || []);
   const [featureLoading, setFeatureLoading] = useState<boolean>(false);
   const [showSimulatedAuthModal, setShowSimulatedAuthModal] = useState<boolean>(false);
+
+  // Sync state to localStorage on changes
+  useEffect(() => {
+    const stateToSave = {
+      builderPrompt, selectedTaskType, builderResult,
+      originalText, selectedText, isTextSelected, editorInstruction, aiEditedText, lastInstructionUsed,
+      activeFeatureDemo, featureInput, featureMessages
+    };
+    localStorage.setItem('notion_ai_state', JSON.stringify(stateToSave));
+  }, [
+    builderPrompt, selectedTaskType, builderResult,
+    originalText, selectedText, isTextSelected, editorInstruction, aiEditedText, lastInstructionUsed,
+    activeFeatureDemo, featureInput, featureMessages
+  ]);
 
   const handleOpenFeatureDemo = (feature: 'Search' | 'Generate' | 'Analyze' | 'Chat') => {
     setActiveFeatureDemo(feature);

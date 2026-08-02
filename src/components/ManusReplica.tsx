@@ -24,21 +24,37 @@ interface TaskItem {
 }
 
 export const ManusReplica: React.FC = () => {
+  // Global View Selector
+  const [view, setView] = useState<'landing' | 'workspace'>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const v = params.get('manus_view');
+    if (v === 'landing' || v === 'workspace') return v;
+    return 'landing';
+  });
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('manus_view', view);
+    window.history.replaceState({}, '', url.toString());
+  }, [view]);
+
+  // Load saved state from localStorage
+  const savedState = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('manus_state') || '{}') : {};
+
   // State Management
-  const [view, setView] = useState<'landing' | 'workspace'>('landing');
-  const [taskInput, setTaskInput] = useState<string>('');
-  const [taskType, setTaskType] = useState<string>('default');
-  const [attachedFile, setAttachedFile] = useState<string | null>(null);
+  const [taskInput, setTaskInput] = useState<string>(savedState.taskInput || '');
+  const [taskType, setTaskType] = useState<string>(savedState.taskType || 'default');
+  const [attachedFile, setAttachedFile] = useState<string | null>(savedState.attachedFile || null);
 
   // Execution & Loading States
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [executionLogs, setExecutionLogs] = useState<ExecutionStep[]>([]);
-  const [activeResultText, setActiveResultText] = useState<string>('');
+  const [executionLogs, setExecutionLogs] = useState<ExecutionStep[]>(savedState.executionLogs || []);
+  const [activeResultText, setActiveResultText] = useState<string>(savedState.activeResultText || '');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // History State
-  const [taskHistory, setTaskHistory] = useState<TaskItem[]>([]);
-  const [followUpInput, setFollowUpInput] = useState<string>('');
+  const [taskHistory, setTaskHistory] = useState<TaskItem[]>(savedState.taskHistory || []);
+  const [followUpInput, setFollowUpInput] = useState<string>(savedState.followUpInput || '');
 
   // UI Interactive Toggle States
   const [showMoreDropdown, setShowMoreDropdown] = useState<boolean>(false);
@@ -48,6 +64,18 @@ export const ManusReplica: React.FC = () => {
   const [copied, setCopied] = useState<boolean>(false);
 
   const logsEndRef = useRef<HTMLDivElement>(null);
+
+  // Sync state to localStorage on changes
+  useEffect(() => {
+    const stateToSave = {
+      taskInput, taskType, attachedFile,
+      executionLogs, activeResultText, taskHistory, followUpInput
+    };
+    localStorage.setItem('manus_state', JSON.stringify(stateToSave));
+  }, [
+    taskInput, taskType, attachedFile,
+    executionLogs, activeResultText, taskHistory, followUpInput
+  ]);
 
   useEffect(() => {
     if (view === 'workspace') {
