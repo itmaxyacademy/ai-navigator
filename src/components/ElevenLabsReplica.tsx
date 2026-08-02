@@ -519,18 +519,18 @@ export const ElevenLabsReplica: React.FC = () => {
             {/* Generated Image Result Box */}
             {generatedImageResult && (
               <div className="bg-[#111420] border border-[#21273b] rounded-2xl p-4 space-y-3 shadow-xl">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
-                    <Sparkles className="w-4 h-4 text-purple-400" />
-                    Hasil Gambar AI - {imageStyle}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2">
+                  <span className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-purple-400 shrink-0" />
+                    <span className="line-clamp-2">Hasil Gambar AI - {imageStyle}</span>
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full bg-purple-600/30 text-purple-300 font-mono text-[10px] border border-purple-500/40">
+                  <span className="px-2.5 py-0.5 rounded-full bg-purple-600/30 text-purple-300 font-mono text-[10px] border border-purple-500/40 shrink-0 w-fit">
                     {imageAspectRatio}
                   </span>
                 </div>
 
                 {/* Simulated Canvas Image Output */}
-                <div className="relative aspect-video rounded-xl bg-gradient-to-br from-purple-900/60 via-slate-900 to-indigo-950 border border-[#23293e] overflow-hidden flex flex-col items-center justify-center p-6 text-center space-y-3 group shadow-2xl">
+                <div className="relative aspect-square md:aspect-video min-h-[220px] rounded-xl bg-gradient-to-br from-purple-900/60 via-slate-900 to-indigo-950 border border-[#23293e] overflow-hidden flex flex-col items-center justify-center p-4 sm:p-6 text-center space-y-2 sm:space-y-3 group shadow-2xl">
                   <div className="w-16 h-16 rounded-2xl bg-purple-600/30 border border-purple-500/50 flex items-center justify-center text-purple-300 shadow-xl group-hover:scale-110 transition-transform">
                     <ImageIcon className="w-8 h-8 text-purple-300" />
                   </div>
@@ -542,8 +542,8 @@ export const ElevenLabsReplica: React.FC = () => {
                       "{imagePrompt}"
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 pt-2 flex-wrap max-w-full">
-                    <span className="px-2.5 py-1 rounded-lg bg-black/40 text-[10px] text-slate-600 dark:text-slate-300 font-mono border border-white/10">
+                  <div className="flex items-center justify-center gap-2 pt-2 w-full px-2 overflow-hidden">
+                    <span className="px-2.5 py-1 rounded-lg bg-black/40 text-[9px] sm:text-[10px] text-slate-600 dark:text-slate-300 font-mono border border-white/10 truncate max-w-full">
                       Resolution: 1920x1080 • Model: Eleven Labs Gen-3
                     </span>
                   </div>
@@ -814,9 +814,9 @@ export const ElevenLabsReplica: React.FC = () => {
                   </button>
 
                   <div className="flex-1 space-y-1 min-w-0">
-                    <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
-                      <span className="break-words whitespace-normal leading-snug max-w-[200px]">"{sfxPrompt}"</span>
-                      <span className="text-[10px] text-amber-400 font-mono">24-bit 48kHz WAV</span>
+                    <div className="flex flex-col sm:flex-row sm:justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold gap-1">
+                      <span className="break-words whitespace-normal leading-snug flex-1 min-w-0">"{sfxPrompt}"</span>
+                      <span className="text-[10px] text-amber-400 font-mono shrink-0">24-bit 48kHz WAV</span>
                     </div>
                     <div className="h-2 bg-[#1b2030] rounded-full overflow-hidden">
                       <div className={`h-full bg-amber-400 transition-all ${isSfxPlaying ? 'w-2/3 animate-pulse' : 'w-1/4'}`} />
@@ -928,9 +928,9 @@ export const ElevenLabsReplica: React.FC = () => {
                   </button>
 
                   <div className="flex-1 space-y-1 min-w-0">
-                    <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
-                      <span>"{musicPrompt}"</span>
-                      <span className="text-[10px] text-indigo-400 font-mono">{musicGenre} • {musicLength}</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold gap-1">
+                      <span className="truncate">"{musicPrompt}"</span>
+                      <span className="text-[10px] text-indigo-400 font-mono shrink-0">{musicGenre} • {musicLength}</span>
                     </div>
                     <div className="h-2 bg-[#1b2030] rounded-full overflow-hidden">
                       <div className={`h-full bg-indigo-500 transition-all ${isMusicPlaying ? 'w-1/2 animate-pulse' : 'w-1/3'}`} />
@@ -1052,9 +1052,9 @@ export const ElevenLabsReplica: React.FC = () => {
                   </button>
 
                   <div className="flex-1 space-y-1 min-w-0">
-                    <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
-                      <span>{voiceChangerFile} ➔ {voiceChangerTarget}</span>
-                      <span className="text-[10px] text-rose-400 font-mono">100% Speech-to-Speech</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold gap-1">
+                      <span className="truncate">{voiceChangerFile} ➔ {voiceChangerTarget}</span>
+                      <span className="text-[10px] text-rose-400 font-mono shrink-0">100% Speech-to-Speech</span>
                     </div>
                     <div className="h-2 bg-[#1b2030] rounded-full overflow-hidden">
                       <div className={`h-full bg-rose-500 transition-all ${isVoiceChangerPlaying ? 'w-2/3 animate-pulse' : 'w-1/3'}`} />
@@ -1161,9 +1161,9 @@ export const ElevenLabsReplica: React.FC = () => {
                   </button>
 
                   <div className="flex-1 space-y-1 min-w-0">
-                    <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
-                      <span>{isolatorFile} ➔ Clean Vocal</span>
-                      <span className="text-[10px] text-teal-400 font-mono">Noise Free</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold gap-1">
+                      <span className="truncate">{isolatorFile} ➔ Clean Vocal</span>
+                      <span className="text-[10px] text-teal-400 font-mono shrink-0">Noise Free</span>
                     </div>
                     <div className="h-2 bg-[#1b2030] rounded-full overflow-hidden">
                       <div className={`h-full bg-teal-400 transition-all ${isIsolatorPlaying ? 'w-3/4 animate-pulse' : 'w-1/2'}`} />
@@ -1268,9 +1268,9 @@ export const ElevenLabsReplica: React.FC = () => {
                   </button>
 
                   <div className="flex-1 space-y-1 min-w-0">
-                    <div className="flex justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold">
-                      <span>128 kbps MP3 ➔ 2304 kbps Studio WAV</span>
-                      <span className="text-[10px] text-amber-400 font-mono">High-Res Restoration</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs text-slate-600 dark:text-slate-300 font-semibold gap-1">
+                      <span className="truncate">128 kbps MP3 ➔ 2304 kbps Studio WAV</span>
+                      <span className="text-[10px] text-amber-400 font-mono shrink-0">High-Res Restoration</span>
                     </div>
                     <div className="h-2 bg-[#1b2030] rounded-full overflow-hidden">
                       <div className={`h-full bg-amber-400 transition-all ${isUpscalePlaying ? 'w-4/5 animate-pulse' : 'w-1/2'}`} />
@@ -1610,7 +1610,7 @@ export const ElevenLabsReplica: React.FC = () => {
 
                   {/* Interactive Waveform Bar Scrubber */}
                   <div
-                    className="flex-1 flex items-center gap-1 h-8 px-2 cursor-pointer group flex-wrap max-w-full min-w-0"
+                    className="flex-1 flex items-center gap-0.5 h-8 px-2 cursor-pointer group max-w-full min-w-0 overflow-hidden"
                     onClick={(e) => {
                       const rect = e.currentTarget.getBoundingClientRect();
                       const clickX = e.clientX - rect.left;
