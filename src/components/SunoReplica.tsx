@@ -523,16 +523,9 @@ export const SunoReplica: React.FC = () => {
                 </div>
                 <div className="flex-1 overflow-hidden min-w-0">
                   <h4 className="text-xs font-bold text-slate-900 dark:text-white break-words whitespace-normal leading-snug">wahyudi_maxy_academy</h4>
-                  <p className="text-[10px] text-pink-400 font-semibold">Paket Gratis ({credits} Kredit)</p>
+                  <p className="text-[10px] text-pink-400 font-semibold">Maxy AI (Unlimited)</p>
                 </div>
               </div>
-
-              <button
-                onClick={() => showToast('Membuka halaman Upgrade Pro...')}
-                className="w-full py-2 bg-gradient-to-r from-pink-600/30 to-orange-600/30 hover:from-pink-600/40 hover:to-orange-600/40 text-pink-300 border border-pink-500/40 rounded-xl text-xs font-bold transition-all text-center"
-              >
-                Upgrade ke Pro
-              </button>
 
               {/* Sidebar Navigation Items */}
               <nav className={`space-y-1 text-xs ${isMobileMenuOpen ? 'block' : 'hidden lg:block'}`}>
@@ -553,14 +546,14 @@ export const SunoReplica: React.FC = () => {
                 </button>
 
                 <button
-                  onClick={() => setMobileTab('create')}
+                  onClick={() => { setMobileTab('create'); setIsMobileMenuOpen(false); }}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl font-bold transition-colors ${
                     mobileTab === 'create'
                       ? 'bg-gradient-to-r from-pink-600/20 to-orange-600/20 text-pink-300 border border-pink-500/40'
                       : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928]'
                   }`}
                 >
-                  <Music className="w-4 h-4 text-pink-400" />
+                  <Music className={`w-4 h-4 ${mobileTab === 'create' ? 'text-pink-400' : ''}`} />
                   <span>Buat (Create)</span>
                 </button>
 
@@ -573,10 +566,14 @@ export const SunoReplica: React.FC = () => {
                 </button>
 
                 <button
-                  onClick={() => setMobileTab('workspace')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors flex-wrap max-w-full"
+                  onClick={() => { setMobileTab('workspace'); setIsMobileMenuOpen(false); }}
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl font-bold transition-colors ${
+                    mobileTab === 'workspace'
+                      ? 'bg-gradient-to-r from-pink-600/20 to-orange-600/20 text-pink-300 border border-pink-500/40'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928]'
+                  }`}
                 >
-                  <FolderKanban className="w-4 h-4" />
+                  <FolderKanban className={`w-4 h-4 ${mobileTab === 'workspace' ? 'text-pink-400' : ''}`} />
                   <span>Pustaka Lagu</span>
                 </button>
               </nav>
@@ -589,7 +586,7 @@ export const SunoReplica: React.FC = () => {
           </div>
 
           {/* Middle Create Form Column */}
-          <div className="w-full lg:w-96 bg-[#0f121e] border-r border-[#1b2030] p-5 space-y-5 shrink-0 overflow-y-auto">
+          <div className={`w-full lg:w-96 bg-[#0f121e] border-r border-[#1b2030] p-5 space-y-5 shrink-0 overflow-y-auto ${mobileTab === 'workspace' ? 'hidden lg:block' : 'block'}`}>
             {/* Top Mode Selector Tabs: Sederhana vs Lanjutan */}
             <div className="flex items-center justify-between border-b border-[#1b2030] pb-3">
               <div className="flex items-center gap-1.5 bg-[#080a10] p-1 rounded-xl border border-[#1a1f30] flex-wrap max-w-full">
@@ -798,7 +795,7 @@ export const SunoReplica: React.FC = () => {
           </div>
 
           {/* Right Workspace / Song List & Player Column */}
-          <div className="flex-1 p-5 space-y-5 overflow-y-auto bg-[#090b10] min-w-0">
+          <div className={`flex-1 p-5 space-y-5 overflow-y-auto bg-[#090b10] min-w-0 ${mobileTab === 'create' ? 'hidden lg:block' : 'block'}`}>
             <div className="flex items-center justify-between border-b border-[#1b2030] pb-3">
               <div>
                 <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
@@ -829,8 +826,8 @@ export const SunoReplica: React.FC = () => {
                         : 'border-[#1e2436] hover:border-[#2b344d]'
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-2 sm:gap-3 w-full min-w-0">
-                      <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0 flex-wrap max-w-full">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 w-full min-w-0">
+                      <div className="flex items-center gap-3 flex-1 min-w-0 w-full">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -847,20 +844,20 @@ export const SunoReplica: React.FC = () => {
 
                         <div className="flex-1 min-w-0">
                           <h4 className="text-xs font-bold text-slate-900 dark:text-white flex flex-wrap items-center gap-1.5 w-full leading-snug">
-                            <span className="break-words">{song.title}</span>
+                            <span className="truncate max-w-full">{song.title}</span>
                             {song.isInstrumental && (
                               <span className="px-1.5 py-0.5 sm:px-2 sm:py-0.2 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[8px] sm:text-[9px] rounded font-semibold shrink-0">
                                 Instrumental
                               </span>
                             )}
                           </h4>
-                          <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 break-words w-full mt-0.5 leading-snug">{song.style}</p>
+                          <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 truncate w-full mt-0.5 leading-snug">{song.style}</p>
                           <span className="text-[9px] sm:text-[10px] text-slate-500 font-mono block w-full mt-1">{song.createdAt} • {song.duration}</span>
                         </div>
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="flex items-center gap-1.5 text-xs shrink-0 flex-wrap max-w-full">
+                      <div className="flex items-center gap-1.5 text-xs shrink-0 justify-end w-full sm:w-auto border-t sm:border-0 border-[#1b2030] pt-2 sm:pt-0">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -899,7 +896,7 @@ export const SunoReplica: React.FC = () => {
                     </div>
 
                     {/* Waveform Visualization */}
-                    <div className="bg-[#080a10] rounded-xl p-2.5 flex items-center gap-1 h-9 border border-[#1b2030] flex-wrap max-w-full">
+                    <div className="bg-[#080a10] rounded-xl p-2.5 flex items-center gap-[2px] h-9 border border-[#1b2030] min-w-0 overflow-hidden">
                       {song.waveform.map((barHeight, idx) => {
                         const isPlayed = isSelected && isPlaying && idx < 12;
                         return (
