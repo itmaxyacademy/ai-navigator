@@ -450,10 +450,10 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
       )}
 
       {/* LEFT SIDEBAR (Gemini Style Navigation) */}
-      <aside className="w-full md:w-16 lg:w-60 bg-[#14161c] border-r border-slate-200 dark:border-slate-800/80 p-3 flex flex-row md:flex-col justify-between shrink-0 z-20">
-        <div className="flex md:flex-col space-x-2 md:space-x-0 md:space-y-4 items-center md:items-start w-full">
+      <aside className="w-full md:w-16 lg:w-60 bg-[#14161c] border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800/80 p-2 md:p-3 flex flex-row md:flex-col justify-start md:justify-between shrink-0 z-20 overflow-x-auto overflow-y-hidden gap-4 md:gap-0">
+        <div className="flex md:flex-col space-x-2 md:space-x-0 md:space-y-4 items-center md:items-start shrink-0">
           {/* Gemini Logo Header */}
-          <div className="flex items-center space-x-3 px-2 py-1 cursor-pointer" onClick={() => setCurrentView('gems-manager')}>
+          <div className="flex items-center space-x-3 px-2 py-1 cursor-pointer shrink-0" onClick={() => setCurrentView('gems-manager')}>
             <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-500 via-indigo-500 to-amber-400 flex items-center justify-center shadow-md">
               <Sparkles className="w-4 h-4 text-slate-900 dark:text-white fill-current" />
             </div>
@@ -470,7 +470,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
               setCurrentView('home');
               showToastMsg('Membuka Percakapan Baru');
             }}
-            className={`w-full flex items-center space-x-3 p-2.5 rounded-xl transition-all ${currentView === 'home' && !activeGem ? 'bg-slate-100 dark:bg-slate-800 text-blue-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`w-auto md:w-full flex items-center space-x-3 p-2 md:p-2.5 rounded-xl transition-all shrink-0 ${currentView === 'home' && !activeGem ? 'bg-slate-100 dark:bg-slate-800 text-blue-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200'}`}
             title="Percakapan baru"
           >
             <Edit2 className="w-4 h-4 shrink-0" />
@@ -483,7 +483,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
               setCurrentView('search');
               showToastMsg('Search: Mencari Gem kustom atau bawaan');
             }}
-            className={`w-full flex items-center space-x-3 p-2.5 rounded-xl transition-all ${currentView === 'search' ? 'bg-slate-100 dark:bg-slate-800 text-blue-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`w-auto md:w-full flex items-center space-x-3 p-2 md:p-2.5 rounded-xl transition-all shrink-0 ${currentView === 'search' ? 'bg-slate-100 dark:bg-slate-800 text-blue-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200'}`}
             title="Search"
           >
             <Search className="w-4 h-4 shrink-0" />
@@ -496,7 +496,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
               setCurrentView('gems-manager');
               showToastMsg('Membuka Gem Manager');
             }}
-            className={`w-full flex items-center space-x-3 p-2.5 rounded-xl transition-all ${currentView === 'gems-manager' || currentView === 'create-gem' ? 'bg-blue-950/80 border border-blue-800/60 text-blue-300 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`w-auto md:w-full flex items-center space-x-3 p-2 md:p-2.5 rounded-xl transition-all shrink-0 ${currentView === 'gems-manager' || currentView === 'create-gem' ? 'bg-blue-950/80 border border-blue-800/60 text-blue-300 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200'}`}
             title="Pengelola Gem"
           >
             <Gem className="w-4 h-4 text-blue-400 shrink-0" />
@@ -509,7 +509,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
               setCurrentView('apps');
               showToastMsg('Google Workspace Extensions & Apps');
             }}
-            className={`w-full flex items-center space-x-3 p-2.5 rounded-xl transition-all ${currentView === 'apps' ? 'bg-slate-100 dark:bg-slate-800 text-blue-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`w-auto md:w-full flex items-center space-x-3 p-2 md:p-2.5 rounded-xl transition-all shrink-0 ${currentView === 'apps' ? 'bg-slate-100 dark:bg-slate-800 text-blue-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200'}`}
             title="Apps"
           >
             <LayoutGrid className="w-4 h-4 shrink-0" />
@@ -522,7 +522,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
               setCurrentView('saved');
               showToastMsg('Item Disimpan & Percakapan Favorit');
             }}
-            className={`w-full flex items-center space-x-3 p-2.5 rounded-xl transition-all ${currentView === 'saved' ? 'bg-slate-100 dark:bg-slate-800 text-blue-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`w-auto md:w-full flex items-center space-x-3 p-2 md:p-2.5 rounded-xl transition-all shrink-0 ${currentView === 'saved' ? 'bg-slate-100 dark:bg-slate-800 text-blue-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200'}`}
             title="Disimpan"
           >
             <Heart className="w-4 h-4 shrink-0" />
@@ -531,10 +531,10 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
         </div>
 
         {/* Bottom Sidebar Settings & User */}
-        <div className="flex md:flex-col space-x-2 md:space-x-0 md:space-y-3 items-center md:items-start pt-2 border-t border-slate-200 dark:border-slate-800/80">
+        <div className="flex md:flex-col space-x-2 md:space-x-0 md:space-y-3 items-center md:items-start pt-0 md:pt-2 border-l md:border-l-0 md:border-t border-slate-200 dark:border-slate-800/80 pl-4 md:pl-0 shrink-0">
           <button
             onClick={() => showToastMsg('Pengaturan Gemini & Model AI')}
-            className="w-full flex items-center space-x-3 p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200 text-xs"
+            className="w-auto md:w-full flex items-center space-x-3 p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:bg-slate-800/60 hover:text-slate-700 dark:text-slate-200 text-xs shrink-0"
             title="Settings"
           >
             <Settings className="w-4 h-4 shrink-0" />
@@ -543,7 +543,7 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
 
           <div 
             onClick={() => showToastMsg('Profil Akun: Wahyudi (Maxy Academy)')}
-            className="w-full flex items-center space-x-2.5 p-1.5 rounded-xl hover:bg-slate-100 dark:bg-slate-800/60 cursor-pointer transition-colors"
+            className="w-auto md:w-full flex items-center space-x-2.5 p-1.5 rounded-xl hover:bg-slate-100 dark:bg-slate-800/60 cursor-pointer transition-colors shrink-0"
           >
             <div className="w-7 h-7 rounded-full bg-indigo-700 border border-indigo-500 flex items-center justify-center text-white font-bold text-xs shrink-0">
               W
@@ -877,27 +877,27 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
                 {myGems.map(gem => (
                   <div
                     key={gem.id}
-                    className="bg-[#14161f] border border-slate-200 dark:border-slate-800 hover:border-blue-500/60 p-3.5 rounded-2xl flex items-center justify-between transition-all group shadow-md relative"
+                    className="bg-[#14161f] border border-slate-200 dark:border-slate-800 hover:border-blue-500/60 p-3.5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between transition-all group shadow-md relative gap-3 sm:gap-0"
                   >
                     <div
                       onClick={() => handleOpenGemChat(gem)}
-                      className="flex items-center space-x-3.5 cursor-pointer flex-1 min-w-0"
+                      className="flex items-start sm:items-center space-x-3.5 cursor-pointer flex-1 min-w-0"
                     >
-                      <div className={`w-10 h-10 rounded-xl ${gem.iconBg} border border-slate-600 flex items-center justify-center font-extrabold text-slate-900 dark:text-white text-base shadow shrink-0`}>
+                      <div className={`w-10 h-10 rounded-xl ${gem.iconBg} border border-slate-600 flex items-center justify-center font-extrabold text-slate-900 dark:text-white text-base shadow shrink-0 mt-0.5 sm:mt-0`}>
                         {gem.initial}
                       </div>
-                      <div className="truncate">
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-300 transition-colors break-words whitespace-normal leading-snug">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-300 transition-colors truncate sm:whitespace-normal sm:break-words">
                           {gem.name}
                         </h4>
-                        <p className="text-[11px] text-slate-500 dark:text-slate-400 break-words whitespace-normal leading-snug max-w-lg">
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 max-w-lg">
                           {gem.description}
                         </p>
                       </div>
                     </div>
 
                     {/* Action Icons */}
-                    <div className="flex items-center space-x-2 shrink-0 ml-3 text-slate-500 dark:text-slate-400 relative">
+                    <div className="flex items-center space-x-2 shrink-0 sm:ml-3 text-slate-500 dark:text-slate-400 relative self-end sm:self-auto border-t border-slate-200 dark:border-slate-800/50 sm:border-0 pt-2 sm:pt-0 w-full sm:w-auto justify-end">
                       <button
                         onClick={(e) => handleShareGem(gem, e)}
                         className="p-1.5 hover:text-blue-400 hover:bg-slate-100 dark:bg-slate-800 rounded-lg transition-colors"

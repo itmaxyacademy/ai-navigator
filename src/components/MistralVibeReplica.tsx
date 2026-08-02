@@ -167,8 +167,8 @@ export const MistralVibeReplica: React.FC = () => {
   return (
     <div className="w-full min-h-[750px] bg-[#0c0d0e] text-slate-800 dark:text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col relative shadow-2xl">
       {/* Stage Indicator Bar */}
-      <div className="bg-[#141518] border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between text-xs shrink-0 z-30">
-        <div className="flex items-center space-x-2">
+      <div className="bg-[#141518] border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs shrink-0 z-30 gap-3 sm:gap-0">
+        <div className="flex items-center space-x-2 shrink-0">
           <div className="w-5 h-5 rounded bg-orange-600 flex items-center justify-center font-black text-slate-900 dark:text-white text-[10px] shadow">
             M
           </div>
@@ -176,7 +176,7 @@ export const MistralVibeReplica: React.FC = () => {
           <span className="text-slate-500 hidden sm:inline">| Simulasi Interactive Agent</span>
         </div>
 
-        <div className="flex items-center space-x-1.5 bg-[#0a0b0d] p-1 rounded-xl border border-slate-200 dark:border-slate-800">
+        <div className="flex items-center space-x-1.5 bg-[#0a0b0d] p-1 rounded-xl border border-slate-200 dark:border-slate-800 w-full sm:w-auto overflow-x-auto shrink-0 hide-scrollbar">
           <button
             onClick={() => setActiveStage('landing')}
             className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'landing' ? 'bg-orange-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
@@ -444,9 +444,26 @@ export const MistralVibeReplica: React.FC = () => {
 
       {/* STAGE 3: WORKSPACE UTAMA */}
       {activeStage === 'workspace' && (
-        <div className="flex-1 flex flex-col md:flex-row bg-[#0b0c0e] text-slate-800 dark:text-slate-100 overflow-hidden">
+        <div className="flex-1 flex flex-col md:flex-row bg-[#0b0c0e] text-slate-800 dark:text-slate-100 overflow-hidden relative">
+          
+          {/* Mobile Top Bar (Only visible when sidebar is collapsed on mobile) */}
+          <div className="md:hidden bg-[#121318] border-b border-slate-800/80 p-3 flex flex-row items-center justify-between shrink-0 z-30 w-full">
+             <div className="flex items-center space-x-2">
+               <div className="w-7 h-7 bg-[#f95c16] rounded-lg flex items-center justify-center font-black text-white text-sm shadow">
+                 M
+               </div>
+               <span className="font-extrabold text-sm text-white">Vibe</span>
+             </div>
+             <button 
+                onClick={() => setSidebarCollapsed(!sidebarCollapsed)} 
+                className="p-1.5 bg-slate-800 text-slate-200 rounded-lg"
+             >
+                <Layers className="w-4 h-4" />
+             </button>
+          </div>
+
           {/* LEFT SIDEBAR */}
-          <aside className={`${sidebarCollapsed ? 'w-16' : 'w-full md:w-64'} bg-[#121318] border-r border-slate-200 dark:border-slate-800/80 p-3 flex flex-col justify-between shrink-0 transition-all duration-200 z-20`}>
+          <aside className={`${sidebarCollapsed ? 'hidden md:flex md:w-16' : 'flex absolute md:relative w-full h-full md:h-auto md:w-64 bg-[#121318]/95 backdrop-blur-md md:bg-[#121318]'} border-r border-slate-200 dark:border-slate-800/80 p-3 flex-col justify-between shrink-0 transition-all duration-200 z-40 md:z-20`}>
             <div className="space-y-4">
               {/* Header Logo + Search & Toggle Icons */}
               <div className="flex items-center justify-between px-1">
@@ -468,10 +485,11 @@ export const MistralVibeReplica: React.FC = () => {
                   </button>
                   <button 
                     onClick={() => setSidebarCollapsed(!sidebarCollapsed)} 
-                    className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 rounded-lg hidden md:block"
+                    className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 rounded-lg"
                     title="Toggle Sidebar"
                   >
-                    <Layers className="w-4 h-4" />
+                    <X className="w-4 h-4 md:hidden" />
+                    <Layers className="w-4 h-4 hidden md:block" />
                   </button>
                 </div>
               </div>
@@ -604,20 +622,14 @@ export const MistralVibeReplica: React.FC = () => {
                   </div>
                   <div className="truncate text-xs">
                     <div className="font-bold text-slate-700 dark:text-slate-200 truncate">Maxy Team</div>
-                    <div className="text-[10px] text-slate-500">Free Plan</div>
+                    <div className="text-[10px] text-emerald-500 font-bold">Unlimited Plan (Simulasi)</div>
                   </div>
                 </div>
 
-                <button
-                  onClick={() => showToast('Upgrade to Pro: Buka akses model penalaran & kuota agent tanpa batas')}
-                  className="w-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-slate-900 dark:text-white font-extrabold text-xs p-2.5 rounded-xl shadow flex items-center justify-between transition-all"
-                >
-                  <div className="flex items-center space-x-2">
-                    <Zap className="w-3.5 h-3.5 fill-current" />
-                    <span>Upgrade to Pro</span>
-                  </div>
-                  <CreditCard className="w-3.5 h-3.5 opacity-80" />
-                </button>
+                <div className="w-full bg-emerald-950/40 border border-emerald-800/60 text-emerald-400 font-bold text-xs p-2.5 rounded-xl flex items-center justify-center space-x-2 transition-all">
+                  <Zap className="w-3.5 h-3.5 fill-current" />
+                  <span>Akses Penuh Aktif</span>
+                </div>
               </div>
             )}
           </aside>
@@ -717,7 +729,7 @@ export const MistralVibeReplica: React.FC = () => {
 
                       {isSpeedOpen && (
                         <div className="absolute left-0 bottom-8 w-36 bg-[#1a1d28] border border-slate-300 dark:border-slate-700 rounded-xl shadow-2xl p-1 z-30 space-y-0.5 text-xs">
-                          {['Fast', 'Reasoning', 'Pro Agent'].map(m => (
+                          {['Fast', 'Reasoning', 'Unlimited Agent'].map(m => (
                             <button
                               key={m}
                               onClick={() => {
