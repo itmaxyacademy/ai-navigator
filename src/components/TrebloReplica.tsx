@@ -761,8 +761,8 @@ export const TrebloReplica: React.FC = () => {
 
               {/* Responsive 3-Panel Grid Workspace */}
               <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-w-0">
-                {/* PANEL TENGAH: AREA GENERATE (Cols 1-4 on Desktop) */}
-                <div className={`md:col-span-4 border-r border-slate-200 dark:border-slate-800/80 p-4 overflow-y-auto flex flex-col space-y-4 bg-[#110e10] ${mobileTab === 'editor' ? 'block' : 'hidden md:block'}`}>
+                {/* PANEL TENGAH: AREA GENERATE (Cols 1-3 on Desktop) */}
+                <div className={`md:col-span-4 xl:col-span-3 border-r border-slate-200 dark:border-slate-800/80 p-4 overflow-y-auto flex flex-col space-y-4 bg-[#110e10] ${mobileTab === 'editor' ? 'block' : 'hidden md:block'}`}>
                   {/* Model Notice Box */}
                   <div className="bg-amber-950/40 border border-amber-800/60 rounded-xl p-3 text-xs text-amber-200/90 space-y-1">
                     <div className="flex items-center space-x-1.5 font-bold text-amber-300">
@@ -925,8 +925,8 @@ export const TrebloReplica: React.FC = () => {
                   </button>
                 </div>
 
-                {/* PANEL TENGAH-KANAN: DAFTAR HASIL LAGU (Cols 5-8 on Desktop) */}
-                <div className={`md:col-span-4 border-r border-slate-200 dark:border-slate-800/80 p-3 flex flex-col space-y-3 bg-[#0e0c0d] overflow-y-auto ${mobileTab === 'list' ? 'block' : 'hidden md:block'}`}>
+                {/* PANEL TENGAH-KANAN: DAFTAR HASIL LAGU (Cols 4-7 on Desktop) */}
+                <div className={`md:col-span-4 xl:col-span-4 border-r border-slate-200 dark:border-slate-800/80 p-3 flex flex-col space-y-3 bg-[#0e0c0d] overflow-y-auto ${mobileTab === 'list' ? 'block' : 'hidden md:block'}`}>
                   {/* Filters Bar */}
                   <div className="flex items-center justify-between text-xs gap-1.5">
                     <button 
@@ -978,7 +978,7 @@ export const TrebloReplica: React.FC = () => {
                             className={`p-2.5 rounded-xl border cursor-pointer transition-all ${isSelected ? 'bg-white dark:bg-[#0d1322] border-rose-500/70 shadow-lg' : 'bg-slate-100 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:border-slate-700'}`}
                           >
                             <div className="flex items-start justify-between space-x-2">
-                              <div className="flex items-center space-x-2.5">
+                              <div className="flex items-start space-x-2.5 min-w-0 flex-1">
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
@@ -991,13 +991,13 @@ export const TrebloReplica: React.FC = () => {
                                       setPlayerProgress(0);
                                     }
                                   }}
-                                  className="w-9 h-9 rounded-full bg-rose-950 border border-rose-700 flex items-center justify-center text-rose-300 shrink-0 hover:scale-105 transition-transform"
+                                  className="w-9 h-9 rounded-full bg-rose-950 border border-rose-700 flex items-center justify-center text-rose-300 shrink-0 hover:scale-105 transition-transform mt-0.5"
                                 >
                                   {isThisPlaying ? <Pause className="w-4 h-4 fill-current text-rose-400" /> : <Play className="w-4 h-4 fill-current text-rose-400 ml-0.5" />}
                                 </button>
 
-                                <div>
-                                  <div className="flex items-center space-x-1.5">
+                                <div className="min-w-0 flex-1">
+                                  <div className="flex items-center space-x-1.5 flex-wrap gap-y-1">
                                     {editingSongId === song.id ? (
                                       <input
                                         type="text"
@@ -1007,35 +1007,35 @@ export const TrebloReplica: React.FC = () => {
                                         onKeyDown={(e) => e.key === 'Enter' && saveRenameSong(song.id)}
                                         onClick={(e) => e.stopPropagation()}
                                         autoFocus
-                                        className="bg-white dark:bg-slate-900 border border-rose-500 text-xs text-rose-300 font-bold px-1.5 py-0.5 rounded focus:outline-none"
+                                        className="bg-white dark:bg-slate-900 border border-rose-500 text-xs text-rose-300 font-bold px-1.5 py-0.5 rounded focus:outline-none w-full"
                                       />
                                     ) : (
-                                      <span className="text-xs font-bold text-slate-900 dark:text-white hover:text-rose-400 transition-colors">
+                                      <span className="text-xs font-bold text-slate-900 dark:text-white hover:text-rose-400 transition-colors truncate" title={song.title}>
                                         {song.title}
                                       </span>
                                     )}
                                     <button 
                                       onClick={(e) => startRenameSong(song, e)}
-                                      className="text-slate-500 hover:text-rose-400 p-0.5"
+                                      className="text-slate-500 hover:text-rose-400 p-0.5 shrink-0"
                                       title="Edit judul lagu"
                                     >
                                       <Edit2 className="w-3 h-3" />
                                     </button>
 
                                     {song.isNew && (
-                                      <span className="bg-rose-600 text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full uppercase">
+                                      <span className="bg-rose-600 text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full uppercase shrink-0">
                                         New
                                       </span>
                                     )}
                                   </div>
 
-                                  <p className="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5 font-mono">
+                                  <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate mt-0.5 font-mono" title={song.style}>
                                     {song.style}
                                   </p>
                                 </div>
                               </div>
 
-                              <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 shrink-0">
+                              <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 shrink-0 mt-1">
                                 {song.duration}
                               </span>
                             </div>
@@ -1074,8 +1074,8 @@ export const TrebloReplica: React.FC = () => {
                   </div>
                 </div>
 
-                {/* PANEL KANAN: DETAIL LAGU TERPILIH (Cols 9-12 on Desktop) */}
-                <div className={`md:col-span-4 p-4 overflow-y-auto flex flex-col space-y-4 bg-[#120f11] ${mobileTab === 'detail' ? 'block' : 'hidden md:block'}`}>
+                {/* PANEL KANAN: DETAIL LAGU TERPILIH (Cols 8-12 on Desktop) */}
+                <div className={`md:col-span-4 xl:col-span-5 p-4 overflow-y-auto flex flex-col space-y-4 bg-[#120f11] ${mobileTab === 'detail' ? 'block' : 'hidden md:block'}`}>
                   {/* Top Bar of Detail */}
                   <div className="flex items-start justify-between">
                     <div>

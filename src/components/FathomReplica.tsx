@@ -963,26 +963,26 @@ export const FathomReplica: React.FC = () => {
                   </div>
 
                   {/* Summary Options Toolbar */}
-                  <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <div className="flex items-center space-x-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 flex-wrap min-w-0">
                       <select
                         value={summaryMode}
                         onChange={(e) => setSummaryMode(e.target.value)}
-                        className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-cyan-300 font-bold text-xs px-2.5 py-1.5 rounded-lg focus:outline-none"
+                        className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-cyan-300 font-bold text-xs px-2.5 py-1.5 rounded-lg focus:outline-none max-w-full"
                       >
                         <option value="Enhanced">Enhanced Summary</option>
                         <option value="Executive">Executive Brief</option>
                         <option value="Standard">Standard Bullets</option>
                       </select>
 
-                      <button onClick={() => showToastMsg('Pengaturan format summary')} className="p-1.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200">
+                      <button onClick={() => showToastMsg('Pengaturan format summary')} className="p-1.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 shrink-0">
                         <Settings className="w-3.5 h-3.5" />
                       </button>
 
                       <select
                         value={summaryLang}
                         onChange={(e) => setSummaryLang(e.target.value)}
-                        className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs px-2 py-1.5 rounded-lg focus:outline-none"
+                        className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs px-2 py-1.5 rounded-lg focus:outline-none max-w-full"
                       >
                         <option value="ID">ID Bahasa Indonesia</option>
                         <option value="EN">EN English</option>
@@ -991,7 +991,7 @@ export const FathomReplica: React.FC = () => {
 
                     <button
                       onClick={handleCopySummary}
-                      className="bg-cyan-600 hover:bg-cyan-500 text-slate-900 dark:text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1.5 shadow-sm transition-colors"
+                      className="bg-cyan-600 hover:bg-cyan-500 text-slate-900 dark:text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center justify-center space-x-1.5 shadow-sm transition-colors shrink-0 w-full sm:w-auto"
                     >
                       {copiedSummary ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
                       <span>{copiedSummary ? 'Copied!' : 'Copy Summary'}</span>
