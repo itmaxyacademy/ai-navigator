@@ -436,7 +436,7 @@ export const Header: React.FC<HeaderProps> = ({
               }}
               className="p-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 bg-indigo-600 text-white shadow-md"
             >
-              <Compass className="w-4 h-4" />
+              <Compass className="w-4 h-4 shrink-0" />
               Peta Belajar
             </button>
 
@@ -450,22 +450,55 @@ export const Header: React.FC<HeaderProps> = ({
                   theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-800 text-slate-200'
                 }`}
               >
-                <StickyNote className="w-4 h-4 text-amber-500" />
+                <StickyNote className="w-4 h-4 text-amber-500 shrink-0" />
                 Catatan Saya
+              </button>
+            )}
+
+            {onOpenAchievements && (
+              <button
+                onClick={() => {
+                  onOpenAchievements();
+                  setMobileMenuOpen(false);
+                }}
+                className={`p-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border col-span-2 sm:col-span-1 ${
+                  theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-800 text-slate-200'
+                }`}
+              >
+                <Award className="w-4 h-4 text-purple-500 shrink-0" />
+                Pencapaian
               </button>
             )}
           </div>
 
-          <div className={`flex items-center justify-between gap-2 p-3 rounded-2xl border ${
+          <div 
+            onClick={() => {
+              if (onOpenStreakModal) onOpenStreakModal();
+              setMobileMenuOpen(false);
+            }}
+            className={`flex flex-col gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-[1.01] transition-transform ${
             theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-900' : 'bg-slate-950 border-slate-800 text-white'
           }`}>
-            <div className="flex items-center gap-2">
-              <Flame className="w-4 h-4 text-amber-500" />
-              <span className="text-xs font-extrabold">{progress.streakDays} Hari Streak</span>
-              <span className="text-slate-400">•</span>
-              <span className="text-xs font-extrabold text-indigo-600 dark:text-indigo-400">{progress.xp} XP</span>
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center gap-1.5 text-amber-500 font-extrabold">
+                <Flame className="w-4 h-4 fill-amber-500/20" />
+                <span className="text-xs">{progress.streakDays} Hari Streak</span>
+              </div>
+              <div className="h-4 w-px bg-slate-300 dark:bg-slate-700" />
+              <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-300 font-extrabold">
+                <Sparkles className="w-4 h-4" />
+                <span className="text-xs">Lvl {levelInfo.level} • {progress.xp} XP</span>
+              </div>
             </div>
-
+            
+            <div className="w-full border-t border-slate-200 dark:border-slate-800/60 pt-3 flex items-center justify-center">
+              <DailyGoalRing
+                dailyGoalMinutes={progress.dailyGoalMinutes}
+                dailyMinutesHistory={progress.dailyMinutesHistory}
+                onUpdateGoal={onUpdateGoal}
+                onAddMinutes={onAddMinutes}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
@@ -519,7 +552,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
 
-          {userTier === 'free' && (
+          {userTier === 'free' ? (
             <button
               onClick={() => {
                 if (onOpenUpgradeModal) onOpenUpgradeModal();
@@ -529,6 +562,28 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Lock className="w-4 h-4" />
               Upgrade ke Tier 1 / Tier 2
+            </button>
+          ) : userTier === 'tier1' ? (
+            <button
+              onClick={() => {
+                if (onOpenUpgradeModal) onOpenUpgradeModal();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full p-2.5 rounded-xl bg-indigo-600 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-indigo-600/20"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              Tier 1 Full
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                if (onOpenUpgradeModal) onOpenUpgradeModal();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full p-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-md shadow-amber-500/20"
+            >
+              <Crown className="w-4 h-4 fill-slate-950" />
+              Tier 2 VIP
             </button>
           )}
         </div>
