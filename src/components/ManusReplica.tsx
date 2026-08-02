@@ -373,7 +373,7 @@ export const ManusReplica: React.FC = () => {
 
               {/* More Dropdown Menu */}
               {showMoreDropdown && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-40 text-left animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-48 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-40 text-left animate-in fade-in zoom-in-95 duration-150">
                   <button
                     onClick={() => handleSelectChip('Analyze data', 'Analisis data eksekutif berikut dan sajikan wawasan kunci')}
                     className="w-full px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 text-left flex items-center gap-2 flex-wrap max-w-full"
@@ -534,8 +534,26 @@ export const ManusReplica: React.FC = () => {
                     </div>
                   </div>
                 ) : activeResultText ? (
-                  <div className="prose prose-slate max-w-none text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-sans text-slate-800">
-                    {activeResultText}
+                  <div className="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-md flex flex-col h-full animate-in fade-in duration-300">
+                    {/* Simulated Browser/Workspace Header */}
+                    <div className="bg-slate-50/80 backdrop-blur-sm border-b border-slate-200 px-4 py-2.5 flex items-center shrink-0">
+                      <div className="flex gap-1.5 shrink-0">
+                        <div className="w-3 h-3 rounded-full bg-rose-400 border border-rose-500/20"></div>
+                        <div className="w-3 h-3 rounded-full bg-amber-400 border border-amber-500/20"></div>
+                        <div className="w-3 h-3 rounded-full bg-emerald-400 border border-emerald-500/20"></div>
+                      </div>
+                      <div className="flex-1 flex justify-center px-4">
+                        <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-4 py-1 shadow-xs text-[10px] font-mono text-slate-500 w-full max-w-xs justify-center">
+                          <Globe className="w-3 h-3" />
+                          <span>manus-agent-sandbox.local</span>
+                        </div>
+                      </div>
+                      <div className="w-10 shrink-0"></div> {/* Spacer for centering */}
+                    </div>
+                    {/* Output Render Body */}
+                    <div className="flex-1 overflow-y-auto p-6 bg-white prose prose-slate prose-sm max-w-none text-slate-800 whitespace-pre-wrap leading-relaxed font-medium">
+                      {activeResultText}
+                    </div>
                   </div>
                 ) : (
                   <div className="text-center text-slate-500 dark:text-slate-400 py-12 text-xs font-medium">
