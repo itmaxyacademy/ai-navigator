@@ -453,17 +453,17 @@ export const LovableReplica: React.FC = () => {
         /* WORKSPACE VIEW: BUILDER STUDIO */
         <div className="relative z-10 flex-1 flex flex-col overflow-hidden bg-[#0a0814]">
           {/* Workspace Top Toolbar */}
-          <div className="px-4 py-2.5 bg-[#120f22] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-3 flex-wrap max-w-full">
+          <div className="px-4 py-2.5 bg-[#120f22] border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between shrink-0 gap-3 md:gap-0 overflow-x-auto hide-scrollbar">
+            <div className="flex items-center gap-3 shrink-0">
               <button
                 onClick={() => setViewState('landing')}
-                className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full"
+                className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Kembali ke Home</span>
               </button>
 
-              <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300 flex-wrap max-w-full">
+              <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300 shrink-0">
                 <span className="text-purple-400 font-bold">Lovable Workspace</span>
                 <span className="text-slate-600">•</span>
                 <span className="px-2 py-0.5 rounded-full bg-purple-950 text-purple-300 border border-purple-800 text-[10px]">
@@ -473,7 +473,7 @@ export const LovableReplica: React.FC = () => {
             </div>
 
             {/* Middle: Tab Switcher (Preview / Code / Split) */}
-            <div className="flex items-center bg-[#1b1730] p-1 rounded-xl border border-slate-200 dark:border-slate-800">
+            <div className="flex items-center bg-[#1b1730] p-1 rounded-xl border border-slate-200 dark:border-slate-800 shrink-0">
               <button
                 onClick={() => setWorkspaceTab('split')}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
@@ -501,10 +501,10 @@ export const LovableReplica: React.FC = () => {
             </div>
 
             {/* Right: Actions */}
-            <div className="flex items-center gap-2 flex-wrap max-w-full">
+            <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={handleCopyCode}
-                className="px-3 py-1.5 rounded-lg bg-[#221d38] border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full"
+                className="px-3 py-1.5 rounded-lg bg-[#221d38] border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:text-white flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copiedCode ? 'Tersalin' : 'Salin Kode'}</span>
@@ -513,12 +513,12 @@ export const LovableReplica: React.FC = () => {
           </div>
 
           {/* Workspace Body Grid */}
-          <div className="flex-1 flex overflow-hidden min-w-0">
+          <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-w-0">
             {/* LEFT PANEL: CHAT & CODE EDITOR */}
             {(workspaceTab === 'split' || workspaceTab === 'code') && (
               <div
                 className={`${
-                  workspaceTab === 'split' ? 'w-1/2 border-r border-slate-200 dark:border-slate-800' : 'w-full'
+                  workspaceTab === 'split' ? 'w-full h-1/2 md:w-1/2 md:h-full border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800' : 'w-full h-full'
                 } flex flex-col bg-[#0d0b1a] overflow-hidden`}
               >
                 {/* Chat History Messages */}
@@ -603,7 +603,7 @@ export const LovableReplica: React.FC = () => {
             {(workspaceTab === 'split' || workspaceTab === 'preview') && (
               <div
                 className={`${
-                  workspaceTab === 'split' ? 'w-1/2' : 'w-full'
+                  workspaceTab === 'split' ? 'w-full h-1/2 md:w-1/2 md:h-full' : 'w-full h-full'
                 } bg-[#080712] flex flex-col overflow-hidden`}
               >
                 {/* Device Responsiveness Toolbar */}
