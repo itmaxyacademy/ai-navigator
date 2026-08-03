@@ -118,3 +118,20 @@ export function calculateRemainingTimeMinutes(
     formattedText: `~${totalRemainingMins} Menit (${remainingCount} Sisa Modul)`,
   };
 }
+
+export function isCertificateEligible(progress: { completedModules?: number[]; userTier?: string }): boolean {
+  const completed = progress?.completedModules || [];
+  const userTier = progress?.userTier || 'free';
+
+  if (userTier === 'tier2') {
+    // Tier 2 requires 100% completion of ALL 29 modules (Modul 1 through Modul 29)
+    const requiredModules = Array.from({ length: 29 }, (_, i) => i + 1);
+    return requiredModules.every((id) => completed.includes(id));
+  } else if (userTier === 'tier1') {
+    // Tier 1 requires 100% completion of ALL 22 modules (Modul 1 through Modul 22)
+    const requiredModules = Array.from({ length: 22 }, (_, i) => i + 1);
+    return requiredModules.every((id) => completed.includes(id));
+  }
+
+  return false; // Free trial users are not eligible for certificates
+}

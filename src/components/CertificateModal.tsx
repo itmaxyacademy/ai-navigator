@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { Award, X, Sparkles, CheckCircle2, Download, Printer, Compass, ShieldCheck, Mail, User, Crown, ExternalLink, BookOpen, Loader2 } from 'lucide-react';
+import { Award, X, Sparkles, CheckCircle2, Download, Printer, Compass, ShieldCheck, Mail, User, Crown, ExternalLink, BookOpen, Loader2, Lock } from 'lucide-react';
 import { UserProgress } from '../types';
 import { issueCertificateApi } from '../services/api';
 import { MODULES_DATA } from '../data/modulesData';
+import { isCertificateEligible } from '../lib/gamification';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { toJpeg } from 'html-to-image';
@@ -44,6 +45,72 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   if (!isOpen) return null;
 
   const userTier = progress.userTier || 'free';
+  const isEligible = isCertificateEligible(progress);
+
+  if (!isEligible) {
+    const isTier2 = userTier === 'tier2';
+    const targetTotal = isTier2 ? 29 : 22;
+    const completedCount = (progress.completedModules || []).filter(id => id <= targetTotal).length;
+    const remainingCount = Math.max(0, targetTotal - completedCount);
+
+    return (
+      <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+        <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-8 text-center space-y-5">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
+          <div className="w-16 h-16 rounded-3xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto text-amber-500">
+            <Lock className="w-8 h-8" />
+          </div>
+
+          <div>
+            <h3 className="font-black text-xl text-slate-900 dark:text-white">Sertifikat Kelulusan Terkunci</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+              Sertifikat resmi hanya dapat diterbitkan apabila Anda telah menyelesaikan <strong className="text-amber-500">100% seluruh modul</strong> pembelajaran.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-xs space-y-2 text-left">
+            <div className="flex justify-between font-bold text-slate-700 dark:text-slate-300">
+              <span>Status Paket:</span>
+              <span className="text-amber-500 uppercase">{userTier === 'tier2' ? 'Tier 2 VIP Master' : userTier === 'tier1' ? 'Tier 1 Basic' : 'Free Trial'}</span>
+            </div>
+            <div className="flex justify-between text-slate-600 dark:text-slate-400">
+              <span>Syarat Kelulusan:</span>
+              <span>100% (Modul 1 s/d Modul {targetTotal})</span>
+            </div>
+            <div className="flex justify-between text-slate-600 dark:text-slate-400">
+              <span>Modul Diselesaikan:</span>
+              <span className="font-mono text-emerald-500 font-bold">{completedCount} / {targetTotal} Modul</span>
+            </div>
+            <div className="w-full bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden mt-1">
+              <div
+                className="bg-amber-500 h-full rounded-full transition-all duration-500"
+                style={{ width: `${Math.min(100, (completedCount / targetTotal) * 100)}%` }}
+              />
+            </div>
+          </div>
+
+          <p className="text-xs font-semibold text-slate-400">
+            {userTier === 'free'
+              ? 'Silakan upgrade ke Paket Tier 1 atau Tier 2 dan selesaikan seluruh modul untuk membuka sertifikat.'
+              : `Selesaikan ${remainingCount} modul tersisa untuk klaim sertifikat kelulusan Anda!`}
+          </p>
+
+          <button
+            onClick={onClose}
+            className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-sm transition-all shadow-lg shadow-amber-500/20 cursor-pointer"
+          >
+            Lanjutkan Belajar Modul
+          </button>
+        </div>
+      </div>
+    );
+  }
   const tierKey = userTier === 'tier2' ? 'tier2' : 'tier1';
   const bgImage = packages?.[tierKey]?.certificate_bg_image;
   const templateDataRaw = (packages?.[tierKey] as any)?.certificate_template_data;

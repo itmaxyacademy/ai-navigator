@@ -15,7 +15,7 @@ import { DevPanel } from './components/DevPanel';
 import { useTierAccess } from './hooks/useTierAccess';
 import { BADGES_LIST } from './lib/achievementsData';
 import { FloatingXpNotification, FloatingXpItem } from './components/FloatingXpNotification';
-import { getLocalDateString, getDaysDifference } from './lib/gamification';
+import { getLocalDateString, getDaysDifference, isCertificateEligible } from './lib/gamification';
 import { Compass, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -454,12 +454,9 @@ export default function App() {
     progress.dailyMinutesHistory,
   ]);
 
-  // Check and trigger certificate popup automatically if eligible
+  // Check and trigger certificate popup automatically if 100% completed
   useEffect(() => {
-    const isTier1Complete = progress.userTier === 'tier1' && (progress.completedModules?.length || 0) >= 22;
-    const isTier2Complete = progress.userTier === 'tier2' && (progress.completedModules?.length || 0) >= 29;
-    
-    if ((isTier1Complete || isTier2Complete) && !progress.hasSeenCertPopup) {
+    if (isCertificateEligible(progress) && !progress.hasSeenCertPopup) {
       const timer = setTimeout(() => {
         try {
           confetti({
@@ -871,8 +868,8 @@ export default function App() {
   };
 
   const currentModule = MODULES_DATA.find((m) => m.id === selectedModuleId);
-  // Sertifikat terbuka jika user menyelesaikan Capstone Tier 1 (Modul 22) ATAU Capstone Tier 2 (Modul 29)
-  const allModulesCompleted = progress.completedModules.includes(22) || progress.completedModules.includes(29);
+  // Sertifikat hanya aktif jika user 100% menyelesaikan seluruh modul (Tier 1: Modul 1-22, Tier 2: Modul 1-29)
+  const allModulesCompleted = isCertificateEligible(progress);
 
   if (isAuthValidating) {
     return (
