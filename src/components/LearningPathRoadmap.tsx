@@ -721,32 +721,43 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                         </span>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                           {/* Option 1: Sertifikat Capstone Project (Template CMS 1) */}
-                          <button
-                            type="button"
-                            onClick={() => {
-                              if (!progress.capstoneSubmission && onOpenCapstoneModal) {
-                                onOpenCapstoneModal();
-                              } else if (onOpenCertificateModal) {
-                                onOpenCertificateModal('capstone');
-                              }
-                            }}
-                            className="p-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold text-xs flex flex-col items-start gap-1 shadow-lg shadow-amber-500/20 transition-all cursor-pointer border border-amber-300 group"
-                          >
-                            <div className="flex items-center gap-1.5 w-full justify-between">
-                              <span className="flex items-center gap-1.5 font-black text-slate-950">
-                                <FileText className="w-4 h-4 shrink-0" />
-                                1. Sertifikat Capstone Project
+                          <div className="flex flex-col gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (!progress.capstoneSubmission && onOpenCapstoneModal) {
+                                  onOpenCapstoneModal();
+                                } else if (onOpenCertificateModal) {
+                                  onOpenCertificateModal('capstone');
+                                }
+                              }}
+                              className="p-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold text-xs flex flex-col items-start gap-1 shadow-lg shadow-amber-500/20 transition-all cursor-pointer border border-amber-300 group"
+                            >
+                              <div className="flex items-center gap-1.5 w-full justify-between">
+                                <span className="flex items-center gap-1.5 font-black text-slate-950">
+                                  <FileText className="w-4 h-4 shrink-0" />
+                                  1. Sertifikat Capstone Project
+                                </span>
+                                <span className="text-[10px] bg-slate-950/20 text-slate-950 px-2 py-0.5 rounded-full font-bold">
+                                  {progress.capstoneSubmission ? '✓ Submitted' : 'Form Submission'}
+                                </span>
+                              </div>
+                              <span className="text-[10.5px] text-slate-900/90 font-medium text-left leading-tight">
+                                {progress.capstoneSubmission 
+                                  ? `Judul: "${progress.capstoneSubmission.title}" (Klik untuk Unduh Template Capstone)`
+                                  : 'Form Isian Judul & Link Project Capstone (Memakai Template CMS Capstone)'}
                               </span>
-                              <span className="text-[10px] bg-slate-950/20 text-slate-950 px-2 py-0.5 rounded-full font-bold">
-                                {progress.capstoneSubmission ? '✓ Submitted' : 'Form Submission'}
-                              </span>
-                            </div>
-                            <span className="text-[10.5px] text-slate-900/90 font-medium text-left leading-tight">
-                              {progress.capstoneSubmission 
-                                ? `Judul: "${progress.capstoneSubmission.title}" (Klik untuk Unduh Template Capstone)`
-                                : 'Form Isian Judul & Link Project Capstone (Memakai Template CMS Capstone)'}
-                            </span>
-                          </button>
+                            </button>
+                            {progress.capstoneSubmission && onOpenCapstoneModal && (
+                              <button
+                                type="button"
+                                onClick={onOpenCapstoneModal}
+                                className="text-[11px] text-amber-400 hover:text-amber-300 font-bold underline text-left px-1 cursor-pointer"
+                              >
+                                ✏️ Edit Judul & Link Project Capstone
+                              </button>
+                            )}
+                          </div>
 
                           {/* Option 2: Sertifikat Completion Standard (Template CMS 2 - "Seperti Sekarang") */}
                           <button
@@ -785,15 +796,32 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                       </button>
                     )
                   ) : (
-                    <button
-                      onClick={() => {
-                        alert(`Anda telah menyelesaikan ${completedCount}/${requiredModulesCount} modul. Selesaikan hingga ${requiredModulesCount} modul (100%) untuk mengklaim sertifikat.`);
-                      }}
-                      className="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
-                    >
-                      <ShieldCheck className="w-4 h-4 text-amber-400" />
-                      <span>Status Check ({completedCount}/{requiredModulesCount})</span>
-                    </button>
+                    <div className="space-y-2">
+                      {hasTier2 && onOpenCapstoneModal && (
+                        <button
+                          type="button"
+                          onClick={onOpenCapstoneModal}
+                          className="w-full p-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold text-xs flex items-center justify-between shadow-lg shadow-amber-500/20 transition-all cursor-pointer border border-amber-300"
+                        >
+                          <span className="flex items-center gap-2 font-black">
+                            <FileText className="w-4 h-4" />
+                            {progress.capstoneSubmission ? `Judul Capstone: "${progress.capstoneSubmission.title}" (Edit)` : '🎓 Input Judul & Link Project Capstone (Tier 2 VIP)'}
+                          </span>
+                          <span className="text-[10px] bg-slate-950/20 text-slate-950 px-2 py-0.5 rounded-full font-bold">
+                            {progress.capstoneSubmission ? '✓ Submitted (Klik untuk Edit)' : 'Form Input'}
+                          </span>
+                        </button>
+                      )}
+                      <button
+                        onClick={() => {
+                          alert(`Anda telah menyelesaikan ${completedCount}/${requiredModulesCount} modul. Selesaikan hingga ${requiredModulesCount} modul (100%) untuk mengklaim sertifikat.`);
+                        }}
+                        className="w-full px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
+                      >
+                        <ShieldCheck className="w-4 h-4 text-amber-400" />
+                        <span>Status Progress Sertifikat ({completedCount}/{requiredModulesCount} Modul Selesai)</span>
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
