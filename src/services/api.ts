@@ -213,27 +213,12 @@ export async function fetchAiNavigatorPackages() {
   }
 }
 
-export async function issueCertificateApi(name: string, email: string) {
-  // MOCK untuk pengembangan di localhost agar tidak terjadi 401 Unauthorized di console
-  if (
-    typeof window !== 'undefined' && 
-    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ) {
-    return {
-      success: true,
-      data: {
-        uuid: 'f7ad0d5c-6528-4517-9074-70ee377a03fb',
-        certificate_number: 'No. 0255/AIN/NAV/2026',
-        verify_url: 'https://cms.maxy.academy/certificate/verify/f7ad0d5c-6528-4517-9074-70ee377a03fb'
-      }
-    };
-  }
-
+export async function issueCertificateApi(name: string, email: string, certType: 'standard' | 'capstone' = 'standard') {
   try {
     const res = await fetchWithAuth(`${API_BASE}/certificates/issue`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email }),
+      body: JSON.stringify({ name, email, type: certType }),
     });
     return await res.json();
   } catch (err) {

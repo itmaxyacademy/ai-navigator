@@ -189,7 +189,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     }
     setIsIssuing(true);
     try {
-      const res = await issueCertificateApi(userName.trim(), userEmail.trim());
+      const res = await issueCertificateApi(userName.trim(), userEmail.trim(), certType);
       if (res.success && res.data) {
         setCertUuid(res.data.uuid);
         setCertNumber(res.data.certificate_number);
