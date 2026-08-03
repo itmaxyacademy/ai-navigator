@@ -43,45 +43,41 @@ const isLocalDevEnv = typeof window !== 'undefined' && (
 
 export default function App() {
   const [progress, setProgress] = useState<UserProgress>(() => {
+    let parsed: Partial<UserProgress> = {};
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = JSON.parse(saved);
-        delete parsed.userTier;
-        delete parsed.tier;
-        delete parsed.maxAllowedModuleId;
-        delete parsed.packageName;
-        delete parsed.subscriptionExpiredAt;
-        delete parsed.userName;
-        delete parsed.userEmail;
-        return {
-          ...defaultProgress,
-          ...parsed,
-          userTier: isLocalDevEnv ? 'tier2' : 'free',
-          tier: isLocalDevEnv ? 'tier2' : 'free',
-          maxAllowedModuleId: isLocalDevEnv ? 29 : 3,
-          paidTiers: isLocalDevEnv ? ['tier1', 'tier2'] : [],
-          hasTier1: isLocalDevEnv,
-          hasTier2: isLocalDevEnv,
-          userName: isLocalDevEnv ? 'Local Developer' : undefined,
-          userEmail: isLocalDevEnv ? 'dev@localhost' : undefined,
-          packageName: isLocalDevEnv ? 'Local Dev — VIP Access' : undefined,
-        };
+        parsed = JSON.parse(saved);
       }
     } catch (e) {
       console.error('Failed to load progress', e);
     }
+
+    const cachedName = localStorage.getItem('maxy_user_name');
+    const cachedEmail = localStorage.getItem('maxy_user_email');
+    const cachedTier = (localStorage.getItem('maxy_user_tier') as UserTier) || undefined;
+    const cachedHasTier1 = localStorage.getItem('maxy_has_tier1') === 'true';
+    const cachedHasTier2 = localStorage.getItem('maxy_has_tier2') === 'true';
+    const cachedPackageName = localStorage.getItem('maxy_package_name') || undefined;
+
+    const resolvedTier = isLocalDevEnv ? 'tier2' : (cachedTier || (cachedHasTier2 ? 'tier2' : cachedHasTier1 ? 'tier1' : (parsed.userTier || 'free')));
+    const resolvedMaxAllowed = isLocalDevEnv ? 29 : (resolvedTier === 'tier2' ? 29 : resolvedTier === 'tier1' ? 22 : 3);
+    const resolvedHasTier1 = isLocalDevEnv || cachedHasTier1 || resolvedTier === 'tier1' || resolvedTier === 'tier2';
+    const resolvedHasTier2 = isLocalDevEnv || cachedHasTier2 || resolvedTier === 'tier2';
+    const resolvedPaidTiers = isLocalDevEnv ? ['tier1', 'tier2'] : (resolvedTier === 'tier2' ? ['tier1', 'tier2'] : resolvedTier === 'tier1' ? ['tier1'] : []);
+
     return {
       ...defaultProgress,
-      userTier: isLocalDevEnv ? 'tier2' : 'free',
-      tier: isLocalDevEnv ? 'tier2' : 'free',
-      maxAllowedModuleId: isLocalDevEnv ? 29 : 3,
-      paidTiers: isLocalDevEnv ? ['tier1', 'tier2'] : [],
-      hasTier1: isLocalDevEnv,
-      hasTier2: isLocalDevEnv,
-      userName: isLocalDevEnv ? 'Local Developer' : undefined,
-      userEmail: isLocalDevEnv ? 'dev@localhost' : undefined,
-      packageName: isLocalDevEnv ? 'Local Dev — VIP Access' : undefined,
+      ...parsed,
+      userTier: resolvedTier,
+      tier: resolvedTier,
+      maxAllowedModuleId: resolvedMaxAllowed,
+      paidTiers: resolvedPaidTiers as UserTier[],
+      hasTier1: resolvedHasTier1,
+      hasTier2: resolvedHasTier2,
+      userName: isLocalDevEnv ? 'Local Developer' : (parsed.userName || cachedName || undefined),
+      userEmail: isLocalDevEnv ? 'dev@localhost' : (parsed.userEmail || cachedEmail || undefined),
+      packageName: isLocalDevEnv ? 'Local Dev — VIP Access' : (parsed.packageName || cachedPackageName || undefined),
     };
   });
 
@@ -271,7 +267,7 @@ export default function App() {
         }
         return false;
       });
-    }, 3000);
+    }, 12000);
 
     Promise.all([
       fetchUserProfile(token),
@@ -291,6 +287,17 @@ export default function App() {
           const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
           const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
           const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
+
+          const resolvedName = user?.name || user?.nickname || user?.email || undefined;
+          const resolvedEmail = user?.email || undefined;
+          const resolvedPkgName = sub?.package_name || undefined;
+
+          if (resolvedName) localStorage.setItem('maxy_user_name', resolvedName);
+          if (resolvedEmail) localStorage.setItem('maxy_user_email', resolvedEmail);
+          if (userTier) localStorage.setItem('maxy_user_tier', userTier);
+          localStorage.setItem('maxy_has_tier1', hasTier1 ? 'true' : 'false');
+          localStorage.setItem('maxy_has_tier2', hasTier2 ? 'true' : 'false');
+          if (resolvedPkgName) localStorage.setItem('maxy_package_name', resolvedPkgName);
 
           const cloudData = cloudDataRaw ? { ...(cloudDataRaw as unknown as UserProgress) } : null;
           if (cloudData) {
