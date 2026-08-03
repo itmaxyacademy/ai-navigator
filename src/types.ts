@@ -137,6 +137,7 @@ export interface UserProgress {
   certEmail?: string;
   certRequested?: boolean;
   capstoneSubmission?: CapstoneSubmission;
+  adminOverrideAt?: string;
 }
 
 export interface RCTFState {

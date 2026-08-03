@@ -396,6 +396,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
   onOpenCertificateModal,
 }) => {
   const userTier = progress.userTier || 'free';
+  const hasTier2 = progress.hasTier2 || progress.paidTiers?.includes('tier2') || userTier === 'tier2' || progress.completedModules?.some(id => id > 22);
   const { canAccessModule } = useTierAccess(userTier, progress.maxAllowedModuleId);
   const [viewMode, setViewMode] = useState<'map' | 'heatmap' | 'grid'>('map');
   const [sidebarTab, setSidebarTab] = useState<'challenge' | 'flashcards' | 'skills' | 'analytics' | 'tips'>('challenge');
@@ -419,7 +420,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
   // Ref to active module node for auto-scroll
   const activeNodeRef = useRef<HTMLDivElement | null>(null);
 
-  const isTier1User = userTier === 'tier1' || userTier === 'free';
+  const isTier1User = !hasTier2;
   const tierTargetModules = isTier1User ? 22 : modules.length;
   const completedCount = progress.completedModules.length;
   const totalModules = tierTargetModules;
@@ -664,8 +665,8 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
         {/* Main Column */}
         <div className="lg:col-span-7 xl:col-span-8 space-y-6">
           {/* MODULE COMPLETION VERIFICATION CHECKPOINT CARD */}
-          {completedCount >= (userTier === 'tier2' ? 22 : 15) && (() => {
-            const requiredModulesCount = userTier === 'tier2' ? 29 : 22;
+          {completedCount >= (hasTier2 ? 22 : 15) && (() => {
+            const requiredModulesCount = hasTier2 ? 29 : 22;
             const isFullyCompleted = completedCount >= requiredModulesCount;
             return (
               <div className="w-full p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/60 border border-slate-300 dark:border-slate-700 shadow-xl flex flex-col gap-4 animate-fadeIn">
@@ -677,7 +678,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                     </div>
                     <div>
                       <span className="text-[10px] font-bold uppercase text-amber-400 tracking-wide">
-                        Status Sertifikasi • {userTier === 'tier2' ? 'Tier 2 VIP' : 'Tier 1 Basic'}
+                        Status Sertifikasi • {hasTier2 ? 'Tier 2 VIP' : 'Tier 1 Basic'}
                       </span>
                       <h3 className="text-sm font-extrabold text-slate-900 dark:text-white leading-snug">
                         {isFullyCompleted
@@ -702,7 +703,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   {isFullyCompleted ? (
                     <>
-                      {userTier === 'tier2' && onOpenCapstoneModal && (
+                      {hasTier2 && onOpenCapstoneModal && (
                         <button
                           onClick={onOpenCapstoneModal}
                           className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"

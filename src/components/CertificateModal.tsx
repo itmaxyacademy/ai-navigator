@@ -57,11 +57,11 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   if (!isOpen) return null;
 
   const userTier = progress.userTier || 'free';
+  const hasTier2 = progress.hasTier2 || progress.paidTiers?.includes('tier2') || userTier === 'tier2' || progress.completedModules?.some(id => id > 22);
   const isEligible = isCertificateEligible(progress);
 
   if (!isEligible) {
-    const isTier2 = userTier === 'tier2';
-    const targetTotal = isTier2 ? 29 : 22;
+    const targetTotal = hasTier2 ? 29 : 22;
     const completedCount = (progress.completedModules || []).filter(id => id <= targetTotal).length;
     const remainingCount = Math.max(0, targetTotal - completedCount);
 
@@ -89,7 +89,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
           <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-xs space-y-2 text-left">
             <div className="flex justify-between font-bold text-slate-700 dark:text-slate-300">
               <span>Status Paket:</span>
-              <span className="text-amber-500 uppercase">{userTier === 'tier2' ? 'Tier 2 VIP Master' : userTier === 'tier1' ? 'Tier 1 Basic' : 'Free Trial'}</span>
+              <span className="text-amber-500 uppercase">{hasTier2 ? 'Tier 2 VIP Master' : userTier === 'tier1' ? 'Tier 1 Basic' : 'Free Trial'}</span>
             </div>
             <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>Syarat Kelulusan:</span>
@@ -123,7 +123,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       </div>
     );
   }
-  const tierKey = userTier === 'tier2' ? 'tier2' : 'tier1';
+  const tierKey = hasTier2 ? 'tier2' : 'tier1';
   const bgImage = packages?.[tierKey]?.certificate_bg_image;
   const templateDataRaw = (packages?.[tierKey] as any)?.certificate_template_data;
 
@@ -139,7 +139,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     }
   }
 
-  const isTier1 = userTier === 'tier1' || userTier === 'free';
+  const isTier1 = !hasTier2;
   const displayModules = isTier1 ? MODULES_DATA.slice(0, 22) : MODULES_DATA;
 
   // Split modules into 10-module chunks per page for large, crisp, legible 13.5px font rendering
@@ -613,7 +613,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                         Transkrip Kurikulum Modul Pembelajaran (Bagian 1)
                       </div>
                       <div style={{ fontSize: '10.5px', color: '#475569', marginTop: '1px', fontWeight: 600 }}>
-                        Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
+                        Lampiran Resmi Certificate of Completion – AI Navigator ({hasTier2 ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
                       </div>
                     </div>
                   </div>
@@ -680,7 +680,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                           Transkrip Kurikulum Modul Pembelajaran (Bagian 2)
                         </div>
                         <div style={{ fontSize: '10.5px', color: '#475569', marginTop: '1px', fontWeight: 600 }}>
-                          Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
+                          Lampiran Resmi Certificate of Completion – AI Navigator ({hasTier2 ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
                         </div>
                       </div>
                     </div>
