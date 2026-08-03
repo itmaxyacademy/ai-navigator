@@ -417,8 +417,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
   const [showGraduationModal, setShowGraduationModal] = useState<boolean>(false);
   const [lockedTooltip, setLockedTooltip] = useState<string | null>(null);
 
-  // Ref to active module node for auto-scroll
+  // Ref to active module node for auto-scroll and certification banner
   const activeNodeRef = useRef<HTMLDivElement | null>(null);
+  const certBannerRef = useRef<HTMLDivElement | null>(null);
 
   const isTier1User = !hasTier2;
   const tierTargetModules = isTier1User ? 22 : modules.length;
@@ -493,12 +494,23 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
       return;
     }
 
-    setShowGraduationModal(true);
     confetti({
       particleCount: 150,
       spread: 100,
       origin: { y: 0.5 }
     });
+
+    if (hasTier2 && !progress.capstoneSubmission && onOpenCapstoneModal) {
+      onOpenCapstoneModal();
+    } else if (onOpenCertificateModal) {
+      onOpenCertificateModal();
+    } else {
+      setShowGraduationModal(true);
+    }
+
+    if (certBannerRef.current) {
+      certBannerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   };
 
   // Node position pattern left-center-right zig-zag
@@ -669,7 +681,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
             const requiredModulesCount = hasTier2 ? 29 : 22;
             const isFullyCompleted = completedCount >= requiredModulesCount;
             return (
-              <div className="w-full p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/60 border border-slate-300 dark:border-slate-700 shadow-xl flex flex-col gap-4 animate-fadeIn">
+              <div ref={certBannerRef} className="w-full p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/60 border border-slate-300 dark:border-slate-700 shadow-xl flex flex-col gap-4 animate-fadeIn">
                 {/* Top row: badge + progress */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
