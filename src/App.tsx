@@ -240,7 +240,6 @@ export default function App() {
     const redirectToLogin = () => {
       localStorage.removeItem('maxy_access_token');
       localStorage.removeItem('maxy_refresh_token');
-      localStorage.removeItem(STORAGE_KEY);
       setIsAuthValidating(false);
       window.location.href = getLandingUrl();
     };
@@ -346,8 +345,9 @@ export default function App() {
         // Invalid or expired token
         redirectToLogin();
       }
-    }).catch(() => {
-      redirectToLogin();
+    }).catch((err) => {
+      console.warn('Network or server error during auth validation, using cached local progress:', err);
+      setIsAuthValidating(false);
     });
   }, []);
 
