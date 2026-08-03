@@ -67,11 +67,11 @@ export default function App() {
     const cachedHasTier2 = localStorage.getItem('maxy_has_tier2') === 'true';
     const cachedPackageName = localStorage.getItem('maxy_package_name') || undefined;
 
-    const resolvedTier = isLocalDevEnv ? 'tier2' : ((cachedTier === 'tier1' || cachedTier === 'tier2') ? cachedTier : 'free');
-    const resolvedMaxAllowed = isLocalDevEnv ? 29 : (resolvedTier === 'tier2' ? 29 : resolvedTier === 'tier1' ? 22 : 3);
-    const resolvedHasTier1 = isLocalDevEnv || (resolvedTier === 'tier1' || resolvedTier === 'tier2');
-    const resolvedHasTier2 = isLocalDevEnv || (resolvedTier === 'tier2');
-    const resolvedPaidTiers = isLocalDevEnv ? ['tier1', 'tier2'] : (resolvedTier === 'tier2' ? ['tier1', 'tier2'] : resolvedTier === 'tier1' ? ['tier1'] : []);
+    const resolvedTier = (cachedTier === 'tier1' || cachedTier === 'tier2') ? cachedTier : 'free';
+    const resolvedMaxAllowed = resolvedTier === 'tier2' ? 29 : (resolvedTier === 'tier1' ? 22 : 3);
+    const resolvedHasTier1 = resolvedTier === 'tier1' || resolvedTier === 'tier2';
+    const resolvedHasTier2 = resolvedTier === 'tier2';
+    const resolvedPaidTiers = resolvedTier === 'tier2' ? ['tier1', 'tier2'] : (resolvedTier === 'tier1' ? ['tier1'] : []);
 
     return {
       ...defaultProgress,
@@ -82,9 +82,9 @@ export default function App() {
       paidTiers: resolvedPaidTiers as UserTier[],
       hasTier1: resolvedHasTier1,
       hasTier2: resolvedHasTier2,
-      userName: isLocalDevEnv ? 'Local Developer' : (cachedName || parsed.userName || undefined),
-      userEmail: isLocalDevEnv ? 'dev@localhost' : (cachedEmail || parsed.userEmail || undefined),
-      packageName: isLocalDevEnv ? 'Local Dev — VIP Access' : (cachedPackageName || undefined),
+      userName: cachedName || parsed.userName || undefined,
+      userEmail: cachedEmail || parsed.userEmail || undefined,
+      packageName: cachedPackageName || undefined,
     };
   });
 
