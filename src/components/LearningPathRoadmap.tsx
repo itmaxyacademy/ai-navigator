@@ -30,7 +30,7 @@ interface LearningPathRoadmapProps {
   onAwardXp?: (amount: number, label: string) => void;
   onOpenUpgradeModal?: (targetModuleId?: number) => void;
   onOpenCapstoneModal?: () => void;
-  onOpenCertificateModal?: () => void;
+  onOpenCertificateModal?: (certType?: 'capstone' | 'completion') => void;
 }
 
 // -----------------------------------------------------------------------------
@@ -711,29 +711,79 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                     : `Selesaikan ${requiredModulesCount - completedCount} modul lagi untuk membuka akses sertifikat kelulusan.`}
                 </p>
 
-                {/* Action buttons */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                {/* Action buttons / Dual Certificate Selection for Tier 2 */}
+                <div className="w-full">
                   {isFullyCompleted ? (
-                    <>
-                      {hasTier2 && onOpenCapstoneModal && (
-                        <button
-                          onClick={onOpenCapstoneModal}
-                          className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
-                        >
-                          <FileText className="w-4 h-4" />
-                          <span>1. Isi Capstone Form</span>
-                        </button>
-                      )}
-                      {onOpenCertificateModal && (
-                        <button
-                          onClick={onOpenCertificateModal}
-                          className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
-                        >
-                          <Award className="w-4 h-4" />
-                          <span>Download Sertifikat & Transkrip</span>
-                        </button>
-                      )}
-                    </>
+                    hasTier2 ? (
+                      <div className="space-y-2 pt-1">
+                        <span className="text-[11px] font-extrabold text-amber-400 uppercase tracking-wider block">
+                          🎓 Pilih Jenis Sertifikat Tier 2 VIP Master (2 Pilihan Sertifikat):
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                          {/* Option 1: Sertifikat Capstone Project */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (!progress.capstoneSubmission && onOpenCapstoneModal) {
+                                onOpenCapstoneModal();
+                              } else if (onOpenCertificateModal) {
+                                onOpenCertificateModal('capstone');
+                              }
+                            }}
+                            className="p-3 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold text-xs flex flex-col items-start gap-1 shadow-lg shadow-amber-500/20 transition-all cursor-pointer border border-amber-300 group"
+                          >
+                            <div className="flex items-center gap-1.5 w-full justify-between">
+                              <span className="flex items-center gap-1.5 font-black text-slate-950">
+                                <FileText className="w-4 h-4 shrink-0" />
+                                1. Sertifikat Capstone Project
+                              </span>
+                              <span className="text-[10px] bg-slate-950/20 text-slate-950 px-2 py-0.5 rounded-full font-bold">
+                                {progress.capstoneSubmission ? '✓ Submitted' : 'Form Submission'}
+                              </span>
+                            </div>
+                            <span className="text-[10.5px] text-slate-900/80 font-medium text-left leading-tight">
+                              {progress.capstoneSubmission 
+                                ? `Judul: "${progress.capstoneSubmission.title}" (Klik untuk Lihat/Download)`
+                                : 'Isi Judul & Link Project Capstone Anda untuk menerbitkan Sertifikat Competency Capstone'}
+                            </span>
+                          </button>
+
+                          {/* Option 2: Sertifikat Completion 28 JP */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (onOpenCertificateModal) {
+                                onOpenCertificateModal('completion');
+                              }
+                            }}
+                            className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs flex flex-col items-start gap-1 shadow-md transition-all cursor-pointer border border-slate-700 group"
+                          >
+                            <div className="flex items-center gap-1.5 w-full justify-between">
+                              <span className="flex items-center gap-1.5 font-black text-emerald-400">
+                                <Award className="w-4 h-4 shrink-0 text-emerald-400" />
+                                2. Sertifikat Completion 28 JP
+                              </span>
+                              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">
+                                Siap Unduh
+                              </span>
+                            </div>
+                            <span className="text-[10.5px] text-slate-400 font-medium text-left leading-tight">
+                              Sertifikat Kelulusan 28 JP tanpa mencantumkan Judul Capstone (Langsung Terbit PDF)
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      /* Tier 1 Action Button */
+                      <button
+                        type="button"
+                        onClick={() => onOpenCertificateModal && onOpenCertificateModal('completion')}
+                        className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
+                      >
+                        <Award className="w-4 h-4" />
+                        <span>Download Sertifikat & Transkrip 22 JP</span>
+                      </button>
+                    )
                   ) : (
                     <button
                       onClick={() => {

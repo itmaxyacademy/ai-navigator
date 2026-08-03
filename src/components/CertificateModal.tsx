@@ -12,6 +12,7 @@ interface CertificateModalProps {
   isOpen: boolean;
   onClose: () => void;
   progress: UserProgress;
+  certType?: 'capstone' | 'completion';
   onSaveCertDetails?: (name: string, email: string) => void;
   packages?: Record<string, { price: number; fake_price: number; name?: string; certificate_bg_image?: string | null }>;
 }
@@ -20,6 +21,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   isOpen,
   onClose,
   progress,
+  certType = 'capstone',
   onSaveCertDetails,
   packages,
 }) => {
@@ -36,7 +38,6 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const [verifyUrl, setVerifyUrl] = useState<string>('');
   const [isIssuing, setIsIssuing] = useState<boolean>(false);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
-  const [tier2CertType, setTier2CertType] = useState<'capstone' | 'completion'>('capstone');
 
   const page1Ref = useRef<HTMLDivElement>(null);
   const page2Ref = useRef<HTMLDivElement>(null);
@@ -148,7 +149,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const part2Modules = displayModules.slice(10, 20);
   const part3Modules = displayModules.slice(20);
 
-  const capstoneTitle = (hasTier2 && tier2CertType === 'capstone')
+  const capstoneTitle = (hasTier2 && certType === 'capstone')
     ? (progress.capstoneSubmission?.title || (progress as any).certTitle || 'Otomasi Workflow Pemasaran & Konten Berbasis RCTF & Multi-LLM')
     : null;
 
@@ -428,45 +429,6 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 <span>{isDownloading ? 'Mengekstrak PDF Lengkap...' : `Download Sertifikat PDF (${totalPages} Halaman Resmi)`}</span>
               </button>
             </div>
-
-            {hasTier2 && (
-              <div className="p-3.5 bg-gradient-to-r from-slate-900 via-amber-950/40 to-slate-900 border border-amber-500/40 rounded-2xl space-y-2.5 my-2 shadow-lg">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-amber-500/20 pb-2">
-                  <span className="text-xs font-black text-amber-400 uppercase tracking-wide flex items-center gap-1.5">
-                    <Crown className="w-4 h-4 text-amber-400" /> Pilihan 2 Jenis Sertifikat Tier 2 VIP:
-                  </span>
-                  <span className="text-[11px] font-bold text-slate-300">
-                    Aktif: {tier2CertType === 'capstone' ? '🎓 Sertifikat 1 (Dengan Judul Capstone)' : '📜 Sertifikat 2 (Tanpa Judul Capstone)'}
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <button
-                    type="button"
-                    onClick={() => setTier2CertType('capstone')}
-                    className={`px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-2 border ${
-                      tier2CertType === 'capstone'
-                        ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md shadow-amber-500/20 ring-2 ring-amber-400/40'
-                        : 'bg-slate-950/80 text-slate-300 border-slate-800 hover:bg-slate-800'
-                    }`}
-                  >
-                    <FileText className="w-4 h-4 shrink-0" />
-                    <span>1. Sertifikat Capstone (Dengan Judul Project)</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setTier2CertType('completion')}
-                    className={`px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-2 border ${
-                      tier2CertType === 'completion'
-                        ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md shadow-amber-500/20 ring-2 ring-amber-400/40'
-                        : 'bg-slate-950/80 text-slate-300 border-slate-800 hover:bg-slate-800'
-                    }`}
-                  >
-                    <Award className="w-4 h-4 shrink-0" />
-                    <span>2. Sertifikat Completion 28 JP (Tanpa Capstone)</span>
-                  </button>
-                </div>
-              </div>
-            )}
 
             <div id="printable-certificate-area" className="space-y-6">
 

@@ -106,6 +106,7 @@ export default function App() {
   // State untuk verifikasi pembayaran setelah kembali dari Xendit
   const [isVerifyingPayment, setIsVerifyingPayment] = useState<boolean>(false);
   const [paymentVerifyStatus, setPaymentVerifyStatus] = useState<'success' | 'cancelled' | 'timeout' | null>(null);
+  const [selectedCertType, setSelectedCertType] = useState<'capstone' | 'completion'>('capstone');
   const [milestoneModalState, setMilestoneModalState] = useState<{ isOpen: boolean; tierCompleted: 'tier1' | 'tier2' }>({
     isOpen: false,
     tierCompleted: 'tier1',
@@ -799,6 +800,8 @@ export default function App() {
       certRequested: true,
     }));
     setCapstoneModalOpen(false);
+    setSelectedCertType('capstone');
+    setCertificateOpen(true);
     addFloatingXp(500, 'Capstone Project Berhasil Dikirim!', 'xp_graduation');
     try {
       confetti({
@@ -975,7 +978,10 @@ export default function App() {
               setUpgradeModalOpen(true);
             }}
             onOpenCapstoneModal={() => setCapstoneModalOpen(true)}
-            onOpenCertificateModal={() => setCertificateOpen(true)}
+            onOpenCertificateModal={(certType) => {
+              if (certType) setSelectedCertType(certType);
+              setCertificateOpen(true);
+            }}
           />
         )}
 
@@ -1024,6 +1030,7 @@ export default function App() {
         isOpen={certificateOpen}
         onClose={() => setCertificateOpen(false)}
         progress={progress}
+        certType={selectedCertType}
         onSaveCertDetails={handleSaveCertDetails}
         packages={cmsPackages}
       />
