@@ -44,6 +44,10 @@ export const LovableReplica: React.FC = () => {
   const [previewDevice, setPreviewDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [copiedCode, setCopiedCode] = useState<boolean>(false);
   const [previewClickCount, setPreviewClickCount] = useState<number>(0);
+  const [cartCount, setCartCount] = useState<number>(0);
+  const [selectedQuizOption, setSelectedQuizOption] = useState<number | null>(null);
+  const [contactSuccessToast, setContactSuccessToast] = useState<boolean>(false);
+  const [activeTemplateOverride, setActiveTemplateOverride] = useState<'auto' | 'saas' | 'course' | 'portfolio' | 'ecommerce'>('auto');
 
   // Modals state
   const [isInfoModalOpen, setIsInfoModalOpen] = useState<boolean>(false);
@@ -60,6 +64,21 @@ export const LovableReplica: React.FC = () => {
       workspaceChatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [history, isLoading, viewState]);
+  // Helper to detect active template based on user prompt or manual override
+  const getActiveTemplate = (): 'saas' | 'course' | 'portfolio' | 'ecommerce' => {
+    if (activeTemplateOverride !== 'auto') return activeTemplateOverride;
+    const lastUserPrompt = history.slice().reverse().find((m) => m.sender === 'user')?.text?.toLowerCase() || '';
+    if (lastUserPrompt.includes('kursus') || lastUserPrompt.includes('sertifikasi') || lastUserPrompt.includes('dashboard') || lastUserPrompt.includes('maxy')) {
+      return 'course';
+    }
+    if (lastUserPrompt.includes('portfolio') || lastUserPrompt.includes('developer') || lastUserPrompt.includes('rancang studio')) {
+      return 'portfolio';
+    }
+    if (lastUserPrompt.includes('e-commerce') || lastUserPrompt.includes('store') || lastUserPrompt.includes('toko') || lastUserPrompt.includes('belanja')) {
+      return 'ecommerce';
+    }
+    return 'saas';
+  };
 
   // Handle Speech / Microphone Simulation
   const handleMicrophoneClick = () => {
@@ -656,9 +675,28 @@ export default function GeneratedApp() {
                     </button>
                   </div>
 
-                  <span className="text-[10px] text-slate-500 font-mono">
-                    Live Preview Container
-                  </span>
+                  {/* Dynamic Template Switcher Pills */}
+                  <div className="flex items-center gap-1.5 overflow-x-auto hide-scrollbar">
+                    <span className="text-[10px] text-slate-400 font-mono hidden sm:inline">Desain Template:</span>
+                    {[
+                      { id: 'saas', label: '⚡ SaaS' },
+                      { id: 'course', label: '🎓 Edu LMS' },
+                      { id: 'portfolio', label: '🎨 Portfolio' },
+                      { id: 'ecommerce', label: '🛒 Store' },
+                    ].map((t) => (
+                      <button
+                        key={t.id}
+                        onClick={() => setActiveTemplateOverride(t.id as any)}
+                        className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-all cursor-pointer ${
+                          getActiveTemplate() === t.id
+                            ? 'bg-purple-600 text-white shadow'
+                            : 'bg-slate-800 text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        {t.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Render Frame Container */}
@@ -672,111 +710,270 @@ export default function GeneratedApp() {
                         : 'max-w-xs h-[500px]'
                     }`}
                   >
-                    {/* Simulated Component Render - Premium Modern Web App */}
+                    {/* Simulated Component Render - Dynamic Template Preview */}
                     <div className="h-full overflow-y-auto font-sans bg-[#090a0f] text-slate-100 flex flex-col justify-between selection:bg-purple-500 selection:text-white">
                       
-                      {/* Top App Header */}
-                      <header className="px-5 py-3 border-b border-slate-800/80 bg-[#0d0f17]/90 backdrop-blur flex items-center justify-between sticky top-0 z-20">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-600/30 font-extrabold text-white text-xs">
-                            ⚡
-                          </div>
-                          <span className="font-extrabold text-xs tracking-tight text-white flex items-center gap-1.5">
-                            Lovable Studio <span className="px-2 py-0.5 text-[9px] rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold">Live Pro</span>
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <span className="hidden sm:inline-block text-[11px] text-slate-400 font-medium">v2.4 Production Ready</span>
-                          <button 
-                            onClick={() => setPreviewClickCount(c => c + 1)}
-                            className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md shadow-purple-600/20 transition-all active:scale-95 cursor-pointer flex items-center gap-1.5"
-                          >
-                            <Sparkles className="w-3.5 h-3.5" /> Launch App ({previewClickCount})
-                          </button>
-                        </div>
-                      </header>
-
-                      {/* Main Hero & Content Section */}
-                      <main className="p-5 space-y-5 flex-1">
-                        {/* Dynamic Hero Badge */}
-                        <div className="space-y-3 text-center sm:text-left pt-1">
-                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/80 border border-purple-500/40 text-purple-300 text-xs font-bold shadow-inner">
-                            <Sparkles className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
-                            <span>AI Generated Result • Lovable V4 Engine</span>
-                          </div>
-
-                          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white leading-tight bg-gradient-to-r from-white via-slate-100 to-purple-200 bg-clip-text text-transparent">
-                            {history.find((m) => m.sender === 'user')?.text || 'Buatkan landing page SaaS untuk alat otomatisasi alur kerja AI'}
-                          </h1>
-
-                          <p className="text-slate-400 text-xs leading-relaxed max-w-xl">
-                            Antarmuka aplikasi web modern ini dibuat secara otomatis dengan komponen React interaktif, sistem gaya Tailwind CSS, serta kompatibilitas penuh untuk perangkat seluler dan desktop.
-                          </p>
-                        </div>
-
-                        {/* Interactive Feature Cards Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                          {/* Card 1: Interactive State Tester */}
-                          <div className="p-4 rounded-2xl bg-[#121420] border border-slate-800 hover:border-purple-500/50 transition-all space-y-2.5 shadow-xl group">
-                            <div className="flex items-center justify-between">
-                              <span className="text-xs font-bold text-purple-400 flex items-center gap-1.5">
-                                <Sparkles className="w-3.5 h-3.5 text-purple-400" /> State Interaktif Live
-                              </span>
-                              <span className="text-[9px] px-2 py-0.5 rounded-md bg-purple-900/40 text-purple-300 border border-purple-700/50 font-mono">React Hook</span>
-                            </div>
-                            <p className="text-[11px] text-slate-300 leading-relaxed">
-                              Uji coba langsung tombol state di bawah ini. Nilai state akan diperbarui secara real-time di antarmuka.
-                            </p>
-                            <button
-                              onClick={() => setPreviewClickCount(c => c + 1)}
-                              className="w-full py-2 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg group-hover:shadow-purple-500/20"
-                            >
-                              <span>Klik Uji State (Counter: {previewClickCount})</span>
-                              <ArrowRight className="w-3.5 h-3.5 text-purple-300" />
-                            </button>
-                          </div>
-
-                          {/* Card 2: Performance Metrics */}
-                          <div className="p-4 rounded-2xl bg-[#121420] border border-slate-800 hover:border-emerald-500/50 transition-all space-y-2.5 shadow-xl">
-                            <div className="flex items-center justify-between">
-                              <span className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-                                <Check className="w-3.5 h-3.5 text-emerald-400" /> Responsif &amp; Siap Pakai
-                              </span>
-                              <span className="text-[9px] px-2 py-0.5 rounded-md bg-emerald-900/40 text-emerald-300 border border-emerald-700/50 font-mono">100% Uptime</span>
-                            </div>
-                            <p className="text-[11px] text-slate-300 leading-relaxed">
-                              Tata letak dan gaya CSS diuji siap pakai secara langsung di produksi dengan performa optimal.
-                            </p>
-                            <div className="flex items-center gap-2.5 pt-0.5">
-                              <div className="flex-1 bg-slate-800 h-2 rounded-full overflow-hidden p-0.5 border border-slate-700">
-                                <div className="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full w-[94%]" />
+                      {getActiveTemplate() === 'course' ? (
+                        /* TEMPLATE 2: EDU LMS & CERTIFICATION DASHBOARD */
+                        <div className="flex-1 flex flex-col justify-between space-y-4">
+                          <header className="px-5 py-3 border-b border-slate-800 bg-[#0d0f17]/90 backdrop-blur flex items-center justify-between sticky top-0 z-20">
+                            <div className="flex items-center gap-2">
+                              <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 flex items-center justify-center font-bold text-white text-xs">
+                                🎓
                               </div>
-                              <span className="text-[10px] font-bold text-emerald-400 font-mono">99.4% Score</span>
+                              <span className="font-extrabold text-xs text-white">Maxy AI Academy</span>
                             </div>
-                          </div>
-                        </div>
+                            <div className="flex items-center gap-2">
+                              <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">1,450 XP</span>
+                              <span className="px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 text-[10px] font-bold">Tier 2 Ready</span>
+                            </div>
+                          </header>
 
-                        {/* Action Buttons Row */}
-                        <div className="pt-1 flex items-center gap-2.5 flex-wrap">
-                          <button
-                            onClick={() => setPreviewClickCount(c => c + 1)}
-                            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-purple-600/30 flex items-center gap-2 cursor-pointer"
-                          >
-                            <span>Mulai Uji Coba</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </button>
-                          <button
-                            onClick={() => handleOpenNavSimulationModal('Pelajari Selengkapnya')}
-                            className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition-all cursor-pointer"
-                          >
-                            Pelajari Selengkapnya
-                          </button>
+                          <main className="p-5 space-y-4 flex-1">
+                            <div className="space-y-1">
+                              <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-wider">Dashboard Kursus Interaktif</span>
+                              <h2 className="text-xl font-extrabold text-white">Laporan Progres Sertifikasi AI</h2>
+                              <p className="text-xs text-slate-400">Seluruh 29 modul kurikulum berhasil diselesaikan secara lengkap.</p>
+                            </div>
+
+                            {/* Progress Card */}
+                            <div className="p-4 rounded-2xl bg-[#121420] border border-slate-800 space-y-3">
+                              <div className="flex items-center justify-between text-xs">
+                                <span className="font-bold text-emerald-400">Progres Modul Kursus</span>
+                                <span className="font-mono font-bold text-white">29 / 29 Modul (100%)</span>
+                              </div>
+                              <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden p-0.5 border border-slate-700">
+                                <div className="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full w-full" />
+                              </div>
+                            </div>
+
+                            {/* Interactive Quiz Tester Widget */}
+                            <div className="p-4 rounded-2xl bg-[#141226] border border-purple-800/60 space-y-3">
+                              <span className="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+                                <Sparkles className="w-3.5 h-3.5 text-purple-400" /> Mini Quiz Simulator
+                              </span>
+                              <p className="text-xs text-slate-200">Berapa jumlah modul total pada Jalur Pembelajaran AI Master?</p>
+                              <div className="grid grid-cols-2 gap-2">
+                                <button
+                                  onClick={() => setSelectedQuizOption(1)}
+                                  className={`p-2 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
+                                    selectedQuizOption === 1
+                                      ? 'bg-emerald-600 text-white border-emerald-400 shadow-lg'
+                                      : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'
+                                  }`}
+                                >
+                                  ✓ 29 Modul (Tier 2 Master)
+                                </button>
+                                <button
+                                  onClick={() => setSelectedQuizOption(2)}
+                                  className={`p-2 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
+                                    selectedQuizOption === 2
+                                      ? 'bg-rose-600 text-white border-rose-400'
+                                      : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'
+                                  }`}
+                                >
+                                  22 Modul (Tier 1 Fundamental)
+                                </button>
+                              </div>
+                              {selectedQuizOption === 1 && (
+                                <div className="p-2 rounded-xl bg-emerald-950/80 border border-emerald-700 text-emerald-300 text-xs font-bold text-center animate-fadeIn">
+                                  🎉 Jawaban Tepat! Anda berhak klaim Sertifikat Tier 2.
+                                </div>
+                              )}
+                            </div>
+                          </main>
                         </div>
-                      </main>
+                      ) : getActiveTemplate() === 'portfolio' ? (
+                        /* TEMPLATE 3: MODERN DEVELOPER PORTFOLIO */
+                        <div className="flex-1 flex flex-col justify-between space-y-4">
+                          <header className="px-5 py-3 border-b border-slate-800 bg-[#0d0f17]/90 backdrop-blur flex items-center justify-between sticky top-0 z-20">
+                            <span className="font-extrabold text-xs text-indigo-400 flex items-center gap-1.5">
+                              ⚡ alexchen.dev
+                            </span>
+                            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">
+                              🟢 Open for Hire
+                            </span>
+                          </header>
+
+                          <main className="p-5 space-y-4 flex-1">
+                            <div className="space-y-2">
+                              <h1 className="text-2xl font-extrabold text-white">Alex Chen</h1>
+                              <p className="text-xs text-indigo-300 font-medium">Senior AI &amp; Full-Stack Engineer</p>
+                              <p className="text-xs text-slate-400 leading-relaxed">Spesialis dalam membangun agen AI otonom, Web Apps berkecepatan tinggi, dan integrasi LLM.</p>
+                            </div>
+
+                            {/* Tech Stack Pills */}
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              {['React 19', 'TypeScript', 'Tailwind CSS', 'Gemini 1.5', 'Python'].map((tech, i) => (
+                                <span key={i} className="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 text-[10px] font-mono">
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+
+                            {/* Interactive Contact Form Simulator */}
+                            <div className="p-4 rounded-2xl bg-[#121420] border border-slate-800 space-y-2.5">
+                              <span className="text-xs font-bold text-white">Kirim Pesan Langsung</span>
+                              <input
+                                type="text"
+                                placeholder="Tulis pesan kerjasama..."
+                                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none"
+                              />
+                              <button
+                                onClick={() => {
+                                  setContactSuccessToast(true);
+                                  setTimeout(() => setContactSuccessToast(false), 3000);
+                                }}
+                                className="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg cursor-pointer"
+                              >
+                                Send Message 🚀
+                              </button>
+                              {contactSuccessToast && (
+                                <div className="p-2 rounded-xl bg-indigo-950 border border-indigo-700 text-indigo-200 text-xs font-bold text-center animate-fadeIn">
+                                  ✉️ Pesan Anda berhasil dikirim ke Alex Chen!
+                                </div>
+                              )}
+                            </div>
+                          </main>
+                        </div>
+                      ) : getActiveTemplate() === 'ecommerce' ? (
+                        /* TEMPLATE 4: E-COMMERCE AI STOREFRONT */
+                        <div className="flex-1 flex flex-col justify-between space-y-4">
+                          <header className="px-5 py-3 border-b border-slate-800 bg-[#0d0f17]/90 backdrop-blur flex items-center justify-between sticky top-0 z-20">
+                            <span className="font-extrabold text-xs text-amber-400 flex items-center gap-1.5">
+                              🛒 CyberStore AI
+                            </span>
+                            <button
+                              onClick={() => setCartCount(c => c + 1)}
+                              className="px-3 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold cursor-pointer"
+                            >
+                              🛒 Keranjang ({cartCount})
+                            </button>
+                          </header>
+
+                          <main className="p-5 space-y-4 flex-1">
+                            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-600/30 to-rose-600/30 border border-amber-500/40 space-y-1">
+                              <span className="text-[10px] font-bold text-amber-300">PROMO GADGET AI 2026</span>
+                              <h3 className="text-sm font-extrabold text-white">Diskon 30% Peralatan AI Pro</h3>
+                            </div>
+
+                            {/* Product Cards Grid */}
+                            <div className="grid grid-cols-2 gap-2.5">
+                              <div className="p-3 rounded-xl bg-[#121420] border border-slate-800 space-y-2">
+                                <div className="w-full h-16 rounded-lg bg-slate-800 flex items-center justify-center text-2xl">🎧</div>
+                                <div className="text-[11px] font-bold text-white">AI Neural Headphones</div>
+                                <div className="text-[10px] text-amber-400 font-bold">Rp 1.499.000</div>
+                                <button
+                                  onClick={() => setCartCount(c => c + 1)}
+                                  className="w-full py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold text-[10px] cursor-pointer"
+                                >
+                                  + Beli
+                                </button>
+                              </div>
+
+                              <div className="p-3 rounded-xl bg-[#121420] border border-slate-800 space-y-2">
+                                <div className="w-full h-16 rounded-lg bg-slate-800 flex items-center justify-center text-2xl">🤖</div>
+                                <div className="text-[11px] font-bold text-white">Smart AI Desk Robot</div>
+                                <div className="text-[10px] text-amber-400 font-bold">Rp 2.299.000</div>
+                                <button
+                                  onClick={() => setCartCount(c => c + 1)}
+                                  className="w-full py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold text-[10px] cursor-pointer"
+                                >
+                                  + Beli
+                                </button>
+                              </div>
+                            </div>
+                          </main>
+                        </div>
+                      ) : (
+                        /* TEMPLATE 1 (DEFAULT): SAAS AI WORKFLOW AUTOMATION */
+                        <div className="flex-1 flex flex-col justify-between space-y-4">
+                          <header className="px-5 py-3 border-b border-slate-800/80 bg-[#0d0f17]/90 backdrop-blur flex items-center justify-between sticky top-0 z-20">
+                            <div className="flex items-center gap-2.5">
+                              <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-600/30 font-extrabold text-white text-xs">
+                                ⚡
+                              </div>
+                              <span className="font-extrabold text-xs tracking-tight text-white flex items-center gap-1.5">
+                                Lovable Studio <span className="px-2 py-0.5 text-[9px] rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold">Live Pro</span>
+                              </span>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              <span className="hidden sm:inline-block text-[11px] text-slate-400 font-medium">v2.4 Production Ready</span>
+                              <button 
+                                onClick={() => setPreviewClickCount(c => c + 1)}
+                                className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md shadow-purple-600/20 transition-all active:scale-95 cursor-pointer flex items-center gap-1.5"
+                              >
+                                <Sparkles className="w-3.5 h-3.5" /> Launch App ({previewClickCount})
+                              </button>
+                            </div>
+                          </header>
+
+                          {/* Main Hero & Content Section */}
+                          <main className="p-5 space-y-5 flex-1">
+                            {/* Dynamic Hero Badge */}
+                            <div className="space-y-3 text-center sm:text-left pt-1">
+                              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/80 border border-purple-500/40 text-purple-300 text-xs font-bold shadow-inner">
+                                <Sparkles className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
+                                <span>AI Generated Result • Lovable V4 Engine</span>
+                              </div>
+
+                              <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white leading-tight bg-gradient-to-r from-white via-slate-100 to-purple-200 bg-clip-text text-transparent">
+                                {history.find((m) => m.sender === 'user')?.text || 'Buatkan landing page SaaS untuk alat otomatisasi alur kerja AI'}
+                              </h1>
+
+                              <p className="text-slate-400 text-xs leading-relaxed max-w-xl">
+                                Antarmuka aplikasi web modern ini dibuat secara otomatis dengan komponen React interaktif, sistem gaya Tailwind CSS, serta kompatibilitas penuh untuk perangkat seluler dan desktop.
+                              </p>
+                            </div>
+
+                            {/* Interactive Feature Cards Grid */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                              {/* Card 1: Interactive State Tester */}
+                              <div className="p-4 rounded-2xl bg-[#121420] border border-slate-800 hover:border-purple-500/50 transition-all space-y-2.5 shadow-xl group">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-xs font-bold text-purple-400 flex items-center gap-1.5">
+                                    <Sparkles className="w-3.5 h-3.5 text-purple-400" /> State Interaktif Live
+                                  </span>
+                                  <span className="text-[9px] px-2 py-0.5 rounded-md bg-purple-900/40 text-purple-300 border border-purple-700/50 font-mono">React Hook</span>
+                                </div>
+                                <p className="text-[11px] text-slate-300 leading-relaxed">
+                                  Uji coba langsung tombol state di bawah ini. Nilai state akan diperbarui secara real-time di antarmuka.
+                                </p>
+                                <button
+                                  onClick={() => setPreviewClickCount(c => c + 1)}
+                                  className="w-full py-2 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg group-hover:shadow-purple-500/20"
+                                >
+                                  <span>Klik Uji State (Counter: {previewClickCount})</span>
+                                  <ArrowRight className="w-3.5 h-3.5 text-purple-300" />
+                                </button>
+                              </div>
+
+                              {/* Card 2: Performance Metrics */}
+                              <div className="p-4 rounded-2xl bg-[#121420] border border-slate-800 hover:border-emerald-500/50 transition-all space-y-2.5 shadow-xl">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                                    <Check className="w-3.5 h-3.5 text-emerald-400" /> Responsif &amp; Siap Pakai
+                                  </span>
+                                  <span className="text-[9px] px-2 py-0.5 rounded-md bg-emerald-900/40 text-emerald-300 border border-emerald-700/50 font-mono">100% Uptime</span>
+                                </div>
+                                <p className="text-[11px] text-slate-300 leading-relaxed">
+                                  Tata letak dan gaya CSS diuji siap pakai secara langsung di produksi dengan performa optimal.
+                                </p>
+                                <div className="flex items-center gap-2.5 pt-0.5">
+                                  <div className="flex-1 bg-slate-800 h-2 rounded-full overflow-hidden p-0.5 border border-slate-700">
+                                    <div className="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full w-[94%]" />
+                                  </div>
+                                  <span className="text-[10px] font-bold text-emerald-400 font-mono">99.4% Score</span>
+                                </div>
+                              </div>
+                            </div>
+                          </main>
+                        </div>
+                      )}
 
                       {/* Footer */}
-                      <footer className="px-5 py-2.5 border-t border-slate-800/80 bg-[#0d0f17] flex items-center justify-between text-[10px] text-slate-400">
+                      <footer className="px-5 py-2.5 border-t border-slate-800/80 bg-[#0d0f17] flex items-center justify-between text-[10px] text-slate-400 shrink-0">
                         <span>© 2026 Lovable AI Navigator • Maxy Academy</span>
                         <span className="text-purple-400 font-mono">Status: Ready</span>
                       </footer>
