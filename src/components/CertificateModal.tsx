@@ -36,6 +36,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const [verifyUrl, setVerifyUrl] = useState<string>('');
   const [isIssuing, setIsIssuing] = useState<boolean>(false);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
+  const [tier2CertType, setTier2CertType] = useState<'capstone' | 'completion'>('capstone');
 
   const page1Ref = useRef<HTMLDivElement>(null);
   const page2Ref = useRef<HTMLDivElement>(null);
@@ -146,6 +147,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const part1Modules = displayModules.slice(0, 10);
   const part2Modules = displayModules.slice(10, 20);
   const part3Modules = displayModules.slice(20);
+
+  const capstoneTitle = (hasTier2 && tier2CertType === 'capstone')
+    ? (progress.capstoneSubmission?.title || progress.certTitle || 'Otomasi Workflow Pemasaran & Konten Berbasis RCTF & Multi-LLM')
+    : null;
 
   const now = new Date();
   const monthName = now.toLocaleDateString('id-ID', { month: 'long' });
@@ -424,6 +429,45 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               </button>
             </div>
 
+            {hasTier2 && (
+              <div className="p-3.5 bg-gradient-to-r from-slate-900 via-amber-950/40 to-slate-900 border border-amber-500/40 rounded-2xl space-y-2.5 my-2 shadow-lg">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-amber-500/20 pb-2">
+                  <span className="text-xs font-black text-amber-400 uppercase tracking-wide flex items-center gap-1.5">
+                    <Crown className="w-4 h-4 text-amber-400" /> Pilihan 2 Jenis Sertifikat Tier 2 VIP:
+                  </span>
+                  <span className="text-[11px] font-bold text-slate-300">
+                    Aktif: {tier2CertType === 'capstone' ? '🎓 Sertifikat 1 (Dengan Judul Capstone)' : '📜 Sertifikat 2 (Tanpa Judul Capstone)'}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setTier2CertType('capstone')}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-2 border ${
+                      tier2CertType === 'capstone'
+                        ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md shadow-amber-500/20 ring-2 ring-amber-400/40'
+                        : 'bg-slate-950/80 text-slate-300 border-slate-800 hover:bg-slate-800'
+                    }`}
+                  >
+                    <FileText className="w-4 h-4 shrink-0" />
+                    <span>1. Sertifikat Capstone (Dengan Judul Project)</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTier2CertType('completion')}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-2 border ${
+                      tier2CertType === 'completion'
+                        ? 'bg-amber-500 text-slate-950 border-amber-400 shadow-md shadow-amber-500/20 ring-2 ring-amber-400/40'
+                        : 'bg-slate-950/80 text-slate-300 border-slate-800 hover:bg-slate-800'
+                    }`}
+                  >
+                    <Award className="w-4 h-4 shrink-0" />
+                    <span>2. Sertifikat Completion 28 JP (Tanpa Capstone)</span>
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div id="printable-certificate-area" className="space-y-6">
 
             {/* ============ HALAMAN 1: SERTIFIKAT ============ */}
@@ -527,6 +571,28 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       </div>
                     </>
                   )}
+                  {capstoneTitle && (
+                    <div
+                      className="absolute whitespace-nowrap pointer-events-none z-10 text-center"
+                      style={{
+                        top: '51.5%',
+                        left: '49.5%',
+                        transform: 'translateX(-50%)',
+                        fontSize: '11.5px',
+                        fontFamily: 'Poppins, sans-serif',
+                        fontWeight: 700,
+                        color: '#b45309',
+                        backgroundColor: 'rgba(254, 243, 199, 0.95)',
+                        padding: '3px 14px',
+                        borderRadius: '8px',
+                        border: '1px solid rgba(245, 158, 11, 0.5)',
+                        maxWidth: '82%',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.06)',
+                      }}
+                    >
+                      Judul Capstone Project: "{capstoneTitle}"
+                    </div>
+                  )}
                 </div>
               ) : (
                 /* Fallback: Digital Certificate */
@@ -562,6 +628,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       {userName || 'Siswa AI Navigator'}
                     </h3>
                   </div>
+
+                  {capstoneTitle && (
+                    <div className="mt-2 text-xs font-bold text-amber-800 bg-amber-50 border border-amber-300 px-4 py-1.5 rounded-xl inline-block max-w-md shadow-sm">
+                      Judul Capstone Project: "{capstoneTitle}"
+                    </div>
+                  )}
 
                   <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed mt-3">
                     telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong> dengan predikat <strong className="text-emerald-700">LULUS</strong>.
