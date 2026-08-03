@@ -715,36 +715,63 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                 <div className="w-full">
                   {isFullyCompleted ? (
                     hasTier2 ? (
-                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-1">
-                        {!progress.capstoneSubmission ? (
+                      <div className="space-y-2 pt-1">
+                        <span className="text-[11px] font-extrabold text-amber-400 uppercase tracking-wider block">
+                          🎓 Pilih Jenis Sertifikat Tier 2 VIP Master (2 Template CMS Aktif):
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                          {/* Option 1: Sertifikat Capstone Project (Template CMS 1) */}
                           <button
                             type="button"
-                            onClick={onOpenCapstoneModal}
-                            className="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-500/25 transition-all cursor-pointer border border-amber-300"
+                            onClick={() => {
+                              if (!progress.capstoneSubmission && onOpenCapstoneModal) {
+                                onOpenCapstoneModal();
+                              } else if (onOpenCertificateModal) {
+                                onOpenCertificateModal('capstone');
+                              }
+                            }}
+                            className="p-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold text-xs flex flex-col items-start gap-1 shadow-lg shadow-amber-500/20 transition-all cursor-pointer border border-amber-300 group"
                           >
-                            <FileText className="w-4 h-4 shrink-0" />
-                            <span>1. Isi Capstone Form (Kirim Judul &amp; Link Project)</span>
+                            <div className="flex items-center gap-1.5 w-full justify-between">
+                              <span className="flex items-center gap-1.5 font-black text-slate-950">
+                                <FileText className="w-4 h-4 shrink-0" />
+                                1. Sertifikat Capstone Project
+                              </span>
+                              <span className="text-[10px] bg-slate-950/20 text-slate-950 px-2 py-0.5 rounded-full font-bold">
+                                {progress.capstoneSubmission ? '✓ Submitted' : 'Form Submission'}
+                              </span>
+                            </div>
+                            <span className="text-[10.5px] text-slate-900/90 font-medium text-left leading-tight">
+                              {progress.capstoneSubmission 
+                                ? `Judul: "${progress.capstoneSubmission.title}" (Klik untuk Unduh Template Capstone)`
+                                : 'Form Isian Judul & Link Project Capstone (Memakai Template CMS Capstone)'}
+                            </span>
                           </button>
-                        ) : (
-                          <>
-                            <button
-                              type="button"
-                              onClick={() => onOpenCertificateModal && onOpenCertificateModal('capstone')}
-                              className="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25 transition-all cursor-pointer flex-1"
-                            >
-                              <Award className="w-4 h-4 shrink-0" />
-                              <span className="truncate">Download Sertifikat &amp; Transkrip (Judul: "{progress.capstoneSubmission.title}")</span>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={onOpenCapstoneModal}
-                              className="px-3.5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-slate-700 shrink-0"
-                            >
-                              <FileText className="w-3.5 h-3.5" />
-                              <span>Edit Capstone</span>
-                            </button>
-                          </>
-                        )}
+
+                          {/* Option 2: Sertifikat Completion Standard (Template CMS 2 - "Seperti Sekarang") */}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (onOpenCertificateModal) {
+                                onOpenCertificateModal('completion');
+                              }
+                            }}
+                            className="p-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs flex flex-col items-start gap-1 shadow-md transition-all cursor-pointer border border-slate-700 group"
+                          >
+                            <div className="flex items-center gap-1.5 w-full justify-between">
+                              <span className="flex items-center gap-1.5 font-black text-emerald-400">
+                                <Award className="w-4 h-4 shrink-0 text-emerald-400" />
+                                2. Sertifikat Completion Standard
+                              </span>
+                              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">
+                                Siap Unduh
+                              </span>
+                            </div>
+                            <span className="text-[10.5px] text-slate-400 font-medium text-left leading-tight">
+                              Sertifikat Kelulusan Standard tanpa Judul Capstone (Memakai Template CMS Standard "seperti sekarang")
+                            </span>
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       /* Tier 1 Action Button */

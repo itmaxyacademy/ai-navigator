@@ -127,8 +127,15 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   }
   const tierKey = hasTier2 ? 'tier2' : 'tier1';
   const pkgObj = packages?.[tierKey] || packages?.['tier2'] || packages?.['tier1'];
-  const bgImage = pkgObj?.certificate_bg_image || packages?.['tier2']?.certificate_bg_image || packages?.['tier1']?.certificate_bg_image || null;
-  const templateDataRaw = (pkgObj as any)?.certificate_template_data || (packages?.['tier2'] as any)?.certificate_template_data || (packages?.['tier1'] as any)?.certificate_template_data || null;
+
+  const isCapstone = certType === 'capstone';
+  const bgImage = isCapstone
+    ? (pkgObj?.certificate_bg_image_capstone || pkgObj?.certificate_bg_image || packages?.['tier2']?.certificate_bg_image_capstone || packages?.['tier2']?.certificate_bg_image || null)
+    : (pkgObj?.certificate_bg_image || packages?.['tier2']?.certificate_bg_image || packages?.['tier1']?.certificate_bg_image || null);
+
+  const templateDataRaw = isCapstone
+    ? ((pkgObj as any)?.certificate_template_data_capstone || (pkgObj as any)?.certificate_template_data || (packages?.['tier2'] as any)?.certificate_template_data_capstone || (packages?.['tier2'] as any)?.certificate_template_data || null)
+    : ((pkgObj as any)?.certificate_template_data || (packages?.['tier2'] as any)?.certificate_template_data || (packages?.['tier1'] as any)?.certificate_template_data || null);
 
   let templateObjects: Array<any> = [];
   if (templateDataRaw) {
