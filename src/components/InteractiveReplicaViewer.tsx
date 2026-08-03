@@ -164,31 +164,61 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
       case 1:
         return 'Lengkapi 4 parameter kerangka RCTF (Role, Context, Task, Format) di bawah untuk memicu pembuat prompt terstruktur!';
       case 2:
-        return 'Coba buat instruksi percakapan atau pilih tombol sampel prompt ChatGPT di dalam simulator!';
+        return 'Eksplorasi perintah percakapan, beralih model GPT-4o / Reasoning, atau klik sampel prompt ChatGPT di dalam simulator!';
       case 3:
-        return 'Buka atau tutup panel Artifacts Claude untuk melihat bagaimana dokumen & kode dirender secara berdampingan!';
+        return 'Uji fitur Artifacts dengan membuat komponen kode React/SVG dan perhatikan bagaimana panel pratinjau muncul di sisi kanan!';
       case 4:
-        return 'Gunakan fitur pemrosesan multimodal Gemini dengan mengunggah gambar atau teks contoh!';
+        return 'Coba fitur pemrosesan multimodal Gemini dengan memasukkan teks atau mengunggah sampel gambar untuk dianalisis!';
+      case 5:
+        return 'Ketik topik pencarian untuk melihat bagaimana Perplexity AI menyajikan jawaban terstruktur dengan sitasi sumber klaim!';
+      case 6:
+        return 'Uji 3 gaya respons Copilot (Creative, Balanced, Precise) untuk melihat perbedaan nada bahasa dan integrasi Office!';
+      case 7:
+        return 'Simulasikan percakapan dengan model open-weights Meta AI Llama 3 untuk pembuatan teks & ide konten media sosial!';
+      case 8:
+        return 'Aktifkan mode "Reasoning Chain R1" untuk melihat langkah penalaran terperinci AI sebelum memberikan jawaban akhir!';
+      case 9:
+        return 'Unggah sampel dokumen/PDF ke NotebookLM untuk membuat ringkasan rangkuman, FAQ otomatis, serta draf skrip Audio Overview!';
+      case 10:
+        return 'Susun rantai alur kerja otomatisasi Google Flow dengan menghubungkan node pemicu, analisis AI, dan tindakan output!';
+      case 11:
+        return 'Ketik deskripsi prompt visual dan atur gaya artistik (PhotoReal, Anime, Alchemy) untuk menghasilkan karya seni digital!';
+      case 12:
+        return 'Gabungkan komponen UI React dan Tailwind CSS menggunakan Google Stitch untuk membangun tata letak aplikasi cerdas!';
+      case 13:
+        return 'Uji pengaturan Sampler, CFG Scale, dan Negative Prompt pada Stable Diffusion untuk mengontrol detail sintesis gambar!';
+      case 14:
+        return 'Gunakan canvas OpenArt untuk melatih gaya visual, menerapkan Inpainting, atau mengubah sketsa draf menjadi lukisan realistis!';
       case 15:
-        return 'Ketik deskripsi gambar visual dan klik "Generate Image (Offline AI Engine)" untuk membuat karya seni instan!';
+        return 'Ketik deskripsi gambar visual dan klik "Generate Image (Offline AI Engine)" untuk memproses 4 variasi gambar secara instan!';
       case 16:
-        return 'Ketik naskah teks, pilih karakter suara, lalu klik "Generate Voice Audio" untuk mendengarkan audio asli!';
+        return 'Ketik naskah teks, pilih karakter suara (Rachel/Adam), lalu klik "Generate Voice Audio" untuk mendengarkan audio suara sintetis!';
       case 17:
-        return 'Ketik judul atau tema lagu, pilih genre musik, lalu klik "Generate 2 Song Versions" untuk memutar lagu AI!';
+        return 'Ketik judul lagu dan genre musik, lalu klik "Generate 2 Song Versions" untuk memutar lagu lengkap dengan lirik instan!';
+      case 18:
+        return 'Uji pembuatan System Instructions, atur parameter Temperature & Top-P, serta dapatkan kode cURL/Python API secara langsung!';
+      case 19:
+        return 'Komposisikan trek musik latar dan efek audio AI dengan menyesuaikan Tempo, Instrumen, serta Mood di studio Treblo!';
       case 20:
-        return 'Ketik pertanyaan mengenai notulensi rapat dan pilih pertanyaan siap pakai Fathom AI!';
+        return 'Pilih sampel notulensi rapat Fathom AI dan jalankan analisis otomatis untuk menghasilkan poin aksi & ringkasan eksekutif!';
       case 21:
-        return 'Pilih persona Gem spesialis (Marketing, Coding, Tutor) dan jalankan sesi konsultasi dinamis!';
+        return 'Pilih persona Gem spesialis (Marketing Pro, Coding Coach, Study Buddy) dan mulailah konsultasi terfokus sesuai topik!';
       case 22:
-        return 'Ketik instruksi tugas coding dan saksikan agen Mistral Vibe merencanakan serta mengeksekusi kode secara otomatis!';
+        return 'Ketik instruksi tugas pengembangan perangkat lunak dan saksikan agen Mistral Vibe merencanakan serta mengeksekusi kode secara mandiri!';
       case 23:
-        return 'Jelajahi alur integrasi Claude Studio dari pembuatan proyek hingga pembuatan artefak dokumentasi!';
+        return 'Jelajahi integrasi Claude Studio mulai dari tahap Pembuatan Proyek, Manajemen Pengetahuan, hingga Penulisan Dokumen Artefak!';
       case 24:
-        return 'Uji analisis dokumen konteks 2 Juta Token dengan beralih antar mode Kimi AI (Chat, Work, Code, Claw)!';
+        return 'Uji kapasitas analisis dokumen konteks 2 Juta Token dengan beralih di antara mode Kimi AI (Chat, Work, Code, Claw)!';
       case 25:
-        return 'Jalankan asisten Lumo AI multimodal untuk pencarian cerdas dan pemrosesan visual cepat!';
+        return 'Jalankan asisten Lumo AI multimodal untuk pencarian jawaban presisi tinggi, pemrosesan dokumen visual, dan pembuatan gambar!';
       case 26:
-        return 'Pilih salah satu chip prompt cepat di bawah atau ketik deskripsi web Anda untuk melihat keajaiban pembuatan antarmuka instan!';
+        return 'Klik salah satu chip prompt cepat atau ketik deskripsi aplikasi web Anda untuk melihat keajaiban pembuatan antarmuka React instan!';
+      case 27:
+        return 'Ketik topik presentasi dan biarkan Gamma AI menyusun slide presentasi, dokumen, atau halaman web terstruktur secara otomatis!';
+      case 28:
+        return 'Jalankan agen mandiri Manus AI untuk mengeksekusi riset mendalam, navigasi web, dan penyusunan laporan kompleks tanpa henti!';
+      case 29:
+        return 'Manfaatkan Notion AI untuk meringkas catatan rapat, memformat tabel database otomatis, dan menyusun draf dokumen kerja!';
       default:
         return `Uji coba interaksi di dalam simulator di bawah untuk memahami fitur utama dari platform ${modTitle}!`;
     }
