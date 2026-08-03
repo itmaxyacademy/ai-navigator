@@ -281,26 +281,27 @@ export default function App() {
 
         setProgress((prev) => {
           if (!cloudData) {
-            // New user without cloud data starts fresh with defaultProgress
+            // New user or cloud load fallback: PRESERVE existing local progress (prev) to prevent progress loss
             return {
               ...defaultProgress,
+              ...prev,
               userTier,
               tier: userTier,
               maxAllowedModuleId: maxAllowed,
               paidTiers,
               hasTier1,
               hasTier2,
-              userName: user?.name || undefined,
-              userEmail: user?.email || undefined,
-              packageName: sub?.package_name || undefined,
+              userName: user?.name || prev.userName || undefined,
+              userEmail: user?.email || prev.userEmail || undefined,
+              packageName: sub?.package_name || prev.packageName || undefined,
               subscriptionExpiredAt: sub?.expired_at || null,
             };
           }
 
-          // Cloud progress from database is the authority (includes Admin CMS edits for modules, XP, and streak)
-          const mergedCompletedModules = cloudData.completedModules !== undefined
-            ? cloudData.completedModules
-            : (prev.completedModules || []);
+          // Merge cloud progress & local progress safely (never lose completed modules, XP, or streak)
+          const cloudModules = cloudData.completedModules || [];
+          const localModules = prev.completedModules || [];
+          const mergedCompletedModules = Array.from(new Set([...localModules, ...cloudModules]));
 
           const mergedUnlockedBadges = Array.from(
             new Set([...(prev.unlockedBadges || []), ...(cloudData.unlockedBadges || [])])
@@ -310,11 +311,12 @@ export default function App() {
           );
           const mergedModuleScores = { ...(prev.moduleScores || {}), ...(cloudData.moduleScores || {}) };
 
-          const mergedXp = cloudData.xp !== undefined ? cloudData.xp : (prev.xp || 0);
-          const mergedStreakDays = cloudData.streakDays !== undefined ? cloudData.streakDays : (prev.streakDays || 1);
-          const mergedCurrentModuleId = cloudData.currentModuleId || prev.currentModuleId || 1;
+          const mergedXp = Math.max(prev.xp || 0, cloudData.xp || 0);
+          const mergedStreakDays = Math.max(prev.streakDays || 1, cloudData.streakDays || 1);
+          const mergedCurrentModuleId = Math.max(prev.currentModuleId || 1, cloudData.currentModuleId || 1);
 
           return {
+            ...defaultProgress,
             ...prev,
             ...cloudData,
             completedModules: mergedCompletedModules,
@@ -332,9 +334,9 @@ export default function App() {
             paidTiers,
             hasTier1,
             hasTier2,
-            userName: user?.name || undefined,
-            userEmail: user?.email || undefined,
-            packageName: sub?.package_name || undefined,
+            userName: user?.name || prev.userName || undefined,
+            userEmail: user?.email || prev.userEmail || undefined,
+            packageName: sub?.package_name || prev.packageName || undefined,
             subscriptionExpiredAt: sub?.expired_at || null,
           };
         });
