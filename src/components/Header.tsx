@@ -43,6 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAchievements,
   onOpenNotes,
   onOpenUpgradeModal,
+  onOpenInvoice,
   allModulesCompleted,
   onManualSave,
   onExportJSON,
