@@ -185,8 +185,28 @@ export async function verifyPaymentOrder(orderId: string): Promise<{ isPaid: boo
 
 export async function fetchAiNavigatorPackages() {
   try {
-    const res = await fetch(`${API_BASE}/packages/ai-navigator`);
-    return await res.json();
+    const endpoints = [
+      `${API_BASE}/packages/ai-navigator`,
+      `${API_BASE}/ai-navigator/packages`,
+      'https://cms.maxy.academy/api/m2m/ai-navigator/packages',
+      'https://ainavigator.maxy.academy/api/m2m/ai-navigator/packages',
+      'https://ainavigator.maxy.academy/api/packages/ai-navigator'
+    ];
+
+    for (const url of endpoints) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          const json = await res.json();
+          if (json && json.data) {
+            return json;
+          }
+        }
+      } catch (_) {
+        // try next endpoint
+      }
+    }
+    return { success: false };
   } catch (err) {
     console.error('API fetchAiNavigatorPackages failed:', err);
     return { success: false };
