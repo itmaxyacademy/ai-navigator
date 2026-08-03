@@ -496,9 +496,9 @@ export const SunoReplica: React.FC = () => {
       {/* TAHAP 2: DASHBOARD CREATE SUNO                                           */}
       {/* ========================================================================= */}
       {currentStage === 'dashboard' && (
-        <div className="flex flex-col lg:flex-row min-h-[640px] bg-[#090b10]">
+        <div className="flex flex-col lg:flex-row min-h-[640px] bg-[#090b10] overflow-hidden">
           {/* Left Sidebar Menu */}
-          <div className="w-full lg:w-64 bg-[#0d0f18] border-r border-[#1b2030] p-4 flex flex-col justify-between shrink-0">
+          <div className="w-full lg:w-[20%] xl:w-64 bg-[#0d0f18] border-r border-[#1b2030] p-4 flex flex-col justify-between shrink-0">
             <div className="space-y-5">
               {/* Suno Brand */}
               <div className="flex items-center justify-between">
@@ -586,7 +586,7 @@ export const SunoReplica: React.FC = () => {
           </div>
 
           {/* Middle Create Form Column */}
-          <div className={`w-full lg:w-96 bg-[#0f121e] border-r border-[#1b2030] p-5 space-y-5 shrink-0 overflow-y-auto ${mobileTab === 'workspace' ? 'hidden lg:block' : 'block'}`}>
+          <div className={`w-full lg:w-[35%] xl:w-96 bg-[#0f121e] border-r border-[#1b2030] p-5 space-y-5 shrink-0 overflow-y-auto ${mobileTab === 'workspace' ? 'hidden lg:block' : 'block'}`}>
             {/* Top Mode Selector Tabs: Sederhana vs Lanjutan */}
             <div className="flex items-center justify-between border-b border-[#1b2030] pb-3">
               <div className="flex items-center gap-1.5 bg-[#080a10] p-1 rounded-xl border border-[#1a1f30] flex-wrap max-w-full">
@@ -794,9 +794,9 @@ export const SunoReplica: React.FC = () => {
             </button>
           </div>
 
-          {/* Right Workspace / Song List & Player Column */}
-          <div className={`flex-1 p-5 space-y-5 overflow-y-auto bg-[#090b10] min-w-0 ${mobileTab === 'create' ? 'hidden lg:block' : 'block'}`}>
-            <div className="flex items-center justify-between border-b border-[#1b2030] pb-3">
+          {/* Right Workspace Column */}
+          <div className={`flex-1 lg:w-[45%] xl:flex-1 p-3 sm:p-5 overflow-y-auto min-w-[280px] ${mobileTab === 'create' ? 'hidden lg:block' : 'block'}`}>
+            <div className="flex items-center justify-between mb-4 sm:mb-6 border-b border-[#1b2030] pb-3">
               <div>
                 <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
                   <FolderKanban className="w-4 h-4 text-pink-400" />
