@@ -698,14 +698,16 @@ export default function App() {
     });
 
     // Milestone Celebration Check (Tier 1: Module 22, Tier 2: Module 29)
-    if (moduleId === 22 || newCompleted.length === 22) {
-      setTimeout(() => {
-        setMilestoneModalState({ isOpen: true, tierCompleted: 'tier1' });
-      }, 500);
-    } else if (moduleId === 29 || newCompleted.length === 29) {
-      setTimeout(() => {
-        setMilestoneModalState({ isOpen: true, tierCompleted: 'tier2' });
-      }, 500);
+    if (!isAlreadyCompleted) {
+      if (moduleId === 22 || newCompleted.length === 22) {
+        setTimeout(() => {
+          setMilestoneModalState({ isOpen: true, tierCompleted: 'tier1' });
+        }, 500);
+      } else if (moduleId === 29 || newCompleted.length === 29) {
+        setTimeout(() => {
+          setMilestoneModalState({ isOpen: true, tierCompleted: 'tier2' });
+        }, 500);
+      }
     }
   };
 
