@@ -10,6 +10,7 @@ import { Achievements } from './components/Achievements';
 import { AllNotesModal } from './components/AllNotesModal';
 import { UpgradeModal } from './components/UpgradeModal';
 import { CapstoneModal } from './components/CapstoneModal';
+import { DevPanel } from './components/DevPanel';
 import { useTierAccess } from './hooks/useTierAccess';
 import { BADGES_LIST } from './lib/achievementsData';
 import { FloatingXpNotification, FloatingXpItem } from './components/FloatingXpNotification';
@@ -934,6 +935,10 @@ export default function App() {
 
         </div>
       </footer>
+      {/* Local Dev Menu */}
+      {isLocalDevEnv && (
+        <DevPanel progress={progress} setProgress={setProgress} />
+      )}
     </div>
   );
 }

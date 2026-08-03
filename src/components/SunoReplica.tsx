@@ -826,8 +826,8 @@ export const SunoReplica: React.FC = () => {
                         : 'border-[#1e2436] hover:border-[#2b344d]'
                     }`}
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 w-full min-w-0">
-                      <div className="flex items-center gap-3 flex-1 min-w-0 w-full">
+                    <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4 w-full min-w-0">
+                      <div className="flex items-center gap-3 flex-1 min-w-[200px] w-full">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();

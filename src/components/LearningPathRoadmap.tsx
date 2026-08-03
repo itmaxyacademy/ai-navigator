@@ -1570,6 +1570,55 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                 <button
                   onClick={() => {
                     alert('Sertifikat Digital berhasil diunduh dalam format PNG!');
+                    
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 800;
+                    canvas.height = 600;
+                    const ctx = canvas.getContext('2d');
+                    
+                    if (ctx) {
+                      ctx.fillStyle = '#0f172a';
+                      ctx.fillRect(0, 0, canvas.width, canvas.height);
+                      
+                      ctx.strokeStyle = '#f59e0b';
+                      ctx.lineWidth = 10;
+                      ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+                      
+                      ctx.fillStyle = '#f59e0b';
+                      ctx.font = 'bold 24px Arial';
+                      ctx.textAlign = 'center';
+                      ctx.fillText('AI NAVIGATOR ACADEMY', canvas.width / 2, 100);
+                      
+                      ctx.fillStyle = '#ffffff';
+                      ctx.font = 'bold 36px Arial';
+                      ctx.fillText('SERTIFIKAT KELULUSAN RESMI', canvas.width / 2, 160);
+                      
+                      ctx.fillStyle = '#94a3b8';
+                      ctx.font = '16px Arial';
+                      ctx.fillText('Diberikan kepada:', canvas.width / 2, 250);
+                      
+                      ctx.fillStyle = '#fcd34d';
+                      ctx.font = 'bold 48px Arial';
+                      ctx.fillText('Praktisi LLM Master', canvas.width / 2, 320);
+                      
+                      ctx.fillStyle = '#94a3b8';
+                      ctx.font = '14px Arial';
+                      ctx.fillText('Atas keberhasilan menyelesaikan seluruh 29 Modul Pembelajaran LLM Interaktif,', canvas.width / 2, 400);
+                      ctx.fillText('mengumpulkan seluruh Peti Karun Spesialis, dan meraih nilai kuis tertinggi.', canvas.width / 2, 430);
+                      
+                      ctx.fillStyle = '#64748b';
+                      ctx.font = '12px Arial';
+                      ctx.fillText('ID Verifikasi: AINAV-2026-M29-CERT', canvas.width / 2, 520);
+                      ctx.fillText('Diterbitkan: 29 Juli 2026', canvas.width / 2, 540);
+                      
+                      const dataUrl = canvas.toDataURL('image/png');
+                      const link = document.createElement('a');
+                      link.href = dataUrl;
+                      link.download = 'Sertifikat_AI_Master_2026.png';
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                    }
                   }}
                   className="px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center gap-2 shadow-lg transition-all cursor-pointer"
                 >
