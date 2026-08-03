@@ -203,10 +203,11 @@ export const LumoReplica: React.FC = () => {
     setErrorMessage(null);
 
     const userMsg: ChatMessage = {
-      id: `u-${Date.now()}`,
+      id: `msg-${Date.now()}`,
       sender: 'user',
       text: query,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      modelUsed: selectedModel,
       isPrivacy: privacyMode,
     };
 
@@ -218,12 +219,12 @@ export const LumoReplica: React.FC = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 600));
 
-      const aiMsg: Message = {
+      const aiMsg: ChatMessage = {
         id: `msg-${Date.now()}`,
-        sender: 'ai',
+        sender: 'lumo',
         text: `[Lumo AI (${selectedModel})]\n\nMenjawab: "${query}"\n\n- Mode Privasi Proton: ${privacyMode ? 'Aktif (Zero Logs)' : 'Standar'}\n- Perkakas Aktif: ${selectedTools.join(', ') || 'Tanpa Tool'}\n- Status: Berhasil diproses (100% Offline Simulation).`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        model: selectedModel,
+        modelUsed: selectedModel,
         isPrivacy: privacyMode,
       };
 
