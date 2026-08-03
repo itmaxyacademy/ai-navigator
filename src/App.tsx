@@ -297,20 +297,21 @@ export default function App() {
             };
           }
 
-          // Merge cloud progress & local progress (union arrays, max XP/streak, merge scores)
-          const mergedCompletedModules = Array.from(
-            new Set([...(prev.completedModules || []), ...(cloudData.completedModules || [])])
-          );
+          // Cloud progress from database is the authority (includes Admin CMS edits for modules, XP, and streak)
+          const mergedCompletedModules = cloudData.completedModules !== undefined
+            ? cloudData.completedModules
+            : (prev.completedModules || []);
+
           const mergedUnlockedBadges = Array.from(
             new Set([...(prev.unlockedBadges || []), ...(cloudData.unlockedBadges || [])])
           );
           const mergedCompletedCheckpoints = Array.from(
             new Set([...(prev.completedCheckpoints || []), ...(cloudData.completedCheckpoints || [])])
           );
-          const mergedModuleScores = { ...(cloudData.moduleScores || {}), ...(prev.moduleScores || {}) };
+          const mergedModuleScores = { ...(prev.moduleScores || {}), ...(cloudData.moduleScores || {}) };
 
-          const mergedXp = Math.max(prev.xp || 0, cloudData.xp || 0);
-          const mergedStreakDays = Math.max(prev.streakDays || 1, cloudData.streakDays || 1);
+          const mergedXp = cloudData.xp !== undefined ? cloudData.xp : (prev.xp || 0);
+          const mergedStreakDays = cloudData.streakDays !== undefined ? cloudData.streakDays : (prev.streakDays || 1);
           const mergedCurrentModuleId = cloudData.currentModuleId || prev.currentModuleId || 1;
 
           return {
