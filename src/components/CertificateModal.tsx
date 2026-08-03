@@ -213,18 +213,18 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   // Helper: render a single module row for the full-width transcript table
   const renderModuleRow = (m: (typeof MODULES_DATA)[0], globalIdx: number, localIdx: number) => (
     <tr key={m.id} style={{ backgroundColor: localIdx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
-      <td style={{ padding: '3px 8px', fontFamily: 'monospace', color: '#334155', fontWeight: 800, textAlign: 'center', borderRight: '1px solid #cbd5e1', fontSize: '11px', width: '42px' }}>
+      <td style={{ padding: '4px 8px', fontFamily: 'monospace', color: '#334155', fontWeight: 800, textAlign: 'center', borderRight: '1px solid #cbd5e1', fontSize: '13px', width: '42px' }}>
         {globalIdx}
       </td>
-      <td style={{ padding: '3px 10px', fontWeight: 800, color: '#0f172a', fontSize: '11.5px', lineHeight: 1.25 }}>
+      <td style={{ padding: '4px 10px', fontWeight: 800, color: '#0f172a', fontSize: '13.5px', lineHeight: 1.3 }}>
         {m.title}
-        <span style={{ display: 'block', fontSize: '9.5px', color: '#475569', fontWeight: 500, marginTop: '0px' }}>{m.subtitle}</span>
+        <span style={{ display: 'block', fontSize: '11px', color: '#475569', fontWeight: 500, marginTop: '1px' }}>{m.subtitle}</span>
       </td>
-      <td style={{ padding: '3px 8px', textAlign: 'center', fontWeight: 900, color: '#1d4ed8', borderLeft: '1px solid #cbd5e1', fontSize: '11px', width: '70px' }}>
+      <td style={{ padding: '4px 8px', textAlign: 'center', fontWeight: 900, color: '#1d4ed8', borderLeft: '1px solid #cbd5e1', fontSize: '12.5px', width: '70px' }}>
         1 JP
       </td>
-      <td style={{ padding: '3px 8px', textAlign: 'center', borderLeft: '1px solid #cbd5e1', width: '80px' }}>
-        <span style={{ padding: '1.5px 6px', backgroundColor: '#ecfdf5', color: '#047857', border: '1px solid #a7f3d0', fontSize: '9.5px', fontWeight: 900, borderRadius: '4px' }}>
+      <td style={{ padding: '4px 8px', textAlign: 'center', borderLeft: '1px solid #cbd5e1', width: '80px' }}>
+        <span style={{ padding: '2px 8px', backgroundColor: '#ecfdf5', color: '#047857', border: '1px solid #a7f3d0', fontSize: '10.5px', fontWeight: 900, borderRadius: '4px' }}>
           LULUS
         </span>
       </td>
@@ -523,11 +523,11 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
                   <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
                     <thead>
-                      <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '11px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        <th style={{ padding: '5px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
-                        <th style={{ padding: '5px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
-                        <th style={{ padding: '5px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
-                        <th style={{ padding: '5px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
+                      <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '12.5px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        <th style={{ padding: '6px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
+                        <th style={{ padding: '6px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
+                        <th style={{ padding: '6px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
+                        <th style={{ padding: '6px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -580,11 +580,11 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
                     <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
                       <thead>
-                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '11px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
-                          <th style={{ padding: '5px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
-                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
-                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
+                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '12.5px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
+                          <th style={{ padding: '6px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
+                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
+                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -652,11 +652,11 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
                     <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
                       <thead>
-                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '11px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
-                          <th style={{ padding: '5px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
-                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
-                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
+                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '12.5px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
+                          <th style={{ padding: '6px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
+                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
+                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
                         </tr>
                       </thead>
                       <tbody>
