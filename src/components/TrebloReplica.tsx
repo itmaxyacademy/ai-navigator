@@ -172,8 +172,9 @@ export const TrebloReplica: React.FC = () => {
       // Sengaja throw error agar masuk ke blok fallback pembuat lagu lokal
       throw new Error('Trigger fallback lokal');
 
-      const data = await res.json();
-      const versions = data.versions || [];
+      /*
+      // const data = await (res as any).json();
+      // const versions = data.versions || [];
 
       if (versions && versions.length > 0) {
         const generatedBatch: TrebloSong[] = versions.map((ver: any, idx: number) => {
@@ -210,6 +211,7 @@ export const TrebloReplica: React.FC = () => {
       } else {
         throw new Error('Format data lagu tidak sesuai.');
       }
+      */
     } catch (err: any) {
       console.error('Treblo generate error:', err);
       

@@ -210,21 +210,21 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     }
   };
 
-  // Helper: render a single module row for the full-width transcript table with LARGE font sizes
+  // Helper: render a single module row for the full-width transcript table
   const renderModuleRow = (m: (typeof MODULES_DATA)[0], globalIdx: number, localIdx: number) => (
     <tr key={m.id} style={{ backgroundColor: localIdx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
-      <td style={{ padding: '8px 12px', fontFamily: 'monospace', color: '#334155', fontWeight: 800, textAlign: 'center', borderRight: '1px solid #cbd5e1', fontSize: '13px', width: '50px' }}>
+      <td style={{ padding: '4.5px 10px', fontFamily: 'monospace', color: '#334155', fontWeight: 800, textAlign: 'center', borderRight: '1px solid #cbd5e1', fontSize: '12px', width: '50px' }}>
         {globalIdx}
       </td>
-      <td style={{ padding: '8px 14px', fontWeight: 800, color: '#0f172a', fontSize: '13.5px', lineHeight: 1.35 }}>
+      <td style={{ padding: '4.5px 12px', fontWeight: 800, color: '#0f172a', fontSize: '12.5px', lineHeight: 1.3 }}>
         {m.title}
-        <span style={{ display: 'block', fontSize: '11px', color: '#475569', fontWeight: 500, marginTop: '3px' }}>{m.subtitle}</span>
+        <span style={{ display: 'block', fontSize: '10.5px', color: '#475569', fontWeight: 500, marginTop: '1px' }}>{m.subtitle}</span>
       </td>
-      <td style={{ padding: '8px 12px', textAlign: 'center', fontWeight: 900, color: '#1d4ed8', borderLeft: '1px solid #cbd5e1', fontSize: '13px', width: '85px' }}>
+      <td style={{ padding: '4.5px 10px', textAlign: 'center', fontWeight: 900, color: '#1d4ed8', borderLeft: '1px solid #cbd5e1', fontSize: '12px', width: '85px' }}>
         1 JP
       </td>
-      <td style={{ padding: '8px 12px', textAlign: 'center', borderLeft: '1px solid #cbd5e1', width: '95px' }}>
-        <span style={{ padding: '3px 10px', backgroundColor: '#ecfdf5', color: '#047857', border: '1px solid #a7f3d0', fontSize: '10.5px', fontWeight: 900, borderRadius: '4px' }}>
+      <td style={{ padding: '4.5px 10px', textAlign: 'center', borderLeft: '1px solid #cbd5e1', width: '95px' }}>
+        <span style={{ padding: '2px 8px', backgroundColor: '#ecfdf5', color: '#047857', border: '1px solid #a7f3d0', fontSize: '10px', fontWeight: 900, borderRadius: '4px' }}>
           LULUS
         </span>
       </td>
