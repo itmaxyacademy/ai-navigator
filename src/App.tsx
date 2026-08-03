@@ -257,37 +257,95 @@ export default function App() {
       localStorage.setItem('maxy_access_token', tokenFromUrl);
     }
 
-    fetchUserProfile(token).then(async (res) => {
-      if (res.success && res.data) {
-        const sub = res.data.subscription;
-        const user = res.data.user;
-        const rawTier = sub?.active_tier || sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
-        const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
-        const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
-        const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
-        const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
-        const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
-
-        // Load cloud-synced progress from database
-        const cloudDataRaw = (await loadCloudProgress(token)) as unknown as UserProgress | null;
-        const cloudData = cloudDataRaw ? { ...cloudDataRaw } : null;
-        if (cloudData) {
-          delete (cloudData as Record<string, unknown>).userTier;
-          delete (cloudData as Record<string, unknown>).tier;
-          delete (cloudData as Record<string, unknown>).maxAllowedModuleId;
-          delete (cloudData as Record<string, unknown>).paidTiers;
-          delete (cloudData as Record<string, unknown>).hasTier1;
-          delete (cloudData as Record<string, unknown>).hasTier2;
-          delete (cloudData as Record<string, unknown>).packageName;
-          delete (cloudData as Record<string, unknown>).subscriptionExpiredAt;
+    // Safety fallback: pastikan loading overlay "Memverifikasi Sesi" paling lambat hilang dalam 3 detik jika API lambat
+    const safetyTimeout = setTimeout(() => {
+      setIsAuthValidating((prev) => {
+        if (prev) {
+          console.warn('Auth validation timeout safety triggered — rendering app with cached progress.');
         }
+        return false;
+      });
+    }, 3000);
 
-        setProgress((prev) => {
-          if (!cloudData) {
-            // New user or cloud load fallback: PRESERVE existing local progress (prev) to prevent progress loss
+    Promise.all([
+      fetchUserProfile(token),
+      loadCloudProgress(token).catch((err) => {
+        console.warn('loadCloudProgress failed, using local progress:', err);
+        return null;
+      }),
+    ])
+      .then(([res, cloudDataRaw]) => {
+        clearTimeout(safetyTimeout);
+        if (res && res.success && res.data) {
+          const sub = res.data.subscription;
+          const user = res.data.user;
+          const rawTier = sub?.active_tier || sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
+          const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
+          const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
+          const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
+          const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
+          const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
+
+          const cloudData = cloudDataRaw ? { ...(cloudDataRaw as unknown as UserProgress) } : null;
+          if (cloudData) {
+            delete (cloudData as Record<string, unknown>).userTier;
+            delete (cloudData as Record<string, unknown>).tier;
+            delete (cloudData as Record<string, unknown>).maxAllowedModuleId;
+            delete (cloudData as Record<string, unknown>).paidTiers;
+            delete (cloudData as Record<string, unknown>).hasTier1;
+            delete (cloudData as Record<string, unknown>).hasTier2;
+            delete (cloudData as Record<string, unknown>).packageName;
+            delete (cloudData as Record<string, unknown>).subscriptionExpiredAt;
+          }
+
+          setProgress((prev) => {
+            if (!cloudData) {
+              return {
+                ...defaultProgress,
+                ...prev,
+                userTier,
+                tier: userTier,
+                maxAllowedModuleId: maxAllowed,
+                paidTiers,
+                hasTier1,
+                hasTier2,
+                userName: user?.name || prev.userName || undefined,
+                userEmail: user?.email || prev.userEmail || undefined,
+                packageName: sub?.package_name || prev.packageName || undefined,
+                subscriptionExpiredAt: sub?.expired_at || null,
+              };
+            }
+
+            const cloudModules = cloudData.completedModules !== undefined ? cloudData.completedModules : (prev.completedModules || []);
+            const mergedCompletedModules = (cloudData.adminOverrideAt || cloudData.completedModules !== undefined)
+              ? cloudModules
+              : Array.from(new Set([...(prev.completedModules || []), ...cloudModules]));
+
+            const mergedUnlockedBadges = Array.from(
+              new Set([...(cloudData.unlockedBadges || []), ...(prev.unlockedBadges || [])])
+            );
+            const mergedCompletedCheckpoints = Array.from(
+              new Set([...(cloudData.completedCheckpoints || []), ...(prev.completedCheckpoints || [])])
+            );
+            const mergedModuleScores = { ...(prev.moduleScores || {}), ...(cloudData.moduleScores || {}) };
+
+            const mergedXp = cloudData.xp !== undefined ? cloudData.xp : (prev.xp || 0);
+            const mergedStreakDays = cloudData.streakDays !== undefined ? cloudData.streakDays : (prev.streakDays || 1);
+            const mergedCurrentModuleId = cloudData.currentModuleId || prev.currentModuleId || 1;
+
             return {
               ...defaultProgress,
               ...prev,
+              ...cloudData,
+              completedModules: mergedCompletedModules,
+              unlockedBadges: mergedUnlockedBadges,
+              completedCheckpoints: mergedCompletedCheckpoints,
+              moduleScores: mergedModuleScores,
+              xp: mergedXp,
+              streakDays: mergedStreakDays,
+              currentModuleId: mergedCurrentModuleId,
+              certName: cloudData.certName || prev.certName || user?.name || undefined,
+              certEmail: cloudData.certEmail || prev.certEmail || user?.email || undefined,
               userTier,
               tier: userTier,
               maxAllowedModuleId: maxAllowed,
@@ -299,62 +357,18 @@ export default function App() {
               packageName: sub?.package_name || prev.packageName || undefined,
               subscriptionExpiredAt: sub?.expired_at || null,
             };
-          }
+          });
 
-          // Cloud progress from database (including Admin CMS edits) is the authority for UI display!
-          const cloudModules = cloudData.completedModules !== undefined ? cloudData.completedModules : (prev.completedModules || []);
-          // Respect Admin CMS edit if present, hiding non-selected modules on the UI
-          const mergedCompletedModules = (cloudData.adminOverrideAt || cloudData.completedModules !== undefined)
-            ? cloudModules
-            : Array.from(new Set([...(prev.completedModules || []), ...cloudModules]));
-
-          const mergedUnlockedBadges = Array.from(
-            new Set([...(cloudData.unlockedBadges || []), ...(prev.unlockedBadges || [])])
-          );
-          const mergedCompletedCheckpoints = Array.from(
-            new Set([...(cloudData.completedCheckpoints || []), ...(prev.completedCheckpoints || [])])
-          );
-          const mergedModuleScores = { ...(prev.moduleScores || {}), ...(cloudData.moduleScores || {}) };
-
-          const mergedXp = cloudData.xp !== undefined ? cloudData.xp : (prev.xp || 0);
-          const mergedStreakDays = cloudData.streakDays !== undefined ? cloudData.streakDays : (prev.streakDays || 1);
-          const mergedCurrentModuleId = cloudData.currentModuleId || prev.currentModuleId || 1;
-
-          return {
-            ...defaultProgress,
-            ...prev,
-            ...cloudData,
-            completedModules: mergedCompletedModules,
-            unlockedBadges: mergedUnlockedBadges,
-            completedCheckpoints: mergedCompletedCheckpoints,
-            moduleScores: mergedModuleScores,
-            xp: mergedXp,
-            streakDays: mergedStreakDays,
-            currentModuleId: mergedCurrentModuleId,
-            certName: cloudData.certName || prev.certName || user?.name || undefined,
-            certEmail: cloudData.certEmail || prev.certEmail || user?.email || undefined,
-            userTier,
-            tier: userTier,
-            maxAllowedModuleId: maxAllowed,
-            paidTiers,
-            hasTier1,
-            hasTier2,
-            userName: user?.name || prev.userName || undefined,
-            userEmail: user?.email || prev.userEmail || undefined,
-            packageName: sub?.package_name || prev.packageName || undefined,
-            subscriptionExpiredAt: sub?.expired_at || null,
-          };
-        });
-
+          setIsAuthValidating(false);
+        } else {
+          redirectToLogin();
+        }
+      })
+      .catch((err) => {
+        clearTimeout(safetyTimeout);
+        console.warn('Network or server error during auth validation, using cached local progress:', err);
         setIsAuthValidating(false);
-      } else {
-        // Invalid or expired token
-        redirectToLogin();
-      }
-    }).catch((err) => {
-      console.warn('Network or server error during auth validation, using cached local progress:', err);
-      setIsAuthValidating(false);
-    });
+      });
   }, []);
 
   const handleToggleTheme = () => {
