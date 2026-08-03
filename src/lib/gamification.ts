@@ -122,7 +122,7 @@ export function calculateRemainingTimeMinutes(
 export function isCertificateEligible(progress: { completedModules?: number[]; userTier?: string; hasTier2?: boolean; paidTiers?: string[] }): boolean {
   const completed = progress?.completedModules || [];
   const userTier = progress?.userTier || 'free';
-  const hasTier2 = progress?.hasTier2 || progress?.paidTiers?.includes('tier2') || userTier === 'tier2' || completed.some(id => id > 22);
+  const hasTier2 = Boolean(progress?.hasTier2 || progress?.paidTiers?.includes('tier2') || userTier === 'tier2');
 
   if (hasTier2) {
     // Tier 2 requires 100% completion of ALL 29 modules (Modul 1 through Modul 29)

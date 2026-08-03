@@ -59,7 +59,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   if (!isOpen) return null;
 
   const userTier = progress.userTier || 'free';
-  const hasTier2 = progress.hasTier2 || progress.paidTiers?.includes('tier2') || userTier === 'tier2' || progress.completedModules?.some(id => id > 22);
+  const hasTier2 = Boolean(progress.hasTier2 || progress.paidTiers?.includes('tier2') || userTier === 'tier2');
   const isEligible = isCertificateEligible(progress);
 
   if (!isEligible) {

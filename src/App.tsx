@@ -294,10 +294,18 @@ export default function App() {
 
           if (resolvedName) localStorage.setItem('maxy_user_name', resolvedName);
           if (resolvedEmail) localStorage.setItem('maxy_user_email', resolvedEmail);
-          if (userTier) localStorage.setItem('maxy_user_tier', userTier);
-          localStorage.setItem('maxy_has_tier1', hasTier1 ? 'true' : 'false');
-          localStorage.setItem('maxy_has_tier2', hasTier2 ? 'true' : 'false');
-          if (resolvedPkgName) localStorage.setItem('maxy_package_name', resolvedPkgName);
+          
+          if (userTier !== 'free') {
+            localStorage.setItem('maxy_user_tier', userTier);
+            localStorage.setItem('maxy_has_tier1', hasTier1 ? 'true' : 'false');
+            localStorage.setItem('maxy_has_tier2', hasTier2 ? 'true' : 'false');
+            if (resolvedPkgName) localStorage.setItem('maxy_package_name', resolvedPkgName);
+          } else {
+            localStorage.setItem('maxy_user_tier', 'free');
+            localStorage.setItem('maxy_has_tier1', 'false');
+            localStorage.setItem('maxy_has_tier2', 'false');
+            localStorage.removeItem('maxy_package_name');
+          }
 
           const cloudData = cloudDataRaw ? { ...(cloudDataRaw as unknown as UserProgress) } : null;
           if (cloudData) {

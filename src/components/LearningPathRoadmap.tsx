@@ -396,7 +396,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
   onOpenCertificateModal,
 }) => {
   const userTier = progress.userTier || 'free';
-  const hasTier2 = progress.hasTier2 || progress.paidTiers?.includes('tier2') || userTier === 'tier2' || progress.completedModules?.some(id => id > 22);
+  const hasTier2 = Boolean(progress.hasTier2 || progress.paidTiers?.includes('tier2') || userTier === 'tier2');
   const { canAccessModule } = useTierAccess(userTier, progress.maxAllowedModuleId);
   const [viewMode, setViewMode] = useState<'map' | 'heatmap' | 'grid'>('map');
   const [sidebarTab, setSidebarTab] = useState<'challenge' | 'flashcards' | 'skills' | 'analytics' | 'tips'>('challenge');
