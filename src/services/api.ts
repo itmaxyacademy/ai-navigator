@@ -146,10 +146,39 @@ export async function checkoutUpgrade(tier: 'tier1' | 'tier2' | 'tier_1' | 'tier
         redirect_url: typeof window !== 'undefined' ? `${window.location.origin}/app` : 'https://ainavigator.maxy.academy/app',
       }),
     });
-    return await res.json();
+    const json = await res.json();
+
+    // Normalise: pastikan order_id dan payment_url selalu ada di top-level
+    if (json && json.success) {
+      const data = json.data || {};
+      json.order_id = json.order_id || data.order_number || data.external_id || null;
+      json.payment_url = json.payment_url || data.payment_url || data.invoice_url || null;
+    }
+
+    return json;
   } catch (err) {
     console.error('API checkoutUpgrade failed:', err);
     return { success: false, message: 'Gagal membuat checkout upgrade' };
+  }
+}
+
+/**
+ * Poll status pembayaran berdasarkan order_id (external_id / order_number).
+ * Dipanggil frontend setelah kembali dari halaman Xendit dengan ?payment=success
+ */
+export async function verifyPaymentOrder(orderId: string): Promise<{ isPaid: boolean; status: string }> {
+  try {
+    const res = await fetchWithAuth(`${API_BASE}/payments/status/${encodeURIComponent(orderId)}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const json = await res.json();
+    const status = json?.data?.status || json?.status || 'pending';
+    const isPaid = status === 'paid' || status === 'PAID' || status === 'SETTLED' || status === 'settled';
+    return { isPaid, status };
+  } catch (err) {
+    console.error('API verifyPaymentOrder failed:', err);
+    return { isPaid: false, status: 'error' };
   }
 }
 

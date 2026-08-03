@@ -18,7 +18,7 @@ import { getLocalDateString, getDaysDifference } from './lib/gamification';
 import { Compass, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-import { fetchUserProfile, checkoutUpgrade, loadCloudProgress, saveCloudProgress, fetchAiNavigatorPackages } from './services/api';
+import { fetchUserProfile, checkoutUpgrade, loadCloudProgress, saveCloudProgress, fetchAiNavigatorPackages, verifyPaymentOrder } from './services/api';
 
 const STORAGE_KEY = 'ai_navigator_user_progress_v1';
 
@@ -99,6 +99,10 @@ export default function App() {
   const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
   const [paymentLoadingTier, setPaymentLoadingTier] = useState<'tier1' | 'tier2' | null>(null);
   const [cmsPackages, setCmsPackages] = useState<Record<string, { price: number; fake_price: number; name?: string }>>({});
+  // State untuk verifikasi pembayaran setelah kembali dari Xendit
+  const [isVerifyingPayment, setIsVerifyingPayment] = useState<boolean>(false);
+  const [paymentVerifyStatus, setPaymentVerifyStatus] = useState<'success' | 'cancelled' | 'timeout' | null>(null);
+
 
   useEffect(() => {
     fetchAiNavigatorPackages().then((res) => {
@@ -108,7 +112,102 @@ export default function App() {
     });
   }, []);
 
-  // Theme State ('dark' | 'light') - Forced to Dark Mode
+  // Deteksi return dari halaman Xendit — verifikasi status pembayaran sebelum update tier
+  useEffect(() => {
+    if (isLocalDevEnv) return; // Skip di local dev
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentParam = urlParams.get('payment');
+    const orderId = urlParams.get('order_id');
+
+    // Bersihkan query params dari URL tanpa reload halaman
+    const cleanUrl = window.location.pathname;
+    if (paymentParam) {
+      window.history.replaceState({}, document.title, cleanUrl);
+    }
+
+    if (paymentParam === 'cancelled') {
+      // User balik tanpa bayar — tampilkan notifikasi singkat, tidak ubah tier
+      setPaymentVerifyStatus('cancelled');
+      setTimeout(() => setPaymentVerifyStatus(null), 5000);
+      return;
+    }
+
+    if (paymentParam === 'success' && orderId) {
+      // User balik setelah bayar — mulai polling untuk konfirmasi pembayaran dari webhook Xendit
+      setIsVerifyingPayment(true);
+
+      const MAX_POLLS = 5;
+      const POLL_INTERVAL_MS = 2500;
+      let pollCount = 0;
+
+      const pollStatus = async () => {
+        pollCount++;
+        const result = await verifyPaymentOrder(orderId);
+
+        if (result.isPaid) {
+          // Pembayaran dikonfirmasi — refresh user profile untuk update tier
+          setIsVerifyingPayment(false);
+          setPaymentVerifyStatus('success');
+
+          const token = localStorage.getItem('maxy_access_token');
+          if (token) {
+            // Re-fetch profile agar tier ter-update dari backend
+            fetchUserProfile(token).then((res) => {
+              if (res.success && res.data) {
+                const sub = res.data.subscription;
+                const user = res.data.user;
+                const rawTier = sub?.active_tier || sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
+                const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
+                const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
+                const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
+                const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
+                const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
+
+                setProgress((prev) => ({
+                  ...prev,
+                  userTier,
+                  tier: userTier,
+                  maxAllowedModuleId: maxAllowed,
+                  paidTiers,
+                  hasTier1,
+                  hasTier2,
+                  userName: user?.name || prev.userName,
+                  userEmail: user?.email || prev.userEmail,
+                  packageName: sub?.package_name || prev.packageName,
+                  subscriptionExpiredAt: sub?.expired_at || null,
+                }));
+
+                // Konfetti celebrasi pembayaran berhasil
+                try {
+                  confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 }, colors: ['#f59e0b', '#6366f1', '#10b981'] });
+                } catch (_) { /* ignore */ }
+              }
+            });
+          }
+
+          setTimeout(() => setPaymentVerifyStatus(null), 8000);
+          return;
+        }
+
+        if (pollCount < MAX_POLLS) {
+          // Coba lagi setelah interval — webhook mungkin belum tiba
+          setTimeout(pollStatus, POLL_INTERVAL_MS);
+        } else {
+          // Habis polling — belum ada konfirmasi, minta user untuk refresh manual
+          setIsVerifyingPayment(false);
+          setPaymentVerifyStatus('timeout');
+          setTimeout(() => setPaymentVerifyStatus(null), 15000);
+        }
+      };
+
+      // Mulai polling pertama setelah 1.5 detik (beri waktu webhook tiba)
+      setTimeout(pollStatus, 1500);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
@@ -919,6 +1018,71 @@ export default function App() {
         notifications={floatingXpItems}
         onDismiss={handleDismissFloatingXp}
       />
+
+      {/* ── Payment Verification Overlays ── */}
+
+      {/* Loading Screen: Memverifikasi pembayaran setelah redirect dari Xendit */}
+      {isVerifyingPayment && (
+        <div className="fixed inset-0 z-[200] bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center gap-6 text-white">
+          <div className="w-16 h-16 rounded-full border-4 border-amber-400/30 border-t-amber-400 animate-spin" />
+          <div className="text-center space-y-2">
+            <h3 className="text-xl font-black text-white">Memverifikasi Pembayaran...</h3>
+            <p className="text-sm text-slate-400 max-w-xs">
+              Mohon tunggu sebentar, kami sedang mengkonfirmasi pembayaran Anda dengan Xendit.
+            </p>
+          </div>
+          <div className="flex gap-1.5">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="w-2 h-2 rounded-full bg-amber-400/40 animate-pulse"
+                style={{ animationDelay: `${i * 0.2}s` }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Toast: Pembayaran berhasil dikonfirmasi */}
+      {paymentVerifyStatus === 'success' && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[201] animate-fadeIn">
+          <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-emerald-600 text-white shadow-2xl shadow-emerald-900/50 max-w-sm">
+            <span className="text-2xl">🎉</span>
+            <div>
+              <p className="font-black text-sm">Pembayaran Berhasil Dikonfirmasi!</p>
+              <p className="text-xs text-emerald-100 mt-0.5">Akses modul Anda sudah aktif. Selamat belajar!</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast: Pembayaran dibatalkan */}
+      {paymentVerifyStatus === 'cancelled' && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[201] animate-fadeIn">
+          <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-slate-700 text-white shadow-2xl max-w-sm">
+            <span className="text-2xl">↩️</span>
+            <div>
+              <p className="font-black text-sm">Pembayaran Dibatalkan</p>
+              <p className="text-xs text-slate-300 mt-0.5">Anda dapat memilih tier kapan saja dari menu upgrade.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast: Timeout — webhook belum tiba */}
+      {paymentVerifyStatus === 'timeout' && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[201] animate-fadeIn">
+          <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-amber-600 text-white shadow-2xl shadow-amber-900/50 max-w-sm">
+            <span className="text-2xl">⏳</span>
+            <div>
+              <p className="font-black text-sm">Pembayaran Masih Diproses</p>
+              <p className="text-xs text-amber-100 mt-0.5">
+                Konfirmasi sedang dikirim oleh Xendit. Silakan refresh halaman dalam 1-2 menit, atau hubungi support jika belum aktif.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 py-6 mt-auto">
