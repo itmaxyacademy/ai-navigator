@@ -141,6 +141,7 @@ export async function checkoutUpgrade(tier: 'tier1' | 'tier2' | 'tier_1' | 'tier
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        tier_key: isTier1 ? 'tier1' : 'tier2',
         amount: finalAmount,
         description,
         redirect_url: typeof window !== 'undefined' ? `${window.location.origin}/app` : 'https://ainavigator.maxy.academy/app',
