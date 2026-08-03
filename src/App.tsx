@@ -301,22 +301,24 @@ export default function App() {
             };
           }
 
-          // Merge cloud progress & local progress safely (never lose completed modules, XP, or streak)
-          const cloudModules = cloudData.completedModules || [];
-          const localModules = prev.completedModules || [];
-          const mergedCompletedModules = Array.from(new Set([...localModules, ...cloudModules]));
+          // Cloud progress from database (including Admin CMS edits) is the authority for UI display!
+          const cloudModules = cloudData.completedModules !== undefined ? cloudData.completedModules : (prev.completedModules || []);
+          // Respect Admin CMS edit if present, hiding non-selected modules on the UI
+          const mergedCompletedModules = (cloudData.adminOverrideAt || cloudData.completedModules !== undefined)
+            ? cloudModules
+            : Array.from(new Set([...(prev.completedModules || []), ...cloudModules]));
 
           const mergedUnlockedBadges = Array.from(
-            new Set([...(prev.unlockedBadges || []), ...(cloudData.unlockedBadges || [])])
+            new Set([...(cloudData.unlockedBadges || []), ...(prev.unlockedBadges || [])])
           );
           const mergedCompletedCheckpoints = Array.from(
-            new Set([...(prev.completedCheckpoints || []), ...(cloudData.completedCheckpoints || [])])
+            new Set([...(cloudData.completedCheckpoints || []), ...(prev.completedCheckpoints || [])])
           );
           const mergedModuleScores = { ...(prev.moduleScores || {}), ...(cloudData.moduleScores || {}) };
 
-          const mergedXp = Math.max(prev.xp || 0, cloudData.xp || 0);
-          const mergedStreakDays = Math.max(prev.streakDays || 1, cloudData.streakDays || 1);
-          const mergedCurrentModuleId = Math.max(prev.currentModuleId || 1, cloudData.currentModuleId || 1);
+          const mergedXp = cloudData.xp !== undefined ? cloudData.xp : (prev.xp || 0);
+          const mergedStreakDays = cloudData.streakDays !== undefined ? cloudData.streakDays : (prev.streakDays || 1);
+          const mergedCurrentModuleId = cloudData.currentModuleId || prev.currentModuleId || 1;
 
           return {
             ...defaultProgress,
