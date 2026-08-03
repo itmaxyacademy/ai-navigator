@@ -153,6 +153,8 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     (obj: any) => obj.id === 'CAPSTONE_TITLE' || obj.id === 'CAPSTONE' || (typeof obj.text === 'string' && (obj.text.includes('Judul Capstone') || obj.text.includes('CAPSTONE_TITLE')))
   );
 
+  const hasCmsTemplate = Boolean(bgImage || templateObjects.length > 0);
+
   const isTier1 = !hasTier2;
   const displayModules = isTier1 ? MODULES_DATA.slice(0, 22) : MODULES_DATA;
 
@@ -459,18 +461,22 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   transform: `scale(${certWidth / 850})`
                 }}
               >
-              {bgImage ? (
+              {hasCmsTemplate ? (
                 <div
                   data-cert-bg
-                  className="relative w-full h-full bg-cover bg-center bg-no-repeat overflow-hidden"
-                  style={{ backgroundImage: `url(${bgImage})` }}
+                  className="relative w-full h-full bg-cover bg-center bg-no-repeat overflow-hidden bg-slate-900"
+                  style={{
+                    backgroundImage: bgImage ? `url(${bgImage})` : undefined,
+                  }}
                 >
-                  <img
-                    src={bgImage}
-                    crossOrigin="anonymous"
-                    alt="Certificate Template Background"
-                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                  />
+                  {bgImage && (
+                    <img
+                      src={bgImage}
+                      crossOrigin="anonymous"
+                      alt="Certificate Template Background"
+                      className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                    />
+                  )}
                   {templateObjects.length > 0 ? (
                     templateObjects.map((obj: any, i: number) => {
                       if (obj.text === 'UID' || obj.text === 'uid') return null; // Skip stray duplicate label
