@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Sparkles, Award, Flame, Menu, X, Compass, Trophy, StickyNote, Lock, Crown, ShieldCheck, LogOut, Save, Download, Upload, FileText } from 'lucide-react';
+import { Sparkles, Award, Flame, Menu, X, Compass, Trophy, StickyNote, Lock, Crown, ShieldCheck, LogOut, Save, Download, Upload, FileText, RotateCcw } from 'lucide-react';
 import { UserProgress } from '../types';
 import { getUserLevelInfo } from '../lib/gamification';
 import { DailyGoalRing } from './DailyGoalRing';
 import { Tooltip } from './Tooltip';
+import { ConfirmModal } from './ConfirmModal';
 
 interface HeaderProps {
   progress: UserProgress;
@@ -50,6 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
   onImportJSON,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const levelInfo = getUserLevelInfo(progress.xp);
   const userTier = progress.userTier || 'free';
@@ -317,71 +319,39 @@ export const Header: React.FC<HeaderProps> = ({
                 ? 'bg-slate-100 border-slate-200' 
                 : 'bg-slate-900/50 border-slate-800/80'
             }`}>
-              {/* Icon Button: Manual Save */}
+              {/* Icon Button: Reset Progress */}
               <Tooltip
                 content={
                   <div className="space-y-0.5 text-center">
-                    <div className="font-bold text-xs text-indigo-400">Save Progress</div>
-                    <p className="text-[10px] text-slate-600 dark:text-slate-300">Simpan manual data Anda</p>
+                    <div className="font-bold text-xs text-amber-400">Reset Progress</div>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-300">Hapus semua data (Dev Only)</p>
                   </div>
                 }
               >
                 <button
-                  onClick={onManualSave}
-                  aria-label="Save Progress"
-                  className={`p-1.5 rounded-xl transition-colors cursor-pointer ${
-                    theme === 'light'
-                      ? 'hover:bg-indigo-50 text-slate-500 hover:text-indigo-600'
-                      : 'hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-indigo-400'
-                  }`}
-                >
-                  <Save className="w-4 h-4" />
-                </button>
-              </Tooltip>
-
-              {/* Icon Button: Export JSON */}
-              <Tooltip
-                content={
-                  <div className="space-y-0.5 text-center">
-                    <div className="font-bold text-xs text-emerald-400">Export Data</div>
-                    <p className="text-[10px] text-slate-600 dark:text-slate-300">Download file backup .json</p>
-                  </div>
-                }
-              >
-                <button
-                  onClick={onExportJSON}
-                  aria-label="Export Data"
-                  className={`p-1.5 rounded-xl transition-colors cursor-pointer ${
-                    theme === 'light'
-                      ? 'hover:bg-emerald-50 text-slate-500 hover:text-emerald-600'
-                      : 'hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-emerald-400'
-                  }`}
-                >
-                  <Download className="w-4 h-4" />
-                </button>
-              </Tooltip>
-
-              {/* Icon Button: Import JSON */}
-              <Tooltip
-                content={
-                  <div className="space-y-0.5 text-center">
-                    <div className="font-bold text-xs text-amber-400">Import Data</div>
-                    <p className="text-[10px] text-slate-600 dark:text-slate-300">Upload file backup .json</p>
-                  </div>
-                }
-              >
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  aria-label="Import Data"
+                  onClick={() => setIsResetModalOpen(true)}
+                  aria-label="Reset Progress"
                   className={`p-1.5 rounded-xl transition-colors cursor-pointer ${
                     theme === 'light'
                       ? 'hover:bg-amber-50 text-slate-500 hover:text-amber-600'
                       : 'hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-amber-400'
                   }`}
                 >
-                  <Upload className="w-4 h-4" />
+                  <RotateCcw className="w-4 h-4" />
                 </button>
+                <ConfirmModal
+                  isOpen={isResetModalOpen}
+                  title="Reset Progress"
+                  message="Yakin ingin mereset seluruh progress simulasi?"
+                  onConfirm={() => {
+                    localStorage.clear();
+                    window.location.reload();
+                    setIsResetModalOpen(false);
+                  }}
+                  onCancel={() => setIsResetModalOpen(false)}
+                />
               </Tooltip>
+
 
               {/* Icon Button: Logout */}
               <Tooltip
@@ -517,41 +487,15 @@ export const Header: React.FC<HeaderProps> = ({
 
           <div className="grid grid-cols-2 gap-2">
             <button
-              onClick={() => {
-                onManualSave();
-                setMobileMenuOpen(false);
-              }}
-              className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
-                theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
-              }`}
-            >
-              <Save className="w-4 h-4 text-indigo-500" />
-              Save
-            </button>
-            <button
-              onClick={() => {
-                onExportJSON();
-                setMobileMenuOpen(false);
-              }}
-              className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
-                theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
-              }`}
-            >
-              <Download className="w-4 h-4 text-emerald-500" />
-              Export
-            </button>
-            <button
-              onClick={() => {
-                fileInputRef.current?.click();
-                setMobileMenuOpen(false);
-              }}
-              className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
-                theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
-              }`}
-            >
-              <Upload className="w-4 h-4 text-amber-500" />
-              Import
-            </button>
+                onClick={() => setIsResetModalOpen(true)}
+                className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
+                  theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
+                }`}
+              >
+                <RotateCcw className="w-4 h-4 text-amber-500" />
+                Reset Progress
+              </button>
+
             <button
               onClick={() => {
                 onLogout();

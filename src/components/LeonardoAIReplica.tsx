@@ -635,7 +635,7 @@ export const LeonardoAIReplica: React.FC = () => {
                   </button>
                 </div>
 
-                <div className="flex items-center gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-slate-800 flex-wrap max-w-full">
+                <div className="flex items-center gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-slate-800">
                   {featuredBlueprints.map((bp) => (
                     <div 
                       key={bp.id}
@@ -667,7 +667,7 @@ export const LeonardoAIReplica: React.FC = () => {
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-wide">Community Creations</h2>
 
                 {/* Filter tags row */}
-                <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none flex-wrap max-w-full">
+                <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
                   {['Trending', 'All', 'Photography', 'Animals', 'Anime', 'Architecture', 'Character', 'Food', 'Sci-Fi'].map((tag) => (
                     <button
                       key={tag}

@@ -666,7 +666,7 @@ export const ClaudeReplica: React.FC = () => {
         <main className="flex-1 bg-[#1e1e1e] flex flex-col justify-between min-w-0 relative">
           
           {/* Header Top Bar */}
-          <div className="px-4 py-3 border-b border-neutral-800/80 flex items-center justify-between bg-[#1e1e1e]">
+          <div className="px-4 py-3 border-b border-neutral-800/80 flex items-center justify-between gap-4 bg-[#1e1e1e]">
             <div className="flex items-center gap-2 flex-wrap max-w-full">
               {/* Sidebar Toggle Icon for Mobile or Collapsed */}
               <button

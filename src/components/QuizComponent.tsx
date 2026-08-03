@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { CheckCircle2, XCircle, Trophy, RefreshCw, ArrowRight, Award, HelpCircle } from 'lucide-react';
 import { CourseModule, BankQuestion } from '../types';
-import { QUESTION_BANK } from '../data/questionBank';
 
 interface QuizComponentProps {
   module: CourseModule;
@@ -31,43 +30,61 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const loadAndPrepareQuestions = async () => {
+    setIsLoading(true);
+    try {
+      // Lazy load JSON
+      const { default: QUESTION_BANK } = await import('../data/questionBank.json');
+      
+      const bankModule = QUESTION_BANK.modules.find((m: any) => m.moduleId === module.id);
+      let pool: BankQuestion[] = [];
+
+      if (bankModule && bankModule.questions.length > 0) {
+        pool = bankModule.questions;
+      } else {
+        pool = (module.content.quiz || []).map((q) => ({
+          id: q.id,
+          question: q.question,
+          options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
+          correctOptionId: q.correctAnswer.toString(),
+          explanation: q.explanation,
+        }));
+      }
+
+      const shuffledPool = shuffleArray(pool);
+      const selected = shuffledPool.slice(0, quizLength);
+      const preparedQuestions = selected.map(q => ({
+        ...q,
+        options: shuffleArray(q.options)
+      }));
+
+      setQuizQuestions(preparedQuestions);
+      setCurrentQuestionIdx(0);
+      setSelectedAnswers({});
+      setIsSubmitted(false);
+    } catch (error) {
+      console.error("Failed to load question bank:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // 1. Try to fetch questions from QUESTION_BANK (50 soal per modul)
-    const bankModule = QUESTION_BANK.modules.find((m) => m.moduleId === module.id);
-    let pool: BankQuestion[] = [];
-
-    if (bankModule && bankModule.questions.length > 0) {
-      // Use question bank directly (already in BankQuestion format)
-      pool = bankModule.questions;
-    } else {
-      // Fallback: convert from module.content.quiz format
-      pool = (module.content.quiz || []).map((q) => ({
-        id: q.id,
-        question: q.question,
-        options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
-        correctOptionId: q.correctAnswer.toString(),
-        explanation: q.explanation,
-      }));
-    }
-
-    // 2. Shuffle the entire pool and pick exactly quizLength (default 10) questions
-    const shuffledPool = shuffleArray(pool);
-    const selected = shuffledPool.slice(0, quizLength);
-
-    // 3. Randomize the options order for each selected question
-    const preparedQuestions = selected.map(q => ({
-      ...q,
-      options: shuffleArray(q.options)
-    }));
-
-    setQuizQuestions(preparedQuestions);
-    setCurrentQuestionIdx(0);
-    setSelectedAnswers({});
-    setIsSubmitted(false);
+    loadAndPrepareQuestions();
   }, [module.id, quizLength]);
 
   // Wait until questions are prepared
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center p-12 space-y-4 animate-pulse">
+        <RefreshCw className="w-10 h-10 text-indigo-500 animate-spin" />
+        <p className="text-slate-500 dark:text-slate-400 font-semibold">Mempersiapkan Soal Kuis...</p>
+      </div>
+    );
+  }
+  
   if (quizQuestions.length === 0) return null;
 
   const currentQuestion = quizQuestions[currentQuestionIdx];
@@ -116,33 +133,8 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
   };
 
   const handleRestart = () => {
-    // Reshuffle on restart for a completely new quiz experience from QUESTION_BANK
-    const bankModule = QUESTION_BANK.modules.find((m) => m.moduleId === module.id);
-    let pool: BankQuestion[] = [];
-
-    if (bankModule && bankModule.questions.length > 0) {
-      pool = bankModule.questions;
-    } else {
-      pool = (module.content.quiz || []).map((q) => ({
-        id: q.id,
-        question: q.question,
-        options: q.options.map((opt, idx) => ({ id: idx.toString(), text: opt })),
-        correctOptionId: q.correctAnswer.toString(),
-        explanation: q.explanation,
-      }));
-    }
-
-    const shuffledPool = shuffleArray(pool);
-    const selected = shuffledPool.slice(0, quizLength);
-    const preparedQuestions = selected.map(q => ({
-      ...q,
-      options: shuffleArray(q.options)
-    }));
-
-    setQuizQuestions(preparedQuestions);
-    setSelectedAnswers({});
-    setIsSubmitted(false);
-    setCurrentQuestionIdx(0);
+    // Reshuffle on restart for a completely new quiz experience
+    loadAndPrepareQuestions();
   };
 
   const score = calculateScore();

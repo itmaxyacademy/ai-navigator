@@ -41,6 +41,18 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const page2Ref = useRef<HTMLDivElement>(null);
   const page3Ref = useRef<HTMLDivElement>(null);
   const page4Ref = useRef<HTMLDivElement>(null);
+  const [certWidth, setCertWidth] = useState(850);
+
+  React.useEffect(() => {
+    if (!page1Ref.current) return;
+    const observer = new ResizeObserver((entries) => {
+      if (entries[0]) {
+        setCertWidth(entries[0].contentRect.width);
+      }
+    });
+    observer.observe(page1Ref.current);
+    return () => observer.disconnect();
+  }, [isVerified, isOpen]);
 
   if (!isOpen) return null;
 
@@ -192,6 +204,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     cloned.style.margin = '0';
     cloned.style.borderRadius = '0';
     cloned.style.border = 'none';
+
+    // Force scaler wrapper to adapt to 1123px width instead of screen width
+    const scaler = cloned.querySelector('.cert-scaler') as HTMLElement;
+    if (scaler) {
+      scaler.style.transform = `scale(${1123 / 850})`;
+    }
 
     wrapper.appendChild(cloned);
     document.body.appendChild(wrapper);
@@ -379,7 +397,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
           /* Official Certificate & Transcript View */
           <div className="space-y-5">
             {/* Action Bar */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4 mt-8 sm:mt-2 pr-10 sm:pr-0">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Sertifikat Terverifikasi
@@ -411,9 +429,18 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             {/* ============ HALAMAN 1: SERTIFIKAT ============ */}
             <div
               ref={page1Ref}
-              className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
+              className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
               style={{ aspectRatio: '850 / 600' }}
             >
+              <div 
+                className="cert-scaler absolute top-0 left-0"
+                style={{
+                  width: '850px',
+                  height: '600px',
+                  transformOrigin: 'top left',
+                  transform: `scale(${certWidth / 850})`
+                }}
+              >
               {bgImage ? (
                 <div
                   data-cert-bg
@@ -553,17 +580,27 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   </div>
                 </div>
               )}
+              </div>
             </div>
 
             {/* ============ HALAMAN 2: TRANSKRIP PART 1 (FULL-WIDTH 1-COLUMN TABLE) ============ */}
             <div
               ref={page2Ref}
-              className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
+              className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
               style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
             >
-              <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '16px 20px' }}>
-                {/* Header */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '2px solid #1e3a5f', marginBottom: '8px' }}>
+              <div 
+                className="cert-scaler absolute top-0 left-0"
+                style={{
+                  width: '850px',
+                  height: '600px',
+                  transformOrigin: 'top left',
+                  transform: `scale(${certWidth / 850})`
+                }}
+              >
+                <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '16px 20px' }}>
+                  {/* Header */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '2px solid #1e3a5f', marginBottom: '8px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <img
                       src="https://cms.maxy.academy/uploads/LogoMaxyBgWhite.png"
@@ -609,14 +646,24 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</span>
                 </div>
               </div>
+              </div>
             </div>
 
             {/* ============ HALAMAN 3: TRANSKRIP PART 2 (FULL-WIDTH 1-COLUMN TABLE) ============ */}
             {part2Modules.length > 0 && (
               <div
                 ref={page3Ref}
-                className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
+                className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
                 style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
+              >
+              <div 
+                className="cert-scaler absolute top-0 left-0"
+                style={{
+                  width: '850px',
+                  height: '600px',
+                  transformOrigin: 'top left',
+                  transform: `scale(${certWidth / 850})`
+                }}
               >
                 <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '16px 20px' }}>
                   {/* Header */}
@@ -679,6 +726,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       </div>
                     </div>
                   )}
+                  </div>
                 </div>
               </div>
             )}
@@ -687,8 +735,17 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             {part3Modules.length > 0 && (
               <div
                 ref={page4Ref}
-                className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
+                className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
                 style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
+              >
+              <div 
+                className="cert-scaler absolute top-0 left-0"
+                style={{
+                  width: '850px',
+                  height: '600px',
+                  transformOrigin: 'top left',
+                  transform: `scale(${certWidth / 850})`
+                }}
               >
                 <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '16px 20px' }}>
                   {/* Header */}
@@ -743,6 +800,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</div>
                       <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight: 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>

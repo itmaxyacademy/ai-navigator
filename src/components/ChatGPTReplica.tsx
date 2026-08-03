@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { generateWithGemini } from '../services/gemini';
 import { 
   Sparkles, Search, PanelLeft, Image as ImageIcon, BookOpen, Plug, 
   Folder, Code, MoreHorizontal, Plus, Mic, Radio, ChevronDown, 
@@ -328,7 +329,7 @@ export const ChatGPTReplica: React.FC = () => {
     setIsModelPickerOpen(false);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputPrompt.trim()) return;
 
     const userText = inputPrompt;
@@ -336,7 +337,29 @@ export const ChatGPTReplica: React.FC = () => {
     setMessages(prev => [...prev, { sender: 'user', text: userText }]);
     setIsLoading(true);
 
-    setTimeout(() => {
+    try {
+      // Coba panggil AI asli (dibatasi 3x)
+      const realAiResponse = await generateWithGemini(userText);
+      
+      if (realAiResponse) {
+        setMessages(prev => [
+          ...prev,
+          {
+            sender: 'ai',
+            text: `[Respon Live AI (${selectedModel})]\n\n${realAiResponse}`
+          }
+        ]);
+      } else {
+        // Fallback ke simulasi jika kuota habis atau gagal
+        setMessages(prev => [
+          ...prev,
+          {
+            sender: 'ai',
+            text: `[Respon Simulasi ChatGPT (${selectedModel})]\n\nTerima kasih telah mengajukan instruksi: "${userText}".\n\nSebagai model AI multimodal dari OpenAI, saya siap membantu Anda menyelesaikan tugas ini secara offline. Gunakan menu (+) untuk melampirkan berkas, mencoba DALL-E 3, atau menguji fitur suara!`
+          }
+        ]);
+      }
+    } catch (error) {
       setMessages(prev => [
         ...prev,
         {
@@ -344,8 +367,9 @@ export const ChatGPTReplica: React.FC = () => {
           text: `[Respon Simulasi ChatGPT (${selectedModel})]\n\nTerima kasih telah mengajukan instruksi: "${userText}".\n\nSebagai model AI multimodal dari OpenAI, saya siap membantu Anda menyelesaikan tugas ini secara offline. Gunakan menu (+) untuk melampirkan berkas, mencoba DALL-E 3, atau menguji fitur suara!`
         }
       ]);
+    } finally {
       setIsLoading(false);
-    }, 400);
+    }
   };
 
   const handleCopy = (text: string, index: number) => {
@@ -861,12 +885,72 @@ export const ChatGPTReplica: React.FC = () => {
                   {/* Bottom Sticky Input for Ongoing Chat */}
                   <div className="pt-4">
                     <div className="relative bg-[#2f2f2f] border border-neutral-700 rounded-2xl p-2.5 flex items-center gap-2 flex-wrap max-w-full">
-                      <button
-                        onClick={() => setIsPlusMenuOpen(!isPlusMenuOpen)}
-                        className="p-2 bg-neutral-700 hover:bg-neutral-600 rounded-full text-neutral-200"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
+                      <div className="relative">
+                        <button
+                          onClick={() => setIsPlusMenuOpen(!isPlusMenuOpen)}
+                          className="p-2 bg-neutral-700 hover:bg-neutral-600 rounded-full text-neutral-200"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                        
+                        {/* PLUS DROPDOWN MENU */}
+                        {isPlusMenuOpen && (
+                          <div className="absolute bottom-12 left-0 w-64 bg-[#171717] border border-neutral-800 rounded-2xl shadow-2xl p-2 z-50 space-y-1 text-xs text-left">
+                            <div className="px-3 py-1.5 text-[10px] font-bold text-neutral-500 uppercase tracking-wider border-b border-neutral-800">
+                              Pilih Lampiran / Mode AI
+                            </div>
+
+                            <button
+                              onClick={() => handleOpenModal('upload-file')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium flex-wrap max-w-full"
+                            >
+                              <FileText className="w-4 h-4 text-emerald-400" />
+                              <span>Upload file / Documents</span>
+                            </button>
+
+                            <button
+                              onClick={() => handleOpenModal('create-image')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium flex-wrap max-w-full"
+                            >
+                              <ImageIcon className="w-4 h-4 text-amber-400" />
+                              <span>Create an image (DALL-E 3)</span>
+                            </button>
+
+                            <button
+                              onClick={() => handleOpenModal('code-analysis')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium flex-wrap max-w-full"
+                            >
+                              <BarChart3 className="w-4 h-4 text-indigo-400" />
+                              <span>Code & Data analysis</span>
+                            </button>
+
+                            <button
+                              onClick={() => handleOpenModal('web-search')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium flex-wrap max-w-full"
+                            >
+                              <Globe className="w-4 h-4 text-cyan-400" />
+                              <span>Web search / Browse</span>
+                            </button>
+
+                            <button
+                              onClick={() => handleOpenModal('reason-think')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-xl hover:bg-neutral-800 text-neutral-200 hover:text-slate-900 dark:text-white text-left font-medium flex-wrap max-w-full"
+                            >
+                              <Brain className="w-4 h-4 text-purple-400" />
+                              <span>Reason / Think (o1/o3)</span>
+                            </button>
+
+                            <div className="pt-1 border-t border-neutral-800">
+                              <button
+                                onClick={() => handleOpenModal('plus-menu')}
+                                className="w-full text-center py-1.5 text-[10px] font-bold text-neutral-400 hover:text-slate-900 dark:text-white"
+                              >
+                                ℹ️ Penjelasan Lengkap Fitur (+)
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                       <input
                         type="text"
                         value={inputPrompt}

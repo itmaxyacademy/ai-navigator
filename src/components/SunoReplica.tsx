@@ -18,6 +18,15 @@ interface SongItem {
   isInstrumental: boolean;
 }
 
+interface InfoModalData {
+  title: string;
+  category: string;
+  badge: string;
+  description: string;
+  keyFeatures: string[];
+  howToUse: string;
+}
+
 export const SunoReplica: React.FC = () => {
   // Navigation Stage: 'landing' (Tahap 1) vs 'dashboard' (Tahap 2)
   const [currentStage, setCurrentStage] = useState<'landing' | 'dashboard'>('landing');
@@ -108,6 +117,82 @@ export const SunoReplica: React.FC = () => {
   // Modal Info & Toast State
   const [activeModalKey, setActiveModalKey] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Modal Info Dictionary for All Suno AI Navigation & Features
+  const infoDictionary: Record<string, InfoModalData> = {
+    'menu-beranda': {
+      title: 'Menu Beranda (Home)',
+      category: 'Navigasi Suno AI',
+      badge: 'Utama',
+      description: 'Halaman utama tempat pengguna mengeksplorasi tren musik AI terbaru, lagu-lagu populer karya komunitas global, serta rekomendasi gaya lagu terkini.',
+      keyFeatures: [
+        'Melihat tren musik AI yang paling sering diputar',
+        'Inspirasi prompt dan struktur lirik terbaik',
+        'Akses cepat ke pembuatan lagu baru'
+      ],
+      howToUse: 'Klik "Beranda" untuk melihat katalog inspirasi musik utama Suno AI.'
+    },
+    'menu-jelajahi': {
+      title: 'Menu Jelajahi (Explore)',
+      category: 'Navigasi Suno AI',
+      badge: 'Discovery',
+      description: 'Fitur pencarian dan eksplorasi lagu AI berdasarkan genre (Pop, Lofi, Synthwave, Rock, EDM, Jazz), tempo BPM, serta suasana hati (mood).',
+      keyFeatures: [
+        'Filter musik berdasarkan instrumen dan genre',
+        'Penyaringan berdasarkan kecepatan tempo & vokal',
+        'Salin prompt dari lagu populer yang disukai'
+      ],
+      howToUse: 'Klik "Jelajahi", pilih kategori genre atau ketik kata kunci musik untuk menemukan lagu sampel.'
+    },
+    'menu-buat': {
+      title: 'Menu Buat (Create)',
+      category: 'Navigasi Suno AI',
+      badge: 'Fitur Inti',
+      description: 'Modul pembuat musik generatif utama Suno v4.5 yang mengubah naskah teks atau lirik terstruktur menjadi 2 versi lagu utuh berkualitas rekaman studio.',
+      keyFeatures: [
+        'Mode Sederhana (Simple Prompting)',
+        'Mode Lanjutan (Custom Lyrics, Style & Title)',
+        'Opsi Instrumental tanpa vokal'
+      ],
+      howToUse: 'Pilih "Buat", isi prompt atau lirik lagu, lalu klik tombol "Buat Lagu".'
+    },
+    'menu-studio': {
+      title: 'Menu Studio Audio',
+      category: 'Navigasi Suno AI',
+      badge: 'Advanced Editor',
+      description: 'Area kerja pengeditan vokal & instrumen tingkat lanjut untuk melakukan pemisahan trek (stem separation), mengedit vokal, dan mastering.',
+      keyFeatures: [
+        'Pemisahan trek Vokal & Instrumen',
+        'Mastering equalizer & efek audio',
+        'Pengaturan durasi & kesinambungan lagu'
+      ],
+      howToUse: 'Klik "Studio" untuk membuka alat pengeditan dan eksperimen audio lanjutan.'
+    },
+    'menu-pustaka': {
+      title: 'Menu Pustaka Lagu (Library)',
+      category: 'Navigasi Suno AI',
+      badge: 'Workspace',
+      description: 'Daftar pustaka tempat menyimpan seluruh koleksi lagu kreasi sendiri, unduhan berkas MP3, lirik terstruktur, dan riwayat generasi audio.',
+      keyFeatures: [
+        'Manajemen riwayat hasil pembuatan musik',
+        'Unduh berkas audio MP3 resolusi tinggi',
+        'Salin dan buat variasi lagu baru'
+      ],
+      howToUse: 'Klik "Pustaka Lagu" untuk mengakses dan mengunduh seluruh lagu buatan Anda.'
+    },
+    'menu-profile': {
+      title: 'Profil Akun Maxy AI',
+      category: 'Akun & Lisensi',
+      badge: 'Unlimited Plan',
+      description: 'Informasi status akun pengguna terintegrasi dengan akses tak terbatas (Unlimited Credits) dari lisensi resmi Maxy Academy AI Studio.',
+      keyFeatures: [
+        'Akses mesin sintesis Suno AI v4.5 tanpa batas',
+        'Generasi 2 versi lagu bersamaan secara gratis',
+        'Penyimpanan cloud tak terbatas untuk hasil karya'
+      ],
+      howToUse: 'Informasi akun aktif Anda otomatis terhubung dengan Maxy Academy.'
+    }
+  };
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -498,7 +583,7 @@ export const SunoReplica: React.FC = () => {
       {currentStage === 'dashboard' && (
         <div className="flex flex-col lg:flex-row min-h-[640px] bg-[#090b10] overflow-hidden">
           {/* Left Sidebar Menu */}
-          <div className="w-full lg:w-[20%] xl:w-64 bg-[#0d0f18] border-r border-[#1b2030] p-4 flex flex-col justify-between shrink-0">
+          <div className="w-full lg:w-56 bg-[#0d0f18] border-r border-[#1b2030] p-4 flex flex-col justify-between shrink-0 sticky top-0 self-start">
             <div className="space-y-5">
               {/* Suno Brand */}
               <div className="flex items-center justify-between">
@@ -517,7 +602,11 @@ export const SunoReplica: React.FC = () => {
               </div>
 
               {/* User Account Info Box */}
-              <div className="bg-[#131724] border border-[#21273c] rounded-2xl p-3 flex items-center gap-2.5 flex-wrap max-w-full">
+              <div 
+                onClick={() => { setActiveModalKey('menu-profile'); showToast('Membuka detail akun Maxy AI...'); }}
+                className="bg-[#131724] border border-[#21273c] hover:border-pink-500/50 rounded-2xl p-3 flex items-center gap-2.5 cursor-pointer transition-colors"
+                title="Klik untuk detail Akun"
+              >
                 <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 text-slate-900 dark:text-white font-bold flex items-center justify-center text-xs shrink-0">
                   MA
                 </div>
@@ -525,56 +614,77 @@ export const SunoReplica: React.FC = () => {
                   <h4 className="text-xs font-bold text-slate-900 dark:text-white break-words whitespace-normal leading-snug">wahyudi_maxy_academy</h4>
                   <p className="text-[10px] text-pink-400 font-semibold">Maxy AI (Unlimited)</p>
                 </div>
+                <Info className="w-3.5 h-3.5 text-slate-500 hover:text-pink-400 shrink-0" />
               </div>
 
               {/* Sidebar Navigation Items */}
               <nav className={`space-y-1 text-xs ${isMobileMenuOpen ? 'block' : 'hidden lg:block'}`}>
                 <button
-                  onClick={() => showToast('Membuka Beranda Suno...')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors flex-wrap max-w-full"
+                  onClick={() => { setActiveModalKey('menu-beranda'); showToast('Beranda Suno AI: Halaman tren & inspirasi musik utama'); }}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors"
+                  title="Klik untuk informasi menu Beranda"
                 >
-                  <Home className="w-4 h-4" />
-                  <span>Beranda</span>
+                  <div className="flex items-center gap-3">
+                    <Home className="w-4 h-4" />
+                    <span>Beranda</span>
+                  </div>
+                  <Info className="w-3.5 h-3.5 text-slate-600 dark:text-slate-300 hover:text-pink-400" />
                 </button>
 
                 <button
-                  onClick={() => showToast('Membuka Jelajahi Musik...')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors flex-wrap max-w-full"
+                  onClick={() => { setActiveModalKey('menu-jelajahi'); showToast('Jelajahi: Eksplorasi musik berdasarkan genre & mood'); }}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors"
+                  title="Klik untuk informasi menu Jelajahi"
                 >
-                  <Compass className="w-4 h-4" />
-                  <span>Jelajahi</span>
+                  <div className="flex items-center gap-3">
+                    <Compass className="w-4 h-4" />
+                    <span>Jelajahi</span>
+                  </div>
+                  <Info className="w-3.5 h-3.5 text-slate-600 dark:text-slate-300 hover:text-pink-400" />
                 </button>
 
                 <button
-                  onClick={() => { setMobileTab('create'); setIsMobileMenuOpen(false); }}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl font-bold transition-colors ${
+                  onClick={() => { setMobileTab('create'); setActiveModalKey('menu-buat'); showToast('Buat (Create): Generator lagu & musik AI utama'); }}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl font-bold transition-colors ${
                     mobileTab === 'create'
                       ? 'bg-gradient-to-r from-pink-600/20 to-orange-600/20 text-pink-300 border border-pink-500/40'
                       : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928]'
                   }`}
+                  title="Klik untuk informasi menu Buat"
                 >
-                  <Music className={`w-4 h-4 ${mobileTab === 'create' ? 'text-pink-400' : ''}`} />
-                  <span>Buat (Create)</span>
+                  <div className="flex items-center gap-3">
+                    <Music className={`w-4 h-4 ${mobileTab === 'create' ? 'text-pink-400' : ''}`} />
+                    <span>Buat (Create)</span>
+                  </div>
+                  <Info className="w-3.5 h-3.5 text-pink-400" />
                 </button>
 
                 <button
-                  onClick={() => showToast('Membuka Studio Audio...')}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors flex-wrap max-w-full"
+                  onClick={() => { setActiveModalKey('menu-studio'); showToast('Studio Audio: Fitur pengeditan & pemisahan vokal/instrumen'); }}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928] transition-colors"
+                  title="Klik untuk informasi menu Studio"
                 >
-                  <Radio className="w-4 h-4" />
-                  <span>Studio</span>
+                  <div className="flex items-center gap-3">
+                    <Radio className="w-4 h-4" />
+                    <span>Studio</span>
+                  </div>
+                  <Info className="w-3.5 h-3.5 text-slate-600 dark:text-slate-300 hover:text-pink-400" />
                 </button>
 
                 <button
-                  onClick={() => { setMobileTab('workspace'); setIsMobileMenuOpen(false); }}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl font-bold transition-colors ${
+                  onClick={() => { setMobileTab('workspace'); setActiveModalKey('menu-pustaka'); showToast('Pustaka Lagu: Menyimpan koleksi & unduhan MP3 Anda'); }}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl font-bold transition-colors ${
                     mobileTab === 'workspace'
                       ? 'bg-gradient-to-r from-pink-600/20 to-orange-600/20 text-pink-300 border border-pink-500/40'
                       : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-[#151928]'
                   }`}
+                  title="Klik untuk informasi menu Pustaka Lagu"
                 >
-                  <FolderKanban className={`w-4 h-4 ${mobileTab === 'workspace' ? 'text-pink-400' : ''}`} />
-                  <span>Pustaka Lagu</span>
+                  <div className="flex items-center gap-3">
+                    <FolderKanban className={`w-4 h-4 ${mobileTab === 'workspace' ? 'text-pink-400' : ''}`} />
+                    <span>Pustaka Lagu</span>
+                  </div>
+                  <Info className="w-3.5 h-3.5 text-pink-400" />
                 </button>
               </nav>
             </div>
@@ -585,8 +695,10 @@ export const SunoReplica: React.FC = () => {
             </div>
           </div>
 
-          {/* Middle Create Form Column */}
-          <div className={`w-full lg:w-[35%] xl:w-96 bg-[#0f121e] border-r border-[#1b2030] p-5 space-y-5 shrink-0 overflow-y-auto ${mobileTab === 'workspace' ? 'hidden lg:block' : 'block'}`}>
+          {/* Main Area Container (Vertical Stack: Generator Form Top, Song Library Bottom) */}
+          <div className="flex-1 flex flex-col overflow-y-auto min-w-0 bg-[#090b10]">
+            {/* Top Section: Create Song Form (Full Width) */}
+            <div className="w-full bg-[#0f121e] border-b border-[#1b2030] p-4 lg:p-5 space-y-4 shrink-0">
             {/* Top Mode Selector Tabs: Sederhana vs Lanjutan */}
             <div className="flex items-center justify-between border-b border-[#1b2030] pb-3">
               <div className="flex items-center gap-1.5 bg-[#080a10] p-1 rounded-xl border border-[#1a1f30] flex-wrap max-w-full">
@@ -794,8 +906,8 @@ export const SunoReplica: React.FC = () => {
             </button>
           </div>
 
-          {/* Right Workspace Column */}
-          <div className={`flex-1 lg:w-[45%] xl:flex-1 p-3 sm:p-5 overflow-y-auto min-w-[280px] ${mobileTab === 'create' ? 'hidden lg:block' : 'block'}`}>
+          {/* Bottom Section: Song Library & Player Details (Full Width) */}
+          <div className="w-full p-4 lg:p-5 space-y-5 flex-1 bg-[#090b10]">
             <div className="flex items-center justify-between mb-4 sm:mb-6 border-b border-[#1b2030] pb-3">
               <div>
                 <h3 className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2 flex-wrap max-w-full">
@@ -813,7 +925,7 @@ export const SunoReplica: React.FC = () => {
             </div>
 
             {/* Generated Songs Cards List */}
-            <div className="space-y-3">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
               {generatedSongs.map((song) => {
                 const isSelected = activeSongId === song.id;
                 return (
@@ -951,6 +1063,59 @@ export const SunoReplica: React.FC = () => {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      </div>
+      )}
+
+      {/* Interactive Feature Info Modal Popup */}
+      {activeModalKey && infoDictionary[activeModalKey] && (
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in">
+          <div className="bg-[#111422] border border-[#252c42] rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl relative text-left">
+            <button
+              onClick={() => setActiveModalKey(null)}
+              className="absolute top-4 right-4 p-2 bg-[#1a2032] hover:bg-[#252d47] text-slate-400 hover:text-white rounded-full transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="space-y-1">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/20 text-pink-300 border border-pink-500/30">
+                {infoDictionary[activeModalKey].badge} • {infoDictionary[activeModalKey].category}
+              </span>
+              <h3 className="text-lg font-extrabold text-slate-900 dark:text-white pt-1">
+                {infoDictionary[activeModalKey].title}
+              </h3>
+            </div>
+
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              {infoDictionary[activeModalKey].description}
+            </p>
+
+            <div className="space-y-2 bg-[#090b12] p-3.5 rounded-2xl border border-[#1d2338]">
+              <h4 className="text-xs font-bold text-pink-400 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" /> Fitur & Keunggulan Utama:
+              </h4>
+              <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-300 pl-4 list-disc">
+                {infoDictionary[activeModalKey].keyFeatures.map((feat, idx) => (
+                  <li key={idx}>{feat}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-[#151a2a] p-3.5 rounded-2xl border border-[#232b45] space-y-1 text-xs">
+              <span className="font-bold text-amber-400 block">💡 Cara Penggunaan:</span>
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{infoDictionary[activeModalKey].howToUse}</p>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                onClick={() => setActiveModalKey(null)}
+                className="px-5 py-2 bg-gradient-to-r from-pink-600 to-orange-600 hover:brightness-110 text-slate-900 dark:text-white font-extrabold text-xs rounded-xl shadow-lg cursor-pointer"
+              >
+                Paham & Tutup
+              </button>
+            </div>
           </div>
         </div>
       )}

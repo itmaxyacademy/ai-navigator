@@ -167,7 +167,7 @@ export const MistralVibeReplica: React.FC = () => {
   return (
     <div className="w-full min-h-[750px] bg-[#0c0d0e] text-slate-800 dark:text-slate-100 font-sans rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col relative shadow-2xl">
       {/* Stage Indicator Bar */}
-      <div className="bg-[#141518] border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs shrink-0 z-30 gap-3 sm:gap-0">
+      <div className="bg-[#141518] border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex items-center justify-between text-xs shrink-0 z-30 gap-3 overflow-hidden">
         <div className="flex items-center space-x-2 shrink-0">
           <div className="w-5 h-5 rounded bg-orange-600 flex items-center justify-center font-black text-slate-900 dark:text-white text-[10px] shadow">
             M
@@ -176,22 +176,22 @@ export const MistralVibeReplica: React.FC = () => {
           <span className="text-slate-500 hidden sm:inline">| Simulasi Interactive Agent</span>
         </div>
 
-        <div className="flex items-center space-x-1.5 bg-[#0a0b0d] p-1 rounded-xl border border-slate-200 dark:border-slate-800 w-full sm:w-auto overflow-x-auto shrink-0 hide-scrollbar">
+        <div className="flex items-center space-x-1.5 bg-[#0a0b0d] p-1 rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto shrink-0 hide-scrollbar min-w-0">
           <button
             onClick={() => setActiveStage('landing')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'landing' ? 'bg-orange-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all whitespace-nowrap ${activeStage === 'landing' ? 'bg-orange-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 1: Landing Page
           </button>
           <button
             onClick={() => setActiveStage('onboarding')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'onboarding' ? 'bg-orange-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all whitespace-nowrap ${activeStage === 'onboarding' ? 'bg-orange-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 2: Onboarding Modal
           </button>
           <button
             onClick={() => setActiveStage('workspace')}
-            className={`px-3 py-1 rounded-lg font-bold transition-all ${activeStage === 'workspace' ? 'bg-orange-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
+            className={`px-3 py-1 rounded-lg font-bold transition-all whitespace-nowrap ${activeStage === 'workspace' ? 'bg-orange-600 text-slate-900 dark:text-white shadow' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
           >
             TAHAP 3: Workspace Utama
           </button>

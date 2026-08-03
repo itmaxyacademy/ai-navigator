@@ -29,7 +29,7 @@ const INSPIRATIONS_DATA = [
     id: 'insp-1',
     prompt: 'A cute fox with a red hat in a fairytale autumn forest',
     style: 'Art Style',
-    url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80',
+    url: 'https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=600&q=80',
   },
   {
     id: 'insp-2',
@@ -948,6 +948,9 @@ export const CraiyonReplica: React.FC = () => {
                     alt={generatedResult.prompt}
                     referrerPolicy="no-referrer"
                     className="w-full max-h-[450px] object-contain mx-auto"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80';
+                    }}
                   />
                   <a
                     href={generatedResult.url}
@@ -1072,6 +1075,9 @@ export const CraiyonReplica: React.FC = () => {
                       alt={item.prompt}
                       referrerPolicy="no-referrer"
                       className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80';
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end">
                       <div className="flex items-center justify-between">

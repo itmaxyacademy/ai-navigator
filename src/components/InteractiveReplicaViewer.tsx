@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { generateWithGemini } from '../services/gemini';
 import { 
   Sparkles, Info, Send, Copy, Check, ChevronRight, RefreshCw,
   Code2, Brain, Terminal, Eye, ExternalLink
@@ -100,9 +101,30 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
   const [showThoughtAccordion, setShowThoughtAccordion] = useState(true);
 
   // Execute Prompt Handler (Offline Mode)
-  const handleExecutePrompt = () => {
+  const handleExecutePrompt = async () => {
     setIsLoading(true);
-    setTimeout(() => {
+    
+    try {
+      const realAiResponse = await generateWithGemini(userPrompt);
+      if (realAiResponse) {
+        if (module.id === 1) {
+          setCurrentResponse(`[Respon Live AI Prompt Terstruktur RCTF]\n\n${realAiResponse}`);
+        } else {
+          setCurrentResponse(`[Respon Live AI (${replica.llmName})]\n\n${realAiResponse}`);
+        }
+      } else {
+        // Fallback jika API habis atau gagal
+        if (module.id === 1) {
+          setCurrentResponse(
+            `[Respon Simulasi AI Prompt Terstruktur RCTF]\n\nHalo! Bertindak sebagai ${rctf.role || 'Asisten AI'}:\n\nBerdasarkan situasi (${rctf.context || 'Konteks Umum'}), berikut adalah solusi tugas "${rctf.task || 'Tugas Utama'}":\n\n1. **Poin Utama**: Large Language Model bekerja dengan memprediksi kata berikutnya paling logis berdasarkan ribuan data yang telah dipelajari.\n2. **Analogi Koki**: Bayangkan LLM seperti koki handal yang meracik masakan (jawaban) berdasarkan resep dan pesanan khusus (prompt) yang Anda berikan.\n\n(Hasil disusun rapi sesuai format: ${rctf.format || 'Poin-poin sederhana'})`
+          );
+        } else {
+          setCurrentResponse(
+            `[Respon Simulasi ${replica.llmName}]\n\nInstruksi "${userPrompt}" berhasil diproses secara instan!\n\nBerikut adalah respon terstruktur sesuai fitur utama ${replica.llmName}. Eksperimen dengan variasi kata kunci untuk melihat perubahan hasil.`
+          );
+        }
+      }
+    } catch (err) {
       if (module.id === 1) {
         setCurrentResponse(
           `[Respon Simulasi AI Prompt Terstruktur RCTF]\n\nHalo! Bertindak sebagai ${rctf.role || 'Asisten AI'}:\n\nBerdasarkan situasi (${rctf.context || 'Konteks Umum'}), berikut adalah solusi tugas "${rctf.task || 'Tugas Utama'}":\n\n1. **Poin Utama**: Large Language Model bekerja dengan memprediksi kata berikutnya paling logis berdasarkan ribuan data yang telah dipelajari.\n2. **Analogi Koki**: Bayangkan LLM seperti koki handal yang meracik masakan (jawaban) berdasarkan resep dan pesanan khusus (prompt) yang Anda berikan.\n\n(Hasil disusun rapi sesuai format: ${rctf.format || 'Poin-poin sederhana'})`
@@ -112,8 +134,9 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
           `[Respon Simulasi ${replica.llmName}]\n\nInstruksi "${userPrompt}" berhasil diproses secara instan!\n\nBerikut adalah respon terstruktur sesuai fitur utama ${replica.llmName}. Eksperimen dengan variasi kata kunci untuk melihat perubahan hasil.`
         );
       }
+    } finally {
       setIsLoading(false);
-    }, 300);
+    }
   };
 
   const handleCopyPrompt = () => {
@@ -455,7 +478,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                     placeholder="Hasil prompt terstruktur..."
                     className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-3 text-xs font-mono text-amber-200 leading-relaxed focus:outline-none focus:border-amber-500 resize-none selection:bg-amber-500 selection:text-slate-950"
                   />
-                  <div className="flex items-center justify-between pt-1">
+                  <div className="flex items-center justify-between gap-2 flex-wrap pt-1">
                     <button
                       onClick={handleCopyPrompt}
                       className="px-3.5 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-lg flex items-center gap-1.5 border border-slate-300 dark:border-slate-700 transition-colors"

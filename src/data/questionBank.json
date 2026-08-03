@@ -1,6 +1,4 @@
-import { QuestionBankDatabase } from '../types';
-
-export const QUESTION_BANK: QuestionBankDatabase = {
+{
   "modules": [
     {
       "moduleId": 1,
@@ -34977,4 +34975,4 @@ export const QUESTION_BANK: QuestionBankDatabase = {
       ]
     }
   ]
-};
+}

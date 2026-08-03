@@ -396,7 +396,7 @@ export const GoogleFlowReplica: React.FC = () => {
         <div className="bg-[#0b0d14] text-slate-800 dark:text-slate-100 rounded-2xl border border-slate-200 dark:border-slate-800/80 overflow-hidden min-h-[640px] flex flex-col font-sans relative">
           
           {/* TOP HEADER BAR */}
-          <div className="bg-[#12151e]/90 border-b border-slate-200 dark:border-slate-800/80 px-3 py-2.5 flex items-center justify-between gap-2 z-20 shrink-0">
+          <div className="bg-[#12151e]/90 border-b border-slate-200 dark:border-slate-800/80 px-3 py-2.5 flex flex-wrap items-center justify-between gap-2 z-20 shrink-0">
             {/* Left: Back & Title */}
             <div className="flex items-center gap-2 shrink-0 flex-wrap max-w-full">
               <button 
@@ -421,7 +421,7 @@ export const GoogleFlowReplica: React.FC = () => {
             </div>
 
             {/* Middle: Search Bar with Filter/View Mode Button */}
-            <div className="flex-1 max-w-md mx-2 min-w-0">
+            <div className="w-full sm:flex-1 sm:max-w-md mx-0 sm:mx-2 mt-2 sm:mt-0 order-last sm:order-none min-w-0">
               <div className="relative flex items-center">
                 <Search className="w-3.5 h-3.5 absolute left-3 text-slate-500 dark:text-slate-400 pointer-events-none" />
                 <input
@@ -720,7 +720,7 @@ export const GoogleFlowReplica: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 
                 {/* Tile 1: Warehouse pallets with boxes (Portrait Video) */}
-                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px]">
+                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px] min-w-0">
                   <img
                     src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80"
                     alt="Warehouse Pallets"
@@ -736,7 +736,7 @@ export const GoogleFlowReplica: React.FC = () => {
                 </div>
 
                 {/* Tile 2: Gabungan Collection Card (City/Monas with Indonesia Flags) */}
-                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px] flex flex-col justify-between p-3">
+                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px] flex flex-col justify-between p-3 min-w-0">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-slate-900/60 to-transparent z-10" />
                   <img
                     src="https://images.unsplash.com/photo-1555899434-94d1368aa7af?auto=format&fit=crop&w=600&q=80"
@@ -769,7 +769,7 @@ export const GoogleFlowReplica: React.FC = () => {
                 </div>
 
                 {/* Tile 3: Captain Maxy in warehouse with boxes */}
-                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px]">
+                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px] min-w-0">
                   <img
                     src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80"
                     alt="Captain Maxy Character"
@@ -785,7 +785,7 @@ export const GoogleFlowReplica: React.FC = () => {
                 </div>
 
                 {/* Tile 4: Captain Maxy in High-Tech Briefing Room */}
-                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px]">
+                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px] min-w-0">
                   <img
                     src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80"
                     alt="Captain Maxy Briefing Room"
@@ -801,7 +801,7 @@ export const GoogleFlowReplica: React.FC = () => {
                 </div>
 
                 {/* Tile 5: Captain Maxy Portrait Close-up */}
-                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px]">
+                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px] min-w-0">
                   <img
                     src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80"
                     alt="Captain Maxy Close-up"
@@ -813,7 +813,7 @@ export const GoogleFlowReplica: React.FC = () => {
                 </div>
 
                 {/* Tile 6: Monas City View */}
-                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px]">
+                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-900 aspect-[9/16] max-h-[260px] sm:max-h-[320px] min-w-0">
                   <img
                     src="https://images.unsplash.com/photo-1555899434-94d1368aa7af?auto=format&fit=crop&w=600&q=80"
                     alt="Monas Landscape"

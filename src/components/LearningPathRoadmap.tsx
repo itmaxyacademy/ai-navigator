@@ -816,20 +816,21 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                       {/* MODULE ZIG-ZAG NODE ITEM */}
                       <div 
                         ref={isCurrent ? activeNodeRef : null}
-                        className="relative flex flex-col items-center group w-full transition-all"
+                        className="flex flex-col group w-full transition-all"
                         style={{
                           alignItems: posX === 50 ? 'center' : posX < 50 ? 'flex-start' : 'flex-end',
                           paddingLeft: posX < 50 ? '10%' : '0',
                           paddingRight: posX > 50 ? '10%' : '0',
                         }}
                       >
-                        {/* NAVIGATOR MASCOT hovering on current node */}
-                        {isCurrent && (
-                          <NavigatorMascot moduleTitle={module.title} />
-                        )}
+                        <div className="relative flex flex-col items-center">
+                          {/* NAVIGATOR MASCOT hovering on current node */}
+                          {isCurrent && (
+                            <NavigatorMascot moduleTitle={module.title} />
+                          )}
 
-                        {/* NODE BUTTON */}
-                        <button
+                          {/* NODE BUTTON */}
+                          <button
                           onClick={() => {
                             if (isFreeTrialLocked) {
                               if (onOpenUpgradeModal) {
@@ -935,6 +936,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                             </span>
                           )}
                         </button>
+                        </div>
                       </div>
 
                       {/* ========================================================== */}

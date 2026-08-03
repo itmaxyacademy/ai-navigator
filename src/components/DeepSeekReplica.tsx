@@ -344,7 +344,7 @@ export const DeepSeekReplica: React.FC = () => {
   const renderSidebarContent = () => (
     <div className="flex flex-col h-full bg-[#18191c] text-slate-600 dark:text-slate-300 select-none border-r border-[#26272c]">
       {/* Top Header: DeepSeek Logo & Controls */}
-      <div className="p-3.5 flex items-center justify-between border-b border-[#26272c]/60">
+      <div className="p-3.5 flex items-center justify-between border-b border-[#26272c]/60 shrink-0">
         <div 
           className="flex items-center gap-2 cursor-pointer group flex-wrap max-w-full"
           onClick={() => openModal('new-chat')}
@@ -386,7 +386,7 @@ export const DeepSeekReplica: React.FC = () => {
       </div>
 
       {/* New Chat Button */}
-      <div className="p-3">
+      <div className="p-3 shrink-0">
         <button
           onClick={() => {
             setMessages([]);
@@ -428,7 +428,7 @@ export const DeepSeekReplica: React.FC = () => {
       </div>
 
       {/* Bottom Profile Bar - Maxy Academy */}
-      <div className="relative p-3 border-t border-[#26272c] bg-[#151619]">
+      <div className="relative p-3 border-t border-[#26272c] bg-[#151619] shrink-0">
         {/* Profile Popup Menu */}
         {isProfileMenuOpen && (
           <div className="absolute bottom-16 left-3 right-3 bg-[#23252b] border border-slate-300 dark:border-slate-700/80 rounded-xl shadow-2xl p-1.5 space-y-0.5 text-xs z-50 animate-in fade-in slide-in-from-bottom-2 duration-150">

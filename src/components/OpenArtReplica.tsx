@@ -303,9 +303,9 @@ export const OpenArtReplica: React.FC = () => {
 
   // Render Top Header Bar (Desktop & Mobile)
   const renderTopNavbar = () => (
-    <div className="h-14 px-3 sm:px-4 bg-[#111216] border-b border-[#22242d] flex items-center justify-between shrink-0 select-none text-xs">
+    <div className={`px-3 sm:px-4 bg-[#111216] border-b border-[#22242d] flex items-center justify-between shrink-0 select-none text-xs ${viewMode === 'mobile' ? 'min-h-[56px] py-2 flex-wrap gap-2' : 'h-14'}`}>
       {/* Left: Brand Logo & Collapse Icon */}
-      <div className="flex items-center gap-2.5 flex-wrap max-w-full">
+      <div className="flex items-center gap-2 min-w-0 overflow-hidden">
         <button
           onClick={() => {
             if (viewMode === 'mobile') {
@@ -314,13 +314,13 @@ export const OpenArtReplica: React.FC = () => {
               setIsSidebarCollapsed(!isSidebarCollapsed);
             }
           }}
-          className="p-1.5 hover:bg-[#1f212a] rounded-lg text-slate-600 dark:text-slate-300 transition-colors"
+          className="p-1.5 hover:bg-[#1f212a] rounded-lg text-slate-600 dark:text-slate-300 transition-colors shrink-0"
           title="Toggle Navigation"
         >
           <Menu className="w-5 h-5" />
         </button>
 
-        <div className="flex items-center gap-1.5 cursor-pointer flex-wrap max-w-full" onClick={() => setActiveTab('home')}>
+        <div className="flex items-center gap-1.5 cursor-pointer shrink-0" onClick={() => setActiveTab('home')}>
           {/* OpenArt Infinity Logo */}
           <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-[#10b981] via-[#06b6d4] to-[#a855f7] flex items-center justify-center text-slate-900 dark:text-white font-extrabold shadow-sm">
             <span className="text-sm leading-none font-bold">∞</span>
@@ -332,28 +332,28 @@ export const OpenArtReplica: React.FC = () => {
         </div>
 
         {/* Workspace Dropdown */}
-        <div className="hidden md:flex items-center gap-2 pl-3 border-l border-[#22242d] flex-wrap max-w-full">
-          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#181a20] hover:bg-[#20232d] border border-[#2a2d39] rounded-lg cursor-pointer transition-colors text-slate-700 dark:text-slate-200 flex-wrap max-w-full">
-            <div className="w-4 h-4 rounded-full bg-purple-600 flex items-center justify-center text-[9px] font-bold text-white">
+        <div className={`${viewMode === 'mobile' ? 'hidden' : 'hidden xl:flex'} items-center gap-2 pl-3 border-l border-[#22242d] truncate`}>
+          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[#181a20] hover:bg-[#20232d] border border-[#2a2d39] rounded-lg cursor-pointer transition-colors text-slate-700 dark:text-slate-200 truncate">
+            <div className="w-4 h-4 rounded-full bg-purple-600 flex items-center justify-center text-[9px] font-bold text-white shrink-0">
               M
             </div>
-            <span className="font-medium break-words whitespace-normal leading-snug max-w-[140px]">Maxy Academy's wor...</span>
-            <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+            <span className="font-medium truncate max-w-[120px]">Maxy Academy's wor...</span>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 shrink-0" />
           </div>
 
           <span className="text-slate-500">•</span>
-          <span className="text-slate-600 dark:text-slate-300 font-medium capitalize">Create • {activeTab}</span>
+          <span className="text-slate-600 dark:text-slate-300 font-medium capitalize whitespace-nowrap">Create • {activeTab}</span>
         </div>
       </div>
 
       {/* Right Navbar Actions */}
-      <div className="flex items-center gap-2 flex-wrap max-w-full">
-        <button className="hidden lg:flex items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white px-2 py-1 rounded-lg hover:bg-[#1c1e26] flex-wrap max-w-full">
+      <div className="flex items-center gap-1.5 shrink-0 pl-1">
+        <button className={`${viewMode === 'mobile' ? 'hidden' : 'hidden lg:flex'} items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white px-2 py-1 rounded-lg hover:bg-[#1c1e26] whitespace-nowrap`}>
           <span>Previous version</span>
           <ExternalLink className="w-3 h-3" />
         </button>
 
-        <button className="hidden sm:flex items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white px-2 py-1 rounded-lg hover:bg-[#1c1e26] flex-wrap max-w-full">
+        <button className={`${viewMode === 'mobile' ? 'hidden' : 'hidden sm:flex'} items-center gap-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white px-2 py-1 rounded-lg hover:bg-[#1c1e26] whitespace-nowrap`}>
           <HelpCircle className="w-3.5 h-3.5" />
           <span>Help</span>
           <ChevronDown className="w-3 h-3" />
@@ -367,20 +367,20 @@ export const OpenArtReplica: React.FC = () => {
         {/* Upgrade Green Button with Diamond */}
         <button
           onClick={() => openInfo('upgrade')}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#10b981] hover:bg-[#059669] text-black font-extrabold text-xs rounded-full shadow-md transition-all flex-wrap max-w-full"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-[#10b981] hover:bg-[#059669] text-black font-extrabold text-xs rounded-full shadow-md transition-all whitespace-nowrap"
         >
           <span className="text-xs">💎 38</span>
           <span className="hidden sm:inline bg-black/20 px-1.5 py-0.5 rounded-full text-[10px]">Upgrade</span>
         </button>
 
         {/* User Profile Avatar */}
-        <div className="flex items-center gap-1 pl-1 cursor-pointer flex-wrap max-w-full">
+        <div className="flex items-center gap-1 pl-1 cursor-pointer">
           <img
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
             alt="Maxy Academy"
-            className="w-7 h-7 rounded-full object-cover border border-purple-500/50"
+            className="w-7 h-7 rounded-full object-cover border border-purple-500/50 shrink-0"
           />
-          <ChevronDown className="w-3 h-3 text-slate-500 dark:text-slate-400" />
+          <ChevronDown className="w-3 h-3 text-slate-500 dark:text-slate-400 shrink-0" />
         </div>
       </div>
     </div>
@@ -1015,9 +1015,9 @@ export const OpenArtReplica: React.FC = () => {
 
   // 1. CREATE IMAGE VIEW (Screenshot 5 & Screenshot 10)
   const renderCreateImagePanel = () => (
-    <div className="flex-1 flex flex-col md:flex-row overflow-hidden bg-[#0d0e12]">
+    <div className="flex-1 flex flex-col overflow-y-auto bg-[#0d0e12]">
       {/* Left Form Column */}
-      <div className="w-full md:w-[420px] bg-[#12141a] border-r border-[#222430] p-4 flex flex-col justify-between overflow-y-auto space-y-4 shrink-0">
+      <div className="w-full bg-[#12141a] border-b border-[#222430] p-4 md:p-6 space-y-4 shrink-0">
         <div className="space-y-4">
           {/* Header Title */}
           <div className="flex items-center justify-between">
@@ -1193,7 +1193,7 @@ export const OpenArtReplica: React.FC = () => {
       </div>
 
       {/* Right Gallery / Inspiration Column */}
-      <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 overflow-y-auto space-y-5 min-w-0">
+      <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 space-y-5 min-w-0">
         {/* Gallery Top Filter Bar */}
         <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pb-2 border-b border-[#1f222d]">
           <div className="flex items-center gap-2 flex-wrap max-w-full">
@@ -1225,11 +1225,15 @@ export const OpenArtReplica: React.FC = () => {
           </div>
 
           {/* Monster Family Illustration Card */}
-          <div className="relative rounded-2xl overflow-hidden border border-purple-500/40 w-full md:w-64 h-36 shrink-0 shadow-2xl">
+          <div className="relative rounded-2xl overflow-hidden border border-purple-500/40 w-full md:w-64 h-36 shrink-0 shadow-2xl bg-purple-950">
             <img
-              src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80"
+              src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80"
               alt="Monster Family"
               className="w-full h-full object-cover"
+              onError={(e) => {
+                // Fallback to stylized gradient if network blocks image
+                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=600&q=80';
+              }}
             />
             <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur px-2 py-0.5 rounded-full text-[10px] font-bold text-pink-300 border border-pink-500/40 flex items-center gap-1 flex-wrap max-w-full">
               <span>Monster family</span>
@@ -1265,9 +1269,9 @@ export const OpenArtReplica: React.FC = () => {
 
   // 2. CREATE VIDEO VIEW (Screenshot 6 & Screenshot 9)
   const renderCreateVideoPanel = () => (
-    <div className="flex-1 flex flex-col md:flex-row overflow-hidden bg-[#0d0e12]">
+    <div className="flex-1 flex flex-col overflow-y-auto bg-[#0d0e12]">
       {/* Left Form Column */}
-      <div className="w-full md:w-[420px] bg-[#12141a] border-r border-[#222430] p-4 flex flex-col justify-between overflow-y-auto space-y-4 shrink-0">
+      <div className="w-full bg-[#12141a] border-b border-[#222430] p-4 md:p-6 space-y-4 shrink-0">
         <div className="space-y-4">
           {/* Header Title */}
           <div className="flex items-center justify-between">
@@ -1405,7 +1409,7 @@ export const OpenArtReplica: React.FC = () => {
       </div>
 
       {/* Right Gallery Column */}
-      <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 overflow-y-auto space-y-5 min-w-0">
+      <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 space-y-5 min-w-0">
         <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pb-2 border-b border-[#1f222d]">
           <div className="flex items-center gap-2 flex-wrap max-w-full">
             <button className="p-1.5 hover:bg-[#1a1d26] rounded-lg text-slate-900 dark:text-white"><LayoutGrid className="w-4 h-4" /></button>
@@ -1472,9 +1476,9 @@ export const OpenArtReplica: React.FC = () => {
 
   // 3. CREATE CHARACTER VIEW (Screenshot 2 & Screenshot 8)
   const renderCreateCharacterPanel = () => (
-    <div className="flex-1 flex flex-col md:flex-row overflow-hidden bg-[#0d0e12]">
+    <div className="flex-1 flex flex-col overflow-y-auto bg-[#0d0e12]">
       {/* Left Column */}
-      <div className="w-full md:w-[420px] bg-[#12141a] border-r border-[#222430] p-4 flex flex-col justify-between overflow-y-auto space-y-4 shrink-0">
+      <div className="w-full bg-[#12141a] border-b border-[#222430] p-4 md:p-6 space-y-4 shrink-0">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 flex-wrap max-w-full">
@@ -1525,7 +1529,7 @@ export const OpenArtReplica: React.FC = () => {
       </div>
 
       {/* Right Templates Grid */}
-      <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 overflow-y-auto space-y-5 min-w-0">
+      <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 space-y-5 min-w-0">
         <div className="p-6 rounded-3xl bg-gradient-to-r from-emerald-950/60 via-purple-950/40 to-indigo-950/60 border border-emerald-800/40 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="space-y-2 text-left">
             <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
@@ -1563,9 +1567,9 @@ export const OpenArtReplica: React.FC = () => {
 
   // 4. CREATE WORLD VIEW (Screenshot 3 & Screenshot 7)
   const renderCreateWorldPanel = () => (
-    <div className="flex-1 flex flex-col md:flex-row overflow-hidden bg-[#0d0e12]">
+    <div className="flex-1 flex flex-col overflow-y-auto bg-[#0d0e12]">
       {/* Left Column */}
-      <div className="w-full md:w-[420px] bg-[#12141a] border-r border-[#222430] p-4 flex flex-col justify-between overflow-y-auto space-y-4 shrink-0">
+      <div className="w-full bg-[#12141a] border-b border-[#222430] p-4 md:p-6 space-y-4 shrink-0">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 flex-wrap max-w-full">
@@ -1612,7 +1616,7 @@ export const OpenArtReplica: React.FC = () => {
       </div>
 
       {/* Right Gallery */}
-      <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 overflow-y-auto space-y-5 min-w-0">
+      <div className="flex-1 bg-[#0d0e12] p-4 md:p-6 space-y-5 min-w-0">
         <div className="p-6 rounded-3xl bg-gradient-to-r from-amber-950/60 via-purple-950/40 to-cyan-950/60 border border-amber-800/40 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="space-y-2 text-left">
             <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
@@ -1648,9 +1652,9 @@ export const OpenArtReplica: React.FC = () => {
 
   // 5. CREATE AUDIO VIEW (Screenshot 1 & Screenshot 7)
   const renderCreateAudioPanel = () => (
-    <div className="flex-1 flex flex-col md:flex-row overflow-hidden bg-[#0d0e12]">
+    <div className="flex-1 flex flex-col overflow-y-auto bg-[#0d0e12]">
       {/* Left Form */}
-      <div className="w-full md:w-[420px] bg-[#12141a] border-r border-[#222430] p-4 flex flex-col justify-between overflow-y-auto space-y-4 shrink-0">
+      <div className="w-full bg-[#12141a] border-b border-[#222430] p-4 md:p-6 space-y-4 shrink-0">
         <div className="space-y-4 text-left">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 flex-wrap max-w-full">
@@ -1749,7 +1753,7 @@ export const OpenArtReplica: React.FC = () => {
       </div>
 
       {/* Right Panel: Empty Folder State (Screenshot 1 & Screenshot 7) */}
-      <div className="flex-1 bg-[#0d0e12] p-6 flex flex-col items-center justify-center text-center space-y-4">
+      <div className="flex-1 bg-[#0d0e12] p-6 flex flex-col items-center justify-center text-center space-y-4 min-w-0">
         <div className="w-20 h-20 rounded-3xl bg-pink-950/40 border border-pink-500/30 flex items-center justify-center text-pink-400 shadow-xl">
           <Folder className="w-10 h-10" />
         </div>

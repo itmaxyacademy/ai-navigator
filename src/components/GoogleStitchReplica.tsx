@@ -45,7 +45,7 @@ export const GoogleStitchReplica: React.FC = () => {
   const [isThemeDropdownOpen, setIsThemeDropdownOpen] = useState(false);
   const [selectedModel, setSelectedModel] = useState('3 Flash');
   const [selectedTheme, setSelectedTheme] = useState('Amber (#ffb034)');
-  const [isAgentLogOpen, setIsAgentLogOpen] = useState(true);
+  const [isAgentLogOpen, setIsAgentLogOpen] = useState(false);
   const [activeTool, setActiveTool] = useState<string>('pointer');
   const [zoomLevel, setZoomLevel] = useState(24);
   const [promptInput, setPromptInput] = useState('');
@@ -114,12 +114,12 @@ export const GoogleStitchReplica: React.FC = () => {
     <div className="relative w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#121316] text-slate-800 dark:text-slate-100 overflow-hidden shadow-2xl flex flex-col min-h-[680px]">
 
       {/* Simulator Device View Mode Switcher Header Bar */}
-      <div className="bg-[#0b0c0e] border-b border-slate-200 dark:border-slate-800 px-3 sm:px-4 py-2 flex items-center justify-between z-40 shrink-0">
+      <div className="bg-[#0b0c0e] border-b border-slate-200 dark:border-slate-800 px-3 sm:px-4 py-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 z-40 shrink-0">
         <div className="flex items-center gap-2 flex-wrap max-w-full">
-          <Sparkles className="w-4 h-4 text-cyan-400" />
-          <span className="text-xs font-bold text-slate-600 dark:text-slate-300">Mode Tampilan Google Stitch Simulator:</span>
+          <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" />
+          <span className="text-xs font-bold text-slate-600 dark:text-slate-300 leading-tight">Mode Tampilan Google Stitch Simulator:</span>
         </div>
-        <div className="flex items-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-1 gap-1">
+        <div className="flex items-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-1 gap-1 shrink-0">
           <button
             onClick={() => setDeviceMode('desktop')}
             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-md transition-all ${
@@ -127,7 +127,7 @@ export const GoogleStitchReplica: React.FC = () => {
             }`}
           >
             <Laptop className="w-3.5 h-3.5" />
-            <span>Desktop View</span>
+            <span>Desktop</span>
           </button>
           <button
             onClick={() => setDeviceMode('mobile')}
@@ -136,12 +136,12 @@ export const GoogleStitchReplica: React.FC = () => {
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
-            <span>Mobile View</span>
+            <span>Mobile</span>
           </button>
         </div>
       </div>
       {/* Top Header Navigation Bar */}
-      <div className="h-14 border-b border-slate-200 dark:border-slate-800/80 bg-[#181a20]/90 backdrop-blur-md px-3 sm:px-4 flex items-center justify-between shrink-0 z-30">
+      <div className="min-h-[56px] py-2 border-b border-slate-200 dark:border-slate-800/80 bg-[#181a20]/90 backdrop-blur-md px-3 sm:px-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 shrink-0 z-30">
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 max-w-full">
           <button 
             onClick={() => explainFeature('Side Navigation Menu', 'Header Control', 'Membuka menu navigasi utama Google Stitch, daftar proyek kanvas Maxy Academy, template, dan pengaturan akun.')}
@@ -223,21 +223,23 @@ export const GoogleStitchReplica: React.FC = () => {
         {/* Floating Agent Log Sidebar (Desktop Mode or Collapsible Sheet on Mobile) */}
         <div className={`z-20 transition-all duration-300 ${
           deviceMode === 'mobile' 
-            ? `absolute inset-x-2 bottom-20 max-h-[380px] bg-[#1a1d24]/95 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl p-4 overflow-y-auto ${isAgentLogOpen ? 'block' : 'hidden'}`
-            : `w-80 border-r border-slate-200 dark:border-slate-800/80 bg-[#16181e]/90 backdrop-blur-md flex flex-col justify-between shrink-0 p-4 ${isAgentLogOpen ? 'block' : 'w-12 bg-[#16181e]'}`
+            ? `absolute left-2 right-14 sm:right-20 bottom-20 bg-[#1a1d24]/95 border border-slate-300 dark:border-slate-700 rounded-2xl shadow-2xl overflow-hidden flex flex-col ${isAgentLogOpen ? 'max-h-[380px] p-4' : 'max-h-12 p-2 px-4'}`
+            : `border-r border-slate-200 dark:border-slate-800/80 bg-[#16181e]/90 backdrop-blur-md flex flex-col justify-between shrink-0 transition-all overflow-hidden ${isAgentLogOpen ? 'w-80 p-4' : 'w-14 py-4 px-2 items-center'}`
         }`}>
           {/* Agent Log Header */}
-          <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
-            <div className="flex items-center gap-2 flex-wrap max-w-full">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Agent Log</span>
+          <div className={`flex items-center justify-between pb-3 ${isAgentLogOpen ? 'border-b border-slate-200 dark:border-slate-800' : ''}`}>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shrink-0" />
+              {isAgentLogOpen && (
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 whitespace-nowrap">Agent Log</span>
+              )}
             </div>
             <button
               onClick={() => {
                 setIsAgentLogOpen(!isAgentLogOpen);
                 explainFeature('Toggle Agent Log Panel', 'Sidebar Control', 'Menampilkan atau menyembunyikan panel riwayat instruksi agen AI.');
               }}
-              className="p-1 hover:bg-slate-100 dark:bg-slate-800 rounded text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white"
+              className="p-1.5 hover:bg-slate-100 dark:bg-slate-800 rounded text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white shrink-0"
             >
               {isAgentLogOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
             </button>
@@ -297,33 +299,35 @@ export const GoogleStitchReplica: React.FC = () => {
           )}
 
           {/* Bottom Agent Log Collapsible Bar */}
-          <div 
-            onClick={() => {
-              setIsAgentLogOpen(!isAgentLogOpen);
-              explainFeature('Agent Log Status Bar', 'System Log', 'Status pengawasan agen AI Stitch yang sedang memantau kanvas secara real-time.');
-            }}
-            className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 text-xs"
-          >
-            <div className="flex items-center gap-2 flex-wrap max-w-full">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-              <span className="font-medium">Agent log v2.4</span>
+          {isAgentLogOpen && (
+            <div 
+              onClick={() => {
+                setIsAgentLogOpen(false);
+                explainFeature('Agent Log Status Bar', 'System Log', 'Status pengawasan agen AI Stitch yang sedang memantau kanvas secara real-time.');
+              }}
+              className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 text-xs shrink-0"
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="font-medium whitespace-nowrap">Agent log v2.4</span>
+              </div>
+              <ChevronUp className="w-3.5 h-3.5" />
             </div>
-            <ChevronUp className={`w-3.5 h-3.5 transition-transform ${isAgentLogOpen ? '' : 'rotate-180'}`} />
-          </div>
+          )}
         </div>
 
         {/* Center Visual Infinite Canvas Workspace */}
-        <div className="flex-1 relative overflow-auto p-4 sm:p-8 flex items-center justify-center z-10 min-w-0">
+        <div className="flex-1 relative overflow-auto p-4 sm:p-8 z-10 min-w-0">
           
           {/* Render Artboards Grid on Canvas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto my-auto py-6">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 sm:gap-8 max-w-6xl mx-auto py-6">
 
             {/* ARTBOARD 1: Kinetic Academy Design Tokens */}
             <div 
               onClick={() => explainFeature('Artboard: Kinetic Academy Theme Tokens', 'Design System', 'Papan acuan sistem desain yang memuat variasi warna primer (#6366f1, #00b6d4, #f59e0b) dan elemen tipografi Aa.')}
-              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-cyan-500/80 transition-all cursor-pointer group hover:scale-[1.01]"
+              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-cyan-500/80 transition-all cursor-pointer group hover:scale-[1.01] min-w-[260px]"
             >
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3 flex-wrap max-w-full">
+              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3">
                 <LayoutGrid className="w-4 h-4 text-indigo-400" />
                 <span className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-cyan-300">Kinetic Academy Tokens</span>
               </div>
@@ -351,15 +355,15 @@ export const GoogleStitchReplica: React.FC = () => {
             {/* ARTBOARD 2: Maxy Warriors Mobile App - Main Dashboard */}
             <div 
               onClick={() => explainFeature('Artboard: Maxy Warriors Mobile Dashboard', 'Mobile Screen', 'Tampilan layar utama aplikasi presisi Maxy Academy dengan status Offline, tombol Check In, acara mendatang, dan berita.')}
-              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-cyan-500/80 transition-all cursor-pointer group hover:scale-[1.01]"
+              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-cyan-500/80 transition-all cursor-pointer group hover:scale-[1.01] min-w-[260px]"
             >
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3 flex-wrap max-w-full">
+              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3">
                 <Smartphone className="w-4 h-4 text-cyan-400" />
                 <span className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-cyan-300">Maxy Warriors Attendance</span>
               </div>
               <div className="bg-slate-100 dark:bg-slate-950 rounded-xl p-3 border border-slate-200 dark:border-slate-800 space-y-2.5 text-xs">
                 <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
-                  <div className="flex items-center gap-1.5 flex-wrap max-w-full">
+                  <div className="flex items-center gap-1.5">
                     <div className="w-6 h-6 rounded-full bg-cyan-600 text-slate-900 dark:text-white font-bold flex items-center justify-center text-[10px]">M</div>
                     <span className="font-bold text-slate-700 dark:text-slate-200 text-[11px]">Maxy Warriors</span>
                   </div>
@@ -390,9 +394,9 @@ export const GoogleStitchReplica: React.FC = () => {
             {/* ARTBOARD 3: Kinetic Academy Gold Variant */}
             <div 
               onClick={() => explainFeature('Artboard: Kinetic Academy Gold Theme (#ffb034)', 'Design Theme', 'Variansi sistem warna Amber Gold yang diminta pengguna untuk branding tim Maxy Warriors.')}
-              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-amber-500/80 transition-all cursor-pointer group hover:scale-[1.01]"
+              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-amber-500/80 transition-all cursor-pointer group hover:scale-[1.01] min-w-[260px]"
             >
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3 flex-wrap max-w-full">
+              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3">
                 <Palette className="w-4 h-4 text-amber-400" />
                 <span className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-amber-300">Kinetic Gold Variant</span>
               </div>
@@ -415,9 +419,9 @@ export const GoogleStitchReplica: React.FC = () => {
             {/* ARTBOARD 4: Attendance Map Screen */}
             <div 
               onClick={() => explainFeature('Artboard: Attendance Map & Geo-fence', 'Mobile Screen', 'Layar presisi dengan fitur Peta Geo-fence "Home Office (Geo-fence active)" dan pencatatan jam harian.')}
-              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-cyan-500/80 transition-all cursor-pointer group hover:scale-[1.01]"
+              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-cyan-500/80 transition-all cursor-pointer group hover:scale-[1.01] min-w-[260px]"
             >
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3 flex-wrap max-w-full">
+              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3">
                 <MapPin className="w-4 h-4 text-emerald-400" />
                 <span className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-cyan-300">Attendance Map View</span>
               </div>
@@ -428,7 +432,7 @@ export const GoogleStitchReplica: React.FC = () => {
                   <button className="py-1 bg-emerald-600 text-white rounded font-bold text-[10px]">➜ Check In</button>
                   <button className="py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded text-[10px]">Check Out</button>
                 </div>
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 flex items-center gap-2 flex-wrap max-w-full">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 flex items-center gap-2">
                   <Globe className="w-4 h-4 text-cyan-400 shrink-0" />
                   <div>
                     <p className="font-bold text-[10px] text-slate-700 dark:text-slate-200">Home Office (Geo-fence active)</p>
@@ -441,9 +445,9 @@ export const GoogleStitchReplica: React.FC = () => {
             {/* ARTBOARD 5: Warrior Profile View */}
             <div 
               onClick={() => explainFeature('Artboard: Warrior Profile', 'Mobile Screen', 'Halaman profil terpusat rincian staf Alex Mercer (MENTOR), ID Karyawan MAXY-8842-WAR, dan preferensi kerja.')}
-              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-cyan-500/80 transition-all cursor-pointer group hover:scale-[1.01]"
+              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-cyan-500/80 transition-all cursor-pointer group hover:scale-[1.01] min-w-[260px]"
             >
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3 flex-wrap max-w-full">
+              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3">
                 <User className="w-4 h-4 text-purple-400" />
                 <span className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-cyan-300">Warrior Profile</span>
               </div>
@@ -464,9 +468,9 @@ export const GoogleStitchReplica: React.FC = () => {
             {/* ARTBOARD 6: Warrior Login Screen */}
             <div 
               onClick={() => explainFeature('Artboard: Warrior Login Screen', 'Mobile Screen', 'Layar otentikasi login masuk yang aman untuk staf, mentor, dan peserta magang Maxy Academy.')}
-              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-cyan-500/80 transition-all cursor-pointer group hover:scale-[1.01]"
+              className="bg-[#1e222d] rounded-2xl border border-slate-300 dark:border-slate-700/80 p-4 shadow-xl hover:border-cyan-500/80 transition-all cursor-pointer group hover:scale-[1.01] min-w-[260px]"
             >
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3 flex-wrap max-w-full">
+              <div className="flex items-center gap-2 pb-3 border-b border-slate-300 dark:border-slate-700/60 mb-3">
                 <Lock className="w-4 h-4 text-rose-400" />
                 <span className="text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:text-cyan-300">Warrior Authentication</span>
               </div>
@@ -551,31 +555,31 @@ export const GoogleStitchReplica: React.FC = () => {
           </button>
         </div>
 
-        {/* Quick Suggestion Pills Floating Above Prompt Bar */}
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-20 z-20 flex flex-wrap justify-center gap-2 max-w-xl px-2">
-          <button
-            onClick={() => {
-              setPromptInput('Add an attendance history log to the attendance screen with filter dates...');
-              explainFeature('Suggestion Pill 1', 'Quick Prompt', 'Menyisipkan perintah cepat untuk menambahkan log riwayat presisi.');
-            }}
-            className="bg-white dark:bg-[#0d1322] hover:bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700/80 hover:border-cyan-500/80 rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 shadow-lg backdrop-blur-md transition-all flex-wrap max-w-full"
-          >
-            <span>Add an attendance history log to the...</span>
-            <span className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-cyan-400 flex items-center justify-center">1</span>
-          </button>
+      </div>
 
-          <button
-            onClick={() => {
-              setPromptInput('Create a detailed view for a single warrior profile with stats...');
-              explainFeature('Suggestion Pill 2', 'Quick Prompt', 'Menyisipkan perintah cepat untuk membuat rincian detail profil anggota.');
-            }}
-            className="bg-white dark:bg-[#0d1322] hover:bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700/80 hover:border-cyan-500/80 rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 shadow-lg backdrop-blur-md transition-all flex-wrap max-w-full"
-          >
-            <span>Create a detailed view for a single n...</span>
-            <span className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-cyan-400 flex items-center justify-center">2</span>
-          </button>
-        </div>
+      {/* Quick Suggestion Pills Floating Above Prompt Bar */}
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-[104px] z-40 flex flex-wrap justify-center gap-2 max-w-xl px-2 w-full pointer-events-none">
+        <button
+          onClick={() => {
+            setPromptInput('Add an attendance history log to the attendance screen with filter dates...');
+            explainFeature('Suggestion Pill 1', 'Quick Prompt', 'Menyisipkan perintah cepat untuk menambahkan log riwayat presisi.');
+          }}
+          className="pointer-events-auto bg-white dark:bg-[#0d1322] hover:bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700/80 hover:border-cyan-500/80 rounded-full px-3 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 shadow-lg backdrop-blur-md transition-all flex-wrap max-w-full"
+        >
+          <span>Add an attendance history log to the...</span>
+          <span className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-cyan-400 flex items-center justify-center">1</span>
+        </button>
 
+        <button
+          onClick={() => {
+            setPromptInput('Create a detailed view for a single warrior profile with stats...');
+            explainFeature('Suggestion Pill 2', 'Quick Prompt', 'Menyisipkan perintah cepat untuk membuat rincian detail profil anggota.');
+          }}
+          className="pointer-events-auto bg-white dark:bg-[#0d1322] hover:bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700/80 hover:border-cyan-500/80 rounded-full px-3 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white flex items-center gap-1.5 shadow-lg backdrop-blur-md transition-all flex-wrap max-w-full"
+        >
+          <span>Create a detailed view for a single n...</span>
+          <span className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-cyan-400 flex items-center justify-center">2</span>
+        </button>
       </div>
 
       {/* Bottom Interactive Prompt & Action Bar */}

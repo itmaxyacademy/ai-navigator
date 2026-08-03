@@ -521,384 +521,230 @@ export const TrebloReplica: React.FC = () => {
             </div>
           )}
 
-          {/* Main Workspace Layout */}
-          <div className="flex-1 flex overflow-hidden relative min-w-0">
-            {/* LEFT SIDEBAR */}
-            <aside className="w-56 bg-[#141012] border-r border-slate-200 dark:border-slate-800/80 flex flex-col shrink-0 hidden md:flex">
-              {/* Logo & Collapse Header */}
-              <div className="p-4 border-b border-slate-200 dark:border-slate-800/60 flex items-center justify-between">
+          {/* Main Workspace Layout (Unified 1-Column Vertical Container) */}
+          <div className="flex-1 flex flex-col overflow-y-auto bg-[#0e0c0d] relative">
+            {/* Top Workspace Navbar Header */}
+            <header className="border-b border-slate-200 dark:border-slate-800/80 px-4 md:px-6 py-3 flex flex-wrap items-center justify-between gap-3 shrink-0 bg-[#120f11] sticky top-0 z-30 shadow-md">
+              <div className="flex items-center space-x-4">
                 <div 
                   onClick={() => setStage('landing')}
                   className="flex items-center space-x-2 cursor-pointer group"
                   title="Kembali ke Landing Page"
                 >
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-rose-600 to-pink-500 flex items-center justify-center">
-                    <Music className="w-4 h-4 text-slate-900 dark:text-white" />
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-600 to-pink-500 flex items-center justify-center shadow-md">
+                    <Music className="w-4.5 h-4.5 text-slate-900 dark:text-white" />
                   </div>
-                  <span className="font-extrabold text-base tracking-wider text-slate-900 dark:text-white group-hover:text-rose-400 transition-colors">Treblo</span>
-                </div>
-                <button 
-                  onClick={() => showToastMsg('Sidebar collapsed')}
-                  className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 p-1 rounded-md hover:bg-slate-100 dark:bg-slate-800"
-                >
-                  <ChevronDown className="w-4 h-4 rotate-90" />
-                </button>
-              </div>
-
-              {/* Main Nav Items */}
-              <div className="p-3 space-y-1 text-xs font-medium border-b border-slate-200 dark:border-slate-800/60">
-                <button 
-                  onClick={() => setStage('landing')}
-                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/50 transition-colors"
-                >
-                  <Home className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                  <span>Home</span>
-                </button>
-
-                <button 
-                  onClick={() => showToastMsg('Membuka fitur Search')}
-                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/50 transition-colors"
-                >
-                  <Search className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                  <span>Search</span>
-                </button>
-
-                <button 
-                  onClick={() => showToastMsg('Membuka form Feedback')}
-                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/50 transition-colors"
-                >
-                  <MessageSquare className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                  <span>Feedback</span>
-                </button>
-
-                {/* Radio Menu with Listener Badge */}
-                <button 
-                  onClick={() => showToastMsg('Radio Streaming Treblo: 26 Pendengar Aktif')}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/50 transition-colors"
-                >
-                  <div className="flex items-center space-x-3">
-                    <Radio className="w-4 h-4 text-rose-400 animate-pulse" />
-                    <span>Radio</span>
-                  </div>
-                  <span className="bg-rose-950 text-rose-300 font-bold px-1.5 py-0.5 rounded text-[10px]">
-                    26
-                  </span>
-                </button>
-
-                {/* Active Create Menu */}
-                <button 
-                  className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg bg-rose-950/80 border border-rose-800/50 text-rose-300 font-bold shadow-sm"
-                >
-                  <Sparkles className="w-4 h-4 text-rose-400" />
-                  <span>Create</span>
-                </button>
-              </div>
-
-              {/* Your Library Section */}
-              <div className="flex-1 p-3 overflow-y-auto space-y-3 min-w-0">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400">
-                  <span>Your Library</span>
-                  <button 
-                    onClick={() => showToastMsg('Playlist baru ditambahkan!')}
-                    className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white flex items-center space-x-1 text-[11px] bg-slate-100 dark:bg-slate-800/60 px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700"
-                  >
-                    <span>+ Playlist</span>
-                  </button>
+                  <span className="font-extrabold text-lg tracking-wider text-slate-900 dark:text-white group-hover:text-rose-400 transition-colors">Treblo</span>
                 </div>
 
-                <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
-                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 flex items-center justify-between text-slate-600 dark:text-slate-300">
-                    <span className="font-semibold text-slate-700 dark:text-slate-200">My Music</span>
-                    <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-                  </div>
+                <div className="h-4 w-[1px] bg-slate-800 hidden sm:block"></div>
 
-                  <div className="flex items-center space-x-2 pt-1">
-                    <button 
-                      onClick={() => {
-                        setIsPlaying(!isPlaying);
-                        showToastMsg(isPlaying ? 'Playback di-pause' : 'Memutar semua koleksi');
-                      }}
-                      className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-md font-medium flex items-center justify-center space-x-1 min-w-0"
-                    >
-                      <Play className="w-3 h-3 fill-current text-rose-400" />
-                      <span>Play</span>
-                    </button>
-                    <button 
-                      onClick={() => showToastMsg('Shuffle koleksi lagu')}
-                      className="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs py-1.5 rounded-md font-medium flex items-center justify-center space-x-1 min-w-0"
-                    >
-                      <Disc className="w-3 h-3 text-slate-500 dark:text-slate-400" />
-                      <span>Shuffle</span>
-                    </button>
-                  </div>
-
-                  <div className="relative pt-1">
+                {/* Project Title (Editable) */}
+                <div className="flex items-center space-x-1.5">
+                  {isEditingTitle ? (
                     <input
                       type="text"
-                      placeholder="Search..."
-                      className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md py-1 px-2 pl-7 text-[11px] text-slate-700 dark:text-slate-200 placeholder-slate-500 focus:outline-none"
+                      value={projectTitle}
+                      onChange={(e) => setProjectTitle(e.target.value)}
+                      onBlur={() => setIsEditingTitle(false)}
+                      onKeyDown={(e) => e.key === 'Enter' && setIsEditingTitle(false)}
+                      autoFocus
+                      className="bg-white dark:bg-slate-900 text-rose-300 text-xs font-bold px-2 py-0.5 rounded border border-rose-500 focus:outline-none"
                     />
-                    <Search className="w-3 h-3 text-slate-500 absolute left-2 top-2.5" />
-                  </div>
-
-                  <div className="space-y-1 pt-2 border-t border-slate-200 dark:border-slate-800/60">
-                    <button 
-                      onClick={() => showToastMsg('Membuka profil Maxy Academy')}
-                      className="w-full flex items-center space-x-2.5 px-2 py-1.5 rounded-md text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/40 text-xs"
+                  ) : (
+                    <span 
+                      onClick={() => setIsEditingTitle(true)}
+                      className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 cursor-pointer hover:text-rose-400 flex items-center space-x-1"
+                      title="Klik untuk ubah judul proyek"
                     >
-                      <User className="w-3.5 h-3.5 text-rose-400" />
-                      <span>Your Profile</span>
-                    </button>
-                    <button 
-                      onClick={() => {
-                        setShowLikedOnly(!showLikedOnly);
-                        showToastMsg(showLikedOnly ? 'Menampilkan semua lagu' : 'Menampilkan Liked Songs');
-                      }}
-                      className={`w-full flex items-center space-x-2.5 px-2 py-1.5 rounded-md text-xs transition-colors ${showLikedOnly ? 'bg-rose-950/80 text-rose-300 font-bold' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800/40'}`}
-                    >
-                      <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
-                      <span>Liked Songs</span>
-                    </button>
-                  </div>
+                      <span>{projectTitle}</span>
+                      <Edit2 className="w-3 h-3 text-slate-500" />
+                    </span>
+                  )}
                 </div>
               </div>
 
-              {/* Social Icons & Footer Links */}
-              <div className="p-3 border-t border-slate-200 dark:border-slate-800/60 text-[11px] text-slate-500 space-y-2">
-                <div className="flex items-center space-x-3 text-slate-500 dark:text-slate-400">
-                  <button onClick={() => showToastMsg('Discord Maxy Community')} title="Discord"><MessageSquare className="w-3.5 h-3.5 hover:text-rose-400" /></button>
-                  <button onClick={() => showToastMsg('X (Twitter)')} title="Twitter"><Globe className="w-3.5 h-3.5 hover:text-rose-400" /></button>
-                  <button onClick={() => showToastMsg('Dokumentasi API Treblo')} title="API Docs"><FileText className="w-3.5 h-3.5 hover:text-rose-400" /></button>
-                </div>
-                <div className="flex flex-wrap gap-x-2 gap-y-1 text-[10px] text-slate-500">
-                  <a href="#terms" onClick={(e) => e.preventDefault()} className="hover:underline">Terms</a>
-                  <span>•</span>
-                  <a href="#privacy" onClick={(e) => e.preventDefault()} className="hover:underline">Privacy</a>
-                  <span>•</span>
-                  <a href="#api" onClick={(e) => e.preventDefault()} className="hover:underline">API</a>
-                  <span>•</span>
-                  <a href="#faq" onClick={(e) => e.preventDefault()} className="hover:underline">FAQ</a>
+              {/* Navigation quick links in top bar */}
+              <div className="flex items-center space-x-2 text-xs font-medium">
+                <button 
+                  onClick={() => setStage('landing')}
+                  className="px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors flex items-center space-x-1.5"
+                >
+                  <Home className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Home</span>
+                </button>
+                <button 
+                  onClick={() => showToastMsg('Radio Streaming Treblo: 26 Pendengar')}
+                  className="px-2.5 py-1.5 rounded-lg text-rose-300 bg-rose-950/60 border border-rose-800/40 flex items-center space-x-1.5"
+                >
+                  <Radio className="w-3.5 h-3.5 text-rose-400 animate-pulse" />
+                  <span>Radio <span className="font-bold text-[10px] bg-rose-600 text-white px-1 rounded">26</span></span>
+                </button>
+                <button 
+                  onClick={() => showToastMsg('Notifikasi sistem')} 
+                  className="p-2 text-slate-400 hover:text-white relative bg-slate-900 rounded-lg border border-slate-800"
+                >
+                  <Bell className="w-4 h-4" />
+                  <span className="w-1.5 h-1.5 bg-rose-500 rounded-full absolute top-1 right-1"></span>
+                </button>
+                <div 
+                  onClick={() => showToastMsg('Profil Pengguna: Maxy Academy')}
+                  className="w-8 h-8 rounded-full bg-rose-950 border border-rose-700 flex items-center justify-center text-rose-300 font-bold text-xs cursor-pointer hover:scale-105 transition-transform"
+                >
+                  M
                 </div>
               </div>
-            </aside>
+            </header>
 
-            {/* MAIN CONTENT AREA */}
-            <main className="flex-1 flex flex-col overflow-hidden bg-[#0e0c0d]">
-              {/* Workspace Header */}
-              <header className="h-12 border-b border-slate-200 dark:border-slate-800/80 px-4 flex items-center justify-between shrink-0 bg-[#120f11]">
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-1 text-slate-500 dark:text-slate-400">
-                    <button 
-                      onClick={() => setStage('landing')}
-                      className="p-1 hover:bg-slate-100 dark:bg-slate-800 rounded text-slate-600 dark:text-slate-300"
-                      title="Kembali"
-                    >
-                      &lt;
-                    </button>
-                    <button className="p-1 hover:bg-slate-100 dark:bg-slate-800 rounded text-slate-500 opacity-50" disabled>&gt;</button>
+            {/* Main Single Column Workspace Container (Top-to-Bottom Stack) */}
+            <main className="flex-1 p-4 md:p-6 space-y-6 max-w-5xl mx-auto w-full">
+              
+              {/* CARD 1: FORM GENERATOR LAGU */}
+              <div className="bg-[#110e10] border border-slate-200 dark:border-slate-800/80 rounded-2xl p-5 space-y-4 shadow-xl">
+                {/* Model Notice Box */}
+                <div className="bg-amber-950/40 border border-amber-800/60 rounded-xl p-3 text-xs text-amber-200/90 flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center space-x-2 font-bold text-amber-300">
+                    <Info className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>v3 Preview</span>
+                    <span className="text-[11px] font-normal text-amber-200/80">
+                      — Engine v3 saat ini dalam versi pratinjau.
+                    </span>
                   </div>
 
-                  {/* Project Title (Editable) */}
-                  <div className="flex items-center space-x-1.5">
-                    {isEditingTitle ? (
-                      <input
-                        type="text"
-                        value={projectTitle}
-                        onChange={(e) => setProjectTitle(e.target.value)}
-                        onBlur={() => setIsEditingTitle(false)}
-                        onKeyDown={(e) => e.key === 'Enter' && setIsEditingTitle(false)}
-                        autoFocus
-                        className="bg-white dark:bg-slate-900 text-rose-300 text-xs font-bold px-2 py-0.5 rounded border border-rose-500 focus:outline-none"
-                      />
-                    ) : (
-                      <span 
-                        onClick={() => setIsEditingTitle(true)}
-                        className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 cursor-pointer hover:text-rose-400 flex items-center space-x-1"
-                        title="Klik untuk ubah judul proyek"
-                      >
-                        <span>{projectTitle}</span>
-                        <Edit2 className="w-3 h-3 text-slate-500" />
-                      </span>
-                    )}
+                  <div className="flex items-center space-x-2 text-xs">
+                    <span className="text-slate-400 text-[11px]">Pilih Model:</span>
+                    <select
+                      value={selectedModel}
+                      onChange={(e) => setSelectedModel(e.target.value)}
+                      className="bg-slate-900 border border-slate-700 text-rose-300 font-semibold px-2 py-1 rounded-lg text-xs focus:outline-none"
+                    >
+                      <option value="v3">v3 Engine (Rekomendasi)</option>
+                      <option value="v2">v2 Legacy</option>
+                    </select>
                   </div>
                 </div>
 
-                {/* Right Header Icons */}
-                <div className="flex items-center space-x-3">
-                  <button onClick={() => showToastMsg('Notifikasi sistem')} className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 relative">
-                    <Bell className="w-4 h-4" />
-                    <span className="w-1.5 h-1.5 bg-rose-500 rounded-full absolute -top-0.5 -right-0.5"></span>
-                  </button>
+                {/* Mode Tabs (Simple / Advanced) */}
+                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                  <div className="bg-slate-900 p-1 rounded-xl flex items-center border border-slate-800 text-xs font-medium">
+                    <button
+                      onClick={() => setActiveTab('simple')}
+                      className={`px-4 py-1.5 rounded-lg transition-colors ${activeTab === 'simple' ? 'bg-rose-600 text-white font-bold shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                    >
+                      Simple
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('advanced')}
+                      className={`px-4 py-1.5 rounded-lg transition-colors ${activeTab === 'advanced' ? 'bg-rose-600 text-white font-bold shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                    >
+                      Advanced (Lanjutan)
+                    </button>
+                  </div>
 
-                  <div 
-                    onClick={() => showToastMsg('Profil Pengguna: Maxy Academy')}
-                    className="w-7 h-7 rounded-full bg-rose-950 border border-rose-700/80 flex items-center justify-center text-rose-300 font-bold text-xs cursor-pointer"
+                  <button 
+                    onClick={() => {
+                      setWorkspacePrompt('');
+                      setCustomLyricsInput('');
+                      setCustomStyle('');
+                      setCustomTitleInput('');
+                      showToastMsg('Form berhasil di-reset');
+                    }}
+                    className="text-xs text-slate-400 hover:text-rose-400 flex items-center space-x-1 px-2.5 py-1 bg-slate-900 border border-slate-800 rounded-lg"
+                    title="Reset Form"
                   >
-                    M
-                  </div>
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Reset</span>
+                  </button>
                 </div>
-              </header>
 
-              {/* Mobile View Switcher Tab Bar */}
-              <div className="flex md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-500 dark:text-slate-400">
-                <button 
-                  onClick={() => setMobileTab('editor')}
-                  className={`flex-1 py-2 text-center border-b-2 ${mobileTab === 'editor' ? 'border-rose-500 text-rose-400' : 'border-transparent'}`}
-                >
-                  Generate
-                </button>
-                <button 
-                  onClick={() => setMobileTab('list')}
-                  className={`flex-1 py-2 text-center border-b-2 ${mobileTab === 'list' ? 'border-rose-500 text-rose-400' : 'border-transparent'}`}
-                >
-                  Daftar Lagu ({songs.length})
-                </button>
-                <button 
-                  onClick={() => setMobileTab('detail')}
-                  className={`flex-1 py-2 text-center border-b-2 ${mobileTab === 'detail' ? 'border-rose-500 text-rose-400' : 'border-transparent'}`}
-                >
-                  Detail Lirik
-                </button>
-              </div>
-
-              {/* Responsive 3-Panel Grid Workspace */}
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-w-0">
-                {/* PANEL TENGAH: AREA GENERATE (Cols 1-3 on Desktop) */}
-                <div className={`md:col-span-4 xl:col-span-3 border-r border-slate-200 dark:border-slate-800/80 p-4 overflow-y-auto flex flex-col space-y-4 bg-[#110e10] ${mobileTab === 'editor' ? 'block' : 'hidden md:block'}`}>
-                  {/* Model Notice Box */}
-                  <div className="bg-amber-950/40 border border-amber-800/60 rounded-xl p-3 text-xs text-amber-200/90 space-y-1">
-                    <div className="flex items-center space-x-1.5 font-bold text-amber-300">
-                      <Info className="w-4 h-4 text-amber-400 shrink-0" />
-                      <span>v3 Preview</span>
-                    </div>
-                    <p className="text-[11px] leading-relaxed text-amber-200/80">
-                      v3 is currently in preview and sometimes produces lower quality results. Please report issues to team members on our Discord server.
-                    </p>
-                  </div>
-
-                  {/* Mode Tabs (Simple / Advanced) */}
-                  <div className="flex items-center justify-between pt-1">
-                    <div className="bg-white dark:bg-slate-900 p-1 rounded-xl flex items-center border border-slate-200 dark:border-slate-800 text-xs font-medium">
-                      <button
-                        onClick={() => setActiveTab('simple')}
-                        className={`px-3 py-1 rounded-lg transition-colors ${activeTab === 'simple' ? 'bg-rose-600 text-white font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
-                      >
-                        Simple
-                      </button>
-                      <button
-                        onClick={() => setActiveTab('advanced')}
-                        className={`px-3 py-1 rounded-lg transition-colors ${activeTab === 'advanced' ? 'bg-rose-600 text-white font-bold shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'}`}
-                      >
-                        Advanced
-                      </button>
-                    </div>
-
-                    <div className="flex items-center space-x-2 text-xs">
-                      <span className="text-slate-500 dark:text-slate-400 text-[11px]">Model</span>
-                      <select
-                        value={selectedModel}
-                        onChange={(e) => setSelectedModel(e.target.value)}
-                        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-rose-300 font-semibold px-2 py-1 rounded-lg text-xs focus:outline-none"
-                      >
-                        <option value="v3">v3</option>
-                        <option value="v2">v2 Legacy</option>
-                      </select>
-                      <button 
-                        onClick={() => {
-                          setWorkspacePrompt('');
-                          setCustomLyricsInput('');
-                          showToastMsg('Form direset');
-                        }}
-                        className="text-slate-500 hover:text-rose-400 p-1"
-                        title="Reset Form"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* SIMPLE MODE INPUT */}
-                  {activeTab === 'simple' && (
-                    <div className="space-y-3 flex-1 flex flex-col">
-                      <div className="relative bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex-1 flex flex-col focus-within:border-rose-500/60 transition-colors">
-                        <div className="flex items-center space-x-1.5 text-xs text-slate-500 dark:text-slate-400 mb-2">
-                          <Sparkles className="w-3.5 h-3.5 text-rose-400" />
+                {/* SIMPLE MODE INPUT */}
+                {activeTab === 'simple' && (
+                  <div className="space-y-3">
+                    <div className="relative bg-[#0d1322] border border-slate-800 rounded-xl p-4 focus-within:border-rose-500/60 transition-colors">
+                      <div className="flex items-center justify-between text-xs text-slate-400 mb-2 font-medium">
+                        <span className="flex items-center space-x-1.5 text-rose-400 font-bold">
+                          <Sparkles className="w-4 h-4" />
                           <span>Deskripsi Ide Lagu (Prompt)</span>
-                        </div>
-                        <textarea
-                          value={workspacePrompt}
-                          onChange={(e) => setWorkspacePrompt(e.target.value)}
-                          placeholder="Contoh: a country song about my WiFi going out mid-meeting..."
-                          rows={5}
-                          className="w-full flex-1 bg-transparent text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-500 resize-none focus:outline-none min-w-0"
-                        />
-                        <div className="flex items-center justify-end pt-2">
-                          <button 
-                            onClick={() => showToastMsg('Fitur unggah file musik/audio contoh')}
-                            className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 p-1.5 rounded-md hover:bg-slate-100 dark:bg-slate-800"
-                            title="Upload audio reference"
-                          >
-                            <Upload className="w-4 h-4" />
-                          </button>
-                        </div>
+                        </span>
+                        <span className="text-[10px] text-slate-500">Ketik suasana, genre, atau cerita lagu</span>
+                      </div>
+                      <textarea
+                        value={workspacePrompt}
+                        onChange={(e) => setWorkspacePrompt(e.target.value)}
+                        placeholder="Contoh: a country song about my WiFi going out mid-meeting..."
+                        rows={3}
+                        className="w-full bg-transparent text-sm text-slate-100 placeholder-slate-500 resize-none focus:outline-none"
+                      />
+                      <div className="flex items-center justify-end pt-2 border-t border-slate-800/80 mt-2">
+                        <button 
+                          onClick={() => showToastMsg('Fitur unggah file sampel musik')}
+                          className="text-xs text-slate-400 hover:text-white flex items-center space-x-1 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg"
+                        >
+                          <Upload className="w-3.5 h-3.5 text-rose-400" />
+                          <span>Unggah Sampel Referensi</span>
+                        </button>
                       </div>
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  {/* ADVANCED MODE INPUTS */}
-                  {activeTab === 'advanced' && (
-                    <div className="space-y-3 flex-1 flex flex-col text-xs">
+                {/* ADVANCED MODE INPUTS */}
+                {activeTab === 'advanced' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div className="space-y-3">
                       <div>
-                        <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1">Judul Manual (Custom Song Title)</label>
+                        <label className="block text-xs font-semibold text-slate-300 mb-1">Judul Manual (Custom Song Title)</label>
                         <input
                           type="text"
                           value={customTitleInput}
                           onChange={(e) => setCustomTitleInput(e.target.value)}
                           placeholder="e.g. WiFi Putus di Maxy Academy"
-                          className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500"
+                          className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1">Genre & Style Tags</label>
+                        <label className="block text-xs font-semibold text-slate-300 mb-1">Genre & Style Tags</label>
                         <input
                           type="text"
                           value={customStyle}
                           onChange={(e) => setCustomStyle(e.target.value)}
                           placeholder="e.g. country pop, bro-country, acoustic guitar, male vocals"
-                          className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-xs text-rose-300 focus:outline-none focus:border-rose-500"
-                        />
-                      </div>
-
-                      <div className="flex-1 flex flex-col">
-                        <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1">Kustom Lirik Lagu (Lyrics)</label>
-                        <textarea
-                          value={customLyricsInput}
-                          onChange={(e) => setCustomLyricsInput(e.target.value)}
-                          placeholder="[Verse 1] Tulis lirik kustom di sini..."
-                          rows={5}
-                          className="w-full flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-xs text-slate-700 dark:text-slate-200 placeholder-slate-500 resize-none focus:outline-none focus:border-rose-500 font-mono min-w-0"
+                          className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-rose-300 focus:outline-none focus:border-rose-500"
                         />
                       </div>
                     </div>
-                  )}
 
-                  {/* Error Alert Message Box */}
-                  {errorMessage && (
-                    <div className="bg-rose-950/80 border border-rose-800/80 p-3 rounded-xl text-xs text-rose-200 flex items-center justify-between gap-2 animate-in fade-in">
-                      <div className="flex items-center space-x-2">
-                        <Info className="w-4 h-4 text-rose-400 shrink-0" />
-                        <span>{errorMessage}</span>
-                      </div>
-                      <button onClick={() => setErrorMessage(null)} className="p-1 hover:text-slate-900 dark:text-white">
-                        <X className="w-3.5 h-3.5 text-rose-300" />
-                      </button>
+                    <div className="space-y-1">
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">Kustom Lirik Lagu (Lyrics)</label>
+                      <textarea
+                        value={customLyricsInput}
+                        onChange={(e) => setCustomLyricsInput(e.target.value)}
+                        placeholder="[Verse 1] Tulis lirik kustom di sini..."
+                        rows={5}
+                        className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 resize-none focus:outline-none focus:border-rose-500 font-mono"
+                      />
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  {/* Instrumental Toggle */}
-                  <div className="flex items-center justify-between bg-white dark:bg-slate-900/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
-                    <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">Instrumental</span>
+                {/* Error Alert Message Box */}
+                {errorMessage && (
+                  <div className="bg-rose-950/80 border border-rose-800/80 p-3 rounded-xl text-xs text-rose-200 flex items-center justify-between gap-2 animate-in fade-in">
+                    <div className="flex items-center space-x-2">
+                      <Info className="w-4 h-4 text-rose-400 shrink-0" />
+                      <span>{errorMessage}</span>
+                    </div>
+                    <button onClick={() => setErrorMessage(null)} className="p-1 hover:text-white">
+                      <X className="w-3.5 h-3.5 text-rose-300" />
+                    </button>
+                  </div>
+                )}
+
+                {/* Bottom Row: Instrumental Switch + Generate Button */}
+                <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
+                  <div className="flex items-center space-x-3 bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-800">
+                    <span className="text-xs font-semibold text-slate-300">Instrumental (Tanpa Vokal)</span>
                     <button
                       onClick={() => setIsInstrumental(!isInstrumental)}
                       className={`w-11 h-6 rounded-full transition-colors p-0.5 flex items-center ${isInstrumental ? 'bg-rose-600 justify-end' : 'bg-slate-700 justify-start'}`}
@@ -907,33 +753,41 @@ export const TrebloReplica: React.FC = () => {
                     </button>
                   </div>
 
-                  {/* Generate Button */}
                   <button
                     onClick={handleGenerateSong}
                     disabled={isGenerating}
-                    className="w-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-slate-900 dark:text-white font-bold text-sm py-3 rounded-xl shadow-lg shadow-rose-950/80 flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50"
+                    className="px-8 py-3 bg-gradient-to-r from-rose-600 via-pink-600 to-amber-500 hover:from-rose-500 hover:to-pink-500 text-white font-black text-sm rounded-xl shadow-lg shadow-rose-950/80 flex items-center justify-center space-x-2 transition-all transform active:scale-95 disabled:opacity-50 min-w-[200px]"
                   >
                     {isGenerating ? (
                       <>
-                        <Sparkles className="w-4 h-4 animate-spin text-rose-200" />
+                        <Sparkles className="w-4 h-4 animate-spin text-white" />
                         <span>Generating Track...</span>
                       </>
                     ) : (
                       <>
-                        <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
-                        <span>Generate</span>
+                        <Sparkles className="w-4 h-4 text-white" />
+                        <span>Generate Song</span>
                       </>
                     )}
                   </button>
                 </div>
+              </div>
 
-                {/* PANEL TENGAH-KANAN: DAFTAR HASIL LAGU (Cols 4-7 on Desktop) */}
-                <div className={`md:col-span-4 xl:col-span-4 border-r border-slate-200 dark:border-slate-800/80 p-3 flex flex-col space-y-3 bg-[#0e0c0d] overflow-y-auto ${mobileTab === 'list' ? 'block' : 'hidden md:block'}`}>
-                  {/* Filters Bar */}
-                  <div className="flex items-center justify-between text-xs gap-1.5">
+              {/* CARD 2: DAFTAR HASIL LAGU (SONG LIBRARY) */}
+              <div className="bg-[#0e0c0d] border border-slate-800/80 rounded-2xl p-5 space-y-4 shadow-xl">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+                  <div>
+                    <h3 className="text-base font-bold text-white flex items-center space-x-2">
+                      <Music className="w-4 h-4 text-rose-400" />
+                      <span>Koleksi Lagu Hasil Generasi</span>
+                    </h3>
+                    <p className="text-xs text-slate-400">Total {filteredSongs.length} lagu tersedia di workspace ini</p>
+                  </div>
+
+                  <div className="flex items-center space-x-2 text-xs flex-wrap gap-y-2">
                     <button 
                       onClick={() => showToastMsg('Modal Filter Style & Modul')}
-                      className="bg-rose-600 hover:bg-rose-500 text-white px-2.5 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shrink-0"
+                      className="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shrink-0"
                     >
                       <Filter className="w-3.5 h-3.5" />
                       <span>Filters</span>
@@ -941,261 +795,226 @@ export const TrebloReplica: React.FC = () => {
 
                     <button 
                       onClick={() => setShowLikedOnly(!showLikedOnly)}
-                      className={`px-2.5 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shrink-0 border border-slate-200 dark:border-slate-800 transition-colors ${showLikedOnly ? 'bg-rose-950 text-rose-300 border-rose-700' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300'}`}
+                      className={`px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shrink-0 border border-slate-800 transition-colors ${showLikedOnly ? 'bg-rose-950 text-rose-300 border-rose-700' : 'bg-slate-900 text-slate-300'}`}
                     >
                       <Heart className={`w-3.5 h-3.5 ${showLikedOnly ? 'fill-rose-500 text-rose-500' : ''}`} />
-                      <span>Liked</span>
+                      <span>Liked Songs</span>
                     </button>
 
-                    <div className="relative flex-1 min-w-0">
+                    <div className="relative min-w-[200px]">
                       <input
                         type="text"
                         value={listSearch}
                         onChange={(e) => setListSearch(e.target.value)}
-                        placeholder="Search titles, style"
-                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg py-1 px-2 pl-6 text-[11px] text-slate-700 dark:text-slate-200 placeholder-slate-500 focus:outline-none"
+                        placeholder="Cari judul, genre..."
+                        className="w-full bg-slate-900 border border-slate-800 rounded-lg py-1.5 px-3 pl-8 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-rose-500"
                       />
-                      <Search className="w-3 h-3 text-slate-500 absolute left-2 top-2" />
+                      <Search className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2.5" />
                     </div>
-                  </div>
-
-                  {/* Songs List */}
-                  <div className="space-y-2 flex-1 min-w-0">
-                    {filteredSongs.length === 0 ? (
-                      <div className="text-center py-10 text-slate-500 text-xs">
-                        Tidak ada lagu yang cocok dengan pencarian.
-                      </div>
-                    ) : (
-                      filteredSongs.map((song) => {
-                        const isSelected = song.id === selectedSongId;
-                        const isThisPlaying = isPlaying && activePlayerSongId === song.id;
-
-                        return (
-                          <div
-                            key={song.id}
-                            onClick={() => {
-                              setSelectedSongId(song.id);
-                              if (mobileTab === 'list') setMobileTab('detail');
-                            }}
-                            className={`p-2.5 rounded-xl border cursor-pointer transition-all ${isSelected ? 'bg-white dark:bg-[#0d1322] border-rose-500/70 shadow-lg' : 'bg-slate-100 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:border-slate-700'}`}
-                          >
-                            <div className="flex items-start justify-between space-x-2">
-                              <div className="flex items-start space-x-2.5 min-w-0 flex-1">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    if (activePlayerSongId === song.id) {
-                                      setIsPlaying(!isPlaying);
-                                    } else {
-                                      setActivePlayerSongId(song.id);
-                                      setSelectedSongId(song.id);
-                                      setIsPlaying(true);
-                                      setPlayerProgress(0);
-                                    }
-                                  }}
-                                  className="w-9 h-9 rounded-full bg-rose-950 border border-rose-700 flex items-center justify-center text-rose-300 shrink-0 hover:scale-105 transition-transform mt-0.5"
-                                >
-                                  {isThisPlaying ? <Pause className="w-4 h-4 fill-current text-rose-400" /> : <Play className="w-4 h-4 fill-current text-rose-400 ml-0.5" />}
-                                </button>
-
-                                <div className="min-w-0 flex-1">
-                                  <div className="flex items-center space-x-1.5 flex-wrap gap-y-1">
-                                    {editingSongId === song.id ? (
-                                      <input
-                                        type="text"
-                                        value={editingTitleValue}
-                                        onChange={(e) => setEditingTitleValue(e.target.value)}
-                                        onBlur={() => saveRenameSong(song.id)}
-                                        onKeyDown={(e) => e.key === 'Enter' && saveRenameSong(song.id)}
-                                        onClick={(e) => e.stopPropagation()}
-                                        autoFocus
-                                        className="bg-white dark:bg-slate-900 border border-rose-500 text-xs text-rose-300 font-bold px-1.5 py-0.5 rounded focus:outline-none w-full"
-                                      />
-                                    ) : (
-                                      <span className="text-xs font-bold text-slate-900 dark:text-white hover:text-rose-400 transition-colors truncate" title={song.title}>
-                                        {song.title}
-                                      </span>
-                                    )}
-                                    <button 
-                                      onClick={(e) => startRenameSong(song, e)}
-                                      className="text-slate-500 hover:text-rose-400 p-0.5 shrink-0"
-                                      title="Edit judul lagu"
-                                    >
-                                      <Edit2 className="w-3 h-3" />
-                                    </button>
-
-                                    {song.isNew && (
-                                      <span className="bg-rose-600 text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full uppercase shrink-0">
-                                        New
-                                      </span>
-                                    )}
-                                  </div>
-
-                                  <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate mt-0.5 font-mono" title={song.style}>
-                                    {song.style}
-                                  </p>
-                                </div>
-                              </div>
-
-                              <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 shrink-0 mt-1">
-                                {song.duration}
-                              </span>
-                            </div>
-
-                            {/* Prompt preview snippet */}
-                            <p className="text-[10px] text-slate-500 dark:text-slate-400 italic line-clamp-1 mt-1.5 pl-11">
-                              "{song.prompt}"
-                            </p>
-
-                            <div className="flex items-center justify-between pt-2 mt-2 border-t border-slate-200 dark:border-slate-800/40 text-slate-500 dark:text-slate-400 text-xs">
-                              <span className="text-[10px] text-slate-500">{song.createdAt}</span>
-
-                              <div className="flex items-center space-x-2">
-                                <button 
-                                  onClick={(e) => toggleLike(song.id, e)}
-                                  className="p-1 hover:text-rose-400 transition-colors"
-                                  title="Like / Unlike"
-                                >
-                                  <Heart className={`w-3.5 h-3.5 ${song.isLiked ? 'fill-rose-500 text-rose-500' : 'text-slate-500'}`} />
-                                </button>
-                                <button 
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    showToastMsg('Menu opsi lagu');
-                                  }}
-                                  className="p-1 hover:text-slate-700 dark:text-slate-200"
-                                >
-                                  •••
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })
-                    )}
                   </div>
                 </div>
 
-                {/* PANEL KANAN: DETAIL LAGU TERPILIH (Cols 8-12 on Desktop) */}
-                <div className={`md:col-span-4 xl:col-span-5 p-4 overflow-y-auto flex flex-col space-y-4 bg-[#120f11] ${mobileTab === 'detail' ? 'block' : 'hidden md:block'}`}>
-                  {/* Top Bar of Detail */}
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-                        <span>{selectedSong.title}</span>
-                        <button onClick={(e) => startRenameSong(selectedSong, e)} className="text-slate-500 hover:text-rose-400">
-                          <Edit2 className="w-3.5 h-3.5" />
-                        </button>
-                      </h3>
-                      <span className="text-xs text-slate-500 dark:text-slate-400">{selectedSong.createdAt}</span>
+                {/* Songs Grid List (Full width Cards) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {filteredSongs.length === 0 ? (
+                    <div className="col-span-full text-center py-10 text-slate-500 text-xs">
+                      Tidak ada lagu yang cocok dengan pencarian.
                     </div>
+                  ) : (
+                    filteredSongs.map((song) => {
+                      const isSelected = song.id === selectedSongId;
+                      const isThisPlaying = isPlaying && activePlayerSongId === song.id;
+
+                      return (
+                        <div
+                          key={song.id}
+                          onClick={() => setSelectedSongId(song.id)}
+                          className={`p-4 rounded-xl border cursor-pointer transition-all space-y-3 ${isSelected ? 'bg-[#0d1322] border-rose-500/80 shadow-lg shadow-rose-950/30' : 'bg-slate-950/60 border-slate-800/80 hover:border-slate-700'}`}
+                        >
+                          <div className="flex items-start justify-between space-x-3">
+                            <div className="flex items-start space-x-3 min-w-0 flex-1">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (activePlayerSongId === song.id) {
+                                    setIsPlaying(!isPlaying);
+                                  } else {
+                                    setActivePlayerSongId(song.id);
+                                    setSelectedSongId(song.id);
+                                    setIsPlaying(true);
+                                    setPlayerProgress(0);
+                                  }
+                                }}
+                                className="w-10 h-10 rounded-full bg-rose-950 border border-rose-700 flex items-center justify-center text-rose-300 shrink-0 hover:scale-105 transition-transform"
+                              >
+                                {isThisPlaying ? <Pause className="w-4 h-4 fill-current text-rose-400" /> : <Play className="w-4 h-4 fill-current text-rose-400 ml-0.5" />}
+                              </button>
+
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center space-x-2 flex-wrap gap-y-1">
+                                  {editingSongId === song.id ? (
+                                    <input
+                                      type="text"
+                                      value={editingTitleValue}
+                                      onChange={(e) => setEditingTitleValue(e.target.value)}
+                                      onBlur={() => saveRenameSong(song.id)}
+                                      onKeyDown={(e) => e.key === 'Enter' && saveRenameSong(song.id)}
+                                      onClick={(e) => e.stopPropagation()}
+                                      autoFocus
+                                      className="bg-slate-900 border border-rose-500 text-xs text-rose-300 font-bold px-2 py-0.5 rounded focus:outline-none w-full"
+                                    />
+                                  ) : (
+                                    <h4 className="text-xs sm:text-sm font-bold text-white hover:text-rose-400 transition-colors truncate" title={song.title}>
+                                      {song.title}
+                                    </h4>
+                                  )}
+                                  <button 
+                                    onClick={(e) => startRenameSong(song, e)}
+                                    className="text-slate-500 hover:text-rose-400 p-0.5 shrink-0"
+                                    title="Edit judul lagu"
+                                  >
+                                    <Edit2 className="w-3 h-3" />
+                                  </button>
+
+                                  {song.isNew && (
+                                    <span className="bg-rose-600 text-white font-bold text-[9px] px-2 py-0.2 rounded-full uppercase shrink-0">
+                                      New
+                                    </span>
+                                  )}
+                                </div>
+
+                                <p className="text-xs text-slate-400 truncate mt-0.5 font-mono" title={song.style}>
+                                  {song.style}
+                                </p>
+                              </div>
+                            </div>
+
+                            <span className="text-xs font-mono text-slate-400 shrink-0">
+                              {song.duration}
+                            </span>
+                          </div>
+
+                          {/* Dedicated Scrollable Prompt Description Window Box */}
+                          <div className="bg-[#090d18] border border-slate-800/80 rounded-xl p-2.5 space-y-1">
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Deskripsi Prompt</span>
+                            <div className="text-xs text-slate-300 italic max-h-20 overflow-y-auto pr-1 leading-relaxed whitespace-normal break-words">
+                              "{song.prompt}"
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between pt-2 border-t border-slate-800/60 text-xs text-slate-400">
+                            <span className="text-[11px] text-slate-500">{song.createdAt}</span>
+
+                            <div className="flex items-center space-x-3">
+                              <button 
+                                onClick={(e) => toggleLike(song.id, e)}
+                                className="p-1 hover:text-rose-400 transition-colors"
+                                title="Like / Unlike"
+                              >
+                                <Heart className={`w-4 h-4 ${song.isLiked ? 'fill-rose-500 text-rose-500' : 'text-slate-500'}`} />
+                              </button>
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  showToastMsg('Menu opsi lagu');
+                                }}
+                                className="p-1 hover:text-white"
+                              >
+                                •••
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+
+              {/* CARD 3: DETAIL LAGU TERPILIH & LIRIK (FULL WIDTH) */}
+              <div className="bg-[#120f11] border border-slate-800/80 rounded-2xl p-5 space-y-4 shadow-xl">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+                  <div>
+                    <h3 className="text-base font-bold text-white flex items-center space-x-2">
+                      <span>{selectedSong.title}</span>
+                      <button onClick={(e) => startRenameSong(selectedSong, e)} className="text-slate-500 hover:text-rose-400">
+                        <Edit2 className="w-3.5 h-3.5" />
+                      </button>
+                    </h3>
+                    <span className="text-xs text-slate-400">{selectedSong.style} • {selectedSong.createdAt}</span>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => {
+                        setActivePlayerSongId(selectedSong.id);
+                        setIsPlaying(!isPlaying);
+                      }}
+                      className="bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center space-x-1.5 shadow-md"
+                    >
+                      {isPlaying && activePlayerSongId === selectedSong.id ? (
+                        <>
+                          <Pause className="w-4 h-4 fill-current" />
+                          <span>Pause Track</span>
+                        </>
+                      ) : (
+                        <>
+                          <Play className="w-4 h-4 fill-current" />
+                          <span>Putar Lagu Ini</span>
+                        </>
+                      )}
+                    </button>
 
                     <button 
-                      onClick={() => setMobileTab('list')}
-                      className="p-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-md hover:bg-slate-100 dark:bg-slate-800 md:hidden"
+                      onClick={handleCopyLyrics}
+                      className="text-xs flex items-center space-x-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 px-3 py-2 rounded-xl border border-slate-800"
                     >
-                      <X className="w-4 h-4" />
+                      {copiedLyrics ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span>{copiedLyrics ? 'Lirik Disalin' : 'Salin Lirik'}</span>
                     </button>
                   </div>
+                </div>
 
-                  {/* Visual Waveform Box */}
-                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-3 shadow-inner">
-                    <div className="h-16 flex items-end justify-between space-x-1 px-2">
-                      {selectedSong.waveform.map((val, idx) => (
-                        <div
-                          key={idx}
-                          style={{ height: `${val}%` }}
-                          className={`flex-1 rounded-t transition-all ${idx * 4 <= playerProgress ? 'bg-gradient-to-t from-rose-600 to-pink-400' : 'bg-slate-700'}`}
-                        ></div>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs font-mono text-slate-500 dark:text-slate-400">
-                      <span>0:00</span>
-                      <span>{selectedSong.duration}</span>
-                    </div>
-
-                    {/* Action buttons */}
-                    <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800/80">
-                      <button
-                        onClick={() => {
-                          setActivePlayerSongId(selectedSong.id);
-                          setIsPlaying(!isPlaying);
-                        }}
-                        className="bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center space-x-1.5 shadow-md"
-                      >
-                        {isPlaying && activePlayerSongId === selectedSong.id ? (
-                          <>
-                            <Pause className="w-3.5 h-3.5 fill-current" />
-                            <span>Pause</span>
-                          </>
-                        ) : (
-                          <>
-                            <Play className="w-3.5 h-3.5 fill-current" />
-                            <span>Play</span>
-                          </>
-                        )}
-                      </button>
-
-                      <button 
-                        onClick={() => showToastMsg('Tautan lagu disalin ke clipboard')}
-                        className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium px-3 py-2 rounded-lg flex items-center space-x-1"
-                      >
-                        <Share2 className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-                        <span>Share</span>
-                      </button>
-
-                      <button 
-                        onClick={() => showToastMsg('Membuka audio editor')}
-                        className="bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium px-3 py-2 rounded-lg flex items-center space-x-1"
-                      >
-                        <span>Edit</span>
-                        <ChevronDown className="w-3 h-3 text-slate-500 dark:text-slate-400" />
-                      </button>
-
-                      <div className="flex items-center space-x-1">
-                        <button onClick={() => showToastMsg('Mengunduh file MP3')} className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white" title="Download">
-                          <Download className="w-4 h-4" />
-                        </button>
-                        <button onClick={() => showToastMsg('Info metadata lagu')} className="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white" title="Info">
-                          <Info className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
+                {/* Visual Waveform Box */}
+                <div className="bg-[#0d1322] border border-slate-800 rounded-xl p-4 space-y-3">
+                  <div className="h-20 flex items-end justify-between space-x-1 px-2">
+                    {selectedSong.waveform.map((val, idx) => (
+                      <div
+                        key={idx}
+                        style={{ height: `${val}%` }}
+                        className={`flex-1 rounded-t transition-all ${idx * 4 <= playerProgress ? 'bg-gradient-to-t from-rose-600 to-pink-400' : 'bg-slate-700'}`}
+                      ></div>
+                    ))}
                   </div>
 
-                  {/* Section: Prompt */}
-                  <div className="space-y-1">
-                    <h4 className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Prompt</h4>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 leading-relaxed italic">
+                  <div className="flex items-center justify-between text-xs font-mono text-slate-400">
+                    <span>0:00</span>
+                    <span>{selectedSong.duration}</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Prompt Box */}
+                  <div className="space-y-1.5 md:col-span-1">
+                    <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Prompt Deskripsi</h4>
+                    <div className="text-xs text-slate-300 bg-slate-900/90 border border-slate-800 rounded-xl p-3 leading-relaxed italic max-h-48 overflow-y-auto min-h-[100px] whitespace-normal break-words">
                       "{selectedSong.prompt}"
-                    </p>
+                    </div>
                   </div>
 
-                  {/* Section: Lyrics */}
-                  <div className="space-y-2 flex-1 flex flex-col">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Lyrics</h4>
-                      <div className="flex items-center space-x-2">
-                        <button 
-                          onClick={handleCopyLyrics}
-                          className="text-slate-500 dark:text-slate-400 hover:text-rose-400 text-xs flex items-center space-x-1 bg-slate-100 dark:bg-slate-800/80 px-2 py-1 rounded"
-                          title="Salin lirik"
-                        >
-                          {copiedLyrics ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                          <span>{copiedLyrics ? 'Copied' : 'Copy'}</span>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex-1 overflow-y-auto text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-sans whitespace-pre-wrap min-w-0">
+                  {/* Lyrics Box */}
+                  <div className="space-y-1.5 md:col-span-2">
+                    <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Lirik Lagu (Full Lyrics)</h4>
+                    <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-4 text-xs text-slate-200 leading-relaxed font-mono whitespace-pre-wrap max-h-60 overflow-y-auto">
                       {selectedSong.lyrics}
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* PERSISTENT BOTTOM AUDIO PLAYER */}
+            </main>
+
+            {/* PERSISTENT BOTTOM AUDIO PLAYER */}
               <div className="h-16 bg-[#161214] border-t border-slate-200 dark:border-slate-800/90 px-4 flex items-center justify-between shrink-0 text-xs z-20">
                 {/* Left: Song Info */}
                 <div className="flex items-center space-x-3 w-1/4">
@@ -1278,7 +1097,6 @@ export const TrebloReplica: React.FC = () => {
                   </button>
                 </div>
               </div>
-            </main>
           </div>
         </div>
       )}

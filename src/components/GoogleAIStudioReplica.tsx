@@ -5,7 +5,7 @@ import {
   Columns, MoreVertical, LayoutGrid, Compass, Clock, BookOpen, ExternalLink,
   Key, Shield, CreditCard, Copy, ArrowLeft, RefreshCw, FileText, CheckCircle2,
   Wand2, Zap, Layers, MessageSquare, Mic, Paperclip, Dices, Globe, Eye,
-  Settings, Folder, Box, ChevronRight, HelpCircle, User, Sparkle, Menu
+  Settings, Folder, Box, ChevronRight, ChevronLeft, HelpCircle, User, Sparkle, Menu
 } from 'lucide-react';
 
 interface AppItem {
@@ -32,6 +32,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
   // Main view state in sidebar: 'playground' | 'build_workspace' | 'my_apps' | 'gallery' | 'dashboard'
   const [activeTab, setActiveTab] = useState<'playground' | 'build_workspace' | 'my_apps' | 'gallery' | 'dashboard'>('playground');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
 
   // Stage toggle inside Playground: 'playground' (Tahap 1) vs 'build_workspace' (Tahap 2)
   const [selectedGridMode, setSelectedGridMode] = useState<string>('featured');
@@ -61,6 +62,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
   // Run Settings State (TAHAP 1)
+  const [showSettingsPanel, setShowSettingsPanel] = useState<boolean>(false);
   const [selectedModel, setSelectedModel] = useState<string>('gemini-3-flash-preview');
   const [systemInstruction, setSystemInstruction] = useState<string>(
     'Anda adalah AI Assistant profesional buatan Maxy Academy. Hasilkan kode React TypeScript yang bersih, modular, dan terstruktur.'
@@ -355,143 +357,177 @@ export const GoogleAIStudioReplica: React.FC = () => {
         )}
 
         {/* Left Sidebar Navigation */}
-        <aside className={`w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800/80 flex-col justify-between shrink-0 select-none absolute lg:relative z-50 h-full transition-transform ${isMobileMenuOpen ? 'translate-x-0 flex shadow-2xl' : '-translate-x-full lg:translate-x-0 hidden lg:flex'}`}>
-          <div className="p-4 space-y-6">
-            {/* Logo / Header */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5 cursor-pointer flex-wrap max-w-full">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-500 via-indigo-500 to-purple-500 flex items-center justify-center text-slate-900 dark:text-white font-bold shadow-md">
-                  <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
-                </div>
-                <div>
-                  <h1 className="text-sm font-bold text-slate-900 dark:text-white tracking-wide flex items-center gap-1 flex-wrap max-w-full">
-                    Google AI Studio
-                  </h1>
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Maxy Academy Edition</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Sidebar Sections */}
-            <nav className="space-y-5 text-xs font-medium">
-              {/* EXPLORE */}
-              <div>
-                <p className="px-2 mb-1.5 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
-                  Explore
-                </p>
-                <div className="space-y-0.5">
-                  <button
-                    onClick={() => { setActiveTab('playground'); setIsMobileMenuOpen(false); }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
-                      activeTab === 'playground'
-                        ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
-                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
-                    }`}
-                  >
-                    <Terminal className="w-4 h-4" />
-                    <span>Playground</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      showToast('Riwayat prompt dibuka pada section Recent');
-                      setActiveTab('playground');
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50 transition-all flex-wrap max-w-full"
-                  >
-                    <Clock className="w-4 h-4" />
-                    <span>History</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* BUILD */}
-              <div>
-                <p className="px-2 mb-1.5 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
-                  Build
-                </p>
-                <div className="space-y-0.5">
-                  <button
-                    onClick={() => { handleStartBuilding('Buat aplikasi web baru dengan Gemini AI'); setIsMobileMenuOpen(false); }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-gradient-to-r from-blue-600/30 to-indigo-600/30 text-blue-300 hover:from-blue-600/40 hover:to-indigo-600/40 border border-blue-500/30 transition-all font-semibold flex-wrap max-w-full"
-                  >
-                    <Plus className="w-4 h-4 text-blue-400" />
-                    <span>+ New app</span>
-                  </button>
-                  <button
-                    onClick={() => { setActiveTab('my_apps'); setIsMobileMenuOpen(false); }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
-                      activeTab === 'my_apps'
-                        ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
-                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
-                    }`}
-                  >
-                    <LayoutGrid className="w-4 h-4" />
-                    <span>My apps</span>
-                  </button>
-                  <button
-                    onClick={() => { setActiveTab('gallery'); setIsMobileMenuOpen(false); }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all ${
-                      activeTab === 'gallery'
-                        ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
-                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
-                    }`}
-                  >
-                    <Compass className="w-4 h-4" />
-                    <span>Gallery</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* MANAGE */}
-              <div>
-                <p className="px-2 mb-1.5 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
-                  Manage
-                </p>
-                <div className="space-y-0.5">
-                  <button
-                    onClick={() => { setActiveTab('dashboard'); setIsMobileMenuOpen(false); }}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all ${
-                      activeTab === 'dashboard'
-                        ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
-                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5 flex-wrap max-w-full">
-                      <Key className="w-4 h-4" />
-                      <span>Dashboard & API Keys</span>
+        <aside className={`${isSidebarCollapsed ? 'w-16' : 'w-56 sm:w-64'} bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800/80 flex flex-col shrink-0 select-none absolute lg:relative z-50 sticky top-0 self-start transition-all duration-200 ${isMobileMenuOpen ? 'translate-x-0 flex shadow-2xl' : '-translate-x-full lg:translate-x-0 hidden lg:flex'}`}>
+          <div className="p-3 sm:p-4 flex flex-col space-y-5">
+            <div className="space-y-5">
+              {/* Logo / Header */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => setActiveTab('playground')}>
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-500 via-indigo-500 to-purple-500 flex items-center justify-center text-slate-900 dark:text-white font-bold shadow-md shrink-0">
+                    <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
+                  </div>
+                  {!isSidebarCollapsed && (
+                    <div className="truncate">
+                      <h1 className="text-xs font-extrabold text-slate-900 dark:text-white tracking-wide truncate">
+                        Google AI Studio
+                      </h1>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Maxy Edition</p>
                     </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
-                  </button>
-                  <button
-                    onClick={() => { showToast('Membuka dokumentasi resmi Google AI Studio'); setIsMobileMenuOpen(false); }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50 transition-all flex-wrap max-w-full"
-                  >
-                    <BookOpen className="w-4 h-4" />
-                    <span>Documentation</span>
-                    <ExternalLink className="w-3 h-3 ml-auto text-slate-600" />
-                  </button>
+                  )}
                 </div>
-              </div>
-            </nav>
-          </div>
 
-          {/* User Profile at Bottom */}
-          <div className="p-3 border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 flex items-center justify-between">
-            <div className="flex items-center gap-2.5 overflow-hidden flex-wrap max-w-full">
-              <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-slate-950 font-bold text-xs">
-                M
+                <button
+                  onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                  className="hidden lg:flex p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+                  title={isSidebarCollapsed ? 'Perluas Sidebar' : 'Ciutkan Sidebar'}
+                >
+                  {isSidebarCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+                </button>
               </div>
-              <div className="truncate">
-                <p className="text-xs font-semibold text-slate-700 dark:text-slate-200 break-words whitespace-normal leading-snug">Maxy Academy</p>
-                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                  PRO
-                </span>
-              </div>
+
+              {/* Sidebar Sections */}
+              <nav className="space-y-4 text-xs font-medium">
+                {/* EXPLORE */}
+                <div>
+                  {!isSidebarCollapsed && (
+                    <p className="px-2 mb-1 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                      Explore
+                    </p>
+                  )}
+                  <div className="space-y-0.5">
+                    <button
+                      onClick={() => { setActiveTab('playground'); setIsMobileMenuOpen(false); }}
+                      className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl transition-all ${
+                        activeTab === 'playground'
+                          ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
+                      } ${isSidebarCollapsed ? 'justify-center' : ''}`}
+                      title="Playground"
+                    >
+                      <Terminal className="w-4 h-4 shrink-0" />
+                      {!isSidebarCollapsed && <span>Playground</span>}
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        showToast('Riwayat prompt dibuka pada section Recent');
+                        setActiveTab('playground');
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50 transition-all ${isSidebarCollapsed ? 'justify-center' : ''}`}
+                      title="History"
+                    >
+                      <Clock className="w-4 h-4 shrink-0" />
+                      {!isSidebarCollapsed && <span>History</span>}
+                    </button>
+                  </div>
+                </div>
+
+                {/* BUILD */}
+                <div>
+                  {!isSidebarCollapsed && (
+                    <p className="px-2 mb-1 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                      Build
+                    </p>
+                  )}
+                  <div className="space-y-0.5">
+                    <button
+                      onClick={() => { handleStartBuilding('Buat aplikasi web baru dengan Gemini AI'); setIsMobileMenuOpen(false); }}
+                      className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl bg-gradient-to-r from-blue-600/30 to-indigo-600/30 text-blue-300 hover:from-blue-600/40 hover:to-indigo-600/40 border border-blue-500/30 transition-all font-semibold ${isSidebarCollapsed ? 'justify-center' : ''}`}
+                      title="+ New app"
+                    >
+                      <Plus className="w-4 h-4 text-blue-400 shrink-0" />
+                      {!isSidebarCollapsed && <span>+ New app</span>}
+                    </button>
+
+                    <button
+                      onClick={() => { setActiveTab('my_apps'); setIsMobileMenuOpen(false); }}
+                      className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl transition-all ${
+                        activeTab === 'my_apps'
+                          ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
+                      } ${isSidebarCollapsed ? 'justify-center' : ''}`}
+                      title="My apps"
+                    >
+                      <LayoutGrid className="w-4 h-4 shrink-0" />
+                      {!isSidebarCollapsed && <span>My apps</span>}
+                    </button>
+
+                    <button
+                      onClick={() => { setActiveTab('gallery'); setIsMobileMenuOpen(false); }}
+                      className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl transition-all ${
+                        activeTab === 'gallery'
+                          ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
+                      } ${isSidebarCollapsed ? 'justify-center' : ''}`}
+                      title="Gallery"
+                    >
+                      <Compass className="w-4 h-4 shrink-0" />
+                      {!isSidebarCollapsed && <span>Gallery</span>}
+                    </button>
+                  </div>
+                </div>
+
+                {/* MANAGE */}
+                <div>
+                  {!isSidebarCollapsed && (
+                    <p className="px-2 mb-1 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                      Manage
+                    </p>
+                  )}
+                  <div className="space-y-0.5">
+                    <button
+                      onClick={() => { setActiveTab('dashboard'); setIsMobileMenuOpen(false); }}
+                      className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl transition-all ${
+                        activeTab === 'dashboard'
+                          ? 'bg-blue-600/20 text-blue-400 font-semibold border border-blue-500/30'
+                          : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50'
+                      } ${isSidebarCollapsed ? 'justify-center' : ''}`}
+                      title="Dashboard & API Keys"
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <Key className="w-4 h-4 shrink-0" />
+                        {!isSidebarCollapsed && <span className="truncate">Dashboard & Keys</span>}
+                      </div>
+                      {!isSidebarCollapsed && <ChevronRight className="w-3.5 h-3.5 text-slate-500 shrink-0" />}
+                    </button>
+
+                    <button
+                      onClick={() => { showToast('Membuka dokumentasi resmi Google AI Studio'); setIsMobileMenuOpen(false); }}
+                      className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:bg-slate-800/50 transition-all ${isSidebarCollapsed ? 'justify-center' : ''}`}
+                      title="Documentation"
+                    >
+                      <BookOpen className="w-4 h-4 shrink-0" />
+                      {!isSidebarCollapsed && <span>Documentation</span>}
+                    </button>
+                  </div>
+                </div>
+              </nav>
             </div>
-            <div className="flex items-center gap-1 text-slate-500 flex-wrap max-w-full">
-              <Key className="w-3.5 h-3.5 hover:text-slate-600 dark:text-slate-300 cursor-pointer" onClick={() => setActiveTab('dashboard')} />
-              <Settings className="w-3.5 h-3.5 hover:text-slate-600 dark:text-slate-300 cursor-pointer" onClick={() => showToast('Pengaturan Akun Maxy Academy')} />
+
+            {/* User Profile at Bottom (Compact & Clean) */}
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-800/80">
+              <div className={`flex items-center justify-between p-2 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 ${isSidebarCollapsed ? 'justify-center' : ''}`}>
+                <div className="flex items-center gap-2 overflow-hidden min-w-0">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-slate-950 font-bold text-xs shrink-0">
+                    M
+                  </div>
+                  {!isSidebarCollapsed && (
+                    <div className="truncate">
+                      <p className="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">Maxy Academy</p>
+                      <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                        PRO
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {!isSidebarCollapsed && (
+                  <div className="flex items-center gap-1 text-slate-500 shrink-0">
+                    <Settings className="w-3.5 h-3.5 hover:text-slate-600 dark:text-slate-300 cursor-pointer" onClick={() => showToast('Pengaturan Akun Maxy Academy')} />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </aside>
@@ -502,7 +538,7 @@ export const GoogleAIStudioReplica: React.FC = () => {
           {/* VIEW 1: TAHAP 1 - PLAYGROUND (Main Prompting Screen)       */}
           {/* ========================================================= */}
           {activeTab === 'playground' && (
-            <div className="flex-1 flex flex-col lg:flex-row min-h-0">
+            <div className="flex-1 flex flex-col lg:flex-row min-h-0 relative">
               {/* Mobile Tab Switcher */}
               <div className="lg:hidden p-4 border-b border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0d1322] shrink-0">
                 <div className="flex items-center bg-slate-100 dark:bg-slate-950 rounded-xl p-1">
@@ -537,6 +573,21 @@ export const GoogleAIStudioReplica: React.FC = () => {
                     </p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      onClick={() => {
+                        setShowSettingsPanel(!showSettingsPanel);
+                        showToast(showSettingsPanel ? 'Panel Run Settings disembunyikan' : 'Panel Run Settings ditampilkan');
+                      }}
+                      className={`px-3 py-1.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                        showSettingsPanel
+                          ? 'bg-blue-600/30 text-blue-300 border-blue-500/50 shadow-md'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
+                      }`}
+                      title="Tampilkan / Sembunyikan Panel Run Settings"
+                    >
+                      <Sliders className="w-3.5 h-3.5 text-blue-400" />
+                      <span>Run Settings</span>
+                    </button>
                     <button
                       onClick={() => showToast('Link Playground disalin ke clipboard!')}
                       className="p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:bg-slate-800 transition-all text-xs flex items-center gap-1.5 flex-wrap max-w-full"
@@ -920,17 +971,22 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 )}
               </div>
 
-              {/* Right Panel: RUN SETTINGS */}
-              <aside className={`w-full lg:w-80 bg-white dark:bg-[#0d1322] border-l border-slate-200 dark:border-slate-800 p-5 space-y-6 overflow-y-auto shrink-0 ${playgroundMobileTab === 'settings' ? 'block' : 'hidden lg:block'}`}>
-                <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-3">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2 flex-wrap max-w-full">
-                    <Sliders className="w-4 h-4 text-blue-400" />
-                    Run Settings
-                  </h3>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">
-                    Gemini 3 Config
-                  </span>
-                </div>
+              {/* Right Panel: RUN SETTINGS (Floating Drawer Overlay) */}
+              {showSettingsPanel && (
+                <aside className="absolute right-0 top-0 bottom-0 z-30 w-80 bg-white dark:bg-[#0d1322] border-l border-slate-200 dark:border-slate-800 p-5 space-y-6 overflow-y-auto shadow-2xl animate-in slide-in-from-right duration-200">
+                  <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-3">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
+                      <Sliders className="w-4 h-4 text-blue-400" />
+                      <span>Run Settings</span>
+                    </h3>
+                    <button
+                      onClick={() => setShowSettingsPanel(false)}
+                      className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+                      title="Tutup Panel Settings"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
 
                 {/* Active Model Selector */}
                 <div className="space-y-2">
@@ -1154,8 +1210,9 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   </div>
                 </div>
               </aside>
-            </div>
-          )}
+            )}
+          </div>
+        )}
 
           {/* ========================================================= */}
           {/* VIEW 2: TAHAP 2 - BUILD WORKSPACE (App Development Canvas) */}
@@ -1212,10 +1269,10 @@ export const GoogleAIStudioReplica: React.FC = () => {
                 </div>
               </div>
 
-              {/* Workspace Main 2-Panel Split */}
-              <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
-                {/* Left Panel: Chat & AI Iteration */}
-                <div className="w-full lg:w-[420px] bg-white dark:bg-[#0d1322] border-r border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between overflow-y-auto shrink-0 space-y-4">
+              {/* Workspace Main Vertical Stack (Chat Top, Live Preview Bottom) */}
+              <div className="flex-1 flex flex-col overflow-y-auto bg-slate-100 dark:bg-slate-950">
+                {/* Top Panel: Chat & AI Iteration */}
+                <div className="w-full bg-white dark:bg-[#0d1322] border-b border-slate-200 dark:border-slate-800 p-4 md:p-5 flex flex-col justify-between shrink-0 space-y-4">
                   {/* Chat History List */}
                   <div className="space-y-4 overflow-y-auto flex-1 pr-1 min-w-0">
                     {chatMessages.map((msg, idx) => (
@@ -1306,8 +1363,8 @@ export const GoogleAIStudioReplica: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Right Panel: Live App Preview & Code Viewer */}
-                <div className="flex-1 bg-slate-100 dark:bg-slate-950 flex flex-col overflow-hidden">
+                {/* Bottom Panel: Live App Preview & Code Viewer */}
+                <div className="w-full bg-slate-100 dark:bg-slate-950 flex flex-col min-h-[520px] p-2 md:p-4 space-y-3">
                   {/* Preview Toolbar */}
                   <div className="bg-white dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 p-2.5 px-4 flex items-center justify-between">
                     {/* Tabs: Preview vs Code */}

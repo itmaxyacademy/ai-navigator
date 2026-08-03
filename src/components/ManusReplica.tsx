@@ -1,10 +1,82 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  Sparkles, Plus, ArrowUp, Layout, Globe, Palette, Gamepad2, ChevronDown,
+  Plus, ArrowUp, Layout, Globe, Palette, Gamepad2, ChevronDown,
   ArrowLeft, CheckCircle2, Circle, Loader2, FileText, AlertCircle, X,
-  Terminal, Code2, Copy, Check, Info, FileSpreadsheet, FileCode, Sliders,
-  RefreshCw, Play, Share2, Download
+  Terminal, Code2, Copy, Check, FileSpreadsheet, FileCode, Sliders, Monitor
 } from 'lucide-react';
+
+// ── Simulation helpers ──────────────────────────────────────────────
+interface SimSlide {
+  title: string;
+  body: string;
+  emoji: string;
+  gradient: string;
+}
+
+function buildSimResult(prompt: string, taskType: string): { text: string; slides: SimSlide[] } {
+  const topic = prompt.length > 60 ? prompt.slice(0, 57) + '...' : prompt;
+  const isSlide = taskType === 'Create slides';
+  const slides: SimSlide[] = isSlide ? [
+    { title: 'Judul & Gambaran Umum', body: `Presentasi profesional tentang: "${topic}"`, emoji: '🎯', gradient: 'from-blue-600 to-indigo-700' },
+    { title: 'Latar Belakang & Konteks', body: 'Situasi saat ini, data tren, dan mengapa topik ini penting untuk dipahami lebih dalam.', emoji: '📊', gradient: 'from-purple-600 to-violet-700' },
+    { title: 'Temuan & Analisis Utama', body: 'Tiga insight kunci yang didukung data visual, grafik, dan perbandingan kompetitif.', emoji: '🔍', gradient: 'from-emerald-600 to-teal-700' },
+    { title: 'Strategi & Solusi', body: 'Rencana tindakan konkret dengan timeline eksekusi, penanggung jawab, dan metrik keberhasilan.', emoji: '🚀', gradient: 'from-orange-500 to-rose-600' },
+    { title: 'Penutup & Next Steps', body: 'Kesimpulan kuat, call-to-action audiens, dan langkah implementasi minggu pertama.', emoji: '✅', gradient: 'from-slate-700 to-slate-900' },
+  ] : [];
+  const text = isSlide
+    ? `Berikut adalah struktur slide presentasi yang profesional dan siap digunakan mengenai "${topic}".
+
+---
+
+### **Judul Presentasi:** ${topic}
+
+---
+
+**Slide 1: Judul**
+
+*   **Narasi Utama:**
+    *   Selamat datang di presentasi tentang topik yang relevan dan berdampak ini.
+    *   Kami akan membahas mengapa hal ini menjadi keharusan dalam lanskap saat ini.
+
+**Slide 2: Latar Belakang & Konteks**
+
+*   Data dan tren pasar terkini
+*   Mengapa topik ini mendesak untuk dibahas sekarang
+*   Perbandingan kondisi sebelum dan sesudah adopsi
+
+**Slide 3: Temuan & Analisis**
+
+*   Insight #1: Efisiensi meningkat rata-rata 40%
+*   Insight #2: Biaya operasional turun signifikan
+*   Insight #3: Kepuasan pengguna meningkat drastis
+
+**Slide 4: Solusi & Strategi**
+
+*   Roadmap implementasi 3 fase
+*   Anggaran dan alokasi sumber daya
+*   KPI dan metrik evaluasi keberhasilan
+
+**Slide 5: Penutup & Call-to-Action**
+
+*   Ringkasan 3 poin utama
+*   Langkah konkret yang harus diambil audiens
+*   Q&A dan diskusi terbuka`
+    : `Manus Agent telah selesai mengeksekusi tugas: "${topic}".
+
+Berikut adalah hasil komprehensif yang telah disiapkan:
+
+**Ringkasan Eksekusi:**
+Tugas berhasil dianalisis dan diselesaikan secara otonom dalam 4 langkah eksekusi. Seluruh modul berjalan tanpa error.
+
+**Output Utama:**
+• Analisis mendalam tentang topik yang diminta
+• Rekomendasi tindakan berdasarkan data
+• Dokumentasi hasil yang terstruktur dan siap digunakan
+• Verifikasi kelengkapan format sudah dilakukan
+
+**Status:** ✅ Selesai — Siap untuk ditinjau dan diimplementasikan.`;
+  return { text, slides };
+}
 
 interface ExecutionStep {
   id: number;
@@ -50,6 +122,8 @@ export const ManusReplica: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [executionLogs, setExecutionLogs] = useState<ExecutionStep[]>(savedState.executionLogs || []);
   const [activeResultText, setActiveResultText] = useState<string>(savedState.activeResultText || '');
+  const [activeSlides, setActiveSlides] = useState<SimSlide[]>([]);
+  const [resultTab, setResultTab] = useState<'text' | 'slides'>('text');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // History State
@@ -115,80 +189,43 @@ export const ManusReplica: React.FC = () => {
     setActiveResultText('');
     setView('workspace');
 
-    // Timer animations for progressive logs
+    // Timer animations for progressive logs — pure simulation, no API
     const t1 = setTimeout(() => {
-      setExecutionLogs((prev) =>
-        prev.map((s) =>
-          s.id === 1 ? { ...s, status: 'completed' } : s.id === 2 ? { ...s, status: 'in_progress', timestamp: '00:02' } : s
-        )
-      );
-    }, 1200);
-
+      setExecutionLogs(prev => prev.map(s =>
+        s.id === 1 ? { ...s, status: 'completed' } : s.id === 2 ? { ...s, status: 'in_progress', timestamp: '00:02' } : s
+      ));
+    }, 1000);
     const t2 = setTimeout(() => {
-      setExecutionLogs((prev) =>
-        prev.map((s) =>
-          s.id === 2 ? { ...s, status: 'completed' } : s.id === 3 ? { ...s, status: 'in_progress', timestamp: '00:03' } : s
-        )
-      );
-    }, 2400);
-
+      setExecutionLogs(prev => prev.map(s =>
+        s.id === 2 ? { ...s, status: 'completed' } : s.id === 3 ? { ...s, status: 'in_progress', timestamp: '00:03' } : s
+      ));
+    }, 2000);
     const t3 = setTimeout(() => {
-      setExecutionLogs((prev) =>
-        prev.map((s) =>
-          s.id === 3 ? { ...s, status: 'completed' } : s.id === 4 ? { ...s, status: 'in_progress', timestamp: '00:04' } : s
-        )
-      );
-    }, 3600);
-
-    try {
-      const response = await fetch('/api/manus-ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: targetPrompt.trim(),
-          taskType,
-          fileName: attachedFile,
-          history: taskHistory.map((t) => ({ sender: 'user', text: t.prompt })),
-        }),
-      });
-
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-
-      if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.error || 'Gagal menghubungi Manus Agent.');
-      }
-
-      const data = await response.json();
-
-      setExecutionLogs((prev) =>
-        prev.map((s) => ({ ...s, status: 'completed' }))
-      );
-
-      setActiveResultText(data.resultText || 'Tugas telah selesai diproses oleh Manus Agent.');
-
-      const newTaskItem: TaskItem = {
+      setExecutionLogs(prev => prev.map(s =>
+        s.id === 3 ? { ...s, status: 'completed' } : s.id === 4 ? { ...s, status: 'in_progress', timestamp: '00:04' } : s
+      ));
+    }, 3000);
+    const t4 = setTimeout(() => {
+      setExecutionLogs(prev => prev.map(s => ({ ...s, status: 'completed' })));
+      const { text, slides } = buildSimResult(targetPrompt.trim(), taskType);
+      setActiveResultText(text);
+      setActiveSlides(slides);
+      if (slides.length > 0) setResultTab('slides');
+      else setResultTab('text');
+      const newTask: TaskItem = {
         id: `task-${Date.now()}`,
         prompt: targetPrompt.trim(),
         taskType,
         attachedFile,
-        steps: initialSteps.map((s) => ({ ...s, status: 'completed' })),
-        resultText: data.resultText || '',
+        steps: initialSteps.map(s => ({ ...s, status: 'completed' })),
+        resultText: text,
         createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
-
-      setTaskHistory((prev) => [newTaskItem, ...prev]);
-    } catch (err: any) {
-      console.error('Manus error:', err);
-      setErrorMessage(err.message || 'Terjadi kesalahan saat memproses tugas.');
-      setExecutionLogs((prev) =>
-        prev.map((s) => (s.status === 'in_progress' ? { ...s, status: 'pending', text: `❌ ${s.text}` } : s))
-      );
-    } finally {
+      setTaskHistory(prev => [newTask, ...prev]);
       setIsLoading(false);
-    }
+    }, 4000);
+    // cleanup on unmount only — simulation always completes
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
   };
 
   // Handle Follow-up inside Workspace
@@ -528,65 +565,94 @@ export const ManusReplica: React.FC = () => {
             <div className="lg:col-span-8 bg-[#f8fafc] p-6 flex flex-col min-h-0 overflow-hidden">
               {/* Output Header Bar */}
               <div className="bg-white border border-slate-200 rounded-t-2xl px-5 py-3 flex items-center justify-between shrink-0 shadow-xs">
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-700 flex-wrap max-w-full">
+                <div className="flex items-center gap-2">
                   <Code2 className="w-4 h-4 text-slate-500" />
-                  <span>Hasil Eksekusi Agent</span>
+                  <span className="text-xs font-bold text-slate-700">Hasil Eksekusi Agent</span>
                 </div>
-
-                <div className="flex items-center gap-2 flex-wrap max-w-full">
-                  <button
-                    onClick={handleCopyResult}
-                    disabled={!activeResultText}
-                    className="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50 flex-wrap max-w-full"
-                  >
-                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copied ? 'Tercopy' : 'Copy'}</span>
-                  </button>
-                </div>
+                {/* Tab toggle */}
+                {!isLoading && activeResultText && (
+                  <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+                    <button
+                      onClick={() => setResultTab('text')}
+                      className={`px-3 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${ resultTab === 'text' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                    >
+                      📝 Teks
+                    </button>
+                    {activeSlides.length > 0 && (
+                      <button
+                        onClick={() => setResultTab('slides')}
+                        className={`px-3 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${ resultTab === 'slides' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                      >
+                        🖼️ Visual Slide
+                      </button>
+                    )}
+                  </div>
+                )}
+                <button
+                  onClick={handleCopyResult}
+                  disabled={!activeResultText}
+                  className="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? 'Tercopy' : 'Copy'}</span>
+                </button>
               </div>
 
               {/* Output Content Body */}
-              <div className="flex-1 bg-white border-x border-b border-slate-200 rounded-b-2xl p-6 overflow-y-auto space-y-4 shadow-sm min-w-0">
+              <div className="flex-1 bg-white border-x border-b border-slate-200 rounded-b-2xl overflow-y-auto shadow-sm min-w-0">
                 {isLoading ? (
                   <div className="h-full flex flex-col items-center justify-center space-y-4 text-center py-16">
-                    <div className="relative">
-                      <div className="w-12 h-12 rounded-2xl bg-purple-100 border border-purple-200 text-purple-600 flex items-center justify-center font-bold text-xl animate-bounce">
-                        ✋
-                      </div>
-                    </div>
+                    <div className="w-12 h-12 rounded-2xl bg-purple-100 border border-purple-200 text-purple-600 flex items-center justify-center font-bold text-xl animate-bounce">✋</div>
                     <div className="space-y-1">
                       <h4 className="text-sm font-extrabold text-slate-800">Manus Agent Sedang Bekerja...</h4>
-                      <p className="text-xs text-slate-500 max-w-sm font-medium">
-                        Mengeksekusi rencana secara otonom, melakukan verifikasi, dan menyiapkan hasil akhir.
-                      </p>
+                      <p className="text-xs text-slate-500 max-w-sm font-medium">Mengeksekusi rencana secara otonom, melakukan verifikasi, dan menyiapkan hasil akhir.</p>
                     </div>
                   </div>
-                ) : activeResultText ? (
-                  <div className="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-md flex flex-col h-full animate-in fade-in duration-300">
-                    {/* Simulated Browser/Workspace Header */}
-                    <div className="bg-slate-50/80 backdrop-blur-sm border-b border-slate-200 px-4 py-2.5 flex items-center shrink-0">
-                      <div className="flex gap-1.5 shrink-0">
-                        <div className="w-3 h-3 rounded-full bg-rose-400 border border-rose-500/20"></div>
-                        <div className="w-3 h-3 rounded-full bg-amber-400 border border-amber-500/20"></div>
-                        <div className="w-3 h-3 rounded-full bg-emerald-400 border border-emerald-500/20"></div>
+                ) : activeResultText && resultTab === 'text' ? (
+                  <div className="flex flex-col h-full">
+                    {/* Browser bar */}
+                    <div className="bg-slate-50 border-b border-slate-200 px-4 py-2.5 flex items-center shrink-0">
+                      <div className="flex gap-1.5">
+                        <div className="w-3 h-3 rounded-full bg-rose-400" />
+                        <div className="w-3 h-3 rounded-full bg-amber-400" />
+                        <div className="w-3 h-3 rounded-full bg-emerald-400" />
                       </div>
                       <div className="flex-1 flex justify-center px-4">
-                        <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-4 py-1 shadow-xs text-[10px] font-mono text-slate-500 w-full max-w-xs justify-center">
+                        <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-4 py-1 text-[10px] font-mono text-slate-500 w-full max-w-xs justify-center">
                           <Globe className="w-3 h-3" />
                           <span>manus-agent-sandbox.local</span>
                         </div>
                       </div>
-                      <div className="w-10 shrink-0"></div> {/* Spacer for centering */}
                     </div>
-                    {/* Output Render Body */}
-                    <div className="flex-1 overflow-y-auto p-6 bg-white prose prose-slate prose-sm max-w-none text-slate-800 whitespace-pre-wrap leading-relaxed font-medium">
+                    <div className="flex-1 overflow-y-auto p-6 text-slate-800 whitespace-pre-wrap leading-relaxed font-medium text-xs sm:text-sm">
                       {activeResultText}
                     </div>
                   </div>
-                ) : (
-                  <div className="text-center text-slate-500 dark:text-slate-400 py-12 text-xs font-medium">
-                    Belum ada hasil untuk ditayangkan.
+                ) : activeResultText && resultTab === 'slides' && activeSlides.length > 0 ? (
+                  <div className="p-5 space-y-4 overflow-y-auto">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Monitor className="w-4 h-4 text-purple-600" />
+                      <span className="text-xs font-extrabold text-slate-700 uppercase tracking-wider">Preview Presentasi — {activeSlides.length} Slide</span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {activeSlides.map((slide, i) => (
+                        <div key={i} className={`rounded-2xl bg-gradient-to-br ${slide.gradient} p-5 text-white shadow-lg relative overflow-hidden group cursor-pointer hover:scale-[1.01] transition-transform`}>
+                          {/* slide number */}
+                          <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-black">{i + 1}</div>
+                          {/* icon */}
+                          <div className="text-3xl mb-3">{slide.emoji}</div>
+                          {/* content */}
+                          <h3 className="text-sm font-extrabold leading-tight mb-2">{slide.title}</h3>
+                          <p className="text-xs text-white/80 leading-relaxed">{slide.body}</p>
+                          {/* decorative lines */}
+                          <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20" />
+                          <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-white/5" />
+                        </div>
+                      ))}
+                    </div>
                   </div>
+                ) : (
+                  <div className="text-center text-slate-500 py-12 text-xs font-medium">Belum ada hasil untuk ditayangkan.</div>
                 )}
               </div>
 
