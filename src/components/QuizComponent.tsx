@@ -291,10 +291,10 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
             <button
               onClick={handleRestart}
-              className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl flex items-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-5 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl flex items-center justify-center gap-2 cursor-pointer"
             >
               <RefreshCw className="w-4 h-4" /> Ulangi Kuis Acak Baru
             </button>
@@ -302,9 +302,10 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
             {onNextModule && (
               <button
                 onClick={onNextModule}
-                className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-600/30 cursor-pointer"
+                className="w-full sm:w-auto px-7 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-2 shadow-xl shadow-emerald-600/30 cursor-pointer active:scale-95 transition-all"
               >
-                Lanjut ke Modul Berikutnya <ArrowRight className="w-4 h-4" />
+                <span>Lanjut ke Modul {module.id + 1}</span>
+                <ArrowRight className="w-4 h-4 animate-pulse" />
               </button>
             )}
           </div>

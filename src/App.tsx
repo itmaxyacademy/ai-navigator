@@ -11,6 +11,7 @@ import { AllNotesModal } from './components/AllNotesModal';
 import { UpgradeModal } from './components/UpgradeModal';
 import { CapstoneModal } from './components/CapstoneModal';
 import { PaymentInvoiceModal } from './components/PaymentInvoiceModal';
+import { MilestoneCelebrationModal } from './components/MilestoneCelebrationModal';
 import { DevPanel } from './components/DevPanel';
 import { useTierAccess } from './hooks/useTierAccess';
 import { BADGES_LIST } from './lib/achievementsData';
@@ -105,6 +106,10 @@ export default function App() {
   // State untuk verifikasi pembayaran setelah kembali dari Xendit
   const [isVerifyingPayment, setIsVerifyingPayment] = useState<boolean>(false);
   const [paymentVerifyStatus, setPaymentVerifyStatus] = useState<'success' | 'cancelled' | 'timeout' | null>(null);
+  const [milestoneModalState, setMilestoneModalState] = useState<{ isOpen: boolean; tierCompleted: 'tier1' | 'tier2' }>({
+    isOpen: false,
+    tierCompleted: 'tier1',
+  });
 
 
   useEffect(() => {
@@ -691,6 +696,17 @@ export default function App() {
         },
       };
     });
+
+    // Milestone Celebration Check (Tier 1: Module 22, Tier 2: Module 29)
+    if (moduleId === 22 || newCompleted.length === 22) {
+      setTimeout(() => {
+        setMilestoneModalState({ isOpen: true, tierCompleted: 'tier1' });
+      }, 500);
+    } else if (moduleId === 29 || newCompleted.length === 29) {
+      setTimeout(() => {
+        setMilestoneModalState({ isOpen: true, tierCompleted: 'tier2' });
+      }, 500);
+    }
   };
 
   const handleUpdateGoal = (newGoalMinutes: number) => {
@@ -1008,6 +1024,17 @@ export default function App() {
         progress={progress}
         onSaveCertDetails={handleSaveCertDetails}
         packages={cmsPackages}
+      />
+
+      {/* Milestone Celebration Modal */}
+      <MilestoneCelebrationModal
+        isOpen={milestoneModalState.isOpen}
+        onClose={() => setMilestoneModalState((prev) => ({ ...prev, isOpen: false }))}
+        tierCompleted={milestoneModalState.tierCompleted}
+        onOpenCertificate={() => {
+          setMilestoneModalState((prev) => ({ ...prev, isOpen: false }));
+          setCertificateOpen(true);
+        }}
       />
 
       {/* Streak & Gamification Modal */}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import confetti from 'canvas-confetti';
 import { generateWithGemini } from '../services/gemini';
 import { 
   Sparkles, Info, Send, Copy, Check, ChevronRight, RefreshCw,
@@ -72,8 +73,21 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  // Practice Verification State
+  const [isPracticeVerified, setIsPracticeVerified] = useState<boolean>(false);
+
+  const triggerPracticeVerified = () => {
+    if (!isPracticeVerified) {
+      setIsPracticeVerified(true);
+      try {
+        confetti({ particleCount: 35, spread: 60, origin: { y: 0.8 } });
+      } catch (e) {}
+    }
+  };
+
   // Sync prompt on module change or initial load
   useEffect(() => {
+    setIsPracticeVerified(false);
     if (module.id === 1) {
       setUserPrompt(buildRCTFPromptString(rctf));
     } else {
@@ -145,8 +159,43 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const getModulePracticeMission = (modId: number, modTitle: string): string => {
+    switch (modId) {
+      case 1:
+        return 'Lengkapi 4 parameter kerangka RCTF (Role, Context, Task, Format) di bawah untuk memicu pembuat prompt terstruktur!';
+      case 2:
+        return 'Coba buat instruksi percakapan atau pilih tombol sampel prompt ChatGPT di dalam simulator!';
+      case 3:
+        return 'Buka atau tutup panel Artifacts Claude untuk melihat bagaimana dokumen & kode dirender secara berdampingan!';
+      case 4:
+        return 'Gunakan fitur pemrosesan multimodal Gemini dengan mengunggah gambar atau teks contoh!';
+      case 15:
+        return 'Ketik deskripsi gambar visual dan klik "Generate Image (Offline AI Engine)" untuk membuat karya seni instan!';
+      case 16:
+        return 'Ketik naskah teks, pilih karakter suara, lalu klik "Generate Voice Audio" untuk mendengarkan audio asli!';
+      case 17:
+        return 'Ketik judul atau tema lagu, pilih genre musik, lalu klik "Generate 2 Song Versions" untuk memutar lagu AI!';
+      case 20:
+        return 'Ketik pertanyaan mengenai notulensi rapat dan pilih pertanyaan siap pakai Fathom AI!';
+      case 21:
+        return 'Pilih persona Gem spesialis (Marketing, Coding, Tutor) dan jalankan sesi konsultasi dinamis!';
+      case 22:
+        return 'Ketik instruksi tugas coding dan saksikan agen Mistral Vibe merencanakan serta mengeksekusi kode secara otomatis!';
+      case 23:
+        return 'Jelajahi alur integrasi Claude Studio dari pembuatan proyek hingga pembuatan artefak dokumentasi!';
+      case 24:
+        return 'Uji analisis dokumen konteks 2 Juta Token dengan beralih antar mode Kimi AI (Chat, Work, Code, Claw)!';
+      case 25:
+        return 'Jalankan asisten Lumo AI multimodal untuk pencarian cerdas dan pemrosesan visual cepat!';
+      case 26:
+        return 'Pilih salah satu chip prompt cepat di bawah atau ketik deskripsi web Anda untuk melihat keajaiban pembuatan antarmuka instan!';
+      default:
+        return `Uji coba interaksi di dalam simulator di bawah untuk memahami fitur utama dari platform ${modTitle}!`;
+    }
+  };
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-6" onClick={triggerPracticeVerified}>
       {/* Top Banner Guide */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="space-y-1">
@@ -154,7 +203,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
             <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
               Bagian 2 Dari 3
             </span>
-            <span className="text-xs text-slate-500 dark:text-slate-400">Simulasi Tampilan & Panduan Fitur</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">Simulasi Tampilan &amp; Panduan Fitur</span>
           </div>
           <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
             Tampilan Interaktif {replica.llmName}
@@ -168,8 +217,35 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
           onClick={onAdvanceToQuiz}
           className="shrink-0 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-slate-900 dark:text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/20 flex items-center gap-2 transition-all"
         >
-          Lanjut ke Kuis Modul <ChevronRight className="w-4 h-4" />
+          Saya Paham, Siap Uji Kuis Modul <ChevronRight className="w-4 h-4" />
         </button>
+      </div>
+
+      {/* 🎯 Micro-Mission Banner */}
+      <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-950/80 via-indigo-950/80 to-slate-900 border border-purple-500/40 shadow-xl flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-purple-600/30 border border-purple-400/40 flex items-center justify-center text-xl shrink-0">
+            🎯
+          </div>
+          <div className="space-y-0.5">
+            <span className="text-[10px] font-extrabold text-purple-400 uppercase tracking-wider flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-amber-400" /> Misi Praktik Modul {module.id}
+            </span>
+            <p className="text-xs font-bold text-white leading-snug">
+              {getModulePracticeMission(module.id, module.title)}
+            </p>
+          </div>
+        </div>
+
+        {isPracticeVerified ? (
+          <span className="shrink-0 px-3 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-extrabold flex items-center gap-1.5 animate-fadeIn">
+            <Check className="w-4 h-4 text-emerald-400" /> Praktik Terverifikasi (+50 XP)
+          </span>
+        ) : (
+          <span className="shrink-0 px-3 py-1.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-bold">
+            ⚡ Klik / Uji Coba Simulator
+          </span>
+        )}
       </div>
 
       {/* Main Interactive Workspace Grid */}
