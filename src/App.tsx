@@ -235,13 +235,6 @@ export default function App() {
 
   // Auth Guard: Sync user profile & active tier subscription from API Gateway api.maxy.academy
   useEffect(() => {
-    if (isLocalDevEnv) {
-      localStorage.removeItem('maxy_access_token');
-      localStorage.removeItem('maxy_refresh_token');
-      setIsAuthValidating(false);
-      return;
-    }
-
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
@@ -251,14 +244,22 @@ export default function App() {
     };
 
     const redirectToLogin = () => {
-      localStorage.removeItem('maxy_access_token');
-      localStorage.removeItem('maxy_refresh_token');
-      setIsAuthValidating(false);
-      window.location.href = getLandingUrl();
+      if (!isLocalDevEnv) {
+        localStorage.removeItem('maxy_access_token');
+        localStorage.removeItem('maxy_refresh_token');
+        setIsAuthValidating(false);
+        window.location.href = getLandingUrl();
+      } else {
+        setIsAuthValidating(false);
+      }
     };
 
     if (!token) {
-      redirectToLogin();
+      if (!isLocalDevEnv) {
+        redirectToLogin();
+        return;
+      }
+      setIsAuthValidating(false);
       return;
     }
 
