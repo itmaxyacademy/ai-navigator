@@ -1197,10 +1197,6 @@ export default function App() {
 
         </div>
       </footer>
-      {/* Local Dev Menu */}
-      {isLocalDevEnv && (
-        <DevPanel progress={progress} setProgress={setProgress} />
-      )}
     </div>
   );
 }
