@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Award, Flame, Menu, X, Compass, Trophy, StickyNote, Lock, Crown, ShieldCheck, LogOut, Save, Download, Upload } from 'lucide-react';
+import { Sparkles, Award, Flame, Menu, X, Compass, Trophy, StickyNote, Lock, Crown, ShieldCheck, LogOut, Save, Download, Upload, FileText } from 'lucide-react';
 import { UserProgress } from '../types';
 import { getUserLevelInfo } from '../lib/gamification';
 import { DailyGoalRing } from './DailyGoalRing';
@@ -22,6 +22,7 @@ interface HeaderProps {
   onOpenNotes?: () => void;
   onOpenUpgradeModal?: () => void;
   onOpenCapstoneModal?: () => void;
+  onOpenInvoice?: () => void;
   allModulesCompleted: boolean;
   onManualSave: () => void;
   onExportJSON: () => void;
@@ -273,6 +274,18 @@ export const Header: React.FC<HeaderProps> = ({
                   <span className="truncate max-w-[120px]">{progress.userName}</span>
                 </div>
               </Tooltip>
+            )}
+
+            {/* Invoice Receipt Button (If User Has Paid Tier or onOpenInvoice) */}
+            {onOpenInvoice && userTier !== 'free' && (
+              <button
+                onClick={onOpenInvoice}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-all cursor-pointer border border-slate-200 dark:border-slate-700 shadow-sm"
+                title="Lihat Kwitansi / Invoice Pembayaran Digital"
+              >
+                <FileText className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                <span>Invoice</span>
+              </button>
             )}
 
             {/* Certificate Button (If All Modules Completed) */}

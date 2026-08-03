@@ -10,6 +10,7 @@ import { Achievements } from './components/Achievements';
 import { AllNotesModal } from './components/AllNotesModal';
 import { UpgradeModal } from './components/UpgradeModal';
 import { CapstoneModal } from './components/CapstoneModal';
+import { PaymentInvoiceModal } from './components/PaymentInvoiceModal';
 import { DevPanel } from './components/DevPanel';
 import { useTierAccess } from './hooks/useTierAccess';
 import { BADGES_LIST } from './lib/achievementsData';
@@ -95,6 +96,8 @@ export default function App() {
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [targetUpgradeModuleId, setTargetUpgradeModuleId] = useState<number | null>(null);
   const [capstoneModalOpen, setCapstoneModalOpen] = useState(false);
+  const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
+  const [activeInvoiceOrderId, setActiveInvoiceOrderId] = useState<string | null>(null);
   const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => !isLocalDevEnv);
   const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
   const [paymentLoadingTier, setPaymentLoadingTier] = useState<'tier1' | 'tier2' | null>(null);
@@ -135,6 +138,7 @@ export default function App() {
 
     if (paymentParam === 'success' && orderId) {
       // User balik setelah bayar — mulai polling untuk konfirmasi pembayaran dari webhook Xendit
+      setActiveInvoiceOrderId(orderId);
       setIsVerifyingPayment(true);
 
       const MAX_POLLS = 5;
@@ -915,6 +919,7 @@ export default function App() {
         onOpenNotes={() => setAllNotesOpen(true)}
         onOpenUpgradeModal={() => setUpgradeModalOpen(true)}
         onOpenCapstoneModal={() => setCapstoneModalOpen(true)}
+        onOpenInvoice={() => setInvoiceModalOpen(true)}
         allModulesCompleted={allModulesCompleted}
         onManualSave={handleManualSave}
         onExportJSON={handleExportJSON}
@@ -1046,15 +1051,30 @@ export default function App() {
         </div>
       )}
 
+      {/* Payment Invoice Modal */}
+      <PaymentInvoiceModal
+        isOpen={invoiceModalOpen}
+        onClose={() => setInvoiceModalOpen(false)}
+        orderId={activeInvoiceOrderId}
+        userName={progress.userName}
+        userEmail={progress.userEmail}
+      />
+
       {/* Toast: Pembayaran berhasil dikonfirmasi */}
       {paymentVerifyStatus === 'success' && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[201] animate-fadeIn">
-          <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-emerald-600 text-white shadow-2xl shadow-emerald-900/50 max-w-sm">
+          <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-emerald-600 text-white shadow-2xl shadow-emerald-900/50 max-w-md">
             <span className="text-2xl">🎉</span>
-            <div>
+            <div className="flex-1">
               <p className="font-black text-sm">Pembayaran Berhasil Dikonfirmasi!</p>
               <p className="text-xs text-emerald-100 mt-0.5">Akses modul Anda sudah aktif. Selamat belajar!</p>
             </div>
+            <button
+              onClick={() => setInvoiceModalOpen(true)}
+              className="px-3 py-1.5 rounded-xl bg-white text-slate-900 font-extrabold text-xs hover:bg-emerald-100 transition-colors shadow-sm whitespace-nowrap cursor-pointer"
+            >
+              Lihat Invoice
+            </button>
           </div>
         </div>
       )}
