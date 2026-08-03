@@ -149,7 +149,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const part3Modules = displayModules.slice(20);
 
   const capstoneTitle = (hasTier2 && tier2CertType === 'capstone')
-    ? (progress.capstoneSubmission?.title || progress.certTitle || 'Otomasi Workflow Pemasaran & Konten Berbasis RCTF & Multi-LLM')
+    ? (progress.capstoneSubmission?.title || (progress as any).certTitle || 'Otomasi Workflow Pemasaran & Konten Berbasis RCTF & Multi-LLM')
     : null;
 
   const now = new Date();
