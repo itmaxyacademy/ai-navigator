@@ -48,6 +48,13 @@ export default function App() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         parsed = JSON.parse(saved);
+        delete parsed.userTier;
+        delete parsed.tier;
+        delete parsed.maxAllowedModuleId;
+        delete parsed.paidTiers;
+        delete parsed.hasTier1;
+        delete parsed.hasTier2;
+        delete parsed.packageName;
       }
     } catch (e) {
       console.error('Failed to load progress', e);
@@ -60,10 +67,10 @@ export default function App() {
     const cachedHasTier2 = localStorage.getItem('maxy_has_tier2') === 'true';
     const cachedPackageName = localStorage.getItem('maxy_package_name') || undefined;
 
-    const resolvedTier = isLocalDevEnv ? 'tier2' : (cachedTier || (cachedHasTier2 ? 'tier2' : cachedHasTier1 ? 'tier1' : (parsed.userTier || 'free')));
+    const resolvedTier = isLocalDevEnv ? 'tier2' : ((cachedTier === 'tier1' || cachedTier === 'tier2') ? cachedTier : 'free');
     const resolvedMaxAllowed = isLocalDevEnv ? 29 : (resolvedTier === 'tier2' ? 29 : resolvedTier === 'tier1' ? 22 : 3);
-    const resolvedHasTier1 = isLocalDevEnv || cachedHasTier1 || resolvedTier === 'tier1' || resolvedTier === 'tier2';
-    const resolvedHasTier2 = isLocalDevEnv || cachedHasTier2 || resolvedTier === 'tier2';
+    const resolvedHasTier1 = isLocalDevEnv || (resolvedTier === 'tier1' || resolvedTier === 'tier2');
+    const resolvedHasTier2 = isLocalDevEnv || (resolvedTier === 'tier2');
     const resolvedPaidTiers = isLocalDevEnv ? ['tier1', 'tier2'] : (resolvedTier === 'tier2' ? ['tier1', 'tier2'] : resolvedTier === 'tier1' ? ['tier1'] : []);
 
     return {
@@ -75,9 +82,9 @@ export default function App() {
       paidTiers: resolvedPaidTiers as UserTier[],
       hasTier1: resolvedHasTier1,
       hasTier2: resolvedHasTier2,
-      userName: isLocalDevEnv ? 'Local Developer' : (parsed.userName || cachedName || undefined),
-      userEmail: isLocalDevEnv ? 'dev@localhost' : (parsed.userEmail || cachedEmail || undefined),
-      packageName: isLocalDevEnv ? 'Local Dev — VIP Access' : (parsed.packageName || cachedPackageName || undefined),
+      userName: isLocalDevEnv ? 'Local Developer' : (cachedName || parsed.userName || undefined),
+      userEmail: isLocalDevEnv ? 'dev@localhost' : (cachedEmail || parsed.userEmail || undefined),
+      packageName: isLocalDevEnv ? 'Local Dev — VIP Access' : (cachedPackageName || undefined),
     };
   });
 
@@ -519,6 +526,9 @@ export default function App() {
       delete cleanLocal.userTier;
       delete cleanLocal.tier;
       delete cleanLocal.maxAllowedModuleId;
+      delete cleanLocal.paidTiers;
+      delete cleanLocal.hasTier1;
+      delete cleanLocal.hasTier2;
       delete cleanLocal.packageName;
       delete cleanLocal.subscriptionExpiredAt;
       delete cleanLocal.userName;
