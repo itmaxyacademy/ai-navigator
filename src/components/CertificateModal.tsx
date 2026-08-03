@@ -213,18 +213,18 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   // Helper: render a single module row for the full-width transcript table
   const renderModuleRow = (m: (typeof MODULES_DATA)[0], globalIdx: number, localIdx: number) => (
     <tr key={m.id} style={{ backgroundColor: localIdx % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
-      <td style={{ padding: '4.5px 10px', fontFamily: 'monospace', color: '#334155', fontWeight: 800, textAlign: 'center', borderRight: '1px solid #cbd5e1', fontSize: '12px', width: '50px' }}>
+      <td style={{ padding: '3px 8px', fontFamily: 'monospace', color: '#334155', fontWeight: 800, textAlign: 'center', borderRight: '1px solid #cbd5e1', fontSize: '11px', width: '42px' }}>
         {globalIdx}
       </td>
-      <td style={{ padding: '4.5px 12px', fontWeight: 800, color: '#0f172a', fontSize: '12.5px', lineHeight: 1.3 }}>
+      <td style={{ padding: '3px 10px', fontWeight: 800, color: '#0f172a', fontSize: '11.5px', lineHeight: 1.25 }}>
         {m.title}
-        <span style={{ display: 'block', fontSize: '10.5px', color: '#475569', fontWeight: 500, marginTop: '1px' }}>{m.subtitle}</span>
+        <span style={{ display: 'block', fontSize: '9.5px', color: '#475569', fontWeight: 500, marginTop: '0px' }}>{m.subtitle}</span>
       </td>
-      <td style={{ padding: '4.5px 10px', textAlign: 'center', fontWeight: 900, color: '#1d4ed8', borderLeft: '1px solid #cbd5e1', fontSize: '12px', width: '85px' }}>
+      <td style={{ padding: '3px 8px', textAlign: 'center', fontWeight: 900, color: '#1d4ed8', borderLeft: '1px solid #cbd5e1', fontSize: '11px', width: '70px' }}>
         1 JP
       </td>
-      <td style={{ padding: '4.5px 10px', textAlign: 'center', borderLeft: '1px solid #cbd5e1', width: '95px' }}>
-        <span style={{ padding: '2px 8px', backgroundColor: '#ecfdf5', color: '#047857', border: '1px solid #a7f3d0', fontSize: '10px', fontWeight: 900, borderRadius: '4px' }}>
+      <td style={{ padding: '3px 8px', textAlign: 'center', borderLeft: '1px solid #cbd5e1', width: '80px' }}>
+        <span style={{ padding: '1.5px 6px', backgroundColor: '#ecfdf5', color: '#047857', border: '1px solid #a7f3d0', fontSize: '9.5px', fontWeight: 900, borderRadius: '4px' }}>
           LULUS
         </span>
       </td>
@@ -494,40 +494,40 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
               style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
             >
-              <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '24px' }}>
+              <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '16px 20px' }}>
                 {/* Header */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '2.5px solid #1e3a5f', marginBottom: '14px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '2px solid #1e3a5f', marginBottom: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <img
                       src="https://cms.maxy.academy/uploads/LogoMaxyBgWhite.png"
                       crossOrigin="anonymous"
                       alt="Maxy Academy Logo"
-                      style={{ height: '34px', width: 'auto', objectFit: 'contain' }}
+                      style={{ height: '26px', width: 'auto', objectFit: 'contain' }}
                     />
                     <div>
-                      <div style={{ fontSize: '16px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      <div style={{ fontSize: '14px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                         Transkrip Kurikulum Modul Pembelajaran (Bagian 1)
                       </div>
-                      <div style={{ fontSize: '11.5px', color: '#475569', marginTop: '2px', fontWeight: 600 }}>
+                      <div style={{ fontSize: '10.5px', color: '#475569', marginTop: '1px', fontWeight: 600 }}>
                         Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
                       </div>
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '13px', fontWeight: 900, color: '#1e3a5f' }}>{userName || 'Siswa AI Navigator'}</div>
-                    <div style={{ fontSize: '10.5px', color: '#475569', fontFamily: 'monospace', fontWeight: 700 }}>{certNumber || 'No. 0255/AIN/NAV/2026'}</div>
+                    <div style={{ fontSize: '12px', fontWeight: 900, color: '#1e3a5f' }}>{userName || 'Siswa AI Navigator'}</div>
+                    <div style={{ fontSize: '10px', color: '#475569', fontFamily: 'monospace', fontWeight: 700 }}>{certNumber || 'No. 0255/AIN/NAV/2026'}</div>
                   </div>
                 </div>
 
                 {/* Full-Width 1-Column Table Part 1 */}
-                <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '10px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
+                <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
                   <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
                     <thead>
-                      <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        <th style={{ padding: '10px 12px', textAlign: 'center', width: '50px', borderRight: '1px solid #2d4a6f' }}>No</th>
-                        <th style={{ padding: '10px 14px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
-                        <th style={{ padding: '10px 12px', textAlign: 'center', width: '85px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
-                        <th style={{ padding: '10px 12px', textAlign: 'center', width: '95px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
+                      <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '11px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        <th style={{ padding: '5px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
+                        <th style={{ padding: '5px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
+                        <th style={{ padding: '5px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
+                        <th style={{ padding: '5px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -537,7 +537,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 </div>
 
                 {/* Footer Part 1 */}
-                <div style={{ paddingTop: '10px', marginTop: '10px', borderTop: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '11px', color: '#475569' }}>
+                <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '10px', color: '#475569' }}>
                   <span>Halaman 2 dari {totalPages} • Transkrip Kurikulum Modul Pembelajaran AI Navigator</span>
                   <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</span>
                 </div>
@@ -551,40 +551,40 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
                 style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
               >
-                <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '24px' }}>
+                <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '16px 20px' }}>
                   {/* Header */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '2.5px solid #1e3a5f', marginBottom: '14px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '2px solid #1e3a5f', marginBottom: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <img
                       src="https://cms.maxy.academy/uploads/LogoMaxyBgWhite.png"
                       crossOrigin="anonymous"
                       alt="Maxy Academy Logo"
-                      style={{ height: '34px', width: 'auto', objectFit: 'contain' }}
+                      style={{ height: '26px', width: 'auto', objectFit: 'contain' }}
                     />
                       <div>
-                        <div style={{ fontSize: '16px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        <div style={{ fontSize: '14px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                           Transkrip Kurikulum Modul Pembelajaran (Bagian 2)
                         </div>
-                        <div style={{ fontSize: '11.5px', color: '#475569', marginTop: '2px', fontWeight: 600 }}>
+                        <div style={{ fontSize: '10.5px', color: '#475569', marginTop: '1px', fontWeight: 600 }}>
                           Lampiran Resmi Certificate of Completion – AI Navigator ({userTier === 'tier2' ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
                         </div>
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '13px', fontWeight: 900, color: '#1e3a5f' }}>{userName || 'Siswa AI Navigator'}</div>
-                      <div style={{ fontSize: '10.5px', color: '#475569', fontFamily: 'monospace', fontWeight: 700 }}>{certNumber || 'No. 0255/AIN/NAV/2026'}</div>
+                      <div style={{ fontSize: '12px', fontWeight: 900, color: '#1e3a5f' }}>{userName || 'Siswa AI Navigator'}</div>
+                      <div style={{ fontSize: '10px', color: '#475569', fontFamily: 'monospace', fontWeight: 700 }}>{certNumber || 'No. 0255/AIN/NAV/2026'}</div>
                     </div>
                   </div>
 
                   {/* Full-Width 1-Column Table Part 2 */}
-                  <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '10px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
+                  <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
                     <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
                       <thead>
-                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                          <th style={{ padding: '10px 12px', textAlign: 'center', width: '50px', borderRight: '1px solid #2d4a6f' }}>No</th>
-                          <th style={{ padding: '10px 14px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
-                          <th style={{ padding: '10px 12px', textAlign: 'center', width: '85px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
-                          <th style={{ padding: '10px 12px', textAlign: 'center', width: '95px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
+                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '11px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
+                          <th style={{ padding: '5px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
+                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
+                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -595,20 +595,20 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
                   {/* Footer Part 2 or Summary */}
                   {part3Modules.length > 0 ? (
-                    <div style={{ paddingTop: '10px', marginTop: '10px', borderTop: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '11px', color: '#475569' }}>
+                    <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '10px', color: '#475569' }}>
                       <span>Halaman 3 dari {totalPages} • Transkrip Kurikulum Modul Pembelajaran AI Navigator</span>
                       <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</span>
                     </div>
                   ) : (
-                    <div style={{ paddingTop: '12px', marginTop: '12px', borderTop: '2px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <div style={{ fontSize: '11.5px', color: '#334155', lineHeight: 1.5 }}>
-                        <div>* Total Beban Belajar: <strong style={{ color: '#1e3a5f', fontSize: '12px' }}>{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur &amp; evaluasi).</div>
+                    <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '2px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ fontSize: '10.5px', color: '#334155', lineHeight: 1.4 }}>
+                        <div>* Total Beban Belajar: <strong style={{ color: '#1e3a5f', fontSize: '11px' }}>{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur &amp; evaluasi).</div>
                         <div>* Status Kelulusan: <strong style={{ color: '#047857' }}>100% LULUS TERVERIFIKASI</strong>.</div>
                       </div>
 
                       <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</div>
-                        <div style={{ fontSize: '11.5px', color: '#b45309', fontWeight: 800, marginTop: '2px' }}>Maxy Academy — Executive Education Board</div>
+                        <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</div>
+                        <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight: 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
                       </div>
                     </div>
                   )}
@@ -623,40 +623,40 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 className="w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
                 style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
               >
-                <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '24px' }}>
+                <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '16px 20px' }}>
                   {/* Header */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '2.5px solid #1e3a5f', marginBottom: '14px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '2px solid #1e3a5f', marginBottom: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <img
                       src="https://cms.maxy.academy/uploads/LogoMaxyBgWhite.png"
                       crossOrigin="anonymous"
                       alt="Maxy Academy Logo"
-                      style={{ height: '34px', width: 'auto', objectFit: 'contain' }}
+                      style={{ height: '26px', width: 'auto', objectFit: 'contain' }}
                     />
                       <div>
-                        <div style={{ fontSize: '16px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        <div style={{ fontSize: '14px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                           Transkrip Kurikulum Modul Pembelajaran (Bagian 3)
                         </div>
-                        <div style={{ fontSize: '11.5px', color: '#475569', marginTop: '2px', fontWeight: 600 }}>
+                        <div style={{ fontSize: '10.5px', color: '#475569', marginTop: '1px', fontWeight: 600 }}>
                           Lampiran Resmi Certificate of Completion – AI Navigator (Tier 2 VIP Master)
                         </div>
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '13px', fontWeight: 900, color: '#1e3a5f' }}>{userName || 'Siswa AI Navigator'}</div>
-                      <div style={{ fontSize: '10.5px', color: '#475569', fontFamily: 'monospace', fontWeight: 700 }}>{certNumber || 'No. 0255/AIN/NAV/2026'}</div>
+                      <div style={{ fontSize: '12px', fontWeight: 900, color: '#1e3a5f' }}>{userName || 'Siswa AI Navigator'}</div>
+                      <div style={{ fontSize: '10px', color: '#475569', fontFamily: 'monospace', fontWeight: 700 }}>{certNumber || 'No. 0255/AIN/NAV/2026'}</div>
                     </div>
                   </div>
 
                   {/* Full-Width 1-Column Table Part 3 */}
-                  <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '10px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
+                  <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
                     <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
                       <thead>
-                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                          <th style={{ padding: '10px 12px', textAlign: 'center', width: '50px', borderRight: '1px solid #2d4a6f' }}>No</th>
-                          <th style={{ padding: '10px 14px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
-                          <th style={{ padding: '10px 12px', textAlign: 'center', width: '85px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
-                          <th style={{ padding: '10px 12px', textAlign: 'center', width: '95px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
+                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '11px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
+                          <th style={{ padding: '5px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
+                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
+                          <th style={{ padding: '5px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -666,15 +666,15 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   </div>
 
                   {/* Summary & Legal Verification Footer */}
-                  <div style={{ paddingTop: '12px', marginTop: '12px', borderTop: '2px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ fontSize: '11.5px', color: '#334155', lineHeight: 1.5 }}>
-                      <div>* Total Beban Belajar: <strong style={{ color: '#1e3a5f', fontSize: '12px' }}>{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur &amp; evaluasi).</div>
+                  <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '2px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div style={{ fontSize: '10.5px', color: '#334155', lineHeight: 1.4 }}>
+                      <div>* Total Beban Belajar: <strong style={{ color: '#1e3a5f', fontSize: '11px' }}>{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur &amp; evaluasi).</div>
                       <div>* Status Kelulusan: <strong style={{ color: '#047857' }}>100% LULUS TERVERIFIKASI</strong>.</div>
                     </div>
 
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</div>
-                      <div style={{ fontSize: '11.5px', color: '#b45309', fontWeight: 800, marginTop: '2px' }}>Maxy Academy — Executive Education Board</div>
+                      <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</div>
+                      <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight: 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
                     </div>
                   </div>
                 </div>
