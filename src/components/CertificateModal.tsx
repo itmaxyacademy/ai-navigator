@@ -46,6 +46,15 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const [certWidth, setCertWidth] = useState(850);
 
   React.useEffect(() => {
+    if (isOpen) {
+      setIsVerified(false);
+      setCertUuid('');
+      setCertNumber('');
+      setVerifyUrl('');
+    }
+  }, [isOpen, certType]);
+
+  React.useEffect(() => {
     if (!page1Ref.current) return;
     const observer = new ResizeObserver((entries) => {
       if (entries[0]) {
