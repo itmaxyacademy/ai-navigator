@@ -149,6 +149,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     }
   }
 
+  const hasCustomCapstoneCanvasObj = templateObjects.length > 0 && templateObjects.some(
+    (obj: any) => obj.id === 'CAPSTONE_TITLE' || obj.id === 'CAPSTONE' || (typeof obj.text === 'string' && (obj.text.includes('Judul Capstone') || obj.text.includes('CAPSTONE_TITLE')))
+  );
+
   const isTier1 = !hasTier2;
   const displayModules = isTier1 ? MODULES_DATA.slice(0, 22) : MODULES_DATA;
 
@@ -475,12 +479,14 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       const isNameObj = obj.id === 'NAME' || (typeof obj.text === 'string' && obj.text.includes('Nama Siswa'));
                       const isCertNumObj = obj.id === 'NO_SERTIF' || (typeof obj.text === 'string' && obj.text.includes('No. 0255'));
                       const isDateObj = obj.id === 'DATE' || (typeof obj.text === 'string' && obj.text.includes('Jakarta,'));
+                      const isCapstoneTitleObj = obj.id === 'CAPSTONE_TITLE' || obj.id === 'CAPSTONE' || (typeof obj.text === 'string' && (obj.text.includes('Judul Capstone') || obj.text.includes('CAPSTONE_TITLE')));
 
                       let content = obj.text || '';
                       if (isNameObj) content = userName || 'Siswa AI Navigator';
                       else if (isUuidObj) content = certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb';
                       else if (isCertNumObj) content = certNumber || 'No. 0255/AIN/NAV/2026';
                       else if (isDateObj) content = todayStr;
+                      else if (isCapstoneTitleObj) content = capstoneTitle ? `Judul Capstone: ${capstoneTitle}` : '';
 
                       // Canvas editor (Fabric.js 850x600) stores top/left as pixel coords
                       let isCentered = obj.textAlign === 'center' || obj.originX === 'center';
@@ -541,7 +547,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       </div>
                     </>
                   )}
-                  {capstoneTitle && (
+                  {capstoneTitle && !hasCustomCapstoneCanvasObj && (
                     <div
                       className="absolute whitespace-nowrap pointer-events-none z-10 text-center"
                       style={{
