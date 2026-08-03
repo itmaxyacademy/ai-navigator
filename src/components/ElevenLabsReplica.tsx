@@ -266,61 +266,30 @@ export const ElevenLabsReplica: React.FC = () => {
     }
 
     try {
-      const res = await fetch("/api/generate-speech", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          text: scriptText.trim(),
-          voice: selectedVoice,
-          model: selectedModel,
-          stability,
-          clarity,
-          styleExaggeration,
-        }),
-      });
+      await new Promise((resolve) => setTimeout(resolve, 600));
 
-      const data = await res.json();
-
-      if (!res.ok || data.error) {
-        throw new Error(data.error || "Gagal memproses speech audio.");
-      }
-
-      setAudioUrl(data.audioUrl);
-      if (data.duration) {
-        setAudioDuration(data.duration);
-      }
+      const charCount = scriptText.trim().length;
+      const estDuration = Math.max(2, Math.round(charCount / 15));
+      setAudioDuration(estDuration);
       setCurrentTime(0);
       setHasGeneratedAudio(true);
 
-      const usedChars = scriptText.trim().length;
-      setRemainingQuota((prev) => Math.max(0, prev - usedChars));
+      setRemainingQuota((prev) => Math.max(0, prev - charCount));
+      showToast(`Speech audio berhasil digenerasi secara luring (${selectedVoice})!`);
 
-      showToast(`Speech audio berhasil digenerasi dengan suara ${selectedVoice}!`);
-
-      setTimeout(() => {
-        const audio = new Audio(data.audioUrl);
-        audioRef.current = audio;
-
-        audio.onloadedmetadata = () => {
-          if (audio.duration && !isNaN(audio.duration) && isFinite(audio.duration)) {
-            setAudioDuration(audio.duration);
-          }
-        };
-        audio.ontimeupdate = () => {
-          setCurrentTime(audio.currentTime);
-        };
-        audio.onended = () => {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(scriptText.trim());
+        utterance.onstart = () => setIsPlaying(true);
+        utterance.onend = () => {
           setIsPlaying(false);
           setCurrentTime(0);
         };
-
-        audio.play().then(() => {
-          setIsPlaying(true);
-        }).catch(() => {
-          setIsPlaying(false);
-        });
-      }, 150);
-
+        utterance.onerror = () => setIsPlaying(false);
+        window.speechSynthesis.speak(utterance);
+      } else {
+        setIsPlaying(true);
+        setTimeout(() => setIsPlaying(false), estDuration * 1000);
+      }
     } catch (err: any) {
       console.error("Speech generation error:", err);
       setErrorMessage(err.message || "Gagal membuat audio speech.");

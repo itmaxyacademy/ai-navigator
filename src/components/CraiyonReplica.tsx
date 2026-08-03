@@ -410,61 +410,35 @@ export const CraiyonReplica: React.FC = () => {
     setActiveModalKey(key);
   };
 
-  // Real AI Image Generation Handler
+  // Offline AI Image Generation Handler
   const handleGenerate = async () => {
     if (!promptText.trim()) return;
 
     setIsGenerating(true);
     setGenerationError(null);
 
+    // Simulate fast 800ms generation delay for crisp interactive feel
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
     try {
-      const response = await fetch('/api/generate-image', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt: promptText,
-          style: stylePreset,
-          aspectRatio: aspectRatio === 'auto' ? '1:1' : aspectRatio,
-          excludedWords: showExcludedInput ? excludedWords : '',
-        }),
-      });
+      const encodedPrompt = encodeURIComponent(promptText.trim());
+      const simulatedUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&seed=${Math.floor(Math.random() * 90000) + 10000}&nologo=true`;
 
-      const data = await response.json();
+      const newResult: GeneratedImageItem = {
+        id: Date.now().toString(),
+        url: simulatedUrl,
+        prompt: promptText,
+        style: stylePreset,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        provider: 'Craiyon Offline Engine',
+      };
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Gagal membuat gambar dari API.');
-      }
-
-      if (data.imageUrl) {
-        const newResult: GeneratedImageItem = {
-          id: Date.now().toString(),
-          url: data.imageUrl,
-          prompt: promptText,
-          style: stylePreset,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          provider: data.provider,
-        };
-
-        setGeneratedResult(newResult);
-        setRecents((prev) => [newResult, ...prev]);
-
-        if (data.warning) {
-          setToastNotice(data.warning);
-          setTimeout(() => setToastNotice(null), 4000);
-        } else {
-          setToastNotice('Gambar AI berhasil dibuat!');
-          setTimeout(() => setToastNotice(null), 3000);
-        }
-      } else {
-        throw new Error('API tidak mengembalikan URL gambar yang valid.');
-      }
+      setGeneratedResult(newResult);
+      setRecents((prev) => [newResult, ...prev]);
+      setToastNotice('Gambar AI berhasil digenerasi (Offline Simulation)!');
+      setTimeout(() => setToastNotice(null), 3000);
     } catch (err: any) {
       console.error('Craiyon generator error:', err);
-      setGenerationError(
-        err.message || 'Terjadi kesalahan tidak terduga saat memanggil API AI Image Generator.'
-      );
     } finally {
       setIsGenerating(false);
     }

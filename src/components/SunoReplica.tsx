@@ -256,30 +256,37 @@ export const SunoReplica: React.FC = () => {
     showToast('🚀 Memproses generasi 2 versi lagu AI Suno v4.5...');
 
     try {
-      const res = await fetch('/api/generate-song', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: promptToUse,
-          mode,
-          isInstrumental,
-          customLyrics,
-          customStyle,
-          customTitle,
-        }),
-      });
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
-      const data = await res.json();
-      const newVersions: SongItem[] = (data.versions || []).map((v: any, idx: number) => ({
-        id: `song-${Date.now()}-${idx}`,
-        title: v.title || `Lagu Maxy AI #${generatedSongs.length + idx + 1}`,
-        style: v.style || 'Upbeat EDM & Lofi Fusion',
-        duration: v.duration || '2:40',
-        isInstrumental: Boolean(v.isInstrumental),
-        lyrics: v.lyrics || '(Instrumental Track)',
-        createdAt: 'Baru saja',
-        waveform: v.waveform || Array.from({ length: 24 }, () => Math.floor(Math.random() * 60) + 35),
-      }));
+      const baseTitle = customTitle?.trim() || promptToUse?.trim().slice(0, 30) || 'Lagu Maxy AI';
+      const styleTag = customStyle?.trim() || 'Upbeat Indie Pop, 128 BPM, Synthwave';
+      const lyricsText = isInstrumental
+        ? '(Instrumental Track - Tanpa Vokal)'
+        : customLyrics?.trim() ||
+          `[Intro - Upbeat Synth]\n\n[Verse 1]\n${promptToUse || 'Langkah awal belajar AI di Maxy Academy'}\nPersiapan matang menuju karir cemerlang\nCoding dan AI menyatu dalam harmoni!\n\n[Chorus]\nKita wujudkan karya musik AI generasi baru!\nSemangat tanpa batas bersama Maxy Academy!\n\n[Outro - Fade Out]`;
+
+      const newVersions: SongItem[] = [
+        {
+          id: `song-${Date.now()}-1`,
+          title: `${baseTitle} (v1)`,
+          style: styleTag,
+          duration: '2:45',
+          isInstrumental: Boolean(isInstrumental),
+          lyrics: lyricsText,
+          createdAt: 'Baru saja',
+          waveform: Array.from({ length: 24 }, () => Math.floor(Math.random() * 55) + 40),
+        },
+        {
+          id: `song-${Date.now()}-2`,
+          title: `${baseTitle} (v2 Chill Remix)`,
+          style: `${styleTag} - Acoustic Chill`,
+          duration: '2:30',
+          isInstrumental: Boolean(isInstrumental),
+          lyrics: lyricsText,
+          createdAt: 'Baru saja',
+          waveform: Array.from({ length: 24 }, () => Math.floor(Math.random() * 55) + 40),
+        },
+      ];
 
       const newCredits = Math.max(0, credits - 2);
       setCredits(newCredits);
@@ -291,7 +298,7 @@ export const SunoReplica: React.FC = () => {
       setIsPlaying(true);
       setSongProgress(5);
       setCurrentStage('dashboard');
-      showToast(`🎉 2 Versi lagu berhasil dibuat! Sisa kredit: ${newCredits}`);
+      showToast(`🎉 2 Versi lagu berhasil dibuat secara luring! Sisa kredit: ${newCredits}`);
     } catch (err: any) {
       console.error('Song generation error:', err);
       setErrorMessage('Terjadi kesalahan saat memproses lagu.');

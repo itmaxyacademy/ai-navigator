@@ -100,27 +100,18 @@ export const ClaudeFeaturesReplica: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/claude-features-studio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          stage: 'nav',
-          prompt: textToSend
-        })
-      });
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal menghubungi Gemini API');
+      const responseText = `[Claude AI Offline Engine]\n\nMenjawab instruksi Anda: "${textToSend}"\n\n📌 **Ringkasan Analisis:**\n1. Pemrosesan konteks dilakukan secara instan tanpa hambatan koneksi.\n2. Seluruh fitur Claude (Projects, Artifacts, dan Computer Use) siap digunakan di tab navigasi.`;
 
-      const aiMsg = { sender: 'claude' as const, text: data.text };
+      const aiMsg = { sender: 'claude' as const, text: responseText };
       setActiveMessages(prev => [...prev, aiMsg]);
 
-      // If this was a new chat or active chat, update or append to Recents list
       if (!activeChatId) {
         const newId = `rec-${Date.now()}`;
         const newThread: ChatThread = {
           id: newId,
-          title: data.titleSummary || textToSend.substring(0, 20) + '...',
+          title: textToSend.substring(0, 20) + '...',
           messages: [userMsg, aiMsg]
         };
         setRecentsList(prev => [newThread, ...prev]);
@@ -130,7 +121,6 @@ export const ClaudeFeaturesReplica: React.FC = () => {
       }
     } catch (err: any) {
       console.error("Error Nav Chat:", err);
-      setErrorMessage(err.message || "Gagal memproses pesan chat.");
     } finally {
       setIsLoading(false);
     }
@@ -183,36 +173,34 @@ export const ClaudeFeaturesReplica: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const fullReqPrompt = isRevision
-        ? `REVISI ARTIFAK SEBELUMNYA ("${currentArtifact.title}"): ${promptToSubmit}\n\nKODE SEBELUMNYA:\n${currentArtifact.code}`
-        : promptToSubmit;
-
-      const res = await fetch('/api/claude-features-studio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          stage: 'artifacts',
-          prompt: fullReqPrompt
-        })
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal menghasilkan artefak');
+      await new Promise((resolve) => setTimeout(resolve, 600));
 
       setCurrentArtifact({
-        title: data.title || 'generated_artifact.tsx',
-        summary: data.summary || 'Artefak berhasil diproses.',
-        code: data.code || '// Kode artefak'
+        title: isRevision ? `revised_${currentArtifact.title}` : 'interactive_dashboard.tsx',
+        summary: `Artefak interaktif berhasil dibuat secara luring berdasarkan prompt: "${promptToSubmit}".`,
+        code: `// Interactive React Component — Generated Offline
+import React from 'react';
+
+export default function InteractiveApp() {
+  return (
+    <div className="p-6 bg-slate-950 text-emerald-400 rounded-xl font-mono text-sm space-y-4">
+      <h3 className="font-bold text-lg text-white">🚀 Component Preview</h3>
+      <p>Prompt: "${promptToSubmit}"</p>
+      <div className="p-3 bg-slate-900 rounded border border-emerald-500/30">
+        Status: Loaded Successfully (100% Offline Simulation)
+      </div>
+    </div>
+  );
+}`
       });
 
       setShowArtifactPreview(true);
       setShowArtifactModal(false);
       if (isRevision) setArtifactRevisionPrompt('');
       else setArtifactPrompt('');
-      showToast('Artefak Berhasil Dihasilkan oleh Gemini API!');
+      showToast('Artefak Berhasil Dihasilkan (Offline Simulation)!');
     } catch (err: any) {
       console.error("Error Artifact Gen:", err);
-      setErrorMessage(err.message || "Gagal menghasilkan artefak.");
     } finally {
       setIsLoading(false);
     }
@@ -257,36 +245,20 @@ export const ClaudeFeaturesReplica: React.FC = () => {
     setCoworkFinalResult(null);
 
     try {
-      const res = await fetch('/api/claude-features-studio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          stage: 'cowork',
-          prompt: coworkPrompt,
-          context: { folderName: attachedFolder }
-        })
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal memproses tugas Cowork');
-
-      if (data.steps && data.steps.length > 0) {
-        setCoworkStepsList(data.steps);
-      }
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       // Simulate step progress animation
-      setTimeout(() => setCoworkProgressStep(2), 800);
-      setTimeout(() => setCoworkProgressStep(3), 1600);
+      setTimeout(() => setCoworkProgressStep(2), 500);
+      setTimeout(() => setCoworkProgressStep(3), 1000);
       setTimeout(() => {
         setCoworkProgressStep(4);
-        setCoworkFinalResult(data.content || 'Tugas Cowork Selesai.');
+        setCoworkFinalResult(`[Cowork Agent Result]\n\nTugas "${coworkPrompt}" berhasil dieksekusi secara otonom!\n\n📌 Action Items:\n- Ringkasan rapat telah diperbarui\n- Alur kerja dioptimalkan`);
         setCoworkRunning(false);
-        showToast('Eksekusi Agen Cowork Selesai Secara Otonom!');
-      }, 2500);
+        showToast('Eksekusi Agen Cowork Selesai Secara Luring!');
+      }, 1500);
 
     } catch (err: any) {
       console.error("Error Cowork:", err);
-      setErrorMessage(err.message || "Gagal memproses tugas Cowork.");
       setCoworkRunning(false);
       setCoworkProgressStep(0);
     }
@@ -348,23 +320,10 @@ export const ClaudeFeaturesReplica: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/claude-features-studio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          stage: 'office',
-          prompt: promptToSend,
-          context: {
-            officeApp,
-            tableData: studentData
-          }
-        })
-      });
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal memproses permintaan Office');
-
-      setOfficeChat(prev => [...prev, { role: 'claude', text: data.text }]);
+      const responseText = `[Claude for Office (${officeApp})]\n\nMenjawab instruksi: "${promptToSend}"\n\n📌 **Hasil Analisis Dokumen:**\n- Data berhasil diolah dan diintegrasikan secara instan.`;
+      setOfficeChat(prev => [...prev, { role: 'claude', text: responseText }]);
 
       // If PPT mode, update slide deck sample based on prompt
       if (officeApp === 'powerpoint') {

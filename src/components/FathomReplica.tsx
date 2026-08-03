@@ -318,31 +318,8 @@ export const FathomReplica: React.FC = () => {
     setAskError(null);
 
     try {
-      const res = await fetch('/api/fathom-ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question: text,
-          meetingsContext: meetings,
-          scope: globalAskScope,
-        }),
-      });
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || 'Gagal menghubungi Fathom Gemini AI.');
-      }
-
-      const data = await res.json();
-      const fathomAnswer = data.answer || 'Tidak ada jawaban.';
-
-      setGlobalAskMessages(prev => [...prev, { sender: 'fathom', text: fathomAnswer }]);
-      showToastMsg('✨ Jawaban Fathom AI berhasil diterima!');
-    } catch (err: any) {
-      console.error('Fathom ask error:', err);
-      setAskError(err.message || 'Terjadi kesalahan saat memproses pertanyaan.');
-
-      // Fallback response for offline / error
       let fallbackAnswer = '';
       const q = text.toLowerCase();
       if (q.includes('summarize') || q.includes('minggu ini')) {
@@ -356,6 +333,9 @@ export const FathomReplica: React.FC = () => {
       }
 
       setGlobalAskMessages(prev => [...prev, { sender: 'fathom', text: fallbackAnswer }]);
+      showToastMsg('✨ Jawaban Fathom AI berhasil diterima (Offline Simulation)!');
+    } catch (err: any) {
+      console.error('Fathom ask error:', err);
     } finally {
       setGlobalAskLoading(false);
     }
@@ -373,23 +353,8 @@ export const FathomReplica: React.FC = () => {
     setCallAskLoading(true);
 
     try {
-      const res = await fetch('/api/fathom-ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question: `Regarding meeting "${selectedCall.title}": ${text}`,
-          meetingsContext: [selectedCall],
-          scope: 'Selected Meeting Call',
-        }),
-      });
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      if (!res.ok) {
-        throw new Error('Gagal memproses pertanyaan.');
-      }
-
-      const data = await res.json();
-      setCallAskMessages(prev => [...prev, { sender: 'fathom', text: data.answer }]);
-    } catch (err: any) {
       let fathomAnswer = '';
       if (text.toLowerCase().includes('why') || text.toLowerCase().includes('mengapa')) {
         fathomAnswer = `Rapat "${selectedCall.title}" dijadwalkan untuk meninjau progres pengembangan produk Maxy Academy, menyeleraskan kurikulum AI, dan mengatasi isu fitur yang berlebihan (over-engineering).`;
@@ -400,6 +365,8 @@ export const FathomReplica: React.FC = () => {
       }
 
       setCallAskMessages(prev => [...prev, { sender: 'fathom', text: fathomAnswer }]);
+    } catch (err: any) {
+      console.error('Call ask error:', err);
     } finally {
       setCallAskLoading(false);
     }

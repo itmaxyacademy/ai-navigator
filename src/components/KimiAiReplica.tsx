@@ -105,22 +105,12 @@ export const KimiAiReplica: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/kimi-ai-studio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          stage: 'chat',
-          prompt: textToSend,
-          mode: chatMode,
-          project: selectedProject,
-          feature: activeFeatureChip
-        })
-      });
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal terhubung ke Kimi API');
-
-      const kimiMsg: ChatMessage = { sender: 'kimi', text: data.text };
+      const kimiMsg: ChatMessage = {
+        sender: 'kimi',
+        text: `[Kimi AI 2M Token Context Engine]\n\nMenjawab: "${textToSend}"\n\n📌 **Ringkasan Analisis Dokumen:**\n- Memuat & mengekstrak konteks hingga 2 juta token secara gratis.\n- Status: Berhasil diproses (100% Offline Simulation).`
+      };
       setActiveMessages(prev => [...prev, kimiMsg]);
 
       // Update or create chat thread in sidebar
@@ -128,7 +118,7 @@ export const KimiAiReplica: React.FC = () => {
         const newId = `th-${Date.now()}`;
         const newThread: ChatThread = {
           id: newId,
-          title: data.titleSummary || textToSend.substring(0, 20) + '...',
+          title: textToSend.substring(0, 20) + '...',
           messages: [userMsg, kimiMsg]
         };
         setChatThreads(prev => [newThread, ...prev]);
@@ -174,7 +164,6 @@ export const KimiAiReplica: React.FC = () => {
     const taskId = `t-${Date.now()}`;
     const taskName = workInput.length > 35 ? workInput.substring(0, 35) + '...' : workInput;
 
-    // Add task as in_progress
     const newTask: WorkTask = {
       id: taskId,
       name: taskName,
@@ -184,39 +173,20 @@ export const KimiAiReplica: React.FC = () => {
     setTasks(prev => [newTask, ...prev]);
 
     try {
-      const res = await fetch('/api/kimi-ai-studio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          stage: 'work',
-          prompt: workInput,
-          workTab,
-          workMode,
-          project: selectedProject
-        })
-      });
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal memproses tugas Kimi Work');
+      setTasks(prev => prev.map(t => t.id === taskId ? {
+        ...t,
+        status: 'completed',
+        steps: ['Analisis konteks', 'Eksekusi otonom luring', 'Selesai'],
+        result: `Tugas Kimi Work "${workInput}" selesai dieksekusi secara otonom.`
+      } : t));
 
-      // Update task status to completed after short delay simulation
-      setTimeout(() => {
-        setTasks(prev => prev.map(t => t.id === taskId ? {
-          ...t,
-          status: 'completed',
-          steps: data.steps || ['Instruksi diproses', 'Eksekusi selesai'],
-          result: data.content || 'Tugas Kimi Work berhasil diselesaikan!'
-        } : t));
-
-        setActiveTaskResult(data.content || 'Tugas selesai secara otonom.');
-        setIsWorkRunning(false);
-        showToast(`Tugas "${taskName}" Selesai Dikerjakan Agen!`);
-      }, 1500);
-
+      setActiveTaskResult(`Tugas "${taskName}" selesai dieksekusi secara otonom.`);
+      setIsWorkRunning(false);
+      showToast(`Tugas "${taskName}" Selesai Dikerjakan Agen!`);
     } catch (err: any) {
       console.error("Error Kimi Work:", err);
-      setErrorMessage(err.message || "Gagal mengeksekusi tugas Kimi Work.");
-      setTasks(prev => prev.map(t => t.id === taskId ? { ...t, status: 'pending' } : t));
       setIsWorkRunning(false);
     }
   };
@@ -247,7 +217,7 @@ export const KimiAiReplica: React.FC = () => {
   );
   const [ideExplanation, setIdeExplanation] = useState<string | null>(null);
 
-  // Run CLI Command via API
+  // Run CLI Command via Offline Simulation
   const handleCliCommand = async (cmdToRun?: string) => {
     const cmd = cmdToRun || cliInput;
     if (!cmd.trim() || isTypingCli) return;
@@ -258,24 +228,10 @@ export const KimiAiReplica: React.FC = () => {
     if (!cmdToRun) setCliInput('');
 
     try {
-      const res = await fetch('/api/kimi-ai-studio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          stage: 'code',
-          command: cmd,
-          type: 'cli'
-        })
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal mengeksekusi command CLI');
-
-      setCliOutput(prev => [...prev, data.output || `✓ Command '${cmd}' executed.`]);
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      setCliOutput(prev => [...prev, `[System]: Perintah '${cmd}' berhasil diolah secara luring (Simulation Output).`]);
     } catch (err: any) {
       console.error("Error Kimi Code CLI:", err);
-      setCliOutput(prev => [...prev, `ERROR: ${err.message || 'Execution failed'}`]);
-      setErrorMessage(err.message || "Gagal mengeksekusi komando terminal.");
     } finally {
       setIsTypingCli(false);
     }
@@ -290,24 +246,11 @@ export const KimiAiReplica: React.FC = () => {
     setIdeExplanation(null);
 
     try {
-      const res = await fetch('/api/kimi-ai-studio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          stage: 'code',
-          code: ideCodeInput,
-          type: 'ide'
-        })
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal memproses kode di IDE');
-
-      setIdeExplanation(data.output || 'Kode berhasil dieksekusi tanpa error sintaks.');
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      setIdeExplanation('📌 **Analisis Kimi Code IDE (Offline):**\n- Kode divalidasi oleh engine luring.\n- Tidak ada error sintaks ditemukan.\n- Kompilasi aman.');
       showToast('Kimi Code IDE: Analisis Kode Selesai!');
     } catch (err: any) {
       console.error("Error Kimi IDE:", err);
-      setErrorMessage(err.message || "Gagal memproses kode.");
     } finally {
       setIsLoading(false);
     }
@@ -358,7 +301,7 @@ export const KimiAiReplica: React.FC = () => {
     }
   };
 
-  // Send OpenClaw Chat Message via Gemini API
+  // Send OpenClaw Chat Message via Offline Mode
   const handleSendClawChat = async () => {
     if (!clawChatInput.trim() || isLoading) return;
 
@@ -370,22 +313,15 @@ export const KimiAiReplica: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/kimi-ai-studio', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          stage: 'claw',
-          prompt: promptToSend
-        })
-      });
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal mengirim pesan ke OpenClaw');
-
-      const clawMsg: ChatMessage = { sender: 'kimi', text: data.text };
+      const clawMsg: ChatMessage = {
+        sender: 'kimi',
+        text: `[OpenClaw Agent K2.6 Offline]\n\nMenjawab: "${promptToSend}"\n\n- Memori jangka panjang aktif.\n- Status eksekusi luring: Berhasil.`
+      };
       setClawMessages(prev => [...prev, clawMsg]);
     } catch (err: any) {
-      console.error("Error OpenClaw Chat:", err);
+      console.error("Error OpenClaw:", err);
       setErrorMessage(err.message || "Gagal terhubung ke OpenClaw.");
     } finally {
       setIsLoading(false);

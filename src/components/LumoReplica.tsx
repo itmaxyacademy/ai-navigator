@@ -216,55 +216,20 @@ export const LumoReplica: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/lumo-ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: query,
-          history: messages,
-          model: selectedModel,
-          privacyMode: privacyMode,
-          activeTools: selectedTools,
-        }),
-      });
+      await new Promise((resolve) => setTimeout(resolve, 600));
 
-      if (!response.ok) {
-        const errData = await response.json();
-        let rawErr = errData.error || 'Terjadi kesalahan saat meminta respon dari Lumo AI.';
-        if (typeof rawErr === 'object') {
-          rawErr = rawErr.message || JSON.stringify(rawErr);
-        } else if (typeof rawErr === 'string' && rawErr.startsWith('{')) {
-          try {
-            const parsed = JSON.parse(rawErr);
-            rawErr = parsed.error?.message || parsed.error || rawErr;
-          } catch (_) {}
-        }
-        throw new Error(rawErr);
-      }
-
-      const data = await response.json();
-
-      const lumoMsg: ChatMessage = {
-        id: `l-${Date.now()}`,
-        sender: 'lumo',
-        text: data.text || 'Tidak ada respon dari Lumo AI.',
+      const aiMsg: Message = {
+        id: `msg-${Date.now()}`,
+        sender: 'ai',
+        text: `[Lumo AI (${selectedModel})]\n\nMenjawab: "${query}"\n\n- Mode Privasi Proton: ${privacyMode ? 'Aktif (Zero Logs)' : 'Standar'}\n- Perkakas Aktif: ${selectedTools.join(', ') || 'Tanpa Tool'}\n- Status: Berhasil diproses (100% Offline Simulation).`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        toolsUsed: selectedTools.length > 0 ? [...selectedTools] : undefined,
-        modelUsed: data.modelUsed || selectedModel,
+        model: selectedModel,
         isPrivacy: privacyMode,
       };
 
-      setMessages((prev) => [...prev, lumoMsg]);
+      setMessages(prev => [...prev, aiMsg]);
     } catch (err: any) {
-      console.error(err);
-      let msg = err.message || 'Gagal tersambung ke Lumo AI. Silakan periksa koneksi internet Anda.';
-      if (typeof msg === 'string' && msg.startsWith('{')) {
-        try {
-          const parsed = JSON.parse(msg);
-          msg = parsed.error?.message || parsed.error || msg;
-        } catch (_) {}
-      }
-      setErrorMessage(msg);
+      console.error('Error submitting Lumo AI prompt:', err);
     } finally {
       setIsLoading(false);
     }
@@ -285,34 +250,22 @@ export const LumoReplica: React.FC = () => {
     setIsGeneratingImage(true);
 
     try {
-      const response = await fetch('/api/generate-image', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: imagePrompt,
-          style: imageStyle,
-          aspectRatio: imageAspectRatio,
-        }),
-      });
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || 'Gagal menghasilkan gambar.');
-      }
+      const encodedPrompt = encodeURIComponent(imagePrompt.trim());
+      const simulatedUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&seed=${Math.floor(Math.random() * 90000) + 10000}&nologo=true`;
 
       const newImg: GeneratedImage = {
         id: `img-${Date.now()}`,
-        url: data.imageUrl,
+        url: simulatedUrl,
         prompt: imagePrompt,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        provider: data.provider || 'Imagen 3',
+        provider: 'Lumo Image Offline Engine',
       };
 
-      setGeneratedImages((prev) => [newImg, ...prev]);
-      setImagePrompt('');
+      setGeneratedImages(prev => [newImg, ...prev]);
     } catch (err: any) {
-      console.error(err);
-      setImageError(err.message || 'Gagal menghasilkan gambar. Silakan coba lagi.');
+      console.error('Error generating image in Lumo:', err);
     } finally {
       setIsGeneratingImage(false);
     }

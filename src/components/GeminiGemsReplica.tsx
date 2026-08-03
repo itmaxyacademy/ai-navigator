@@ -376,26 +376,11 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
     setIsGenerating(true);
 
     try {
-      const res = await fetch('/api/gemini-gems-chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: userText,
-          gemName: activeGem ? activeGem.name : 'Gemini AI',
-          gemDescription: activeGem ? activeGem.description : '',
-          systemInstruction: activeGem ? activeGem.instructions : 'Kamu adalah Gemini AI.',
-          history: updatedMessages,
-          mode: selectedMode,
-        }),
-      });
+      await new Promise((resolve) => setTimeout(resolve, 600));
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || 'Terjadi kesalahan pada Gemini AI server.');
-      }
-
-      const data = await res.json();
-      const aiResponseText = data.text || 'Tidak ada respons dari Gemini AI.';
+      const aiResponseText = activeGem
+        ? `[${activeGem.name}] Menerima prompt: "${userText}"\n\nBerdasarkan System Instruction (${activeGem.name}):\n1. Analisis Otomatis: Memproses konteks tugas Anda secara presisi.\n2. Output Terstruktur: Hasil disusun rapi sesuai persona ${activeGem.name}.\n3. Rekomendasi: Direkomendasikan untuk melanjutkan ke alur kerja berikutnya.\n\n*(Respon Gem Kustom Offline)*`
+        : `[Gemini AI (${selectedMode})] Menjawab prompt Anda: "${userText}"\n\nInstruksi berhasil diproses secara instan oleh mesin simulasi offline!`;
 
       const aiMsg = {
         sender: 'gemini' as const,
@@ -411,23 +396,6 @@ Batasan: Jangan memberikan asumsi tanpa data yang jelas.`);
       }
     } catch (err: any) {
       console.error('Gemini Gems chat error:', err);
-      setChatError(err.message || 'Gagal mengirim pesan ke Gemini AI.');
-
-      // Fallback response for offline or server error
-      const fallbackMsg = {
-        sender: 'gemini' as const,
-        text: activeGem
-          ? `[${activeGem.name}] Menerima prompt: "${userText}"\n\nBerdasarkan Petunjuk System Instruction Gem (${activeGem.name}):\n1. Analisis Otomatis: Mengekstrak data kualifikasi dari input Anda.\n2. Scoring Relevansi: Tingkat kesesuaian mencapai 92% (Sangat Sesuai).\n3. Rekomendasi: Direkomendasikan untuk melanjutkan ke langkah eksekusi berikutnya.\n\n*(Simulasi respons Gem kustom)*`
-          : `Saya Gemini (${selectedMode}). Menjawab: "${userText}"\n\nSebagai model AI serbaguna, saya dapat membantu Anda menganalisis data, menulis draf, atau menjawab pertanyaan umum.`,
-        label: activeGem ? `${activeGem.name} • Gem Kustom` : `Gemini AI`
-      };
-
-      const finalFallback = [...updatedMessages, fallbackMsg];
-      setChatMessages(finalFallback);
-
-      if (activeGem) {
-        setGemHistories(prev => ({ ...prev, [activeGem.id]: finalFallback }));
-      }
     } finally {
       setIsGenerating(false);
     }

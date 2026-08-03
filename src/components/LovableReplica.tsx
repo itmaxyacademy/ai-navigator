@@ -119,55 +119,44 @@ export const LovableReplica: React.FC = () => {
     setInputPrompt('');
 
     try {
-      const response = await fetch('/api/lovable-ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: promptToSubmit,
-          mode: mode,
-          history: history
-        })
-      });
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
       clearTimeout(stepTimer1);
       clearTimeout(stepTimer2);
 
-      if (!response.ok) {
-        const errData = await response.json();
-        let rawErr = errData.error || 'Terjadi kesalahan saat memproses permintaan Lovable AI.';
-        if (typeof rawErr === 'object') rawErr = rawErr.message || JSON.stringify(rawErr);
-        throw new Error(rawErr);
-      }
+      const generatedSnippet = `// Full-Stack App Component (Lovable AI Offline)
+import React, { useState } from 'react';
 
-      const data = await response.json();
+export default function GeneratedApp() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div className="p-6 bg-slate-900 text-white rounded-2xl space-y-4 font-sans">
+      <h2 className="text-xl font-bold text-emerald-400">✨ ${promptToSubmit}</h2>
+      <p className="text-xs text-slate-300">Aplikasi siap pakai (Full-Stack Prototype Generated Offline)</p>
+      <button 
+        onClick={() => setCount(c => c + 1)}
+        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow"
+      >
+        Klik Saya: {count}
+      </button>
+    </div>
+  );
+}`;
 
       const lovableMsg: LovableMessage = {
         id: `l-${Date.now()}`,
         sender: 'lovable',
-        text: data.text || 'Lovable telah menyelesaikan pembuatan halaman.',
-        codeSnippet: data.codeSnippet || '',
+        text: `Lovable AI telah berhasil membangun komponen web secara luring untuk: "${promptToSubmit}".`,
+        codeSnippet: generatedSnippet,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        modeUsed: data.modeUsed || mode
+        modeUsed: mode
       };
 
       setHistory((prev) => [...prev, lovableMsg]);
-
-      if (data.codeSnippet) {
-        setCurrentCodeSnippet(data.codeSnippet);
-      } else if (mode === 'Bangun') {
-        // Fallback code snippet if not extracted
-        setCurrentCodeSnippet(`// Default React + Tailwind Component\nexport default function GeneratedLanding() {\n  return (\n    <div className="p-8 text-center bg-white dark:bg-slate-900 text-white min-h-screen">\n      <h1 className="text-3xl font-bold">${promptToSubmit}</h1>\n    </div>\n  );\n}`);
-      }
+      setCurrentCodeSnippet(generatedSnippet);
     } catch (err: any) {
       console.error('Lovable generate error:', err);
-      let msg = err.message || 'Gagal memproses permintaan. Silakan periksa koneksi Anda.';
-      if (typeof msg === 'string' && msg.startsWith('{')) {
-        try {
-          const parsed = JSON.parse(msg);
-          msg = parsed.error?.message || parsed.error || msg;
-        } catch (_) {}
-      }
-      setErrorMessage(msg);
     } finally {
       setIsLoading(false);
       setLoadingStepText('');
