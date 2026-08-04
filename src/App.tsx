@@ -816,20 +816,70 @@ export default function App() {
     addFloatingXp(xpBonus, 'Checkpoint Mid-Module', 'xp_new');
   };
 
-  // Handle Tier Upgrade Selection via Payment API Checkout (Xendit Invoice)
+  // Handle Tier Upgrade Selection via Payment API Checkout (Xendit Invoice or Free Voucher Giveaway)
   const handleUpgradeTier = async (selectedTier: 'tier1' | 'tier2', voucherCode?: string, customAmount?: number) => {
     setIsPaymentLoading(true);
     setPaymentLoadingTier(selectedTier);
 
     try {
       const res = await checkoutUpgrade(selectedTier, customAmount, voucherCode);
+      const dataObj = res?.data?.data || res?.data || res;
       const invoiceUrl =
-        res?.data?.payment_url ||
-        res?.data?.invoice_url ||
-        res?.data?.data?.payment_url ||
-        res?.data?.data?.invoice_url ||
+        dataObj?.payment_url ||
+        dataObj?.invoice_url ||
         res?.payment_url ||
         res?.invoice_url;
+
+      // Check if order was activated directly for free (100% Discount / Giveaway Voucher)
+      const isPaidDirectly =
+        dataObj?.status === 'paid' ||
+        dataObj?.is_giveaway ||
+        res?.status === 'paid' ||
+        res?.is_giveaway ||
+        (dataObj?.amount === 0 && (res?.success || res?.status === 200));
+
+      if (isPaidDirectly) {
+        setUpgradeModalOpen(false);
+        setPaymentVerifyStatus('success');
+
+        // Immediate profile refetch to update tier & module access in React state
+        const token = localStorage.getItem('maxy_access_token');
+        if (token) {
+          fetchUserProfile(token).then((profileRes) => {
+            if (profileRes?.success && profileRes?.data) {
+              const sub = profileRes.data.subscription;
+              const user = profileRes.data.user;
+              const rawTier = sub?.active_tier || sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
+              const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
+              const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
+              const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
+              const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
+              const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
+
+              setProgress((prev) => ({
+                ...prev,
+                userTier,
+                tier: userTier,
+                maxAllowedModuleId: maxAllowed,
+                paidTiers,
+                hasTier1,
+                hasTier2,
+                userName: user?.name || prev.userName,
+                userEmail: user?.email || prev.userEmail,
+                packageName: sub?.package_name || prev.packageName,
+                subscriptionExpiredAt: sub?.expired_at || null,
+              }));
+            }
+          });
+        }
+
+        try {
+          confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 }, colors: ['#f59e0b', '#6366f1', '#10b981'] });
+        } catch (_) { /* ignore */ }
+
+        setTimeout(() => setPaymentVerifyStatus(null), 8000);
+        return;
+      }
 
       if (invoiceUrl) {
         window.location.href = invoiceUrl;
@@ -839,7 +889,7 @@ export default function App() {
       alert(res?.message || res?.error || 'Gagal membuat halaman pembayaran. Silakan coba lagi.');
     } catch (err) {
       console.error('Payment checkout error:', err);
-      alert('Terjadi kesalahan saat menghubungkan ke payment gateway.');
+      alert('Terjadi kesalahan saat memproses transaksi.');
     } finally {
       setIsPaymentLoading(false);
       setPaymentLoadingTier(null);

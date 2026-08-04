@@ -305,13 +305,15 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               className={`w-full py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 currentTier === 'tier1' || isLoading
                   ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
+                  : finalTier1PriceNum === 0
+                  ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-xl shadow-emerald-500/20 hover:scale-[1.02]'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-200 shadow-sm hover:scale-[1.02]'
               }`}
             >
               {loadingTier === 'tier1' ? (
-                <span>Memproses Pembayaran Xendit...</span>
+                <span>{finalTier1PriceNum === 0 ? 'Mengaktifkan Akses Gratis...' : 'Memproses Pembayaran Xendit...'}</span>
               ) : (
-                <span>{currentTier === 'tier1' ? 'Tier 1 Aktif' : `Pilih Tier 1 (${tier1Price})`}</span>
+                <span>{currentTier === 'tier1' ? 'Tier 1 Aktif' : finalTier1PriceNum === 0 ? '🎁 Klaim Gratis dengan Voucher (Rp 0)' : `Pilih Tier 1 (${tier1Price})`}</span>
               )}
             </button>
           </div>
@@ -397,13 +399,15 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               className={`w-full py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 currentTier === 'tier2' || isLoading
                   ? 'bg-slate-100 dark:bg-slate-800 text-slate-500 cursor-not-allowed'
+                  : finalTier2PriceNum === 0
+                  ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-xl shadow-emerald-500/20 hover:scale-[1.02]'
                   : 'bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-xl shadow-amber-400/20 hover:scale-[1.02]'
               }`}
             >
               {loadingTier === 'tier2' ? (
-                <span>Memproses Pembayaran Xendit...</span>
+                <span>{finalTier2PriceNum === 0 ? 'Mengaktifkan Akses Gratis...' : 'Memproses Pembayaran Xendit...'}</span>
               ) : (
-                <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : `Pilih Tier 2 (${tier2Price})`}</span>
+                <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : finalTier2PriceNum === 0 ? '🎁 Klaim Gratis dengan Voucher (Rp 0)' : `Pilih Tier 2 (${tier2Price})`}</span>
               )}
             </button>
           </div>
