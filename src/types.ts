@@ -117,6 +117,9 @@ export interface UserProgress {
   hasTier2?: boolean;
   userName?: string;   // Display name from API session
   userEmail?: string;  // Email from API session
+  userPhone?: string;  // Phone / WhatsApp number
+  userInstitution?: string; // University / Institution / Organization
+  hasDismissedOnboarding?: boolean; // Track if onboarding popup has been completed/dismissed
   packageName?: string; // e.g. 'Free Plan', 'Tier 1 - AI Practitioner', 'Tier 2 - VIP Master'
   subscriptionExpiredAt?: string | null; // ISO date string or null if no expiry
   completedModules: number[]; // Module IDs
@@ -135,6 +138,8 @@ export interface UserProgress {
   hasSeenCertPopup?: boolean; // track if user has seen certificate pop-up
   certName?: string;
   certEmail?: string;
+  certPhone?: string;
+  certInstitution?: string;
   certRequested?: boolean;
   capstoneSubmission?: CapstoneSubmission;
   adminOverrideAt?: string;

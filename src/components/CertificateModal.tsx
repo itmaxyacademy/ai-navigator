@@ -13,7 +13,7 @@ interface CertificateModalProps {
   onClose: () => void;
   progress: UserProgress;
   certType?: 'capstone' | 'completion';
-  onSaveCertDetails?: (name: string, email: string) => void;
+  onSaveCertDetails?: (name: string, email: string, phone?: string, institution?: string) => void;
   packages?: Record<string, { price: number; fake_price: number; name?: string; certificate_bg_image?: string | null }>;
 }
 
@@ -28,9 +28,13 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   // Prioritize logged-in user name from account over stored certName
   const actualUserName = (progress as any)?.userName || progress?.capstoneSubmission?.name || progress?.certName || '';
   const actualUserEmail = (progress as any)?.userEmail || progress?.capstoneSubmission?.email || progress?.certEmail || '';
+  const actualUserPhone = (progress as any)?.userPhone || progress?.certPhone || '';
+  const actualUserInstitution = (progress as any)?.userInstitution || progress?.certInstitution || '';
 
   const [userName, setUserName] = useState(actualUserName || '');
   const [userEmail, setUserEmail] = useState(actualUserEmail || '');
+  const [userPhone, setUserPhone] = useState(actualUserPhone || '');
+  const [userInstitution, setUserInstitution] = useState(actualUserInstitution || '');
   // Always show verification input form first before displaying certificate as requested
   const [isVerified, setIsVerified] = useState(false);
   const [certUuid, setCertUuid] = useState<string>('');
@@ -210,7 +214,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       setIsIssuing(false);
       setIsVerified(true);
       if (onSaveCertDetails) {
-        onSaveCertDetails(userName.trim(), userEmail.trim());
+        onSaveCertDetails(userName.trim(), userEmail.trim(), userPhone.trim(), userInstitution.trim());
       }
     }
   };
@@ -402,6 +406,36 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   onChange={(e) => setUserEmail(e.target.value)}
                   className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-medium"
                   placeholder="nama@domain.com"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-slate-700 dark:text-slate-200 block flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  Nomor WhatsApp / Telepon
+                </label>
+                <input
+                  type="tel"
+                  required
+                  value={userPhone}
+                  onChange={(e) => setUserPhone(e.target.value)}
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-medium"
+                  placeholder="08123456789"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-slate-700 dark:text-slate-200 block flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5 text-sky-400" />
+                  Asal Instansi / Universitas / Perusahaan
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={userInstitution}
+                  onChange={(e) => setUserInstitution(e.target.value)}
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-medium"
+                  placeholder="e.g. Universitas Indonesia / Maxy Academy"
                 />
               </div>
 

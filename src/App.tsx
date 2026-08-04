@@ -12,6 +12,7 @@ import { UpgradeModal } from './components/UpgradeModal';
 import { CapstoneModal } from './components/CapstoneModal';
 import { PaymentInvoiceModal } from './components/PaymentInvoiceModal';
 import { MilestoneCelebrationModal } from './components/MilestoneCelebrationModal';
+import { UserProfileModal } from './components/UserProfileModal';
 import { DevPanel } from './components/DevPanel';
 import { useTierAccess } from './hooks/useTierAccess';
 import { BADGES_LIST } from './lib/achievementsData';
@@ -111,10 +112,33 @@ export default function App() {
   const [isVerifyingPayment, setIsVerifyingPayment] = useState<boolean>(false);
   const [paymentVerifyStatus, setPaymentVerifyStatus] = useState<'success' | 'cancelled' | 'timeout' | null>(null);
   const [selectedCertType, setSelectedCertType] = useState<'capstone' | 'completion'>('capstone');
+  const [userProfileModalOpen, setUserProfileModalOpen] = useState<boolean>(false);
   const [milestoneModalState, setMilestoneModalState] = useState<{ isOpen: boolean; tierCompleted: 'tier1' | 'tier2' }>({
     isOpen: false,
     tierCompleted: 'tier1',
   });
+
+  // Trigger Onboarding Profile Modal ONLY IF user has missing details (e.g. Google OAuth login missing phone/institution)
+  // AND has NOT already completed/dismissed it
+  useEffect(() => {
+    if (!isAuthValidating && isCloudProgressLoaded) {
+      const isMissingInfo = !progress.userPhone || !progress.userInstitution || !progress.userName || !progress.userEmail;
+      if (isMissingInfo && !progress.hasDismissedOnboarding) {
+        const timer = setTimeout(() => {
+          setUserProfileModalOpen(true);
+        }, 1000);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [
+    isAuthValidating,
+    isCloudProgressLoaded,
+    progress.userPhone,
+    progress.userInstitution,
+    progress.userName,
+    progress.userEmail,
+    progress.hasDismissedOnboarding,
+  ]);
 
 
   useEffect(() => {
@@ -1141,6 +1165,39 @@ export default function App() {
         certType={selectedCertType}
         onSaveCertDetails={handleSaveCertDetails}
         packages={cmsPackages}
+      />
+
+      {/* Onboarding User Profile Modal (For Google OAuth or incomplete profiles) */}
+      <UserProfileModal
+        isOpen={userProfileModalOpen}
+        onClose={() => {
+          setUserProfileModalOpen(false);
+          setProgress((prev) => ({
+            ...prev,
+            hasDismissedOnboarding: true,
+          }));
+        }}
+        progress={progress}
+        onSaveProfile={(data) => {
+          setProgress((prev) => {
+            const next = {
+              ...prev,
+              userName: data.name,
+              userEmail: data.email,
+              userPhone: data.phone,
+              userInstitution: data.institution,
+              hasDismissedOnboarding: true,
+            };
+            const token = localStorage.getItem('maxy_access_token');
+            if (token) {
+              saveCloudProgress(token, next as unknown as Record<string, unknown>).catch((err) =>
+                console.error('Failed to save profile cloud progress:', err)
+              );
+            }
+            return next;
+          });
+          setUserProfileModalOpen(false);
+        }}
       />
 
       {/* Milestone Celebration Modal */}
