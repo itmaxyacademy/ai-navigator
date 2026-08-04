@@ -24,6 +24,7 @@ interface HeaderProps {
   onOpenUpgradeModal?: () => void;
   onOpenCapstoneModal?: () => void;
   onOpenInvoice?: () => void;
+  onOpenUserProfile?: () => void;
   allModulesCompleted: boolean;
   onManualSave: () => void;
   onExportJSON: () => void;
@@ -45,6 +46,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenNotes,
   onOpenUpgradeModal,
   onOpenInvoice,
+  onOpenUserProfile,
   allModulesCompleted,
   onManualSave,
   onExportJSON,
@@ -258,14 +260,21 @@ export const Header: React.FC<HeaderProps> = ({
                     {progress.userEmail && (
                       <p className="text-[10px] text-slate-600 dark:text-slate-300">{progress.userEmail}</p>
                     )}
-                    <p className="text-[10px] text-emerald-400 font-semibold pt-1 border-t border-slate-300 dark:border-slate-700">
-                      ✓ Akun Terhubung ke API Maxy
+                    {progress.userPhone && (
+                      <p className="text-[10px] text-slate-400">📞 {progress.userPhone}</p>
+                    )}
+                    {progress.userInstitution && (
+                      <p className="text-[10px] text-slate-400">🏢 {progress.userInstitution}</p>
+                    )}
+                    <p className="text-[10px] text-amber-400 font-semibold pt-1 border-t border-slate-300 dark:border-slate-700">
+                      ✏️ Klik untuk Edit Profil
                     </p>
                   </div>
                 }
               >
-                <div
-                  className={`hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-extrabold transition-all shadow-sm ${
+                <button
+                  onClick={onOpenUserProfile}
+                  className={`hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-extrabold transition-all shadow-sm cursor-pointer hover:border-amber-500 ${
                     theme === 'light'
                       ? 'bg-slate-100 border-slate-200 text-slate-800'
                       : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
@@ -275,7 +284,7 @@ export const Header: React.FC<HeaderProps> = ({
                     {progress.userName.charAt(0)}
                   </div>
                   <span className="truncate max-w-[120px]">{progress.userName}</span>
-                </div>
+                </button>
               </Tooltip>
             )}
 

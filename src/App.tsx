@@ -1103,6 +1103,7 @@ export default function App() {
         onOpenUpgradeModal={() => setUpgradeModalOpen(true)}
         onOpenCapstoneModal={() => setCapstoneModalOpen(true)}
         onOpenInvoice={() => setInvoiceModalOpen(true)}
+        onOpenUserProfile={() => setUserProfileModalOpen(true)}
         allModulesCompleted={allModulesCompleted}
         onManualSave={handleManualSave}
         onExportJSON={handleExportJSON}
