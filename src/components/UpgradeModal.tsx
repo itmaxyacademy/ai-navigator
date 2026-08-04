@@ -1,13 +1,14 @@
-import React from 'react';
-import { Lock, Sparkles, Check, X, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Lock, Sparkles, Check, X, Tag, CheckCircle2 } from 'lucide-react';
 import { UserTier } from '../types';
+import { verifyVoucher } from '../services/api';
 
 interface UpgradeModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentTier?: UserTier;
-  onUpgradeTier?: (tier: 'tier1' | 'tier2') => void;
-  onSelectTier?: (tier: 'tier1' | 'tier2') => void;
+  onUpgradeTier?: (tier: 'tier1' | 'tier2', voucherCode?: string, customAmount?: number) => void;
+  onSelectTier?: (tier: 'tier1' | 'tier2', voucherCode?: string, customAmount?: number) => void;
   targetModuleId?: number | null;
   isLoading?: boolean;
   loadingTier?: 'tier1' | 'tier2' | null;
@@ -25,17 +26,56 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   loadingTier = null,
   packages,
 }) => {
+  const [voucherInput, setVoucherInput] = useState('');
+  const [activeVoucher, setActiveVoucher] = useState<{ code: string; discountAmount: number; message?: string } | null>(null);
+  const [voucherError, setVoucherError] = useState<string | null>(null);
+  const [isVerifyingVoucher, setIsVerifyingVoucher] = useState(false);
+
   if (!isOpen) return null;
 
-  const tier1Price = packages?.tier1?.price ? `Rp ${packages.tier1.price.toLocaleString('id-ID')}` : 'Rp 49.500';
+  const rawTier1Price = packages?.tier1?.price ?? 49500;
   const tier1FakePrice = packages?.tier1?.fake_price ? `Rp ${packages.tier1.fake_price.toLocaleString('id-ID')}` : 'Rp 125.000';
 
-  const tier2Price = packages?.tier2?.price ? `Rp ${packages.tier2.price.toLocaleString('id-ID')}` : 'Rp 299.500';
+  const rawTier2Price = packages?.tier2?.price ?? 299500;
   const tier2FakePrice = packages?.tier2?.fake_price ? `Rp ${packages.tier2.fake_price.toLocaleString('id-ID')}` : 'Rp 750.000';
 
+  // Dynamic prices after voucher discount
+  const tier1Discount = activeVoucher ? activeVoucher.discountAmount : 0;
+  const finalTier1PriceNum = Math.max(0, rawTier1Price - tier1Discount);
+  const tier1Price = `Rp ${finalTier1PriceNum.toLocaleString('id-ID')}`;
+
+  const tier2Discount = activeVoucher ? activeVoucher.discountAmount : 0;
+  const finalTier2PriceNum = Math.max(0, rawTier2Price - tier2Discount);
+  const tier2Price = `Rp ${finalTier2PriceNum.toLocaleString('id-ID')}`;
+
+  const handleClaimVoucher = async () => {
+    setVoucherError(null);
+    const cleaned = voucherInput.trim().toUpperCase();
+    if (!cleaned) return;
+
+    setIsVerifyingVoucher(true);
+    const res = await verifyVoucher(cleaned, rawTier1Price);
+    setIsVerifyingVoucher(false);
+
+    if (res && (res.success || res.valid) && res.data && res.data.valid) {
+      const discount = typeof res.data.discount_amount === 'number' ? res.data.discount_amount : 0;
+      setActiveVoucher({
+        code: cleaned,
+        discountAmount: discount,
+        message: res.data.message || 'Voucher berhasil diterapkan!',
+      });
+    } else {
+      setActiveVoucher(null);
+      setVoucherError(res?.data?.message || res?.message || 'Kode voucher tidak valid atau sudah kadaluwarsa.');
+    }
+  };
+
   const handleSelect = (tier: 'tier1' | 'tier2') => {
-    if (onSelectTier) onSelectTier(tier);
-    else if (onUpgradeTier) onUpgradeTier(tier);
+    const code = activeVoucher ? activeVoucher.code : undefined;
+    const finalAmount = tier === 'tier1' ? finalTier1PriceNum : finalTier2PriceNum;
+
+    if (onSelectTier) onSelectTier(tier, code, finalAmount);
+    else if (onUpgradeTier) onUpgradeTier(tier, code, finalAmount);
   };
 
   return (
@@ -75,6 +115,43 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               </>
             )}
           </p>
+        </div>
+
+        {/* Voucher Claim Section */}
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-3.5 max-w-xl mx-auto w-full">
+          <div className="flex items-center gap-2 mb-2 text-xs font-bold text-amber-400">
+            <Tag className="w-4 h-4 text-amber-400" />
+            <span>Punya Kode Voucher / Promo? Klaim Di Sini</span>
+          </div>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={voucherInput}
+              onChange={(e) => setVoucherInput(e.target.value)}
+              placeholder="Masukkan kode voucher random..."
+              className="flex-1 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-xs font-mono uppercase text-slate-900 dark:text-white focus:outline-none focus:border-amber-400"
+            />
+            <button
+              onClick={handleClaimVoucher}
+              disabled={isVerifyingVoucher || !voucherInput.trim()}
+              className="px-4 py-2 bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-slate-950 font-bold text-xs rounded-xl transition-all cursor-pointer shadow-md"
+            >
+              {isVerifyingVoucher ? 'Memeriksa...' : 'Klaim Voucher'}
+            </button>
+          </div>
+          {activeVoucher && (
+            <div className="mt-2 text-xs text-emerald-400 font-semibold flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <span>
+                Voucher <code className="bg-emerald-500/20 px-1.5 py-0.5 rounded text-emerald-300">{activeVoucher.code}</code> berhasil diklaim! Diskon Rp {activeVoucher.discountAmount.toLocaleString('id-ID')} telah diterapkan.
+              </span>
+            </div>
+          )}
+          {voucherError && (
+            <div className="mt-2 text-xs text-rose-400 font-medium">
+              ⚠️ {voucherError}
+            </div>
+          )}
         </div>
 
         {/* Pricing & Tier Options (3-Column Layout from Foto Pertama) */}

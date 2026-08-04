@@ -131,21 +131,41 @@ export async function saveCloudProgress(token: string, progress: Record<string, 
   }
 }
 
-export async function checkoutUpgrade(tier: 'tier1' | 'tier2' | 'tier_1' | 'tier_2', amount?: number) {
+export async function verifyVoucher(code: string, amount?: number, packageId?: number) {
+  try {
+    const res = await fetch(`${API_BASE}/payments/verify-voucher`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code, amount, package_id: packageId }),
+    });
+    return await res.json();
+  } catch (err) {
+    console.error('API verifyVoucher failed:', err);
+    return { success: false, message: 'Gagal verifikasi voucher' };
+  }
+}
+
+export async function checkoutUpgrade(tier: 'tier1' | 'tier2' | 'tier_1' | 'tier_2', amount?: number, voucherCode?: string) {
   try {
     const isTier1 = tier === 'tier1' || tier === 'tier_1';
-    const finalAmount = amount || (isTier1 ? 49500 : 299500);
+    const finalAmount = amount !== undefined ? amount : (isTier1 ? 49500 : 299500);
     const description = `Upgrade Paket ${isTier1 ? 'Tier 1' : 'Tier 2'} AI Navigator`;
+
+    const payload: Record<string, any> = {
+      tier_key: isTier1 ? 'tier1' : 'tier2',
+      amount: finalAmount,
+      description,
+      redirect_url: typeof window !== 'undefined' ? `${window.location.origin}/app` : 'https://ainavigator.maxy.academy/app',
+    };
+
+    if (voucherCode) {
+      payload.voucher_code = voucherCode;
+    }
 
     const res = await fetchWithAuth(`${API_BASE}/payments/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        tier_key: isTier1 ? 'tier1' : 'tier2',
-        amount: finalAmount,
-        description,
-        redirect_url: typeof window !== 'undefined' ? `${window.location.origin}/app` : 'https://ainavigator.maxy.academy/app',
-      }),
+      body: JSON.stringify(payload),
     });
     const json = await res.json();
 

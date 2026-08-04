@@ -792,12 +792,12 @@ export default function App() {
   };
 
   // Handle Tier Upgrade Selection via Payment API Checkout (Xendit Invoice)
-  const handleUpgradeTier = async (selectedTier: 'tier1' | 'tier2') => {
+  const handleUpgradeTier = async (selectedTier: 'tier1' | 'tier2', voucherCode?: string, customAmount?: number) => {
     setIsPaymentLoading(true);
     setPaymentLoadingTier(selectedTier);
 
     try {
-      const res = await checkoutUpgrade(selectedTier);
+      const res = await checkoutUpgrade(selectedTier, customAmount, voucherCode);
       const invoiceUrl =
         res?.data?.payment_url ||
         res?.data?.invoice_url ||
