@@ -195,7 +195,10 @@ export async function fetchAiNavigatorPackages() {
 
     for (const url of endpoints) {
       try {
-        const res = await fetch(url);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2500);
+        const res = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
         if (res.ok) {
           const json = await res.json();
           if (json && json.data) {

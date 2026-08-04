@@ -6,36 +6,48 @@ import {
   Code2, Brain, Terminal, Eye, ExternalLink
 } from 'lucide-react';
 import { CourseModule, RCTFState } from '../types';
-import { ChatGPTReplica } from './ChatGPTReplica';
-import { ClaudeReplica } from './ClaudeReplica';
-import { GeminiReplica } from './GeminiReplica';
-import { PerplexityReplica } from './PerplexityReplica';
-import { CopilotReplica } from './CopilotReplica';
-import { MetaAIReplica } from './MetaAIReplica';
-import { DeepSeekReplica } from './DeepSeekReplica';
-import { GeminiNotebookReplica } from './GeminiNotebookReplica';
-import { GoogleFlowReplica } from './GoogleFlowReplica';
-import { LeonardoAIReplica } from './LeonardoAIReplica';
-import { GoogleStitchReplica } from './GoogleStitchReplica';
-import { StableDiffusionReplica } from './StableDiffusionReplica';
-import { OpenArtReplica } from './OpenArtReplica';
-import { CraiyonReplica } from './CraiyonReplica';
-import { ElevenLabsReplica } from './ElevenLabsReplica';
-import { SunoReplica } from './SunoReplica';
-import { GoogleAIStudioReplica } from './GoogleAIStudioReplica';
-import { TrebloReplica } from './TrebloReplica';
-import { FathomReplica } from './FathomReplica';
-import { GeminiGemsReplica } from './GeminiGemsReplica';
-import { MistralVibeReplica } from './MistralVibeReplica';
-import { ClaudeFeaturesReplica } from './ClaudeFeaturesReplica';
-import { KimiAiReplica } from './KimiAiReplica';
-import { LumoReplica } from './LumoReplica';
-import { LovableReplica } from './LovableReplica';
-import { GammaReplica } from './GammaReplica';
-import { ManusReplica } from './ManusReplica';
-import { NotionAiReplica } from './NotionAiReplica';
 import { MiniQuizCheckpoint } from './MiniQuizCheckpoint';
 import { getSectionCheckpointQuestion } from '../lib/miniQuizData';
+
+// Lazy loaded AI Tool Replicas for optimal initial page load speed
+const ChatGPTReplica = React.lazy(() => import('./ChatGPTReplica').then(m => ({ default: m.ChatGPTReplica })));
+const ClaudeReplica = React.lazy(() => import('./ClaudeReplica').then(m => ({ default: m.ClaudeReplica })));
+const GeminiReplica = React.lazy(() => import('./GeminiReplica').then(m => ({ default: m.GeminiReplica })));
+const PerplexityReplica = React.lazy(() => import('./PerplexityReplica').then(m => ({ default: m.PerplexityReplica })));
+const CopilotReplica = React.lazy(() => import('./CopilotReplica').then(m => ({ default: m.CopilotReplica })));
+const MetaAIReplica = React.lazy(() => import('./MetaAIReplica').then(m => ({ default: m.MetaAIReplica })));
+const DeepSeekReplica = React.lazy(() => import('./DeepSeekReplica').then(m => ({ default: m.DeepSeekReplica })));
+const GeminiNotebookReplica = React.lazy(() => import('./GeminiNotebookReplica').then(m => ({ default: m.GeminiNotebookReplica })));
+const GoogleFlowReplica = React.lazy(() => import('./GoogleFlowReplica').then(m => ({ default: m.GoogleFlowReplica })));
+const LeonardoAIReplica = React.lazy(() => import('./LeonardoAIReplica').then(m => ({ default: m.LeonardoAIReplica })));
+const GoogleStitchReplica = React.lazy(() => import('./GoogleStitchReplica').then(m => ({ default: m.GoogleStitchReplica })));
+const StableDiffusionReplica = React.lazy(() => import('./StableDiffusionReplica').then(m => ({ default: m.StableDiffusionReplica })));
+const OpenArtReplica = React.lazy(() => import('./OpenArtReplica').then(m => ({ default: m.OpenArtReplica })));
+const CraiyonReplica = React.lazy(() => import('./CraiyonReplica').then(m => ({ default: m.CraiyonReplica })));
+const ElevenLabsReplica = React.lazy(() => import('./ElevenLabsReplica').then(m => ({ default: m.ElevenLabsReplica })));
+const SunoReplica = React.lazy(() => import('./SunoReplica').then(m => ({ default: m.SunoReplica })));
+const GoogleAIStudioReplica = React.lazy(() => import('./GoogleAIStudioReplica').then(m => ({ default: m.GoogleAIStudioReplica })));
+const TrebloReplica = React.lazy(() => import('./TrebloReplica').then(m => ({ default: m.TrebloReplica })));
+const FathomReplica = React.lazy(() => import('./FathomReplica').then(m => ({ default: m.FathomReplica })));
+const GeminiGemsReplica = React.lazy(() => import('./GeminiGemsReplica').then(m => ({ default: m.GeminiGemsReplica })));
+const MistralVibeReplica = React.lazy(() => import('./MistralVibeReplica').then(m => ({ default: m.MistralVibeReplica })));
+const ClaudeFeaturesReplica = React.lazy(() => import('./ClaudeFeaturesReplica').then(m => ({ default: m.ClaudeFeaturesReplica })));
+const KimiAiReplica = React.lazy(() => import('./KimiAiReplica').then(m => ({ default: m.KimiAiReplica })));
+const LumoReplica = React.lazy(() => import('./LumoReplica').then(m => ({ default: m.LumoReplica })));
+const LovableReplica = React.lazy(() => import('./LovableReplica').then(m => ({ default: m.LovableReplica })));
+const GammaReplica = React.lazy(() => import('./GammaReplica').then(m => ({ default: m.GammaReplica })));
+const ManusReplica = React.lazy(() => import('./ManusReplica').then(m => ({ default: m.ManusReplica })));
+const NotionAiReplica = React.lazy(() => import('./NotionAiReplica').then(m => ({ default: m.NotionAiReplica })));
+
+const ReplicaLoadingFallback = () => (
+  <div className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center flex flex-col items-center justify-center min-h-[350px] shadow-lg animate-pulse">
+    <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center mb-3">
+      <Sparkles className="w-6 h-6 text-indigo-500 animate-spin" />
+    </div>
+    <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">Memuat Simulator Interactive AI...</p>
+    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Menyiapkan antarmuka modul yang dipilih</p>
+  </div>
+);
 
 interface InteractiveReplicaViewerProps {
   module: CourseModule;
@@ -282,6 +294,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Simulated Interface Replica (8 cols) */}
         <div className="lg:col-span-8 space-y-4">
+          <React.Suspense fallback={<ReplicaLoadingFallback />}>
           {module.id === 2 ? (
             <ChatGPTReplica />
           ) : module.id === 3 ? (
@@ -624,6 +637,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
             </div>
           </div>
           )}
+          </React.Suspense>
         </div>
 
         {/* Right Column: Feature Breakdown Cards (4 cols) */}

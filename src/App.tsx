@@ -103,6 +103,7 @@ export default function App() {
   const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
   const [activeInvoiceOrderId, setActiveInvoiceOrderId] = useState<string | null>(null);
   const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => !isLocalDevEnv);
+  const [isCloudProgressLoaded, setIsCloudProgressLoaded] = useState<boolean>(false);
   const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
   const [paymentLoadingTier, setPaymentLoadingTier] = useState<'tier1' | 'tier2' | null>(null);
   const [cmsPackages, setCmsPackages] = useState<Record<string, { price: number; fake_price: number; name?: string }>>({});
@@ -259,6 +260,7 @@ export default function App() {
         redirectToLogin();
         return;
       }
+      setIsCloudProgressLoaded(true);
       setIsAuthValidating(false);
       return;
     }
@@ -267,15 +269,16 @@ export default function App() {
       localStorage.setItem('maxy_access_token', tokenFromUrl);
     }
 
-    // Safety fallback: pastikan loading overlay "Memverifikasi Sesi" paling lambat hilang dalam 3 detik jika API lambat
+    // Safety fallback: pastikan loading overlay "Memverifikasi Sesi" paling lambat hilang dalam 5 detik jika API lambat
     const safetyTimeout = setTimeout(() => {
+      setIsCloudProgressLoaded(true);
       setIsAuthValidating((prev) => {
         if (prev) {
           console.warn('Auth validation timeout safety triggered — rendering app with cached progress.');
         }
         return false;
       });
-    }, 12000);
+    }, 5000);
 
     Promise.all([
       fetchUserProfile(token),
@@ -388,6 +391,7 @@ export default function App() {
             };
           });
 
+          setIsCloudProgressLoaded(true);
           setIsAuthValidating(false);
         } else {
           redirectToLogin();
@@ -396,6 +400,7 @@ export default function App() {
       .catch((err) => {
         clearTimeout(safetyTimeout);
         console.warn('Network or server error during auth validation, using cached local progress:', err);
+        setIsCloudProgressLoaded(true);
         setIsAuthValidating(false);
       });
   }, []);
@@ -539,7 +544,7 @@ export default function App() {
       console.error('Failed to save progress', e);
     }
 
-    if (isAuthValidating) return;
+    if (isAuthValidating || !isCloudProgressLoaded) return;
     const token = localStorage.getItem('maxy_access_token');
     if (!token) return;
 
@@ -548,7 +553,7 @@ export default function App() {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [progress, isAuthValidating]);
+  }, [progress, isAuthValidating, isCloudProgressLoaded]);
 
   // Handle module selection from roadmap
   const handleSelectModule = (moduleId: number) => {
