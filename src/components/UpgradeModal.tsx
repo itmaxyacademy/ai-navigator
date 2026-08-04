@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Lock, Sparkles, Check, X, Tag, CheckCircle2 } from 'lucide-react';
 import { UserTier } from '../types';
 import { verifyVoucher } from '../services/api';
@@ -13,6 +13,8 @@ interface UpgradeModalProps {
   isLoading?: boolean;
   loadingTier?: 'tier1' | 'tier2' | null;
   packages?: Record<string, { price: number; fake_price: number; name?: string }>;
+  prefilledVoucher?: string;
+  prefilledTier?: 'tier1' | 'tier2' | null;
 }
 
 export const UpgradeModal: React.FC<UpgradeModalProps> = ({
@@ -25,11 +27,32 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   isLoading = false,
   loadingTier = null,
   packages,
+  prefilledVoucher = '',
+  prefilledTier = null,
 }) => {
-  const [voucherInput, setVoucherInput] = useState('');
+  const [voucherInput, setVoucherInput] = useState(prefilledVoucher || '');
   const [activeVoucher, setActiveVoucher] = useState<{ code: string; discountAmount: number; message?: string } | null>(null);
   const [voucherError, setVoucherError] = useState<string | null>(null);
   const [isVerifyingVoucher, setIsVerifyingVoucher] = useState(false);
+
+  // Auto-verify pre-filled voucher from landing-navigator redirect
+  useEffect(() => {
+    if (isOpen && prefilledVoucher) {
+      setVoucherInput(prefilledVoucher);
+      const rawPrice = (prefilledTier === 'tier1' ? packages?.tier1?.price : packages?.tier2?.price) ?? 299500;
+      verifyVoucher(prefilledVoucher.toUpperCase(), rawPrice).then((res) => {
+        const serverData = res?.data || res;
+        if ((res?.success || res?.valid) && res?.data?.valid) {
+          const discount = typeof res.data.discount_amount === 'number' ? res.data.discount_amount : 0;
+          setActiveVoucher({ code: prefilledVoucher.toUpperCase(), discountAmount: discount, message: res.data.message || 'Voucher berhasil diterapkan!' });
+        } else if (serverData?.valid === true) {
+          const discount = typeof serverData.discount_amount === 'number' ? serverData.discount_amount : 0;
+          setActiveVoucher({ code: prefilledVoucher.toUpperCase(), discountAmount: discount, message: serverData.message || 'Voucher berhasil diterapkan!' });
+        }
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, prefilledVoucher]);
 
   if (!isOpen) return null;
 

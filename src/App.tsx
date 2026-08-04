@@ -221,6 +221,31 @@ export default function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Deteksi redirect dari landing-navigator: ?upgrade=true&tier=tier1|tier2&voucher=XXXX
+  const [upgradePrefilledVoucher, setUpgradePrefilledVoucher] = useState<string>('');
+  const [upgradePrefilledTier, setUpgradePrefilledTier] = useState<'tier1' | 'tier2' | null>(null);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const upgradeParam = urlParams.get('upgrade');
+    const tierParam = urlParams.get('tier');
+    const voucherParam = urlParams.get('voucher');
+
+    if (upgradeParam === 'true') {
+      // Bersihkan query params
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      if (tierParam === 'tier1' || tierParam === 'tier2') {
+        setUpgradePrefilledTier(tierParam);
+      }
+      if (voucherParam) {
+        setUpgradePrefilledVoucher(voucherParam);
+      }
+      // Buka UpgradeModal setelah auth selesai (delay kecil supaya token sudah terbaca)
+      setTimeout(() => setUpgradeModalOpen(true), 800);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
@@ -1036,13 +1061,15 @@ export default function App() {
       {/* Upgrade Modal (Tier 1 / Tier 2) */}
       <UpgradeModal
         isOpen={upgradeModalOpen}
-        onClose={() => setUpgradeModalOpen(false)}
+        onClose={() => { setUpgradeModalOpen(false); setUpgradePrefilledVoucher(''); setUpgradePrefilledTier(null); }}
         currentTier={progress.userTier || 'free'}
         onSelectTier={handleUpgradeTier}
         targetModuleId={targetUpgradeModuleId}
         isLoading={isPaymentLoading}
         loadingTier={paymentLoadingTier}
         packages={cmsPackages}
+        prefilledVoucher={upgradePrefilledVoucher}
+        prefilledTier={upgradePrefilledTier}
       />
 
       {/* Capstone Project Submission Modal */}
