@@ -51,12 +51,27 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
   React.useEffect(() => {
     if (isOpen) {
-      setIsVerified(false);
+      const uName = (progress as any)?.userName || progress?.capstoneSubmission?.name || progress?.certName || '';
+      const uEmail = (progress as any)?.userEmail || progress?.capstoneSubmission?.email || progress?.certEmail || '';
+      const uPhone = (progress as any)?.userPhone || progress?.certPhone || '';
+      const uInst = (progress as any)?.userInstitution || progress?.certInstitution || '';
+
+      if (uName) setUserName(uName);
+      if (uEmail) setUserEmail(uEmail);
+      if (uPhone) setUserPhone(uPhone);
+      if (uInst) setUserInstitution(uInst);
+
+      // Auto-verify if all required details exist or if certificate was already requested
+      if (progress?.certRequested || (progress as any)?.certUuid || (uName && uEmail && uPhone && uInst)) {
+        setIsVerified(true);
+      } else {
+        setIsVerified(false);
+      }
       setCertUuid('');
       setCertNumber('');
       setVerifyUrl('');
     }
-  }, [isOpen, certType]);
+  }, [isOpen, certType, progress.certName, progress.certEmail, progress.certPhone, progress.certInstitution, progress.userName, progress.userEmail, progress.userPhone, progress.userInstitution, progress.certRequested]);
 
   React.useEffect(() => {
     if (!page1Ref.current) return;

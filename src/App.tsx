@@ -425,16 +425,20 @@ export default function App() {
               xp: mergedXp,
               streakDays: mergedStreakDays,
               currentModuleId: mergedCurrentModuleId,
-              certName: cloudData.certName || prev.certName || user?.name || undefined,
-              certEmail: cloudData.certEmail || prev.certEmail || user?.email || undefined,
+              certName: cloudData?.certName || prev.certName || user?.name || undefined,
+              certEmail: cloudData?.certEmail || prev.certEmail || user?.email || undefined,
+              certPhone: cloudData?.certPhone || prev.certPhone || user?.phone || undefined,
+              certInstitution: cloudData?.certInstitution || prev.certInstitution || user?.university || undefined,
               userTier,
               tier: userTier,
               maxAllowedModuleId: maxAllowed,
               paidTiers,
               hasTier1,
               hasTier2,
-              userName: user?.name || prev.userName || undefined,
-              userEmail: user?.email || prev.userEmail || undefined,
+              userName: user?.name || cloudData?.userName || prev.userName || undefined,
+              userEmail: user?.email || cloudData?.userEmail || prev.userEmail || undefined,
+              userPhone: user?.phone || cloudData?.userPhone || prev.userPhone || undefined,
+              userInstitution: user?.university || cloudData?.userInstitution || prev.userInstitution || undefined,
               packageName: sub?.package_name || prev.packageName || undefined,
               subscriptionExpiredAt: sub?.expired_at || null,
             };
@@ -946,13 +950,28 @@ export default function App() {
     setCertificateOpen(true);
   };
 
-  const handleSaveCertDetails = (name: string, email: string) => {
-    setProgress((prev) => ({
-      ...prev,
-      certName: name,
-      certEmail: email,
-      certRequested: true,
-    }));
+  const handleSaveCertDetails = (name: string, email: string, phone?: string, institution?: string) => {
+    setProgress((prev) => {
+      const next = {
+        ...prev,
+        certName: name,
+        certEmail: email,
+        userName: name,
+        userEmail: email,
+        userPhone: phone || prev.userPhone || prev.certPhone || undefined,
+        userInstitution: institution || prev.userInstitution || prev.certInstitution || undefined,
+        certPhone: phone || prev.certPhone || undefined,
+        certInstitution: institution || prev.certInstitution || undefined,
+        certRequested: true,
+      };
+      const token = localStorage.getItem('maxy_access_token');
+      if (token) {
+        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch((err) =>
+          console.error('Failed to sync cert details to cloud:', err)
+        );
+      }
+      return next;
+    });
   };
 
   // Advance to next module from quiz
