@@ -197,14 +197,14 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                   FREE TRIAL
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold">
-                  3 HARI
+                  3 MODUL
                 </span>
               </div>
 
               <div>
                 <h3 className="text-xl font-black text-slate-900">Free Trial / Starter</h3>
                 <p className="text-xs text-slate-500 mt-1 font-medium leading-relaxed">
-                  Promo Soft Launching - Akses Uji Coba 3 Hari Modul Dasar &amp; Pengenalan AI Navigator
+                  Promo Soft Launching - Akses Uji Coba 3 Modul Dasar &amp; Pengenalan AI Navigator
                 </p>
               </div>
 
@@ -216,7 +216,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               <ul className="space-y-2.5 text-xs text-slate-700 font-medium">
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Akses 3 Hari Modul Pengenalan AI &amp; Prompting</span>
+                  <span>Akses 3 Modul Pengenalan AI &amp; Prompting</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
@@ -241,7 +241,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               onClick={onClose}
               className="w-full py-3.5 rounded-2xl font-black text-xs bg-white dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-md transition-all cursor-pointer hover:scale-[1.02]"
             >
-              Coba Gratis (3 Hari)
+              Coba Gratis (3 Modul)
             </button>
           </div>
 
