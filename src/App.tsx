@@ -950,7 +950,14 @@ export default function App() {
     setCertificateOpen(true);
   };
 
-  const handleSaveCertDetails = (name: string, email: string, phone?: string, institution?: string) => {
+  const handleSaveCertDetails = (
+    name: string,
+    email: string,
+    phone?: string,
+    institution?: string,
+    certUuid?: string,
+    certNumber?: string
+  ) => {
     setProgress((prev) => {
       const next = {
         ...prev,
@@ -963,6 +970,8 @@ export default function App() {
         certPhone: phone || prev.certPhone || undefined,
         certInstitution: institution || prev.certInstitution || undefined,
         certRequested: true,
+        certUuid: certUuid || (prev as any).certUuid || undefined,
+        certNumber: certNumber || (prev as any).certNumber || undefined,
       };
       const token = localStorage.getItem('maxy_access_token');
       if (token) {

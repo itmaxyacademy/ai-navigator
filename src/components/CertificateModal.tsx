@@ -222,15 +222,26 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
         setCertUuid(res.data.uuid);
         setCertNumber(res.data.certificate_number);
         setVerifyUrl(res.data.verify_url);
+        if (onSaveCertDetails) {
+          onSaveCertDetails(
+            userName.trim(),
+            userEmail.trim(),
+            userPhone.trim(),
+            userInstitution.trim(),
+            res.data.uuid,
+            res.data.certificate_number
+          );
+        }
+      } else {
+        if (onSaveCertDetails) {
+          onSaveCertDetails(userName.trim(), userEmail.trim(), userPhone.trim(), userInstitution.trim());
+        }
       }
     } catch (err) {
       console.error('Cert issuance error:', err);
     } finally {
       setIsIssuing(false);
       setIsVerified(true);
-      if (onSaveCertDetails) {
-        onSaveCertDetails(userName.trim(), userEmail.trim(), userPhone.trim(), userInstitution.trim());
-      }
     }
   };
 
