@@ -930,7 +930,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
                     <div style={{ textAlign: 'right' }}>
                       <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan...' : '-')}</div>
-                      <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
+                      <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight: 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
                     </div>
                   </div>
                   </div>
