@@ -517,7 +517,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/20 transition-all cursor-pointer flex items-center justify-center gap-2 mt-2"
               >
                 <ShieldCheck className="w-4 h-4" />
-                <span>{isIssuing ? 'Menerbitkan Certify UUID...' : 'Terbitkan Certificate & Transkrip'}</span>
+                <span>{isIssuing ? 'Memuat UUID...' : 'Terbitkan Certificate & Transkrip'}</span>
               </button>
             </form>
           </div>
@@ -540,7 +540,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
               <button
                 onClick={handleDownloadPDF}
-                disabled={isDownloading}
+                disabled={isDownloading || isIssuing}
                 className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 text-white font-black text-xs sm:text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/25 transition-all cursor-pointer"
               >
                 {isDownloading ? (
@@ -552,7 +552,16 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               </button>
             </div>
 
-            <div id="printable-certificate-area" className="space-y-6">
+            <div id="printable-certificate-area" className="space-y-6 relative">
+
+            {/* Loading overlay while UUID is being issued */}
+            {isIssuing && (
+              <div className="absolute inset-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center gap-3">
+                <Loader2 className="w-10 h-10 text-amber-500 animate-spin" />
+                <p className="text-sm font-bold text-slate-700 dark:text-slate-200">Menerbitkan UUID Sertifikat...</p>
+                <p className="text-xs text-slate-500">Mohon tunggu sebentar</p>
+              </div>
+            )}
 
             {/* ============ HALAMAN 1: SERTIFIKAT ============ */}
             <div
@@ -597,8 +606,8 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
                       let content = obj.text || '';
                       if (isNameObj) content = userName || 'Siswa AI Navigator';
-                      else if (isUuidObj) content = certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan UUID...' : '');
-                      else if (isCertNumObj) content = certNumber || (progress as any)?.certNumber || (isIssuing ? 'Menerbitkan Nomor...' : '');
+                      else if (isUuidObj) content = certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-');
+                      else if (isCertNumObj) content = certNumber || (progress as any)?.certNumber || (isIssuing ? 'Memuat...' : '-');
                       else if (isDateObj) content = todayStr;
                       else if (isCapstoneTitleObj) content = capstoneTitle ? `Judul Capstone: ${capstoneTitle}` : '';
 
@@ -805,7 +814,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 {/* Footer Part 1 */}
                 <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '10px', color: '#475569' }}>
                   <span>Halaman 2 dari {totalPages} • Transkrip Kurikulum Modul Pembelajaran AI Navigator</span>
-                  <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan...' : '-')}</span>
+                  <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-')}</span>
                 </div>
               </div>
               </div>
@@ -873,7 +882,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   {part3Modules.length > 0 ? (
                     <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '10px', color: '#475569' }}>
                       <span>Halaman 3 dari {totalPages} • Transkrip Kurikulum Modul Pembelajaran AI Navigator</span>
-                      <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan...' : '-')}</span>
+                      <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-')}</span>
                     </div>
                   ) : (
                     <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '2px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -883,7 +892,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       </div>
 
                       <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan...' : '-')}</div>
+                        <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-')}</div>
                         <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight: 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
                       </div>
                     </div>
@@ -959,7 +968,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                     </div>
 
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan...' : '-')}</div>
+                      <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-')}</div>
                       <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight: 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
                     </div>
                   </div>
