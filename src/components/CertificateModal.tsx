@@ -13,7 +13,7 @@ interface CertificateModalProps {
   onClose: () => void;
   progress: UserProgress;
   certType?: 'capstone' | 'completion';
-  onSaveCertDetails?: (name: string, email: string, phone?: string, institution?: string) => void;
+  onSaveCertDetails?: (name: string, email: string, phone?: string, institution?: string, certUuid?: string, certNumber?: string) => void;
   packages?: Record<string, { price: number; fake_price: number; name?: string; certificate_bg_image?: string | null }>;
 }
 
@@ -81,6 +81,36 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       }
     }
   }, [isOpen, certType, progress.certName, progress.certEmail, progress.certPhone, progress.certInstitution, progress.userName, progress.userEmail, progress.userPhone, progress.userInstitution, progress.certRequested, (progress as any)?.certUuid, (progress as any)?.certNumber]);
+
+  // Auto-issue certificate UUID if modal is open, verified, but no UUID exists yet
+  React.useEffect(() => {
+    if (!isOpen || !isVerified || certUuid || isIssuing) return;
+    const uName = userName || (progress as any)?.userName || progress?.certName || '';
+    const uEmail = userEmail || (progress as any)?.userEmail || progress?.certEmail || '';
+    if (!uName || !uEmail) return;
+
+    let cancelled = false;
+    const autoIssue = async () => {
+      setIsIssuing(true);
+      try {
+        const res = await issueCertificateApi(uName, uEmail, certType);
+        if (!cancelled && res.success && res.data) {
+          setCertUuid(res.data.uuid);
+          setCertNumber(res.data.certificate_number);
+          setVerifyUrl(res.data.verify_url);
+          if (onSaveCertDetails) {
+            onSaveCertDetails(uName, uEmail, userPhone, userInstitution, res.data.uuid, res.data.certificate_number);
+          }
+        }
+      } catch (err) {
+        console.error('Auto-issue cert error:', err);
+      } finally {
+        if (!cancelled) setIsIssuing(false);
+      }
+    };
+    autoIssue();
+    return () => { cancelled = true; };
+  }, [isOpen, isVerified, certUuid, isIssuing]);
 
   React.useEffect(() => {
     if (!page1Ref.current) return;
