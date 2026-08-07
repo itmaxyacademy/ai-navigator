@@ -61,17 +61,26 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       if (uPhone) setUserPhone(uPhone);
       if (uInst) setUserInstitution(uInst);
 
+      const existingUuid = (progress as any)?.certUuid || '';
+      const existingCertNum = (progress as any)?.certNumber || '';
+
+      if (existingUuid) setCertUuid(existingUuid);
+      else setCertUuid('');
+
+      if (existingCertNum) setCertNumber(existingCertNum);
+      else setCertNumber('');
+
+      if (existingUuid) setVerifyUrl(`https://cms.maxy.academy/certificate/verify/${existingUuid}`);
+      else setVerifyUrl('');
+
       // Auto-verify if all required details exist or if certificate was already requested
-      if (progress?.certRequested || (progress as any)?.certUuid || (uName && uEmail && uPhone && uInst)) {
+      if (progress?.certRequested || existingUuid || (uName && uEmail && uPhone && uInst)) {
         setIsVerified(true);
       } else {
         setIsVerified(false);
       }
-      setCertUuid('');
-      setCertNumber('');
-      setVerifyUrl('');
     }
-  }, [isOpen, certType, progress.certName, progress.certEmail, progress.certPhone, progress.certInstitution, progress.userName, progress.userEmail, progress.userPhone, progress.userInstitution, progress.certRequested]);
+  }, [isOpen, certType, progress.certName, progress.certEmail, progress.certPhone, progress.certInstitution, progress.userName, progress.userEmail, progress.userPhone, progress.userInstitution, progress.certRequested, (progress as any)?.certUuid, (progress as any)?.certNumber]);
 
   React.useEffect(() => {
     if (!page1Ref.current) return;
@@ -558,8 +567,8 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
                       let content = obj.text || '';
                       if (isNameObj) content = userName || 'Siswa AI Navigator';
-                      else if (isUuidObj) content = certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb';
-                      else if (isCertNumObj) content = certNumber || 'No. 0255/AIN/NAV/2026';
+                      else if (isUuidObj) content = certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan UUID...' : '');
+                      else if (isCertNumObj) content = certNumber || (progress as any)?.certNumber || (isIssuing ? 'Menerbitkan Nomor...' : '');
                       else if (isDateObj) content = todayStr;
                       else if (isCapstoneTitleObj) content = capstoneTitle ? `Judul Capstone: ${capstoneTitle}` : '';
 
@@ -766,7 +775,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 {/* Footer Part 1 */}
                 <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '10px', color: '#475569' }}>
                   <span>Halaman 2 dari {totalPages} • Transkrip Kurikulum Modul Pembelajaran AI Navigator</span>
-                  <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</span>
+                  <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan...' : '-')}</span>
                 </div>
               </div>
               </div>
@@ -834,7 +843,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                   {part3Modules.length > 0 ? (
                     <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '10px', color: '#475569' }}>
                       <span>Halaman 3 dari {totalPages} • Transkrip Kurikulum Modul Pembelajaran AI Navigator</span>
-                      <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</span>
+                      <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan...' : '-')}</span>
                     </div>
                   ) : (
                     <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '2px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -844,7 +853,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       </div>
 
                       <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</div>
+                        <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan...' : '-')}</div>
                         <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight: 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
                       </div>
                     </div>
@@ -920,8 +929,8 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                     </div>
 
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || 'f7ad0d5c-6528-4517-9074-70ee377a03fb'}</div>
-                      <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight: 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
+                      <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Menerbitkan...' : '-')}</div>
+                      <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
                     </div>
                   </div>
                   </div>
