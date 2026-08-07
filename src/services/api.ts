@@ -238,11 +238,20 @@ export async function fetchAiNavigatorPackages() {
 
 export async function issueCertificateApi(name: string, email: string, certType: 'standard' | 'capstone' = 'standard') {
   try {
-    const res = await fetchWithAuth(`${API_BASE}/certificates/issue`, {
+    const token = localStorage.getItem('maxy_access_token');
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000); // 4s max
+
+    const res = await fetch(`${API_BASE}/certificates/issue`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({ name, email, type: certType }),
+      signal: controller.signal,
     });
+    clearTimeout(timeoutId);
     return await res.json();
   } catch (err) {
     console.error('API issueCertificateApi failed:', err);
