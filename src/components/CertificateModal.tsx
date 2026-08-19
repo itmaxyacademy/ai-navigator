@@ -261,7 +261,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       return;
     }
 
-    // Validation for Tier 2 VIP Master Certificate: requires Mentor Assignment & Capstone Project
+    // Validation for Tier 2 VIP Master Certificate: requires Mentor Assignment, Capstone Project & Mentor Approval
     if (hasTier2) {
       if (!hasMentor) {
         alert('Penerbitan Sertifikat Tier 2 VIP Master memerlukan penugasan mentor. Silakan hubungi Admin / Mentor Anda untuk penetapan mentor.');
@@ -273,6 +273,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
           onClose();
           onOpenCapstone();
         }
+        return;
+      }
+      if (progress.capstoneStatus !== 'approved') {
+        alert('Penerbitan Sertifikat Tier 2 VIP Master memerlukan persetujuan (Approval) Capstone Project oleh Mentor Pembimbing. Status saat ini: ' + (progress.capstoneStatus === 'in_review' ? 'Sedang Direview Mentor' : 'Menunggu Approval Mentor') + '. Silakan tunggu hingga Mentor menyetujui hasil proyek Anda di CMS.');
         return;
       }
     }
@@ -571,14 +575,29 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
                   {/* Capstone Requirement */}
                   {hasCapstone ? (
-                    <div className="p-2.5 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-indigo-300 text-xs flex items-center justify-between">
-                      <div className="overflow-hidden">
-                        <span className="text-[10px] text-indigo-400 font-bold block uppercase">Capstone Project:</span>
-                        <span className="font-extrabold text-white text-xs truncate max-w-[260px] block">
-                          {progress.capstoneTitle || progress.capstoneSubmission?.title || 'Capstone Project AI Navigator'}
-                        </span>
+                    <div className="p-2.5 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-indigo-300 text-xs space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <div className="overflow-hidden">
+                          <span className="text-[10px] text-indigo-400 font-bold block uppercase">Judul Capstone Project:</span>
+                          <span className="font-extrabold text-white text-xs truncate max-w-[260px] block">
+                            {progress.capstoneTitle || progress.capstoneSubmission?.title || 'Capstone Project AI Navigator'}
+                          </span>
+                        </div>
+                        <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
                       </div>
-                      <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
+                      {onOpenCapstone && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            onClose();
+                            onOpenCapstone();
+                          }}
+                          className="text-[10px] text-amber-400 hover:text-amber-300 font-bold underline inline-flex items-center gap-1 cursor-pointer"
+                        >
+                          <FileText className="w-3 h-3" />
+                          <span>Lihat / Edit Judul &amp; Link Capstone</span>
+                        </button>
+                      )}
                     </div>
                   ) : (
                     <div className="p-2.5 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs space-y-2">
@@ -603,16 +622,50 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                       )}
                     </div>
                   )}
+
+                  {/* Mentor Approval Status Requirement */}
+                  {hasCapstone && (
+                    <div className={`p-2.5 rounded-xl border text-xs flex items-center justify-between ${progress.capstoneStatus === 'approved' ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' : 'bg-amber-950/40 border-amber-500/30 text-amber-300'}`}>
+                      <div>
+                        <span className={`text-[10px] font-bold block uppercase ${progress.capstoneStatus === 'approved' ? 'text-emerald-400' : 'text-amber-400'}`}>
+                          Status Persetujuan (Approval) Mentor:
+                        </span>
+                        <span className="font-extrabold text-white text-xs block">
+                          {progress.capstoneStatus === 'approved' ? 'Disetujui Mentor (Approved)' : (progress.capstoneStatus === 'in_review' ? 'Sedang Direview Mentor' : 'Menunggu Approval Mentor')}
+                        </span>
+                        {progress.capstoneStatus !== 'approved' && (
+                          <p className="text-[10px] text-amber-200/90 mt-0.5">
+                            Menunggu konfirmasi approval dari mentor agar sertifikat dapat dicetak.
+                          </p>
+                        )}
+                      </div>
+                      {progress.capstoneStatus === 'approved' ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      ) : (
+                        <Clock className="w-4 h-4 text-amber-400 shrink-0" />
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
 
               <button
                 type="submit"
-                disabled={isIssuing}
-                className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/20 transition-all cursor-pointer flex items-center justify-center gap-2 mt-2"
+                disabled={isIssuing || (hasTier2 && (!hasMentor || !hasCapstone || progress.capstoneStatus !== 'approved'))}
+                className={`w-full py-3 rounded-xl font-black text-xs shadow-lg transition-all flex items-center justify-center gap-2 mt-2 ${
+                  hasTier2 && (!hasMentor || !hasCapstone || progress.capstoneStatus !== 'approved')
+                    ? 'bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed border border-slate-400/20'
+                    : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/20 cursor-pointer hover:scale-[1.01]'
+                }`}
               >
                 <ShieldCheck className="w-4 h-4" />
-                <span>{isIssuing ? 'Memuat UUID...' : 'Terbitkan Certificate & Transkrip'}</span>
+                <span>
+                  {isIssuing
+                    ? 'Memuat UUID...'
+                    : hasTier2 && progress.capstoneStatus !== 'approved'
+                    ? 'Menunggu Approval Capstone dari Mentor'
+                    : 'Terbitkan Certificate & Transkrip'}
+                </span>
               </button>
             </form>
           </div>

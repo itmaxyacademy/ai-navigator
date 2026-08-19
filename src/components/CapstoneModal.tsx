@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Award, X, Send, Info, CheckCircle2, Link2, FileText, User, Mail } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Award, X, Send, Info, CheckCircle2, Link2, FileText, User, Mail, Clock, AlertCircle } from 'lucide-react';
 import { UserProgress, CapstoneSubmission } from '../types';
 
 interface CapstoneModalProps {
@@ -22,26 +22,54 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
   initialEmail = '',
 }) => {
   const submitHandler = onSubmitCapstone || onSubmit || (() => {});
-  const [name, setName] = useState(
-    progress?.capstoneSubmission?.name || progress?.certName || progress?.userName || initialName || ''
-  );
-  const [email, setEmail] = useState(
-    progress?.capstoneSubmission?.email || progress?.certEmail || progress?.userEmail || initialEmail || ''
-  );
-  const [title, setTitle] = useState(
-    progress?.capstoneTitle || progress?.capstoneSubmission?.title || ''
-  );
-  const [capstoneUrl, setCapstoneUrl] = useState(
-    progress?.capstoneUrl || progress?.capstoneSubmission?.capstoneUrl || ''
-  );
-  const [submitted, setSubmitted] = useState(!!progress?.capstoneSubmission || (!!progress?.capstoneTitle && !!progress?.capstoneUrl));
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [title, setTitle] = useState('');
+  const [capstoneUrl, setCapstoneUrl] = useState('');
+  const [isSavedSuccess, setIsSavedSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Sync state whenever modal opens or progress changes
+  useEffect(() => {
+    if (isOpen) {
+      setName(
+        progress?.capstoneSubmission?.name ||
+        progress?.certName ||
+        progress?.userName ||
+        initialName ||
+        ''
+      );
+      setEmail(
+        progress?.capstoneSubmission?.email ||
+        progress?.certEmail ||
+        progress?.userEmail ||
+        initialEmail ||
+        ''
+      );
+      setTitle(
+        progress?.capstoneTitle ||
+        progress?.capstoneSubmission?.title ||
+        ''
+      );
+      setCapstoneUrl(
+        progress?.capstoneUrl ||
+        progress?.capstoneSubmission?.capstoneUrl ||
+        ''
+      );
+      setIsSavedSuccess(false);
+      setErrors({});
+    }
+  }, [isOpen, progress, initialName, initialEmail]);
 
   if (!isOpen) return null;
 
   const validateEmail = (emailStr: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
   };
+
+  const capStatus = progress?.capstoneStatus || (progress?.capstoneSubmission ? 'submitted' : 'not_started');
+  const isApproved = capStatus === 'approved';
+  const isSubmitted = capStatus === 'submitted' || capStatus === 'in_review' || !!progress?.capstoneSubmission;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,8 +81,8 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
     } else if (!validateEmail(email.trim())) {
       newErrors.email = 'Format email tidak valid.';
     }
-    if (!title.trim()) newErrors.title = 'Judul/nama capstone project wajib diisi.';
-    if (!capstoneUrl.trim()) newErrors.capstoneUrl = 'Link URL atau deskripsi capstone wajib diisi.';
+    if (!title.trim()) newErrors.title = 'Judul Capstone Project wajib diisi.';
+    if (!capstoneUrl.trim()) newErrors.capstoneUrl = 'Link URL atau repositori Capstone wajib diisi.';
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -75,7 +103,7 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
       }),
     };
 
-    setSubmitted(true);
+    setIsSavedSuccess(true);
     submitHandler(submission);
   };
 
@@ -98,11 +126,41 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            Submission <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">Capstone Project</span>
+            Pengajuan <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">Capstone Project</span>
           </h2>
 
           <p className="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
-            Lengkapi formulir Capstone Project Anda sebagai syarat wajib penerbitan sertifikat resmi <strong className="text-amber-300">CAAI™ Tier 2 VIP Master</strong>.
+            Lengkapi dan perbarui data Capstone Project Anda. Hasil proyek akan ditinjau dan disetujui oleh Mentor sebelum sertifikat kelulusan dapat diterbitkan.
+          </p>
+        </div>
+
+        {/* Status Box */}
+        <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs space-y-2">
+          <div className="flex items-center justify-between font-bold">
+            <span className="text-slate-700 dark:text-slate-300">Status Review Capstone:</span>
+            {isApproved ? (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-extrabold text-[11px]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                Disetujui Mentor (Approved)
+              </span>
+            ) : isSubmitted ? (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-extrabold text-[11px]">
+                <Clock className="w-3.5 h-3.5 text-amber-400" />
+                Menunggu Review / Approval Mentor
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-500/20 text-slate-300 border border-slate-500/40 font-extrabold text-[11px]">
+                <AlertCircle className="w-3.5 h-3.5 text-slate-400" />
+                Belum Diajukan
+              </span>
+            )}
+          </div>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+            {isApproved
+              ? 'Capstone Project Anda telah diverifikasi dan disetujui (Approved) oleh Mentor Pembimbing. Anda kini dapat mencetak Sertifikat Tier 2 resmi Anda.'
+              : isSubmitted
+              ? 'Pengajuan Anda telah diterima di sistem. Mentor akan mereview kualitas hasil proyek Anda. Anda tetap dapat mengedit judul atau link di bawah ini jika diperlukan.'
+              : 'Silakan isi Judul Capstone dan Link Pengumpulan di bawah ini lalu klik Kirim.'}
           </p>
         </div>
 
@@ -114,12 +172,12 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
                 {progress.assignedMentorName.charAt(0).toUpperCase()}
               </div>
               <div>
-                <span className="text-[10px] text-indigo-400 font-bold uppercase tracking-wider block">Mentor Pembimbing Ditugaskan</span>
+                <span className="text-[10px] text-indigo-400 font-bold uppercase tracking-wider block">Mentor Pembimbing</span>
                 <span className="font-extrabold text-white text-xs">{progress.assignedMentorName}</span>
               </div>
             </div>
             <span className="px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 text-[10px] font-bold">
-              Mentor Verified
+              Mentor Assigned
             </span>
           </div>
         )}
@@ -127,111 +185,98 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
         {/* Mentor Notes / Feedback if present */}
         {progress?.capstoneNotes && (
           <div className="p-3.5 rounded-2xl bg-amber-950/30 border border-amber-500/30 text-amber-200 text-xs space-y-1">
-            <span className="text-[10px] text-amber-400 font-bold uppercase tracking-wider block">Arahan / Catatan dari Mentor:</span>
+            <span className="text-[10px] text-amber-400 font-bold uppercase tracking-wider block">Catatan / Arahan dari Mentor:</span>
             <p className="text-xs italic text-amber-100/90 leading-relaxed">"{progress.capstoneNotes}"</p>
           </div>
         )}
 
-        {/* Notice Box */}
-        <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 text-amber-200 text-xs space-y-1.5">
-          <div className="font-extrabold flex items-center gap-2 text-amber-300">
-            <Info className="w-4 h-4 shrink-0 text-amber-400" />
-            <span>Petunjuk Capstone Project:</span>
-          </div>
-          <p className="text-[11px] leading-relaxed text-amber-100/90 font-medium">
-            Pastikan Judul Capstone dan Link Pengumpulan (Google Drive / GitHub / Notion / Dokumen) sudah benar. Data ini akan divalidasi bersama mentor untuk penerbitan sertifikat CAAI™.
-          </p>
-        </div>
-
-        {/* Already submitted notice */}
-        {submitted && (
-          <div className="flex items-center gap-2 p-3 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-semibold">
+        {/* Save confirmation banner */}
+        {isSavedSuccess && (
+          <div className="flex items-center gap-2 p-3.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-semibold animate-fadeIn">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>Capstone Project telah tersimpan! Anda sekarang dapat menutup modal ini dan mencetak Sertifikat Tier 2 Anda.</span>
+            <span>Pengajuan Capstone Project berhasil disimpan dan dikirimkan ke Mentor!</span>
           </div>
         )}
 
-        {/* Form */}
-        {!submitted && (
-          <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-            {/* Name */}
-            <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5 text-amber-400" />
-                Nama Lengkap (Ditampilkan di Sertifikat) <span className="text-rose-400">*</span>
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => { setName(e.target.value); setErrors(prev => ({ ...prev, name: '' })); }}
-                placeholder="Masukkan nama lengkap Anda..."
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${errors.name ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
-              />
-              {errors.name && <p className="text-rose-400 text-[10px] font-semibold">{errors.name}</p>}
-            </div>
+        {/* Editable Form - ALWAYS Available */}
+        <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+          {/* Name */}
+          <div className="space-y-1">
+            <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+              <User className="w-3.5 h-3.5 text-amber-400" />
+              Nama Lengkap Penerima Sertifikat <span className="text-rose-400">*</span>
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => { setName(e.target.value); setErrors(prev => ({ ...prev, name: '' })); }}
+              placeholder="Masukkan nama lengkap Anda..."
+              className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${errors.name ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+            />
+            {errors.name && <p className="text-rose-400 text-[10px] font-semibold">{errors.name}</p>}
+          </div>
 
-            {/* Email */}
-            <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-indigo-400" />
-                Alamat Email <span className="text-rose-400">*</span>
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => { setEmail(e.target.value); setErrors(prev => ({ ...prev, email: '' })); }}
-                placeholder="contoh: nama@email.com"
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${errors.email ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
-              />
-              {errors.email && <p className="text-rose-400 text-[10px] font-semibold">{errors.email}</p>}
-            </div>
+          {/* Email */}
+          <div className="space-y-1">
+            <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+              <Mail className="w-3.5 h-3.5 text-indigo-400" />
+              Alamat Email Siswa <span className="text-rose-400">*</span>
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setErrors(prev => ({ ...prev, email: '' })); }}
+              placeholder="contoh: nama@email.com"
+              className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${errors.email ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+            />
+            {errors.email && <p className="text-rose-400 text-[10px] font-semibold">{errors.email}</p>}
+          </div>
 
-            {/* Capstone Title */}
-            <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                <FileText className="w-3.5 h-3.5 text-purple-400" />
-                Judul / Nama Capstone Project <span className="text-rose-400">*</span>
-              </label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => { setTitle(e.target.value); setErrors(prev => ({ ...prev, title: '' })); }}
-                placeholder="Contoh: Otomasi Konten Digital Menggunakan RCTF & Claude"
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${errors.title ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
-              />
-              {errors.title && <p className="text-rose-400 text-[10px] font-semibold">{errors.title}</p>}
-            </div>
+          {/* Capstone Title */}
+          <div className="space-y-1">
+            <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+              <FileText className="w-3.5 h-3.5 text-purple-400" />
+              Judul Capstone Project <span className="text-rose-400">*</span>
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => { setTitle(e.target.value); setErrors(prev => ({ ...prev, title: '' })); }}
+              placeholder="Contoh: Otomasi Workflow Pemasaran & Konten Berbasis RCTF & Multi-LLM"
+              className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${errors.title ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+            />
+            {errors.title && <p className="text-rose-400 text-[10px] font-semibold">{errors.title}</p>}
+          </div>
 
-            {/* Capstone URL / Description */}
-            <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                <Link2 className="w-3.5 h-3.5 text-cyan-400" />
-                Link URL / Deskripsi Capstone Project <span className="text-rose-400">*</span>
-              </label>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium -mt-0.5">
-                Masukkan link ke project Anda (Google Drive, Notion, GitHub, dsb.) atau tulis deskripsi singkat project.
-              </p>
-              <textarea
-                rows={3}
-                value={capstoneUrl}
-                onChange={(e) => { setCapstoneUrl(e.target.value); setErrors(prev => ({ ...prev, capstoneUrl: '' })); }}
-                placeholder="Contoh: https://drive.google.com/... atau deskripsi singkat project Anda"
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium leading-relaxed resize-none ${errors.capstoneUrl ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
-              />
-              {errors.capstoneUrl && <p className="text-rose-400 text-[10px] font-semibold">{errors.capstoneUrl}</p>}
-            </div>
+          {/* Capstone URL / Description */}
+          <div className="space-y-1">
+            <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+              <Link2 className="w-3.5 h-3.5 text-cyan-400" />
+              Link Pengumpulan Capstone Project <span className="text-rose-400">*</span>
+            </label>
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium -mt-0.5">
+              Masukkan tautan pengumpulan proyek (Google Drive, GitHub, Notion, Figma, dsb.).
+            </p>
+            <textarea
+              rows={3}
+              value={capstoneUrl}
+              onChange={(e) => { setCapstoneUrl(e.target.value); setErrors(prev => ({ ...prev, capstoneUrl: '' })); }}
+              placeholder="Contoh: https://github.com/username/capstone-project atau https://drive.google.com/..."
+              className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium leading-relaxed resize-none ${errors.capstoneUrl ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+            />
+            {errors.capstoneUrl && <p className="text-rose-400 text-[10px] font-semibold">{errors.capstoneUrl}</p>}
+          </div>
 
-            <div className="pt-2">
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-xl shadow-amber-500/20 hover:scale-[1.01] transition-all cursor-pointer"
-              >
-                <Send className="w-4 h-4" />
-                <span>Kirim Capstone &amp; Request Sertifikasi</span>
-              </button>
-            </div>
-          </form>
-        )}
+          <div className="pt-2">
+            <button
+              type="submit"
+              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-xl shadow-amber-500/20 hover:scale-[1.01] transition-all cursor-pointer"
+            >
+              <Send className="w-4 h-4" />
+              <span>{isSubmitted ? 'Perbarui & Simpan Capstone Project' : 'Kirim Capstone & Ajukan Review Mentor'}</span>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
