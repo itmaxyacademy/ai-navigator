@@ -17,6 +17,7 @@ import { DevPanel } from './components/DevPanel';
 import { useTierAccess } from './hooks/useTierAccess';
 import { BADGES_LIST } from './lib/achievementsData';
 import { FloatingXpNotification, FloatingXpItem } from './components/FloatingXpNotification';
+import { getLocalDateString, getDaysDifference, isCertificateEligible } from './lib/gamification';
 import { Compass, Sparkles, Clock, Lock, Award, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
