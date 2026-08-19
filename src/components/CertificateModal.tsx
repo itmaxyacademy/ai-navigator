@@ -198,6 +198,101 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       </div>
     );
   }
+
+  const isCapstoneApproved = progress.capstoneStatus === 'approved';
+
+  if (hasTier2 && !isCapstoneApproved) {
+    return (
+      <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+        <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-amber-500/40 p-6 sm:p-8 text-center space-y-5">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+
+          <div className="w-16 h-16 rounded-3xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-500">
+            <Clock className="w-8 h-8" />
+          </div>
+
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[11px] font-extrabold mb-2">
+              <Award className="w-3.5 h-3.5" />
+              <span>Tier 2 VIP Master — Review Capstone</span>
+            </div>
+            <h3 className="font-black text-xl text-slate-900 dark:text-white">
+              {!hasCapstone
+                ? 'Capstone Project Belum Dikumpulkan'
+                : !hasMentor
+                ? 'Mentor Belum Ditugaskan'
+                : 'Sertifikat Menunggu Approval Mentor'}
+            </h3>
+            <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+              {!hasCapstone
+                ? 'Sertifikat resmi CAAI™ Tier 2 mewajibkan pengumpulan Capstone Project (Judul & Link Proyek).'
+                : !hasMentor
+                ? 'Penugasan Mentor Resmi oleh Admin/Mentor diperlukan sebelum sertifikat kelulusan dapat disetujui.'
+                : 'Pengajuan Capstone Project Anda telah tersimpan dan diteruskan ke Mentor. Sertifikat resmi CAAI™ Tier 2 hanya dapat dicetak setelah disetujui (Approved) oleh Mentor Pembimbing.'}
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-xs space-y-2.5 text-left">
+            <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
+              <span className="font-bold">Mentor Pembimbing:</span>
+              <span className="font-extrabold text-indigo-400">{progress.assignedMentorName || 'Belum Ditugaskan'}</span>
+            </div>
+            <div className="flex justify-between items-start text-slate-700 dark:text-slate-300 gap-2">
+              <span className="font-bold shrink-0">Judul Capstone:</span>
+              <span className="font-semibold text-slate-900 dark:text-slate-200 text-right truncate max-w-[240px]">
+                {progress.capstoneTitle || progress.capstoneSubmission?.title || 'Belum Diisi'}
+              </span>
+            </div>
+            <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
+              <span className="font-bold">Status Review:</span>
+              <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black uppercase">
+                {!hasCapstone
+                  ? 'Belum Mengajukan'
+                  : progress.capstoneStatus === 'in_review'
+                  ? 'Sedang Direview Mentor'
+                  : 'Menunggu Approval Mentor'}
+              </span>
+            </div>
+            {progress.capstoneNotes && (
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-700 text-[11px] text-amber-300">
+                <span className="font-bold block text-slate-400 text-[10px]">Catatan / Feedback Mentor:</span>
+                <p className="italic mt-0.5 leading-relaxed">"{progress.capstoneNotes}"</p>
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-2 pt-1">
+            {onOpenCapstone && (
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onOpenCapstone();
+                }}
+                className="flex-1 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all shadow-lg shadow-amber-500/20 cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <FileText className="w-4 h-4" />
+                <span>{!hasCapstone ? 'Isi Form Capstone' : 'Edit / Perbarui Capstone'}</span>
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={onClose}
+              className="py-3 px-5 rounded-2xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition-all cursor-pointer"
+            >
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const tierKey = hasTier2 ? 'tier2' : 'tier1';
   const pkgObj = packages?.[tierKey] || packages?.['tier2'] || packages?.['tier1'];
 
