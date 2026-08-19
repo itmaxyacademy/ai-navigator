@@ -17,8 +17,7 @@ import { DevPanel } from './components/DevPanel';
 import { useTierAccess } from './hooks/useTierAccess';
 import { BADGES_LIST } from './lib/achievementsData';
 import { FloatingXpNotification, FloatingXpItem } from './components/FloatingXpNotification';
-import { getLocalDateString, getDaysDifference, isCertificateEligible } from './lib/gamification';
-import { Compass, Sparkles } from 'lucide-react';
+import { Compass, Sparkles, Clock, Lock, Award, X } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 import { fetchUserProfile, checkoutUpgrade, loadCloudProgress, saveCloudProgress, fetchAiNavigatorPackages, verifyPaymentOrder } from './services/api';
@@ -89,7 +88,7 @@ export default function App() {
     };
   });
 
-  const { canAccessModule } = useTierAccess(progress.userTier, progress.maxAllowedModuleId);
+  const { canAccessModule } = useTierAccess(progress.userTier, progress.maxAllowedModuleId, progress.isExpired);
 
   const [activeTab, setActiveTab] = useState<'path' | 'module'>('path');
   const [selectedModuleId, setSelectedModuleId] = useState<number | null>(null);
@@ -101,6 +100,7 @@ export default function App() {
   const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
   const [targetUpgradeModuleId, setTargetUpgradeModuleId] = useState<number | null>(null);
   const [capstoneModalOpen, setCapstoneModalOpen] = useState(false);
+  const [expiredModalOpen, setExpiredModalOpen] = useState(false);
   const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
   const [activeInvoiceOrderId, setActiveInvoiceOrderId] = useState<string | null>(null);
   const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => !isLocalDevEnv);
@@ -214,6 +214,17 @@ export default function App() {
                   userEmail: user?.email || prev.userEmail,
                   packageName: sub?.package_name || prev.packageName,
                   subscriptionExpiredAt: sub?.expired_at || null,
+                  isExpired: sub?.is_expired || false,
+                  expiredAt: sub?.expired_at || null,
+                  expiredDays: sub?.expired_days || null,
+                  assignedMentorId: sub?.assigned_mentor_id || prev.assignedMentorId || null,
+                  assignedMentorName: sub?.assigned_mentor_name || prev.assignedMentorName || null,
+                  mentorAssignedAt: sub?.mentor_assigned_at || prev.mentorAssignedAt || null,
+                  capstoneTitle: sub?.capstone_title || prev.capstoneTitle || null,
+                  capstoneUrl: sub?.capstone_url || prev.capstoneUrl || null,
+                  capstoneStatus: sub?.capstone_status || prev.capstoneStatus || null,
+                  capstoneNotes: sub?.capstone_notes || prev.capstoneNotes || null,
+                  capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || prev.capstoneAssignedByMentor || null,
                 }));
 
                 // Konfetti celebrasi pembayaran berhasil
@@ -394,6 +405,18 @@ export default function App() {
                 userEmail: user?.email || prev.userEmail || undefined,
                 packageName: sub?.package_name || prev.packageName || undefined,
                 subscriptionExpiredAt: sub?.expired_at || null,
+                isExpired: sub?.is_expired || false,
+                expiredAt: sub?.expired_at || null,
+                expiredDays: sub?.expired_days || null,
+                assignedMentorId: sub?.assigned_mentor_id || prev.assignedMentorId || null,
+                assignedMentorName: sub?.assigned_mentor_name || prev.assignedMentorName || null,
+                mentorAssignedAt: sub?.mentor_assigned_at || prev.mentorAssignedAt || null,
+                capstoneTitle: sub?.capstone_title || prev.capstoneTitle || null,
+                capstoneUrl: sub?.capstone_url || prev.capstoneUrl || null,
+                capstoneStatus: sub?.capstone_status || prev.capstoneStatus || null,
+                capstoneNotes: sub?.capstone_notes || prev.capstoneNotes || null,
+                capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || prev.capstoneAssignedByMentor || null,
+                capstoneAssignedAt: sub?.capstone_assigned_at || prev.capstoneAssignedAt || null,
               };
             }
 
@@ -441,6 +464,18 @@ export default function App() {
               userInstitution: user?.university || cloudData?.userInstitution || prev.userInstitution || undefined,
               packageName: sub?.package_name || prev.packageName || undefined,
               subscriptionExpiredAt: sub?.expired_at || null,
+              isExpired: sub?.is_expired || false,
+              expiredAt: sub?.expired_at || null,
+              expiredDays: sub?.expired_days || null,
+              assignedMentorId: sub?.assigned_mentor_id || cloudData?.assignedMentorId || prev.assignedMentorId || null,
+              assignedMentorName: sub?.assigned_mentor_name || cloudData?.assignedMentorName || prev.assignedMentorName || null,
+              mentorAssignedAt: sub?.mentor_assigned_at || cloudData?.mentorAssignedAt || prev.mentorAssignedAt || null,
+              capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || prev.capstoneTitle || null,
+              capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || prev.capstoneUrl || null,
+              capstoneStatus: sub?.capstone_status || cloudData?.capstoneStatus || prev.capstoneStatus || null,
+              capstoneNotes: sub?.capstone_notes || cloudData?.capstoneNotes || prev.capstoneNotes || null,
+              capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || cloudData?.capstoneAssignedByMentor || prev.capstoneAssignedByMentor || null,
+              capstoneAssignedAt: sub?.capstone_assigned_at || cloudData?.capstoneAssignedAt || prev.capstoneAssignedAt || null,
             };
           });
 
@@ -610,6 +645,10 @@ export default function App() {
 
   // Handle module selection from roadmap
   const handleSelectModule = (moduleId: number) => {
+    if (progress.isExpired && progress.userTier !== 'free') {
+      setExpiredModalOpen(true);
+      return;
+    }
     if (!canAccessModule(moduleId)) {
       setTargetUpgradeModuleId(moduleId);
       setUpgradeModalOpen(true);
@@ -929,6 +968,10 @@ export default function App() {
     setProgress((prev) => ({
       ...prev,
       capstoneSubmission: submission,
+      capstoneTitle: submission.title,
+      capstoneUrl: submission.capstoneUrl,
+      capstoneStatus: 'submitted',
+      capstoneAssignedAt: submission.submittedAt,
       certName: submission.name,
       certEmail: submission.email,
       certRequested: true,
@@ -1193,6 +1236,7 @@ export default function App() {
         progress={progress}
         certType={selectedCertType}
         onSaveCertDetails={handleSaveCertDetails}
+        onOpenCapstone={() => setCapstoneModalOpen(true)}
         packages={cmsPackages}
       />
 
@@ -1290,6 +1334,68 @@ export default function App() {
                 style={{ animationDelay: `${i * 0.2}s` }}
               />
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Expiration Lock Modal (Masa Aktif 6 Bulan Berakhir) */}
+      {expiredModalOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
+          <div className="relative bg-white dark:bg-slate-900 border border-amber-500/40 rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-2xl text-slate-900 dark:text-white text-center">
+            <button
+              onClick={() => setExpiredModalOpen(false)}
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-200 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="w-16 h-16 rounded-3xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto text-amber-400">
+              <Clock className="w-8 h-8" />
+            </div>
+
+            <div className="space-y-2">
+              <span className="px-3.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold inline-block">
+                Masa Akses Modul Selesai (6 Bulan)
+              </span>
+              <h3 className="text-2xl font-black text-slate-900 dark:text-white">Akses Modul Telah Berakhir</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed max-w-sm mx-auto">
+                Masa akses aktif 6 bulan untuk membuka dan mengulang modul interaktif telah berakhir. Namun, seluruh sertifikat dan transkrip kelulusan resmi Anda tetap aktif dan dapat dicetak/diunduh kapan saja!
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs space-y-2 text-left">
+              <div className="flex justify-between font-bold text-slate-700 dark:text-slate-300">
+                <span>Status Akses:</span>
+                <span className="text-amber-500 uppercase">{progress.userTier === 'tier2' ? 'Tier 2 VIP Master (Expired)' : 'Tier 1 Basic (Expired)'}</span>
+              </div>
+              <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                <span>Akses Sertifikat &amp; Transkrip:</span>
+                <span className="text-emerald-400 font-bold">Aktif Seumur Hidup</span>
+              </div>
+            </div>
+
+            <div className="space-y-2.5 pt-1">
+              <button
+                onClick={() => {
+                  setExpiredModalOpen(false);
+                  setCertificateOpen(true);
+                }}
+                className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Award className="w-4 h-4" />
+                <span>Buka &amp; Download Sertifikat Kelulusan</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setExpiredModalOpen(false);
+                  setUpgradeModalOpen(true);
+                }}
+                className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition-all cursor-pointer"
+              >
+                Perpanjang Masa Akses / Upgrade Paket
+              </button>
+            </div>
           </div>
         </div>
       )}

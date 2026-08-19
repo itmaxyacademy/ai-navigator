@@ -14,6 +14,7 @@ interface CertificateModalProps {
   progress: UserProgress;
   certType?: 'capstone' | 'completion';
   onSaveCertDetails?: (name: string, email: string, phone?: string, institution?: string, certUuid?: string, certNumber?: string) => void;
+  onOpenCapstone?: () => void;
   packages?: Record<string, { price: number; fake_price: number; name?: string; certificate_bg_image?: string | null }>;
 }
 
@@ -23,6 +24,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   progress,
   certType = 'capstone',
   onSaveCertDetails,
+  onOpenCapstone,
   packages,
 }) => {
   // Prioritize logged-in user name from account over stored certName
@@ -84,7 +86,21 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
         setIsVerified(false);
       }
     }
-  }, [isOpen, certType, progress.certName, progress.certEmail, progress.certPhone, progress.certInstitution, progress.userName, progress.userEmail, progress.userPhone, progress.userInstitution, progress.certRequested, (progress as any)?.certUuid, (progress as any)?.certNumber]);
+  }, [isOpen, progress]);
+
+  // Keep certificate preview scaled responsive to its container width
+  React.useEffect(() => {
+    if (!page1Ref.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        if (entry.contentRect.width > 0) {
+          setCertWidth(entry.contentRect.width);
+        }
+      }
+    });
+    observer.observe(page1Ref.current);
+    return () => observer.disconnect();
+  }, [isVerified, isOpen]);
 
   // Background silent sync with backend database
   React.useEffect(() => {
@@ -111,21 +127,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       .catch(() => {});
   }, [isOpen, isVerified]);
 
-  React.useEffect(() => {
-    if (!page1Ref.current) return;
-    const observer = new ResizeObserver((entries) => {
-      if (entries[0]) {
-        setCertWidth(entries[0].contentRect.width);
-      }
-    });
-    observer.observe(page1Ref.current);
-    return () => observer.disconnect();
-  }, [isVerified, isOpen]);
-
   if (!isOpen) return null;
 
   const userTier = progress.userTier || 'free';
   const hasTier2 = Boolean(progress.hasTier2 || progress.paidTiers?.includes('tier2') || userTier === 'tier2');
+  const hasMentor = Boolean(progress.assignedMentorId || progress.assignedMentorName);
+  const hasCapstone = Boolean(progress.capstoneSubmission || (progress.capstoneTitle && progress.capstoneUrl));
   const isEligible = isCertificateEligible(progress);
 
   if (!isEligible) {
@@ -230,7 +237,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const part3Modules = displayModules.slice(20);
 
   const capstoneTitle = (hasTier2 && certType === 'capstone')
-    ? (progress.capstoneSubmission?.title || (progress as any).certTitle || 'Otomasi Workflow Pemasaran & Konten Berbasis RCTF & Multi-LLM')
+    ? (progress.capstoneTitle || progress.capstoneSubmission?.title || (progress as any).certTitle || 'Otomasi Workflow Pemasaran & Konten Berbasis RCTF & Multi-LLM')
     : null;
 
   const now = new Date();
@@ -253,6 +260,23 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       alert('Format email tidak valid. Mohon periksa kembali.');
       return;
     }
+
+    // Validation for Tier 2 VIP Master Certificate: requires Mentor Assignment & Capstone Project
+    if (hasTier2) {
+      if (!hasMentor) {
+        alert('Penerbitan Sertifikat Tier 2 VIP Master memerlukan penugasan mentor. Silakan hubungi Admin / Mentor Anda untuk penetapan mentor.');
+        return;
+      }
+      if (!hasCapstone) {
+        alert('Penerbitan Sertifikat Tier 2 VIP Master memerlukan pengumpulan Capstone Project (Judul & Link Project). Silakan isi form Capstone terlebih dahulu.');
+        if (onOpenCapstone) {
+          onClose();
+          onOpenCapstone();
+        }
+        return;
+      }
+    }
+
     setIsIssuing(true);
     try {
       const res = await issueCertificateApi(userName.trim(), userEmail.trim(), certType);
@@ -271,6 +295,9 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
           );
         }
       } else {
+        if (res.error) {
+          alert('Peringatan: ' + res.error);
+        }
         if (onSaveCertDetails) {
           onSaveCertDetails(userName.trim(), userEmail.trim(), userPhone.trim(), userInstitution.trim());
         }
@@ -503,10 +530,79 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 />
               </div>
 
-              {progress.capstoneSubmission && (
-                <div className="p-3 rounded-xl bg-indigo-950/60 border border-indigo-800 text-indigo-200 text-[11px] space-y-0.5">
-                  <span className="font-bold block text-indigo-300">📌 Capstone Submission Terhubung:</span>
-                  <p className="font-mono text-slate-600 dark:text-slate-300 truncate">"{progress.capstoneSubmission.title}"</p>
+              {/* Expiration Notice if expired */}
+              {progress.isExpired && (
+                <div className="p-3 rounded-xl bg-blue-950/50 border border-blue-500/40 text-blue-200 text-xs space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-blue-300">
+                    <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                    <span>Masa Akses Modul Berakhir (6 Bulan)</span>
+                  </div>
+                  <p className="text-[11px] text-blue-100/90 leading-relaxed">
+                    Sertifikat resmi dan transkrip kelulusan Anda tetap berlaku seumur hidup dan dapat diunduh/dicetak kapan saja.
+                  </p>
+                </div>
+              )}
+
+              {/* Tier 2 Mentor & Capstone Prerequisites Info Box */}
+              {hasTier2 && (
+                <div className="space-y-2 pt-1">
+                  <span className="font-bold text-slate-400 text-[10px] uppercase tracking-wider block">Syarat Sertifikasi Tier 2 VIP Master:</span>
+                  
+                  {/* Mentor Requirement */}
+                  {hasMentor ? (
+                    <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] text-emerald-400 font-bold block uppercase">Mentor Ditugaskan:</span>
+                        <span className="font-extrabold text-white text-xs">{progress.assignedMentorName}</span>
+                      </div>
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    </div>
+                  ) : (
+                    <div className="p-2.5 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs space-y-1">
+                      <div className="font-bold flex items-center gap-1.5 text-amber-400">
+                        <Lock className="w-3.5 h-3.5 shrink-0" />
+                        <span>Mentor Belum Ditugaskan</span>
+                      </div>
+                      <p className="text-[10px] text-amber-200/90">
+                        Penugasan mentor oleh Admin/Mentor diperlukan untuk penerbitan sertifikat Tier 2 VIP Master.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Capstone Requirement */}
+                  {hasCapstone ? (
+                    <div className="p-2.5 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-indigo-300 text-xs flex items-center justify-between">
+                      <div className="overflow-hidden">
+                        <span className="text-[10px] text-indigo-400 font-bold block uppercase">Capstone Project:</span>
+                        <span className="font-extrabold text-white text-xs truncate max-w-[260px] block">
+                          {progress.capstoneTitle || progress.capstoneSubmission?.title || 'Capstone Project AI Navigator'}
+                        </span>
+                      </div>
+                      <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
+                    </div>
+                  ) : (
+                    <div className="p-2.5 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs space-y-2">
+                      <div className="font-bold flex items-center gap-1.5 text-amber-400">
+                        <FileText className="w-3.5 h-3.5 shrink-0" />
+                        <span>Capstone Project Belum Dikumpulkan</span>
+                      </div>
+                      <p className="text-[10px] text-amber-200/90">
+                        Silakan lengkapi Judul &amp; Link Capstone Project Anda sebagai syarat kelulusan Tier 2.
+                      </p>
+                      {onOpenCapstone && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            onClose();
+                            onOpenCapstone();
+                          }}
+                          className="w-full py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[11px] transition-all cursor-pointer shadow-md"
+                        >
+                          Isi Form Capstone Project
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
 

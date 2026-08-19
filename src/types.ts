@@ -141,6 +141,18 @@ export interface UserProgress {
   certPhone?: string;
   certInstitution?: string;
   certRequested?: boolean;
+  isExpired?: boolean;
+  expiredAt?: string | null;
+  expiredDays?: number | null;
+  assignedMentorId?: number | null;
+  assignedMentorName?: string | null;
+  mentorAssignedAt?: string | null;
+  capstoneTitle?: string | null;
+  capstoneUrl?: string | null;
+  capstoneStatus?: string | null;
+  capstoneNotes?: string | null;
+  capstoneAssignedByMentor?: boolean | null;
+  capstoneAssignedAt?: string | null;
   capstoneSubmission?: CapstoneSubmission;
   adminOverrideAt?: string;
 }

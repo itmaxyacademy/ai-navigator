@@ -29,12 +29,12 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
     progress?.capstoneSubmission?.email || progress?.certEmail || progress?.userEmail || initialEmail || ''
   );
   const [title, setTitle] = useState(
-    progress?.capstoneSubmission?.title || ''
+    progress?.capstoneTitle || progress?.capstoneSubmission?.title || ''
   );
   const [capstoneUrl, setCapstoneUrl] = useState(
-    progress?.capstoneSubmission?.capstoneUrl || ''
+    progress?.capstoneUrl || progress?.capstoneSubmission?.capstoneUrl || ''
   );
-  const [submitted, setSubmitted] = useState(!!progress?.capstoneSubmission);
+  const [submitted, setSubmitted] = useState(!!progress?.capstoneSubmission || (!!progress?.capstoneTitle && !!progress?.capstoneUrl));
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   if (!isOpen) return null;
@@ -102,18 +102,44 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
           </h2>
 
           <p className="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
-            Selamat telah menyelesaikan seluruh 29 modul! Lengkapi formulir Capstone Project Anda sebagai syarat penerbitan <strong className="text-amber-300">Certificate of Completion</strong>.
+            Lengkapi formulir Capstone Project Anda sebagai syarat wajib penerbitan sertifikat resmi <strong className="text-amber-300">CAAI™ Tier 2 VIP Master</strong>.
           </p>
         </div>
+
+        {/* Mentor Info Box if assigned */}
+        {progress?.assignedMentorName && (
+          <div className="p-3.5 rounded-2xl bg-indigo-950/40 border border-indigo-500/40 text-indigo-200 text-xs flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-indigo-300 font-black">
+                {progress.assignedMentorName.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <span className="text-[10px] text-indigo-400 font-bold uppercase tracking-wider block">Mentor Pembimbing Ditugaskan</span>
+                <span className="font-extrabold text-white text-xs">{progress.assignedMentorName}</span>
+              </div>
+            </div>
+            <span className="px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 text-[10px] font-bold">
+              Mentor Verified
+            </span>
+          </div>
+        )}
+
+        {/* Mentor Notes / Feedback if present */}
+        {progress?.capstoneNotes && (
+          <div className="p-3.5 rounded-2xl bg-amber-950/30 border border-amber-500/30 text-amber-200 text-xs space-y-1">
+            <span className="text-[10px] text-amber-400 font-bold uppercase tracking-wider block">Arahan / Catatan dari Mentor:</span>
+            <p className="text-xs italic text-amber-100/90 leading-relaxed">"{progress.capstoneNotes}"</p>
+          </div>
+        )}
 
         {/* Notice Box */}
         <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 text-amber-200 text-xs space-y-1.5">
           <div className="font-extrabold flex items-center gap-2 text-amber-300">
             <Info className="w-4 h-4 shrink-0 text-amber-400" />
-            <span>Catatan Penting Capstone:</span>
+            <span>Petunjuk Capstone Project:</span>
           </div>
           <p className="text-[11px] leading-relaxed text-amber-100/90 font-medium">
-            Project Capstone ini bersifat <strong>submission portofolio &amp; dokumentasi kelulusan saja (tidak dinilai kontennya)</strong>. Sistem hanya mencatat bahwa Anda sudah melakukan submission. Data Nama &amp; Email akan digunakan untuk mencetak sertifikat resmi Anda.
+            Pastikan Judul Capstone dan Link Pengumpulan (Google Drive / GitHub / Notion / Dokumen) sudah benar. Data ini akan divalidasi bersama mentor untuk penerbitan sertifikat CAAI™.
           </p>
         </div>
 
@@ -121,7 +147,7 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
         {submitted && (
           <div className="flex items-center gap-2 p-3 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-semibold">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>Capstone Project telah tersimpan! Anda sekarang dapat menutup modal ini dan mencetak Sertifikat.</span>
+            <span>Capstone Project telah tersimpan! Anda sekarang dapat menutup modal ini dan mencetak Sertifikat Tier 2 Anda.</span>
           </div>
         )}
 

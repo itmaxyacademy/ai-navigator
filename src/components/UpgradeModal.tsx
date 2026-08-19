@@ -264,7 +264,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               <div>
                 <h3 className="text-xl font-black text-slate-900">Tier 1: Self-Paced Basic</h3>
                 <p className="text-xs text-slate-500 mt-1 font-medium leading-relaxed">
-                  21 Hari Pembelajaran Mandiri + Sertifikat Completion (21 JP)
+                  Akses 6 Bulan Modul Mandiri + Sertifikat Completion (21 JP)
                 </p>
               </div>
 
@@ -278,7 +278,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               <ul className="space-y-2.5 text-xs text-slate-700 font-medium">
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Akses 21 Hari Modul Interaktif Self-Paced</span>
+                  <span>Akses 6 Bulan Penuh Modul Interaktif Self-Paced (22 Modul)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
@@ -344,7 +344,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                   Tier 2: Full Mentoring &amp; CAAI™ Certification
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 font-medium leading-relaxed">
-                  28 Hari (21 Hari Self-Paced + 7 Hari Mentoring) + Sertifikat CAAI™ Level 1 (28 JP)
+                  Akses 6 Bulan Penuh (29 Modul Lengkap + Mentoring &amp; Capstone) + Sertifikat CAAI™ Level 1 (28 JP)
                 </p>
               </div>
 
@@ -358,13 +358,13 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                   <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3 h-3 text-amber-400" />
                   </div>
-                  <span>Semua Akses Tier 1 (21 Hari Modul Self-Paced)</span>
+                  <span>Akses 6 Bulan Penuh Semua 29 Modul Interaktif</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3 h-3 text-amber-400" />
                   </div>
-                  <span>7 Hari Sesi Live Mentoring di ai.maxy.academy</span>
+                  <span>Penugasan Mentor Resmi &amp; Bimbingan Capstone</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
