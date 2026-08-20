@@ -339,43 +339,43 @@ const getModuleIcon = (iconName: string) => {
   }
 };
 
-// Mascot sitting on current active node
+// Mascot sitting on current active uncompleted node
 const NavigatorMascot = ({ moduleTitle }: { moduleTitle: string }) => {
   return (
     <motion.div
-      initial={{ y: -10, opacity: 0 }}
-      animate={{ y: [0, -6, 0], opacity: 1 }}
+      initial={{ y: -6, opacity: 0 }}
+      animate={{ y: [0, -5, 0], opacity: 1 }}
       transition={{
         y: { repeat: Infinity, duration: 2.2, ease: "easeInOut" },
-        opacity: { duration: 0.4 }
+        opacity: { duration: 0.3 }
       }}
-      className="absolute -top-20 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-none w-56"
+      className="absolute -top-16 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-none w-60"
     >
       {/* Speech Bubble */}
-      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 text-white text-[11px] font-black px-3 py-1.5 rounded-2xl shadow-2xl border border-indigo-300/60 text-center flex items-center gap-1.5 mb-1 whitespace-nowrap">
+      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 text-white text-[11px] font-black px-3 py-1 rounded-2xl shadow-xl border border-indigo-300/60 text-center flex items-center gap-1.5 mb-1 whitespace-nowrap">
         <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0 animate-pulse" />
-        <span>Di Sini: {moduleTitle.split(' ')[0]}!</span>
+        <span>📍 Lanjutkan Belajar Di Sini</span>
       </div>
 
       {/* Cyber Mascot Avatar */}
-      <div className="relative w-12 h-12">
+      <div className="relative w-11 h-11">
         <div className="absolute inset-0 bg-indigo-500/40 rounded-full blur-md opacity-80 animate-pulse" />
-        <div className="relative w-full h-full bg-slate-900 border-2 border-cyan-400 rounded-2xl p-1 shadow-2xl flex items-center justify-center">
+        <div className="relative w-full h-full bg-slate-900 border-2 border-cyan-400 rounded-2xl p-0.5 shadow-xl flex items-center justify-center">
           <div className="relative flex flex-col items-center">
-            <div className="w-8 h-5.5 bg-slate-950 rounded-xl border border-indigo-400 flex items-center justify-center relative overflow-hidden">
-              <div className="w-5 h-2 bg-cyan-400 rounded-full animate-pulse shadow-sm" />
-              <div className="absolute inset-0 flex items-center justify-around px-1.5">
-                <div className="w-1.5 h-1.5 bg-cyan-200 rounded-full shadow-[0_0_8px_#22d3ee]" />
-                <div className="w-1.5 h-1.5 bg-cyan-200 rounded-full shadow-[0_0_8px_#22d3ee]" />
+            <div className="w-7 h-5 bg-slate-950 rounded-lg border border-indigo-400 flex items-center justify-center relative overflow-hidden">
+              <div className="w-4 h-1.5 bg-cyan-400 rounded-full animate-pulse shadow-sm" />
+              <div className="absolute inset-0 flex items-center justify-around px-1">
+                <div className="w-1 h-1 bg-cyan-200 rounded-full shadow-[0_0_6px_#22d3ee]" />
+                <div className="w-1 h-1 bg-cyan-200 rounded-full shadow-[0_0_6px_#22d3ee]" />
               </div>
             </div>
-            <span className="text-[7.5px] font-black text-cyan-300 tracking-tighter mt-0.5">AI NAVI</span>
+            <span className="text-[7px] font-black text-cyan-300 tracking-tighter mt-0.5">AI NAVI</span>
           </div>
         </div>
       </div>
 
       {/* Down Triangle Arrow */}
-      <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-purple-600 -mt-0.5" />
+      <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[6px] border-t-purple-600 -mt-0.5" />
     </motion.div>
   );
 };
@@ -429,10 +429,13 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
   const timeCalc = calculateRemainingTimeMinutes(progress.completedModules, modules);
   const levelInfo = getUserLevelInfo(progress.xp);
 
-  // Highest unlocked or currently active module
-  const currentActiveModuleId = progress.currentModuleId || (
-    modules.find(m => !progress.completedModules.includes(m.id))?.id || 1
-  );
+  // Highest unlocked or currently active module (null if all completed)
+  const isAllModulesCompleted = progress.completedModules.length >= modules.length;
+  const currentActiveModuleId = isAllModulesCompleted
+    ? null
+    : (progress.currentModuleId && !progress.completedModules.includes(progress.currentModuleId)
+        ? progress.currentModuleId
+        : (modules.find(m => !progress.completedModules.includes(m.id))?.id || null));
 
   // Sync opened chests to localStorage
   useEffect(() => {
@@ -443,15 +446,15 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
     }
   }, [openedChestIds]);
 
-  // Auto-scroll to active node on mount / active module change
+  // Smooth scroll to active node on mount / view switch (only if learning in progress)
   useEffect(() => {
-    if (viewMode === 'map' && activeNodeRef.current) {
+    if (viewMode === 'map' && !isAllModulesCompleted && currentActiveModuleId && activeNodeRef.current) {
       const timer = setTimeout(() => {
         activeNodeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 300);
+      }, 350);
       return () => clearTimeout(timer);
     }
-  }, [currentActiveModuleId, viewMode]);
+  }, [viewMode]);
 
   const handleChestClick = (chest: TreasureChestData) => {
     // Check prerequisite module completion
@@ -965,7 +968,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
               <div className="relative flex flex-col items-center space-y-12 z-10">
                 {modules.map((module, index) => {
                   const isCompleted = progress.completedModules.includes(module.id);
-                  const isCurrent = module.id === currentActiveModuleId;
+                  const isCurrent = currentActiveModuleId !== null && module.id === currentActiveModuleId && !isCompleted;
                   
                   // Free Trial lock: User on 'free' tier can access Modules 1, 2, and 3 directly
                   const isFreeTrialLocked = !canAccessModule(module.id);
@@ -1016,7 +1019,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                       {/* MODULE ZIG-ZAG NODE ITEM */}
                       <div 
                         ref={isCurrent ? activeNodeRef : null}
-                        className="flex flex-col group w-full transition-all"
+                        className={`flex flex-col group w-full transition-all ${isCurrent ? 'pt-8' : ''}`}
                         style={{
                           alignItems: posX === 50 ? 'center' : posX < 50 ? 'flex-start' : 'flex-end',
                           paddingLeft: posX < 50 ? '10%' : '0',
@@ -1024,7 +1027,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                         }}
                       >
                         <div className="relative flex flex-col items-center">
-                          {/* NAVIGATOR MASCOT hovering on current node */}
+                          {/* NAVIGATOR MASCOT hovering on current uncompleted node */}
                           {isCurrent && (
                             <NavigatorMascot moduleTitle={module.title} />
                           )}
