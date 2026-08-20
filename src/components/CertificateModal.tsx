@@ -356,14 +356,10 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       return;
     }
 
-    // Validation for Tier 2 VIP Master Certificate: requires Mentor Assignment, Capstone Project & Mentor Approval
-    if (hasTier2) {
-      if (!hasMentor) {
-        alert('Penerbitan Sertifikat Tier 2 VIP Master memerlukan penugasan mentor. Silakan hubungi Admin / Mentor Anda untuk penetapan mentor.');
-        return;
-      }
+    // Validation for CAAI Capstone Certificate: requires Capstone Project & Mentor Approval
+    if (hasTier2 && certType === 'capstone') {
       if (!hasCapstone) {
-        alert('Penerbitan Sertifikat Tier 2 VIP Master memerlukan pengumpulan Capstone Project (Judul & Link Project). Silakan isi form Capstone terlebih dahulu.');
+        alert('Penerbitan Sertifikat Resmi CAAI™ memerlukan pengumpulan Capstone Project (Judul & Link Project). Silakan isi formulir Capstone terlebih dahulu.');
         if (onOpenCapstone) {
           onClose();
           onOpenCapstone();
@@ -371,7 +367,12 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
         return;
       }
       if (progress.capstoneStatus !== 'approved') {
-        alert('Penerbitan Sertifikat Tier 2 VIP Master memerlukan persetujuan (Approval) Capstone Project oleh Mentor Pembimbing. Status saat ini: ' + (progress.capstoneStatus === 'in_review' ? 'Sedang Direview Mentor' : 'Menunggu Approval Mentor') + '. Silakan tunggu hingga Mentor menyetujui hasil proyek Anda di CMS.');
+        const statusMsg = progress.capstoneStatus === 'revision'
+          ? 'Perlu Revisi (Catatan: ' + (progress.capstoneNotes || 'Perbaiki proyek Anda') + ')'
+          : progress.capstoneStatus === 'in_review'
+          ? 'Sedang Direview Mentor'
+          : 'Menunggu Approval Mentor';
+        alert('Penerbitan Sertifikat Resmi CAAI™ memerlukan persetujuan (Approval) Capstone Project oleh Mentor Pembimbing. Status saat ini: ' + statusMsg + '. Silakan tunggu hingga Mentor menyetujui hasil proyek Anda di CMS atau cek catatan revisi.');
         return;
       }
     }
@@ -718,19 +719,25 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                     </div>
                   )}
 
-                  {/* Mentor Approval Status Requirement */}
-                  {hasCapstone && (
-                    <div className={`p-2.5 rounded-xl border text-xs flex items-center justify-between ${progress.capstoneStatus === 'approved' ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' : 'bg-amber-950/40 border-amber-500/30 text-amber-300'}`}>
+                  {/* Mentor Approval Status Requirement (Only for CAAI Capstone Cert) */}
+                  {certType === 'capstone' && (
+                    <div className={`p-2.5 rounded-xl border text-xs flex items-center justify-between ${progress.capstoneStatus === 'approved' ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' : progress.capstoneStatus === 'revision' ? 'bg-rose-950/40 border-rose-500/30 text-rose-300' : 'bg-amber-950/40 border-amber-500/30 text-amber-300'}`}>
                       <div>
-                        <span className={`text-[10px] font-bold block uppercase ${progress.capstoneStatus === 'approved' ? 'text-emerald-400' : 'text-amber-400'}`}>
-                          Status Persetujuan (Approval) Mentor:
+                        <span className={`text-[10px] font-bold block uppercase ${progress.capstoneStatus === 'approved' ? 'text-emerald-400' : progress.capstoneStatus === 'revision' ? 'text-rose-400' : 'text-amber-400'}`}>
+                          Status Approval Sertifikasi CAAI™:
                         </span>
                         <span className="font-extrabold text-white text-xs block">
-                          {progress.capstoneStatus === 'approved' ? 'Disetujui Mentor (Approved)' : (progress.capstoneStatus === 'in_review' ? 'Sedang Direview Mentor' : 'Menunggu Approval Mentor')}
+                          {progress.capstoneStatus === 'approved'
+                            ? `Disetujui Mentor (Approved) ${progress.capstoneScore ? `— Skor: ${progress.capstoneScore}/100` : ''}`
+                            : progress.capstoneStatus === 'revision'
+                            ? 'Perlu Revisi dari Siswa'
+                            : (progress.capstoneStatus === 'in_review' ? 'Sedang Direview Mentor' : 'Menunggu Approval Mentor')}
                         </span>
                         {progress.capstoneStatus !== 'approved' && (
                           <p className="text-[10px] text-amber-200/90 mt-0.5">
-                            Menunggu konfirmasi approval dari mentor agar sertifikat dapat dicetak.
+                            {progress.capstoneStatus === 'revision'
+                              ? `Catatan Revisi: "${progress.capstoneNotes || 'Perbaiki link proyek'}". Silakan perbaiki melalui form Capstone.`
+                              : 'Menunggu konfirmasi approval dari mentor agar Sertifikat Resmi CAAI™ dapat diterbitkan.'}
                           </p>
                         )}
                       </div>
@@ -746,9 +753,9 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
 
               <button
                 type="submit"
-                disabled={isIssuing || (hasTier2 && (!hasMentor || !hasCapstone || progress.capstoneStatus !== 'approved'))}
+                disabled={isIssuing || (hasTier2 && certType === 'capstone' && progress.capstoneStatus !== 'approved')}
                 className={`w-full py-3 rounded-xl font-black text-xs shadow-lg transition-all flex items-center justify-center gap-2 mt-2 ${
-                  hasTier2 && (!hasMentor || !hasCapstone || progress.capstoneStatus !== 'approved')
+                  hasTier2 && certType === 'capstone' && progress.capstoneStatus !== 'approved'
                     ? 'bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed border border-slate-400/20'
                     : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/20 cursor-pointer hover:scale-[1.01]'
                 }`}
@@ -757,7 +764,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
                 <span>
                   {isIssuing
                     ? 'Memuat UUID...'
-                    : hasTier2 && progress.capstoneStatus !== 'approved'
+                    : hasTier2 && certType === 'capstone' && progress.capstoneStatus !== 'approved'
                     ? 'Menunggu Approval Capstone dari Mentor'
                     : 'Terbitkan Certificate & Transkrip'}
                 </span>

@@ -724,49 +724,87 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                     hasTier2 ? (
                       <div className="space-y-2 pt-1">
                         <span className="text-[11px] font-extrabold text-amber-400 uppercase tracking-wider block">
-                          🎓 Pilih Jenis Sertifikat Tier 2 VIP Master (2 Template CMS Aktif):
+                          🎓 Pilih Jenis Sertifikat Tier 2 VIP Master:
                         </span>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                          {/* Option 1: Sertifikat Capstone Project (Template CMS 1) */}
-                          <div className="flex flex-col gap-1.5">
-                            <button
-                              type="button"
-                              onClick={() => {
-                                if (!progress.capstoneSubmission && onOpenCapstoneModal) {
-                                  onOpenCapstoneModal();
-                                } else if (onOpenCertificateModal) {
-                                  onOpenCertificateModal('capstone');
-                                }
-                              }}
-                              className="p-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold text-xs flex flex-col items-start gap-1 shadow-lg shadow-amber-500/20 transition-all cursor-pointer border border-amber-300 group"
-                            >
-                              <div className="flex items-center gap-1.5 w-full justify-between">
-                                <span className="flex items-center gap-1.5 font-black text-slate-950">
-                                  <FileText className="w-4 h-4 shrink-0" />
-                                  1. Sertifikat Capstone Project
-                                </span>
-                                <span className="text-[10px] bg-slate-950/20 text-slate-950 px-2 py-0.5 rounded-full font-bold">
-                                  {progress.capstoneSubmission ? '✓ Submitted' : 'Form Submission'}
-                                </span>
-                              </div>
-                              <span className="text-[10.5px] text-slate-900/90 font-medium text-left leading-tight">
-                                {progress.capstoneSubmission 
-                                  ? `Judul: "${progress.capstoneSubmission.title}" (Klik untuk Unduh Template Capstone)`
-                                  : 'Form Isian Judul & Link Project Capstone (Memakai Template CMS Capstone)'}
-                              </span>
-                            </button>
-                            {progress.capstoneSubmission && onOpenCapstoneModal && (
-                              <button
-                                type="button"
-                                onClick={onOpenCapstoneModal}
-                                className="text-[11px] text-amber-400 hover:text-amber-300 font-bold underline text-left px-1 cursor-pointer"
-                              >
-                                ✏️ Edit Judul & Link Project Capstone
-                              </button>
-                            )}
-                          </div>
+                          @php
+                          @endphp
+                          {/* Option 1: Sertifikat CAAI™ (Capstone Project Approval Required) */}
+                          {(() => {
+                            const rawCapStatus = (progress.capstoneStatus || (progress.capstoneSubmission ? 'submitted' : 'not_started')).toLowerCase();
+                            const isCapApproved = rawCapStatus === 'approved';
+                            const isCapRevision = rawCapStatus === 'revision' || rawCapStatus === 'rejected';
+                            const isCapInReview = rawCapStatus === 'in_review' || rawCapStatus === 'submitted';
+                            const capTitle = progress.capstoneTitle || progress.capstoneSubmission?.title;
 
-                          {/* Option 2: Sertifikat Completion Standard (Template CMS 2 - "Seperti Sekarang") */}
+                            return (
+                              <div className="flex flex-col gap-1.5">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    if (isCapApproved && onOpenCertificateModal) {
+                                      onOpenCertificateModal('capstone');
+                                    } else if (onOpenCapstoneModal) {
+                                      onOpenCapstoneModal();
+                                    }
+                                  }}
+                                  className={`p-3.5 rounded-xl text-left flex flex-col items-start gap-1 shadow-lg transition-all cursor-pointer border group ${
+                                    isCapApproved
+                                      ? 'bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 border-amber-300 shadow-amber-500/20'
+                                      : isCapRevision
+                                      ? 'bg-rose-950/60 hover:bg-rose-900/70 text-rose-100 border-rose-500/40'
+                                      : isCapInReview
+                                      ? 'bg-amber-950/60 hover:bg-amber-900/70 text-amber-100 border-amber-500/40'
+                                      : 'bg-slate-800 hover:bg-slate-700 text-white border-slate-700'
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-1.5 w-full justify-between">
+                                    <span className={`flex items-center gap-1.5 font-black ${isCapApproved ? 'text-slate-950' : 'text-amber-400'}`}>
+                                      <Award className="w-4 h-4 shrink-0" />
+                                      1. Sertifikat Resmi CAAI™
+                                    </span>
+                                    {isCapApproved ? (
+                                      <span className="text-[10px] bg-slate-950/25 text-slate-950 px-2 py-0.5 rounded-full font-bold">
+                                        ✓ Approved (Siap Unduh)
+                                      </span>
+                                    ) : isCapRevision ? (
+                                      <span className="text-[10px] bg-rose-500/25 text-rose-300 border border-rose-500/40 px-2 py-0.5 rounded-full font-bold">
+                                        ⚠️ Perlu Revisi
+                                      </span>
+                                    ) : isCapInReview ? (
+                                      <span className="text-[10px] bg-amber-500/25 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded-full font-bold">
+                                        ⏳ Sedang Direview
+                                      </span>
+                                    ) : (
+                                      <span className="text-[10px] bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 px-2 py-0.5 rounded-full font-bold">
+                                        📝 Kumpulkan Capstone
+                                      </span>
+                                    )}
+                                  </div>
+                                  <span className={`text-[10.5px] font-medium leading-tight ${isCapApproved ? 'text-slate-900/90' : 'text-slate-300'}`}>
+                                    {isCapApproved
+                                      ? `Judul: "${capTitle || 'Capstone Project'}" ${progress.capstoneScore ? `(Skor: ${progress.capstoneScore}/100)` : ''} — Klik untuk cetak sertifikat.`
+                                      : isCapRevision
+                                      ? `Mentor meminta revisi: "${progress.capstoneNotes || 'Perbaiki link proyek'}". Klik untuk submit ulang.`
+                                      : isCapInReview
+                                      ? `Tugas "${capTitle || 'Capstone'}" sedang dievaluasi mentor. Sertifikat CAAI akan aktif setelah disetujui.`
+                                      : 'Kumpulkan Capstone Project (tersedia Bank Capstone) untuk mendapatkan Sertifikat Resmi CAAI™.'}
+                                  </span>
+                                </button>
+                                {capTitle && onOpenCapstoneModal && (
+                                  <button
+                                    type="button"
+                                    onClick={onOpenCapstoneModal}
+                                    className="text-[11px] text-amber-400 hover:text-amber-300 font-bold underline text-left px-1 cursor-pointer"
+                                  >
+                                    ✏️ Lihat Detail &amp; Edit Capstone Project
+                                  </button>
+                                )}
+                              </div>
+                            );
+                          })()}
+
+                          {/* Option 2: Sertifikat Completion Standard (29 JP - Otomatis Siap Unduh) */}
                           <button
                             type="button"
                             onClick={() => {
@@ -774,19 +812,19 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                                 onOpenCertificateModal('completion');
                               }
                             }}
-                            className="p-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs flex flex-col items-start gap-1 shadow-md transition-all cursor-pointer border border-slate-700 group"
+                            className="p-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs flex flex-col items-start gap-1 shadow-md transition-all cursor-pointer border border-emerald-500/40 group"
                           >
                             <div className="flex items-center gap-1.5 w-full justify-between">
                               <span className="flex items-center gap-1.5 font-black text-emerald-400">
-                                <Award className="w-4 h-4 shrink-0 text-emerald-400" />
+                                <FileText className="w-4 h-4 shrink-0 text-emerald-400" />
                                 2. Sertifikat Completion Standard
                               </span>
                               <span className="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">
-                                Siap Unduh
+                                ✓ Siap Unduh Langsung
                               </span>
                             </div>
-                            <span className="text-[10.5px] text-slate-400 font-medium text-left leading-tight">
-                              Sertifikat Kelulusan Standard tanpa Judul Capstone (Memakai Template CMS Standard "seperti sekarang")
+                            <span className="text-[10.5px] text-slate-300 font-medium text-left leading-tight">
+                              Sertifikat Kelulusan 29 JP Modul Pembelajaran (Otomatis dapat diunduh langsung tanpa menunggu review Capstone).
                             </span>
                           </button>
                         </div>
