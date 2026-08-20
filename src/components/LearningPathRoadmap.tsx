@@ -688,48 +688,50 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
             const requiredModulesCount = hasTier2 ? 29 : 22;
             const isFullyCompleted = completedCount >= requiredModulesCount;
             return (
-              <div ref={certBannerRef} className="w-full p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/60 border border-slate-300 dark:border-slate-700 shadow-xl flex flex-col gap-4 animate-fadeIn">
+              <div ref={certBannerRef} className="w-full p-5 sm:p-6 rounded-3xl bg-slate-900 border border-slate-700/80 shadow-2xl flex flex-col gap-4 text-white animate-fadeIn">
                 {/* Top row: badge + progress */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 shrink-0 shadow-md">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-400 flex items-center justify-center text-slate-950 shrink-0 shadow-lg shadow-amber-500/20 font-black">
                       <Award className="w-5 h-5" />
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold uppercase text-amber-400 tracking-wide">
-                        Status Sertifikasi • {hasTier2 ? 'Tier 2 VIP' : 'Tier 1 Basic'}
+                      <span className="text-[10.5px] font-extrabold uppercase text-amber-400 tracking-wider block">
+                        Status Sertifikasi • {hasTier2 ? 'Tier 2 VIP Master' : 'Tier 1 Basic'}
                       </span>
-                      <h3 className="text-sm font-extrabold text-slate-900 dark:text-white leading-snug">
+                      <h3 className="text-base sm:text-lg font-black text-white leading-tight mt-0.5">
                         {isFullyCompleted
-                          ? `🎉 ${requiredModulesCount}/${requiredModulesCount} Modul Selesai — Siap Terbitkan Sertifikat!`
+                          ? `🎉 ${requiredModulesCount}/${requiredModulesCount} Modul Selesai — Akses Sertifikat Terbuka!`
                           : `${completedCount}/${requiredModulesCount} Modul Selesai`}
                       </h3>
                     </div>
                   </div>
-                  <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full whitespace-nowrap">
-                    {completedCount} / {requiredModulesCount} JP
+                  <span className="text-xs font-extrabold text-emerald-300 bg-emerald-500/20 border border-emerald-500/40 px-3.5 py-1.5 rounded-full whitespace-nowrap self-start sm:self-auto">
+                    {completedCount} / {requiredModulesCount} JP Selesai
                   </span>
                 </div>
 
                 {/* Description text */}
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed -mt-1">
+                <p className="text-xs text-slate-300 font-medium leading-relaxed -mt-1">
                   {isFullyCompleted
-                    ? 'Klik tombol di bawah untuk verifikasi nama/email dan mengunduh sertifikat & transkrip resmi dalam format PDF.'
-                    : `Selesaikan ${requiredModulesCount - completedCount} modul lagi untuk membuka akses sertifikat kelulusan.`}
+                    ? 'Selamat! Anda telah menyelesaikan seluruh modul pembelajaran. Silakan pilih jenis sertifikat resmi di bawah ini untuk diverifikasi dan diunduh dalam format PDF.'
+                    : `Selesaikan ${requiredModulesCount - completedCount} modul lagi untuk membuka akses penerbitan sertifikat kelulusan.`}
                 </p>
 
                 {/* Action buttons / Dual Certificate Selection for Tier 2 */}
                 <div className="w-full">
                   {isFullyCompleted ? (
                     hasTier2 ? (
-                      <div className="space-y-2 pt-1">
-                        <span className="text-[11px] font-extrabold text-amber-400 uppercase tracking-wider block">
-                          🎓 Pilih Jenis Sertifikat Tier 2 VIP Master:
-                        </span>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                          @php
-                          @endphp
-                          {/* Option 1: Sertifikat CAAI™ (Capstone Project Approval Required) */}
+                      <div className="space-y-3 pt-2">
+                        <div className="flex items-center gap-2">
+                          <Sparkles className="w-4 h-4 text-amber-400" />
+                          <span className="text-xs font-black text-amber-300 uppercase tracking-wider">
+                            Pilih Jenis Sertifikat Kelulusan Tier 2 VIP Master:
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+                          {/* Option 1: Sertifikat Resmi CAAI™ */}
                           {(() => {
                             const rawCapStatus = (progress.capstoneStatus || (progress.capstoneSubmission ? 'submitted' : 'not_started')).toLowerCase();
                             const isCapApproved = rawCapStatus === 'approved';
@@ -738,95 +740,149 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                             const capTitle = progress.capstoneTitle || progress.capstoneSubmission?.title;
 
                             return (
-                              <div className="flex flex-col gap-1.5">
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    if (isCapApproved && onOpenCertificateModal) {
-                                      onOpenCertificateModal('capstone');
-                                    } else if (onOpenCapstoneModal) {
-                                      onOpenCapstoneModal();
-                                    }
-                                  }}
-                                  className={`p-3.5 rounded-xl text-left flex flex-col items-start gap-1 shadow-lg transition-all cursor-pointer border group ${
-                                    isCapApproved
-                                      ? 'bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 border-amber-300 shadow-amber-500/20'
-                                      : isCapRevision
-                                      ? 'bg-rose-950/60 hover:bg-rose-900/70 text-rose-100 border-rose-500/40'
-                                      : isCapInReview
-                                      ? 'bg-amber-950/60 hover:bg-amber-900/70 text-amber-100 border-amber-500/40'
-                                      : 'bg-slate-800 hover:bg-slate-700 text-white border-slate-700'
-                                  }`}
-                                >
-                                  <div className="flex items-center gap-1.5 w-full justify-between">
-                                    <span className={`flex items-center gap-1.5 font-black ${isCapApproved ? 'text-slate-950' : 'text-amber-400'}`}>
-                                      <Award className="w-4 h-4 shrink-0" />
-                                      1. Sertifikat Resmi CAAI™
-                                    </span>
+                              <div className={`p-4 sm:p-5 rounded-2xl border flex flex-col justify-between transition-all relative overflow-hidden ${
+                                isCapApproved
+                                  ? 'bg-gradient-to-br from-amber-500/15 via-slate-900 to-slate-900 border-amber-400/80 shadow-lg shadow-amber-500/10'
+                                  : isCapRevision
+                                  ? 'bg-gradient-to-br from-rose-950/40 via-slate-900 to-slate-900 border-rose-500/60 shadow-lg'
+                                  : isCapInReview
+                                  ? 'bg-gradient-to-br from-amber-950/40 via-slate-900 to-slate-900 border-amber-500/50 shadow-lg'
+                                  : 'bg-slate-900/90 border-slate-700/80'
+                              }`}>
+                                <div className="space-y-3">
+                                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                                    <div className="flex items-center gap-2">
+                                      <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-400 shrink-0">
+                                        <Award className="w-4 h-4" />
+                                      </div>
+                                      <div>
+                                        <span className="text-[10px] font-extrabold uppercase text-amber-400/80 tracking-wider block">Gelar Profesional</span>
+                                        <h4 className="text-sm font-black text-white leading-tight">1. Sertifikat Resmi CAAI™</h4>
+                                      </div>
+                                    </div>
+
                                     {isCapApproved ? (
-                                      <span className="text-[10px] bg-slate-950/25 text-slate-950 px-2 py-0.5 rounded-full font-bold">
-                                        ✓ Approved (Siap Unduh)
+                                      <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-extrabold flex items-center gap-1">
+                                        <CheckCircle2 className="w-3 h-3 text-emerald-400" /> Approved
                                       </span>
                                     ) : isCapRevision ? (
-                                      <span className="text-[10px] bg-rose-500/25 text-rose-300 border border-rose-500/40 px-2 py-0.5 rounded-full font-bold">
-                                        ⚠️ Perlu Revisi
+                                      <span className="px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[10px] font-extrabold flex items-center gap-1">
+                                        <AlertCircle className="w-3 h-3 text-rose-400" /> Perlu Revisi
                                       </span>
                                     ) : isCapInReview ? (
-                                      <span className="text-[10px] bg-amber-500/25 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded-full font-bold">
-                                        ⏳ Sedang Direview
+                                      <span className="px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-extrabold flex items-center gap-1">
+                                        <Clock className="w-3 h-3 text-amber-400" /> Sedang Direview
                                       </span>
                                     ) : (
-                                      <span className="text-[10px] bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 px-2 py-0.5 rounded-full font-bold">
-                                        📝 Kumpulkan Capstone
+                                      <span className="px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-[10px] font-extrabold">
+                                        Belum Submit
                                       </span>
                                     )}
                                   </div>
-                                  <span className={`text-[10.5px] font-medium leading-tight ${isCapApproved ? 'text-slate-900/90' : 'text-slate-300'}`}>
-                                    {isCapApproved
-                                      ? `Judul: "${capTitle || 'Capstone Project'}" ${progress.capstoneScore ? `(Skor: ${progress.capstoneScore}/100)` : ''} — Klik untuk cetak sertifikat.`
-                                      : isCapRevision
-                                      ? `Mentor meminta revisi: "${progress.capstoneNotes || 'Perbaiki link proyek'}". Klik untuk submit ulang.`
-                                      : isCapInReview
-                                      ? `Tugas "${capTitle || 'Capstone'}" sedang dievaluasi mentor. Sertifikat CAAI akan aktif setelah disetujui.`
-                                      : 'Kumpulkan Capstone Project (tersedia Bank Capstone) untuk mendapatkan Sertifikat Resmi CAAI™.'}
-                                  </span>
-                                </button>
-                                {capTitle && onOpenCapstoneModal && (
+
+                                  <div className="space-y-1 text-xs">
+                                    {capTitle ? (
+                                      <div className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-300 space-y-1">
+                                        <span className="text-amber-400/90 font-bold block truncate">📌 Proyek: "{capTitle}"</span>
+                                        {progress.capstoneScore !== undefined && progress.capstoneScore !== null && (
+                                          <span className="text-emerald-400 font-extrabold block">Nilai Kelulusan: {progress.capstoneScore}/100</span>
+                                        )}
+                                        {progress.capstoneNotes && (
+                                          <p className="text-slate-400 text-[10.5px] italic line-clamp-2">Catatan: "{progress.capstoneNotes}"</p>
+                                        )}
+                                      </div>
+                                    ) : (
+                                      <p className="text-slate-400 text-[11px] leading-relaxed">
+                                        Selesaikan pengumpulan tugas Capstone Project (bisa pilih dari Bank Capstone) untuk mendapatkan gelar &amp; sertifikat resmi CAAI™.
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+
+                                <div className="pt-4 space-y-2">
                                   <button
                                     type="button"
-                                    onClick={onOpenCapstoneModal}
-                                    className="text-[11px] text-amber-400 hover:text-amber-300 font-bold underline text-left px-1 cursor-pointer"
+                                    onClick={() => {
+                                      if (isCapApproved && onOpenCertificateModal) {
+                                        onOpenCertificateModal('capstone');
+                                      } else if (onOpenCapstoneModal) {
+                                        onOpenCapstoneModal();
+                                      }
+                                    }}
+                                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-black flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md ${
+                                      isCapApproved
+                                        ? 'bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-slate-950 shadow-amber-500/20 hover:scale-[1.01]'
+                                        : isCapRevision
+                                        ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-rose-600/20'
+                                        : isCapInReview
+                                        ? 'bg-amber-600/80 hover:bg-amber-600 text-white'
+                                        : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white'
+                                    }`}
                                   >
-                                    ✏️ Lihat Detail &amp; Edit Capstone Project
+                                    <Award className="w-4 h-4" />
+                                    <span>
+                                      {isCapApproved
+                                        ? 'Cetak Sertifikat Resmi CAAI™'
+                                        : isCapRevision
+                                        ? 'Perbaiki & Kirim Ulang Capstone'
+                                        : isCapInReview
+                                        ? 'Cek Status Review Capstone'
+                                        : 'Kumpulkan Capstone Project'}
+                                    </span>
                                   </button>
-                                )}
+
+                                  {capTitle && onOpenCapstoneModal && (
+                                    <button
+                                      type="button"
+                                      onClick={onOpenCapstoneModal}
+                                      className="w-full text-center text-[11px] text-amber-400/90 hover:text-amber-300 font-bold transition-colors cursor-pointer py-0.5"
+                                    >
+                                      ✏️ Edit Data &amp; Link Capstone Project
+                                    </button>
+                                  )}
+                                </div>
                               </div>
                             );
                           })()}
 
-                          {/* Option 2: Sertifikat Completion Standard (29 JP - Otomatis Siap Unduh) */}
-                          <button
-                            type="button"
-                            onClick={() => {
-                              if (onOpenCertificateModal) {
-                                onOpenCertificateModal('completion');
-                              }
-                            }}
-                            className="p-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs flex flex-col items-start gap-1 shadow-md transition-all cursor-pointer border border-emerald-500/40 group"
-                          >
-                            <div className="flex items-center gap-1.5 w-full justify-between">
-                              <span className="flex items-center gap-1.5 font-black text-emerald-400">
-                                <FileText className="w-4 h-4 shrink-0 text-emerald-400" />
-                                2. Sertifikat Completion Standard
-                              </span>
-                              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">
-                                ✓ Siap Unduh Langsung
-                              </span>
+                          {/* Option 2: Sertifikat Completion Standard */}
+                          <div className="p-4 sm:p-5 rounded-2xl border border-emerald-500/50 bg-gradient-to-br from-emerald-950/30 via-slate-900 to-slate-900 flex flex-col justify-between shadow-lg shadow-emerald-500/5 relative overflow-hidden">
+                            <div className="space-y-3">
+                              <div className="flex items-center justify-between gap-2 flex-wrap">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shrink-0">
+                                    <FileText className="w-4 h-4" />
+                                  </div>
+                                  <div>
+                                    <span className="text-[10px] font-extrabold uppercase text-emerald-400/80 tracking-wider block">Kelulusan 29 JP</span>
+                                    <h4 className="text-sm font-black text-white leading-tight">2. Sertifikat Completion Standard</h4>
+                                  </div>
+                                </div>
+
+                                <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-extrabold flex items-center gap-1">
+                                  <CheckCircle2 className="w-3 h-3 text-emerald-400" /> Siap Unduh
+                                </span>
+                              </div>
+
+                              <div className="p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-300 space-y-1">
+                                <span className="text-emerald-400 font-bold block">✓ Kelulusan 29 Modul Pembelajaran Selesai</span>
+                                <p className="text-slate-400 text-[10.5px] leading-relaxed">
+                                  Sertifikat kelulusan modul resmi dapat langsung diunduh dan dicetak secara instan tanpa menunggu proses review Capstone.
+                                </p>
+                              </div>
                             </div>
-                            <span className="text-[10.5px] text-slate-300 font-medium text-left leading-tight">
-                              Sertifikat Kelulusan 29 JP Modul Pembelajaran (Otomatis dapat diunduh langsung tanpa menunggu review Capstone).
-                            </span>
-                          </button>
+
+                            <div className="pt-4">
+                              <button
+                                type="button"
+                                onClick={() => onOpenCertificateModal && onOpenCertificateModal('completion')}
+                                className="w-full py-2.5 px-4 rounded-xl text-xs font-black bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md shadow-emerald-600/20 hover:scale-[1.01]"
+                              >
+                                <FileText className="w-4 h-4" />
+                                <span>Download Sertifikat Completion (29 JP)</span>
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ) : (
