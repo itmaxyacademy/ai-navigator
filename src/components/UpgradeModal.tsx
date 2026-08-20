@@ -17,6 +17,15 @@ interface UpgradeModalProps {
   prefilledTier?: 'tier1' | 'tier2' | null;
 }
 
+interface ActiveVoucherInfo {
+  code: string;
+  applicableTier: 'all' | 'tier1' | 'tier2';
+  discountType: 'PERCENTAGE' | 'FIXED';
+  discountValRaw: number;
+  maxDiscount: number | null;
+  message?: string;
+}
+
 export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   isOpen,
   onClose,
@@ -31,7 +40,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   prefilledTier = null,
 }) => {
   const [voucherInput, setVoucherInput] = useState(prefilledVoucher || '');
-  const [activeVoucher, setActiveVoucher] = useState<{ code: string; discountAmount: number; message?: string } | null>(null);
+  const [activeVoucher, setActiveVoucher] = useState<ActiveVoucherInfo | null>(null);
   const [voucherError, setVoucherError] = useState<string | null>(null);
   const [isVerifyingVoucher, setIsVerifyingVoucher] = useState(false);
 
@@ -39,15 +48,23 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   useEffect(() => {
     if (isOpen && prefilledVoucher) {
       setVoucherInput(prefilledVoucher);
-      const rawPrice = (prefilledTier === 'tier1' ? packages?.tier1?.price : packages?.tier2?.price) ?? 299500;
-      verifyVoucher(prefilledVoucher.toUpperCase(), rawPrice).then((res) => {
-        const serverData = res?.data || res;
-        if ((res?.success || res?.valid) && res?.data?.valid) {
-          const discount = typeof res.data.discount_amount === 'number' ? res.data.discount_amount : 0;
-          setActiveVoucher({ code: prefilledVoucher.toUpperCase(), discountAmount: discount, message: res.data.message || 'Voucher berhasil diterapkan!' });
-        } else if (serverData?.valid === true) {
-          const discount = typeof serverData.discount_amount === 'number' ? serverData.discount_amount : 0;
-          setActiveVoucher({ code: prefilledVoucher.toUpperCase(), discountAmount: discount, message: serverData.message || 'Voucher berhasil diterapkan!' });
+      const cleaned = prefilledVoucher.toUpperCase();
+      verifyVoucher(cleaned).then((res) => {
+        const dData = res?.data?.valid ? res.data : (res?.valid ? res : null);
+        if (dData && dData.valid) {
+          const appTier = (dData.applicable_tier || 'all').toLowerCase() as 'all' | 'tier1' | 'tier2';
+          const discType = (dData.discount_type || 'FIXED').toUpperCase() as 'PERCENTAGE' | 'FIXED';
+          const discValRaw = typeof dData.discount_val_raw === 'number' ? dData.discount_val_raw : (typeof dData.discount_amount === 'number' ? dData.discount_amount : 0);
+          const maxDisc = typeof dData.max_discount === 'number' ? dData.max_discount : null;
+
+          setActiveVoucher({
+            code: cleaned,
+            applicableTier: appTier,
+            discountType: discType,
+            discountValRaw: discValRaw,
+            maxDiscount: maxDisc,
+            message: dData.message || 'Voucher berhasil diterapkan!',
+          });
         }
       });
     }
@@ -62,12 +79,44 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   const rawTier2Price = packages?.tier2?.price ?? 299500;
   const tier2FakePrice = packages?.tier2?.fake_price ? `Rp ${packages.tier2.fake_price.toLocaleString('id-ID')}` : 'Rp 750.000';
 
-  // Dynamic prices after voucher discount
-  const tier1Discount = activeVoucher ? activeVoucher.discountAmount : 0;
+  // Dynamic prices after voucher discount per Tier
+  let tier1Discount = 0;
+  let isTier1VoucherEligible = false;
+  if (activeVoucher) {
+    if (activeVoucher.applicableTier === 'all' || activeVoucher.applicableTier === 'tier1') {
+      isTier1VoucherEligible = true;
+      if (activeVoucher.discountType === 'PERCENTAGE') {
+        let disc = (rawTier1Price * activeVoucher.discountValRaw) / 100;
+        if (activeVoucher.maxDiscount && disc > activeVoucher.maxDiscount) {
+          disc = activeVoucher.maxDiscount;
+        }
+        tier1Discount = disc;
+      } else {
+        tier1Discount = activeVoucher.discountValRaw;
+      }
+    }
+  }
+
+  let tier2Discount = 0;
+  let isTier2VoucherEligible = false;
+  if (activeVoucher) {
+    if (activeVoucher.applicableTier === 'all' || activeVoucher.applicableTier === 'tier2') {
+      isTier2VoucherEligible = true;
+      if (activeVoucher.discountType === 'PERCENTAGE') {
+        let disc = (rawTier2Price * activeVoucher.discountValRaw) / 100;
+        if (activeVoucher.maxDiscount && disc > activeVoucher.maxDiscount) {
+          disc = activeVoucher.maxDiscount;
+        }
+        tier2Discount = disc;
+      } else {
+        tier2Discount = activeVoucher.discountValRaw;
+      }
+    }
+  }
+
   const finalTier1PriceNum = Math.max(0, rawTier1Price - tier1Discount);
   const tier1Price = `Rp ${finalTier1PriceNum.toLocaleString('id-ID')}`;
 
-  const tier2Discount = activeVoucher ? activeVoucher.discountAmount : 0;
   const finalTier2PriceNum = Math.max(0, rawTier2Price - tier2Discount);
   const tier2Price = `Rp ${finalTier2PriceNum.toLocaleString('id-ID')}`;
 
@@ -77,15 +126,23 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
     if (!cleaned) return;
 
     setIsVerifyingVoucher(true);
-    const res = await verifyVoucher(cleaned, rawTier1Price);
+    const res = await verifyVoucher(cleaned);
     setIsVerifyingVoucher(false);
 
-    if (res && (res.success || res.valid) && res.data && res.data.valid) {
-      const discount = typeof res.data.discount_amount === 'number' ? res.data.discount_amount : 0;
+    const dData = res?.data?.valid ? res.data : (res?.valid ? res : null);
+    if (dData && dData.valid) {
+      const appTier = (dData.applicable_tier || 'all').toLowerCase() as 'all' | 'tier1' | 'tier2';
+      const discType = (dData.discount_type || 'FIXED').toUpperCase() as 'PERCENTAGE' | 'FIXED';
+      const discValRaw = typeof dData.discount_val_raw === 'number' ? dData.discount_val_raw : (typeof dData.discount_amount === 'number' ? dData.discount_amount : 0);
+      const maxDisc = typeof dData.max_discount === 'number' ? dData.max_discount : null;
+
       setActiveVoucher({
         code: cleaned,
-        discountAmount: discount,
-        message: res.data.message || 'Voucher berhasil diterapkan!',
+        applicableTier: appTier,
+        discountType: discType,
+        discountValRaw: discValRaw,
+        maxDiscount: maxDisc,
+        message: dData.message || 'Voucher berhasil diterapkan!',
       });
     } else {
       setActiveVoucher(null);
@@ -94,8 +151,20 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
   };
 
   const handleSelect = (tier: 'tier1' | 'tier2') => {
-    const code = activeVoucher ? activeVoucher.code : undefined;
-    const finalAmount = tier === 'tier1' ? finalTier1PriceNum : finalTier2PriceNum;
+    let code: string | undefined = undefined;
+    let finalAmount = tier === 'tier1' ? rawTier1Price : rawTier2Price;
+
+    if (tier === 'tier1') {
+      if (activeVoucher && isTier1VoucherEligible) {
+        code = activeVoucher.code;
+        finalAmount = finalTier1PriceNum;
+      }
+    } else {
+      if (activeVoucher && isTier2VoucherEligible) {
+        code = activeVoucher.code;
+        finalAmount = finalTier2PriceNum;
+      }
+    }
 
     if (onSelectTier) onSelectTier(tier, code, finalAmount);
     else if (onUpgradeTier) onUpgradeTier(tier, code, finalAmount);
@@ -164,9 +233,12 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
           </div>
           {activeVoucher && (
             <div className="mt-2 text-xs text-emerald-400 font-semibold flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>
-                Voucher <code className="bg-emerald-500/20 px-1.5 py-0.5 rounded text-emerald-300">{activeVoucher.code}</code> berhasil diklaim! Diskon Rp {activeVoucher.discountAmount.toLocaleString('id-ID')} telah diterapkan.
+                Voucher <code className="bg-emerald-500/20 px-1.5 py-0.5 rounded text-emerald-300 font-mono">{activeVoucher.code}</code> berhasil diklaim
+                {activeVoucher.applicableTier === 'tier1' && ' (Khusus Tier 1 Basic)'}
+                {activeVoucher.applicableTier === 'tier2' && ' (Khusus Tier 2 VIP Master)'}
+                {activeVoucher.applicableTier === 'all' && ' (Semua Paket)'}!
               </span>
             </div>
           )}
@@ -273,6 +345,16 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                 <div className="text-xs text-slate-500 dark:text-slate-400 font-medium line-through mt-0.5">
                   Normal: {tier1FakePrice}
                 </div>
+                {activeVoucher && isTier1VoucherEligible && tier1Discount > 0 && (
+                  <div className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200 self-start">
+                    <span>✨ Diskon Voucher: -Rp {tier1Discount.toLocaleString('id-ID')}</span>
+                  </div>
+                )}
+                {activeVoucher && !isTier1VoucherEligible && (
+                  <div className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-medium text-amber-700 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200 self-start">
+                    <span>ℹ️ Voucher ini hanya berlaku untuk Tier 2</span>
+                  </div>
+                )}
               </div>
 
               <ul className="space-y-2.5 text-xs text-slate-700 font-medium">
@@ -348,9 +430,21 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                 </p>
               </div>
 
-              <div className="py-3 border-y border-slate-200 dark:border-slate-800 flex items-baseline gap-2">
-                <span className="text-2xl sm:text-3xl font-black text-amber-400">{tier2Price}</span>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium line-through">{tier2FakePrice}</span>
+              <div className="py-3 border-y border-slate-200 dark:border-slate-800 flex flex-col">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl sm:text-3xl font-black text-amber-400">{tier2Price}</span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium line-through">{tier2FakePrice}</span>
+                </div>
+                {activeVoucher && isTier2VoucherEligible && tier2Discount > 0 && (
+                  <div className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-lg border border-emerald-500/40 self-start">
+                    <span>✨ Diskon Voucher: -Rp {tier2Discount.toLocaleString('id-ID')}</span>
+                  </div>
+                )}
+                {activeVoucher && !isTier2VoucherEligible && (
+                  <div className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-medium text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded-lg border border-amber-500/40 self-start">
+                    <span>ℹ️ Voucher ini hanya berlaku untuk Tier 1</span>
+                  </div>
+                )}
               </div>
 
               <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-200 font-medium">

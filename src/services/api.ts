@@ -131,12 +131,12 @@ export async function saveCloudProgress(token: string, progress: Record<string, 
   }
 }
 
-export async function verifyVoucher(code: string, amount?: number, packageId?: number) {
+export async function verifyVoucher(code: string, amount?: number, packageId?: number, tierKey?: string) {
   try {
     const res = await fetch(`${API_BASE}/payments/verify-voucher`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code, amount, package_id: packageId }),
+      body: JSON.stringify({ code, amount, package_id: packageId, tier_key: tierKey }),
     });
     return await res.json();
   } catch (err) {
