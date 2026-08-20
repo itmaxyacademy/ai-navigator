@@ -150,7 +150,9 @@ export interface UserProgress {
   capstoneTitle?: string | null;
   capstoneUrl?: string | null;
   capstoneStatus?: string | null;
+  capstoneScore?: number | null;
   capstoneNotes?: string | null;
+  capstoneReviewedAt?: string | null;
   capstoneAssignedByMentor?: boolean | null;
   capstoneAssignedAt?: string | null;
   capstoneSubmission?: CapstoneSubmission;
