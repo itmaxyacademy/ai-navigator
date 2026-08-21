@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
 import { 
   Sparkles, MessageSquare, Feather, Sparkle, Search, Bot, Share2, BrainCircuit, BookOpen,
   CheckCircle2, Lock, ArrowRight, Play, Trophy, Clock, Star, Award, Compass,
@@ -10,13 +10,20 @@ import confetti from 'canvas-confetti';
 import { CourseModule, UserProgress } from '../types';
 import { useTierAccess } from '../hooks/useTierAccess';
 import { calculateRemainingTimeMinutes, getUserLevelInfo } from '../lib/gamification';
-import { DailyXpTrendChart } from './DailyXpTrendChart';
-import { KnowledgeHeatmap } from './KnowledgeHeatmap';
 import { LearningTipsWidget } from './LearningTipsWidget';
-import { ProgressAnalyticsWidget } from './ProgressAnalyticsWidget';
-import { SkillRadarChartWidget } from './SkillRadarChartWidget';
-import { ConceptFlashcardsWidget } from './ConceptFlashcardsWidget';
-import { DailyChallengeWidget } from './DailyChallengeWidget';
+
+// Lazy-load heavy widgets — only downloaded when the user opens their respective tab
+const DailyChallengeWidget = React.lazy(() => import('./DailyChallengeWidget').then(m => ({ default: m.DailyChallengeWidget })));
+const ConceptFlashcardsWidget = React.lazy(() => import('./ConceptFlashcardsWidget').then(m => ({ default: m.ConceptFlashcardsWidget })));
+const SkillRadarChartWidget = React.lazy(() => import('./SkillRadarChartWidget').then(m => ({ default: m.SkillRadarChartWidget })));
+const ProgressAnalyticsWidget = React.lazy(() => import('./ProgressAnalyticsWidget').then(m => ({ default: m.ProgressAnalyticsWidget })));
+const DailyXpTrendChart = React.lazy(() => import('./DailyXpTrendChart').then(m => ({ default: m.DailyXpTrendChart })));
+const KnowledgeHeatmap = React.lazy(() => import('./KnowledgeHeatmap').then(m => ({ default: m.KnowledgeHeatmap })));
+
+// Lightweight skeleton for Suspense fallback
+const WidgetSkeleton = () => (
+  <div className="w-full h-40 rounded-xl bg-slate-800/40 animate-pulse border border-slate-700/30" />
+);
 
 interface LearningPathRoadmapProps {
   modules: CourseModule[];
@@ -626,7 +633,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
       </div>
 
       {/* Recharts Daily XP Trend Visualization */}
-      <DailyXpTrendChart dailyXpHistory={progress.dailyXpHistory} totalXp={progress.xp} />
+      <Suspense fallback={<WidgetSkeleton />}>
+        <DailyXpTrendChart dailyXpHistory={progress.dailyXpHistory} totalXp={progress.xp} />
+      </Suspense>
 
       {/* Toolbar: Mode Switcher & Search Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -1018,12 +1027,14 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
 
           {/* D3 KNOWLEDGE HEATMAP VIEW */}
           {viewMode === 'heatmap' && (
-            <KnowledgeHeatmap
-              modules={modules}
-              progress={progress}
-              onSelectModule={onSelectModule}
-              onIncrementRevisit={onIncrementRevisit}
-            />
+            <Suspense fallback={<WidgetSkeleton />}>
+              <KnowledgeHeatmap
+                modules={modules}
+                progress={progress}
+                onSelectModule={onSelectModule}
+                onIncrementRevisit={onIncrementRevisit}
+              />
+            </Suspense>
           )}
 
           {/* ========================================================================= */}
@@ -1490,7 +1501,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.2 }}
               >
-                <DailyChallengeWidget onAwardXp={onAwardXp} />
+                <Suspense fallback={<WidgetSkeleton />}>
+                  <DailyChallengeWidget onAwardXp={onAwardXp} />
+                </Suspense>
               </motion.div>
             )}
             {sidebarTab === 'flashcards' && (
@@ -1501,7 +1514,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.2 }}
               >
-                <ConceptFlashcardsWidget onAwardXp={onAwardXp} />
+                <Suspense fallback={<WidgetSkeleton />}>
+                  <ConceptFlashcardsWidget onAwardXp={onAwardXp} />
+                </Suspense>
               </motion.div>
             )}
 
@@ -1513,11 +1528,13 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.2 }}
               >
-                <SkillRadarChartWidget
-                  modules={modules}
-                  progress={progress}
-                  onSelectModule={onSelectModule}
-                />
+                <Suspense fallback={<WidgetSkeleton />}>
+                  <SkillRadarChartWidget
+                    modules={modules}
+                    progress={progress}
+                    onSelectModule={onSelectModule}
+                  />
+                </Suspense>
               </motion.div>
             )}
 
@@ -1529,7 +1546,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.2 }}
               >
-                <ProgressAnalyticsWidget progress={progress} />
+                <Suspense fallback={<WidgetSkeleton />}>
+                  <ProgressAnalyticsWidget progress={progress} />
+                </Suspense>
               </motion.div>
             )}
 

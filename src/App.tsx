@@ -1,19 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { MODULES_DATA } from './data/modulesData';
 import { UserProgress, CapstoneSubmission, UserTier } from './types';
 import { Header } from './components/Header';
 import { LearningPathRoadmap } from './components/LearningPathRoadmap';
 import { ModuleView } from './components/ModuleView';
-import { CertificateModal } from './components/CertificateModal';
 import { StreakModal } from './components/StreakModal';
 import { Achievements } from './components/Achievements';
 import { AllNotesModal } from './components/AllNotesModal';
 import { UpgradeModal } from './components/UpgradeModal';
-import { CapstoneModal } from './components/CapstoneModal';
 import { PaymentInvoiceModal } from './components/PaymentInvoiceModal';
 import { MilestoneCelebrationModal } from './components/MilestoneCelebrationModal';
-import { UserProfileModal } from './components/UserProfileModal';
 import { DevPanel } from './components/DevPanel';
+
+// Lazy-load heavy modals — only downloaded when user opens them
+const CertificateModal = React.lazy(() => import('./components/CertificateModal').then(m => ({ default: m.CertificateModal })));
+const CapstoneModal = React.lazy(() => import('./components/CapstoneModal').then(m => ({ default: m.CapstoneModal })));
+const UserProfileModal = React.lazy(() => import('./components/UserProfileModal').then(m => ({ default: m.UserProfileModal })));
+
 import { useTierAccess } from './hooks/useTierAccess';
 import { BADGES_LIST } from './lib/achievementsData';
 import { FloatingXpNotification, FloatingXpItem } from './components/FloatingXpNotification';
@@ -1462,34 +1465,40 @@ export default function App() {
       />
 
       {/* Capstone Project Submission Modal */}
-      <CapstoneModal
-        isOpen={capstoneModalOpen}
-        onClose={handleCloseCapstoneModal}
-        progress={progress}
-        onSubmit={handleSubmitCapstone}
-        onSubmitCapstone={handleSubmitCapstone}
-        initialName={progress.certName || ''}
-        initialEmail={progress.certEmail || ''}
-      />
+      <Suspense fallback={null}>
+        <CapstoneModal
+          isOpen={capstoneModalOpen}
+          onClose={handleCloseCapstoneModal}
+          progress={progress}
+          onSubmit={handleSubmitCapstone}
+          onSubmitCapstone={handleSubmitCapstone}
+          initialName={progress.certName || ''}
+          initialEmail={progress.certEmail || ''}
+        />
+      </Suspense>
 
       {/* Certificate Modal */}
-      <CertificateModal
-        isOpen={certificateOpen}
-        onClose={handleCloseCertificateModal}
-        progress={progress}
-        certType={selectedCertType}
-        onSaveCertDetails={handleSaveCertDetails}
-        onOpenCapstone={handleOpenCapstoneModal}
-        packages={cmsPackages}
-      />
+      <Suspense fallback={null}>
+        <CertificateModal
+          isOpen={certificateOpen}
+          onClose={handleCloseCertificateModal}
+          progress={progress}
+          certType={selectedCertType}
+          onSaveCertDetails={handleSaveCertDetails}
+          onOpenCapstone={handleOpenCapstoneModal}
+          packages={cmsPackages}
+        />
+      </Suspense>
 
       {/* Onboarding User Profile Modal (For Google OAuth or incomplete profiles) */}
-      <UserProfileModal
-        isOpen={userProfileModalOpen}
-        onClose={handleCloseUserProfile}
-        progress={progress}
-        onSaveProfile={handleSaveProfile}
-      />
+      <Suspense fallback={null}>
+        <UserProfileModal
+          isOpen={userProfileModalOpen}
+          onClose={handleCloseUserProfile}
+          progress={progress}
+          onSaveProfile={handleSaveProfile}
+        />
+      </Suspense>
 
       {/* Milestone Celebration Modal */}
       <MilestoneCelebrationModal
