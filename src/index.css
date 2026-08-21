@@ -1,18 +1,22 @@
 @import "tailwindcss";
 
+/* Force dark mode to follow .dark class on <html>, NOT the OS/browser preference */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 html {
-  background-color: #f1f5f9;
-  color: #0f172a;
+  background-color: #070b14;
+  color: #f1f5f9;
 }
 
 body {
-  background-color: #f1f5f9;
-  color: #0f172a;
+  background-color: #070b14;
+  color: #f1f5f9;
 }
+
 
 /* Smooth color transitions */
 body, header, footer, div, button, section, nav, article {
