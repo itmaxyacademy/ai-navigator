@@ -310,9 +310,10 @@ export default function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     try {
       const saved = localStorage.getItem('ai_navigator_theme_v1');
-      return saved === 'dark' ? 'dark' : 'light';
+      if (saved === 'light' || saved === 'dark') return saved;
+      return 'dark'; // Default to dark theme for consistent, futuristic aesthetic
     } catch {
-      return 'light';
+      return 'dark';
     }
   });
 

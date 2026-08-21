@@ -58,7 +58,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
   const userTier = progress.userTier || 'free';
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-md border-b bg-white/95 border-slate-200 text-slate-900 shadow-xs transition-colors duration-200">
+    <header className="sticky top-0 z-40 backdrop-blur-md border-b bg-white/95 dark:bg-[#070b14]/95 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 shadow-xs transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-3">
           
@@ -74,24 +74,24 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             />
             <div className="flex flex-col">
               <div className="flex items-center whitespace-nowrap">
-                <span className="font-black text-base text-slate-900 tracking-tight">
+                <span className="font-black text-base text-slate-900 dark:text-white tracking-tight">
                   AI Navigator
                 </span>
               </div>
-              <span className="text-[10px] text-slate-500 font-medium tracking-wide">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide">
                 Maxy Academy
               </span>
             </div>
           </div>
 
           {/* 2. CENTER NAVIGATION (Segmented Pill Bar) */}
-          <nav className="hidden md:flex items-center gap-1 p-1 rounded-2xl border bg-slate-100/90 border-slate-200 shrink-0">
+          <nav className="hidden md:flex items-center gap-1 p-1 rounded-2xl border bg-slate-100/90 dark:bg-slate-900/90 border-slate-200 dark:border-slate-800 shrink-0">
             <button
               onClick={() => onSelectTab('path')}
               className={`flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === 'path'
                   ? 'bg-indigo-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
               }`}
             >
               <Compass className="w-3.5 h-3.5" />
@@ -101,7 +101,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             {onOpenNotes && (
               <button
                 onClick={onOpenNotes}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-all cursor-pointer whitespace-nowrap"
+                className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer whitespace-nowrap"
               >
                 <StickyNote className="w-3.5 h-3.5 text-amber-500" />
                 <span>Catatan</span>
@@ -111,7 +111,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             {onOpenAchievements && (
               <button
                 onClick={onOpenAchievements}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition-all cursor-pointer whitespace-nowrap"
+                className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer whitespace-nowrap"
               >
                 <Award className="w-3.5 h-3.5 text-purple-600" />
                 <span>Pencapaian</span>
@@ -128,7 +128,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   <div className="font-bold text-amber-400 text-xs flex items-center gap-1">
                     <Trophy className="w-3.5 h-3.5" /> Status Belajar Anda
                   </div>
-                  <p className="text-[11px] text-slate-600">
+                  <p className="text-[11px] text-slate-600 dark:text-slate-300">
                     Lvl {levelInfo.level} ({levelInfo.title}) • {progress.xp} XP • {progress.streakDays} Hari Streak
                   </p>
                   <p className="text-[10px] text-slate-400">Klik untuk melihat detail pencapaian &amp; level.</p>
@@ -137,18 +137,18 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             >
               <div
                 onClick={onOpenStreakModal}
-                className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-bold transition-all cursor-pointer shadow-xs"
+                className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold transition-all cursor-pointer shadow-xs"
               >
                 {/* Streak */}
-                <div className="flex items-center gap-1 text-amber-600 font-extrabold whitespace-nowrap">
+                <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400 font-extrabold whitespace-nowrap">
                   <Flame className="w-3.5 h-3.5 fill-amber-500/20 text-amber-500" />
                   <span>{progress.streakDays}d</span>
                 </div>
 
-                <div className="h-3.5 w-px bg-slate-200" />
+                <div className="h-3.5 w-px bg-slate-200 dark:bg-slate-700" />
 
                 {/* Level & XP */}
-                <div className="flex items-center gap-1 text-indigo-600 font-extrabold whitespace-nowrap">
+                <div className="flex items-center gap-1 text-indigo-600 dark:text-indigo-400 font-extrabold whitespace-nowrap">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Lvl {levelInfo.level} • {progress.xp}XP</span>
                 </div>
