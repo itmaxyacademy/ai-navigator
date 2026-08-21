@@ -77,6 +77,14 @@ export default function App() {
     return {
       ...defaultProgress,
       ...parsed,
+      completedModules: Array.isArray(parsed.completedModules) ? parsed.completedModules : [],
+      openedChests: Array.isArray(parsed.openedChests) ? parsed.openedChests : [],
+      completedCheckpoints: Array.isArray(parsed.completedCheckpoints) ? parsed.completedCheckpoints : [],
+      unlockedBadges: Array.isArray(parsed.unlockedBadges) ? parsed.unlockedBadges : [],
+      moduleScores: parsed.moduleScores || {},
+      xp: Number(parsed.xp) || 0,
+      streakDays: Number(parsed.streakDays) || 1,
+      currentModuleId: Number(parsed.currentModuleId) || 1,
       userTier: resolvedTier,
       tier: resolvedTier,
       maxAllowedModuleId: resolvedMaxAllowed,
@@ -114,15 +122,9 @@ export default function App() {
   const [expiredModalOpen, setExpiredModalOpen] = useState(false);
   const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
   const [activeInvoiceOrderId, setActiveInvoiceOrderId] = useState<string | null>(null);
-  const [isCloudProgressLoaded, setIsCloudProgressLoaded] = useState<boolean>(() => {
-    return Boolean(localStorage.getItem('maxy_access_token'));
-  });
+  const [isCloudProgressLoaded, setIsCloudProgressLoaded] = useState<boolean>(false);
   const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => {
     if (isLocalDevEnv) return false;
-    const urlParams = new URLSearchParams(window.location.search);
-    const tokenFromUrl = urlParams.get('token');
-    const savedToken = localStorage.getItem('maxy_access_token');
-    if (savedToken && !tokenFromUrl) return false;
     return true;
   });
   const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
@@ -1361,7 +1363,7 @@ export default function App() {
   const hasCachedModules = Boolean(progress.completedModules && progress.completedModules.length > 0);
   const isInitialLoading = isFreshTokenLogin 
     ? !isCloudProgressLoaded 
-    : (!hasCachedModules && !isCloudProgressLoaded && isAuthValidating);
+    : (!hasCachedModules && (!isCloudProgressLoaded || isAuthValidating));
 
   if (isInitialLoading) {
     return (
