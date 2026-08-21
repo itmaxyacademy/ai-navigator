@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { MODULES_DATA } from './data/modulesData';
-import { UserProgress, CapstoneSubmission } from './types';
+import { UserProgress, CapstoneSubmission, UserTier } from './types';
 import { Header } from './components/Header';
 import { LearningPathRoadmap } from './components/LearningPathRoadmap';
 import { ModuleView } from './components/ModuleView';
@@ -49,13 +49,13 @@ export default function App() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         parsed = JSON.parse(saved);
-        delete parsed.userTier;
-        delete parsed.tier;
-        delete parsed.maxAllowedModuleId;
-        delete parsed.paidTiers;
-        delete parsed.hasTier1;
-        delete parsed.hasTier2;
-        delete parsed.packageName;
+        delete (parsed as any).userTier;
+        delete (parsed as any).tier;
+        delete (parsed as any).maxAllowedModuleId;
+        delete (parsed as any).paidTiers;
+        delete (parsed as any).hasTier1;
+        delete (parsed as any).hasTier2;
+        delete (parsed as any).packageName;
       }
     } catch (e) {
       console.error('Failed to load progress', e);
@@ -644,8 +644,12 @@ export default function App() {
 
   // Save progress to local storage & sync to cloud database (debounced 2s)
   useEffect(() => {
-    // Only write to localStorage after initial cloud progress load check is settled or if local progress is not empty
-    if (isAuthValidating && !isCloudProgressLoaded) return;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('maxy_access_token') : null;
+
+    // Protection: Never overwrite localStorage with empty progress while cloud data is still loading
+    if (token && !isCloudProgressLoaded && (!progress.completedModules || progress.completedModules.length === 0)) {
+      return;
+    }
 
     try {
       const cleanLocal = { ...progress } as Record<string, unknown>;
@@ -666,7 +670,10 @@ export default function App() {
         try {
           const parsed = JSON.parse(existingSaved);
           if (parsed && Array.isArray(parsed.completedModules) && parsed.completedModules.length > 0) {
-            return;
+            cleanLocal.completedModules = parsed.completedModules;
+            cleanLocal.xp = parsed.xp || cleanLocal.xp;
+            cleanLocal.moduleScores = parsed.moduleScores || cleanLocal.moduleScores;
+            cleanLocal.unlockedBadges = parsed.unlockedBadges || cleanLocal.unlockedBadges;
           }
         } catch (_) {}
       }
@@ -697,9 +704,7 @@ export default function App() {
       }
     }
 
-    if (isAuthValidating || !isCloudProgressLoaded) return;
-    const token = localStorage.getItem('maxy_access_token');
-    if (!token) return;
+    if (!token || !isCloudProgressLoaded) return;
 
     const timer = setTimeout(() => {
       saveCloudProgress(token, progress as unknown as Record<string, unknown>);
@@ -1058,7 +1063,7 @@ export default function App() {
     setCertificateOpen(true);
   };
 
-  const handleSaveCertDetails = (
+  const handleSaveCertDetails = useCallback((
     name: string,
     email: string,
     phone?: string,
@@ -1067,6 +1072,18 @@ export default function App() {
     certNumber?: string
   ) => {
     setProgress((prev) => {
+      if (
+        prev.userName === name &&
+        prev.userEmail === email &&
+        (!phone || prev.userPhone === phone) &&
+        (!institution || prev.userInstitution === institution) &&
+        (!certUuid || (prev as any).certUuid === certUuid) &&
+        (!certNumber || (prev as any).certNumber === certNumber) &&
+        prev.certRequested
+      ) {
+        return prev;
+      }
+
       const next = {
         ...prev,
         certName: name,
@@ -1089,7 +1106,7 @@ export default function App() {
       }
       return next;
     });
-  };
+  }, []);
 
   // Advance to next module from quiz
   const handleNextModule = () => {

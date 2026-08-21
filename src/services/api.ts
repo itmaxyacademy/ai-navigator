@@ -243,7 +243,7 @@ export async function fetchAiNavigatorPackages() {
   }
 }
 
-export async function issueCertificateApi(name: string, email: string, certType: 'standard' | 'capstone' = 'standard') {
+export async function issueCertificateApi(name: string, email: string, certType: 'standard' | 'capstone' | 'completion' = 'standard') {
   try {
     const token = localStorage.getItem('maxy_access_token');
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { CheckCircle2, XCircle, Trophy, RefreshCw, ArrowRight, Award, HelpCircle } from 'lucide-react';
+import { CheckCircle2, XCircle, Trophy, RefreshCw, ArrowRight, Award, HelpCircle, RotateCcw } from 'lucide-react';
 import { CourseModule, BankQuestion } from '../types';
 
 interface QuizComponentProps {

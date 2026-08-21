@@ -4,9 +4,6 @@ import { UserProgress } from '../types';
 import { issueCertificateApi } from '../services/api';
 import { MODULES_DATA } from '../data/modulesData';
 import { isCertificateEligible } from '../lib/gamification';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import { toJpeg } from 'html-to-image';
 
 interface CertificateModalProps {
   isOpen: boolean;
@@ -15,7 +12,7 @@ interface CertificateModalProps {
   certType?: 'capstone' | 'completion';
   onSaveCertDetails?: (name: string, email: string, phone?: string, institution?: string, certUuid?: string, certNumber?: string) => void;
   onOpenCapstone?: () => void;
-  packages?: Record<string, { price: number; fake_price: number; name?: string; certificate_bg_image?: string | null }>;
+  packages?: Record<string, { price: number; fake_price: number; name?: string; certificate_bg_image?: string | null; certificate_bg_image_capstone?: string | null }>;
 }
 
 export const CertificateModal: React.FC<CertificateModalProps> = ({
@@ -51,6 +48,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const page3Ref = useRef<HTMLDivElement>(null);
   const page4Ref = useRef<HTMLDivElement>(null);
   const [certWidth, setCertWidth] = useState(850);
+  const syncedKeyRef = useRef<string>('');
 
   React.useEffect(() => {
     if (isOpen) {
@@ -81,38 +79,53 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
       setVerifyUrl(`https://cms.maxy.academy/certificate/verify/${existingUuid}`);
 
       // Auto-verify if all required details exist or if certificate was already requested
-      if (progress?.certRequested || existingUuid || (uName && uEmail && uPhone && uInst)) {
+      if (progress?.certRequested || (progress as any)?.certUuid || (uName && uEmail && uPhone && uInst)) {
         setIsVerified(true);
       } else {
         setIsVerified(false);
       }
     }
-  }, [isOpen, progress]);
+  }, [isOpen]);
 
-  // Keep certificate preview scaled responsive to its container width
+  // Keep certificate preview scaled responsive to its container width with throttled frame & debounce
   React.useEffect(() => {
-    if (!page1Ref.current) return;
-    const observer = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        if (entry.contentRect.width > 0) {
-          setCertWidth(entry.contentRect.width);
-        }
-      }
-    });
-    observer.observe(page1Ref.current);
-    return () => observer.disconnect();
-  }, [isVerified, isOpen]);
+    if (!isOpen || !isVerified) return;
+    const targetNode = page1Ref.current || page2Ref.current || page3Ref.current || page4Ref.current;
+    if (!targetNode) return;
 
-  // Background silent sync with backend database
+    let timeoutId: ReturnType<typeof setTimeout>;
+    const observer = new ResizeObserver((entries) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        for (let entry of entries) {
+          const w = Math.round(entry.contentRect.width);
+          if (w > 0 && Math.abs(w - certWidth) > 6) {
+            setCertWidth(w);
+          }
+        }
+      }, 40);
+    });
+
+    observer.observe(targetNode);
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, [isVerified, isOpen, activePageTab]);
+
+  // Background silent sync with backend database (Guarded single execution per identity)
   React.useEffect(() => {
     if (!isOpen || !isVerified || !certUuid) return;
     const uName = userName || (progress as any)?.userName || progress?.certName || '';
     const uEmail = userEmail || (progress as any)?.userEmail || progress?.certEmail || '';
     if (!uName || !uEmail) return;
 
-    if (onSaveCertDetails) {
-      onSaveCertDetails(uName, uEmail, userPhone, userInstitution, certUuid, certNumber);
-    }
+    // If UUID is already synced and stored in progress, don't re-trigger
+    if ((progress as any)?.certUuid && (progress as any)?.certUuid === certUuid) return;
+
+    const syncKey = `${uName}_${uEmail}_${certUuid}_${certType}`;
+    if (syncedKeyRef.current === syncKey) return;
+    syncedKeyRef.current = syncKey;
 
     issueCertificateApi(uName, uEmail, certType)
       .then((res) => {
@@ -126,7 +139,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
         }
       })
       .catch(() => {});
-  }, [isOpen, isVerified]);
+  }, [isOpen, isVerified, certUuid, userName, userEmail]);
 
   if (!isOpen) return null;
 
@@ -412,7 +425,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   };
 
   // Off-screen clone capture helper: completely prevents visible preview flicker or expansion
-  const captureOffscreenNode = async (el: HTMLElement): Promise<string> => {
+  const captureOffscreenNode = async (el: HTMLElement, toJpegFn: (node: HTMLElement, options?: any) => Promise<string>): Promise<string> => {
     const wrapper = document.createElement('div');
     wrapper.style.position = 'fixed';
     wrapper.style.left = '-9999px';
@@ -424,6 +437,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     wrapper.style.backgroundColor = '#ffffff';
 
     const cloned = el.cloneNode(true) as HTMLElement;
+    cloned.style.display = 'block';
     cloned.style.width = '1123px';
     cloned.style.height = '794px';
     cloned.style.margin = '0';
@@ -440,7 +454,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     document.body.appendChild(wrapper);
 
     try {
-      const dataUrl = await toJpeg(cloned, {
+      const dataUrl = await toJpegFn(cloned, {
         quality: 0.98,
         pixelRatio: 2,
         backgroundColor: '#ffffff',
@@ -454,8 +468,14 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   };
 
   const handleDownloadPDF = async () => {
-    if (!page1Ref.current || !page2Ref.current) return;
     setIsDownloading(true);
+    // Give React a tick to mount all 4 page refs in DOM before capturing offscreen clones
+    await new Promise((r) => setTimeout(r, 80));
+
+    if (!page1Ref.current || !page2Ref.current) {
+      setIsDownloading(false);
+      return;
+    }
 
     const p1 = page1Ref.current;
     const p2 = page2Ref.current;
@@ -465,16 +485,21 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     const safeName = (userName || 'Siswa').replace(/[^a-zA-Z0-9]/g, '_');
 
     try {
+      const [{ toJpeg }, { default: jsPDF }] = await Promise.all([
+        import('html-to-image'),
+        import('jspdf'),
+      ]);
+
       // Capture off-screen clones so the visible preview on screen NEVER flickers or expands
-      const imgData1 = await captureOffscreenNode(p1);
-      const imgData2 = await captureOffscreenNode(p2);
+      const imgData1 = await captureOffscreenNode(p1, toJpeg);
+      const imgData2 = await captureOffscreenNode(p2, toJpeg);
       let imgData3: string | null = null;
       if (p3) {
-        imgData3 = await captureOffscreenNode(p3);
+        imgData3 = await captureOffscreenNode(p3, toJpeg);
       }
       let imgData4: string | null = null;
       if (p4) {
-        imgData4 = await captureOffscreenNode(p4);
+        imgData4 = await captureOffscreenNode(p4, toJpeg);
       }
 
       const pdfWidth = 297;
@@ -504,6 +529,11 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     } catch (err) {
       console.warn('html-to-image PDF error, attempting html2canvas fallback:', err);
       try {
+        const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
+          import('html2canvas'),
+          import('jspdf'),
+        ]);
+
         const canvas1 = await html2canvas(p1, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false });
         const canvas2 = await html2canvas(p2, { scale: 2, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false });
         const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
@@ -862,268 +892,274 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             <div id="printable-certificate-area" className="space-y-6 relative">
 
             {/* ============ HALAMAN 1: SERTIFIKAT ============ */}
-            <div
-              ref={page1Ref}
-              className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
-              style={{ display: activePageTab === 1 ? 'block' : 'none', aspectRatio: '850 / 600' }}
-            >
-              <div 
-                className="cert-scaler absolute top-0 left-0"
-                style={{
-                  width: '850px',
-                  height: '600px',
-                  transformOrigin: 'top left',
-                  transform: `scale(${certWidth / 850})`
-                }}
+            {(activePageTab === 1 || isDownloading) && (
+              <div
+                ref={page1Ref}
+                className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
+                style={{ display: activePageTab === 1 || isDownloading ? 'block' : 'none', aspectRatio: '850 / 600' }}
               >
-              {hasCmsTemplate ? (
-                <div
-                  data-cert-bg
-                  className="relative w-full h-full bg-cover bg-center bg-no-repeat overflow-hidden bg-slate-900"
+                <div 
+                  className="cert-scaler absolute top-0 left-0"
                   style={{
-                    backgroundImage: bgImage ? `url(${bgImage})` : undefined,
+                    width: '850px',
+                    height: '600px',
+                    transformOrigin: 'top left',
+                    transform: `scale(${certWidth / 850})`
                   }}
                 >
-                  {bgImage && (
-                    <img
-                      src={bgImage}
-                      crossOrigin="anonymous"
-                      alt="Certificate Template Background"
-                      className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                    />
-                  )}
-                  {templateObjects.length > 0 ? (
-                    templateObjects.map((obj: any, i: number) => {
-                      if (obj.text === 'UID' || obj.text === 'uid') return null; // Skip stray duplicate label
+                {hasCmsTemplate ? (
+                  <div
+                    data-cert-bg
+                    className="relative w-full h-full bg-cover bg-center bg-no-repeat overflow-hidden bg-slate-900"
+                    style={{
+                      backgroundImage: bgImage ? `url(${bgImage})` : undefined,
+                    }}
+                  >
+                    {bgImage && (
+                      <img
+                        src={bgImage}
+                        crossOrigin="anonymous"
+                        alt="Certificate Template Background"
+                        loading="eager"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                      />
+                    )}
+                    {templateObjects.length > 0 ? (
+                      templateObjects.map((obj: any, i: number) => {
+                        if (obj.text === 'UID' || obj.text === 'uid') return null; // Skip stray duplicate label
 
-                      const isUuidObj = obj.id === 'UUID' || (typeof obj.text === 'string' && (obj.text.includes('f7ad0d5c') || obj.text.includes('1a1d2a89') || obj.text.toLowerCase().includes('uuid')));
-                      const isNameObj = obj.id === 'NAME' || (typeof obj.text === 'string' && obj.text.includes('Nama Siswa'));
-                      const isCertNumObj = obj.id === 'NO_SERTIF' || (typeof obj.text === 'string' && obj.text.includes('No. 0255'));
-                      const isDateObj = obj.id === 'DATE' || (typeof obj.text === 'string' && obj.text.includes('Jakarta,'));
-                      const isCapstoneTitleObj = obj.id === 'CAPSTONE_TITLE' || obj.id === 'CAPSTONE' || (typeof obj.text === 'string' && (obj.text.includes('Judul Capstone') || obj.text.includes('CAPSTONE_TITLE')));
+                        const isUuidObj = obj.id === 'UUID' || (typeof obj.text === 'string' && (obj.text.includes('f7ad0d5c') || obj.text.includes('1a1d2a89') || obj.text.toLowerCase().includes('uuid')));
+                        const isNameObj = obj.id === 'NAME' || (typeof obj.text === 'string' && obj.text.includes('Nama Siswa'));
+                        const isCertNumObj = obj.id === 'NO_SERTIF' || (typeof obj.text === 'string' && obj.text.includes('No. 0255'));
+                        const isDateObj = obj.id === 'DATE' || (typeof obj.text === 'string' && obj.text.includes('Jakarta,'));
+                        const isCapstoneTitleObj = obj.id === 'CAPSTONE_TITLE' || obj.id === 'CAPSTONE' || (typeof obj.text === 'string' && (obj.text.includes('Judul Capstone') || obj.text.includes('CAPSTONE_TITLE')));
 
-                      let content = obj.text || '';
-                      if (isNameObj) content = userName || 'Siswa AI Navigator';
-                      else if (isUuidObj) content = certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-');
-                      else if (isCertNumObj) content = certNumber || (progress as any)?.certNumber || (isIssuing ? 'Memuat...' : '-');
-                      else if (isDateObj) content = todayStr;
-                      else if (isCapstoneTitleObj) content = capstoneTitle ? `Judul Capstone: ${capstoneTitle}` : '';
+                        let content = obj.text || '';
+                        if (isNameObj) content = userName || 'Siswa AI Navigator';
+                        else if (isUuidObj) content = certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-');
+                        else if (isCertNumObj) content = certNumber || (progress as any)?.certNumber || (isIssuing ? 'Memuat...' : '-');
+                        else if (isDateObj) content = todayStr;
+                        else if (isCapstoneTitleObj) content = capstoneTitle ? `Judul Capstone: ${capstoneTitle}` : '';
 
-                      // Canvas editor (Fabric.js 850x600) stores top/left as pixel coords
-                      let isCentered = obj.textAlign === 'center' || obj.originX === 'center';
-                      let topPercent = ((obj.top || 0) / 600) * 100;
-                      let leftPercent = ((obj.left || 0) / 850) * 100;
+                        // Canvas editor (Fabric.js 850x600) stores top/left as pixel coords
+                        let isCentered = obj.textAlign === 'center' || obj.originX === 'center';
+                        let topPercent = ((obj.top || 0) / 600) * 100;
+                        let leftPercent = ((obj.left || 0) / 850) * 100;
 
-                      // Keep the recipient name position aligned perfectly
-                      if (isNameObj) {
-                        leftPercent = 49.5;
-                        isCentered = true;
-                        if (!obj.top || (obj.top >= 160 && obj.top <= 280)) {
-                          topPercent = 41;
+                        // Keep the recipient name position aligned perfectly
+                        if (isNameObj) {
+                          leftPercent = 49.5;
+                          isCentered = true;
+                          if (!obj.top || (obj.top >= 160 && obj.top <= 280)) {
+                            topPercent = 41;
+                          }
                         }
-                      }
 
-                      // LARGER & BOLDER FONT SIZES FOR RECIPIENT NAME, DATE & UUID AS REQUESTED
-                      const finalFontSize = isNameObj
-                        ? Math.max(26, Math.round(obj.fontSize ? obj.fontSize * 1.15 : 32))
-                        : isUuidObj
-                        ? Math.max(13, Math.round(obj.fontSize ? obj.fontSize * 1.05 : 13))
-                        : isDateObj
-                        ? Math.max(14, Math.round(obj.fontSize ? obj.fontSize * 1.05 : 14))
-                        : isCertNumObj
-                        ? Math.max(14, Math.round(obj.fontSize ? obj.fontSize * 1.05 : 14))
-                        : Math.max(12, Math.round(obj.fontSize ? obj.fontSize * 0.9 : 14));
+                        // LARGER & BOLDER FONT SIZES FOR RECIPIENT NAME, DATE & UUID AS REQUESTED
+                        const finalFontSize = isNameObj
+                          ? Math.max(26, Math.round(obj.fontSize ? obj.fontSize * 1.15 : 32))
+                          : isUuidObj
+                          ? Math.max(13, Math.round(obj.fontSize ? obj.fontSize * 1.05 : 13))
+                          : isDateObj
+                          ? Math.max(14, Math.round(obj.fontSize ? obj.fontSize * 1.05 : 14))
+                          : isCertNumObj
+                          ? Math.max(14, Math.round(obj.fontSize ? obj.fontSize * 1.05 : 14))
+                          : Math.max(12, Math.round(obj.fontSize ? obj.fontSize * 0.9 : 14));
 
-                      return (
-                        <div
-                          key={i}
-                          className="absolute whitespace-nowrap pointer-events-none z-10"
-                          style={{
-                            top: `${topPercent}%`,
-                            left: `${leftPercent}%`,
-                            transform: isCentered ? 'translateX(-50%)' : 'none',
-                            fontSize: `${finalFontSize}px`,
-                            fontFamily: obj.fontFamily || (isUuidObj ? 'Courier New, monospace' : 'Poppins, sans-serif'),
-                            fontWeight: obj.fontWeight || (isNameObj ? 900 : 700),
-                            color: obj.fill || (isNameObj ? '#d97706' : (isUuidObj ? '#2563eb' : '#0f172a')),
-                            textAlign: isCentered ? 'center' : ((obj.textAlign as any) || 'left'),
-                            lineHeight: 1.2,
-                            textShadow: isNameObj ? '0 1px 2px rgba(0,0,0,0.1)' : 'none',
-                          }}
-                        >
-                          {content}
+                        return (
+                          <div
+                            key={i}
+                            className="absolute whitespace-nowrap pointer-events-none z-10"
+                            style={{
+                              top: `${topPercent}%`,
+                              left: `${leftPercent}%`,
+                              transform: isCentered ? 'translateX(-50%)' : 'none',
+                              fontSize: `${finalFontSize}px`,
+                              fontFamily: obj.fontFamily || (isUuidObj ? 'Courier New, monospace' : 'Poppins, sans-serif'),
+                              fontWeight: obj.fontWeight || (isNameObj ? 900 : 700),
+                              color: obj.fill || (isNameObj ? '#d97706' : (isUuidObj ? '#2563eb' : '#0f172a')),
+                              textAlign: isCentered ? 'center' : ((obj.textAlign as any) || 'left'),
+                              lineHeight: 1.2,
+                              textShadow: isNameObj ? '0 1px 2px rgba(0,0,0,0.1)' : 'none',
+                            }}
+                          >
+                            {content}
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <>
+                        <div className="absolute top-[42%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+                          <h3 className="text-3xl sm:text-5xl font-black text-amber-500 drop-shadow-md">{userName || 'Siswa AI Navigator'}</h3>
                         </div>
-                      );
-                    })
-                  ) : (
-                    <>
-                      <div className="absolute top-[42%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-                        <h3 className="text-3xl sm:text-5xl font-black text-amber-500 drop-shadow-md">{userName || 'Siswa AI Navigator'}</h3>
+                        <div className="absolute bottom-[10%] left-[8%] pointer-events-none text-sm text-slate-800 font-bold">
+                          {todayStr}
+                        </div>
+                        <div className="absolute bottom-[10%] right-[8%] pointer-events-none text-sm text-blue-800 font-mono font-bold">
+                          {certUuid || ''}
+                        </div>
+                      </>
+                    )}
+                    {capstoneTitle && !hasCustomCapstoneCanvasObj && (
+                      <div
+                        className="absolute whitespace-nowrap pointer-events-none z-10 text-center"
+                        style={{
+                          top: '51.5%',
+                          left: '49.5%',
+                          transform: 'translateX(-50%)',
+                          fontSize: '11.5px',
+                          fontFamily: 'Poppins, sans-serif',
+                          fontWeight: 700,
+                          color: '#b45309',
+                          backgroundColor: 'rgba(254, 243, 199, 0.95)',
+                          padding: '3px 14px',
+                          borderRadius: '8px',
+                          border: '1px solid rgba(245, 158, 11, 0.5)',
+                          maxWidth: '82%',
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.06)',
+                        }}
+                      >
+                        Judul Capstone Project: "{capstoneTitle}"
                       </div>
-                      <div className="absolute bottom-[10%] left-[8%] pointer-events-none text-sm text-slate-800 font-bold">
-                        {todayStr}
-                      </div>
-                      <div className="absolute bottom-[10%] right-[8%] pointer-events-none text-sm text-blue-800 font-mono font-bold">
-                        {certUuid || ''}
-                      </div>
-                    </>
-                  )}
-                  {capstoneTitle && !hasCustomCapstoneCanvasObj && (
-                    <div
-                      className="absolute whitespace-nowrap pointer-events-none z-10 text-center"
-                      style={{
-                        top: '51.5%',
-                        left: '49.5%',
-                        transform: 'translateX(-50%)',
-                        fontSize: '11.5px',
-                        fontFamily: 'Poppins, sans-serif',
-                        fontWeight: 700,
-                        color: '#b45309',
-                        backgroundColor: 'rgba(254, 243, 199, 0.95)',
-                        padding: '3px 14px',
-                        borderRadius: '8px',
-                        border: '1px solid rgba(245, 158, 11, 0.5)',
-                        maxWidth: '82%',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.06)',
-                      }}
-                    >
-                      Judul Capstone Project: "{capstoneTitle}"
+                    )}
+                  </div>
+                ) : (
+                  /* Fallback: Digital Certificate */
+                  <div className="w-full h-full bg-white relative flex flex-col items-center justify-center p-8 text-center">
+                    {/* Gold border accent */}
+                    <div className="absolute inset-2 border-2 border-amber-400/60 rounded-lg pointer-events-none" />
+                    <div className="absolute inset-3.5 border border-amber-300/30 rounded pointer-events-none" />
+
+                    {/* Top decorative line */}
+                    <div className="absolute top-5 left-1/2 -translate-x-1/2 flex items-center gap-3">
+                      <div className="w-12 h-[1px] bg-amber-400" />
+                      <img
+                        src="https://cms.maxy.academy/uploads/LogoMaxy.png"
+                        crossOrigin="anonymous"
+                        alt="Maxy Academy Logo"
+                        className="h-7 w-auto object-contain"
+                      />
+                      <div className="w-12 h-[1px] bg-amber-400" />
                     </div>
-                  )}
+
+                    <div className="space-y-1 mt-4">
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold tracking-[0.3em] uppercase block">Maxy Academy — AI Navigator Program</span>
+                      <h2 className="text-3xl sm:text-4xl font-black text-slate-800 tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+                        CERTIFICATE
+                      </h2>
+                      <p className="text-sm text-slate-500 font-medium italic">Of Completion</p>
+                    </div>
+
+                    <p className="text-xs text-slate-500 mt-3">This certificate is proudly presented to:</p>
+
+                    <div className="mt-2 pb-1.5 border-b-2 border-amber-400/50 px-8">
+                      <h3 className="text-2xl sm:text-4xl font-black text-amber-500" style={{ fontFamily: 'Georgia, serif' }}>
+                        {userName || 'Siswa AI Navigator'}
+                      </h3>
+                    </div>
+
+                    {capstoneTitle && (
+                      <div className="mt-2 text-xs font-bold text-amber-800 bg-amber-50 border border-amber-300 px-4 py-1.5 rounded-xl inline-block max-w-md shadow-sm">
+                        Judul Capstone Project: "{capstoneTitle}"
+                      </div>
+                    )}
+
+                    <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed mt-3">
+                      telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong> dengan predikat <strong className="text-emerald-700">LULUS</strong>.
+                    </p>
+
+                    {/* Bottom section */}
+                    <div className="flex items-end justify-between w-full max-w-md mt-auto pt-4">
+                      <div className="text-left">
+                        <p className="text-xs text-slate-700 font-bold">{todayStr}</p>
+                        {certNumber && <p className="text-xs text-slate-500 font-mono mt-0.5">{certNumber}</p>}
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs text-blue-700 font-mono font-bold">{certUuid || ''}</p>
+                        <p className="text-xs text-amber-600 font-bold mt-0.5">CTO & Founder, Maxy Academy</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 </div>
-              ) : (
-                /* Fallback: Digital Certificate */
-                <div className="w-full h-full bg-white relative flex flex-col items-center justify-center p-8 text-center">
-                  {/* Gold border accent */}
-                  <div className="absolute inset-2 border-2 border-amber-400/60 rounded-lg pointer-events-none" />
-                  <div className="absolute inset-3.5 border border-amber-300/30 rounded pointer-events-none" />
-
-                  {/* Top decorative line */}
-                  <div className="absolute top-5 left-1/2 -translate-x-1/2 flex items-center gap-3">
-                    <div className="w-12 h-[1px] bg-amber-400" />
-                    <img
-                      src="https://cms.maxy.academy/uploads/LogoMaxy.png"
-                      crossOrigin="anonymous"
-                      alt="Maxy Academy Logo"
-                      className="h-7 w-auto object-contain"
-                    />
-                    <div className="w-12 h-[1px] bg-amber-400" />
-                  </div>
-
-                  <div className="space-y-1 mt-4">
-                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold tracking-[0.3em] uppercase block">Maxy Academy — AI Navigator Program</span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-800 tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
-                      CERTIFICATE
-                    </h2>
-                    <p className="text-sm text-slate-500 font-medium italic">Of Completion</p>
-                  </div>
-
-                  <p className="text-xs text-slate-500 mt-3">This certificate is proudly presented to:</p>
-
-                  <div className="mt-2 pb-1.5 border-b-2 border-amber-400/50 px-8">
-                    <h3 className="text-2xl sm:text-4xl font-black text-amber-500" style={{ fontFamily: 'Georgia, serif' }}>
-                      {userName || 'Siswa AI Navigator'}
-                    </h3>
-                  </div>
-
-                  {capstoneTitle && (
-                    <div className="mt-2 text-xs font-bold text-amber-800 bg-amber-50 border border-amber-300 px-4 py-1.5 rounded-xl inline-block max-w-md shadow-sm">
-                      Judul Capstone Project: "{capstoneTitle}"
-                    </div>
-                  )}
-
-                  <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed mt-3">
-                    telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong> dengan predikat <strong className="text-emerald-700">LULUS</strong>.
-                  </p>
-
-                  {/* Bottom section */}
-                  <div className="flex items-end justify-between w-full max-w-md mt-auto pt-4">
-                    <div className="text-left">
-                      <p className="text-xs text-slate-700 font-bold">{todayStr}</p>
-                      {certNumber && <p className="text-xs text-slate-500 font-mono mt-0.5">{certNumber}</p>}
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xs text-blue-700 font-mono font-bold">{certUuid || ''}</p>
-                      <p className="text-xs text-amber-600 font-bold mt-0.5">CTO & Founder, Maxy Academy</p>
-                    </div>
-                  </div>
-                </div>
-              )}
               </div>
-            </div>
+            )}
 
             {/* ============ HALAMAN 2: TRANSKRIP PART 1 (FULL-WIDTH 1-COLUMN TABLE) ============ */}
-            <div
-              ref={page2Ref}
-              className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
-              style={{ display: activePageTab === 2 ? 'block' : 'none', aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
-            >
-              <div 
-                className="cert-scaler absolute top-0 left-0"
-                style={{
-                  width: '850px',
-                  height: '600px',
-                  transformOrigin: 'top left',
-                  transform: `scale(${certWidth / 850})`
-                }}
+            {(activePageTab === 2 || isDownloading) && (
+              <div
+                ref={page2Ref}
+                className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
+                style={{ display: activePageTab === 2 || isDownloading ? 'block' : 'none', aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
               >
-                <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '16px 20px' }}>
-                  {/* Header */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '2px solid #1e3a5f', marginBottom: '8px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <img
-                      src="https://cms.maxy.academy/uploads/LogoMaxyBgWhite.png"
-                      crossOrigin="anonymous"
-                      alt="Maxy Academy Logo"
-                      style={{ height: '26px', width: 'auto', objectFit: 'contain' }}
-                    />
-                    <div>
-                      <div style={{ fontSize: '14px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        Transkrip Kurikulum Modul Pembelajaran (Bagian 1)
-                      </div>
-                      <div style={{ fontSize: '10.5px', color: '#475569', marginTop: '1px', fontWeight: 600 }}>
-                        Lampiran Resmi Certificate of Completion – AI Navigator ({hasTier2 ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
+                <div 
+                  className="cert-scaler absolute top-0 left-0"
+                  style={{
+                    width: '850px',
+                    height: '600px',
+                    transformOrigin: 'top left',
+                    transform: `scale(${certWidth / 850})`
+                  }}
+                >
+                  <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '16px 20px' }}>
+                    {/* Header */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '2px solid #1e3a5f', marginBottom: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <img
+                        src="https://cms.maxy.academy/uploads/LogoMaxyBgWhite.png"
+                        crossOrigin="anonymous"
+                        alt="Maxy Academy Logo"
+                        style={{ height: '26px', width: 'auto', objectFit: 'contain' }}
+                      />
+                      <div>
+                        <div style={{ fontSize: '14px', fontWeight: 900, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          Transkrip Kurikulum Modul Pembelajaran (Bagian 1)
+                        </div>
+                        <div style={{ fontSize: '10.5px', color: '#475569', marginTop: '1px', fontWeight: 600 }}>
+                          Lampiran Resmi Certificate of Completion – AI Navigator ({hasTier2 ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
+                        </div>
                       </div>
                     </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: '12px', fontWeight: 900, color: '#1e3a5f' }}>{userName || 'Siswa AI Navigator'}</div>
+                      <div style={{ fontSize: '10px', color: '#475569', fontFamily: 'monospace', fontWeight: 700 }}>{certNumber || 'No. 0255/AIN/NAV/2026'}</div>
+                    </div>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '12px', fontWeight: 900, color: '#1e3a5f' }}>{userName || 'Siswa AI Navigator'}</div>
-                    <div style={{ fontSize: '10px', color: '#475569', fontFamily: 'monospace', fontWeight: 700 }}>{certNumber || 'No. 0255/AIN/NAV/2026'}</div>
+
+                  {/* Full-Width 1-Column Table Part 1 */}
+                  <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
+                    <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
+                      <thead>
+                        <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '12.5px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
+                          <th style={{ padding: '6px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
+                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
+                          <th style={{ padding: '6px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {part1Modules.map((m, idx) => renderModuleRow(m, idx + 1, idx))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Footer Part 1 */}
+                  <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '10px', color: '#475569' }}>
+                    <span>Halaman 2 dari {totalPages} • Transkrip Kurikulum Modul Pembelajaran AI Navigator</span>
+                    <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-')}</span>
                   </div>
                 </div>
-
-                {/* Full-Width 1-Column Table Part 1 */}
-                <div style={{ border: '1.5px solid #cbd5e1', borderRadius: '8px', overflow: 'hidden', flex: 1, minHeight: 0 }}>
-                  <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
-                    <thead>
-                      <tr style={{ backgroundColor: '#1e3a5f', color: '#ffffff', fontSize: '12.5px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        <th style={{ padding: '6px 8px', textAlign: 'center', width: '42px', borderRight: '1px solid #2d4a6f' }}>No</th>
-                        <th style={{ padding: '6px 10px' }}>Judul Modul Pembelajaran &amp; Deskripsi Materi</th>
-                        <th style={{ padding: '6px 8px', textAlign: 'center', width: '70px', borderLeft: '1px solid #2d4a6f' }}>Bobot</th>
-                        <th style={{ padding: '6px 8px', textAlign: 'center', width: '80px', borderLeft: '1px solid #2d4a6f' }}>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {part1Modules.map((m, idx) => renderModuleRow(m, idx + 1, idx))}
-                    </tbody>
-                  </table>
-                </div>
-
-                {/* Footer Part 1 */}
-                <div style={{ paddingTop: '6px', marginTop: '6px', borderTop: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '10px', color: '#475569' }}>
-                  <span>Halaman 2 dari {totalPages} • Transkrip Kurikulum Modul Pembelajaran AI Navigator</span>
-                  <span style={{ fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 800 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-')}</span>
                 </div>
               </div>
-              </div>
-            </div>
+            )}
 
             {/* ============ HALAMAN 3: TRANSKRIP PART 2 (FULL-WIDTH 1-COLUMN TABLE) ============ */}
-            {part2Modules.length > 0 && (
+            {part2Modules.length > 0 && (activePageTab === 3 || isDownloading) && (
               <div
                 ref={page3Ref}
                 className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
-                style={{ display: activePageTab === 3 ? 'block' : 'none', aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
+                style={{ display: activePageTab === 3 || isDownloading ? 'block' : 'none', aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
               >
               <div 
                 className="cert-scaler absolute top-0 left-0"
@@ -1201,11 +1237,11 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             )}
 
             {/* ============ HALAMAN 4: TRANSKRIP PART 3 (FOR TIER 2 29 MODULES) ============ */}
-            {part3Modules.length > 0 && (
+            {part3Modules.length > 0 && (activePageTab === 4 || isDownloading) && (
               <div
                 ref={page4Ref}
                 className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
-                style={{ display: activePageTab === 4 ? 'block' : 'none', aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
+                style={{ display: activePageTab === 4 || isDownloading ? 'block' : 'none', aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
               >
               <div 
                 className="cert-scaler absolute top-0 left-0"
