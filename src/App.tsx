@@ -104,12 +104,11 @@ export default function App() {
   const [expiredModalOpen, setExpiredModalOpen] = useState(false);
   const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
   const [activeInvoiceOrderId, setActiveInvoiceOrderId] = useState<string | null>(null);
+  const [isCloudProgressLoaded, setIsCloudProgressLoaded] = useState<boolean>(false);
   const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => {
     if (isLocalDevEnv) return false;
-    const token = typeof window !== 'undefined' ? (new URLSearchParams(window.location.search).get('token') || localStorage.getItem('maxy_access_token')) : null;
-    return !token;
+    return true;
   });
-  const [isCloudProgressLoaded, setIsCloudProgressLoaded] = useState<boolean>(false);
   const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
   const [paymentLoadingTier, setPaymentLoadingTier] = useState<'tier1' | 'tier2' | null>(null);
   const [cmsPackages, setCmsPackages] = useState<Record<string, { price: number; fake_price: number; name?: string }>>({});
@@ -1267,7 +1266,9 @@ export default function App() {
     setUserProfileModalOpen(false);
   }, []);
 
-  if (isAuthValidating) {
+  const hasCachedProgress = Boolean(progress.completedModules && progress.completedModules.length > 0);
+
+  if (isAuthValidating && !hasCachedProgress) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
         theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-white'
@@ -1279,7 +1280,7 @@ export default function App() {
           theme === 'light' ? 'text-slate-600' : 'text-slate-600 dark:text-slate-300'
         }`}>
           <span className="w-4 h-4 border-2 border-[#ffb034] border-t-transparent rounded-full animate-spin" />
-          <span>Memverifikasi Sesi AI Navigator...</span>
+          <span>Memuat Sesi &amp; Peta Belajar AI Navigator...</span>
         </div>
       </div>
     );

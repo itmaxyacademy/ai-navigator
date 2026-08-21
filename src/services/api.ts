@@ -26,8 +26,8 @@ export async function refreshAccessToken(): Promise<string | null> {
   }
 }
 
-async function fetchWithAuth(url: string, options: RequestInit = {}): Promise<Response> {
-  let token = localStorage.getItem('maxy_access_token');
+async function fetchWithAuth(url: string, options: RequestInit = {}, customToken?: string): Promise<Response> {
+  const token = customToken || (typeof window !== 'undefined' ? (new URLSearchParams(window.location.search).get('token') || localStorage.getItem('maxy_access_token')) : null);
   const headers = new Headers(options.headers || {});
   if (token) {
     headers.set('Authorization', `Bearer ${token}`);
@@ -70,7 +70,7 @@ export async function fetchUserProfile(token?: string) {
     const res = await fetchWithAuth(`${API_BASE}/auth/me`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
-    });
+    }, token);
     return await res.json();
   } catch (err) {
     console.error('API fetchUserProfile failed:', err);
@@ -83,7 +83,7 @@ export async function loadCloudProgress(token?: string): Promise<Record<string, 
     const res = await fetchWithAuth(`${API_BASE}/progress`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
-    });
+    }, token);
     if (!res.ok) return null;
     const result = await res.json();
     if (result?.success && result?.data) {
