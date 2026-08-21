@@ -380,7 +380,7 @@ const NavigatorMascot = ({ moduleTitle }: { moduleTitle: string }) => {
   );
 };
 
-export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
+export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.memo(({
   modules,
   progress,
   onSelectModule,
@@ -426,8 +426,27 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
   const totalModules = tierTargetModules;
   const progressPercent = Math.min(100, Math.round((completedCount / totalModules) * 100));
 
-  const timeCalc = calculateRemainingTimeMinutes(progress.completedModules, modules);
-  const levelInfo = getUserLevelInfo(progress.xp);
+  const timeCalc = useMemo(() => calculateRemainingTimeMinutes(progress.completedModules, modules), [progress.completedModules, modules]);
+  const levelInfo = useMemo(() => getUserLevelInfo(progress.xp), [progress.xp]);
+
+  // Fast O(1) lookups for roadmap layout items
+  const groupStartMap = useMemo(() => {
+    const map = new Map<number, (typeof PATH_GROUPS)[0]>();
+    PATH_GROUPS.forEach(g => map.set(g.moduleRange[0], g));
+    return map;
+  }, []);
+
+  const chestAfterMap = useMemo(() => {
+    const map = new Map<number, TreasureChestData>();
+    TREASURE_CHESTS.forEach(c => map.set(c.afterModuleId, c));
+    return map;
+  }, []);
+
+  const milestoneAfterMap = useMemo(() => {
+    const map = new Map<number, CheckpointMilestone>();
+    CHECKPOINT_MILESTONES.forEach(m => map.set(m.afterModuleId, m));
+    return map;
+  }, []);
 
   // Highest unlocked or currently active module (null if all completed)
   const isAllModulesCompleted = progress.completedModules.length >= modules.length;
@@ -979,14 +998,10 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
                   const posX = getNodePositionX(index);
                   const score = progress.moduleScores[module.id];
 
-                  // Check if this module is the start of a Group
-                  const groupStart = PATH_GROUPS.find(g => g.moduleRange[0] === module.id);
-                  
-                  // Check if a Treasure Chest is placed after this module
-                  const chestAfter = TREASURE_CHESTS.find(c => c.afterModuleId === module.id);
-                  
-                  // Check if a Checkpoint Milestone is placed after this module
-                  const milestoneAfter = CHECKPOINT_MILESTONES.find(m => m.afterModuleId === module.id);
+                  // Fast O(1) checks
+                  const groupStart = groupStartMap.get(module.id);
+                  const chestAfter = chestAfterMap.get(module.id);
+                  const milestoneAfter = milestoneAfterMap.get(module.id);
 
                   // Calculate Star rating (1 to 3 stars if completed, based on 10-question quiz)
                   const starCount = isCompleted
@@ -1843,6 +1858,6 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = ({
       </AnimatePresence>
     </div>
   );
-};
+});
 
 export default LearningPathRoadmap;

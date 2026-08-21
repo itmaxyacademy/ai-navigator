@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -18,53 +18,55 @@ interface DailyXpTrendChartProps {
   totalXp: number;
 }
 
-export const DailyXpTrendChart: React.FC<DailyXpTrendChartProps> = ({
+export const DailyXpTrendChart: React.FC<DailyXpTrendChartProps> = React.memo(({
   dailyXpHistory = {},
   totalXp,
 }) => {
   const [chartType, setChartType] = useState<'area' | 'bar'>('area');
 
-  // Build last 7 days array ending today
-  const today = new Date();
-  const daysData = [];
+  // Memoized 7-day calculations to avoid lag on re-render
+  const { daysData, sum7Days, avgDailyXp, maxXpDay } = useMemo(() => {
+    const today = new Date();
+    const result = [];
 
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(today.getDate() - i);
-    const dateStr = getLocalDateString(d);
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(today.getDate() - i);
+      const dateStr = getLocalDateString(d);
 
-    const dayNameOptions: Intl.DateTimeFormatOptions = { weekday: 'short' };
-    const dateNumOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
+      const dayNameOptions: Intl.DateTimeFormatOptions = { weekday: 'short' };
+      const dateNumOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
 
-    const dayName = d.toLocaleDateString('id-ID', dayNameOptions);
-    const dateShort = d.toLocaleDateString('id-ID', dateNumOptions);
-    const isToday = i === 0;
+      const dayName = d.toLocaleDateString('id-ID', dayNameOptions);
+      const dateShort = d.toLocaleDateString('id-ID', dateNumOptions);
+      const isToday = i === 0;
 
-    let xpGained = dailyXpHistory[dateStr] || 0;
+      let xpGained = dailyXpHistory[dateStr] || 0;
 
-    // Fallback heuristic: If no specific daily history recorded yet but user has totalXp,
-    // generate realistic distribution ending with current total so chart renders engagingly
-    if (Object.keys(dailyXpHistory).length === 0 && totalXp > 0) {
-      if (i === 0) {
-        xpGained = Math.min(totalXp, 120);
-      } else if (i === 1 && totalXp >= 200) {
-        xpGained = 100;
-      } else if (i === 2 && totalXp >= 300) {
-        xpGained = 80;
+      if (Object.keys(dailyXpHistory).length === 0 && totalXp > 0) {
+        if (i === 0) {
+          xpGained = Math.min(totalXp, 120);
+        } else if (i === 1 && totalXp >= 200) {
+          xpGained = 100;
+        } else if (i === 2 && totalXp >= 300) {
+          xpGained = 80;
+        }
       }
+
+      result.push({
+        dateStr,
+        label: isToday ? 'Hari Ini' : dayName,
+        fullLabel: `${dayName}, ${dateShort}`,
+        xp: xpGained,
+      });
     }
 
-    daysData.push({
-      dateStr,
-      label: isToday ? 'Hari Ini' : dayName,
-      fullLabel: `${dayName}, ${dateShort}`,
-      xp: xpGained,
-    });
-  }
+    const sum = result.reduce((acc, curr) => acc + curr.xp, 0);
+    const avg = Math.round(sum / 7);
+    const max = Math.max(...result.map((d) => d.xp), 0);
 
-  const sum7Days = daysData.reduce((acc, curr) => acc + curr.xp, 0);
-  const avgDailyXp = Math.round(sum7Days / 7);
-  const maxXpDay = Math.max(...daysData.map((d) => d.xp), 0);
+    return { daysData: result, sum7Days: sum, avgDailyXp: avg, maxXpDay: max };
+  }, [dailyXpHistory, totalXp]);
 
   return (
     <div className="bg-white border-slate-200 text-slate-900 dark:bg-[#0d1322] dark:border-slate-800 dark:text-white border rounded-3xl p-5 sm:p-6 space-y-4 shadow-xl">
@@ -204,4 +206,4 @@ export const DailyXpTrendChart: React.FC<DailyXpTrendChartProps> = ({
       </div>
     </div>
   );
-};
+});

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   ResponsiveContainer,
   LineChart,
@@ -17,7 +17,7 @@ interface ProgressAnalyticsWidgetProps {
   className?: string;
 }
 
-export const ProgressAnalyticsWidget: React.FC<ProgressAnalyticsWidgetProps> = ({
+export const ProgressAnalyticsWidget: React.FC<ProgressAnalyticsWidgetProps> = React.memo(({
   progress,
   className = '',
 }) => {
@@ -28,56 +28,57 @@ export const ProgressAnalyticsWidget: React.FC<ProgressAnalyticsWidgetProps> = (
   const dailyMinutesHistory = progress.dailyMinutesHistory || {};
   const totalXp = progress.xp || 0;
 
-  // Build last N days array ending today
-  const today = new Date();
-  const rawDaysData = [];
+  // Build last N days array ending today (memoized)
+  const rawDaysData = useMemo(() => {
+    const today = new Date();
+    const result = [];
+    let runningCumulativeXp = 0;
 
-  let runningCumulativeXp = 0;
+    for (let i = timeRangeDays - 1; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(today.getDate() - i);
+      const dateStr = getLocalDateString(d);
 
-  for (let i = timeRangeDays - 1; i >= 0; i--) {
-    const d = new Date();
-    d.setDate(today.getDate() - i);
-    const dateStr = getLocalDateString(d);
+      const dayNameOptions: Intl.DateTimeFormatOptions = { weekday: 'short' };
+      const dateNumOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
 
-    const dayNameOptions: Intl.DateTimeFormatOptions = { weekday: 'short' };
-    const dateNumOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
+      const dayName = d.toLocaleDateString('id-ID', dayNameOptions);
+      const dateShort = d.toLocaleDateString('id-ID', dateNumOptions);
+      const isToday = i === 0;
 
-    const dayName = d.toLocaleDateString('id-ID', dayNameOptions);
-    const dateShort = d.toLocaleDateString('id-ID', dateNumOptions);
-    const isToday = i === 0;
+      let xpGained = dailyXpHistory[dateStr] || 0;
+      let minutesLearned = dailyMinutesHistory[dateStr] || 0;
 
-    let xpGained = dailyXpHistory[dateStr] || 0;
-    let minutesLearned = dailyMinutesHistory[dateStr] || 0;
-
-    // Fallback heuristic if history is empty but user has progress
-    if (Object.keys(dailyXpHistory).length === 0 && totalXp > 0) {
-      if (i === 0) {
-        xpGained = Math.min(totalXp, 100);
-        minutesLearned = 25;
-      } else if (i === 1 && totalXp >= 150) {
-        xpGained = 60;
-        minutesLearned = 15;
-      } else if (i === 3 && totalXp >= 250) {
-        xpGained = 90;
-        minutesLearned = 20;
-      } else if (i === 7 && totalXp >= 350) {
-        xpGained = 100;
-        minutesLearned = 30;
+      if (Object.keys(dailyXpHistory).length === 0 && totalXp > 0) {
+        if (i === 0) {
+          xpGained = Math.min(totalXp, 100);
+          minutesLearned = 25;
+        } else if (i === 1 && totalXp >= 150) {
+          xpGained = 60;
+          minutesLearned = 15;
+        } else if (i === 3 && totalXp >= 250) {
+          xpGained = 90;
+          minutesLearned = 20;
+        } else if (i === 7 && totalXp >= 350) {
+          xpGained = 100;
+          minutesLearned = 30;
+        }
       }
+
+      runningCumulativeXp += xpGained;
+
+      result.push({
+        dateStr,
+        dayLabel: isToday ? 'Hari Ini' : dateShort,
+        fullDateLabel: `${dayName}, ${dateShort}`,
+        dailyXp: xpGained,
+        cumulativeXp: runningCumulativeXp,
+        minutes: minutesLearned,
+        hasActivity: xpGained > 0 || minutesLearned > 0,
+      });
     }
-
-    runningCumulativeXp += xpGained;
-
-    rawDaysData.push({
-      dateStr,
-      dayLabel: isToday ? 'Hari Ini' : dateShort,
-      fullDateLabel: `${dayName}, ${dateShort}`,
-      dailyXp: xpGained,
-      cumulativeXp: runningCumulativeXp,
-      minutes: minutesLearned,
-      hasActivity: xpGained > 0 || minutesLearned > 0,
-    });
-  }
+    return result;
+  }, [timeRangeDays, dailyXpHistory, dailyMinutesHistory, totalXp]);
 
   const totalPeriodXp = rawDaysData.reduce((acc, d) => acc + d.dailyXp, 0);
   const totalPeriodMinutes = rawDaysData.reduce((acc, d) => acc + d.minutes, 0);
@@ -216,4 +217,4 @@ export const ProgressAnalyticsWidget: React.FC<ProgressAnalyticsWidgetProps> = (
       </div>
     </div>
   );
-};
+});

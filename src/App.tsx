@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MODULES_DATA } from './data/modulesData';
 import { UserProgress, CapstoneSubmission } from './types';
 import { Header } from './components/Header';
@@ -649,7 +649,7 @@ export default function App() {
   }, [progress, isAuthValidating, isCloudProgressLoaded]);
 
   // Handle module selection from roadmap
-  const handleSelectModule = (moduleId: number) => {
+  const handleSelectModule = useCallback((moduleId: number) => {
     if (progress.isExpired && progress.userTier !== 'free') {
       setExpiredModalOpen(true);
       return;
@@ -670,9 +670,9 @@ export default function App() {
       },
     }));
     setActiveTab('module');
-  };
+  }, [progress.isExpired, progress.userTier, canAccessModule]);
 
-  const handleIncrementRevisit = (moduleId: number) => {
+  const handleIncrementRevisit = useCallback((moduleId: number) => {
     setProgress((prev) => ({
       ...prev,
       moduleRevisits: {
@@ -680,10 +680,10 @@ export default function App() {
         [moduleId]: ((prev.moduleRevisits || {})[moduleId] || 0) + 1,
       },
     }));
-  };
+  }, []);
 
   // Handle General XP Awarding (e.g. from Learning Tips, Daily Challenges)
-  const handleAwardXp = (amount: number, label: string) => {
+  const handleAwardXp = useCallback((amount: number, label: string) => {
     const todayStr = getLocalDateString();
     setProgress((prev) => {
       const currentHistory = prev.dailyXpHistory || {};
@@ -708,7 +708,7 @@ export default function App() {
     } catch (e) {
       // Ignore
     }
-  };
+  }, []);
 
   // Handle Focus Timer XP awards & daily minutes update
   const handleAwardFocusXp = (minutesCompleted: number, xpReward: number) => {
@@ -1132,7 +1132,7 @@ export default function App() {
     );
   }
 
-  const handleOpenCertificateSection = () => {
+  const handleOpenCertificateSection = useCallback(() => {
     setActiveTab('path');
     setSelectedModuleId(null);
     setTimeout(() => {
@@ -1145,7 +1145,7 @@ export default function App() {
         }, 2500);
       }
     }, 120);
-  };
+  }, []);
 
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${

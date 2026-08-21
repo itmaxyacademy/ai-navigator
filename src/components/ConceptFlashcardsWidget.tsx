@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FLASHCARDS_DATA, Flashcard, ConfidenceLevel } from '../data/flashcards';
 import { 
   RotateCw, Check, AlertCircle, HelpCircle, ChevronLeft, ChevronRight, 
@@ -11,7 +11,7 @@ interface ConceptFlashcardsWidgetProps {
   className?: string;
 }
 
-export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = ({
+export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = React.memo(({
   onAwardXp,
   className = '',
 }) => {
@@ -42,10 +42,12 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
 
   const categories = ['Semua', 'Prompting', 'Arsitektur LLM', 'RAG & Memory', 'Parameter & Tuning', 'Keamanan & Etika'];
 
-  // Filter flashcards by selected category
-  const filteredCards = selectedCategory === 'Semua' 
-    ? FLASHCARDS_DATA 
-    : FLASHCARDS_DATA.filter((c) => c.category === selectedCategory);
+  // Filter flashcards by selected category (memoized)
+  const filteredCards = useMemo(() => {
+    return selectedCategory === 'Semua' 
+      ? FLASHCARDS_DATA 
+      : FLASHCARDS_DATA.filter((c) => c.category === selectedCategory);
+  }, [selectedCategory]);
 
   const safeIndex = currentIndex < filteredCards.length ? currentIndex : 0;
   const currentCard: Flashcard = filteredCards[safeIndex] || FLASHCARDS_DATA[0];
@@ -380,4 +382,4 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = (
       </div>
     </div>
   );
-};
+});

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   ResponsiveContainer,
   RadarChart,
@@ -28,7 +28,40 @@ export interface DomainSkill {
   recommendationModuleId: number;
 }
 
-export const SkillRadarChartWidget: React.FC<SkillRadarChartWidgetProps> = ({
+const DOMAIN_DEFINITIONS = [
+  {
+    key: 'prompting',
+    domain: 'Prompt Engineering',
+    shortDomain: 'Prompting',
+    moduleIds: [1, 10, 11, 21],
+  },
+  {
+    key: 'llm_theory',
+    domain: 'Teori & Arsitektur LLM',
+    shortDomain: 'Arsitektur LLM',
+    moduleIds: [2, 3, 4, 7],
+  },
+  {
+    key: 'rag_knowledge',
+    domain: 'RAG & Pengetahuan',
+    shortDomain: 'RAG & Data',
+    moduleIds: [5, 8, 22],
+  },
+  {
+    key: 'multimodal',
+    domain: 'Generasi Multimodal',
+    shortDomain: 'Multimodal',
+    moduleIds: [12, 13, 14, 15, 16],
+  },
+  {
+    key: 'tools_workflow',
+    domain: 'Tools & Produktivitas',
+    shortDomain: 'Tools AI',
+    moduleIds: [6, 9, 17, 18, 19, 20, 23],
+  },
+];
+
+export const SkillRadarChartWidget: React.FC<SkillRadarChartWidgetProps> = React.memo(({
   modules,
   progress,
   onSelectModule,
@@ -36,94 +69,63 @@ export const SkillRadarChartWidget: React.FC<SkillRadarChartWidgetProps> = ({
 }) => {
   const [selectedDomainKey, setSelectedDomainKey] = useState<string | null>(null);
 
-  const DOMAIN_DEFINITIONS = [
-    {
-      key: 'prompting',
-      domain: 'Prompt Engineering',
-      shortDomain: 'Prompting',
-      moduleIds: [1, 10, 11, 21],
-    },
-    {
-      key: 'llm_theory',
-      domain: 'Teori & Arsitektur LLM',
-      shortDomain: 'Arsitektur LLM',
-      moduleIds: [2, 3, 4, 7],
-    },
-    {
-      key: 'rag_knowledge',
-      domain: 'RAG & Pengetahuan',
-      shortDomain: 'RAG & Data',
-      moduleIds: [5, 8, 22],
-    },
-    {
-      key: 'multimodal',
-      domain: 'Generasi Multimodal',
-      shortDomain: 'Multimodal',
-      moduleIds: [12, 13, 14, 15, 16],
-    },
-    {
-      key: 'tools_workflow',
-      domain: 'Tools & Produktivitas',
-      shortDomain: 'Tools AI',
-      moduleIds: [6, 9, 17, 18, 19, 20, 23],
-    },
-  ];
+  // Compute skill levels dynamically from user progress (memoized)
+  const domainSkills: DomainSkill[] = useMemo(() => {
+    return DOMAIN_DEFINITIONS.map((def) => {
+      const domainModules = modules.filter((m) => def.moduleIds.includes(m.id));
+      const totalDomainModules = domainModules.length || 1;
 
-  // Compute skill levels dynamically from user progress
-  const domainSkills: DomainSkill[] = DOMAIN_DEFINITIONS.map((def) => {
-    const domainModules = modules.filter((m) => def.moduleIds.includes(m.id));
-    const totalDomainModules = domainModules.length || 1;
+      let completedCount = 0;
+      let totalScoreSum = 0;
 
-    let completedCount = 0;
-    let totalScoreSum = 0;
-
-    domainModules.forEach((m) => {
-      const isCompleted = progress.completedModules.includes(m.id);
-      if (isCompleted) {
-        completedCount++;
-        const quizScore = progress.moduleScores[m.id];
-        const maxQuestions = m.content.quiz.length || 1;
-        if (quizScore !== undefined) {
-          totalScoreSum += (quizScore / maxQuestions) * 100;
-        } else {
-          totalScoreSum += 80;
+      domainModules.forEach((m) => {
+        const isCompleted = progress.completedModules.includes(m.id);
+        if (isCompleted) {
+          completedCount++;
+          const quizScore = progress.moduleScores[m.id];
+          const maxQuestions = m.content.quiz.length || 1;
+          if (quizScore !== undefined) {
+            totalScoreSum += (quizScore / maxQuestions) * 100;
+          } else {
+            totalScoreSum += 80;
+          }
         }
+      });
+
+      const completionRate = completedCount / totalDomainModules;
+      const avgScore = completedCount > 0 ? totalScoreSum / completedCount : 0;
+      let computedScore = Math.round(completionRate * 60 + (avgScore / 100) * 40);
+
+      if (computedScore === 0 && progress.xp > 0) {
+        computedScore = 20; // Beginner baseline
       }
+
+      let levelLabel = 'Pemula';
+      if (computedScore >= 80) levelLabel = 'Ahli (Expert)';
+      else if (computedScore >= 50) levelLabel = 'Menengah (Intermediate)';
+      else if (computedScore >= 20) levelLabel = 'Dasar (Basic)';
+
+      const uncompletedModule = domainModules.find((m) => !progress.completedModules.includes(m.id));
+      const recommendationModuleId = uncompletedModule ? uncompletedModule.id : domainModules[0]?.id || 1;
+
+      return {
+        key: def.key,
+        domain: def.domain,
+        shortDomain: def.shortDomain,
+        score: Math.min(computedScore, 100),
+        moduleIds: def.moduleIds,
+        levelLabel,
+        recommendationModuleId,
+      };
     });
+  }, [modules, progress.completedModules, progress.moduleScores, progress.xp]);
 
-    const completionRate = completedCount / totalDomainModules;
-    const avgScore = completedCount > 0 ? totalScoreSum / completedCount : 0;
-    let computedScore = Math.round(completionRate * 60 + (avgScore / 100) * 40);
-
-    if (computedScore === 0 && progress.xp > 0) {
-      computedScore = 20; // Beginner baseline
-    }
-
-    let levelLabel = 'Pemula';
-    if (computedScore >= 80) levelLabel = 'Ahli (Expert)';
-    else if (computedScore >= 50) levelLabel = 'Menengah (Intermediate)';
-    else if (computedScore >= 20) levelLabel = 'Dasar (Basic)';
-
-    const uncompletedModule = domainModules.find((m) => !progress.completedModules.includes(m.id));
-    const recommendationModuleId = uncompletedModule ? uncompletedModule.id : domainModules[0]?.id || 1;
-
-    return {
-      key: def.key,
-      domain: def.domain,
-      shortDomain: def.shortDomain,
-      score: Math.min(computedScore, 100),
-      moduleIds: def.moduleIds,
-      levelLabel,
-      recommendationModuleId,
-    };
-  });
-
-  const chartData = domainSkills.map((ds) => ({
+  const chartData = useMemo(() => domainSkills.map((ds) => ({
     subject: ds.shortDomain,
     score: ds.score,
     fullDomain: ds.domain,
     levelLabel: ds.levelLabel,
-  }));
+  })), [domainSkills]);
 
   const activeDomain = domainSkills.find((d) => d.key === selectedDomainKey) || domainSkills[0];
   const activeRecModule = modules.find((m) => m.id === activeDomain.recommendationModuleId);
@@ -227,4 +229,4 @@ export const SkillRadarChartWidget: React.FC<SkillRadarChartWidgetProps> = ({
       </div>
     </div>
   );
-};
+});

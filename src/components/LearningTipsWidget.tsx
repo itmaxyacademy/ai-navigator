@@ -12,7 +12,7 @@ interface LearningTipsWidgetProps {
   compact?: boolean;
 }
 
-export const LearningTipsWidget: React.FC<LearningTipsWidgetProps> = ({
+export const LearningTipsWidget: React.FC<LearningTipsWidgetProps> = React.memo(({
   onAwardXp,
   className = '',
   compact = false,
@@ -241,4 +241,4 @@ export const LearningTipsWidget: React.FC<LearningTipsWidgetProps> = ({
       </div>
     </div>
   );
-};
+});

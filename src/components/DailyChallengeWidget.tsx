@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { getLocalDateString, getDaysDifference } from '../lib/gamification';
 import { getTodayChallengeSet, DailyChallengeSet, DailyQuestion } from '../data/dailyChallenges';
 import { 
@@ -22,12 +22,12 @@ interface CompletedState {
   userAnswers: number[];
 }
 
-export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
+export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = React.memo(({
   onAwardXp,
   className = '',
 }) => {
   const todayStr = getLocalDateString();
-  const challengeSet: DailyChallengeSet = getTodayChallengeSet(todayStr);
+  const challengeSet: DailyChallengeSet = useMemo(() => getTodayChallengeSet(todayStr), [todayStr]);
 
   const STORAGE_KEY_COMPLETED = 'ai_navigator_daily_challenge_completed_v1';
   const STORAGE_KEY_STREAK = 'ai_navigator_daily_challenge_streak_v1';
@@ -448,4 +448,4 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = ({
       )}
     </div>
   );
-};
+});
