@@ -9,7 +9,7 @@ interface UserProfileModalProps {
   onSaveProfile: (data: { name: string; email: string; phone: string; institution: string }) => void;
 }
 
-export const UserProfileModal: React.FC<UserProfileModalProps> = ({
+const UserProfileModalComponent: React.FC<UserProfileModalProps> = ({
   isOpen,
   onClose,
   progress,
@@ -20,6 +20,15 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
   const [phone, setPhone] = useState(progress.userPhone || '');
   const [institution, setInstitution] = useState(progress.userInstitution || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setName(progress.userName || '');
+      setEmail(progress.userEmail || '');
+      setPhone(progress.userPhone || '');
+      setInstitution(progress.userInstitution || '');
+    }
+  }, [isOpen, progress.userName, progress.userEmail, progress.userPhone, progress.userInstitution]);
 
   if (!isOpen) return null;
 
@@ -42,16 +51,16 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-slate-950/80 animate-fadeIn">
       <div className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 text-slate-900 dark:text-white space-y-6 overflow-hidden">
         {/* Soft Background Accent Glow */}
-        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-32 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
         {/* Close / Remind Me Later Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          title="Nanti Saja"
+          className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          title="Tutup"
         >
           <X className="w-5 h-5" />
         </button>
@@ -157,3 +166,5 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
     </div>
   );
 };
+
+export const UserProfileModal = React.memo(UserProfileModalComponent);

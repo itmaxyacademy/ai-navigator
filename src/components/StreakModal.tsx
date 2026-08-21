@@ -12,7 +12,7 @@ interface StreakModalProps {
   totalModulesCount: number;
 }
 
-export const StreakModal: React.FC<StreakModalProps> = ({
+const StreakModalComponent: React.FC<StreakModalProps> = ({
   isOpen,
   onClose,
   progress,
@@ -215,3 +215,5 @@ export const StreakModal: React.FC<StreakModalProps> = ({
     </div>
   );
 };
+
+export const StreakModal = React.memo(StreakModalComponent);

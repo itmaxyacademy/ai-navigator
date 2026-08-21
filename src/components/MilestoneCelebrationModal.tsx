@@ -9,7 +9,7 @@ interface MilestoneCelebrationModalProps {
   onOpenCertificate: () => void;
 }
 
-export const MilestoneCelebrationModal: React.FC<MilestoneCelebrationModalProps> = ({
+const MilestoneCelebrationModalComponent: React.FC<MilestoneCelebrationModalProps> = ({
   isOpen,
   onClose,
   tierCompleted,
@@ -128,3 +128,5 @@ export const MilestoneCelebrationModal: React.FC<MilestoneCelebrationModalProps>
     </div>
   );
 };
+
+export const MilestoneCelebrationModal = React.memo(MilestoneCelebrationModalComponent);

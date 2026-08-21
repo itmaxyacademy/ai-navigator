@@ -27,7 +27,7 @@ interface PaymentInvoiceModalProps {
   userEmail?: string;
 }
 
-export const PaymentInvoiceModal: React.FC<PaymentInvoiceModalProps> = ({
+const PaymentInvoiceModalComponent: React.FC<PaymentInvoiceModalProps> = ({
   isOpen,
   onClose,
   orderId,
@@ -247,3 +247,5 @@ export const PaymentInvoiceModal: React.FC<PaymentInvoiceModalProps> = ({
     </div>
   );
 };
+
+export const PaymentInvoiceModal = React.memo(PaymentInvoiceModalComponent);

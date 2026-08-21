@@ -13,7 +13,7 @@ interface CapstoneModalProps {
   initialEmail?: string;
 }
 
-export const CapstoneModal: React.FC<CapstoneModalProps> = ({
+const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
   isOpen,
   onClose,
   progress,
@@ -441,3 +441,5 @@ export const CapstoneModal: React.FC<CapstoneModalProps> = ({
     </div>
   );
 };
+
+export const CapstoneModal = React.memo(CapstoneModalComponent);

@@ -1150,6 +1150,67 @@ export default function App() {
     }, 120);
   }, []);
 
+  const handleOpenStreakModal = useCallback(() => setStreakModalOpen(true), []);
+  const handleCloseStreakModal = useCallback(() => setStreakModalOpen(false), []);
+
+  const handleOpenAchievements = useCallback(() => setAchievementsOpen(true), []);
+  const handleCloseAchievements = useCallback(() => setAchievementsOpen(false), []);
+
+  const handleOpenNotes = useCallback(() => setAllNotesOpen(true), []);
+  const handleCloseNotes = useCallback(() => setAllNotesOpen(false), []);
+
+  const handleOpenUpgradeModal = useCallback((targetId?: number) => {
+    if (targetId !== undefined) setTargetUpgradeModuleId(targetId || null);
+    setUpgradeModalOpen(true);
+  }, []);
+  const handleCloseUpgradeModal = useCallback(() => {
+    setUpgradeModalOpen(false);
+    setUpgradePrefilledVoucher('');
+    setUpgradePrefilledTier(null);
+  }, []);
+
+  const handleOpenCapstoneModal = useCallback(() => setCapstoneModalOpen(true), []);
+  const handleCloseCapstoneModal = useCallback(() => setCapstoneModalOpen(false), []);
+
+  const handleOpenInvoiceModal = useCallback(() => setInvoiceModalOpen(true), []);
+  const handleCloseInvoiceModal = useCallback(() => setInvoiceModalOpen(false), []);
+
+  const handleOpenUserProfile = useCallback(() => setUserProfileModalOpen(true), []);
+  const handleCloseUserProfile = useCallback(() => setUserProfileModalOpen(false), []);
+
+  const handleOpenCertificateModal = useCallback((certType?: 'capstone' | 'completion') => {
+    if (certType) setSelectedCertType(certType);
+    setCertificateOpen(true);
+  }, []);
+  const handleCloseCertificateModal = useCallback(() => setCertificateOpen(false), []);
+
+  const handleCloseMilestoneModal = useCallback(() => {
+    setMilestoneModalState((prev) => ({ ...prev, isOpen: false }));
+  }, []);
+  const handleOpenCertificateFromMilestone = useCallback(() => {
+    setMilestoneModalState((prev) => ({ ...prev, isOpen: false }));
+    setCertificateOpen(true);
+  }, []);
+
+  const handleSaveProfile = useCallback((data: { name: string; email: string; phone: string; institution: string }) => {
+    setProgress((prev) => {
+      const next = {
+        ...prev,
+        userName: data.name,
+        userEmail: data.email,
+        userPhone: data.phone,
+        userInstitution: data.institution,
+        hasDismissedOnboarding: true,
+      };
+      const token = localStorage.getItem('maxy_access_token');
+      if (token) {
+        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch(() => {});
+      }
+      return next;
+    });
+    setUserProfileModalOpen(false);
+  }, []);
+
   if (isAuthValidating) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
@@ -1190,13 +1251,13 @@ export default function App() {
         onSearchChange={setSearchQuery}
         onLogout={handleLogout}
         onOpenCertificate={handleOpenCertificateSection}
-        onOpenStreakModal={() => setStreakModalOpen(true)}
-        onOpenAchievements={() => setAchievementsOpen(true)}
-        onOpenNotes={() => setAllNotesOpen(true)}
-        onOpenUpgradeModal={() => setUpgradeModalOpen(true)}
-        onOpenCapstoneModal={() => setCapstoneModalOpen(true)}
-        onOpenInvoice={() => setInvoiceModalOpen(true)}
-        onOpenUserProfile={() => setUserProfileModalOpen(true)}
+        onOpenStreakModal={handleOpenStreakModal}
+        onOpenAchievements={handleOpenAchievements}
+        onOpenNotes={handleOpenNotes}
+        onOpenUpgradeModal={handleOpenUpgradeModal}
+        onOpenCapstoneModal={handleOpenCapstoneModal}
+        onOpenInvoice={handleOpenInvoiceModal}
+        onOpenUserProfile={handleOpenUserProfile}
         allModulesCompleted={allModulesCompleted}
         onManualSave={handleManualSave}
         onExportJSON={handleExportJSON}
@@ -1213,18 +1274,12 @@ export default function App() {
             onIncrementRevisit={handleIncrementRevisit}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
-            onOpenStreakModal={() => setStreakModalOpen(true)}
-            onOpenAchievements={() => setAchievementsOpen(true)}
+            onOpenStreakModal={handleOpenStreakModal}
+            onOpenAchievements={handleOpenAchievements}
             onAwardXp={handleAwardXp}
-            onOpenUpgradeModal={(targetId) => {
-              setTargetUpgradeModuleId(targetId || null);
-              setUpgradeModalOpen(true);
-            }}
-            onOpenCapstoneModal={() => setCapstoneModalOpen(true)}
-            onOpenCertificateModal={(certType) => {
-              if (certType) setSelectedCertType(certType);
-              setCertificateOpen(true);
-            }}
+            onOpenUpgradeModal={handleOpenUpgradeModal}
+            onOpenCapstoneModal={handleOpenCapstoneModal}
+            onOpenCertificateModal={handleOpenCertificateModal}
           />
         )}
 
@@ -1248,7 +1303,7 @@ export default function App() {
       {/* Upgrade Modal (Tier 1 / Tier 2) */}
       <UpgradeModal
         isOpen={upgradeModalOpen}
-        onClose={() => { setUpgradeModalOpen(false); setUpgradePrefilledVoucher(''); setUpgradePrefilledTier(null); }}
+        onClose={handleCloseUpgradeModal}
         currentTier={progress.userTier || 'free'}
         onSelectTier={handleUpgradeTier}
         targetModuleId={targetUpgradeModuleId}
@@ -1262,7 +1317,7 @@ export default function App() {
       {/* Capstone Project Submission Modal */}
       <CapstoneModal
         isOpen={capstoneModalOpen}
-        onClose={() => setCapstoneModalOpen(false)}
+        onClose={handleCloseCapstoneModal}
         progress={progress}
         onSubmit={handleSubmitCapstone}
         onSubmitCapstone={handleSubmitCapstone}
@@ -1273,62 +1328,34 @@ export default function App() {
       {/* Certificate Modal */}
       <CertificateModal
         isOpen={certificateOpen}
-        onClose={() => setCertificateOpen(false)}
+        onClose={handleCloseCertificateModal}
         progress={progress}
         certType={selectedCertType}
         onSaveCertDetails={handleSaveCertDetails}
-        onOpenCapstone={() => setCapstoneModalOpen(true)}
+        onOpenCapstone={handleOpenCapstoneModal}
         packages={cmsPackages}
       />
 
       {/* Onboarding User Profile Modal (For Google OAuth or incomplete profiles) */}
       <UserProfileModal
         isOpen={userProfileModalOpen}
-        onClose={() => {
-          setUserProfileModalOpen(false);
-          setProgress((prev) => ({
-            ...prev,
-            hasDismissedOnboarding: true,
-          }));
-        }}
+        onClose={handleCloseUserProfile}
         progress={progress}
-        onSaveProfile={(data) => {
-          setProgress((prev) => {
-            const next = {
-              ...prev,
-              userName: data.name,
-              userEmail: data.email,
-              userPhone: data.phone,
-              userInstitution: data.institution,
-              hasDismissedOnboarding: true,
-            };
-            const token = localStorage.getItem('maxy_access_token');
-            if (token) {
-              saveCloudProgress(token, next as unknown as Record<string, unknown>).catch((err) =>
-                console.error('Failed to save profile cloud progress:', err)
-              );
-            }
-            return next;
-          });
-          setUserProfileModalOpen(false);
-        }}
+        onSaveProfile={handleSaveProfile}
       />
 
       {/* Milestone Celebration Modal */}
       <MilestoneCelebrationModal
         isOpen={milestoneModalState.isOpen}
-        onClose={() => setMilestoneModalState((prev) => ({ ...prev, isOpen: false }))}
+        onClose={handleCloseMilestoneModal}
         tierCompleted={milestoneModalState.tierCompleted}
-        onOpenCertificate={() => {
-          setMilestoneModalState((prev) => ({ ...prev, isOpen: false }));
-          setCertificateOpen(true);
-        }}
+        onOpenCertificate={handleOpenCertificateFromMilestone}
       />
 
       {/* Streak & Gamification Modal */}
       <StreakModal
         isOpen={streakModalOpen}
-        onClose={() => setStreakModalOpen(false)}
+        onClose={handleCloseStreakModal}
         progress={progress}
         totalModulesCount={MODULES_DATA.length}
       />
@@ -1337,7 +1364,7 @@ export default function App() {
       <Achievements
         isModal
         isOpen={achievementsOpen}
-        onClose={() => setAchievementsOpen(false)}
+        onClose={handleCloseAchievements}
         progress={progress}
         totalModulesCount={MODULES_DATA.length}
       />
@@ -1345,7 +1372,7 @@ export default function App() {
       {/* All Notes Collection Modal */}
       <AllNotesModal
         isOpen={allNotesOpen}
-        onClose={() => setAllNotesOpen(false)}
+        onClose={handleCloseNotes}
         onSelectModule={handleSelectModule}
       />
 

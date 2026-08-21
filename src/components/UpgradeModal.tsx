@@ -26,7 +26,7 @@ interface ActiveVoucherInfo {
   message?: string;
 }
 
-export const UpgradeModal: React.FC<UpgradeModalProps> = ({
+const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
   isOpen,
   onClose,
   currentTier = 'free',
@@ -524,4 +524,6 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
     </div>
   );
 };
+
+export const UpgradeModal = React.memo(UpgradeModalComponent);
 

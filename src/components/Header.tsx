@@ -31,7 +31,7 @@ interface HeaderProps {
   onImportJSON: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
+const HeaderComponent: React.FC<HeaderProps> = ({
   progress,
   theme,
   onToggleTheme,
@@ -510,3 +510,5 @@ export const Header: React.FC<HeaderProps> = ({
     </header>
   );
 };
+
+export const Header = React.memo(HeaderComponent);

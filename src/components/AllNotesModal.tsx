@@ -20,7 +20,7 @@ interface SavedNoteItem {
   lastSaved: string;
 }
 
-export const AllNotesModal: React.FC<AllNotesModalProps> = ({
+const AllNotesModalComponent: React.FC<AllNotesModalProps> = ({
   isOpen,
   onClose,
   onSelectModule,
@@ -335,3 +335,5 @@ export const AllNotesModal: React.FC<AllNotesModalProps> = ({
     </div>
   );
 };
+
+export const AllNotesModal = React.memo(AllNotesModalComponent);
