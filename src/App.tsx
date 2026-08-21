@@ -85,7 +85,17 @@ export default function App() {
       hasTier2: resolvedHasTier2,
       userName: cachedName || parsed.userName || undefined,
       userEmail: cachedEmail || parsed.userEmail || undefined,
+      userPhone: parsed.userPhone || parsed.certPhone || undefined,
+      userInstitution: parsed.userInstitution || parsed.certInstitution || undefined,
       packageName: cachedPackageName || undefined,
+      capstoneTitle: parsed.capstoneTitle || parsed.capstoneSubmission?.title || undefined,
+      capstoneUrl: parsed.capstoneUrl || parsed.capstoneSubmission?.capstoneUrl || undefined,
+      capstoneStatus: parsed.capstoneStatus || (parsed.capstoneSubmission ? 'submitted' : undefined),
+      capstoneScore: parsed.capstoneScore,
+      capstoneNotes: parsed.capstoneNotes,
+      capstoneSubmission: parsed.capstoneSubmission,
+      assignedMentorName: parsed.assignedMentorName,
+      assignedMentorId: parsed.assignedMentorId,
     };
   });
 
@@ -490,6 +500,16 @@ export default function App() {
                 certEmail: cloudData?.certEmail || user?.email || undefined,
                 certPhone: cloudData?.certPhone || user?.phone || undefined,
                 certInstitution: cloudData?.certInstitution || user?.university || undefined,
+                userPhone: cloudData?.userPhone || user?.phone || undefined,
+                userInstitution: cloudData?.userInstitution || user?.university || undefined,
+                capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || prev.capstoneTitle || undefined,
+                capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || prev.capstoneUrl || undefined,
+                capstoneStatus: sub?.capstone_status || cloudData?.capstoneStatus || prev.capstoneStatus || undefined,
+                capstoneScore: sub?.capstone_score !== undefined ? sub.capstone_score : (cloudData?.capstoneScore ?? prev.capstoneScore ?? undefined),
+                capstoneNotes: sub?.capstone_notes || cloudData?.capstoneNotes || prev.capstoneNotes || undefined,
+                capstoneSubmission: cloudData?.capstoneSubmission || prev.capstoneSubmission || undefined,
+                assignedMentorName: sub?.assigned_mentor_name || prev.assignedMentorName || undefined,
+                assignedMentorId: sub?.assigned_mentor_id || prev.assignedMentorId || undefined,
               };
               localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanToStore));
             } catch (_) {}
@@ -1316,9 +1336,14 @@ export default function App() {
     addFloatingXp(xpReward, `Peti: ${chestTitle}`, 'xp_milestone');
   }, []);
 
-  const hasSavedToken = Boolean(localStorage.getItem('maxy_access_token')) || isLocalDevEnv;
+  const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const isFreshTokenLogin = Boolean(urlParams?.get('token'));
+  const hasCachedModules = Boolean(progress.completedModules && progress.completedModules.length > 0);
+  const isInitialLoading = isFreshTokenLogin 
+    ? !isCloudProgressLoaded 
+    : (!hasCachedModules && !isCloudProgressLoaded && isAuthValidating);
 
-  if (!hasSavedToken && isAuthValidating) {
+  if (isInitialLoading) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
         theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-white'
