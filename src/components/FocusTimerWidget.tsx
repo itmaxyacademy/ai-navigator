@@ -324,34 +324,34 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
       </AnimatePresence>
 
       {/* Embedded Bar / Widget Component */}
-      <div className="bg-slate-900 border border-slate-700/80 rounded-3xl p-3.5 sm:p-4 shadow-xl transition-all text-white">
+      <div className="bg-white border border-slate-200 rounded-3xl p-3.5 sm:p-4 shadow-sm transition-all text-slate-900">
         {/* Compact Bar Always Visible */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           {/* Left info */}
           <div className="flex items-center gap-3">
-            <div className={`p-2.5 rounded-2xl bg-gradient-to-r ${currentConfig.color} text-white shadow-lg shrink-0`}>
+            <div className={`p-2.5 rounded-2xl bg-gradient-to-r ${currentConfig.color} text-white shadow-md shrink-0`}>
               <Clock className="w-5 h-5 text-white" />
             </div>
 
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-black text-sm text-white">Focus Timer</span>
+                <span className="font-black text-sm text-slate-900">Focus Timer</span>
                 {currentConfig.xpReward > 0 && (
-                  <span className="text-[10px] font-black bg-indigo-950/80 border border-indigo-500/40 text-amber-300 px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
-                    <Sparkles className="w-3 h-3 text-amber-400" />
+                  <span className="text-[10px] font-black bg-amber-50 border border-amber-200 text-amber-700 px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+                    <Sparkles className="w-3 h-3 text-amber-500" />
                     +{currentConfig.xpReward} Focus XP
                   </span>
                 )}
                 {completedBlocksCount > 0 && (
-                  <span className="text-[10px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 px-2.5 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full">
                     Selesai: {completedBlocksCount} Sesi
                   </span>
                 )}
               </div>
-              <div className="text-xs text-slate-400 flex items-center gap-2 mt-0.5">
+              <div className="text-xs text-slate-500 flex items-center gap-2 mt-0.5">
                 <span>{currentConfig.label}</span>
                 <span>•</span>
-                <span className="font-mono font-black text-amber-300">{formatTime(secondsRemaining)}</span>
+                <span className="font-mono font-black text-indigo-600">{formatTime(secondsRemaining)}</span>
               </div>
             </div>
           </div>
@@ -372,15 +372,15 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
 
             <button
               onClick={handleReset}
-              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 cursor-pointer transition-all"
+              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 cursor-pointer transition-all"
               title="Reset Timer"
             >
-              <RotateCcw className="w-4 h-4 text-amber-400" />
+              <RotateCcw className="w-4 h-4 text-amber-600" />
             </button>
 
             <button
               onClick={() => setIsZenMode(true)}
-              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-300 hover:text-white border border-slate-700 cursor-pointer transition-all"
+              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-indigo-600 hover:text-indigo-800 border border-slate-200 cursor-pointer transition-all"
               title="Mode Zen (Layar Penuh)"
             >
               <Maximize2 className="w-4 h-4" />
@@ -388,7 +388,7 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
 
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 cursor-pointer transition-all"
+              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 cursor-pointer transition-all"
             >
               {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
             </button>
@@ -396,7 +396,7 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
         </div>
 
         {/* Progress Bar Line */}
-        <div className="w-full bg-slate-950 rounded-full h-2 mt-3.5 overflow-hidden border border-slate-800">
+        <div className="w-full bg-slate-100 rounded-full h-2 mt-3.5 overflow-hidden border border-slate-200">
           <div
             className={`h-full bg-gradient-to-r ${currentConfig.color} transition-all duration-1000 ease-linear shadow-sm`}
             style={{ width: `${progressPercent}%` }}
@@ -410,11 +410,11 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="pt-4 border-t border-slate-800 mt-3.5 space-y-4 overflow-hidden"
+              className="pt-4 border-t border-slate-100 mt-3.5 space-y-4 overflow-hidden"
             >
               {/* Preset Selection Buttons */}
               <div className="space-y-2">
-                <span className="text-[11px] font-black text-slate-400 uppercase tracking-wider block">
+                <span className="text-[11px] font-black text-slate-600 uppercase tracking-wider block">
                   Pilih Durasi Sesi Belajar / Istirahat
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs">
@@ -427,12 +427,12 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
                         onClick={() => handleSelectMode(modeKey)}
                         className={`p-3 rounded-2xl border text-left font-bold transition-all cursor-pointer ${
                           isSel
-                            ? 'bg-indigo-950/90 border-indigo-400 text-white shadow-lg ring-1 ring-indigo-400/50'
-                            : 'bg-slate-950/80 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white hover:bg-slate-800/60'
+                            ? 'bg-indigo-50 border-indigo-400 text-indigo-950 shadow-sm ring-1 ring-indigo-400/50'
+                            : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-white'
                         }`}
                       >
                         <div className="truncate font-black">{cfg.label}</div>
-                        <div className="text-[10px] text-amber-300 font-mono font-bold mt-0.5">
+                        <div className="text-[10px] text-amber-600 font-mono font-bold mt-0.5">
                           {cfg.xpReward > 0 ? `+${cfg.xpReward} Focus XP` : 'Istirahat'}
                         </div>
                       </button>
@@ -442,39 +442,39 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
               </div>
 
               {/* Audio Controls (Ambient Sounds & Chimes) */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800 text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs">
                 {/* Audio chime toggle */}
                 <button
                   onClick={() => setSoundEnabled(!soundEnabled)}
                   className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold border cursor-pointer transition-all ${
                     soundEnabled
-                      ? 'bg-slate-800 border-indigo-500/50 text-indigo-300'
-                      : 'bg-slate-950 border-slate-800 text-slate-500'
+                      ? 'bg-indigo-50 border-indigo-300 text-indigo-700'
+                      : 'bg-slate-100 border-slate-200 text-slate-500'
                   }`}
                 >
-                  {soundEnabled ? <Volume2 className="w-4 h-4 text-indigo-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
+                  {soundEnabled ? <Volume2 className="w-4 h-4 text-indigo-600" /> : <VolumeX className="w-4 h-4 text-slate-400" />}
                   <span>{soundEnabled ? 'Suara Lonceng Aktif' : 'Mute Lonceng'}</span>
                 </button>
 
                 {/* Ambient noise selector */}
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[11px] font-bold text-slate-400">Audio Latar:</span>
-                  <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
+                  <span className="text-[11px] font-bold text-slate-500">Audio Latar:</span>
+                  <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
                     <button
                       onClick={() => setAmbientSound('off')}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${ambientSound === 'off' ? 'bg-slate-800 text-white' : 'text-slate-500 hover:text-slate-300'}`}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${ambientSound === 'off' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-500 hover:text-slate-800'}`}
                     >
                       Off
                     </button>
                     <button
                       onClick={() => setAmbientSound('binaural')}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${ambientSound === 'binaural' ? 'bg-indigo-600 text-white' : 'text-slate-500 hover:text-slate-300'}`}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${ambientSound === 'binaural' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-800'}`}
                     >
                       Binaural (Focus)
                     </button>
                     <button
                       onClick={() => setAmbientSound('rain')}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${ambientSound === 'rain' ? 'bg-blue-600 text-white' : 'text-slate-500 hover:text-slate-300'}`}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${ambientSound === 'rain' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 hover:text-slate-800'}`}
                     >
                       Hujan (Calm)
                     </button>

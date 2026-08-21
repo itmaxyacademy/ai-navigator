@@ -237,9 +237,9 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
   };
 
   return (
-    <div className="space-y-6 text-white" onClick={triggerPracticeVerified}>
-      {/* Top Banner Guide */}
-      <div className="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 sm:p-7 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-2xl">
+    <div className="space-y-6 text-slate-900" onClick={triggerPracticeVerified}>
+      {/* Top Banner Guide (Dark Navy matching Roadmap Group Banner) */}
+      <div className="bg-[#0d1322] border border-slate-800 rounded-3xl p-6 sm:p-7 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-xl text-white">
         <div className="space-y-1.5 max-w-2xl">
           <div className="flex items-center gap-2">
             <span className="px-3 py-1 rounded-full text-[11px] font-black bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm">
@@ -265,27 +265,27 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
       </div>
 
       {/* 🎯 Micro-Mission Banner */}
-      <div className="p-5 rounded-3xl bg-gradient-to-r from-purple-950/80 via-indigo-950/80 to-slate-900 border border-purple-500/40 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-5 rounded-3xl bg-gradient-to-r from-purple-50 via-indigo-50 to-white border border-purple-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-slate-900">
         <div className="flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-2xl bg-purple-600/30 border border-purple-400/40 flex items-center justify-center text-xl shrink-0 shadow-md">
+          <div className="w-11 h-11 rounded-2xl bg-purple-100 border border-purple-200 flex items-center justify-center text-xl shrink-0 shadow-xs">
             🎯
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-black text-purple-400 uppercase tracking-wider flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Misi Praktik Modul {module.id}
+            <span className="text-[10px] font-black text-purple-700 uppercase tracking-wider flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Misi Praktik Modul {module.id}
             </span>
-            <p className="text-xs sm:text-sm font-black text-white leading-snug">
+            <p className="text-xs sm:text-sm font-black text-slate-900 leading-snug">
               {getModulePracticeMission(module.id, module.title)}
             </p>
           </div>
         </div>
 
         {isPracticeVerified ? (
-          <span className="shrink-0 px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-black flex items-center gap-1.5 shadow-sm animate-fadeIn">
-            <Check className="w-4 h-4 text-emerald-400" /> Praktik Terverifikasi (+50 XP)
+          <span className="shrink-0 px-4 py-2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 text-xs font-black flex items-center gap-1.5 shadow-xs animate-fadeIn">
+            <Check className="w-4 h-4 text-emerald-600" /> Praktik Terverifikasi (+50 XP)
           </span>
         ) : (
-          <span className="shrink-0 px-4 py-2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-black shadow-sm">
+          <span className="shrink-0 px-4 py-2 rounded-full bg-amber-50 text-amber-800 border border-amber-300 text-xs font-black shadow-xs">
             ⚡ Klik / Uji Coba Simulator
           </span>
         )}
@@ -353,76 +353,76 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
           ) : module.id === 29 || module.slug === 'notion' || module.slug === 'notion-ai' || (replica?.llmName && replica.llmName.toLowerCase().includes('notion')) ? (
             <NotionAiReplica />
           ) : (
-            <div className="relative rounded-3xl border border-slate-700/80 bg-slate-950 overflow-hidden shadow-2xl">
+            <div className="relative rounded-3xl border border-slate-200 bg-white overflow-hidden shadow-sm">
               {/* Top Bar Replica Header */}
-              <div className="bg-slate-900 border-b border-slate-800 px-5 py-3.5 flex items-center justify-between">
+              <div className="bg-slate-100 border-b border-slate-200 px-5 py-3.5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-rose-500/80" />
                     <div className="w-3 h-3 rounded-full bg-amber-500/80" />
                     <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
                   </div>
-                  <span className="text-xs font-black text-white flex items-center gap-2 ml-2">
-                    <Terminal className="w-4 h-4 text-indigo-400" />
+                  <span className="text-xs font-black text-slate-800 flex items-center gap-2 ml-2">
+                    <Terminal className="w-4 h-4 text-indigo-600" />
                     {replica.llmName} Simulator
                   </span>
                 </div>
 
-                <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-slate-800 text-amber-300 border border-slate-700">
+                <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-white text-indigo-700 border border-slate-200">
                   {replica.badgeText}
                 </span>
               </div>
 
             {/* Special Interactive Controls Section per Module */}
             {module.id === 1 && (
-              <div className="p-5 sm:p-6 bg-slate-900 border-b border-slate-800 space-y-4">
+              <div className="p-5 sm:p-6 bg-slate-50 border-b border-slate-200 space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs sm:text-sm font-black text-amber-300 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-amber-400" /> Formula RCTF Interactive Builder
+                  <span className="text-xs sm:text-sm font-black text-amber-700 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-500" /> Formula RCTF Interactive Builder
                   </span>
-                  <span className="text-[10px] text-slate-400 font-mono">
+                  <span className="text-[10px] text-slate-500 font-mono">
                     Edit parameter untuk memperbarui prompt box
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                   <div className="space-y-1">
-                    <label className="text-[11px] text-amber-300 font-bold block">[R] ROLE (Peran AI):</label>
+                    <label className="text-[11px] text-amber-800 font-bold block">[R] ROLE (Peran AI):</label>
                     <input
                       type="text"
                       value={rctf.role}
                       onChange={(e) => handleRctfChange('role', e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:border-amber-400 focus:outline-none transition-colors"
+                      className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-slate-900 placeholder-slate-400 focus:border-amber-500 focus:outline-none transition-colors shadow-xs"
                       placeholder="Peran AI..."
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[11px] text-cyan-300 font-bold block">[C] CONTEXT (Konteks Situasi):</label>
+                    <label className="text-[11px] text-sky-800 font-bold block">[C] CONTEXT (Konteks Situasi):</label>
                     <input
                       type="text"
                       value={rctf.context}
                       onChange={(e) => handleRctfChange('context', e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none transition-colors"
+                      className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-slate-900 placeholder-slate-400 focus:border-sky-500 focus:outline-none transition-colors shadow-xs"
                       placeholder="Konteks situasi..."
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[11px] text-emerald-300 font-bold block">[T] TASK (Tugas Utama):</label>
+                    <label className="text-[11px] text-emerald-800 font-bold block">[T] TASK (Tugas Utama):</label>
                     <input
                       type="text"
                       value={rctf.task}
                       onChange={(e) => handleRctfChange('task', e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:border-emerald-400 focus:outline-none transition-colors"
+                      className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:outline-none transition-colors shadow-xs"
                       placeholder="Tugas utama..."
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[11px] text-purple-300 font-bold block">[F] FORMAT (Format Output):</label>
+                    <label className="text-[11px] text-purple-800 font-bold block">[F] FORMAT (Format Output):</label>
                     <input
                       type="text"
                       value={rctf.format}
                       onChange={(e) => handleRctfChange('format', e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:border-purple-400 focus:outline-none transition-colors"
+                      className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-slate-900 placeholder-slate-400 focus:border-purple-500 focus:outline-none transition-colors shadow-xs"
                       placeholder="Format output..."
                     />
                   </div>
@@ -432,13 +432,13 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
 
             {/* Special Controls: Claude Artifacts Toggle (Module 3) */}
             {module.id === 3 && (
-              <div className="p-3.5 bg-amber-950/40 border-b border-amber-800/40 flex items-center justify-between text-xs">
-                <span className="text-amber-200 font-bold flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-amber-400" /> Mode Artifacts Active (Anthropic Jendela Terpisah)
+              <div className="p-3.5 bg-amber-50 border-b border-amber-200 flex items-center justify-between text-xs">
+                <span className="text-amber-800 font-bold flex items-center gap-2">
+                  <Code2 className="w-4 h-4 text-amber-600" /> Mode Artifacts Active (Anthropic Jendela Terpisah)
                 </span>
                 <button
                   onClick={() => setShowArtifactPanel(!showArtifactPanel)}
-                  className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-colors cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-colors cursor-pointer shadow-xs"
                 >
                   {showArtifactPanel ? 'Sembunyikan Panel' : 'Tampilkan Panel Preview'}
                 </button>
@@ -447,24 +447,24 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
 
             {/* Special Controls: Copilot Styles (Module 6) */}
             {module.id === 6 && (
-              <div className="p-3.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-xs">
-                <span className="text-slate-300 font-bold">Pilih Conversation Style:</span>
-                <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+              <div className="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs">
+                <span className="text-slate-700 font-bold">Pilih Conversation Style:</span>
+                <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200">
                   <button
                     onClick={() => setCopilotStyle('creative')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-black ${copilotStyle === 'creative' ? 'bg-pink-600 text-white' : 'text-slate-400'}`}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-black ${copilotStyle === 'creative' ? 'bg-pink-600 text-white' : 'text-slate-500'}`}
                   >
                     Creative
                   </button>
                   <button
                     onClick={() => setCopilotStyle('balanced')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-black ${copilotStyle === 'balanced' ? 'bg-blue-600 text-white' : 'text-slate-400'}`}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-black ${copilotStyle === 'balanced' ? 'bg-blue-600 text-white' : 'text-slate-500'}`}
                   >
                     Balanced
                   </button>
                   <button
                     onClick={() => setCopilotStyle('precise')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-black ${copilotStyle === 'precise' ? 'bg-emerald-600 text-white' : 'text-slate-400'}`}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-black ${copilotStyle === 'precise' ? 'bg-emerald-600 text-white' : 'text-slate-500'}`}
                   >
                     Precise
                   </button>
@@ -474,9 +474,9 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
 
             {/* Special Controls: DeepSeek Reasoning Thought Accordion (Module 8) */}
             {module.id === 8 && (
-              <div className="p-3.5 bg-blue-950/50 border-b border-blue-800/50 flex items-center justify-between text-xs">
-                <span className="text-blue-300 font-bold flex items-center gap-2">
-                  <Brain className="w-4 h-4 text-blue-400" /> DeepSeek-R1 Thought Chain Mode
+              <div className="p-3.5 bg-blue-50 border-b border-blue-200 flex items-center justify-between text-xs">
+                <span className="text-blue-800 font-bold flex items-center gap-2">
+                  <Brain className="w-4 h-4 text-blue-600" /> DeepSeek-R1 Thought Chain Mode
                 </span>
                 <button
                   onClick={() => setShowThoughtAccordion(!showThoughtAccordion)}
@@ -488,10 +488,10 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
             )}
 
             {/* Main Interactive Chat Area */}
-            <div className="p-6 space-y-4 min-h-[360px] max-h-[480px] overflow-y-auto relative">
+            <div className="p-6 space-y-4 min-h-[360px] max-h-[480px] overflow-y-auto relative bg-slate-50/60">
               {/* User Prompt Bubble */}
               <div className="flex justify-end">
-                <div className="bg-indigo-600 text-white rounded-3xl rounded-tr-none px-5 py-3.5 max-w-lg text-xs leading-relaxed shadow-lg">
+                <div className="bg-indigo-600 text-white rounded-3xl rounded-tr-none px-5 py-3.5 max-w-lg text-xs leading-relaxed shadow-md">
                   <p className="font-bold text-[10px] text-indigo-200 mb-1 uppercase tracking-wider">
                     {module.id === 1 ? 'Formula Prompt RCTF:' : 'Instruksi Pengguna:'}
                   </p>
@@ -503,14 +503,14 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
 
               {/* AI Thought Accordion for DeepSeek (Module 8) */}
               {module.id === 8 && showThoughtAccordion && (
-                <div className="bg-slate-900 border border-blue-800/60 rounded-2xl p-4 text-xs space-y-2">
-                  <div className="flex items-center justify-between text-blue-400 font-mono text-[11px] font-bold">
+                <div className="bg-white border border-blue-200 rounded-2xl p-4 text-xs space-y-2 shadow-xs">
+                  <div className="flex items-center justify-between text-blue-700 font-mono text-[11px] font-bold">
                     <span className="flex items-center gap-1.5">
                       <Brain className="w-4 h-4" /> &lt;thought&gt; (Proses Berpikir R1 - 4.2 Detik)
                     </span>
-                    <span className="text-[10px] text-slate-400">MoE Activated</span>
+                    <span className="text-[10px] text-slate-500">MoE Activated</span>
                   </div>
-                  <p className="text-slate-300 font-mono text-[11px] leading-relaxed italic bg-slate-950 p-3 rounded-xl border border-slate-800">
+                  <p className="text-slate-700 font-mono text-[11px] leading-relaxed italic bg-slate-50 p-3 rounded-xl border border-slate-200">
                     1. Menganalisis batasan teka-teki: Kotak Apel, Jeruk, dan Campuran. All labels are wrong.<br />
                     2. Menguji pilihan kotak pertama: Jika membuka &apos;Campuran&apos;, isinya tidak mungkin campuran (karena label salah). Maka isinya 100% murni.<br />
                     3. Menarik deduksi logis secara berantai untuk sisa 2 kotak lainnya...
@@ -520,38 +520,38 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
 
               {/* AI Response Bubble */}
               <div className="flex justify-start">
-                <div className="bg-slate-900 border border-slate-800 text-slate-100 rounded-3xl rounded-tl-none p-5 sm:p-6 max-w-xl text-xs leading-relaxed space-y-3 shadow-xl">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
-                    <span className="font-black text-amber-300 flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-amber-400" />
+                <div className="bg-white border border-slate-200 text-slate-800 rounded-3xl rounded-tl-none p-5 sm:p-6 max-w-xl text-xs leading-relaxed space-y-3 shadow-md">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                    <span className="font-black text-amber-700 flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-amber-500" />
                       Respon {replica.llmName}
                     </span>
                     <button
                       onClick={handleCopyPrompt}
-                      className="text-slate-400 hover:text-white flex items-center gap-1 text-[11px] font-bold cursor-pointer"
+                      className="text-slate-500 hover:text-slate-900 flex items-center gap-1 text-[11px] font-bold cursor-pointer"
                     >
-                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                       {copied ? 'Tersalin' : 'Salin Respon'}
                     </button>
                   </div>
 
-                  <div className="whitespace-pre-line text-slate-200 font-normal leading-relaxed text-xs sm:text-sm">
+                  <div className="whitespace-pre-line text-slate-700 font-normal leading-relaxed text-xs sm:text-sm">
                     {currentResponse}
                   </div>
 
                   {/* Claude Artifacts Window Panel Mockup inside */}
                   {module.id === 3 && showArtifactPanel && (
-                    <div className="mt-3 p-4 bg-slate-950 border border-amber-500/40 rounded-2xl space-y-3">
-                      <div className="flex items-center justify-between text-amber-400 text-[11px] font-bold">
+                    <div className="mt-3 p-4 bg-slate-50 border border-amber-300 rounded-2xl space-y-3">
+                      <div className="flex items-center justify-between text-amber-800 text-[11px] font-bold">
                         <span className="flex items-center gap-1.5">
                           <Eye className="w-4 h-4" /> Artifacts Preview: React Button Component
                         </span>
-                        <span className="text-[10px] bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-500/40">
+                        <span className="text-[10px] bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full border border-amber-300">
                           Live Render
                         </span>
                       </div>
-                      <div className="p-5 bg-slate-900 rounded-xl text-center flex items-center justify-center border border-slate-800">
-                        <button className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black rounded-xl shadow-lg hover:scale-105 active:scale-95 transition-all text-xs cursor-pointer">
+                      <div className="p-5 bg-white rounded-xl text-center flex items-center justify-center border border-slate-200">
+                        <button className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black rounded-xl shadow-md hover:scale-105 active:scale-95 transition-all text-xs cursor-pointer">
                           ✨ Tombol Interaktif Claude
                         </button>
                       </div>
@@ -560,16 +560,16 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
 
                   {/* Perplexity Citations Box (Module 5) */}
                   {module.id === 5 && (
-                    <div className="mt-3 pt-2.5 border-t border-slate-800 space-y-2">
-                      <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider block">
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 space-y-2">
+                      <span className="text-[10px] font-bold text-sky-700 uppercase tracking-wider block">
                         Rujukan Sitasi Real-time:
                       </span>
                       <div className="grid grid-cols-2 gap-2 text-[10px]">
-                        <a href="#cit1" className="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl border border-slate-800 text-slate-300 flex items-center gap-1.5 transition-colors">
-                          <ExternalLink className="w-3.5 h-3.5 text-cyan-400" /> [1] TechReport AI 2026
+                        <a href="#cit1" className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 text-slate-700 flex items-center gap-1.5 transition-colors">
+                          <ExternalLink className="w-3.5 h-3.5 text-sky-600" /> [1] TechReport AI 2026
                         </a>
-                        <a href="#cit2" className="p-2.5 bg-slate-950 hover:bg-slate-800 rounded-xl border border-slate-800 text-slate-300 flex items-center gap-1.5 transition-colors">
-                          <ExternalLink className="w-3.5 h-3.5 text-cyan-400" /> [2] Statista Report
+                        <a href="#cit2" className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 text-slate-700 flex items-center gap-1.5 transition-colors">
+                          <ExternalLink className="w-3.5 h-3.5 text-sky-600" /> [2] Statista Report
                         </a>
                       </div>
                     </div>
@@ -579,15 +579,15 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
             </div>
 
             {/* Bottom Interactive Prompt Input Box */}
-            <div className="bg-slate-900 border-t border-slate-800 p-4 sm:p-5 space-y-3">
+            <div className="bg-white border-t border-slate-200 p-4 sm:p-5 space-y-3">
               {module.id === 1 ? (
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-[11px] font-black text-amber-300 flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-amber-400" />
+                    <label className="text-[11px] font-black text-slate-800 flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-amber-500" />
                       Hasil Prompt Box (Terupdate Otomatis 4 Baris):
                     </label>
-                    <span className="text-[10px] text-slate-400 font-mono">
+                    <span className="text-[10px] text-slate-500 font-mono">
                       Format Baris Terpisah [R, C, T, F]
                     </span>
                   </div>
@@ -596,20 +596,20 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                     value={userPrompt}
                     onChange={(e) => setUserPrompt(e.target.value)}
                     placeholder="Hasil prompt terstruktur..."
-                    className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-amber-200 leading-relaxed focus:outline-none focus:border-amber-400 resize-none shadow-inner"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs font-mono text-slate-900 leading-relaxed focus:outline-none focus:border-indigo-500 resize-none shadow-inner"
                   />
                   <div className="flex items-center justify-between gap-2 flex-wrap pt-1">
                     <button
                       onClick={handleCopyPrompt}
-                      className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl flex items-center gap-2 border border-slate-700 transition-colors cursor-pointer"
+                      className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-2 border border-slate-200 transition-colors cursor-pointer"
                     >
-                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-amber-400" />}
+                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-indigo-600" />}
                       {copied ? 'Tersalin!' : 'Salin Prompt Box'}
                     </button>
                     <button
                       onClick={handleExecutePrompt}
                       disabled={isLoading}
-                      className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-400 hover:to-indigo-500 text-white font-black text-xs rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20 cursor-pointer"
+                      className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-400 hover:to-indigo-500 text-white font-black text-xs rounded-xl flex items-center gap-2 transition-all shadow-md shadow-amber-500/20 cursor-pointer"
                     >
                       {isLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
                       Proses Ke Simulator
@@ -623,12 +623,12 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                     value={userPrompt}
                     onChange={(e) => setUserPrompt(e.target.value)}
                     placeholder={`Tulis atau ubah instruksi untuk ${replica.llmName}...`}
-                    className="flex-1 bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                    className="flex-1 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white"
                   />
                   <button
                     onClick={handleExecutePrompt}
                     disabled={isLoading}
-                    className="px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xs rounded-2xl flex items-center gap-2 transition-all shadow-lg shadow-indigo-600/30 shrink-0 cursor-pointer"
+                    className="px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xs rounded-2xl flex items-center gap-2 transition-all shadow-md shadow-indigo-600/20 shrink-0 cursor-pointer"
                   >
                     {isLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
                     Kirim
@@ -643,13 +643,13 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
 
         {/* Right Column: Feature Breakdown Cards (4 cols) */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="bg-slate-900 border border-slate-700/80 rounded-3xl p-5 sm:p-6 space-y-4 shadow-xl text-white">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="font-black text-sm sm:text-base text-white flex items-center gap-2">
-                <Info className="w-4 h-4 text-amber-400" />
+          <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 space-y-4 shadow-sm text-slate-900">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 className="font-black text-sm sm:text-base text-slate-900 flex items-center gap-2">
+                <Info className="w-4 h-4 text-amber-500" />
                 Panduan Fitur Platform
               </h3>
-              <span className="text-[10px] text-slate-400 font-mono font-bold">
+              <span className="text-[10px] text-slate-500 font-mono font-bold">
                 {replica.hotspots.length} Fitur Utama
               </span>
             </div>
@@ -659,20 +659,20 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
               {replica.hotspots.map((hotspot) => (
                 <div
                   key={hotspot.id}
-                  className="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-1.5 transition-all hover:border-slate-700"
+                  className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-1.5 transition-all hover:border-slate-300"
                 >
                   <div className="flex items-center justify-between">
-                    <h4 className="text-xs font-black text-white flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <h4 className="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
                       {hotspot.title}
                     </h4>
                     {hotspot.tag && (
-                      <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                      <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
                         {hotspot.tag}
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] text-slate-300 leading-relaxed font-normal">
+                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal">
                     {hotspot.description}
                   </p>
                 </div>
@@ -695,7 +695,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
             {/* Advance Button */}
             <button
               onClick={onAdvanceToQuiz}
-              className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm rounded-2xl shadow-xl shadow-emerald-600/30 flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.02]"
+              className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm rounded-2xl shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.02]"
             >
               <span>Saya Paham, Siap Uji Kuis Modul</span>
               <ChevronRight className="w-4 h-4" />

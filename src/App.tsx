@@ -283,16 +283,16 @@ export default function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>('light');
 
   useEffect(() => {
     try {
-      localStorage.setItem('ai_navigator_theme_v1', 'dark');
+      localStorage.setItem('ai_navigator_theme_v1', 'light');
     } catch (e) {
       console.error('Failed to save theme preference', e);
     }
-    document.documentElement.classList.add('dark');
-    document.documentElement.classList.remove('light');
+    document.documentElement.classList.remove('dark');
+    document.documentElement.classList.add('light');
   }, [theme]);
 
   // Auth Guard: Sync user profile & active tier subscription from API Gateway api.maxy.academy

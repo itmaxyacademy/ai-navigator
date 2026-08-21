@@ -55,35 +55,39 @@ const renderAdvantageIcon = (iconName: string, themeColor: string) => {
   }
 };
 
-// Color palettes for the 4 core feature cards
+// Color palettes for the 4 core feature cards matching the roadmap aesthetic
 const CARD_THEMES = [
   {
-    border: 'border-amber-500/40 hover:border-amber-400/80',
-    bg: 'bg-gradient-to-br from-amber-950/30 via-slate-900 to-slate-900',
-    iconBg: 'bg-amber-500/20 border-amber-400/40 text-amber-400',
-    tagBg: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
-    textColor: 'text-amber-400',
+    border: 'border-amber-200 hover:border-amber-300',
+    bg: 'bg-gradient-to-br from-amber-50/70 via-white to-amber-50/30',
+    iconBg: 'bg-amber-100 border-amber-200 text-amber-700',
+    tagBg: 'bg-amber-100/70 text-amber-800 border-amber-200',
+    textColor: 'text-amber-700',
+    exampleBox: 'bg-amber-100/50 border-amber-200 text-amber-900',
   },
   {
-    border: 'border-cyan-500/40 hover:border-cyan-400/80',
-    bg: 'bg-gradient-to-br from-cyan-950/30 via-slate-900 to-slate-900',
-    iconBg: 'bg-cyan-500/20 border-cyan-400/40 text-cyan-400',
-    tagBg: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
-    textColor: 'text-cyan-400',
+    border: 'border-sky-200 hover:border-sky-300',
+    bg: 'bg-gradient-to-br from-sky-50/70 via-white to-sky-50/30',
+    iconBg: 'bg-sky-100 border-sky-200 text-sky-700',
+    tagBg: 'bg-sky-100/70 text-sky-800 border-sky-200',
+    textColor: 'text-sky-700',
+    exampleBox: 'bg-sky-100/50 border-sky-200 text-sky-900',
   },
   {
-    border: 'border-emerald-500/40 hover:border-emerald-400/80',
-    bg: 'bg-gradient-to-br from-emerald-950/30 via-slate-900 to-slate-900',
-    iconBg: 'bg-emerald-500/20 border-emerald-400/40 text-emerald-400',
-    tagBg: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
-    textColor: 'text-emerald-400',
+    border: 'border-emerald-200 hover:border-emerald-300',
+    bg: 'bg-gradient-to-br from-emerald-50/70 via-white to-emerald-50/30',
+    iconBg: 'bg-emerald-100 border-emerald-200 text-emerald-700',
+    tagBg: 'bg-emerald-100/70 text-emerald-800 border-emerald-200',
+    textColor: 'text-emerald-700',
+    exampleBox: 'bg-emerald-100/50 border-emerald-200 text-emerald-900',
   },
   {
-    border: 'border-purple-500/40 hover:border-purple-400/80',
-    bg: 'bg-gradient-to-br from-purple-950/30 via-slate-900 to-slate-900',
-    iconBg: 'bg-purple-500/20 border-purple-400/40 text-purple-400',
-    tagBg: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
-    textColor: 'text-purple-400',
+    border: 'border-purple-200 hover:border-purple-300',
+    bg: 'bg-gradient-to-br from-purple-50/70 via-white to-purple-50/30',
+    iconBg: 'bg-purple-100 border-purple-200 text-purple-700',
+    tagBg: 'bg-purple-100/70 text-purple-800 border-purple-200',
+    textColor: 'text-purple-700',
+    exampleBox: 'bg-purple-100/50 border-purple-200 text-purple-900',
   },
 ];
 
@@ -107,8 +111,8 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
 
   return (
     <div className="space-y-8">
-      {/* Hero Header Info Card */}
-      <div className="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 sm:p-8 space-y-4 shadow-2xl relative overflow-hidden text-white">
+      {/* Hero Header Info Card (Dark Navy Pill matching Roadmap Group Banner) */}
+      <div className="bg-[#0d1322] border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl relative overflow-hidden text-white">
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
         
         {/* Top meta tags */}
@@ -133,7 +137,7 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight drop-shadow-md">
             {module.title}
           </h1>
-          <p className="text-sm sm:text-base font-extrabold text-amber-300/90 mt-1.5 flex items-center gap-2">
+          <p className="text-sm sm:text-base font-extrabold text-amber-300 mt-1.5 flex items-center gap-2">
             <Zap className="w-4 h-4 text-amber-400 shrink-0" />
             {overview.tagline}
           </p>
@@ -148,11 +152,11 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
       {/* Key Advantages Grid */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2.5">
-            <Sparkles className="w-5 h-5 text-amber-400" />
+          <h2 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2.5">
+            <Sparkles className="w-5 h-5 text-amber-500" />
             <span>Keunggulan Utama & Fitur Unggulan</span>
           </h2>
-          <span className="text-xs font-bold text-slate-400 hidden sm:inline">
+          <span className="text-xs font-bold text-slate-500 hidden sm:inline">
             4 Pilar Kunci Modul {module.id}
           </span>
         </div>
@@ -163,34 +167,34 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
             return (
               <div
                 key={idx}
-                className={`${theme.bg} ${theme.border} border p-5 sm:p-6 rounded-3xl space-y-3 shadow-xl transition-all hover:scale-[1.01] hover:shadow-2xl flex flex-col justify-between`}
+                className={`${theme.bg} ${theme.border} border p-5 sm:p-6 rounded-3xl space-y-3 shadow-sm transition-all hover:shadow-md flex flex-col justify-between`}
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className={`w-11 h-11 rounded-2xl ${theme.iconBg} border flex items-center justify-center shrink-0 shadow-md`}>
+                      <div className={`w-11 h-11 rounded-2xl ${theme.iconBg} border flex items-center justify-center shrink-0 shadow-sm`}>
                         {renderAdvantageIcon(adv.icon, theme.textColor)}
                       </div>
                       <div>
-                        <h3 className="font-black text-sm sm:text-base text-white leading-tight">
+                        <h3 className="font-black text-sm sm:text-base text-slate-900 leading-tight">
                           {adv.title}
                         </h3>
-                        <span className={`text-[10px] font-extrabold uppercase tracking-wider block mt-0.5 ${theme.textColor}`}>
+                        <span className={`text-[10px] font-black uppercase tracking-wider block mt-0.5 ${theme.textColor}`}>
                           Pilar 0{idx + 1}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <p className="text-xs text-slate-300 font-medium leading-relaxed">
+                  <p className="text-xs text-slate-600 font-medium leading-relaxed">
                     {adv.description}
                   </p>
                 </div>
 
                 {/* Example pill for RCTF / Special modules */}
                 {isRCTF && RCTF_EXAMPLES[idx] && (
-                  <div className="mt-2 pt-2.5 border-t border-slate-800/80">
-                    <span className="text-[11px] text-amber-300/90 font-bold block italic bg-slate-950/60 px-3 py-1.5 rounded-xl border border-slate-800">
+                  <div className="mt-2 pt-2.5 border-t border-slate-200">
+                    <span className={`text-[11px] font-bold block italic ${theme.exampleBox} px-3 py-1.5 rounded-xl border`}>
                       {RCTF_EXAMPLES[idx]}
                     </span>
                   </div>
@@ -204,16 +208,16 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
       {/* Use Cases & Unique Capabilities side-by-side */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Best For Card */}
-        <div className="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 space-y-4 shadow-xl text-white">
-          <div className="flex items-center gap-2.5 pb-3 border-b border-slate-800">
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 space-y-4 shadow-sm text-slate-900">
+          <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
+            <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
               <Target className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-black text-white leading-tight">
+              <h3 className="text-sm sm:text-base font-black text-slate-900 leading-tight">
                 Paling Cocok Digunakan Untuk:
               </h3>
-              <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">
+              <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-wider">
                 Skenario & Use Cases
               </span>
             </div>
@@ -221,8 +225,8 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
 
           <ul className="space-y-3">
             {overview.bestFor.map((item, idx) => (
-              <li key={idx} className="flex items-start gap-3 text-xs text-slate-300 font-medium">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+              <li key={idx} className="flex items-start gap-3 text-xs text-slate-600 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <span className="leading-relaxed">{item}</span>
               </li>
             ))}
@@ -230,16 +234,16 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
         </div>
 
         {/* Unique Capabilities Card */}
-        <div className="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 space-y-4 shadow-xl text-white">
-          <div className="flex items-center gap-2.5 pb-3 border-b border-slate-800">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 space-y-4 shadow-sm text-slate-900">
+          <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100">
+            <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 shrink-0">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-black text-white leading-tight">
+              <h3 className="text-sm sm:text-base font-black text-slate-900 leading-tight">
                 Kemampuan & Fitur Unik:
               </h3>
-              <span className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">
+              <span className="text-[10px] text-amber-600 font-bold uppercase tracking-wider">
                 Nilai Tambah & Diferensiasi
               </span>
             </div>
@@ -247,8 +251,8 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
 
           <ul className="space-y-3">
             {overview.uniqueCapabilities.map((item, idx) => (
-              <li key={idx} className="flex items-start gap-3 text-xs text-slate-300 font-medium">
-                <div className="w-2 h-2 rounded-full bg-amber-400 shrink-0 mt-1.5 shadow-[0_0_8px_#f59e0b]" />
+              <li key={idx} className="flex items-start gap-3 text-xs text-slate-600 font-medium">
+                <div className="w-2 h-2 rounded-full bg-amber-500 shrink-0 mt-1.5" />
                 <span className="leading-relaxed">{item}</span>
               </li>
             ))}
