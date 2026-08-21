@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   Sparkles, MessageSquare, Feather, Sparkle, Search, Bot, Share2, BrainCircuit, BookOpen,
   CheckCircle2, Lock, ArrowRight, Play, Trophy, Clock, Star, Award, Compass,
-  Gift, Crown, Map, LayoutGrid, X, Zap, ChevronRight, Check, Video, Music, Terminal, Gem, Flame, Layers,
+  Gift, Crown, Map as MapIcon, LayoutGrid, X, Zap, ChevronRight, Check, Video, Music, Terminal, Gem, Flame, Layers,
   Download, ShieldCheck, ExternalLink, HelpCircle, RefreshCw, CheckCircle, UserCheck, FileText, Target
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -645,7 +645,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
             }`}
           >
-            <Map className="w-4 h-4" />
+            <MapIcon className="w-4 h-4" />
             <span>Peta Pembelajaran</span>
           </button>
           <button
