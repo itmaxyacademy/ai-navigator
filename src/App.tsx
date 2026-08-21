@@ -423,10 +423,13 @@ export default function App() {
               };
             }
 
-            const cloudModules = cloudData.completedModules !== undefined ? cloudData.completedModules : (prev.completedModules || []);
-            const mergedCompletedModules = (cloudData.adminOverrideAt || cloudData.completedModules !== undefined)
+            const cloudModules = Array.isArray(cloudData.completedModules) ? cloudData.completedModules : [];
+            const localModules = Array.isArray(prev.completedModules) ? prev.completedModules : [];
+            
+            // If admin explicitly overrode progress in CMS, respect cloudModules. Otherwise, do union with localModules so progress is never lost on refresh!
+            const mergedCompletedModules = cloudData.adminOverrideAt
               ? cloudModules
-              : Array.from(new Set([...(prev.completedModules || []), ...cloudModules]));
+              : Array.from(new Set([...localModules, ...cloudModules]));
 
             const mergedUnlockedBadges = Array.from(
               new Set([...(cloudData.unlockedBadges || []), ...(prev.unlockedBadges || [])])
@@ -434,11 +437,16 @@ export default function App() {
             const mergedCompletedCheckpoints = Array.from(
               new Set([...(cloudData.completedCheckpoints || []), ...(prev.completedCheckpoints || [])])
             );
-            const mergedModuleScores = { ...(prev.moduleScores || {}), ...(cloudData.moduleScores || {}) };
+            const mergedModuleScores = { ...(prev.moduleScores || {}) };
+            if (cloudData.moduleScores && typeof cloudData.moduleScores === 'object') {
+              Object.entries(cloudData.moduleScores).forEach(([modId, score]) => {
+                mergedModuleScores[modId] = Math.max(mergedModuleScores[modId] || 0, Number(score) || 0);
+              });
+            }
 
-            const mergedXp = cloudData.xp !== undefined ? cloudData.xp : (prev.xp || 0);
-            const mergedStreakDays = cloudData.streakDays !== undefined ? cloudData.streakDays : (prev.streakDays || 1);
-            const mergedCurrentModuleId = cloudData.currentModuleId || prev.currentModuleId || 1;
+            const mergedXp = Math.max(Number(cloudData.xp) || 0, Number(prev.xp) || 0);
+            const mergedStreakDays = Math.max(Number(cloudData.streakDays) || 1, Number(prev.streakDays) || 1);
+            const mergedCurrentModuleId = Math.max(Number(cloudData.currentModuleId) || 1, Number(prev.currentModuleId) || 1);
 
             return {
               ...defaultProgress,
@@ -620,6 +628,9 @@ export default function App() {
 
   // Save progress to local storage & sync to cloud database (debounced 2s)
   useEffect(() => {
+    // Only write to localStorage after initial cloud progress load check is settled or if local progress is not empty
+    if (isAuthValidating && !isCloudProgressLoaded) return;
+
     try {
       const cleanLocal = { ...progress } as Record<string, unknown>;
       delete cleanLocal.userTier;
@@ -632,6 +643,18 @@ export default function App() {
       delete cleanLocal.subscriptionExpiredAt;
       delete cleanLocal.userName;
       delete cleanLocal.userEmail;
+
+      // Protection against race condition: don't overwrite non-empty storage with empty state during initialization
+      const existingSaved = localStorage.getItem(STORAGE_KEY);
+      if (existingSaved && (!progress.completedModules || progress.completedModules.length === 0) && (progress.xp === 0 || !progress.xp)) {
+        try {
+          const parsed = JSON.parse(existingSaved);
+          if (parsed && Array.isArray(parsed.completedModules) && parsed.completedModules.length > 0) {
+            return;
+          }
+        } catch (_) {}
+      }
+
       localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanLocal));
     } catch (e: unknown) {
       const err = e as { name?: string; code?: number };
