@@ -84,8 +84,9 @@ export async function loadCloudProgress(token?: string): Promise<Record<string, 
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
+    if (!res.ok) return null;
     const result = await res.json();
-    if (result.success && result.data) {
+    if (result?.success && result?.data) {
       let progressObj = result.data as Record<string, unknown>;
       while (progressObj && typeof progressObj === 'object' && 'data' in progressObj && progressObj.data && typeof progressObj.data === 'object') {
         progressObj = progressObj.data as Record<string, unknown>;
@@ -97,8 +98,9 @@ export async function loadCloudProgress(token?: string): Promise<Record<string, 
       return progressObj;
     }
     return null;
-  } catch (err) {
-    console.error('API loadCloudProgress failed:', err);
+  } catch (err: unknown) {
+    const error = err as { name?: string };
+    if (error?.name === 'AbortError') return null;
     return null;
   }
 }

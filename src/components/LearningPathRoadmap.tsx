@@ -541,13 +541,13 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
   };
 
   return (
-    <div className="space-y-8 pb-16 min-h-screen p-3 sm:p-6 rounded-3xl font-sans text-slate-900 dark:text-slate-100 bg-slate-100/90 dark:bg-[#070b19]">
+    <div className="space-y-6 sm:space-y-8 pb-16 min-h-screen p-2 sm:p-6 rounded-2xl sm:rounded-3xl font-sans text-slate-900 dark:text-slate-100 bg-slate-100/90 dark:bg-[#070b19]">
       {/* ---------------- TOP HERO BANNER ---------------- */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border border-slate-700/60 p-6 sm:p-8 shadow-2xl text-white">
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border border-slate-700/60 p-4 sm:p-6 md:p-8 shadow-2xl text-white">
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
 
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-center">
           <div className="md:col-span-8 space-y-3">
             <div className="flex flex-wrap items-center gap-2">
               <button
@@ -561,56 +561,56 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
               {progress.isExpired && (
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold">
                   <Clock className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Masa Aktif 6 Bulan Selesai (Sertifikat Tetap Aktif)</span>
+                  <span>Masa Aktif Selesai</span>
                 </div>
               )}
             </div>
 
-            <div className="flex items-center gap-3 pt-1">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 pt-1">
               <img
                 src="https://cms.maxy.academy/uploads/LogoMaxy.png"
                 alt="Maxy Academy Logo"
-                className="h-10 sm:h-12 w-auto object-contain shrink-0"
+                className="h-8 sm:h-11 w-auto object-contain shrink-0 self-start sm:self-auto"
               />
-              <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
                 <span className="text-white font-extrabold">AI Navigator — </span>
-                <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">Platform Pembelajaran LLM Interaktif</span>
+                <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent block sm:inline">Platform Pembelajaran LLM Interaktif</span>
               </h1>
             </div>
             <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl font-medium">
               Kuasai 29 modul LLM modern dari dasar hingga mahir! Lewati setiap node zig-zag, dapatkan 3 bintang kuis, dan buka 7 Peti Karun Spesial dengan bonus tools AI eksklusif.
             </p>
 
-            <div className="pt-2 flex flex-wrap items-center gap-3 text-xs">
-              <div className="flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-slate-700/60 text-slate-200">
-                <Trophy className="w-4 h-4 text-amber-400" />
-                <span>Progres: <strong className="text-amber-300">{completedCount}/{totalModules} Modul</strong> ({progressPercent}%)</span>
+            <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-stretch sm:items-center gap-2 sm:gap-2.5 text-xs">
+              <div className="flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3 py-2 rounded-2xl border border-slate-700/60 text-slate-200">
+                <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
+                <span className="truncate">Progres: <strong className="text-amber-300">{completedCount}/{totalModules} Modul</strong> ({progressPercent}%)</span>
               </div>
-              <div className="flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-slate-700/60 text-slate-200">
-                <Clock className="w-4 h-4 text-indigo-400" />
-                <span>Sisa Waktu: <strong className="text-indigo-300">{timeCalc.formattedText}</strong></span>
+              <div className="flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3 py-2 rounded-2xl border border-slate-700/60 text-slate-200">
+                <Clock className="w-4 h-4 text-indigo-400 shrink-0" />
+                <span className="truncate">Sisa Waktu: <strong className="text-indigo-300">{timeCalc.formattedText}</strong></span>
               </div>
               <button
                 onClick={onOpenStreakModal}
-                className="flex items-center gap-2 bg-indigo-950/80 hover:bg-indigo-900/90 px-3.5 py-2 rounded-2xl border border-indigo-700/60 text-slate-200 transition-all cursor-pointer"
+                className="flex items-center gap-2 bg-indigo-950/80 hover:bg-indigo-900/90 px-3 py-2 rounded-2xl border border-indigo-700/60 text-slate-200 transition-all cursor-pointer"
               >
-                <Award className="w-4 h-4 text-emerald-400" />
-                <span>Lvl {levelInfo.level} ({levelInfo.title}): <strong className="text-amber-400">{progress.xp} XP</strong></span>
+                <Award className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="truncate">Lvl {levelInfo.level} ({levelInfo.title}): <strong className="text-amber-400">{progress.xp} XP</strong></span>
               </button>
               {onOpenAchievements && (
                 <button
                   onClick={onOpenAchievements}
-                  className="flex items-center gap-2 bg-amber-950/80 hover:bg-amber-900/90 px-3.5 py-2 rounded-2xl border border-amber-700/60 text-amber-200 transition-all cursor-pointer hover:scale-105"
+                  className="flex items-center gap-2 bg-amber-950/80 hover:bg-amber-900/90 px-3 py-2 rounded-2xl border border-amber-700/60 text-amber-200 transition-all cursor-pointer hover:scale-105"
                 >
-                  <Gift className="w-4 h-4 text-amber-400" />
-                  <span>Peti Unlocked ({openedChestIds.length}/{TREASURE_CHESTS.length})</span>
+                  <Gift className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span className="truncate">Peti Unlocked ({openedChestIds.length}/{TREASURE_CHESTS.length})</span>
                 </button>
               )}
             </div>
           </div>
 
           {/* Progress gauge card */}
-          <div className="md:col-span-4 bg-slate-900/90 backdrop-blur-md rounded-3xl p-5 border border-slate-700/60 text-center space-y-3 shadow-xl">
+          <div className="md:col-span-4 bg-slate-900/90 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-700/60 text-center space-y-2.5 sm:space-y-3 shadow-xl">
             <div className="flex justify-between items-center text-xs text-slate-300">
               <span className="font-bold text-slate-200">Progres Kelulusan</span>
               <span className="font-black text-amber-400 text-sm">{progressPercent}%</span>
@@ -973,7 +973,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
           {/* INTERACTIVE SKILL TREE / DUOLINGO PATH (VERTICAL ZIG-ZAG ROADMAP)         */}
           {/* ========================================================================= */}
           {viewMode === 'map' && (
-            <div className="relative max-w-2xl mx-auto py-12 px-4 sm:px-8 bg-slate-100 dark:bg-slate-950/80 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+            <div className="relative max-w-2xl mx-auto py-8 sm:py-12 px-2 sm:px-8 bg-slate-100 dark:bg-slate-950/80 rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
               {/* Dotted Grid Background */}
               <div 
                 className="absolute inset-0 opacity-20 pointer-events-none"
@@ -984,7 +984,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
               />
 
               {/* Path Container */}
-              <div className="relative flex flex-col items-center space-y-12 z-10">
+              <div className="relative flex flex-col items-center space-y-10 sm:space-y-12 z-10">
                 {modules.map((module, index) => {
                   const isCompleted = progress.completedModules.includes(module.id);
                   const isCurrent = currentActiveModuleId !== null && module.id === currentActiveModuleId && !isCompleted;
@@ -1012,7 +1012,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                     <React.Fragment key={module.id}>
                       {/* GROUP HEADER BANNER (If module is first in group) */}
                       {groupStart && (
-                        <div className="w-full my-8 py-5 px-6 rounded-3xl bg-slate-900 border border-slate-700/90 shadow-2xl space-y-2 text-center relative overflow-hidden text-white">
+                        <div className="w-full my-6 sm:my-8 py-4 sm:py-5 px-4 sm:px-6 rounded-2xl sm:rounded-3xl bg-slate-900 border border-slate-700/90 shadow-2xl space-y-2 text-center relative overflow-hidden text-white">
                           <div className={`absolute top-0 left-0 w-2.5 h-full bg-gradient-to-b ${groupStart.themeGradient}`} />
                           <div className="flex flex-wrap items-center justify-between gap-2">
                             <span className={`text-[11px] font-black px-3 py-1 rounded-full border shadow-sm ${groupStart.badgeBg}`}>
@@ -1037,8 +1037,8 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                         className={`flex flex-col group w-full transition-all ${isCurrent ? 'pt-8' : ''}`}
                         style={{
                           alignItems: posX === 50 ? 'center' : posX < 50 ? 'flex-start' : 'flex-end',
-                          paddingLeft: posX < 50 ? '10%' : '0',
-                          paddingRight: posX > 50 ? '10%' : '0',
+                          paddingLeft: posX < 50 ? '6%' : '0',
+                          paddingRight: posX > 50 ? '6%' : '0',
                         }}
                       >
                         <div className="relative flex flex-col items-center">
