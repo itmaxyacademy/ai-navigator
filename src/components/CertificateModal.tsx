@@ -44,6 +44,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
   const [verifyUrl, setVerifyUrl] = useState<string>('');
   const [isIssuing, setIsIssuing] = useState<boolean>(false);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
+  const [activePageTab, setActivePageTab] = useState<number>(1);
 
   const page1Ref = useRef<HTMLDivElement>(null);
   const page2Ref = useRef<HTMLDivElement>(null);
@@ -802,13 +803,69 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               </button>
             </div>
 
+            {/* Page Tabs Switcher (Render 1 page at a time for high-performance viewing) */}
+            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 overflow-x-auto">
+              <button
+                type="button"
+                onClick={() => setActivePageTab(1)}
+                className={`flex-1 min-w-[130px] py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                  activePageTab === 1
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-900'
+                }`}
+              >
+                <Award className="w-3.5 h-3.5" />
+                <span>Hal 1: Sertifikat</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActivePageTab(2)}
+                className={`flex-1 min-w-[130px] py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                  activePageTab === 2
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-900'
+                }`}
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>Hal 2: Transkrip (1-10)</span>
+              </button>
+              {part2Modules.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setActivePageTab(3)}
+                  className={`flex-1 min-w-[130px] py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                    activePageTab === 3
+                      ? 'bg-indigo-600 text-white shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-900'
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Hal 3: Transkrip (11-20)</span>
+                </button>
+              )}
+              {part3Modules.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setActivePageTab(4)}
+                  className={`flex-1 min-w-[130px] py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                    activePageTab === 4
+                      ? 'bg-indigo-600 text-white shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-900'
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Hal 4: Transkrip (21-29)</span>
+                </button>
+              )}
+            </div>
+
             <div id="printable-certificate-area" className="space-y-6 relative">
 
             {/* ============ HALAMAN 1: SERTIFIKAT ============ */}
             <div
               ref={page1Ref}
               className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
-              style={{ aspectRatio: '850 / 600' }}
+              style={{ display: activePageTab === 1 ? 'block' : 'none', aspectRatio: '850 / 600' }}
             >
               <div 
                 className="cert-scaler absolute top-0 left-0"
@@ -999,7 +1056,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
             <div
               ref={page2Ref}
               className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
-              style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
+              style={{ display: activePageTab === 2 ? 'block' : 'none', aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
             >
               <div 
                 className="cert-scaler absolute top-0 left-0"
@@ -1066,7 +1123,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               <div
                 ref={page3Ref}
                 className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
-                style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
+                style={{ display: activePageTab === 3 ? 'block' : 'none', aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
               >
               <div 
                 className="cert-scaler absolute top-0 left-0"
@@ -1148,7 +1205,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
               <div
                 ref={page4Ref}
                 className="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700"
-                style={{ aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
+                style={{ display: activePageTab === 4 ? 'block' : 'none', aspectRatio: '850 / 600', backgroundColor: '#ffffff' }}
               >
               <div 
                 className="cert-scaler absolute top-0 left-0"

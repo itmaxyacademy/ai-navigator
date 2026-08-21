@@ -1114,6 +1114,21 @@ export default function App() {
   // Sertifikat hanya aktif jika user 100% menyelesaikan seluruh modul (Tier 1: Modul 1-22, Tier 2: Modul 1-29)
   const allModulesCompleted = isCertificateEligible(progress);
 
+  const handleOpenCertificateSection = useCallback(() => {
+    setActiveTab('path');
+    setSelectedModuleId(null);
+    setTimeout(() => {
+      const certElem = document.getElementById('certificate-section');
+      if (certElem) {
+        certElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        certElem.classList.add('ring-4', 'ring-amber-400', 'transition-all');
+        setTimeout(() => {
+          certElem.classList.remove('ring-4', 'ring-amber-400');
+        }, 2500);
+      }
+    }, 120);
+  }, []);
+
   if (isAuthValidating) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
@@ -1131,21 +1146,6 @@ export default function App() {
       </div>
     );
   }
-
-  const handleOpenCertificateSection = useCallback(() => {
-    setActiveTab('path');
-    setSelectedModuleId(null);
-    setTimeout(() => {
-      const certElem = document.getElementById('certificate-section');
-      if (certElem) {
-        certElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        certElem.classList.add('ring-4', 'ring-amber-400', 'transition-all');
-        setTimeout(() => {
-          certElem.classList.remove('ring-4', 'ring-amber-400');
-        }, 2500);
-      }
-    }, 120);
-  }, []);
 
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${

@@ -74,12 +74,9 @@ export const Header: React.FC<HeaderProps> = ({
               className="h-8 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform"
             />
             <div className="flex flex-col">
-              <div className="flex items-center gap-1.5 whitespace-nowrap">
+              <div className="flex items-center whitespace-nowrap">
                 <span className="font-black text-base text-slate-900 tracking-tight">
                   AI Navigator
-                </span>
-                <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-                  Pemula
                 </span>
               </div>
               <span className="text-[10px] text-slate-500 font-medium tracking-wide">
