@@ -370,7 +370,10 @@ export default function App() {
       localStorage.setItem('maxy_access_token', tokenFromUrl);
     }
 
-    // Safety fallback: pastikan loading overlay "Memverifikasi Sesi" paling lambat hilang dalam 5 detik jika API lambat
+    // Safety fallback: jika API lambat/502/overload, render dari cache setelah 1.5s (ada cache) atau 2.5s (fresh login)
+    // API fetchWithAuth sudah di-set timeout 3s, sehingga ini hanya backup jika Promise.all tidak resolve
+    const hasCachedData = Boolean(localStorage.getItem(STORAGE_KEY));
+    const safetyDelayMs = hasCachedData ? 1500 : 2500;
     const safetyTimeout = setTimeout(() => {
       setIsCloudProgressLoaded(true);
       setIsAuthValidating((prev) => {
@@ -379,7 +382,7 @@ export default function App() {
         }
         return false;
       });
-    }, 5000);
+    }, safetyDelayMs);
 
     Promise.all([
       fetchUserProfile(token),

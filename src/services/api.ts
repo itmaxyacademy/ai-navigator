@@ -35,7 +35,7 @@ async function fetchWithAuth(url: string, options: RequestInit = {}, customToken
   options.headers = headers;
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+  const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout — fail fast, fallback to cache
   options.signal = controller.signal;
 
   let res;
@@ -52,7 +52,7 @@ async function fetchWithAuth(url: string, options: RequestInit = {}, customToken
       retryHeaders.set('Authorization', `Bearer ${newToken}`);
       options.headers = retryHeaders;
       const retryController = new AbortController();
-      const retryTimeoutId = setTimeout(() => retryController.abort(), 10000);
+      const retryTimeoutId = setTimeout(() => retryController.abort(), 3000);
       options.signal = retryController.signal;
       try {
         res = await fetch(url, options);
@@ -223,7 +223,7 @@ export async function fetchAiNavigatorPackages() {
     for (const url of endpoints) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2500);
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
         const res = await fetch(url, { signal: controller.signal });
         clearTimeout(timeoutId);
         if (res.ok) {
