@@ -1,7 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
+}
+
+html {
+  background-color: #070b14;
+  color: #f8fafc;
+}
+
+body {
+  background-color: #070b14;
+  color: #f8fafc;
 }
 
 html.dark {
@@ -11,14 +21,8 @@ html.dark {
 /* Smooth color transitions for theme switching */
 body, header, footer, div, button, section, nav, article {
   transition-property: color, background-color, border-color, box-shadow;
-  transition-duration: 200ms;
+  transition-duration: 150ms;
   transition-timing-function: ease-in-out;
-}
-
-/* Light Theme Base Setup */
-html.light body {
-  background-color: #f8fafc;
-  color: #0f172a;
 }
 
 /* Custom Scrollbar */
