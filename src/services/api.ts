@@ -121,13 +121,18 @@ export async function saveCloudProgress(token: string, progress: Record<string, 
     delete cleanProgress.userName;
     delete cleanProgress.userEmail;
 
-    await fetchWithAuth(`${API_BASE}/progress`, {
+    const res = await fetchWithAuth(`${API_BASE}/progress`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ progress: cleanProgress }),
     });
-  } catch (err) {
-    console.error('API saveCloudProgress failed:', err);
+    if (!res.ok && res.status !== 502) {
+      console.warn(`[CloudSync] Background sync status: ${res.status}`);
+    }
+  } catch (err: unknown) {
+    const error = err as { name?: string };
+    if (error?.name === 'AbortError') return; // Debounce abort
+    // Non-critical background sync silent fallback
   }
 }
 

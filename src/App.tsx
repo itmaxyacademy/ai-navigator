@@ -633,8 +633,29 @@ export default function App() {
       delete cleanLocal.userName;
       delete cleanLocal.userEmail;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanLocal));
-    } catch (e) {
-      console.error('Failed to save progress', e);
+    } catch (e: unknown) {
+      const err = e as { name?: string; code?: number };
+      if (err?.name === 'QuotaExceededError' || err?.code === 22) {
+        try {
+          // Prune older extraneous cache keys
+          const keysToPrune = ['notion_ai_state', 'ai_navigator_flashcards_confidence_v1', 'ai_navigator_opened_chests'];
+          keysToPrune.forEach(k => localStorage.removeItem(k));
+          
+          // Save essential only
+          const essential = {
+            completedModules: progress.completedModules,
+            currentModuleId: progress.currentModuleId,
+            moduleScores: progress.moduleScores,
+            xp: progress.xp,
+            streakDays: progress.streakDays,
+            unlockedBadges: progress.unlockedBadges,
+            hasSeenCertPopup: progress.hasSeenCertPopup,
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(essential));
+        } catch (_) {
+          // Ignore fallback storage error
+        }
+      }
     }
 
     if (isAuthValidating || !isCloudProgressLoaded) return;
