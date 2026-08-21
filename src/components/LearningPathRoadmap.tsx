@@ -405,18 +405,10 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
   
   // Chest and Milestone States
   const [unboxedChest, setUnboxedChest] = useState<TreasureChestData | null>(null);
-  const [openedChestIds, setOpenedChestIds] = useState<number[]>(() => {
-    try {
-      const saved = localStorage.getItem('ai_navigator_opened_chests');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
 
   const allOpenedChestIds = useMemo(() => {
-    return Array.from(new Set([...(progress.openedChests || []), ...openedChestIds]));
-  }, [progress.openedChests, openedChestIds]);
+    return progress.openedChests || [];
+  }, [progress.openedChests]);
 
   const [activeCheckpoint, setActiveCheckpoint] = useState<CheckpointMilestone | null>(null);
   const [showGraduationModal, setShowGraduationModal] = useState<boolean>(false);
@@ -462,15 +454,6 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
         ? progress.currentModuleId
         : (modules.find(m => !progress.completedModules.includes(m.id))?.id || null));
 
-  // Sync opened chests to localStorage
-  useEffect(() => {
-    try {
-      localStorage.setItem('ai_navigator_opened_chests', JSON.stringify(openedChestIds));
-    } catch (e) {
-      console.warn("Could not save opened chests to localStorage", e);
-    }
-  }, [openedChestIds]);
-
   // Smooth scroll to active node on mount / view switch (only if learning in progress)
   useEffect(() => {
     if (viewMode === 'map' && !isAllModulesCompleted && currentActiveModuleId && activeNodeRef.current) {
@@ -490,25 +473,23 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
       return;
     }
 
-    const isAlreadyClaimed = allOpenedChestIds.includes(chest.id);
     setUnboxedChest(chest);
+  };
 
-    if (!isAlreadyClaimed) {
-      setOpenedChestIds(prev => [...prev, chest.id]);
-      if (onOpenChest) {
-        onOpenChest(chest.id, chest.xpReward, chest.title);
-      } else if (onAwardXp) {
-        onAwardXp(chest.xpReward, chest.title);
-      }
-
-      setTimeout(() => {
-        confetti({
-          particleCount: 50,
-          spread: 60,
-          origin: { y: 0.6 }
-        });
-      }, 120);
+  const handleClaimChest = (chest: TreasureChestData) => {
+    if (onOpenChest) {
+      onOpenChest(chest.id, chest.xpReward, chest.title);
+    } else if (onAwardXp) {
+      onAwardXp(chest.xpReward, chest.title);
     }
+    setUnboxedChest(null);
+    setTimeout(() => {
+      confetti({
+        particleCount: 40,
+        spread: 55,
+        origin: { y: 0.5 }
+      });
+    }, 100);
   };
 
   const handleCheckpointClick = (cp: CheckpointMilestone) => {
@@ -1696,12 +1677,12 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                     ? 'bg-gradient-to-b from-emerald-500 to-emerald-700 border-emerald-300 shadow-emerald-500/30'
                     : 'bg-gradient-to-b from-amber-400 to-amber-600 border-amber-200 shadow-amber-500/50'
                 }`}>
-                  <Gift className={`w-10 h-10 ${isClaimed ? 'text-white' : 'text-slate-950 fill-amber-200 animate-bounce'}`} />
+                  <Gift className={`w-10 h-10 ${isClaimed ? 'text-white' : 'text-slate-950 fill-amber-200'}`} />
                 </div>
 
                 <div className="space-y-1">
                   <span className={`text-[10px] font-black uppercase tracking-wider ${isClaimed ? 'text-emerald-400' : 'text-amber-400'}`}>
-                    {isClaimed ? '✓ Bonus Telah Diklaim' : '🎉 Bonus Unlocked!'}
+                    {isClaimed ? '✓ Bonus Telah Diklaim' : '🎉 Bonus Peti Harta Karun!'}
                   </span>
                   <h3 className="text-xl sm:text-2xl font-black text-amber-300">{unboxedChest.title}</h3>
                   <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
@@ -1742,14 +1723,20 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                 </div>
 
                 <button
-                  onClick={() => setUnboxedChest(null)}
+                  onClick={() => {
+                    if (isClaimed) {
+                      setUnboxedChest(null);
+                    } else {
+                      handleClaimChest(unboxedChest);
+                    }
+                  }}
                   className={`w-full py-3.5 rounded-2xl font-black text-xs shadow-lg transition-all cursor-pointer ${
                     isClaimed
                       ? 'bg-slate-800 hover:bg-slate-700 text-white'
-                      : 'bg-amber-500 hover:bg-amber-400 text-slate-950'
+                      : 'bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 shadow-amber-500/20'
                   }`}
                 >
-                  {isClaimed ? 'Tutup Tutorial' : 'Klaim Hadiah & Lanjutkan Belajar'}
+                  {isClaimed ? 'Tutup Tutorial' : `🎁 Buka Peti & Klaim (+${unboxedChest.xpReward} XP)`}
                 </button>
               </motion.div>
             </div>
