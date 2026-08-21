@@ -23,7 +23,7 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
   initialEmail = '',
 }) => {
   const submitHandler = onSubmitCapstone || onSubmit || (() => {});
-  const [activeTab, setActiveTab] = useState<'form' | 'bank'>('form');
+  const [activeTab, setActiveTab] = useState<'form' | 'history' | 'bank'>('form');
   const [selectedBankTopic, setSelectedBankTopic] = useState<CapstoneTopic | null>(null);
 
   const [name, setName] = useState('');
@@ -89,6 +89,11 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isApproved) {
+      onClose();
+      return;
+    }
+
     const newErrors: Record<string, string> = {};
 
     if (!name.trim()) newErrors.name = 'Nama lengkap wajib diisi.';
@@ -189,11 +194,11 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
 
           <p className="text-[11px] leading-relaxed opacity-90">
             {isApproved
-              ? 'Selamat! Proyek Capstone Anda telah dinilai dan disetujui resmi oleh Mentor. Anda kini dapat langsung mencetak Sertifikat Resmi CAAI™ Anda!'
+              ? 'Selamat! Proyek Capstone Anda telah dinilai dan disetujui resmi oleh Mentor. Judul dan URL pengumpulan telah dikunci untuk penerbitan Sertifikat Resmi CAAI™ Anda.'
               : isRevision
               ? 'Mentor meminta perbaikan pada proyek Anda. Silakan pelajari catatan revisi di bawah, perbaiki proyek Anda, dan kirimkan kembali pembaruan link proyek.'
               : isInReview
-              ? 'Tugas proyek Anda telah diterima dan saat ini sedang dalam proses evaluasi oleh Mentor Pembimbing. Anda tetap dapat memperbarui link di bawah jika ada perbaikan.'
+              ? 'Tugas proyek Anda telah diterima dan saat ini sedang dalam proses evaluasi oleh Mentor Pembimbing.'
               : 'Silakan isi judul dan link pengumpulan proyek di bawah. Jika belum memiliki topik sendiri, Anda dapat memilih studi kasus langsung dari Bank Capstone!'}
           </p>
 
@@ -226,37 +231,59 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
           </div>
         )}
 
-        {/* Navigation Tabs (Form vs Bank Capstone) */}
+        {/* Navigation Tabs (Form vs Riwayat vs Bank Capstone) */}
         <div className="flex gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs font-bold">
           <button
             type="button"
             onClick={() => setActiveTab('form')}
-            className={`flex-1 py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+            className={`flex-1 py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'form'
                 ? 'bg-amber-500 text-slate-950 font-black shadow-md'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <FileText className="w-4 h-4" />
-            <span>Formulir Pengajuan Proyek</span>
+            <FileText className="w-3.5 h-3.5" />
+            <span>Formulir Pengajuan</span>
           </button>
+          
+          <button
+            type="button"
+            onClick={() => setActiveTab('history')}
+            className={`flex-1 py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              activeTab === 'history'
+                ? 'bg-amber-500 text-slate-950 font-black shadow-md'
+                : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Clock className="w-3.5 h-3.5" />
+            <span>Riwayat &amp; Log</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setActiveTab('bank')}
-            className={`flex-1 py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+            className={`flex-1 py-2 px-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'bank'
                 ? 'bg-amber-500 text-slate-950 font-black shadow-md'
                 : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>Bank Capstone ({CAPSTONE_BANK.length} Pilihan Topik)</span>
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>Bank Topik</span>
           </button>
         </div>
 
         {/* TAB 1: FORM PENGUMPULAN */}
         {activeTab === 'form' && (
           <form onSubmit={handleSubmit} className="space-y-4 text-xs animate-fadeIn">
+            {/* Locked Info if Approved */}
+            {isApproved && (
+              <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Pengumpulan Capstone telah disetujui resmi oleh Mentor dan dikunci untuk penerbitan sertifikat.</span>
+              </div>
+            )}
+
             {/* Save confirmation banner */}
             {isSavedSuccess && (
               <div className="flex items-center gap-2 p-3.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-semibold animate-fadeIn">
@@ -273,10 +300,11 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
               </label>
               <input
                 type="text"
+                disabled={isApproved}
                 value={name}
                 onChange={(e) => { setName(e.target.value); setErrors(prev => ({ ...prev, name: '' })); }}
                 placeholder="Masukkan nama lengkap Anda..."
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${errors.name ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.name ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
               />
               {errors.name && <p className="text-rose-400 text-[10px] font-semibold">{errors.name}</p>}
             </div>
@@ -289,10 +317,11 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
               </label>
               <input
                 type="email"
+                disabled={isApproved}
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setErrors(prev => ({ ...prev, email: '' })); }}
                 placeholder="contoh: nama@email.com"
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${errors.email ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.email ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
               />
               {errors.email && <p className="text-rose-400 text-[10px] font-semibold">{errors.email}</p>}
             </div>
@@ -304,21 +333,24 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
                   <FileText className="w-3.5 h-3.5 text-purple-400" />
                   Judul Capstone Project <span className="text-rose-400">*</span>
                 </label>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('bank')}
-                  className="text-[11px] text-amber-400 hover:text-amber-300 font-bold underline flex items-center gap-1 cursor-pointer"
-                >
-                  <Sparkles className="w-3 h-3" />
-                  Pilih dari Bank Capstone
-                </button>
+                {!isApproved && (
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('bank')}
+                    className="text-[11px] text-amber-400 hover:text-amber-300 font-bold underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    Pilih dari Bank Capstone
+                  </button>
+                )}
               </div>
               <input
                 type="text"
+                disabled={isApproved}
                 value={title}
                 onChange={(e) => { setTitle(e.target.value); setErrors(prev => ({ ...prev, title: '' })); }}
                 placeholder="Contoh: Otomasi AI Customer Support & Knowledge Base RAG"
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${errors.title ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.title ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
               />
               {errors.title && <p className="text-rose-400 text-[10px] font-semibold">{errors.title}</p>}
             </div>
@@ -334,24 +366,113 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
               </p>
               <textarea
                 rows={2}
+                disabled={isApproved}
                 value={capstoneUrl}
                 onChange={(e) => { setCapstoneUrl(e.target.value); setErrors(prev => ({ ...prev, capstoneUrl: '' })); }}
                 placeholder="Contoh: https://github.com/username/capstone-project atau https://drive.google.com/..."
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium leading-relaxed resize-none ${errors.capstoneUrl ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium leading-relaxed resize-none ${isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.capstoneUrl ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
               />
               {errors.capstoneUrl && <p className="text-rose-400 text-[10px] font-semibold">{errors.capstoneUrl}</p>}
             </div>
 
             <div className="pt-2">
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-xl shadow-amber-500/20 hover:scale-[1.01] transition-all cursor-pointer"
-              >
-                <Send className="w-4 h-4" />
-                <span>{isRevision ? 'Kirim Ulang Hasil Revisi Capstone' : isSubmitted ? 'Perbarui & Simpan Pengajuan Capstone' : 'Kirim Capstone & Ajukan Approval Mentor'}</span>
-              </button>
+              {isApproved ? (
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs flex items-center justify-center gap-2 shadow-xl shadow-emerald-600/20 hover:scale-[1.01] transition-all cursor-pointer"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Proyek Disetujui • Tutup &amp; Siap Cetak Sertifikat</span>
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-xl shadow-amber-500/20 hover:scale-[1.01] transition-all cursor-pointer"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>{isRevision ? 'Kirim Ulang Hasil Revisi Capstone' : isSubmitted ? 'Perbarui & Simpan Pengajuan Capstone' : 'Kirim Capstone & Ajukan Approval Mentor'}</span>
+                </button>
+              )}
             </div>
           </form>
+        )}
+
+        {/* TAB 2: RIWAYAT & LOG PENGUMPULAN */}
+        {activeTab === 'history' && (
+          <div className="space-y-4 animate-fadeIn text-xs">
+            <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
+              <h4 className="font-black text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                <Clock className="w-4 h-4 text-amber-400" />
+                Riwayat &amp; Log Evaluasi Capstone
+              </h4>
+
+              <div className="space-y-2 text-xs">
+                <div className="flex justify-between py-1.5 border-b border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Status Saat Ini:</span>
+                  <span className={`font-bold ${
+                    isApproved ? 'text-emerald-600 dark:text-emerald-400' : isRevision ? 'text-rose-600 dark:text-rose-400' : isInReview ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'
+                  }`}>
+                    {isApproved ? '✓ Disetujui Mentor' : isRevision ? '⚠️ Perlu Revisi' : isInReview ? '⏳ Sedang Direview' : 'Belum Dikumpulkan'}
+                  </span>
+                </div>
+
+                <div className="flex justify-between py-1.5 border-b border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Judul Proyek:</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-200 text-right max-w-[280px] truncate">
+                    {title || 'Belum diisi'}
+                  </span>
+                </div>
+
+                <div className="flex justify-between py-1.5 border-b border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Link Repositori:</span>
+                  <span className="font-bold text-indigo-600 dark:text-indigo-400 text-right max-w-[280px] truncate">
+                    {capstoneUrl ? (
+                      <a href={capstoneUrl} target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-400">
+                        {capstoneUrl}
+                      </a>
+                    ) : 'Belum diisi'}
+                  </span>
+                </div>
+
+                <div className="flex justify-between py-1.5 border-b border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400">Mentor Pembimbing:</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-200">
+                    {progress?.assignedMentorName || 'Tim Mentor Maxy Academy'}
+                  </span>
+                </div>
+
+                {score !== undefined && score !== null && (
+                  <div className="flex justify-between py-1.5 border-b border-slate-200 dark:border-slate-800">
+                    <span className="text-slate-500 dark:text-slate-400">Nilai Evaluasi:</span>
+                    <span className="font-black text-emerald-600 dark:text-emerald-400">
+                      {score}/100
+                    </span>
+                  </div>
+                )}
+
+                {notes && (
+                  <div className="pt-2">
+                    <span className="text-slate-500 dark:text-slate-400 block mb-1">Catatan &amp; Feedback Mentor:</span>
+                    <p className="p-3 rounded-xl bg-slate-200/60 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 italic text-slate-800 dark:text-slate-200">
+                      "{notes}"
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {isRevision && (
+              <button
+                type="button"
+                onClick={() => setActiveTab('form')}
+                className="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Buka Formulir untuk Kirim Ulang Revisi</span>
+              </button>
+            )}
+          </div>
         )}
 
         {/* TAB 2: BANK CAPSTONE */}

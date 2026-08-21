@@ -104,7 +104,11 @@ export default function App() {
   const [expiredModalOpen, setExpiredModalOpen] = useState(false);
   const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
   const [activeInvoiceOrderId, setActiveInvoiceOrderId] = useState<string | null>(null);
-  const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => !isLocalDevEnv);
+  const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => {
+    if (isLocalDevEnv) return false;
+    const token = typeof window !== 'undefined' ? (new URLSearchParams(window.location.search).get('token') || localStorage.getItem('maxy_access_token')) : null;
+    return !token;
+  });
   const [isCloudProgressLoaded, setIsCloudProgressLoaded] = useState<boolean>(false);
   const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
   const [paymentLoadingTier, setPaymentLoadingTier] = useState<'tier1' | 'tier2' | null>(null);
@@ -283,17 +287,33 @@ export default function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [theme, setTheme] = useState<'dark' | 'light'>('light');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    try {
+      const saved = localStorage.getItem('ai_navigator_theme_v1');
+      return saved === 'dark' ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
+  });
 
   useEffect(() => {
     try {
-      localStorage.setItem('ai_navigator_theme_v1', 'light');
+      localStorage.setItem('ai_navigator_theme_v1', theme);
     } catch (e) {
       console.error('Failed to save theme preference', e);
     }
-    document.documentElement.classList.remove('dark');
-    document.documentElement.classList.add('light');
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
   }, [theme]);
+
+  const handleToggleTheme = useCallback(() => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  }, []);
 
   // Auth Guard: Sync user profile & active tier subscription from API Gateway api.maxy.academy
   useEffect(() => {
@@ -505,10 +525,6 @@ export default function App() {
         setIsAuthValidating(false);
       });
   }, []);
-
-  const handleToggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('maxy_access_token');

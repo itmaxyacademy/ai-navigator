@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Award, Flame, Menu, X, Compass, Trophy, StickyNote, Lock, Crown, ShieldCheck, LogOut, Save, Download, Upload, FileText, RotateCcw } from 'lucide-react';
+import { Sparkles, Award, Flame, Menu, X, Compass, Trophy, StickyNote, Lock, Crown, ShieldCheck, LogOut, Save, Download, Upload, FileText, RotateCcw, Moon, Sun } from 'lucide-react';
 import { UserProgress } from '../types';
 import { getUserLevelInfo } from '../lib/gamification';
 import { Tooltip } from './Tooltip';
@@ -227,9 +227,9 @@ const HeaderComponent: React.FC<HeaderProps> = ({
               <Tooltip
                 content={
                   <div className="space-y-1 text-left min-w-[180px]">
-                    <div className="font-bold text-slate-900 text-xs">{progress.userName}</div>
+                    <div className="font-bold text-slate-900 dark:text-white text-xs">{progress.userName}</div>
                     {progress.userEmail && (
-                      <p className="text-[10px] text-slate-600">{progress.userEmail}</p>
+                      <p className="text-[10px] text-slate-600 dark:text-slate-400">{progress.userEmail}</p>
                     )}
                     {progress.userPhone && (
                       <p className="text-[10px] text-slate-400">📞 {progress.userPhone}</p>
@@ -237,7 +237,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                     {progress.userInstitution && (
                       <p className="text-[10px] text-slate-400">🏢 {progress.userInstitution}</p>
                     )}
-                    <p className="text-[10px] text-indigo-600 font-semibold pt-1 border-t border-slate-200">
+                    <p className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold pt-1 border-t border-slate-200 dark:border-slate-800">
                       ✏️ Klik untuk Edit Profil
                     </p>
                   </div>
@@ -245,7 +245,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
               >
                 <button
                   onClick={onOpenUserProfile}
-                  className="hidden lg:flex items-center gap-2 px-2.5 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-bold text-slate-800 transition-all shadow-xs cursor-pointer hover:border-slate-300"
+                  className="hidden lg:flex items-center gap-2 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 transition-all shadow-xs cursor-pointer hover:border-slate-300"
                 >
                   <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-[10px] font-black text-white shrink-0 uppercase shadow-xs">
                     {progress.userName.charAt(0)}
@@ -254,6 +254,27 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 </button>
               </Tooltip>
             )}
+
+            {/* Dark Theme Toggle Button (Beside Profile) */}
+            <Tooltip content={<div className="font-bold text-xs">{theme === 'dark' ? 'Mode Terang' : 'Mode Gelap'}</div>}>
+              <button
+                onClick={onToggleTheme}
+                aria-label="Toggle Theme"
+                className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-all shadow-xs cursor-pointer text-xs font-bold"
+              >
+                {theme === 'dark' ? (
+                  <>
+                    <Sun className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span className="text-[11px] font-bold">Terang</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-4 h-4 text-indigo-600 shrink-0" />
+                    <span className="text-[11px] font-bold">Gelap</span>
+                  </>
+                )}
+              </button>
+            </Tooltip>
 
             {/* Hidden file input for Import JSON */}
             <input
@@ -265,7 +286,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             />
 
             {/* ACTION BUTTONS GROUP (Invoice, Reset, Logout) */}
-            <div className="flex items-center gap-0.5 p-1 rounded-xl border bg-slate-100 border-slate-200">
+            <div className="flex items-center gap-0.5 p-1 rounded-xl border bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800">
               {/* Invoice Receipt Button */}
               {onOpenInvoice && userTier !== 'free' && (
                 <Tooltip content={<div className="font-bold text-xs text-slate-800">Invoice Pembayaran</div>}>
@@ -427,16 +448,26 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-3 gap-2">
             <button
-                onClick={() => setIsResetModalOpen(true)}
-                className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
-                  theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
-                }`}
-              >
-                <RotateCcw className="w-4 h-4 text-amber-500" />
-                Reset Progress
-              </button>
+              onClick={onToggleTheme}
+              className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
+                theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-800 text-slate-200'
+              }`}
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
+              {theme === 'dark' ? 'Mode Terang' : 'Mode Gelap'}
+            </button>
+
+            <button
+              onClick={() => setIsResetModalOpen(true)}
+              className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
+                theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
+              }`}
+            >
+              <RotateCcw className="w-4 h-4 text-amber-500" />
+              Reset
+            </button>
 
             <button
               onClick={() => {
