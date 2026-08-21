@@ -134,6 +134,7 @@ export interface UserProgress {
   dailyGoalMinutes?: number; // e.g. 15 minutes default
   dailyMinutesHistory?: Record<string, number>; // dateStr -> minutes learned today
   completedCheckpoints?: string[]; // IDs of mini-quiz checkpoints completed
+  openedChests?: number[]; // IDs of opened treasure chests
   moduleRevisits?: Record<number, number>; // moduleId -> count of times revisited/practiced
   hasSeenCertPopup?: boolean; // track if user has seen certificate pop-up
   certName?: string;

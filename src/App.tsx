@@ -453,6 +453,9 @@ export default function App() {
             const mergedUnlockedBadges = Array.from(
               new Set([...(cloudData.unlockedBadges || []), ...(prev.unlockedBadges || [])])
             );
+            const mergedOpenedChests = Array.from(
+              new Set([...(cloudData.openedChests || []), ...(prev.openedChests || [])])
+            );
             const mergedCompletedCheckpoints = Array.from(
               new Set([...(cloudData.completedCheckpoints || []), ...(prev.completedCheckpoints || [])])
             );
@@ -472,6 +475,7 @@ export default function App() {
                 completedModules: mergedCompletedModules,
                 unlockedBadges: mergedUnlockedBadges,
                 completedCheckpoints: mergedCompletedCheckpoints,
+                openedChests: mergedOpenedChests,
                 moduleScores: mergedModuleScores,
                 xp: mergedXp,
                 streakDays: mergedStreakDays,
@@ -491,6 +495,7 @@ export default function App() {
               completedModules: mergedCompletedModules,
               unlockedBadges: mergedUnlockedBadges,
               completedCheckpoints: mergedCompletedCheckpoints,
+              openedChests: mergedOpenedChests,
               moduleScores: mergedModuleScores,
               xp: mergedXp,
               streakDays: mergedStreakDays,
@@ -1283,7 +1288,29 @@ export default function App() {
     setUserProfileModalOpen(false);
   }, []);
 
-  if (isAuthValidating || !isCloudProgressLoaded) {
+  const handleOpenChest = useCallback((chestId: number, xpReward: number, chestTitle: string) => {
+    setProgress((prev) => {
+      const alreadyOpened = (prev.openedChests || []).includes(chestId);
+      if (alreadyOpened) return prev;
+      const nextOpened = [...(prev.openedChests || []), chestId];
+      const nextXp = prev.xp + xpReward;
+      const next = {
+        ...prev,
+        openedChests: nextOpened,
+        xp: nextXp,
+      };
+      const token = localStorage.getItem('maxy_access_token');
+      if (token) {
+        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch(() => {});
+      }
+      return next;
+    });
+    addFloatingXp(xpReward, `Peti: ${chestTitle}`, 'xp_milestone');
+  }, []);
+
+  const hasValidCachedProgress = Boolean(progress.completedModules && progress.completedModules.length > 0);
+
+  if (!hasValidCachedProgress && (isAuthValidating || !isCloudProgressLoaded)) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
         theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-white'
@@ -1349,6 +1376,7 @@ export default function App() {
             onOpenStreakModal={handleOpenStreakModal}
             onOpenAchievements={handleOpenAchievements}
             onAwardXp={handleAwardXp}
+            onOpenChest={handleOpenChest}
             onOpenUpgradeModal={handleOpenUpgradeModal}
             onOpenCapstoneModal={handleOpenCapstoneModal}
             onOpenCertificateModal={handleOpenCertificateModal}

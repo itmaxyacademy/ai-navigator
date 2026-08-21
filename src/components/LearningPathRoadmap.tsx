@@ -28,6 +28,7 @@ interface LearningPathRoadmapProps {
   onOpenAchievements?: () => void;
   onIncrementRevisit?: (moduleId: number) => void;
   onAwardXp?: (amount: number, label: string) => void;
+  onOpenChest?: (chestId: number, xpReward: number, chestTitle: string) => void;
   onOpenUpgradeModal?: (targetModuleId?: number) => void;
   onOpenCapstoneModal?: () => void;
   onOpenCertificateModal?: (certType?: 'capstone' | 'completion') => void;
@@ -390,6 +391,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
   onOpenAchievements,
   onIncrementRevisit,
   onAwardXp,
+  onOpenChest,
   onOpenUpgradeModal,
   onOpenCapstoneModal,
   onOpenCertificateModal,
@@ -411,6 +413,10 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
       return [];
     }
   });
+
+  const allOpenedChestIds = useMemo(() => {
+    return Array.from(new Set([...(progress.openedChests || []), ...openedChestIds]));
+  }, [progress.openedChests, openedChestIds]);
 
   const [activeCheckpoint, setActiveCheckpoint] = useState<CheckpointMilestone | null>(null);
   const [showGraduationModal, setShowGraduationModal] = useState<boolean>(false);
@@ -484,21 +490,25 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
       return;
     }
 
+    const isAlreadyClaimed = allOpenedChestIds.includes(chest.id);
     setUnboxedChest(chest);
-    if (!openedChestIds.includes(chest.id)) {
+
+    if (!isAlreadyClaimed) {
       setOpenedChestIds(prev => [...prev, chest.id]);
-      if (onAwardXp) {
+      if (onOpenChest) {
+        onOpenChest(chest.id, chest.xpReward, chest.title);
+      } else if (onAwardXp) {
         onAwardXp(chest.xpReward, chest.title);
       }
-    }
 
-    setTimeout(() => {
-      confetti({
-        particleCount: 60,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-    }, 120);
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { y: 0.6 }
+        });
+      }, 120);
+    }
   };
 
   const handleCheckpointClick = (cp: CheckpointMilestone) => {
@@ -607,7 +617,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                   className="flex items-center gap-2 bg-amber-950/80 hover:bg-amber-900/90 px-3 py-2 rounded-2xl border border-amber-700/60 text-amber-200 transition-all cursor-pointer hover:scale-105"
                 >
                   <Gift className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span className="truncate">Peti Unlocked ({openedChestIds.length}/{TREASURE_CHESTS.length})</span>
+                  <span className="truncate">Peti Unlocked ({allOpenedChestIds.length}/{TREASURE_CHESTS.length})</span>
                 </button>
               )}
             </div>
@@ -1229,7 +1239,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                       {chestAfter && (
                         <div className="relative flex flex-col items-center my-3 z-10">
                           {(() => {
-                            const isOpened = openedChestIds.includes(chestAfter.id);
+                            const isOpened = allOpenedChestIds.includes(chestAfter.id);
                             const isPrereqDone = progress.completedModules.includes(chestAfter.afterModuleId);
 
                             return (
@@ -1664,72 +1674,87 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
       {/* TREASURE CHEST UNBOXING MODAL                                             */}
       {/* ========================================================================= */}
       <AnimatePresence>
-        {unboxedChest && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-amber-500/50 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 text-center text-slate-900 dark:text-white"
-            >
-              <button
-                onClick={() => setUnboxedChest(null)}
-                className="absolute top-4 right-4 p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-full hover:bg-slate-100 dark:bg-slate-800 transition-colors cursor-pointer"
+        {unboxedChest && (() => {
+          const isClaimed = allOpenedChestIds.includes(unboxedChest.id);
+          return (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-amber-500/50 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-5 text-center text-slate-900 dark:text-white"
               >
-                <X className="w-5 h-5" />
-              </button>
+                <button
+                  onClick={() => setUnboxedChest(null)}
+                  className="absolute top-4 right-4 p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-full hover:bg-slate-100 dark:bg-slate-800 transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
 
-              <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-b from-amber-400 to-amber-600 flex items-center justify-center shadow-2xl shadow-amber-500/50 border-2 border-amber-200">
-                <Gift className="w-10 h-10 text-slate-950 fill-amber-200 animate-bounce" />
-              </div>
+                <div className={`w-20 h-20 mx-auto rounded-3xl flex items-center justify-center shadow-2xl border-2 ${
+                  isClaimed
+                    ? 'bg-gradient-to-b from-emerald-500 to-emerald-700 border-emerald-300 shadow-emerald-500/30'
+                    : 'bg-gradient-to-b from-amber-400 to-amber-600 border-amber-200 shadow-amber-500/50'
+                }`}>
+                  <Gift className={`w-10 h-10 ${isClaimed ? 'text-white' : 'text-slate-950 fill-amber-200 animate-bounce'}`} />
+                </div>
 
-              <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase text-amber-400 tracking-wider">
-                  🎉 Bonus Unlocked!
-                </span>
-                <h3 className="text-xl sm:text-2xl font-black text-amber-300">{unboxedChest.title}</h3>
-                <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
-                  {unboxedChest.description}
-                </p>
-              </div>
-
-              {/* Bonus Mini Tutorial Preview */}
-              <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-left space-y-3 text-xs">
-                <div className="font-extrabold text-amber-300 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
-                  <span>💡 Mini Tutorial: {unboxedChest.bonusToolName}</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    +{unboxedChest.xpReward} XP
+                <div className="space-y-1">
+                  <span className={`text-[10px] font-black uppercase tracking-wider ${isClaimed ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    {isClaimed ? '✓ Bonus Telah Diklaim' : '🎉 Bonus Unlocked!'}
                   </span>
+                  <h3 className="text-xl sm:text-2xl font-black text-amber-300">{unboxedChest.title}</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
+                    {unboxedChest.description}
+                  </p>
                 </div>
 
-                <p className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
-                  {unboxedChest.miniTutorial.overview}
-                </p>
+                {/* Bonus Mini Tutorial Preview */}
+                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-left space-y-3 text-xs">
+                  <div className="font-extrabold text-amber-300 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+                    <span>💡 Mini Tutorial: {unboxedChest.bonusToolName}</span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full border ${
+                      isClaimed
+                        ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                        : 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                    }`}>
+                      {isClaimed ? `✓ Sudah Diklaim (+${unboxedChest.xpReward} XP)` : `+${unboxedChest.xpReward} XP`}
+                    </span>
+                  </div>
 
-                <div className="space-y-1 pt-1">
-                  <span className="font-bold text-slate-700 dark:text-slate-200 block">Pro Tips:</span>
-                  <ul className="list-disc list-inside space-y-1 text-slate-500 dark:text-slate-400 font-medium">
-                    {unboxedChest.miniTutorial.keyTips.map((tip, idx) => (
-                      <li key={idx}>{tip}</li>
-                    ))}
-                  </ul>
+                  <p className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                    {unboxedChest.miniTutorial.overview}
+                  </p>
+
+                  <div className="space-y-1 pt-1">
+                    <span className="font-bold text-slate-700 dark:text-slate-200 block">Pro Tips:</span>
+                    <ul className="list-disc list-inside space-y-1 text-slate-500 dark:text-slate-400 font-medium">
+                      {unboxedChest.miniTutorial.keyTips.map((tip, idx) => (
+                        <li key={idx}>{tip}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-mono text-[11px] text-amber-200 select-all">
+                    <span className="text-[9px] text-slate-500 font-sans block mb-1">Contoh Prompt:</span>
+                    {unboxedChest.miniTutorial.samplePrompt}
+                  </div>
                 </div>
 
-                <div className="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 font-mono text-[11px] text-amber-200 select-all">
-                  <span className="text-[9px] text-slate-500 font-sans block mb-1">Contoh Prompt:</span>
-                  {unboxedChest.miniTutorial.samplePrompt}
-                </div>
-              </div>
-
-              <button
-                onClick={() => setUnboxedChest(null)}
-                className="w-full py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-lg transition-all cursor-pointer"
-              >
-                Klaim Hadiah &amp; Lanjutkan Belajar
-              </button>
-            </motion.div>
-          </div>
-        )}
+                <button
+                  onClick={() => setUnboxedChest(null)}
+                  className={`w-full py-3.5 rounded-2xl font-black text-xs shadow-lg transition-all cursor-pointer ${
+                    isClaimed
+                      ? 'bg-slate-800 hover:bg-slate-700 text-white'
+                      : 'bg-amber-500 hover:bg-amber-400 text-slate-950'
+                  }`}
+                >
+                  {isClaimed ? 'Tutup Tutorial' : 'Klaim Hadiah & Lanjutkan Belajar'}
+                </button>
+              </motion.div>
+            </div>
+          );
+        })()}
       </AnimatePresence>
 
       {/* ========================================================================= */}
