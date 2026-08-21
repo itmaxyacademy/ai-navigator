@@ -467,6 +467,23 @@ export default function App() {
             const mergedStreakDays = Math.max(Number(cloudData.streakDays) || 1, Number(prev.streakDays) || 1);
             const mergedCurrentModuleId = Math.max(Number(cloudData.currentModuleId) || 1, Number(prev.currentModuleId) || 1);
 
+            try {
+              const cleanToStore = {
+                completedModules: mergedCompletedModules,
+                unlockedBadges: mergedUnlockedBadges,
+                completedCheckpoints: mergedCompletedCheckpoints,
+                moduleScores: mergedModuleScores,
+                xp: mergedXp,
+                streakDays: mergedStreakDays,
+                currentModuleId: mergedCurrentModuleId,
+                certName: cloudData?.certName || user?.name || undefined,
+                certEmail: cloudData?.certEmail || user?.email || undefined,
+                certPhone: cloudData?.certPhone || user?.phone || undefined,
+                certInstitution: cloudData?.certInstitution || user?.university || undefined,
+              };
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanToStore));
+            } catch (_) {}
+
             return {
               ...defaultProgress,
               ...prev,
@@ -1266,9 +1283,7 @@ export default function App() {
     setUserProfileModalOpen(false);
   }, []);
 
-  const hasCachedProgress = Boolean(progress.completedModules && progress.completedModules.length > 0);
-
-  if (isAuthValidating && !hasCachedProgress) {
+  if (isAuthValidating || !isCloudProgressLoaded) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
         theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-white'
