@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Sparkles, Award, Flame, Menu, X, Compass, Trophy, StickyNote, Lock, Crown, ShieldCheck, LogOut, Save, Download, Upload, FileText, RotateCcw } from 'lucide-react';
 import { UserProgress } from '../types';
 import { getUserLevelInfo } from '../lib/gamification';
-import { DailyGoalRing } from './DailyGoalRing';
 import { Tooltip } from './Tooltip';
 import { ConfirmModal } from './ConfirmModal';
 
@@ -122,15 +121,6 @@ const HeaderComponent: React.FC<HeaderProps> = ({
 
           {/* 3. RIGHT SECTION (Grouped User Stats & Utilities) */}
           <div className="hidden lg:flex items-center gap-2 sm:gap-2.5 shrink-0 pr-1">
-            
-            {/* Daily Goal Ring */}
-            <DailyGoalRing
-              dailyGoalMinutes={progress.dailyGoalMinutes}
-              dailyMinutesHistory={progress.dailyMinutesHistory}
-              onUpdateGoal={onUpdateGoal}
-              onAddMinutes={onAddMinutes}
-            />
-
             {/* Streak & Level Stats Pill */}
             <Tooltip
               content={
@@ -434,15 +424,6 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 <Sparkles className="w-4 h-4" />
                 <span className="text-xs">Lvl {levelInfo.level} • {progress.xp} XP</span>
               </div>
-            </div>
-            
-            <div className="w-full border-t border-slate-200 dark:border-slate-800/60 pt-3 flex items-center justify-center">
-              <DailyGoalRing
-                dailyGoalMinutes={progress.dailyGoalMinutes}
-                dailyMinutesHistory={progress.dailyMinutesHistory}
-                onUpdateGoal={onUpdateGoal}
-                onAddMinutes={onAddMinutes}
-              />
             </div>
           </div>
 
