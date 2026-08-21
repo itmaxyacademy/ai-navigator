@@ -1132,6 +1132,21 @@ export default function App() {
     );
   }
 
+  const handleOpenCertificateSection = () => {
+    setActiveTab('path');
+    setSelectedModuleId(null);
+    setTimeout(() => {
+      const certElem = document.getElementById('certificate-section');
+      if (certElem) {
+        certElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        certElem.classList.add('ring-4', 'ring-amber-400', 'transition-all');
+        setTimeout(() => {
+          certElem.classList.remove('ring-4', 'ring-amber-400');
+        }, 2500);
+      }
+    }, 120);
+  };
+
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
       theme === 'light' ? 'bg-slate-100/80 text-slate-900' : 'bg-[#070b14] text-slate-100'
@@ -1153,7 +1168,7 @@ export default function App() {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onLogout={handleLogout}
-        onOpenCertificate={() => setCertificateOpen(true)}
+        onOpenCertificate={handleOpenCertificateSection}
         onOpenStreakModal={() => setStreakModalOpen(true)}
         onOpenAchievements={() => setAchievementsOpen(true)}
         onOpenNotes={() => setAllNotesOpen(true)}
