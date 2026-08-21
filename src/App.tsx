@@ -1281,7 +1281,27 @@ export default function App() {
   const handleCloseInvoiceModal = useCallback(() => setInvoiceModalOpen(false), []);
 
   const handleOpenUserProfile = useCallback(() => setUserProfileModalOpen(true), []);
-  const handleCloseUserProfile = useCallback(() => setUserProfileModalOpen(false), []);
+  const handleCloseUserProfile = useCallback(() => {
+    setProgress((prev) => ({
+      ...prev,
+      hasDismissedOnboarding: true,
+    }));
+    setUserProfileModalOpen(false);
+  }, []);
+
+  const handleSelectTab = useCallback((tab: 'path') => {
+    setActiveTab(tab);
+    if (tab === 'path') {
+      setSelectedModuleId(null);
+    }
+  }, []);
+
+  const handleBackToPath = useCallback(() => {
+    setActiveTab('path');
+    setSelectedModuleId(null);
+  }, []);
+
+  const handleSearchChange = useCallback((q: string) => setSearchQuery(q), []);
 
   const handleOpenCertificateModal = useCallback((certType?: 'capstone' | 'completion') => {
     if (certType) setSelectedCertType(certType);
@@ -1373,14 +1393,9 @@ export default function App() {
         onUpdateGoal={handleUpdateGoal}
         onAddMinutes={handleAddMinutes}
         activeTab={activeTab === 'module' ? 'path' : activeTab}
-        onSelectTab={(tab) => {
-          setActiveTab(tab);
-          if (tab === 'path') {
-            setSelectedModuleId(null);
-          }
-        }}
+        onSelectTab={handleSelectTab}
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+        onSearchChange={handleSearchChange}
         onLogout={handleLogout}
         onOpenCertificate={handleOpenCertificateSection}
         onOpenStreakModal={handleOpenStreakModal}
@@ -1405,7 +1420,7 @@ export default function App() {
             onSelectModule={handleSelectModule}
             onIncrementRevisit={handleIncrementRevisit}
             searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
+            onSearchChange={handleSearchChange}
             onOpenStreakModal={handleOpenStreakModal}
             onOpenAchievements={handleOpenAchievements}
             onAwardXp={handleAwardXp}
@@ -1420,10 +1435,7 @@ export default function App() {
           <ModuleView
             module={currentModule}
             progress={progress}
-            onBackToPath={() => {
-              setActiveTab('path');
-              setSelectedModuleId(null);
-            }}
+            onBackToPath={handleBackToPath}
             onSectionChange={handleSectionChange}
             onQuizComplete={handleQuizComplete}
             onNextModule={handleNextModule}

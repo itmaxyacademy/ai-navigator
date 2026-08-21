@@ -95,7 +95,7 @@ export const DailyChallengeWidget: React.FC<DailyChallengeWidgetProps> = React.m
     };
 
     updateCountdown();
-    const timer = setInterval(updateCountdown, 1000);
+    const timer = setInterval(updateCountdown, 60000);
     return () => clearInterval(timer);
   }, []);
 
