@@ -345,8 +345,11 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
   const part2Modules = displayModules.slice(10, 20);
   const part3Modules = displayModules.slice(20);
 
-  const capstoneTitle = (hasTier2 && certType === 'capstone')
-    ? (progress.capstoneTitle || progress.capstoneSubmission?.title || (progress as any).certTitle || 'Otomasi Workflow Pemasaran & Konten Berbasis RCTF & Multi-LLM')
+  const actualCapstoneTitle = progress.capstoneTitle || progress.capstoneSubmission?.title || (progress as any).certTitle || null;
+  const defaultCapstoneTitle = hasTier2 ? 'Implementasi Solusi Otomasi Generative AI & Multi-LLM Workflow' : null;
+  const effectiveCapstoneTitle = actualCapstoneTitle || defaultCapstoneTitle;
+  const capstoneTitle = (hasTier2 && (certType === 'capstone' || actualCapstoneTitle))
+    ? effectiveCapstoneTitle
     : null;
 
   const now = new Date();
@@ -574,12 +577,12 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
   const totalPages = 1 + 1 + (part2Modules.length > 0 ? 1 : 0) + (part3Modules.length > 0 ? 1 : 0);
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-100 dark:bg-slate-950/85 backdrop-blur-md flex items-start justify-center p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-start justify-center p-4 overflow-y-auto">
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-4xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative animate-fadeIn my-8 text-slate-900 dark:text-white">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer z-10"
+          className="absolute top-4 right-4 p-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer z-10"
         >
           <X className="w-5 h-5" />
         </button>
@@ -588,87 +591,87 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
         {!isVerified ? (
           <div className="space-y-6">
             <div className="text-center space-y-2">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold">
-                <Award className="w-4 h-4 text-amber-400" />
+              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-50 dark:bg-amber-500/20 border border-amber-300 dark:border-amber-500/40 text-amber-700 dark:text-amber-300 text-xs font-black shadow-xs">
+                <Award className="w-4 h-4 text-amber-500" />
                 <span>Request Sertifikat Kelulusan</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-                Verifikasi Identitas <span className="text-amber-400">Sertifikat</span>
+                Verifikasi Identitas <span className="text-amber-500 dark:text-amber-400">Sertifikat</span>
               </h2>
-              <p className="text-xs text-slate-600 dark:text-slate-300 font-medium max-w-md mx-auto">
+              <p className="text-xs text-slate-600 dark:text-slate-300 font-medium max-w-md mx-auto leading-relaxed">
                 Silakan isi dan periksa kembali Nama &amp; Email Anda. Data ini akan dicetak secara sah pada <strong>Certificate of Completion &amp; Transkrip Kurikulum Modul</strong>.
               </p>
             </div>
 
-            <form onSubmit={handleVerifyCert} className="space-y-4 max-w-md mx-auto bg-slate-100 dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 text-xs">
-              <div className="space-y-1">
-                <label className="font-bold text-slate-700 dark:text-slate-200 block flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5 text-amber-400" />
-                  Nama Lengkap Penerima Sertifikat
+            <form onSubmit={handleVerifyCert} className="space-y-4 max-w-md mx-auto bg-slate-50 dark:bg-slate-950/80 p-6 sm:p-7 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-sm text-xs">
+              <div className="space-y-1.5">
+                <label className="font-extrabold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-xs">
+                  <User className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Nama Lengkap Penerima Sertifikat</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-medium"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 font-bold shadow-xs transition-all placeholder:text-slate-400"
                   placeholder="Ketik nama lengkap Anda..."
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="font-bold text-slate-700 dark:text-slate-200 block flex items-center gap-1.5">
-                  <Mail className="w-3.5 h-3.5 text-indigo-400" />
-                  Alamat Email Siswa
+              <div className="space-y-1.5">
+                <label className="font-extrabold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-xs">
+                  <Mail className="w-3.5 h-3.5 text-indigo-500" />
+                  <span>Alamat Email Siswa</span>
                 </label>
                 <input
                   type="email"
                   required
                   value={userEmail}
                   onChange={(e) => setUserEmail(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-medium"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 font-bold shadow-xs transition-all placeholder:text-slate-400"
                   placeholder="nama@domain.com"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="font-bold text-slate-700 dark:text-slate-200 block flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  Nomor WhatsApp / Telepon
+              <div className="space-y-1.5">
+                <label className="font-extrabold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-xs">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>Nomor WhatsApp / Telepon</span>
                 </label>
                 <input
                   type="tel"
                   required
                   value={userPhone}
                   onChange={(e) => setUserPhone(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-medium"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 font-bold shadow-xs transition-all placeholder:text-slate-400"
                   placeholder="08123456789"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="font-bold text-slate-700 dark:text-slate-200 block flex items-center gap-1.5">
-                  <Compass className="w-3.5 h-3.5 text-sky-400" />
-                  Asal Instansi / Universitas / Perusahaan
+              <div className="space-y-1.5">
+                <label className="font-extrabold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-xs">
+                  <Compass className="w-3.5 h-3.5 text-sky-500" />
+                  <span>Asal Instansi / Universitas / Perusahaan</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={userInstitution}
                   onChange={(e) => setUserInstitution(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500 font-medium"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 font-bold shadow-xs transition-all placeholder:text-slate-400"
                   placeholder="e.g. Universitas Indonesia / Maxy Academy"
                 />
               </div>
 
               {/* Expiration Notice if expired */}
               {progress.isExpired && (
-                <div className="p-3 rounded-xl bg-blue-950/50 border border-blue-500/40 text-blue-200 text-xs space-y-1">
-                  <div className="flex items-center gap-1.5 font-bold text-blue-300">
-                    <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                <div className="p-3 rounded-2xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-500/40 text-blue-900 dark:text-blue-200 text-xs space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-blue-800 dark:text-blue-300">
+                    <CheckCircle2 className="w-4 h-4 text-blue-500" />
                     <span>Masa Akses Modul Berakhir (6 Bulan)</span>
                   </div>
-                  <p className="text-[11px] text-blue-100/90 leading-relaxed">
+                  <p className="text-[11px] text-blue-800/90 dark:text-blue-100/90 leading-relaxed">
                     Sertifikat resmi dan transkrip kelulusan Anda tetap berlaku seumur hidup dan dapat diunduh/dicetak kapan saja.
                   </p>
                 </div>
@@ -676,25 +679,27 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
 
               {/* Tier 2 Mentor & Capstone Prerequisites Info Box */}
               {hasTier2 && (
-                <div className="space-y-2 pt-1">
-                  <span className="font-bold text-slate-400 text-[10px] uppercase tracking-wider block">Syarat Sertifikasi Tier 2 VIP Master:</span>
+                <div className="space-y-2.5 pt-2">
+                  <span className="font-black text-slate-500 dark:text-slate-400 text-[10.5px] uppercase tracking-wider block">
+                    Syarat Sertifikasi Tier 2 VIP Master:
+                  </span>
                   
                   {/* Mentor Requirement */}
                   {hasMentor ? (
-                    <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs flex items-center justify-between">
+                    <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-500/30 text-emerald-950 dark:text-emerald-300 text-xs flex items-center justify-between shadow-xs">
                       <div>
-                        <span className="text-[10px] text-emerald-400 font-bold block uppercase">Mentor Ditugaskan:</span>
-                        <span className="font-extrabold text-white text-xs">{progress.assignedMentorName}</span>
+                        <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-extrabold block uppercase tracking-wider">Mentor Ditugaskan:</span>
+                        <span className="font-black text-emerald-950 dark:text-white text-xs">{progress.assignedMentorName}</span>
                       </div>
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     </div>
                   ) : (
-                    <div className="p-2.5 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs space-y-1">
-                      <div className="font-bold flex items-center gap-1.5 text-amber-400">
-                        <Lock className="w-3.5 h-3.5 shrink-0" />
+                    <div className="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 text-amber-950 dark:text-amber-300 text-xs space-y-1 shadow-xs">
+                      <div className="font-black flex items-center gap-1.5 text-amber-800 dark:text-amber-400">
+                        <Lock className="w-3.5 h-3.5 shrink-0 text-amber-600" />
                         <span>Mentor Belum Ditugaskan</span>
                       </div>
-                      <p className="text-[10px] text-amber-200/90">
+                      <p className="text-[10.5px] text-amber-800/90 dark:text-amber-200/90 leading-relaxed font-medium">
                         Penugasan mentor oleh Admin/Mentor diperlukan untuk penerbitan sertifikat Tier 2 VIP Master.
                       </p>
                     </div>
@@ -702,15 +707,15 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
 
                   {/* Capstone Requirement */}
                   {hasCapstone ? (
-                    <div className="p-2.5 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-indigo-300 text-xs space-y-1.5">
+                    <div className="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-500/30 text-indigo-950 dark:text-indigo-300 text-xs space-y-1.5 shadow-xs">
                       <div className="flex items-center justify-between">
                         <div className="overflow-hidden">
-                          <span className="text-[10px] text-indigo-400 font-bold block uppercase">Judul Capstone Project:</span>
-                          <span className="font-extrabold text-white text-xs truncate max-w-[260px] block">
-                            {progress.capstoneTitle || progress.capstoneSubmission?.title || 'Capstone Project AI Navigator'}
+                          <span className="text-[10px] text-indigo-700 dark:text-indigo-400 font-extrabold block uppercase tracking-wider">Judul Capstone Project:</span>
+                          <span className="font-black text-indigo-950 dark:text-white text-xs truncate max-w-[260px] block">
+                            {effectiveCapstoneTitle || 'Capstone Project AI Navigator'}
                           </span>
                         </div>
-                        <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
                       </div>
                       {onOpenCapstone && (
                         <button
@@ -719,7 +724,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                             onClose();
                             onOpenCapstone();
                           }}
-                          className="text-[10px] text-amber-400 hover:text-amber-300 font-bold underline inline-flex items-center gap-1 cursor-pointer"
+                          className="text-[10.5px] text-amber-700 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 font-extrabold underline inline-flex items-center gap-1 cursor-pointer"
                         >
                           <FileText className="w-3 h-3" />
                           <span>Lihat / Edit Judul &amp; Link Capstone</span>
@@ -727,12 +732,12 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                       )}
                     </div>
                   ) : (
-                    <div className="p-2.5 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-300 text-xs space-y-2">
-                      <div className="font-bold flex items-center gap-1.5 text-amber-400">
-                        <FileText className="w-3.5 h-3.5 shrink-0" />
+                    <div className="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 text-amber-950 dark:text-amber-300 text-xs space-y-2 shadow-xs">
+                      <div className="font-black flex items-center gap-1.5 text-amber-800 dark:text-amber-400">
+                        <FileText className="w-3.5 h-3.5 shrink-0 text-amber-600" />
                         <span>Capstone Project Belum Dikumpulkan</span>
                       </div>
-                      <p className="text-[10px] text-amber-200/90">
+                      <p className="text-[10.5px] text-amber-800/90 dark:text-amber-200/90 leading-relaxed font-medium">
                         Silakan lengkapi Judul &amp; Link Capstone Project Anda sebagai syarat kelulusan Tier 2.
                       </p>
                       {onOpenCapstone && (
@@ -742,7 +747,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                             onClose();
                             onOpenCapstone();
                           }}
-                          className="w-full py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[11px] transition-all cursor-pointer shadow-md"
+                          className="w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all cursor-pointer shadow-md"
                         >
                           Isi Form Capstone Project
                         </button>
@@ -752,12 +757,24 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
 
                   {/* Mentor Approval Status Requirement (Only for CAAI Capstone Cert) */}
                   {certType === 'capstone' && (
-                    <div className={`p-2.5 rounded-xl border text-xs flex items-center justify-between ${progress.capstoneStatus === 'approved' ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' : progress.capstoneStatus === 'revision' ? 'bg-rose-950/40 border-rose-500/30 text-rose-300' : 'bg-amber-950/40 border-amber-500/30 text-amber-300'}`}>
+                    <div className={`p-3 rounded-2xl border text-xs flex items-center justify-between shadow-xs ${
+                      progress.capstoneStatus === 'approved'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-500/30 text-emerald-950 dark:text-emerald-300'
+                        : progress.capstoneStatus === 'revision'
+                        ? 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-500/30 text-rose-950 dark:text-rose-300'
+                        : 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-500/30 text-amber-950 dark:text-amber-300'
+                    }`}>
                       <div>
-                        <span className={`text-[10px] font-bold block uppercase ${progress.capstoneStatus === 'approved' ? 'text-emerald-400' : progress.capstoneStatus === 'revision' ? 'text-rose-400' : 'text-amber-400'}`}>
+                        <span className={`text-[10px] font-extrabold block uppercase tracking-wider ${
+                          progress.capstoneStatus === 'approved'
+                            ? 'text-emerald-700 dark:text-emerald-400'
+                            : progress.capstoneStatus === 'revision'
+                            ? 'text-rose-700 dark:text-rose-400'
+                            : 'text-amber-700 dark:text-amber-400'
+                        }`}>
                           Status Approval Sertifikasi CAAI™:
                         </span>
-                        <span className="font-extrabold text-white text-xs block">
+                        <span className="font-black text-slate-900 dark:text-white text-xs block">
                           {progress.capstoneStatus === 'approved'
                             ? `Disetujui Mentor (Approved) ${progress.capstoneScore ? `— Skor: ${progress.capstoneScore}/100` : ''}`
                             : progress.capstoneStatus === 'revision'
@@ -765,7 +782,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                             : (progress.capstoneStatus === 'in_review' ? 'Sedang Direview Mentor' : 'Menunggu Approval Mentor')}
                         </span>
                         {progress.capstoneStatus !== 'approved' && (
-                          <p className="text-[10px] text-amber-200/90 mt-0.5">
+                          <p className="text-[10.5px] text-amber-800/90 dark:text-amber-200/90 mt-0.5 font-medium leading-relaxed">
                             {progress.capstoneStatus === 'revision'
                               ? `Catatan Revisi: "${progress.capstoneNotes || 'Perbaiki link proyek'}". Silakan perbaiki melalui form Capstone.`
                               : 'Menunggu konfirmasi approval dari mentor agar Sertifikat Resmi CAAI™ dapat diterbitkan.'}
@@ -773,9 +790,9 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                         )}
                       </div>
                       {progress.capstoneStatus === 'approved' ? (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                       ) : (
-                        <Clock className="w-4 h-4 text-amber-400 shrink-0" />
+                        <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
                       )}
                     </div>
                   )}
@@ -785,10 +802,10 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
               <button
                 type="submit"
                 disabled={isIssuing || (hasTier2 && certType === 'capstone' && progress.capstoneStatus !== 'approved')}
-                className={`w-full py-3 rounded-xl font-black text-xs shadow-lg transition-all flex items-center justify-center gap-2 mt-2 ${
+                className={`w-full py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg transition-all flex items-center justify-center gap-2 mt-3 ${
                   hasTier2 && certType === 'capstone' && progress.capstoneStatus !== 'approved'
-                    ? 'bg-slate-300 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed border border-slate-400/20'
-                    : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/20 cursor-pointer hover:scale-[1.01]'
+                    ? 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed border border-slate-300 dark:border-slate-700'
+                    : 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 shadow-amber-500/25 cursor-pointer hover:scale-[1.01]'
                 }`}
               >
                 <ShieldCheck className="w-4 h-4" />
@@ -1048,7 +1065,11 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                       <h2 className="text-3xl sm:text-4xl font-black text-slate-800 tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
                         CERTIFICATE
                       </h2>
-                      <p className="text-sm text-slate-500 font-medium italic">Of Completion</p>
+                      <p className="text-sm text-amber-600 font-black italic">
+                        {certType === 'capstone'
+                          ? 'Of Capstone Project & AI Mastery (CAAI™)'
+                          : 'Of Completion (CAAI™ Practitioner)'}
+                      </p>
                     </div>
 
                     <p className="text-xs text-slate-500 mt-3">This certificate is proudly presented to:</p>
@@ -1060,13 +1081,13 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                     </div>
 
                     {capstoneTitle && (
-                      <div className="mt-2 text-xs font-bold text-amber-800 bg-amber-50 border border-amber-300 px-4 py-1.5 rounded-xl inline-block max-w-md shadow-sm">
+                      <div className="mt-2.5 text-xs font-bold text-amber-900 bg-amber-50/95 border border-amber-300 px-4 py-1.5 rounded-xl inline-block max-w-md shadow-xs">
                         Judul Capstone Project: "{capstoneTitle}"
                       </div>
                     )}
 
                     <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed mt-3">
-                      telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong> dengan predikat <strong className="text-emerald-700">LULUS</strong>.
+                      telah berhasil menyelesaikan seluruh <strong>{displayModules.length} Modul Pembelajaran AI Navigator ({displayModules.length} JP)</strong>{certType === 'capstone' ? ' serta pengujian Capstone Project resmi' : ''} dengan predikat <strong className="text-emerald-700">LULUS</strong>.
                     </p>
 
                     {/* Bottom section */}
@@ -1117,7 +1138,9 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                           Transkrip Kurikulum Modul Pembelajaran (Bagian 1)
                         </div>
                         <div style={{ fontSize: '10.5px', color: '#475569', marginTop: '1px', fontWeight: 600 }}>
-                          Lampiran Resmi Certificate of Completion – AI Navigator ({hasTier2 ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
+                          {certType === 'capstone'
+                            ? 'Lampiran Resmi Certificate of Capstone Project & AI Mastery – AI Navigator (Tier 2 VIP Master)'
+                            : `Lampiran Resmi Certificate of Completion – AI Navigator (${hasTier2 ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})`}
                         </div>
                       </div>
                     </div>
@@ -1185,7 +1208,9 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                           Transkrip Kurikulum Modul Pembelajaran (Bagian 2)
                         </div>
                         <div style={{ fontSize: '10.5px', color: '#475569', marginTop: '1px', fontWeight: 600 }}>
-                          Lampiran Resmi Certificate of Completion – AI Navigator ({hasTier2 ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})
+                          {certType === 'capstone'
+                            ? 'Lampiran Resmi Certificate of Capstone Project & AI Mastery – AI Navigator (Tier 2 VIP Master)'
+                            : `Lampiran Resmi Certificate of Completion – AI Navigator (${hasTier2 ? 'Tier 2 VIP Master' : 'Tier 1 Self-Paced Basic'})`}
                         </div>
                       </div>
                     </div>
@@ -1267,7 +1292,9 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                           Transkrip Kurikulum Modul Pembelajaran (Bagian 3)
                         </div>
                         <div style={{ fontSize: '10.5px', color: '#475569', marginTop: '1px', fontWeight: 600 }}>
-                          Lampiran Resmi Certificate of Completion – AI Navigator (Tier 2 VIP Master)
+                          {certType === 'capstone'
+                            ? 'Lampiran Resmi Certificate of Capstone Project & AI Mastery – AI Navigator (Tier 2 VIP Master)'
+                            : 'Lampiran Resmi Certificate of Completion – AI Navigator (Tier 2 VIP Master)'}
                         </div>
                       </div>
                     </div>
