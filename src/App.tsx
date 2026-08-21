@@ -104,9 +104,15 @@ export default function App() {
   const [expiredModalOpen, setExpiredModalOpen] = useState(false);
   const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
   const [activeInvoiceOrderId, setActiveInvoiceOrderId] = useState<string | null>(null);
-  const [isCloudProgressLoaded, setIsCloudProgressLoaded] = useState<boolean>(false);
+  const [isCloudProgressLoaded, setIsCloudProgressLoaded] = useState<boolean>(() => {
+    return Boolean(localStorage.getItem('maxy_access_token'));
+  });
   const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => {
     if (isLocalDevEnv) return false;
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get('token');
+    const savedToken = localStorage.getItem('maxy_access_token');
+    if (savedToken && !tokenFromUrl) return false;
     return true;
   });
   const [isPaymentLoading, setIsPaymentLoading] = useState<boolean>(false);
@@ -1055,34 +1061,36 @@ export default function App() {
   };
 
   // Handle Capstone Submission
-  const handleSubmitCapstone = (submission: CapstoneSubmission) => {
-    setProgress((prev) => ({
-      ...prev,
-      capstoneSubmission: submission,
-      capstoneTitle: submission.title,
-      capstoneUrl: submission.capstoneUrl,
-      capstoneStatus: 'submitted',
-      capstoneAssignedAt: submission.submittedAt,
-      certName: submission.name,
-      certEmail: submission.email,
-      certRequested: true,
-    }));
+  const handleSubmitCapstone = useCallback((submission: CapstoneSubmission) => {
+    setProgress((prev) => {
+      const next = {
+        ...prev,
+        capstoneSubmission: submission,
+        capstoneTitle: submission.title,
+        capstoneUrl: submission.capstoneUrl,
+        capstoneStatus: prev.capstoneStatus === 'approved' ? 'approved' : 'submitted',
+        capstoneAssignedAt: submission.submittedAt,
+        certName: submission.name,
+        certEmail: submission.email,
+        certRequested: true,
+      };
+      const token = localStorage.getItem('maxy_access_token');
+      if (token) {
+        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch(() => {});
+      }
+      return next;
+    });
     setCapstoneModalOpen(false);
-    setSelectedCertType('capstone');
-    setCertificateOpen(true);
-    addFloatingXp(500, 'Capstone Project Berhasil Dikirim!', 'xp_graduation');
-    try {
+    addFloatingXp(500, 'Capstone Project Berhasil Disimpan!', 'xp_graduation');
+    setTimeout(() => {
       confetti({
-        particleCount: 150,
-        spread: 100,
+        particleCount: 80,
+        spread: 70,
         origin: { y: 0.5 },
         colors: ['#f59e0b', '#6366f1', '#10b981', '#ec4899'],
       });
-    } catch (e) {
-      // Ignore
-    }
-    setCertificateOpen(true);
-  };
+    }, 150);
+  }, []);
 
   const handleSaveCertDetails = useCallback((
     name: string,
@@ -1308,9 +1316,9 @@ export default function App() {
     addFloatingXp(xpReward, `Peti: ${chestTitle}`, 'xp_milestone');
   }, []);
 
-  const hasValidCachedProgress = Boolean(progress.completedModules && progress.completedModules.length > 0);
+  const hasSavedToken = Boolean(localStorage.getItem('maxy_access_token')) || isLocalDevEnv;
 
-  if (!hasValidCachedProgress && (isAuthValidating || !isCloudProgressLoaded)) {
+  if (!hasSavedToken && isAuthValidating) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
         theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-white'
