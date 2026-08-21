@@ -5,7 +5,7 @@ import { issueCertificateApi } from '../services/api';
 import { MODULES_DATA } from '../data/modulesData';
 import { isCertificateEligible } from '../lib/gamification';
 
-interface CertificateModalProps {
+export interface CertificateModalProps {
   isOpen: boolean;
   onClose: () => void;
   progress: UserProgress;
@@ -15,7 +15,7 @@ interface CertificateModalProps {
   packages?: Record<string, { price: number; fake_price: number; name?: string; certificate_bg_image?: string | null; certificate_bg_image_capstone?: string | null }>;
 }
 
-export const CertificateModal: React.FC<CertificateModalProps> = ({
+const CertificateModalComponent: React.FC<CertificateModalProps> = ({
   isOpen,
   onClose,
   progress,
@@ -1332,3 +1332,5 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     </div>
   );
 };
+
+export const CertificateModal = React.memo(CertificateModalComponent);

@@ -492,20 +492,24 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
       }
     }
 
-    confetti({
-      particleCount: 100,
-      spread: 80,
-      origin: { y: 0.6 }
-    });
+    setTimeout(() => {
+      confetti({
+        particleCount: 60,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }, 120);
   };
 
   const handleCheckpointClick = (cp: CheckpointMilestone) => {
     setActiveCheckpoint(cp);
-    confetti({
-      particleCount: 70,
-      spread: 60,
-      origin: { y: 0.6 }
-    });
+    setTimeout(() => {
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.6 }
+      });
+    }, 120);
   };
 
   const handleGraduationClick = () => {
@@ -1581,7 +1585,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
       {/* ========================================================================= */}
       <AnimatePresence>
         {selectedNodeModule && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-100 dark:bg-slate-950/85 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -1661,7 +1665,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
       {/* ========================================================================= */}
       <AnimatePresence>
         {unboxedChest && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-100 dark:bg-slate-950/90 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -1733,7 +1737,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
       {/* ========================================================================= */}
       <AnimatePresence>
         {activeCheckpoint && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-100 dark:bg-slate-950/90 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -1782,7 +1786,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
       {/* ========================================================================= */}
       <AnimatePresence>
         {showGraduationModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-100 dark:bg-slate-950/95 backdrop-blur-md overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 overflow-y-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
