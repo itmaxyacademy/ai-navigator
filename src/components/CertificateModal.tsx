@@ -62,6 +62,11 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
       if (uPhone) setUserPhone(uPhone);
       if (uInst) setUserInstitution(uInst);
 
+      const initialUuid = (progress as any)?.certUuid || (progress as any)?.uuid || '';
+      if (initialUuid) setCertUuid(initialUuid);
+      const initialNum = (progress as any)?.certNumber || '';
+      if (initialNum) setCertNumber(initialNum);
+
       // Auto-verify if all required details exist or if certificate was already requested
       if (progress?.certRequested || (uName && uEmail)) {
         setIsVerified(true);
