@@ -1232,6 +1232,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                       <div style={{ fontSize: '10.5px', color: '#334155', lineHeight: 1.4 }}>
                         <div>* Total Beban Belajar: <strong style={{ color: '#1e3a5f', fontSize: '11px' }}>{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur &amp; evaluasi).</div>
                         <div>* Status Kelulusan: <strong style={{ color: '#047857' }}>100% LULUS TERVERIFIKASI</strong>.</div>
+                        <div>* Verifikasi Keaslian: <strong style={{ color: '#1e3a5f' }}>https://maxy.academy/verifier</strong></div>
                       </div>
 
                       <div style={{ textAlign: 'right' }}>
@@ -1310,6 +1311,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                     <div style={{ fontSize: '10.5px', color: '#334155', lineHeight: 1.4 }}>
                       <div>* Total Beban Belajar: <strong style={{ color: '#1e3a5f', fontSize: '11px' }}>{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur &amp; evaluasi).</div>
                       <div>* Status Kelulusan: <strong style={{ color: '#047857' }}>100% LULUS TERVERIFIKASI</strong>.</div>
+                      <div>* Verifikasi Keaslian: <strong style={{ color: '#1e3a5f' }}>https://maxy.academy/verifier</strong></div>
                     </div>
 
                     <div style={{ textAlign: 'right' }}>
@@ -1327,13 +1329,13 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
             {(verifyUrl || certUuid) && (
               <div className="text-center pt-2">
                 <a
-                  href={verifyUrl || `https://cms.maxy.academy/certificate/verify/${certUuid}`}
+                  href={certUuid ? `https://maxy.academy/verifier?uuid=${certUuid}` : (verifyUrl || 'https://maxy.academy/verifier')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-indigo-400 hover:text-indigo-300 font-bold underline inline-flex items-center gap-1 cursor-pointer"
                 >
                   <ExternalLink className="w-3 h-3" />
-                  <span>Verifikasi Keaslian Sertifikat</span>
+                  <span>Verifikasi Keaslian Sertifikat di maxy.academy/verifier</span>
                 </a>
               </div>
             )}
