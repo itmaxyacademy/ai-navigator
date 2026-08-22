@@ -915,7 +915,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                               );
                             })()}
 
-                            {/* Card 2: Sertifikat Completion Standard (29 JP) */}
+                            {/* Card 2: Sertifikat Completion (29 JP) */}
                             <div className="p-5 rounded-2xl border border-emerald-200 dark:border-emerald-800/80 bg-gradient-to-br from-emerald-500/5 via-white to-emerald-500/10 dark:from-emerald-950/20 dark:via-slate-900 dark:to-emerald-900/20 flex flex-col justify-between shadow-xs relative overflow-hidden">
                               <div className="space-y-3">
                                 <div className="flex items-start justify-between gap-3">
@@ -925,7 +925,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                                     </div>
                                     <div>
                                       <h4 className="text-sm font-black text-slate-900 dark:text-white leading-tight">
-                                        Sertifikat Completion Standard
+                                        Sertifikat Completion
                                       </h4>
                                       <span className="text-[10.5px] text-emerald-600 dark:text-emerald-400 font-bold block mt-0.5">
                                         Kelulusan 29 Modul Pembelajaran (29 JP)

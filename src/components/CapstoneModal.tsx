@@ -53,6 +53,7 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
       setTitle(
         progress?.capstoneTitle ||
         progress?.capstoneSubmission?.title ||
+        (progress as any)?.certTitle ||
         ''
       );
       setCapstoneUrl(

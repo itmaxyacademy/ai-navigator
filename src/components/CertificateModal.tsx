@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Award, X, Sparkles, CheckCircle2, Download, Printer, Compass, ShieldCheck, Mail, User, Crown, ExternalLink, BookOpen, Loader2, Lock, FileText, Clock } from 'lucide-react';
+import { Award, X, Sparkles, CheckCircle2, Download, Printer, Compass, ShieldCheck, Mail, User, Crown, ExternalLink, BookOpen, Loader2, Lock, FileText, Clock, AlertCircle } from 'lucide-react';
 import { UserProgress } from '../types';
 import { issueCertificateApi } from '../services/api';
 import { MODULES_DATA } from '../data/modulesData';
@@ -52,8 +52,8 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
 
   React.useEffect(() => {
     if (isOpen) {
-      const uName = (progress as any)?.userName || progress?.capstoneSubmission?.name || progress?.certName || '';
-      const uEmail = (progress as any)?.userEmail || progress?.capstoneSubmission?.email || progress?.certEmail || '';
+      const uName = (progress as any)?.userName || progress?.certName || progress?.capstoneSubmission?.name || '';
+      const uEmail = (progress as any)?.userEmail || progress?.certEmail || progress?.capstoneSubmission?.email || '';
       const uPhone = (progress as any)?.userPhone || progress?.certPhone || '';
       const uInst = (progress as any)?.userInstitution || progress?.certInstitution || '';
 
@@ -62,84 +62,41 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
       if (uPhone) setUserPhone(uPhone);
       if (uInst) setUserInstitution(uInst);
 
-      let existingUuid = (progress as any)?.certUuid || '';
-      let existingCertNum = (progress as any)?.certNumber || '';
-
-      if (!existingUuid) {
-        existingUuid = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
-          ? crypto.randomUUID()
-          : `${Math.random().toString(36).substring(2, 10)}-${Math.random().toString(36).substring(2, 6)}-4${Math.random().toString(36).substring(2, 5)}-a${Math.random().toString(36).substring(2, 5)}-${Date.now().toString(36)}${Math.random().toString(36).substring(2, 6)}`;
-      }
-      if (!existingCertNum) {
-        existingCertNum = `No. ${String(Date.now()).slice(-4)}/AIN/NAV/${new Date().getFullYear()}`;
-      }
-
-      setCertUuid(existingUuid);
-      setCertNumber(existingCertNum);
-      setVerifyUrl(`https://cms.maxy.academy/certificate/verify/${existingUuid}`);
-
       // Auto-verify if all required details exist or if certificate was already requested
-      if (progress?.certRequested || (progress as any)?.certUuid || (uName && uEmail && uPhone && uInst)) {
+      if (progress?.certRequested || (uName && uEmail)) {
         setIsVerified(true);
       } else {
         setIsVerified(false);
       }
+
+      // Fetch official database-backed certificate UUID & number for this user & certType
+      if (uName && uEmail) {
+        setIsIssuing(true);
+        issueCertificateApi(uName, uEmail, certType)
+          .then((res) => {
+            setIsIssuing(false);
+            if (res?.success && res?.data?.uuid) {
+              setCertUuid(res.data.uuid);
+              if (res.data.certificate_number) setCertNumber(res.data.certificate_number);
+              if (res.data.verify_url) setVerifyUrl(res.data.verify_url);
+              if (onSaveCertDetails) {
+                onSaveCertDetails(uName, uEmail, uPhone, uInst, res.data.uuid, res.data.certificate_number);
+              }
+            } else {
+              // Fallback generated UUID if offline/pending
+              const fallbackUuid = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+                ? crypto.randomUUID()
+                : `${Math.random().toString(36).substring(2, 10)}-${Math.random().toString(36).substring(2, 6)}-4${Math.random().toString(36).substring(2, 5)}-a${Math.random().toString(36).substring(2, 5)}-${Date.now().toString(36)}${Math.random().toString(36).substring(2, 6)}`;
+              setCertUuid((prev) => prev || fallbackUuid);
+              setCertNumber((prev) => prev || `No. ${String(Date.now()).slice(-4)}/AIN/NAV/${new Date().getFullYear()}`);
+            }
+          })
+          .catch(() => {
+            setIsIssuing(false);
+          });
+      }
     }
-  }, [isOpen]);
-
-  // Keep certificate preview scaled responsive to its container width with throttled frame & debounce
-  React.useEffect(() => {
-    if (!isOpen || !isVerified) return;
-    const targetNode = page1Ref.current || page2Ref.current || page3Ref.current || page4Ref.current;
-    if (!targetNode) return;
-
-    let timeoutId: ReturnType<typeof setTimeout>;
-    const observer = new ResizeObserver((entries) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        for (let entry of entries) {
-          const w = Math.round(entry.contentRect.width);
-          if (w > 0 && Math.abs(w - certWidth) > 6) {
-            setCertWidth(w);
-          }
-        }
-      }, 40);
-    });
-
-    observer.observe(targetNode);
-    return () => {
-      clearTimeout(timeoutId);
-      observer.disconnect();
-    };
-  }, [isVerified, isOpen, activePageTab]);
-
-  // Background silent sync with backend database (Guarded single execution per identity)
-  React.useEffect(() => {
-    if (!isOpen || !isVerified || !certUuid) return;
-    const uName = userName || (progress as any)?.userName || progress?.certName || '';
-    const uEmail = userEmail || (progress as any)?.userEmail || progress?.certEmail || '';
-    if (!uName || !uEmail) return;
-
-    // If UUID is already synced and stored in progress, don't re-trigger
-    if ((progress as any)?.certUuid && (progress as any)?.certUuid === certUuid) return;
-
-    const syncKey = `${uName}_${uEmail}_${certUuid}_${certType}`;
-    if (syncedKeyRef.current === syncKey) return;
-    syncedKeyRef.current = syncKey;
-
-    issueCertificateApi(uName, uEmail, certType)
-      .then((res) => {
-        if (res?.success && res?.data?.uuid) {
-          setCertUuid(res.data.uuid);
-          if (res.data.certificate_number) setCertNumber(res.data.certificate_number);
-          if (res.data.verify_url) setVerifyUrl(res.data.verify_url);
-          if (onSaveCertDetails) {
-            onSaveCertDetails(uName, uEmail, userPhone, userInstitution, res.data.uuid, res.data.certificate_number);
-          }
-        }
-      })
-      .catch(() => {});
-  }, [isOpen, isVerified, certUuid, userName, userEmail]);
+  }, [isOpen, certType, progress?.userName, progress?.userEmail]);
 
   if (!isOpen) return null;
 
@@ -214,8 +171,11 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
   }
 
   const isCapstoneApproved = progress.capstoneStatus === 'approved';
+  const isCapstoneRevision = progress.capstoneStatus === 'revision' || progress.capstoneStatus === 'rejected';
+  const isCapstoneInReview = progress.capstoneStatus === 'in_review' || progress.capstoneStatus === 'submitted';
 
-  if (hasTier2 && !isCapstoneApproved) {
+  // Capstone requirement ONLY applies when student wants to open/print the CAAI™ Capstone Certificate
+  if (certType === 'capstone' && !isCapstoneApproved) {
     return (
       <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
         <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-amber-500/40 p-6 sm:p-8 text-center space-y-5">
@@ -226,35 +186,43 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
             <X className="w-5 h-5" />
           </button>
 
-          <div className="w-16 h-16 rounded-3xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-500">
-            <Clock className="w-8 h-8" />
+          <div className={`w-16 h-16 rounded-3xl flex items-center justify-center mx-auto ${
+            isCapstoneRevision
+              ? 'bg-rose-500/10 border border-rose-500/30 text-rose-500'
+              : 'bg-amber-500/10 border border-amber-500/30 text-amber-500'
+          }`}>
+            {isCapstoneRevision ? <AlertCircle className="w-8 h-8" /> : <Clock className="w-8 h-8" />}
           </div>
 
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 text-[11px] font-extrabold mb-2">
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-extrabold mb-2 border ${
+              isCapstoneRevision
+                ? 'bg-rose-500/20 text-rose-400 border-rose-500/40'
+                : 'bg-amber-500/20 text-amber-400 border-amber-500/40'
+            }`}>
               <Award className="w-3.5 h-3.5" />
-              <span>Tier 2 VIP Master — Review Capstone</span>
+              <span>{isCapstoneRevision ? 'Capstone Perlu Revisi' : 'Sertifikat Resmi CAAI™ — Review Capstone'}</span>
             </div>
             <h3 className="font-black text-xl text-slate-900 dark:text-white">
               {!hasCapstone
                 ? 'Capstone Project Belum Dikumpulkan'
-                : !hasMentor
-                ? 'Mentor Belum Ditugaskan'
-                : 'Sertifikat Menunggu Approval Mentor'}
+                : isCapstoneRevision
+                ? 'Tugas Capstone Perlu Revisi'
+                : 'Menunggu Approval Mentor'}
             </h3>
             <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
               {!hasCapstone
-                ? 'Sertifikat resmi CAAI™ Tier 2 mewajibkan pengumpulan Capstone Project (Judul & Link Proyek).'
-                : !hasMentor
-                ? 'Penugasan Mentor Resmi oleh Admin/Mentor diperlukan sebelum sertifikat kelulusan dapat disetujui.'
-                : 'Pengajuan Capstone Project Anda telah tersimpan dan diteruskan ke Mentor. Sertifikat resmi CAAI™ Tier 2 hanya dapat dicetak setelah disetujui (Approved) oleh Mentor Pembimbing.'}
+                ? 'Sertifikat resmi CAAI™ Level 1 mewajibkan pengumpulan Capstone Project (Judul & Link Proyek).'
+                : isCapstoneRevision
+                ? 'Mentor telah meninjau tugas Capstone Anda dan meminta perbaikan. Silakan cek catatan feedback mentor di bawah ini dan kumpulkan ulang tugas Anda.'
+                : 'Pengajuan Capstone Project Anda telah tersimpan dan sedang direview oleh Mentor. Sertifikat resmi CAAI™ dapat dicetak setelah disetujui (Approved).'}
             </p>
           </div>
 
           <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-xs space-y-2.5 text-left">
             <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
               <span className="font-bold">Mentor Pembimbing:</span>
-              <span className="font-extrabold text-indigo-400">{progress.assignedMentorName || 'Belum Ditugaskan'}</span>
+              <span className="font-extrabold text-indigo-400">{progress.assignedMentorName || 'Admin / Mentor Maxy'}</span>
             </div>
             <div className="flex justify-between items-start text-slate-700 dark:text-slate-300 gap-2">
               <span className="font-bold shrink-0">Judul Capstone:</span>
@@ -264,18 +232,26 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
             </div>
             <div className="flex justify-between items-center text-slate-700 dark:text-slate-300">
               <span className="font-bold">Status Review:</span>
-              <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black uppercase">
+              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase border ${
+                isCapstoneRevision
+                  ? 'bg-rose-500/20 text-rose-400 border-rose-500/40'
+                  : isCapstoneInReview
+                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                  : 'bg-slate-500/20 text-slate-300 border-slate-500/40'
+              }`}>
                 {!hasCapstone
                   ? 'Belum Mengajukan'
-                  : progress.capstoneStatus === 'in_review'
-                  ? 'Sedang Direview Mentor'
-                  : 'Menunggu Approval Mentor'}
+                  : isCapstoneRevision
+                  ? 'Perlu Revisi'
+                  : 'Sedang Direview'}
               </span>
             </div>
             {progress.capstoneNotes && (
-              <div className="pt-2 border-t border-slate-200 dark:border-slate-700 text-[11px] text-amber-300">
-                <span className="font-bold block text-slate-400 text-[10px]">Catatan / Feedback Mentor:</span>
-                <p className="italic mt-0.5 leading-relaxed">"{progress.capstoneNotes}"</p>
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-700 text-[11px]">
+                <span className="font-bold block text-rose-500 dark:text-rose-400 text-[10.5px]">Catatan / Feedback Evaluasi Mentor:</span>
+                <p className="italic mt-1 leading-relaxed text-slate-800 dark:text-slate-200 bg-rose-500/10 p-2.5 rounded-xl border border-rose-500/20">
+                  "{progress.capstoneNotes}"
+                </p>
               </div>
             )}
           </div>
@@ -288,10 +264,20 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                   onClose();
                   onOpenCapstone();
                 }}
-                className="flex-1 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all shadow-lg shadow-amber-500/20 cursor-pointer flex items-center justify-center gap-1.5"
+                className={`flex-1 py-3 rounded-2xl font-black text-xs transition-all shadow-lg cursor-pointer flex items-center justify-center gap-1.5 ${
+                  isCapstoneRevision
+                    ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-rose-600/20'
+                    : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/20'
+                }`}
               >
                 <FileText className="w-4 h-4" />
-                <span>{!hasCapstone ? 'Isi Form Capstone' : 'Edit / Perbarui Capstone'}</span>
+                <span>
+                  {isCapstoneRevision
+                    ? 'Perbaiki & Kumpulkan Ulang'
+                    : !hasCapstone
+                    ? 'Isi & Kumpulkan Capstone'
+                    : 'Lihat / Edit Pengajuan Capstone'}
+                </span>
               </button>
             )}
             <button
@@ -346,10 +332,8 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
   const part3Modules = displayModules.slice(20);
 
   const actualCapstoneTitle = progress.capstoneTitle || progress.capstoneSubmission?.title || (progress as any).certTitle || null;
-  const defaultCapstoneTitle = hasTier2 ? 'Implementasi Solusi Otomasi Generative AI & Multi-LLM Workflow' : null;
-  const effectiveCapstoneTitle = actualCapstoneTitle || defaultCapstoneTitle;
-  const capstoneTitle = (hasTier2 && (certType === 'capstone' || actualCapstoneTitle))
-    ? effectiveCapstoneTitle
+  const capstoneTitle = (hasTier2 && certType === 'capstone')
+    ? actualCapstoneTitle
     : null;
 
   const now = new Date();
@@ -705,54 +689,56 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                     </div>
                   )}
 
-                  {/* Capstone Requirement */}
-                  {hasCapstone ? (
-                    <div className="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-500/30 text-indigo-950 dark:text-indigo-300 text-xs space-y-1.5 shadow-xs">
-                      <div className="flex items-center justify-between">
-                        <div className="overflow-hidden">
-                          <span className="text-[10px] text-indigo-700 dark:text-indigo-400 font-extrabold block uppercase tracking-wider">Judul Capstone Project:</span>
-                          <span className="font-black text-indigo-950 dark:text-white text-xs truncate max-w-[260px] block">
-                            {effectiveCapstoneTitle || 'Capstone Project AI Navigator'}
-                          </span>
+                  {/* Capstone & Mentor Requirement (Only for CAAI Capstone Cert) */}
+                  {certType === 'capstone' && (
+                    hasCapstone ? (
+                      <div className="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-500/30 text-indigo-950 dark:text-indigo-300 text-xs space-y-1.5 shadow-xs">
+                        <div className="flex items-center justify-between">
+                          <div className="overflow-hidden">
+                            <span className="text-[10px] text-indigo-700 dark:text-indigo-400 font-extrabold block uppercase tracking-wider">Judul Capstone Project:</span>
+                            <span className="font-black text-indigo-950 dark:text-white text-xs truncate max-w-[260px] block">
+                              {actualCapstoneTitle || 'Belum Diisi'}
+                            </span>
+                          </div>
+                          <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
                         </div>
-                        <CheckCircle2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                        {onOpenCapstone && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              onClose();
+                              onOpenCapstone();
+                            }}
+                            className="text-[10.5px] text-amber-700 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 font-extrabold underline inline-flex items-center gap-1 cursor-pointer"
+                          >
+                            <FileText className="w-3 h-3" />
+                            <span>Lihat / Edit Judul &amp; Link Capstone</span>
+                          </button>
+                        )}
                       </div>
-                      {onOpenCapstone && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            onClose();
-                            onOpenCapstone();
-                          }}
-                          className="text-[10.5px] text-amber-700 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 font-extrabold underline inline-flex items-center gap-1 cursor-pointer"
-                        >
-                          <FileText className="w-3 h-3" />
-                          <span>Lihat / Edit Judul &amp; Link Capstone</span>
-                        </button>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 text-amber-950 dark:text-amber-300 text-xs space-y-2 shadow-xs">
-                      <div className="font-black flex items-center gap-1.5 text-amber-800 dark:text-amber-400">
-                        <FileText className="w-3.5 h-3.5 shrink-0 text-amber-600" />
-                        <span>Capstone Project Belum Dikumpulkan</span>
+                    ) : (
+                      <div className="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 text-amber-950 dark:text-amber-300 text-xs space-y-2 shadow-xs">
+                        <div className="font-black flex items-center gap-1.5 text-amber-800 dark:text-amber-400">
+                          <FileText className="w-3.5 h-3.5 shrink-0 text-amber-600" />
+                          <span>Capstone Project Belum Dikumpulkan</span>
+                        </div>
+                        <p className="text-[10.5px] text-amber-800/90 dark:text-amber-200/90 leading-relaxed font-medium">
+                          Silakan lengkapi Judul &amp; Link Capstone Project Anda sebagai syarat sertifikasi CAAI™ Level 1.
+                        </p>
+                        {onOpenCapstone && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              onClose();
+                              onOpenCapstone();
+                            }}
+                            className="w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all cursor-pointer shadow-md"
+                          >
+                            Isi Form Capstone Project
+                          </button>
+                        )}
                       </div>
-                      <p className="text-[10.5px] text-amber-800/90 dark:text-amber-200/90 leading-relaxed font-medium">
-                        Silakan lengkapi Judul &amp; Link Capstone Project Anda sebagai syarat kelulusan Tier 2.
-                      </p>
-                      {onOpenCapstone && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            onClose();
-                            onOpenCapstone();
-                          }}
-                          className="w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all cursor-pointer shadow-md"
-                        >
-                          Isi Form Capstone Project
-                        </button>
-                      )}
-                    </div>
+                    )
                   )}
 
                   {/* Mentor Approval Status Requirement (Only for CAAI Capstone Cert) */}
@@ -946,10 +932,10 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                       templateObjects.map((obj: any, i: number) => {
                         if (obj.text === 'UID' || obj.text === 'uid') return null; // Skip stray duplicate label
 
-                        const isUuidObj = obj.id === 'UUID' || (typeof obj.text === 'string' && (obj.text.includes('f7ad0d5c') || obj.text.includes('1a1d2a89') || obj.text.toLowerCase().includes('uuid')));
-                        const isNameObj = obj.id === 'NAME' || (typeof obj.text === 'string' && obj.text.includes('Nama Siswa'));
-                        const isCertNumObj = obj.id === 'NO_SERTIF' || (typeof obj.text === 'string' && obj.text.includes('No. 0255'));
-                        const isDateObj = obj.id === 'DATE' || (typeof obj.text === 'string' && obj.text.includes('Jakarta,'));
+                        const isUuidObj = obj.id === 'UUID' || (typeof obj.text === 'string' && (obj.text.includes('f7ad0d5c') || obj.text.includes('1a1d2a89') || obj.text.toLowerCase().includes('uuid') || /^[0-9a-f]{8}-[0-9a-f]{4}/i.test(obj.text.trim())));
+                        const isNameObj = obj.id === 'NAME' || (typeof obj.text === 'string' && (obj.text.includes('Nama Siswa') || obj.text.includes('John Doe') || obj.text.includes('Ww') || obj.text.includes('Stefen')));
+                        const isCertNumObj = obj.id === 'NO_SERTIF' || (typeof obj.text === 'string' && (obj.text.includes('/AIN/') || obj.text.includes('No. 0255') || obj.text.includes('No. 0256') || obj.text.includes('No. 0257')));
+                        const isDateObj = obj.id === 'DATE' || (typeof obj.text === 'string' && (obj.text.includes('Jakarta,') || obj.text.includes('2026') || obj.text.includes('2025')));
                         const isCapstoneTitleObj = obj.id === 'CAPSTONE_TITLE' || obj.id === 'CAPSTONE' || (typeof obj.text === 'string' && (obj.text.includes('Judul Capstone') || obj.text.includes('CAPSTONE_TITLE')));
 
                         let content = obj.text || '';
@@ -1020,7 +1006,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                     )}
                     {capstoneTitle && !hasCustomCapstoneCanvasObj && (
                       <div
-                        className="absolute whitespace-nowrap pointer-events-none z-10 text-center"
+                        className="absolute pointer-events-none z-10 text-center"
                         style={{
                           top: '51.5%',
                           left: '49.5%',
@@ -1033,7 +1019,9 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                           padding: '3px 14px',
                           borderRadius: '8px',
                           border: '1px solid rgba(245, 158, 11, 0.5)',
-                          maxWidth: '82%',
+                          maxWidth: '85%',
+                          whiteSpace: 'normal',
+                          wordBreak: 'break-word',
                           boxShadow: '0 2px 4px rgba(0,0,0,0.06)',
                         }}
                       >

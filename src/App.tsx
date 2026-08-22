@@ -404,6 +404,14 @@ export default function App() {
           const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
           const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
 
+          const prevCachedEmail = localStorage.getItem('maxy_user_email');
+          const isDifferentUser = Boolean(prevCachedEmail && user?.email && prevCachedEmail.toLowerCase() !== user.email.toLowerCase());
+          if (isDifferentUser) {
+            try {
+              localStorage.removeItem(STORAGE_KEY);
+            } catch (_) {}
+          }
+
           const resolvedName = user?.name || user?.nickname || user?.email || undefined;
           const resolvedEmail = user?.email || undefined;
           const resolvedPkgName = sub?.package_name || undefined;
@@ -436,18 +444,19 @@ export default function App() {
           }
 
           setProgress((prev) => {
+            const basePrev = isDifferentUser ? defaultProgress : prev;
             if (!cloudData) {
               return {
                 ...defaultProgress,
-                ...prev,
+                ...basePrev,
                 userTier,
                 tier: userTier,
                 maxAllowedModuleId: maxAllowed,
                 paidTiers,
                 hasTier1,
                 hasTier2,
-                userName: user?.name || prev.userName || undefined,
-                userEmail: user?.email || prev.userEmail || undefined,
+                userName: user?.name || basePrev.userName || undefined,
+                userEmail: user?.email || basePrev.userEmail || undefined,
                 packageName: sub?.package_name || prev.packageName || undefined,
                 subscriptionExpiredAt: sub?.expired_at || null,
                 isExpired: sub?.is_expired || false,
@@ -511,8 +520,8 @@ export default function App() {
                 certInstitution: cloudData?.certInstitution || user?.university || undefined,
                 userPhone: cloudData?.userPhone || user?.phone || undefined,
                 userInstitution: cloudData?.userInstitution || user?.university || undefined,
-                capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || prev.capstoneTitle || undefined,
-                capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || prev.capstoneUrl || undefined,
+                capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || (cloudData as any)?.capstoneSubmission?.title || prev.capstoneTitle || prev.capstoneSubmission?.title || undefined,
+                capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || (cloudData as any)?.capstoneSubmission?.capstoneUrl || prev.capstoneUrl || prev.capstoneSubmission?.capstoneUrl || undefined,
                 capstoneStatus: sub?.capstone_status || cloudData?.capstoneStatus || prev.capstoneStatus || undefined,
                 capstoneScore: sub?.capstone_score !== undefined ? sub.capstone_score : (cloudData?.capstoneScore ?? prev.capstoneScore ?? undefined),
                 capstoneNotes: sub?.capstone_notes || cloudData?.capstoneNotes || prev.capstoneNotes || undefined,
@@ -535,20 +544,20 @@ export default function App() {
               xp: mergedXp,
               streakDays: mergedStreakDays,
               currentModuleId: mergedCurrentModuleId,
-              certName: cloudData?.certName || prev.certName || user?.name || undefined,
-              certEmail: cloudData?.certEmail || prev.certEmail || user?.email || undefined,
-              certPhone: cloudData?.certPhone || prev.certPhone || user?.phone || undefined,
-              certInstitution: cloudData?.certInstitution || prev.certInstitution || user?.university || undefined,
+              certName: cloudData?.certName || user?.name || (isDifferentUser ? undefined : prev.certName),
+              certEmail: cloudData?.certEmail || user?.email || (isDifferentUser ? undefined : prev.certEmail),
+              certPhone: cloudData?.certPhone || (isDifferentUser ? undefined : prev.certPhone) || user?.phone || undefined,
+              certInstitution: cloudData?.certInstitution || (isDifferentUser ? undefined : prev.certInstitution) || user?.university || undefined,
               userTier,
               tier: userTier,
               maxAllowedModuleId: maxAllowed,
               paidTiers,
               hasTier1,
               hasTier2,
-              userName: user?.name || cloudData?.userName || prev.userName || undefined,
-              userEmail: user?.email || cloudData?.userEmail || prev.userEmail || undefined,
-              userPhone: user?.phone || cloudData?.userPhone || prev.userPhone || undefined,
-              userInstitution: user?.university || cloudData?.userInstitution || prev.userInstitution || undefined,
+              userName: user?.name || cloudData?.userName || (isDifferentUser ? undefined : prev.userName),
+              userEmail: user?.email || cloudData?.userEmail || (isDifferentUser ? undefined : prev.userEmail),
+              userPhone: user?.phone || cloudData?.userPhone || (isDifferentUser ? undefined : prev.userPhone),
+              userInstitution: user?.university || cloudData?.userInstitution || (isDifferentUser ? undefined : prev.userInstitution),
               packageName: sub?.package_name || prev.packageName || undefined,
               subscriptionExpiredAt: sub?.expired_at || null,
               isExpired: sub?.is_expired || false,
@@ -557,14 +566,14 @@ export default function App() {
               assignedMentorId: cloudData?.assignedMentorId || sub?.assigned_mentor_id || prev.assignedMentorId || null,
               assignedMentorName: cloudData?.assignedMentorName || sub?.assigned_mentor_name || prev.assignedMentorName || null,
               mentorAssignedAt: cloudData?.mentorAssignedAt || sub?.mentor_assigned_at || prev.mentorAssignedAt || null,
-              capstoneTitle: cloudData?.capstoneTitle || sub?.capstone_title || prev.capstoneTitle || null,
-              capstoneUrl: cloudData?.capstoneUrl || sub?.capstone_url || prev.capstoneUrl || null,
-              capstoneStatus: cloudData?.capstoneStatus || sub?.capstone_status || prev.capstoneStatus || null,
-              capstoneScore: cloudData?.capstoneScore !== undefined ? cloudData.capstoneScore : (sub?.capstone_score !== undefined ? sub.capstone_score : (prev.capstoneScore ?? null)),
-              capstoneNotes: cloudData?.capstoneNotes !== undefined ? cloudData.capstoneNotes : (sub?.capstone_notes || prev.capstoneNotes || null),
-              capstoneReviewedAt: cloudData?.capstoneReviewedAt || sub?.capstone_reviewed_at || prev.capstoneReviewedAt || null,
-              capstoneAssignedByMentor: cloudData?.capstoneAssignedByMentor || sub?.capstone_assigned_by_mentor || prev.capstoneAssignedByMentor || null,
-              capstoneAssignedAt: cloudData?.capstoneAssignedAt || sub?.capstone_assigned_at || prev.capstoneAssignedAt || null,
+              capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || (cloudData as any)?.capstoneSubmission?.title || prev.capstoneTitle || prev.capstoneSubmission?.title || null,
+              capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || (cloudData as any)?.capstoneSubmission?.capstoneUrl || prev.capstoneUrl || prev.capstoneSubmission?.capstoneUrl || null,
+              capstoneStatus: sub?.capstone_status || cloudData?.capstoneStatus || prev.capstoneStatus || null,
+              capstoneScore: (sub?.capstone_score !== undefined && sub?.capstone_score !== null) ? sub.capstone_score : (cloudData?.capstoneScore !== undefined ? cloudData.capstoneScore : (prev.capstoneScore ?? null)),
+              capstoneNotes: sub?.capstone_notes || cloudData?.capstoneNotes || prev.capstoneNotes || null,
+              capstoneReviewedAt: sub?.capstone_reviewed_at || cloudData?.capstoneReviewedAt || prev.capstoneReviewedAt || null,
+              capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || cloudData?.capstoneAssignedByMentor || prev.capstoneAssignedByMentor || null,
+              capstoneAssignedAt: sub?.capstone_assigned_at || cloudData?.capstoneAssignedAt || prev.capstoneAssignedAt || null,
             };
           });
 
@@ -1096,6 +1105,7 @@ export default function App() {
         ...prev,
         capstoneSubmission: submission,
         capstoneTitle: submission.title,
+        certTitle: submission.title,
         capstoneUrl: submission.capstoneUrl,
         capstoneStatus: prev.capstoneStatus === 'approved' ? 'approved' : 'submitted',
         capstoneAssignedAt: submission.submittedAt,
