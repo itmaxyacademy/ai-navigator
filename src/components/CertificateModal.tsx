@@ -71,15 +71,21 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
       if (uInst) setUserInstitution(uInst);
 
       const isCapstoneType = (certType === 'capstone');
-      const initialUuid = isCapstoneType
-        ? (progress.capstoneCertUuid || '')
-        : (progress.completionCertUuid || progress.certUuid || (progress as any)?.uuid || '');
-      const initialNum = isCapstoneType
-        ? (progress.capstoneCertNumber || '')
-        : (progress.completionCertNumber || progress.certNumber || '');
+      const emailKey = uEmail || progress.userEmail || 'user';
+      const localKeyUuid = `ainav_cert_uuid_${emailKey}_${certType}`;
+      const localKeyNum = `ainav_cert_num_${emailKey}_${certType}`;
+      const cachedLocalUuid = typeof localStorage !== 'undefined' ? localStorage.getItem(localKeyUuid) : null;
+      const cachedLocalNum = typeof localStorage !== 'undefined' ? localStorage.getItem(localKeyNum) : null;
 
-      setCertUuid(initialUuid);
-      setCertNumber(initialNum);
+      const initialUuid = isCapstoneType
+        ? (progress.capstoneCertUuid || cachedLocalUuid || '')
+        : (progress.completionCertUuid || progress.certUuid || cachedLocalUuid || (progress as any)?.uuid || '');
+      const initialNum = isCapstoneType
+        ? (progress.capstoneCertNumber || cachedLocalNum || '')
+        : (progress.completionCertNumber || progress.certNumber || cachedLocalNum || '');
+
+      if (initialUuid) setCertUuid(initialUuid);
+      if (initialNum) setCertNumber(initialNum);
 
       // Auto-verify if all required details exist or if certificate was already requested
       if (progress?.certRequested || (uName && uEmail)) {
@@ -88,27 +94,44 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
         setIsVerified(false);
       }
 
+      const extraData = {
+        capstone_title: progress.capstoneTitle || progress.capstoneSubmission?.title || null,
+        capstone_url: progress.capstoneUrl || progress.capstoneSubmission?.capstoneUrl || '#',
+        capstone_status: progress.capstoneStatus || 'approved',
+        mentor_name: progress.assignedMentorName || 'Admin / Mentor Maxy',
+        completed_modules_count: (progress.completedModules || []).length || 29,
+      };
+
       // Fetch official database-backed certificate UUID & number for this user & certType
       if (uName && uEmail) {
         setIsIssuing(true);
-        issueCertificateApi(uName, uEmail, certType)
+        issueCertificateApi(uName, uEmail, certType, extraData)
           .then((res) => {
             setIsIssuing(false);
             if (res?.success && res?.data?.uuid) {
               setCertUuid(res.data.uuid);
+              if (typeof localStorage !== 'undefined') {
+                localStorage.setItem(localKeyUuid, res.data.uuid);
+                if (res.data.certificate_number) localStorage.setItem(localKeyNum, res.data.certificate_number);
+              }
               if (res.data.certificate_number) setCertNumber(res.data.certificate_number);
               if (res.data.verify_url) setVerifyUrl(res.data.verify_url);
               if (onSaveCertDetails) {
                 onSaveCertDetails(uName, uEmail, uPhone, uInst, res.data.uuid, res.data.certificate_number, certType);
               }
-            } else {
-              // Fallback generated UUID if offline/pending (ensuring uniqueness)
+            } else if (!initialUuid) {
+              // Fallback generated UUID only if no existing UUID
               const fallbackUuid = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
                 ? crypto.randomUUID()
                 : `${Math.random().toString(36).substring(2, 10)}-${Math.random().toString(36).substring(2, 6)}-4${Math.random().toString(36).substring(2, 5)}-a${Math.random().toString(36).substring(2, 5)}-${Date.now().toString(36)}${Math.random().toString(36).substring(2, 6)}`;
-              setCertUuid((prev) => prev || fallbackUuid);
+              setCertUuid(fallbackUuid);
               const numPrefix = isCapstoneType ? '/AIN/CAPSTONE/' : '/AIN/NAV/';
-              setCertNumber((prev) => prev || `No. ${String(Date.now()).slice(-4)}${numPrefix}${new Date().getFullYear()}`);
+              const fallbackNum = `No. ${String(Date.now()).slice(-4)}${numPrefix}${new Date().getFullYear()}`;
+              setCertNumber(fallbackNum);
+              if (typeof localStorage !== 'undefined') {
+                localStorage.setItem(localKeyUuid, fallbackUuid);
+                localStorage.setItem(localKeyNum, fallbackNum);
+              }
             }
           })
           .catch(() => {
@@ -400,11 +423,28 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
 
     setIsIssuing(true);
     try {
-      const res = await issueCertificateApi(userName.trim(), userEmail.trim(), certType);
+      const extraData = {
+        capstone_title: progress.capstoneTitle || progress.capstoneSubmission?.title || null,
+        capstone_url: progress.capstoneUrl || progress.capstoneSubmission?.capstoneUrl || '#',
+        capstone_status: progress.capstoneStatus || 'approved',
+        mentor_name: progress.assignedMentorName || 'Admin / Mentor Maxy',
+        completed_modules_count: (progress.completedModules || []).length || 29,
+      };
+
+      const res = await issueCertificateApi(userName.trim(), userEmail.trim(), certType, extraData);
       if (res.success && res.data) {
         setCertUuid(res.data.uuid);
         setCertNumber(res.data.certificate_number);
         setVerifyUrl(res.data.verify_url);
+
+        const emailKey = userEmail.trim() || progress.userEmail || 'user';
+        const localKeyUuid = `ainav_cert_uuid_${emailKey}_${certType}`;
+        const localKeyNum = `ainav_cert_num_${emailKey}_${certType}`;
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(localKeyUuid, res.data.uuid);
+          if (res.data.certificate_number) localStorage.setItem(localKeyNum, res.data.certificate_number);
+        }
+
         if (onSaveCertDetails) {
           onSaveCertDetails(
             userName.trim(),

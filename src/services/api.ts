@@ -243,19 +243,37 @@ export async function fetchAiNavigatorPackages() {
   }
 }
 
-export async function issueCertificateApi(name: string, email: string, certType: 'standard' | 'capstone' | 'completion' = 'standard') {
+export async function issueCertificateApi(
+  name: string,
+  email: string,
+  certType: 'standard' | 'capstone' | 'completion' = 'standard',
+  extraData?: {
+    capstone_title?: string | null;
+    capstone_url?: string | null;
+    capstone_status?: string | null;
+    mentor_name?: string | null;
+    completed_modules_count?: number;
+  }
+) {
   try {
     const token = localStorage.getItem('maxy_access_token');
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000); // 4s max
+    const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s max
+
+    const bodyPayload: Record<string, unknown> = {
+      name,
+      email,
+      type: certType,
+      ...(extraData || {}),
+    };
 
     const res = await fetch(`${API_BASE}/certificates/issue`, {
       method: 'POST',
       headers,
-      body: JSON.stringify({ name, email, type: certType }),
+      body: JSON.stringify(bodyPayload),
       signal: controller.signal,
     });
     clearTimeout(timeoutId);
