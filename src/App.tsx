@@ -1154,21 +1154,11 @@ export default function App() {
     phone?: string,
     institution?: string,
     certUuid?: string,
-    certNumber?: string
+    certNumber?: string,
+    certType?: 'capstone' | 'completion'
   ) => {
     setProgress((prev) => {
-      if (
-        prev.userName === name &&
-        prev.userEmail === email &&
-        (!phone || prev.userPhone === phone) &&
-        (!institution || prev.userInstitution === institution) &&
-        (!certUuid || (prev as any).certUuid === certUuid) &&
-        (!certNumber || (prev as any).certNumber === certNumber) &&
-        prev.certRequested
-      ) {
-        return prev;
-      }
-
+      const isCapstone = certType === 'capstone';
       const next = {
         ...prev,
         certName: name,
@@ -1180,8 +1170,17 @@ export default function App() {
         certPhone: phone || prev.certPhone || undefined,
         certInstitution: institution || prev.certInstitution || undefined,
         certRequested: true,
-        certUuid: certUuid || (prev as any).certUuid || undefined,
-        certNumber: certNumber || (prev as any).certNumber || undefined,
+        ...(isCapstone
+          ? {
+              capstoneCertUuid: certUuid || prev.capstoneCertUuid || undefined,
+              capstoneCertNumber: certNumber || prev.capstoneCertNumber || undefined,
+            }
+          : {
+              completionCertUuid: certUuid || prev.completionCertUuid || prev.certUuid || undefined,
+              completionCertNumber: certNumber || prev.completionCertNumber || prev.certNumber || undefined,
+              certUuid: certUuid || prev.certUuid || undefined,
+              certNumber: certNumber || prev.certNumber || undefined,
+            }),
       };
       const token = localStorage.getItem('maxy_access_token');
       if (token) {

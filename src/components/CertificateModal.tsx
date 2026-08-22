@@ -10,7 +10,15 @@ export interface CertificateModalProps {
   onClose: () => void;
   progress: UserProgress;
   certType?: 'capstone' | 'completion';
-  onSaveCertDetails?: (name: string, email: string, phone?: string, institution?: string, certUuid?: string, certNumber?: string) => void;
+  onSaveCertDetails?: (
+    name: string,
+    email: string,
+    phone?: string,
+    institution?: string,
+    certUuid?: string,
+    certNumber?: string,
+    certType?: 'capstone' | 'completion'
+  ) => void;
   onOpenCapstone?: () => void;
   packages?: Record<string, { price: number; fake_price: number; name?: string; certificate_bg_image?: string | null; certificate_bg_image_capstone?: string | null }>;
 }
@@ -38,7 +46,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
   const [isVerified, setIsVerified] = useState(false);
   const [certUuid, setCertUuid] = useState<string>('');
   const [certNumber, setCertNumber] = useState<string>('');
-  const [verifyUrl, setVerifyUrl] = useState<string>('');
+  const [verifyUrl, setVerifyUrl] = useState<string>('https://maxy.academy/verifier');
   const [isIssuing, setIsIssuing] = useState<boolean>(false);
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const [activePageTab, setActivePageTab] = useState<number>(1);
@@ -62,10 +70,16 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
       if (uPhone) setUserPhone(uPhone);
       if (uInst) setUserInstitution(uInst);
 
-      const initialUuid = (progress as any)?.certUuid || (progress as any)?.uuid || '';
-      if (initialUuid) setCertUuid(initialUuid);
-      const initialNum = (progress as any)?.certNumber || '';
-      if (initialNum) setCertNumber(initialNum);
+      const isCapstoneType = (certType === 'capstone');
+      const initialUuid = isCapstoneType
+        ? (progress.capstoneCertUuid || '')
+        : (progress.completionCertUuid || progress.certUuid || (progress as any)?.uuid || '');
+      const initialNum = isCapstoneType
+        ? (progress.capstoneCertNumber || '')
+        : (progress.completionCertNumber || progress.certNumber || '');
+
+      setCertUuid(initialUuid);
+      setCertNumber(initialNum);
 
       // Auto-verify if all required details exist or if certificate was already requested
       if (progress?.certRequested || (uName && uEmail)) {
@@ -85,15 +99,16 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
               if (res.data.certificate_number) setCertNumber(res.data.certificate_number);
               if (res.data.verify_url) setVerifyUrl(res.data.verify_url);
               if (onSaveCertDetails) {
-                onSaveCertDetails(uName, uEmail, uPhone, uInst, res.data.uuid, res.data.certificate_number);
+                onSaveCertDetails(uName, uEmail, uPhone, uInst, res.data.uuid, res.data.certificate_number, certType);
               }
             } else {
-              // Fallback generated UUID if offline/pending
+              // Fallback generated UUID if offline/pending (ensuring uniqueness)
               const fallbackUuid = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
                 ? crypto.randomUUID()
                 : `${Math.random().toString(36).substring(2, 10)}-${Math.random().toString(36).substring(2, 6)}-4${Math.random().toString(36).substring(2, 5)}-a${Math.random().toString(36).substring(2, 5)}-${Date.now().toString(36)}${Math.random().toString(36).substring(2, 6)}`;
               setCertUuid((prev) => prev || fallbackUuid);
-              setCertNumber((prev) => prev || `No. ${String(Date.now()).slice(-4)}/AIN/NAV/${new Date().getFullYear()}`);
+              const numPrefix = isCapstoneType ? '/AIN/CAPSTONE/' : '/AIN/NAV/';
+              setCertNumber((prev) => prev || `No. ${String(Date.now()).slice(-4)}${numPrefix}${new Date().getFullYear()}`);
             }
           })
           .catch(() => {
@@ -101,7 +116,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
           });
       }
     }
-  }, [isOpen, certType, progress?.userName, progress?.userEmail]);
+  }, [isOpen, certType, progress?.userName, progress?.userEmail, progress?.capstoneCertUuid, progress?.completionCertUuid, progress?.certUuid]);
 
   if (!isOpen) return null;
 
@@ -397,7 +412,8 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
             userPhone.trim(),
             userInstitution.trim(),
             res.data.uuid,
-            res.data.certificate_number
+            res.data.certificate_number,
+            certType
           );
         }
       } else {
@@ -405,7 +421,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
           alert('Peringatan: ' + res.error);
         }
         if (onSaveCertDetails) {
-          onSaveCertDetails(userName.trim(), userEmail.trim(), userPhone.trim(), userInstitution.trim());
+          onSaveCertDetails(userName.trim(), userEmail.trim(), userPhone.trim(), userInstitution.trim(), undefined, undefined, certType);
         }
       }
     } catch (err) {

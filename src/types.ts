@@ -142,6 +142,12 @@ export interface UserProgress {
   certPhone?: string;
   certInstitution?: string;
   certRequested?: boolean;
+  certUuid?: string;
+  certNumber?: string;
+  completionCertUuid?: string;
+  completionCertNumber?: string;
+  capstoneCertUuid?: string;
+  capstoneCertNumber?: string;
   isExpired?: boolean;
   expiredAt?: string | null;
   expiredDays?: number | null;
