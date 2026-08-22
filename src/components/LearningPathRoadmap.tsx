@@ -405,7 +405,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
 }) => {
   const userTier = progress.userTier || 'free';
   const hasTier2 = Boolean(progress.hasTier2 || progress.paidTiers?.includes('tier2') || userTier === 'tier2');
-  const { canAccessModule } = useTierAccess(userTier, progress.maxAllowedModuleId);
+  const { canAccessModule } = useTierAccess(userTier, progress.maxAllowedModuleId, progress.isExpired);
   const [viewMode, setViewMode] = useState<'map' | 'heatmap' | 'grid'>('map');
   const [sidebarTab, setSidebarTab] = useState<'challenge' | 'flashcards' | 'skills' | 'analytics' | 'tips'>('challenge');
   const [selectedNodeModule, setSelectedNodeModule] = useState<CourseModule | null>(null);
@@ -1121,7 +1121,10 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                           {/* NODE BUTTON */}
                           <button
                           onClick={() => {
-                            if (isFreeTrialLocked) {
+                            if (progress.isExpired && userTier !== 'free') {
+                              setLockedTooltip(`🔒 Masa aktif akses modul telah berakhir (6 bulan). Sertifikat dan transkrip kelulusan Anda tetap berlaku seumur hidup dan dapat dicetak pada bagian bawah halaman.`);
+                              setTimeout(() => setLockedTooltip(null), 4500);
+                            } else if (isFreeTrialLocked) {
                               if (onOpenUpgradeModal) {
                                 onOpenUpgradeModal(module.id);
                               } else {

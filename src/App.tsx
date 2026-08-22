@@ -500,8 +500,12 @@ export default function App() {
               });
             }
 
-            const mergedXp = Math.max(Number(cloudData.xp) || 0, Number(prev.xp) || 0);
-            const mergedStreakDays = Math.max(Number(cloudData.streakDays) || 1, Number(prev.streakDays) || 1);
+            const mergedXp = cloudData.adminOverrideAt && cloudData.xp !== undefined
+              ? Number(cloudData.xp)
+              : Math.max(Number(cloudData.xp) || 0, Number(prev.xp) || 0);
+            const mergedStreakDays = cloudData.adminOverrideAt && cloudData.streakDays !== undefined
+              ? Number(cloudData.streakDays)
+              : Math.max(Number(cloudData.streakDays) || 1, Number(prev.streakDays) || 1);
             const mergedCurrentModuleId = Math.max(Number(cloudData.currentModuleId) || 1, Number(prev.currentModuleId) || 1);
 
             try {
@@ -514,6 +518,8 @@ export default function App() {
                 xp: mergedXp,
                 streakDays: mergedStreakDays,
                 currentModuleId: mergedCurrentModuleId,
+                adminOverrideAt: cloudData.adminOverrideAt || undefined,
+                adminLimitCount: (cloudData as any).adminLimitCount || undefined,
                 certName: cloudData?.certName || user?.name || undefined,
                 certEmail: cloudData?.certEmail || user?.email || undefined,
                 certPhone: cloudData?.certPhone || user?.phone || undefined,
@@ -544,6 +550,8 @@ export default function App() {
               xp: mergedXp,
               streakDays: mergedStreakDays,
               currentModuleId: mergedCurrentModuleId,
+              adminOverrideAt: cloudData.adminOverrideAt || undefined,
+              adminLimitCount: (cloudData as any).adminLimitCount || undefined,
               certName: cloudData?.certName || user?.name || (isDifferentUser ? undefined : prev.certName),
               certEmail: cloudData?.certEmail || user?.email || (isDifferentUser ? undefined : prev.certEmail),
               certPhone: cloudData?.certPhone || (isDifferentUser ? undefined : prev.certPhone) || user?.phone || undefined,

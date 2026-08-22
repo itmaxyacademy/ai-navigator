@@ -119,20 +119,21 @@ export function calculateRemainingTimeMinutes(
   };
 }
 
-export function isCertificateEligible(progress: { completedModules?: number[]; userTier?: string; hasTier2?: boolean; paidTiers?: string[] }): boolean {
+export function isCertificateEligible(progress: { completedModules?: number[]; userTier?: string; hasTier1?: boolean; hasTier2?: boolean; paidTiers?: string[]; isExpired?: boolean }): boolean {
   const completed = progress?.completedModules || [];
   const userTier = progress?.userTier || 'free';
   const hasTier2 = Boolean(progress?.hasTier2 || progress?.paidTiers?.includes('tier2') || userTier === 'tier2');
+  const hasTier1 = Boolean(progress?.hasTier1 || progress?.paidTiers?.includes('tier1') || userTier === 'tier1' || hasTier2);
 
   if (hasTier2) {
     // Tier 2 requires 100% completion of ALL 29 modules (Modul 1 through Modul 29)
     const requiredModules = Array.from({ length: 29 }, (_, i) => i + 1);
     return requiredModules.every((id) => completed.includes(id));
-  } else if (userTier === 'tier1' || progress?.paidTiers?.includes('tier1')) {
+  } else if (hasTier1) {
     // Tier 1 requires 100% completion of ALL 22 modules (Modul 1 through Modul 22)
     const requiredModules = Array.from({ length: 22 }, (_, i) => i + 1);
     return requiredModules.every((id) => completed.includes(id));
   }
 
-  return false; // Free trial users are not eligible for certificates
+  return false; // Free trial users without paid tier are not eligible for certificates
 }
