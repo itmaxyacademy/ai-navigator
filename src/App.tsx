@@ -477,36 +477,32 @@ export default function App() {
             }
 
             const cloudModules = Array.isArray(cloudData.completedModules) ? cloudData.completedModules : [];
-            const localModules = Array.isArray(prev.completedModules) ? prev.completedModules : [];
             
-            // If admin explicitly overrode progress in CMS, respect cloudModules. Otherwise, do union with localModules so progress is never lost on refresh!
-            const mergedCompletedModules = cloudData.adminOverrideAt
-              ? cloudModules
-              : Array.from(new Set([...localModules, ...cloudModules]));
+            // Cloud database is authoritative for logged-in user
+            const mergedCompletedModules = cloudModules;
 
-            const mergedUnlockedBadges = Array.from(
-              new Set([...(cloudData.unlockedBadges || []), ...(prev.unlockedBadges || [])])
-            );
-            const mergedOpenedChests = Array.from(
-              new Set([...(cloudData.openedChests || []), ...(prev.openedChests || [])])
-            );
-            const mergedCompletedCheckpoints = Array.from(
-              new Set([...(cloudData.completedCheckpoints || []), ...(prev.completedCheckpoints || [])])
-            );
-            const mergedModuleScores = { ...(prev.moduleScores || {}) };
-            if (cloudData.moduleScores && typeof cloudData.moduleScores === 'object') {
-              Object.entries(cloudData.moduleScores).forEach(([modId, score]) => {
-                mergedModuleScores[modId] = Math.max(mergedModuleScores[modId] || 0, Number(score) || 0);
-              });
-            }
+            const mergedUnlockedBadges = Array.isArray(cloudData.unlockedBadges)
+              ? cloudData.unlockedBadges
+              : (prev.unlockedBadges || []);
+            const mergedOpenedChests = Array.isArray(cloudData.openedChests)
+              ? cloudData.openedChests
+              : (prev.openedChests || []);
+            const mergedCompletedCheckpoints = Array.isArray(cloudData.completedCheckpoints)
+              ? cloudData.completedCheckpoints
+              : (prev.completedCheckpoints || []);
+            const mergedModuleScores = (cloudData.moduleScores && typeof cloudData.moduleScores === 'object')
+              ? { ...(cloudData.moduleScores as Record<number, number>) }
+              : { ...(prev.moduleScores || {}) };
 
-            const mergedXp = cloudData.adminOverrideAt && cloudData.xp !== undefined
+            const mergedXp = cloudData.xp !== undefined
               ? Number(cloudData.xp)
-              : Math.max(Number(cloudData.xp) || 0, Number(prev.xp) || 0);
-            const mergedStreakDays = cloudData.adminOverrideAt && cloudData.streakDays !== undefined
+              : Number(prev.xp || 0);
+            const mergedStreakDays = cloudData.streakDays !== undefined
               ? Number(cloudData.streakDays)
-              : Math.max(Number(cloudData.streakDays) || 1, Number(prev.streakDays) || 1);
-            const mergedCurrentModuleId = Math.max(Number(cloudData.currentModuleId) || 1, Number(prev.currentModuleId) || 1);
+              : Number(prev.streakDays || 1);
+            const mergedCurrentModuleId = cloudData.currentModuleId !== undefined
+              ? Number(cloudData.currentModuleId)
+              : (Number(prev.currentModuleId) || 1);
 
             try {
               const cleanToStore = {
@@ -737,18 +733,20 @@ export default function App() {
       delete cleanLocal.userName;
       delete cleanLocal.userEmail;
 
-      // Protection against race condition: don't overwrite non-empty storage with empty state during initialization
-      const existingSaved = localStorage.getItem(STORAGE_KEY);
-      if (existingSaved && (!progress.completedModules || progress.completedModules.length === 0) && (progress.xp === 0 || !progress.xp)) {
-        try {
-          const parsed = JSON.parse(existingSaved);
-          if (parsed && Array.isArray(parsed.completedModules) && parsed.completedModules.length > 0) {
-            cleanLocal.completedModules = parsed.completedModules;
-            cleanLocal.xp = parsed.xp || cleanLocal.xp;
-            cleanLocal.moduleScores = parsed.moduleScores || cleanLocal.moduleScores;
-            cleanLocal.unlockedBadges = parsed.unlockedBadges || cleanLocal.unlockedBadges;
-          }
-        } catch (_) {}
+      // Protection against race condition: don't overwrite non-empty storage with empty state during early initialization before cloud is loaded
+      if (!isCloudProgressLoaded) {
+        const existingSaved = localStorage.getItem(STORAGE_KEY);
+        if (existingSaved && (!progress.completedModules || progress.completedModules.length === 0) && (progress.xp === 0 || !progress.xp)) {
+          try {
+            const parsed = JSON.parse(existingSaved);
+            if (parsed && Array.isArray(parsed.completedModules) && parsed.completedModules.length > 0) {
+              cleanLocal.completedModules = parsed.completedModules;
+              cleanLocal.xp = parsed.xp || cleanLocal.xp;
+              cleanLocal.moduleScores = parsed.moduleScores || cleanLocal.moduleScores;
+              cleanLocal.unlockedBadges = parsed.unlockedBadges || cleanLocal.unlockedBadges;
+            }
+          } catch (_) {}
+        }
       }
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanLocal));
