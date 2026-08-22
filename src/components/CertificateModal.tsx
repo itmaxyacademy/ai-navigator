@@ -384,6 +384,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
   const dayNum = now.getDate();
   const yearNum = now.getFullYear();
   const todayStr = `Jakarta, ${monthName} ${dayNum}, ${yearNum}`;
+  const validUntilStr = `${dayNum} ${monthName} ${yearNum + 2}`;
 
   const handleVerifyCert = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -997,7 +998,10 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
 
                         let content = obj.text || '';
                         if (isNameObj) content = userName || 'Siswa AI Navigator';
-                        else if (isUuidObj) content = certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-');
+                        else if (isUuidObj) {
+                          const cleanUuid = (certUuid || (progress as any)?.certUuid || '').replace(/^UUID:\s*/i, '');
+                          content = cleanUuid ? `UUID: ${cleanUuid}` : (isIssuing ? 'Memuat...' : '-');
+                        }
                         else if (isCertNumObj) content = certNumber || (progress as any)?.certNumber || (isIssuing ? 'Memuat...' : '-');
                         else if (isDateObj) content = todayStr;
                         else if (isCapstoneTitleObj) content = capstoneTitle ? `Judul Capstone: ${capstoneTitle}` : '';
@@ -1057,7 +1061,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                           {todayStr}
                         </div>
                         <div className="absolute bottom-[10%] right-[8%] pointer-events-none text-sm text-blue-800 font-mono font-bold">
-                          {certUuid || ''}
+                          {certUuid ? (certUuid.startsWith('UUID:') ? certUuid : `UUID: ${certUuid}`) : ''}
                         </div>
                       </>
                     )}
@@ -1140,10 +1144,11 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                       <div className="text-left">
                         <p className="text-xs text-slate-700 font-bold">{todayStr}</p>
                         {certNumber && <p className="text-xs text-slate-500 font-mono mt-0.5">{certNumber}</p>}
+                        <p className="text-[10.5px] text-emerald-700 font-bold mt-0.5">Masa Berlaku: 2 Tahun (s.d. {validUntilStr})</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-xs text-blue-700 font-mono font-bold">{certUuid || ''}</p>
-                        <p className="text-xs text-amber-600 font-bold mt-0.5">CTO & Founder, Maxy Academy</p>
+                        <p className="text-xs text-blue-700 font-mono font-bold">{certUuid ? (certUuid.startsWith('UUID:') ? certUuid : `UUID: ${certUuid}`) : ''}</p>
+                        <p className="text-xs text-amber-600 font-bold mt-0.5">CTO &amp; Founder, Maxy Academy</p>
                       </div>
                     </div>
                   </div>
@@ -1293,11 +1298,12 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                       <div style={{ fontSize: '10.5px', color: '#334155', lineHeight: 1.4 }}>
                         <div>* Total Beban Belajar: <strong style={{ color: '#1e3a5f', fontSize: '11px' }}>{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur &amp; evaluasi).</div>
                         <div>* Status Kelulusan: <strong style={{ color: '#047857' }}>100% LULUS TERVERIFIKASI</strong>.</div>
+                        <div>* Masa Berlaku: <strong style={{ color: '#1e3a5f' }}>2 Tahun (s.d. {validUntilStr})</strong>.</div>
                         <div>* Verifikasi Keaslian: <strong style={{ color: '#1e3a5f' }}>https://maxy.academy/verifier</strong></div>
                       </div>
 
                       <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-')}</div>
+                        <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid ? certUuid.replace(/^UUID:\s*/i, '') : ((progress as any)?.certUuid ? (progress as any).certUuid.replace(/^UUID:\s*/i, '') : (isIssuing ? 'Memuat...' : '-'))}</div>
                         <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight: 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
                       </div>
                     </div>
@@ -1372,11 +1378,12 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                     <div style={{ fontSize: '10.5px', color: '#334155', lineHeight: 1.4 }}>
                       <div>* Total Beban Belajar: <strong style={{ color: '#1e3a5f', fontSize: '11px' }}>{displayModules.length} JP</strong> (1 JP = 45 menit pembelajaran terstruktur &amp; evaluasi).</div>
                       <div>* Status Kelulusan: <strong style={{ color: '#047857' }}>100% LULUS TERVERIFIKASI</strong>.</div>
+                      <div>* Masa Berlaku: <strong style={{ color: '#1e3a5f' }}>2 Tahun (s.d. {validUntilStr})</strong>.</div>
                       <div>* Verifikasi Keaslian: <strong style={{ color: '#1e3a5f' }}>https://maxy.academy/verifier</strong></div>
                     </div>
 
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid || (progress as any)?.certUuid || (isIssuing ? 'Memuat...' : '-')}</div>
+                      <div style={{ fontSize: '10px', fontFamily: 'monospace', color: '#1e3a5f', fontWeight: 900 }}>UUID: {certUuid ? certUuid.replace(/^UUID:\s*/i, '') : ((progress as any)?.certUuid ? (progress as any).certUuid.replace(/^UUID:\s*/i, '') : (isIssuing ? 'Memuat...' : '-'))}</div>
                       <div style={{ fontSize: '10.5px', color: '#b45309', fontWeight: 800, marginTop: '1px' }}>Maxy Academy — Executive Education Board</div>
                     </div>
                   </div>
