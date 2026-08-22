@@ -580,42 +580,44 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                 <span>Request Sertifikat Kelulusan</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-                Verifikasi Identitas <span className="text-amber-500 dark:text-amber-400">Sertifikat</span>
+                Data Identitas <span className="text-amber-500 dark:text-amber-400">Sertifikat</span>
               </h2>
               <p className="text-xs text-slate-600 dark:text-slate-300 font-medium max-w-md mx-auto leading-relaxed">
-                Silakan isi dan periksa kembali Nama &amp; Email Anda. Data ini akan dicetak secara sah pada <strong>Certificate of Completion &amp; Transkrip Kurikulum Modul</strong>.
+                Nama &amp; Email resmi dicetak otomatis sesuai akun terdaftar Anda pada sistem Maxy Academy untuk <strong>Certificate of Completion &amp; Transkrip Kurikulum Modul</strong>.
               </p>
             </div>
 
             <form onSubmit={handleVerifyCert} className="space-y-4 max-w-md mx-auto bg-slate-50 dark:bg-slate-950/80 p-6 sm:p-7 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-sm text-xs">
-              <div className="space-y-1.5">
-                <label className="font-extrabold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-xs">
-                  <User className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Nama Lengkap Penerima Sertifikat</span>
+              {/* Nama Lengkap Siswa (Terkunci Sesuai Akun Terdaftar) */}
+              <div className="space-y-1.5 text-left">
+                <label className="font-extrabold text-slate-800 dark:text-slate-200 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <User className="w-3.5 h-3.5 text-amber-500" />
+                    <span>Nama Lengkap Siswa</span>
+                  </div>
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3" /> Akun Terverifikasi
+                  </span>
                 </label>
-                <input
-                  type="text"
-                  required
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 font-bold shadow-xs transition-all placeholder:text-slate-400"
-                  placeholder="Ketik nama lengkap Anda..."
-                />
+                <div className="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white font-extrabold shadow-xs select-none">
+                  {userName || 'Siswa AI Navigator'}
+                </div>
               </div>
 
-              <div className="space-y-1.5">
-                <label className="font-extrabold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-xs">
-                  <Mail className="w-3.5 h-3.5 text-indigo-500" />
-                  <span>Alamat Email Siswa</span>
+              {/* Alamat Email Siswa (Terkunci Sesuai Akun Terdaftar) */}
+              <div className="space-y-1.5 text-left">
+                <label className="font-extrabold text-slate-800 dark:text-slate-200 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <Mail className="w-3.5 h-3.5 text-indigo-500" />
+                    <span>Alamat Email Terdaftar</span>
+                  </div>
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3" /> Akun Terverifikasi
+                  </span>
                 </label>
-                <input
-                  type="email"
-                  required
-                  value={userEmail}
-                  onChange={(e) => setUserEmail(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 font-bold shadow-xs transition-all placeholder:text-slate-400"
-                  placeholder="nama@domain.com"
-                />
+                <div className="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white font-semibold shadow-xs select-none">
+                  {userEmail || 'email@maxy.academy'}
+                </div>
               </div>
 
               <div className="space-y-1.5">
@@ -814,12 +816,6 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                 <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[11px] font-bold flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Sertifikat Terverifikasi
                 </span>
-                <button
-                  onClick={() => setIsVerified(false)}
-                  className="text-xs text-slate-500 dark:text-slate-400 hover:text-amber-400 underline font-medium cursor-pointer"
-                >
-                  Ubah Nama/Email
-                </button>
               </div>
 
               <button
