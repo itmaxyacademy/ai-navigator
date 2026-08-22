@@ -143,27 +143,11 @@ export default function App() {
     tierCompleted: 'tier1',
   });
 
-  // Trigger Onboarding Profile Modal ONLY IF user has missing details (e.g. Google OAuth login missing phone/institution)
-  // AND has NOT already completed/dismissed it
+  // Direct login entrance: user profile modal is available on demand / when printing certificates
+  // without blocking immediate access to the app
   useEffect(() => {
-    if (!isAuthValidating && isCloudProgressLoaded) {
-      const isMissingInfo = !progress.userPhone || !progress.userInstitution || !progress.userName || !progress.userEmail;
-      if (isMissingInfo && !progress.hasDismissedOnboarding) {
-        const timer = setTimeout(() => {
-          setUserProfileModalOpen(true);
-        }, 1000);
-        return () => clearTimeout(timer);
-      }
-    }
-  }, [
-    isAuthValidating,
-    isCloudProgressLoaded,
-    progress.userPhone,
-    progress.userInstitution,
-    progress.userName,
-    progress.userEmail,
-    progress.hasDismissedOnboarding,
-  ]);
+    // Keep onboarding dismissed by default to allow instant access to learning materials
+  }, []);
 
 
   useEffect(() => {
