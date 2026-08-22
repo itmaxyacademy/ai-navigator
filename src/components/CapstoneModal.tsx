@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Award, X, Send, Info, CheckCircle2, Link2, FileText, User, Mail, Clock, AlertCircle, BookOpen, Sparkles, Check, ChevronRight, RefreshCw } from 'lucide-react';
+import { Award, X, Send, Info, CheckCircle2, Link2, FileText, User, Mail, Clock, AlertCircle, BookOpen, Sparkles, Check, ChevronRight, RefreshCw, Lock } from 'lucide-react';
 import { UserProgress, CapstoneSubmission } from '../types';
 import { CAPSTONE_BANK, CapstoneTopic } from '../data/capstoneBank';
 
@@ -32,6 +32,9 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
   const [capstoneUrl, setCapstoneUrl] = useState('');
   const [isSavedSuccess, setIsSavedSuccess] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const completedModulesCount = (progress?.completedModules || []).length;
+  const isProgress100 = completedModulesCount >= 29;
 
   // Sync state whenever modal opens or progress changes
   useEffect(() => {
@@ -92,6 +95,11 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
     e.preventDefault();
     if (isApproved) {
       onClose();
+      return;
+    }
+
+    if (!isProgress100) {
+      alert(`🔒 Pengumpulan Capstone Project Terkunci.\n\nAnda harus menyelesaikan seluruh 29 Modul Pembelajaran (100%) terlebih dahulu sebelum dapat mengumpulkan tugas Capstone.\n\nProgres belajar Anda saat ini: ${completedModulesCount}/29 modul.`);
       return;
     }
 
@@ -293,85 +301,105 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
               </div>
             )}
 
+            {!isProgress100 && (
+              <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs flex items-start gap-3 shadow-xs">
+                <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0 mt-0.5">
+                  <Lock className="w-4 h-4" />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="font-extrabold text-slate-900 dark:text-white block text-xs">
+                    Pengumpulan Capstone Project Masih Terkunci
+                  </span>
+                  <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+                    Anda saat ini baru menyelesaikan <strong>{completedModulesCount}/29 modul</strong>. Selesaikan seluruh 29 modul pembelajaran kurikulum AI Navigator (100%) terlebih dahulu untuk membuka akses pengiriman tugas Capstone.
+                  </p>
+                </div>
+              </div>
+            )}
+
             {/* Name */}
-            <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+            <div className="space-y-1.5 text-left">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5 text-amber-400" />
-                Nama Lengkap Siswa <span className="text-rose-400">*</span>
+                <span>Nama Lengkap Siswa</span>
+                <span className="text-rose-400 font-black">*</span>
               </label>
               <input
                 type="text"
-                disabled={isApproved}
+                disabled={!isProgress100 || isApproved}
                 value={name}
                 onChange={(e) => { setName(e.target.value); setErrors(prev => ({ ...prev, name: '' })); }}
-                placeholder="Masukkan nama lengkap Anda..."
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.name ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+                placeholder="Masukkan nama lengkap untuk sertifikat..."
+                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium leading-relaxed ${!isProgress100 || isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.name ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
               />
               {errors.name && <p className="text-rose-400 text-[10px] font-semibold">{errors.name}</p>}
             </div>
 
             {/* Email */}
-            <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-indigo-400" />
-                Alamat Email Siswa <span className="text-rose-400">*</span>
+            <div className="space-y-1.5 text-left">
+              <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                <Mail className="w-3.5 h-3.5 text-amber-400" />
+                <span>Alamat Email Terdaftar</span>
+                <span className="text-rose-400 font-black">*</span>
               </label>
               <input
                 type="email"
-                disabled={isApproved}
+                disabled={!isProgress100 || isApproved}
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setErrors(prev => ({ ...prev, email: '' })); }}
-                placeholder="contoh: nama@email.com"
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.email ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+                placeholder="nama@email.com"
+                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium leading-relaxed ${!isProgress100 || isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.email ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
               />
               {errors.email && <p className="text-rose-400 text-[10px] font-semibold">{errors.email}</p>}
             </div>
 
             {/* Capstone Title */}
-            <div className="space-y-1">
+            <div className="space-y-1.5 text-left">
               <div className="flex items-center justify-between">
-                <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                  <FileText className="w-3.5 h-3.5 text-purple-400" />
-                  Judul Capstone Project <span className="text-rose-400">*</span>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Judul Capstone Project AI</span>
+                  <span className="text-rose-400 font-black">*</span>
                 </label>
-                {!isApproved && (
+                {isProgress100 && !isApproved && (
                   <button
                     type="button"
                     onClick={() => setActiveTab('bank')}
-                    className="text-[11px] text-amber-400 hover:text-amber-300 font-bold underline flex items-center gap-1 cursor-pointer"
+                    className="text-[10.5px] text-amber-600 dark:text-amber-400 hover:underline font-bold flex items-center gap-1 cursor-pointer"
                   >
-                    <Sparkles className="w-3 h-3" />
-                    Pilih dari Bank Capstone
+                    <BookOpen className="w-3 h-3" />
+                    <span>Pilih dari Bank Capstone</span>
                   </button>
                 )}
               </div>
               <input
                 type="text"
-                disabled={isApproved}
+                disabled={!isProgress100 || isApproved}
                 value={title}
                 onChange={(e) => { setTitle(e.target.value); setErrors(prev => ({ ...prev, title: '' })); }}
-                placeholder="Contoh: Otomasi AI Customer Support & Knowledge Base RAG"
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium ${isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.title ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+                placeholder="Contoh: Implementasi Multi-LLM Prompt Engineering untuk Sistem Otomasi Bisnis"
+                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium leading-relaxed ${!isProgress100 || isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.title ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
               />
               {errors.title && <p className="text-rose-400 text-[10px] font-semibold">{errors.title}</p>}
             </div>
 
             {/* Capstone URL / Repository Link */}
-            <div className="space-y-1">
-              <label className="font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
-                <Link2 className="w-3.5 h-3.5 text-cyan-400" />
-                Link Pengumpulan Tugas / Repositori Proyek <span className="text-rose-400">*</span>
-              </label>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium -mt-0.5">
-                Masukkan URL proyek Anda (GitHub, Google Drive, Figma, Notion, demo website, dsb.).
-              </p>
-              <textarea
-                rows={2}
-                disabled={isApproved}
+            <div className="space-y-1.5 text-left">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <Link2 className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Link Repositori / File Capstone Project</span>
+                  <span className="text-rose-400 font-black">*</span>
+                </label>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">GitHub / Google Drive / Notion / HuggingFace</span>
+              </div>
+              <input
+                type="url"
+                disabled={!isProgress100 || isApproved}
                 value={capstoneUrl}
                 onChange={(e) => { setCapstoneUrl(e.target.value); setErrors(prev => ({ ...prev, capstoneUrl: '' })); }}
                 placeholder="Contoh: https://github.com/username/capstone-project atau https://drive.google.com/..."
-                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium leading-relaxed resize-none ${isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.capstoneUrl ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
+                className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium leading-relaxed resize-none ${!isProgress100 || isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.capstoneUrl ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
               />
               {errors.capstoneUrl && <p className="text-rose-400 text-[10px] font-semibold">{errors.capstoneUrl}</p>}
             </div>
@@ -385,6 +413,15 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   <span>Proyek Disetujui • Tutup &amp; Siap Cetak Sertifikat</span>
+                </button>
+              ) : !isProgress100 ? (
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="w-full py-3.5 rounded-2xl bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-black text-xs flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Lock className="w-4 h-4 text-amber-500" />
+                  <span>Tuntaskan 29 Modul (100%) untuk Membuka Pengumpulan Capstone</span>
                 </button>
               ) : (
                 <button

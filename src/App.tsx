@@ -1293,7 +1293,15 @@ export default function App() {
     setUpgradePrefilledTier(null);
   }, []);
 
-  const handleOpenCapstoneModal = useCallback(() => setCapstoneModalOpen(true), []);
+  const handleOpenCapstoneModal = useCallback(() => {
+    const completedCount = (progress.completedModules || []).length;
+    const requiredCount = 29;
+    if (completedCount < requiredCount) {
+      alert(`🔒 Pengumpulan Capstone Project Terkunci\n\nAnda harus menyelesaikan seluruh ${requiredCount} Modul Pembelajaran (100%) terlebih dahulu sebelum dapat mengumpulkan tugas Capstone.\n\nProgres belajar Anda saat ini: ${completedCount}/${requiredCount} modul (${Math.round((completedCount / requiredCount) * 100)}%).`);
+      return;
+    }
+    setCapstoneModalOpen(true);
+  }, [progress.completedModules]);
   const handleCloseCapstoneModal = useCallback(() => setCapstoneModalOpen(false), []);
 
   const handleOpenInvoiceModal = useCallback(() => setInvoiceModalOpen(true), []);

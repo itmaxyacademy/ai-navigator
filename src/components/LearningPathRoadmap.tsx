@@ -991,22 +991,25 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                       )
                     ) : (
                       <div className="space-y-3 pt-2">
-                        {hasTier2 && onOpenCapstoneModal && (
-                          <button
-                            type="button"
-                            onClick={onOpenCapstoneModal}
-                            className="w-full p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 hover:border-amber-500 text-slate-900 dark:text-white font-bold text-xs flex items-center justify-between transition-all cursor-pointer shadow-sm"
-                          >
+                        {hasTier2 && (
+                          <div className="w-full p-4 rounded-2xl bg-amber-500/5 dark:bg-amber-950/20 border border-amber-500/20 text-slate-800 dark:text-slate-200 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
                             <div className="flex items-center gap-2.5">
-                              <FileText className="w-4 h-4 text-amber-500" />
-                              <span className="font-extrabold">
-                                {progress.capstoneSubmission ? `Judul Capstone: "${progress.capstoneSubmission.title}" (Klik untuk Edit)` : 'Input Judul & Link Project Capstone (Tier 2 VIP)'}
-                              </span>
+                              <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
+                                <Lock className="w-4 h-4" />
+                              </div>
+                              <div>
+                                <span className="font-extrabold text-slate-900 dark:text-white block text-xs">
+                                  Pengumpulan Capstone Project Terkunci
+                                </span>
+                                <span className="text-[10.5px] text-slate-500 dark:text-slate-400">
+                                  Tuntaskan seluruh 29 modul (100%) terlebih dahulu untuk membuka akses pengumpulan Capstone.
+                                </span>
+                              </div>
                             </div>
-                            <span className="text-[10px] bg-amber-500/20 text-amber-700 dark:text-amber-300 px-2.5 py-1 rounded-full font-black uppercase">
-                              {progress.capstoneSubmission ? '✓ Tersimpan' : 'Buka Form'}
+                            <span className="text-[10.5px] bg-amber-500/20 text-amber-800 dark:text-amber-300 px-3 py-1 rounded-full font-black uppercase shrink-0">
+                              {completedCount}/29 Modul
                             </span>
-                          </button>
+                          </div>
                         )}
                         <button
                           onClick={() => {
