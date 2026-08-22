@@ -62,27 +62,27 @@ const MilestoneCelebrationModalComponent: React.FC<MilestoneCelebrationModalProp
             {isTier2 ? <Trophy className="w-10 h-10 text-amber-300 animate-bounce" /> : <Award className="w-10 h-10 text-white animate-bounce" />}
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/80 border border-purple-500/40 text-purple-300 text-xs font-extrabold shadow-inner">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-            <span>Pencapaian Spesial Terbuka!</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-amber-400 text-xs font-bold shadow-xs">
+            <Award className="w-3.5 h-3.5" />
+            <span>Pencapaian Kurikulum Terbuka</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
-            {isTier2 ? '🏆 Master AI Navigator Qualified!' : '🎉 Tier 1 Fundamental Selesai!'}
+          <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+            {isTier2 ? 'Master AI Navigator Qualified' : 'Tier 1 Fundamental Selesai'}
           </h2>
 
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-md mx-auto">
             {isTier2
-              ? 'Selamat! Anda telah menyelesaikan seluruh 29 Modul Kurikulum Master AI Navigator dengan sempurna. Sertifikat Tingkat Master Anda siap diunduh.'
-              : 'Luar biasa! Anda berhasil menyelesaikan 22 Modul Tingkat Fundamental. Anda telah resmi memenuhi syarat Sertifikat Tier 1 AI Navigator.'}
+              ? 'Selamat! Anda telah menyelesaikan seluruh 29 Modul Kurikulum Master AI Navigator dengan sempurna. Dokumen sertifikat digital dan transkrip akademik Anda siap diterbitkan.'
+              : 'Selamat! Anda berhasil menyelesaikan 22 Modul Tingkat Fundamental. Anda telah resmi memenuhi syarat penerbitan Sertifikat Tier 1 AI Navigator.'}
           </p>
         </div>
 
         {/* Accomplishment Highlights Card */}
         <div className="relative z-10 p-4 rounded-2xl bg-[#141724] border border-slate-800 text-left space-y-2.5 text-xs text-slate-200">
           <div className="flex items-center justify-between font-bold border-b border-slate-800 pb-2">
-            <span className="text-purple-400">Ringkasan Pencapaian:</span>
-            <span className="font-mono text-emerald-400">100% Verified</span>
+            <span className="text-slate-300">Ringkasan Pencapaian:</span>
+            <span className="font-mono text-emerald-400">100% Terverifikasi</span>
           </div>
           <div className="space-y-1.5 text-[11px]">
             <div className="flex items-center gap-2">
@@ -91,11 +91,11 @@ const MilestoneCelebrationModalComponent: React.FC<MilestoneCelebrationModalProp
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>Seluruh Praktik Simulator &amp; Kuis Terverifikasi</span>
+              <span>Seluruh Praktik Simulator &amp; Evaluasi Mandiri Selesai</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>Sertifikat Resmi Digital Terakreditasi Ready</span>
+              <span>Dokumen Sertifikat Digital &amp; Transkrip Akademik Ready</span>
             </div>
           </div>
         </div>
@@ -107,13 +107,10 @@ const MilestoneCelebrationModalComponent: React.FC<MilestoneCelebrationModalProp
               onClose();
               onOpenCertificate();
             }}
-            className={`w-full py-3.5 rounded-2xl font-extrabold text-xs text-white shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-95 ${
-              isTier2
-                ? 'bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:from-purple-500 hover:to-amber-400 shadow-purple-600/30'
-                : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-emerald-600/30'
-            }`}
+            className="w-full py-3.5 rounded-2xl font-bold text-xs text-slate-950 bg-amber-500 hover:bg-amber-400 shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-98"
           >
-            <span>🏆 Buka &amp; Klaim Sertifikat Resmi</span>
+            <Award className="w-4 h-4 stroke-[2]" />
+            <span>Buka &amp; Klaim Sertifikat Resmi</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
