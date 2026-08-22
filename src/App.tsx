@@ -374,7 +374,7 @@ export default function App() {
     // Safety fallback: jika API lambat/502/overload, render dari cache setelah 1.5s (ada cache) atau 2.5s (fresh login)
     // API fetchWithAuth sudah di-set timeout 3s, sehingga ini hanya backup jika Promise.all tidak resolve
     const hasCachedData = Boolean(localStorage.getItem(STORAGE_KEY));
-    const safetyDelayMs = hasCachedData ? 1500 : 2500;
+    const safetyDelayMs = hasCachedData ? 3000 : 4000;
     const safetyTimeout = setTimeout(() => {
       setIsCloudProgressLoaded(true);
       setIsAuthValidating((prev) => {
@@ -446,9 +446,16 @@ export default function App() {
           setProgress((prev) => {
             const basePrev = isDifferentUser ? defaultProgress : prev;
             if (!cloudData) {
+              let fallbackModules: number[] = Array.isArray(basePrev.completedModules) ? basePrev.completedModules : [];
+              if (fallbackModules.length === 0 && res?.data?.progress && Number(res.data.progress.completed_modules) > 0) {
+                const cCount = Number(res.data.progress.completed_modules);
+                fallbackModules = Array.from({ length: cCount }, (_, i) => i + 1);
+              }
+
               return {
                 ...defaultProgress,
                 ...basePrev,
+                completedModules: fallbackModules,
                 userTier,
                 tier: userTier,
                 maxAllowedModuleId: maxAllowed,
@@ -476,7 +483,11 @@ export default function App() {
               };
             }
 
-            const cloudModules = Array.isArray(cloudData.completedModules) ? cloudData.completedModules : [];
+            let cloudModules = Array.isArray(cloudData.completedModules) ? cloudData.completedModules : [];
+            if (cloudModules.length === 0 && res?.data?.progress && Number(res.data.progress.completed_modules) > 0) {
+              const cCount = Number(res.data.progress.completed_modules);
+              cloudModules = Array.from({ length: cCount }, (_, i) => i + 1);
+            }
             
             // Cloud database is authoritative for logged-in user
             const mergedCompletedModules = cloudModules;
