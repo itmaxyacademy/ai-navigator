@@ -77,11 +77,22 @@ export default function App() {
     const resolvedHasTier2 = resolvedTier === 'tier2';
     const resolvedPaidTiers = resolvedTier === 'tier2' ? ['tier1', 'tier2'] : (resolvedTier === 'tier1' ? ['tier1'] : []);
 
+    let initialOpenedChests: number[] = Array.isArray(parsed.openedChests) ? parsed.openedChests : [];
+    try {
+      const standalone = localStorage.getItem('ai_navigator_opened_chests');
+      if (standalone) {
+        const parsedStandalone = JSON.parse(standalone);
+        if (Array.isArray(parsedStandalone)) {
+          initialOpenedChests = Array.from(new Set([...initialOpenedChests, ...parsedStandalone]));
+        }
+      }
+    } catch (_) {}
+
     return {
       ...defaultProgress,
       ...parsed,
       completedModules: Array.isArray(parsed.completedModules) ? parsed.completedModules : [],
-      openedChests: Array.isArray(parsed.openedChests) ? parsed.openedChests : [],
+      openedChests: initialOpenedChests,
       completedCheckpoints: Array.isArray(parsed.completedCheckpoints) ? parsed.completedCheckpoints : [],
       unlockedBadges: Array.isArray(parsed.unlockedBadges) ? parsed.unlockedBadges : [],
       moduleScores: parsed.moduleScores || {},
@@ -489,9 +500,20 @@ export default function App() {
             const mergedUnlockedBadges = Array.isArray(cloudData.unlockedBadges)
               ? cloudData.unlockedBadges
               : (prev.unlockedBadges || []);
-            const mergedOpenedChests = Array.isArray(cloudData.openedChests)
-              ? cloudData.openedChests
-              : (prev.openedChests || []);
+            const cloudChests = Array.isArray(cloudData.openedChests) ? cloudData.openedChests : [];
+            const prevChests = Array.isArray(prev.openedChests) ? prev.openedChests : [];
+            let standaloneChests: number[] = [];
+            try {
+              const s = localStorage.getItem('ai_navigator_opened_chests');
+              if (s) {
+                const parsedS = JSON.parse(s);
+                if (Array.isArray(parsedS)) standaloneChests = parsedS;
+              }
+            } catch (_) {}
+            const mergedOpenedChests = Array.from(new Set([...cloudChests, ...prevChests, ...standaloneChests]));
+            try {
+              localStorage.setItem('ai_navigator_opened_chests', JSON.stringify(mergedOpenedChests));
+            } catch (_) {}
             const mergedCompletedCheckpoints = Array.isArray(cloudData.completedCheckpoints)
               ? cloudData.completedCheckpoints
               : (prev.completedCheckpoints || []);
@@ -1384,20 +1406,22 @@ export default function App() {
 
   const handleOpenChest = useCallback((chestId: number, xpReward: number, chestTitle: string) => {
     setProgress((prev) => {
-      const alreadyOpened = (prev.openedChests || []).includes(chestId);
-      if (alreadyOpened) return prev;
-      const nextOpened = [...(prev.openedChests || []), chestId];
-      const nextXp = prev.xp + xpReward;
-      const next = {
+      const currentChests = Array.isArray(prev.openedChests) ? prev.openedChests : [];
+      if (currentChests.includes(chestId)) return prev;
+      
+      const nextOpened = Array.from(new Set([...currentChests, chestId]));
+      const nextXp = (Number(prev.xp) || 0) + xpReward;
+
+      // Persist immediately to dedicated key so hard refresh never loses it
+      try {
+        localStorage.setItem('ai_navigator_opened_chests', JSON.stringify(nextOpened));
+      } catch (_) {}
+
+      return {
         ...prev,
         openedChests: nextOpened,
         xp: nextXp,
       };
-      const token = localStorage.getItem('maxy_access_token');
-      if (token) {
-        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch(() => { });
-      }
-      return next;
     });
     addFloatingXp(xpReward, `Peti: ${chestTitle}`, 'xp_milestone');
   }, []);

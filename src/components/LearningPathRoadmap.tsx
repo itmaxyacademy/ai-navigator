@@ -484,6 +484,11 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
   };
 
   const handleClaimChest = (chest: TreasureChestData) => {
+    if (allOpenedChestIds.includes(chest.id)) {
+      setUnboxedChest(null);
+      return;
+    }
+
     if (onOpenChest) {
       onOpenChest(chest.id, chest.xpReward, chest.title);
     } else if (onAwardXp) {
@@ -491,11 +496,13 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
     }
     setUnboxedChest(null);
     setTimeout(() => {
-      confetti({
-        particleCount: 40,
-        spread: 55,
-        origin: { y: 0.5 }
-      });
+      try {
+        confetti({
+          particleCount: 30,
+          spread: 50,
+          origin: { y: 0.5 }
+        });
+      } catch (_) {}
     }, 100);
   };
 
@@ -1231,7 +1238,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                                   isOpened
                                     ? 'bg-gradient-to-b from-emerald-600 to-emerald-900 border-2 border-emerald-400 shadow-emerald-500/20'
                                     : isPrereqDone
-                                    ? 'bg-gradient-to-b from-amber-400 via-orange-500 to-amber-700 border-2 border-amber-200 shadow-amber-500/40 ring-4 ring-amber-400/30 animate-bounce'
+                                    ? 'bg-gradient-to-b from-amber-400 via-orange-500 to-amber-700 border-2 border-amber-200 shadow-amber-500/40 ring-4 ring-amber-400/30'
                                     : 'bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 text-slate-600'
                                 }`}>
                                   <Gift className={`w-8 h-8 ${
@@ -1743,7 +1750,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                       : 'bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 shadow-amber-500/20'
                   }`}
                 >
-                  {isClaimed ? 'Tutup Tutorial' : `🎁 Buka Peti & Klaim (+${unboxedChest.xpReward} XP)`}
+                  {isClaimed ? '✓ Peti Sudah Diklaim (Tutup Tutorial)' : `🎁 Buka Peti & Klaim (+${unboxedChest.xpReward} XP)`}
                 </button>
               </motion.div>
             </div>
