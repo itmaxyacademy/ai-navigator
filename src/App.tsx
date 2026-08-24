@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { MODULES_DATA } from './data/modulesData';
 import { UserProgress, CapstoneSubmission, UserTier } from './types';
 import { Header } from './components/Header';
@@ -39,7 +39,7 @@ const defaultProgress: UserProgress = {
 };
 
 const isLocalDevEnv = typeof window !== 'undefined' && (
-  window.location.hostname === 'localhost' || 
+  window.location.hostname === 'localhost' ||
   window.location.hostname === '127.0.0.1' ||
   window.location.hostname.startsWith('192.168.') ||
   window.location.hostname.startsWith('10.')
@@ -126,8 +126,6 @@ export default function App() {
   const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
   const [activeInvoiceOrderId, setActiveInvoiceOrderId] = useState<string | null>(null);
   const [isCloudProgressLoaded, setIsCloudProgressLoaded] = useState<boolean>(false);
-  // Track initial cloud load to prevent re-render cascade (badge confetti, cloud save-back, cert popup)
-  const isInitialCloudLoadRef = useRef<boolean>(true);
   const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => {
     if (isLocalDevEnv) return false;
     return true;
@@ -264,7 +262,7 @@ export default function App() {
       // Mulai polling pertama setelah 1.5 detik (beri waktu webhook tiba)
       setTimeout(pollStatus, 1500);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Deteksi redirect dari landing-navigator: ?upgrade=true&tier=tier1|tier2&voucher=XXXX
@@ -290,7 +288,7 @@ export default function App() {
       // Buka UpgradeModal setelah auth selesai (delay kecil supaya token sudah terbaca)
       setTimeout(() => setUpgradeModalOpen(true), 800);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
@@ -371,20 +369,13 @@ export default function App() {
       });
     }, safetyDelayMs);
 
-    fetchUserProfile(token)
-      .then(async (res) => {
-        let cloudDataRaw = res?.data?.cloud_progress;
-        if (!cloudDataRaw && res?.success) {
-          // Fallback if cloud_progress wasn't embedded in me response
-          try {
-            cloudDataRaw = await loadCloudProgress(token);
-          } catch (err) {
-            console.warn('loadCloudProgress failed, using local progress:', err);
-            cloudDataRaw = null;
-          }
-        }
-        return [res, cloudDataRaw];
-      })
+    Promise.all([
+      fetchUserProfile(token),
+      loadCloudProgress(token).catch((err) => {
+        console.warn('loadCloudProgress failed, using local progress:', err);
+        return null;
+      }),
+    ])
       .then(([res, cloudDataRaw]) => {
         clearTimeout(safetyTimeout);
         if (res && res.success && res.data) {
@@ -402,7 +393,7 @@ export default function App() {
           if (isDifferentUser) {
             try {
               localStorage.removeItem(STORAGE_KEY);
-            } catch (_) {}
+            } catch (_) { }
           }
 
           const resolvedName = user?.name || user?.nickname || user?.email || undefined;
@@ -411,7 +402,7 @@ export default function App() {
 
           if (resolvedName) localStorage.setItem('maxy_user_name', resolvedName);
           if (resolvedEmail) localStorage.setItem('maxy_user_email', resolvedEmail);
-          
+
           if (userTier !== 'free') {
             localStorage.setItem('maxy_user_tier', userTier);
             localStorage.setItem('maxy_has_tier1', hasTier1 ? 'true' : 'false');
@@ -481,7 +472,7 @@ export default function App() {
               const cCount = Number(res.data.progress.completed_modules);
               cloudModules = Array.from({ length: cCount }, (_, i) => i + 1);
             }
-            
+
             // Cloud database is authoritative for logged-in user
             const mergedCompletedModules = cloudModules;
 
@@ -536,7 +527,7 @@ export default function App() {
                 assignedMentorId: sub?.assigned_mentor_id || prev.assignedMentorId || undefined,
               };
               localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanToStore));
-            } catch (_) {}
+            } catch (_) { }
 
             return {
               ...defaultProgress,
@@ -586,8 +577,6 @@ export default function App() {
           });
 
           setIsCloudProgressLoaded(true);
-          // Mark initial load complete after a short delay to let badge/cert effects skip their first run
-          setTimeout(() => { isInitialCloudLoadRef.current = false; }, 300);
           setIsAuthValidating(false);
         } else {
           redirectToLogin();
@@ -597,7 +586,6 @@ export default function App() {
         clearTimeout(safetyTimeout);
         console.warn('Network or server error during auth validation, using cached local progress:', err);
         setIsCloudProgressLoaded(true);
-        setTimeout(() => { isInitialCloudLoadRef.current = false; }, 300);
         setIsAuthValidating(false);
       });
   }, []);
@@ -607,7 +595,7 @@ export default function App() {
     localStorage.removeItem('maxy_refresh_token');
     localStorage.removeItem(STORAGE_KEY);
     const isLocalDev = typeof window !== 'undefined' && (
-      window.location.hostname === 'localhost' || 
+      window.location.hostname === 'localhost' ||
       window.location.hostname === '127.0.0.1' ||
       window.location.hostname.startsWith('192.168.') ||
       window.location.hostname.startsWith('10.')
@@ -670,26 +658,23 @@ export default function App() {
         unlockedBadges: [...(prev.unlockedBadges || []), ...newlyUnlockedIds],
       }));
 
-      // Only fire confetti & floating XP for badges unlocked by actual user activity,
-      // NOT during initial cloud restore (prevents CPU spike on login for 100% users)
-      if (!isInitialCloudLoadRef.current) {
-        newlyUnlockedIds.forEach((id) => {
-          const badgeDef = BADGES_LIST.find((b) => b.id === id);
-          if (badgeDef) {
-            addFloatingXp(badgeDef.xpReward, `Lencana Terbuka: ${badgeDef.title}`, 'xp_milestone');
-            try {
-              confetti({
-                particleCount: 65,
-                spread: 80,
-                origin: { y: 0.6 },
-                colors: ['#f59e0b', '#a855f7', '#10b981', '#3b82f6'],
-              });
-            } catch (e) {
-              // Ignore if confetti fails
-            }
+      // Trigger celebration for each newly unlocked badge
+      newlyUnlockedIds.forEach((id) => {
+        const badgeDef = BADGES_LIST.find((b) => b.id === id);
+        if (badgeDef) {
+          addFloatingXp(badgeDef.xpReward, `Lencana Terbuka: ${badgeDef.title}`, 'xp_milestone');
+          try {
+            confetti({
+              particleCount: 65,
+              spread: 80,
+              origin: { y: 0.6 },
+              colors: ['#f59e0b', '#a855f7', '#10b981', '#3b82f6'],
+            });
+          } catch (e) {
+            // Ignore if confetti fails
           }
-        });
-      }
+        }
+      });
     }
   }, [
     progress.completedModules,
@@ -701,9 +686,8 @@ export default function App() {
   ]);
 
   // Check and trigger certificate popup automatically if 100% completed
-  // Deferred to 5s after login to avoid CPU spike from confetti during initial render
   useEffect(() => {
-    if (isCertificateEligible(progress) && !progress.hasSeenCertPopup && !isInitialCloudLoadRef.current) {
+    if (isCertificateEligible(progress) && !progress.hasSeenCertPopup) {
       const timer = setTimeout(() => {
         try {
           confetti({
@@ -717,7 +701,7 @@ export default function App() {
         }
         setCertificateOpen(true);
         setProgress((prev) => ({ ...prev, hasSeenCertPopup: true }));
-      }, 5000);
+      }, 1500);
       return () => clearTimeout(timer);
     }
   }, [progress.completedModules, progress.userTier, progress.hasSeenCertPopup]);
@@ -756,7 +740,7 @@ export default function App() {
               cleanLocal.moduleScores = parsed.moduleScores || cleanLocal.moduleScores;
               cleanLocal.unlockedBadges = parsed.unlockedBadges || cleanLocal.unlockedBadges;
             }
-          } catch (_) {}
+          } catch (_) { }
         }
       }
 
@@ -768,7 +752,7 @@ export default function App() {
           // Prune older extraneous cache keys
           const keysToPrune = ['notion_ai_state', 'ai_navigator_flashcards_confidence_v1', 'ai_navigator_opened_chests'];
           keysToPrune.forEach(k => localStorage.removeItem(k));
-          
+
           // Save essential only
           const essential = {
             completedModules: progress.completedModules,
@@ -787,10 +771,6 @@ export default function App() {
     }
 
     if (!token || !isCloudProgressLoaded) return;
-
-    // Skip cloud save on initial load to prevent immediate save-back loop
-    // (cloud data was just loaded — no need to save it back immediately)
-    if (isInitialCloudLoadRef.current) return;
 
     const timer = setTimeout(() => {
       saveCloudProgress(token, progress as unknown as Record<string, unknown>);
@@ -1136,7 +1116,7 @@ export default function App() {
       };
       const token = localStorage.getItem('maxy_access_token');
       if (token) {
-        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch(() => {});
+        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch(() => { });
       }
       return next;
     });
@@ -1176,15 +1156,15 @@ export default function App() {
         certRequested: true,
         ...(isCapstone
           ? {
-              capstoneCertUuid: certUuid || prev.capstoneCertUuid || undefined,
-              capstoneCertNumber: certNumber || prev.capstoneCertNumber || undefined,
-            }
+            capstoneCertUuid: certUuid || prev.capstoneCertUuid || undefined,
+            capstoneCertNumber: certNumber || prev.capstoneCertNumber || undefined,
+          }
           : {
-              completionCertUuid: certUuid || prev.completionCertUuid || prev.certUuid || undefined,
-              completionCertNumber: certNumber || prev.completionCertNumber || prev.certNumber || undefined,
-              certUuid: certUuid || prev.certUuid || undefined,
-              certNumber: certNumber || prev.certNumber || undefined,
-            }),
+            completionCertUuid: certUuid || prev.completionCertUuid || prev.certUuid || undefined,
+            completionCertNumber: certNumber || prev.completionCertNumber || prev.certNumber || undefined,
+            certUuid: certUuid || prev.certUuid || undefined,
+            certNumber: certNumber || prev.certNumber || undefined,
+          }),
       };
       const token = localStorage.getItem('maxy_access_token');
       if (token) {
@@ -1201,7 +1181,7 @@ export default function App() {
     if (!selectedModuleId) return;
     const userTier = progress.userTier || 'free';
     const maxModuleForTier = userTier === 'tier2' ? 29 : 22;
-    
+
     if (selectedModuleId < MODULES_DATA.length) {
       const nextId = selectedModuleId + 1;
       setSelectedModuleId(nextId);
@@ -1211,7 +1191,7 @@ export default function App() {
         activeSection: 'overview',
       }));
     }
-    
+
     // Check if user just completed all modules for their tier
     const completedCount = progress.completedModules.length;
     if (completedCount >= maxModuleForTier) {
@@ -1242,12 +1222,12 @@ export default function App() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    
+
     // Format nama file: ainavigator-progress-NamaUser-YYYY-MM-DD.json
     const safeName = progress.userName ? progress.userName.replace(/[^a-zA-Z0-9]/g, '_') + '-' : '';
     const dateStr = new Date().toISOString().split('T')[0];
     a.download = `ainavigator-progress-${safeName}${dateStr}.json`;
-    
+
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -1376,7 +1356,7 @@ export default function App() {
       };
       const token = localStorage.getItem('maxy_access_token');
       if (token) {
-        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch(() => {});
+        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch(() => { });
       }
       return next;
     });
@@ -1396,7 +1376,7 @@ export default function App() {
       };
       const token = localStorage.getItem('maxy_access_token');
       if (token) {
-        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch(() => {});
+        saveCloudProgress(token, next as unknown as Record<string, unknown>).catch(() => { });
       }
       return next;
     });
@@ -1406,21 +1386,19 @@ export default function App() {
   const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
   const isFreshTokenLogin = Boolean(urlParams?.get('token'));
   const hasCachedModules = Boolean(progress.completedModules && progress.completedModules.length > 0);
-  const isInitialLoading = isFreshTokenLogin 
-    ? !isCloudProgressLoaded 
+  const isInitialLoading = isFreshTokenLogin
+    ? !isCloudProgressLoaded
     : (!hasCachedModules && (!isCloudProgressLoaded || isAuthValidating));
 
   if (isInitialLoading) {
     return (
-      <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
-        theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-white'
-      }`}>
+      <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-white'
+        }`}>
         <div className="w-12 h-12 rounded-2xl bg-[#ffb034]/20 border border-[#ffb034]/40 flex items-center justify-center mb-4 animate-pulse shadow-lg shadow-[#ffb034]/10">
           <Sparkles className="w-6 h-6 text-[#ffb034]" />
         </div>
-        <div className={`flex items-center gap-2.5 text-xs font-bold ${
-          theme === 'light' ? 'text-slate-600' : 'text-slate-600 dark:text-slate-300'
-        }`}>
+        <div className={`flex items-center gap-2.5 text-xs font-bold ${theme === 'light' ? 'text-slate-600' : 'text-slate-600 dark:text-slate-300'
+          }`}>
           <span className="w-4 h-4 border-2 border-[#ffb034] border-t-transparent rounded-full animate-spin" />
           <span>Memuat Sesi &amp; Peta Belajar AI Navigator...</span>
         </div>
@@ -1429,9 +1407,8 @@ export default function App() {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
-      theme === 'light' ? 'bg-slate-100/80 text-slate-900' : 'bg-[#070b14] text-slate-100'
-    } selection:bg-indigo-500 selection:text-white`}>
+    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${theme === 'light' ? 'bg-slate-100/80 text-slate-900' : 'bg-[#070b14] text-slate-100'
+      } selection:bg-indigo-500 selection:text-white`}>
       {/* Header */}
       <Header
         progress={progress}
