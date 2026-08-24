@@ -324,6 +324,21 @@ export default function App() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get('token');
+    const refreshTokenFromUrl = urlParams.get('refresh_token');
+
+    if (tokenFromUrl) {
+      localStorage.setItem('maxy_access_token', tokenFromUrl);
+    }
+    if (refreshTokenFromUrl) {
+      localStorage.setItem('maxy_refresh_token', refreshTokenFromUrl);
+    }
+
+    // Clean sensitive query parameters from URL bar without reload
+    if (tokenFromUrl || refreshTokenFromUrl) {
+      const cleanUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+    }
+
     const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
 
     const getLandingUrl = () => {
@@ -351,14 +366,9 @@ export default function App() {
       return;
     }
 
-    if (tokenFromUrl) {
-      localStorage.setItem('maxy_access_token', tokenFromUrl);
-    }
-
-    // Safety fallback: jika API lambat/502/overload, render dari cache setelah 1.5s (ada cache) atau 2.5s (fresh login)
-    // API fetchWithAuth sudah di-set timeout 3s, sehingga ini hanya backup jika Promise.all tidak resolve
+    // Safety fallback: jika koneksi lambat/502/overload, render dari cache lokal
     const hasCachedData = Boolean(localStorage.getItem(STORAGE_KEY));
-    const safetyDelayMs = hasCachedData ? 3000 : 4000;
+    const safetyDelayMs = hasCachedData ? 4000 : 8000;
     const safetyTimeout = setTimeout(() => {
       setIsCloudProgressLoaded(true);
       setIsAuthValidating((prev) => {
@@ -579,7 +589,16 @@ export default function App() {
           setIsCloudProgressLoaded(true);
           setIsAuthValidating(false);
         } else {
-          redirectToLogin();
+          // If server explicitly confirmed 401 Unauthorized (token invalid / revoked and refresh failed)
+          if (res?.status === 401) {
+            console.warn('Session expired or unauthorized (401), redirecting to login.');
+            redirectToLogin();
+          } else {
+            // Network error / Timeout / 502 / Offline -> keep user logged in using cached data
+            console.warn('Could not sync profile from server, continuing with local cached session:', res?.message);
+            setIsCloudProgressLoaded(true);
+            setIsAuthValidating(false);
+          }
         }
       })
       .catch((err) => {

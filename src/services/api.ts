@@ -35,10 +35,10 @@ async function fetchWithAuth(url: string, options: RequestInit = {}, customToken
   options.headers = headers;
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout — fail fast, fallback to cache
+  const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout — resilient to mobile & server load
   options.signal = controller.signal;
 
-  let res;
+  let res: Response;
   try {
     res = await fetch(url, options);
   } finally {
@@ -52,7 +52,7 @@ async function fetchWithAuth(url: string, options: RequestInit = {}, customToken
       retryHeaders.set('Authorization', `Bearer ${newToken}`);
       options.headers = retryHeaders;
       const retryController = new AbortController();
-      const retryTimeoutId = setTimeout(() => retryController.abort(), 3000);
+      const retryTimeoutId = setTimeout(() => retryController.abort(), 8000);
       options.signal = retryController.signal;
       try {
         res = await fetch(url, options);
@@ -71,10 +71,21 @@ export async function fetchUserProfile(token?: string) {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     }, token);
-    return await res.json();
-  } catch (err) {
-    console.error('API fetchUserProfile failed:', err);
-    return { success: false, message: 'Gagal mengambil profil user dari api.maxy.academy' };
+    const json = await res.json();
+    return {
+      ...json,
+      status: res.status,
+    };
+  } catch (err: unknown) {
+    const error = err as { name?: string; message?: string };
+    const isTimeout = error?.name === 'AbortError';
+    console.warn('API fetchUserProfile warning:', isTimeout ? 'Request timed out' : error?.message);
+    return {
+      success: false,
+      status: isTimeout ? 408 : 0,
+      isNetworkError: true,
+      message: isTimeout ? 'Koneksi lambat, beralih ke sesi lokal...' : 'Tidak dapat terhubung ke server',
+    };
   }
 }
 
