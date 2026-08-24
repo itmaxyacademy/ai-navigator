@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, useRef, Suspense } from 'react';
 import { MODULES_DATA } from './data/modulesData';
 import { UserProgress, CapstoneSubmission, UserTier } from './types';
 import { Header } from './components/Header';
@@ -126,6 +126,8 @@ export default function App() {
   const [invoiceModalOpen, setInvoiceModalOpen] = useState(false);
   const [activeInvoiceOrderId, setActiveInvoiceOrderId] = useState<string | null>(null);
   const [isCloudProgressLoaded, setIsCloudProgressLoaded] = useState<boolean>(false);
+  // Track initial cloud load to prevent re-render cascade (badge confetti, cloud save-back, cert popup)
+  const isInitialCloudLoadRef = useRef<boolean>(true);
   const [isAuthValidating, setIsAuthValidating] = useState<boolean>(() => {
     if (isLocalDevEnv) return false;
     return true;
@@ -369,13 +371,20 @@ export default function App() {
       });
     }, safetyDelayMs);
 
-    Promise.all([
-      fetchUserProfile(token),
-      loadCloudProgress(token).catch((err) => {
-        console.warn('loadCloudProgress failed, using local progress:', err);
-        return null;
-      }),
-    ])
+    fetchUserProfile(token)
+      .then(async (res) => {
+        let cloudDataRaw = res?.data?.cloud_progress;
+        if (!cloudDataRaw && res?.success) {
+          // Fallback if cloud_progress wasn't embedded in me response
+          try {
+            cloudDataRaw = await loadCloudProgress(token);
+          } catch (err) {
+            console.warn('loadCloudProgress failed, using local progress:', err);
+            cloudDataRaw = null;
+          }
+        }
+        return [res, cloudDataRaw];
+      })
       .then(([res, cloudDataRaw]) => {
         clearTimeout(safetyTimeout);
         if (res && res.success && res.data) {
@@ -577,6 +586,8 @@ export default function App() {
           });
 
           setIsCloudProgressLoaded(true);
+          // Mark initial load complete after a short delay to let badge/cert effects skip their first run
+          setTimeout(() => { isInitialCloudLoadRef.current = false; }, 300);
           setIsAuthValidating(false);
         } else {
           redirectToLogin();
@@ -586,6 +597,7 @@ export default function App() {
         clearTimeout(safetyTimeout);
         console.warn('Network or server error during auth validation, using cached local progress:', err);
         setIsCloudProgressLoaded(true);
+        setTimeout(() => { isInitialCloudLoadRef.current = false; }, 300);
         setIsAuthValidating(false);
       });
   }, []);
@@ -658,23 +670,26 @@ export default function App() {
         unlockedBadges: [...(prev.unlockedBadges || []), ...newlyUnlockedIds],
       }));
 
-      // Trigger celebration for each newly unlocked badge
-      newlyUnlockedIds.forEach((id) => {
-        const badgeDef = BADGES_LIST.find((b) => b.id === id);
-        if (badgeDef) {
-          addFloatingXp(badgeDef.xpReward, `Lencana Terbuka: ${badgeDef.title}`, 'xp_milestone');
-          try {
-            confetti({
-              particleCount: 65,
-              spread: 80,
-              origin: { y: 0.6 },
-              colors: ['#f59e0b', '#a855f7', '#10b981', '#3b82f6'],
-            });
-          } catch (e) {
-            // Ignore if confetti fails
+      // Only fire confetti & floating XP for badges unlocked by actual user activity,
+      // NOT during initial cloud restore (prevents CPU spike on login for 100% users)
+      if (!isInitialCloudLoadRef.current) {
+        newlyUnlockedIds.forEach((id) => {
+          const badgeDef = BADGES_LIST.find((b) => b.id === id);
+          if (badgeDef) {
+            addFloatingXp(badgeDef.xpReward, `Lencana Terbuka: ${badgeDef.title}`, 'xp_milestone');
+            try {
+              confetti({
+                particleCount: 65,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#f59e0b', '#a855f7', '#10b981', '#3b82f6'],
+              });
+            } catch (e) {
+              // Ignore if confetti fails
+            }
           }
-        }
-      });
+        });
+      }
     }
   }, [
     progress.completedModules,
@@ -686,8 +701,9 @@ export default function App() {
   ]);
 
   // Check and trigger certificate popup automatically if 100% completed
+  // Deferred to 5s after login to avoid CPU spike from confetti during initial render
   useEffect(() => {
-    if (isCertificateEligible(progress) && !progress.hasSeenCertPopup) {
+    if (isCertificateEligible(progress) && !progress.hasSeenCertPopup && !isInitialCloudLoadRef.current) {
       const timer = setTimeout(() => {
         try {
           confetti({
@@ -701,7 +717,7 @@ export default function App() {
         }
         setCertificateOpen(true);
         setProgress((prev) => ({ ...prev, hasSeenCertPopup: true }));
-      }, 1500);
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [progress.completedModules, progress.userTier, progress.hasSeenCertPopup]);
@@ -771,6 +787,10 @@ export default function App() {
     }
 
     if (!token || !isCloudProgressLoaded) return;
+
+    // Skip cloud save on initial load to prevent immediate save-back loop
+    // (cloud data was just loaded — no need to save it back immediately)
+    if (isInitialCloudLoadRef.current) return;
 
     const timer = setTimeout(() => {
       saveCloudProgress(token, progress as unknown as Record<string, unknown>);
