@@ -35,14 +35,73 @@ class ErrorBoundary extends React.Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: 20, color: '#f87171', backgroundColor: '#0f172a', minHeight: '100vh', fontFamily: 'sans-serif' }}>
-          <h1 style={{ fontSize: '24px', fontWeight: 'bold' }}>Application Render Error</h1>
-          <pre style={{ whiteSpace: 'pre-wrap', color: '#fca5a5', marginTop: '10px' }}>
-            {this.state.error && this.state.error.toString()}
-          </pre>
-          <pre style={{ whiteSpace: 'pre-wrap', color: '#cbd5e1', fontSize: '12px', marginTop: '10px' }}>
-            {this.state.errorInfo && this.state.errorInfo.componentStack}
-          </pre>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          backgroundColor: '#090d16',
+          color: '#f8fafc',
+          fontFamily: 'system-ui, -apple-system, sans-serif',
+          padding: '24px',
+          textAlign: 'center'
+        }}>
+          <div style={{
+            maxWidth: '480px',
+            backgroundColor: '#131b2e',
+            border: '1px solid #1e293b',
+            borderRadius: '24px',
+            padding: '32px 24px',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)'
+          }}>
+            <div style={{ fontSize: '40px', marginBottom: '12px' }}>⚡</div>
+            <h2 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '8px', color: '#fbbf24' }}>
+              Memuat Ulang AI Navigator
+            </h2>
+            <p style={{ fontSize: '13px', color: '#94a3b8', lineHeight: '1.6', marginBottom: '24px' }}>
+              Terjadi penyesuaian cache sesi belajar pada browser Anda. Silakan klik tombol di bawah untuk melanjutkan.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <button
+                onClick={() => {
+                  window.location.reload();
+                }}
+                style={{
+                  padding: '12px 20px',
+                  backgroundColor: '#f59e0b',
+                  color: '#0f172a',
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  borderRadius: '12px',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                🔄 Muat Ulang Halaman
+              </button>
+              <button
+                onClick={() => {
+                  try {
+                    localStorage.removeItem('ai_navigator_user_progress_v1');
+                  } catch (_) {}
+                  window.location.reload();
+                }}
+                style={{
+                  padding: '10px 20px',
+                  backgroundColor: '#1e293b',
+                  color: '#94a3b8',
+                  fontWeight: '600',
+                  fontSize: '12px',
+                  borderRadius: '12px',
+                  border: '1px solid #334155',
+                  cursor: 'pointer'
+                }}
+              >
+                🧹 Bersihkan Cache Sesi & Masuk
+              </button>
+            </div>
+          </div>
         </div>
       );
     }
