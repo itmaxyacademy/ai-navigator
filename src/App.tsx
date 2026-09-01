@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, Suspense, useRef } from 'react';
 import { MODULES_DATA } from './data/modulesData';
 import { UserProgress, CapstoneSubmission, UserTier } from './types';
 import { Header } from './components/Header';
@@ -27,6 +27,7 @@ import confetti from 'canvas-confetti';
 import { fetchUserProfile, checkoutUpgrade, loadCloudProgress, saveCloudProgress, fetchAiNavigatorPackages, verifyPaymentOrder } from './services/api';
 
 const STORAGE_KEY = 'ai_navigator_user_progress_v1';
+const BACKUP_KEY = 'ai_navigator_user_progress_backup_v1';
 
 const defaultProgress: UserProgress = {
   completedModules: [],
@@ -52,14 +53,24 @@ export default function App() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         parsed = JSON.parse(saved);
-        delete (parsed as any).userTier;
-        delete (parsed as any).tier;
-        delete (parsed as any).maxAllowedModuleId;
-        delete (parsed as any).paidTiers;
-        delete (parsed as any).hasTier1;
-        delete (parsed as any).hasTier2;
-        delete (parsed as any).packageName;
       }
+      // Safety fail-safe: jika storage utama kosong/ter-reset tapi ada backup, pulihkan dari backup
+      if (!parsed.completedModules || parsed.completedModules.length === 0) {
+        const backupSaved = localStorage.getItem(BACKUP_KEY);
+        if (backupSaved) {
+          const parsedBackup = JSON.parse(backupSaved);
+          if (parsedBackup && Array.isArray(parsedBackup.completedModules) && parsedBackup.completedModules.length > 0) {
+            parsed = { ...parsedBackup, ...parsed, completedModules: parsedBackup.completedModules };
+          }
+        }
+      }
+      delete (parsed as any).userTier;
+      delete (parsed as any).tier;
+      delete (parsed as any).maxAllowedModuleId;
+      delete (parsed as any).paidTiers;
+      delete (parsed as any).hasTier1;
+      delete (parsed as any).hasTier2;
+      delete (parsed as any).packageName;
     } catch (e) {
       console.error('Failed to load progress', e);
     }
@@ -378,8 +389,7 @@ export default function App() {
     }
 
     // Safety fallback: jika koneksi lambat/502/overload, render dari cache lokal
-    const hasCachedData = Boolean(localStorage.getItem(STORAGE_KEY));
-    const safetyDelayMs = hasCachedData ? 4000 : 8000;
+    const safetyDelayMs = 2500;
     const safetyTimeout = setTimeout(() => {
       setIsCloudProgressLoaded(true);
       setIsAuthValidating((prev) => {
@@ -414,6 +424,7 @@ export default function App() {
           if (isDifferentUser) {
             try {
               localStorage.removeItem(STORAGE_KEY);
+              localStorage.removeItem(BACKUP_KEY);
             } catch (_) { }
           }
 
@@ -494,14 +505,17 @@ export default function App() {
               cloudModules = Array.from({ length: cCount }, (_, i) => i + 1);
             }
 
-            // Cloud database is authoritative for logged-in user
-            const mergedCompletedModules = cloudModules;
+            // Union merge: combine local and cloud completed modules so no completed module is ever lost
+            const prevModules = Array.isArray(basePrev.completedModules) ? basePrev.completedModules : [];
+            const mergedCompletedModules = Array.from(new Set([...prevModules, ...cloudModules])).sort((a, b) => a - b);
 
-            const mergedUnlockedBadges = Array.isArray(cloudData.unlockedBadges)
-              ? cloudData.unlockedBadges
-              : (prev.unlockedBadges || []);
+            const mergedUnlockedBadges = Array.from(new Set([
+              ...(Array.isArray(basePrev.unlockedBadges) ? basePrev.unlockedBadges : []),
+              ...(Array.isArray(cloudData.unlockedBadges) ? cloudData.unlockedBadges : [])
+            ]));
+
             const cloudChests = Array.isArray(cloudData.openedChests) ? cloudData.openedChests : [];
-            const prevChests = Array.isArray(prev.openedChests) ? prev.openedChests : [];
+            const prevChests = Array.isArray(basePrev.openedChests) ? basePrev.openedChests : [];
             let standaloneChests: number[] = [];
             try {
               const s = localStorage.getItem('ai_navigator_opened_chests');
@@ -510,26 +524,44 @@ export default function App() {
                 if (Array.isArray(parsedS)) standaloneChests = parsedS;
               }
             } catch (_) {}
-            const mergedOpenedChests = Array.from(new Set([...cloudChests, ...prevChests, ...standaloneChests]));
+            const mergedOpenedChests = Array.from(new Set([...cloudChests, ...prevChests, ...standaloneChests])).sort((a, b) => a - b);
             try {
               localStorage.setItem('ai_navigator_opened_chests', JSON.stringify(mergedOpenedChests));
             } catch (_) {}
-            const mergedCompletedCheckpoints = Array.isArray(cloudData.completedCheckpoints)
-              ? cloudData.completedCheckpoints
-              : (prev.completedCheckpoints || []);
-            const mergedModuleScores = (cloudData.moduleScores && typeof cloudData.moduleScores === 'object')
-              ? { ...(cloudData.moduleScores as Record<number, number>) }
-              : { ...(prev.moduleScores || {}) };
 
-            const mergedXp = cloudData.xp !== undefined
-              ? Number(cloudData.xp)
-              : Number(prev.xp || 0);
-            const mergedStreakDays = cloudData.streakDays !== undefined
-              ? Number(cloudData.streakDays)
-              : Number(prev.streakDays || 1);
-            const mergedCurrentModuleId = cloudData.currentModuleId !== undefined
-              ? Number(cloudData.currentModuleId)
-              : (Number(prev.currentModuleId) || 1);
+            const mergedCompletedCheckpoints = Array.from(new Set([
+              ...(Array.isArray(basePrev.completedCheckpoints) ? basePrev.completedCheckpoints : []),
+              ...(Array.isArray(cloudData.completedCheckpoints) ? cloudData.completedCheckpoints : [])
+            ]));
+
+            // Merge module scores: keep highest score per module
+            const mergedModuleScores: Record<number, number> = { ...(basePrev.moduleScores || {}) };
+            if (cloudData.moduleScores && typeof cloudData.moduleScores === 'object') {
+              for (const [k, v] of Object.entries(cloudData.moduleScores as Record<string, number>)) {
+                const modId = Number(k);
+                mergedModuleScores[modId] = Math.max(mergedModuleScores[modId] || 0, Number(v) || 0);
+              }
+            }
+
+            // XP and Streak: keep highest
+            const mergedXp = Math.max(Number(basePrev.xp || 0), Number(cloudData.xp || 0));
+            const mergedStreakDays = Math.max(Number(basePrev.streakDays || 1), Number(cloudData.streakDays || 1));
+            const mergedCurrentModuleId = Math.max(Number(basePrev.currentModuleId || 1), Number(cloudData.currentModuleId || 1));
+
+            // Merge daily histories taking max values per date
+            const mergedDailyXp: Record<string, number> = { ...(basePrev.dailyXpHistory || {}) };
+            if (cloudData.dailyXpHistory && typeof cloudData.dailyXpHistory === 'object') {
+              for (const [d, amount] of Object.entries(cloudData.dailyXpHistory as Record<string, number>)) {
+                mergedDailyXp[d] = Math.max(mergedDailyXp[d] || 0, Number(amount) || 0);
+              }
+            }
+
+            const mergedDailyMins: Record<string, number> = { ...(basePrev.dailyMinutesHistory || {}) };
+            if (cloudData.dailyMinutesHistory && typeof cloudData.dailyMinutesHistory === 'object') {
+              for (const [d, mins] of Object.entries(cloudData.dailyMinutesHistory as Record<string, number>)) {
+                mergedDailyMins[d] = Math.max(mergedDailyMins[d] || 0, Number(mins) || 0);
+              }
+            }
 
             try {
               const cleanToStore = {
@@ -549,16 +581,19 @@ export default function App() {
                 certInstitution: cloudData?.certInstitution || user?.university || undefined,
                 userPhone: cloudData?.userPhone || user?.phone || undefined,
                 userInstitution: cloudData?.userInstitution || user?.university || undefined,
-                capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || (cloudData as any)?.capstoneSubmission?.title || prev.capstoneTitle || prev.capstoneSubmission?.title || undefined,
-                capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || (cloudData as any)?.capstoneSubmission?.capstoneUrl || prev.capstoneUrl || prev.capstoneSubmission?.capstoneUrl || undefined,
-                capstoneStatus: sub?.capstone_status || cloudData?.capstoneStatus || prev.capstoneStatus || undefined,
-                capstoneScore: sub?.capstone_score !== undefined ? sub.capstone_score : (cloudData?.capstoneScore ?? prev.capstoneScore ?? undefined),
-                capstoneNotes: sub?.capstone_notes || cloudData?.capstoneNotes || prev.capstoneNotes || undefined,
-                capstoneSubmission: cloudData?.capstoneSubmission || prev.capstoneSubmission || undefined,
-                assignedMentorName: sub?.assigned_mentor_name || prev.assignedMentorName || undefined,
-                assignedMentorId: sub?.assigned_mentor_id || prev.assignedMentorId || undefined,
+                capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || (cloudData as any)?.capstoneSubmission?.title || basePrev.capstoneTitle || basePrev.capstoneSubmission?.title || undefined,
+                capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || (cloudData as any)?.capstoneSubmission?.capstoneUrl || basePrev.capstoneUrl || basePrev.capstoneSubmission?.capstoneUrl || undefined,
+                capstoneStatus: sub?.capstone_status || cloudData?.capstoneStatus || basePrev.capstoneStatus || undefined,
+                capstoneScore: sub?.capstone_score !== undefined ? sub.capstone_score : (cloudData?.capstoneScore ?? basePrev.capstoneScore ?? undefined),
+                capstoneNotes: sub?.capstone_notes || cloudData?.capstoneNotes || basePrev.capstoneNotes || undefined,
+                capstoneSubmission: cloudData?.capstoneSubmission || basePrev.capstoneSubmission || undefined,
+                assignedMentorName: sub?.assigned_mentor_name || basePrev.assignedMentorName || undefined,
+                assignedMentorId: sub?.assigned_mentor_id || basePrev.assignedMentorId || undefined,
               };
               localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanToStore));
+              if (mergedCompletedModules.length > 0) {
+                localStorage.setItem(BACKUP_KEY, JSON.stringify(cleanToStore));
+              }
             } catch (_) { }
 
             return {
@@ -567,14 +602,16 @@ export default function App() {
               completedCheckpoints: mergedCompletedCheckpoints,
               openedChests: mergedOpenedChests,
               moduleScores: mergedModuleScores,
-              dailyXpHistory: (cloudData?.dailyXpHistory && typeof cloudData.dailyXpHistory === 'object') ? cloudData.dailyXpHistory : (prev.dailyXpHistory || {}),
+              dailyXpHistory: mergedDailyXp,
+              dailyMinutesHistory: mergedDailyMins,
               xp: mergedXp,
               streakDays: mergedStreakDays,
               currentModuleId: mergedCurrentModuleId,
-              activeSection: prev.activeSection || 'overview',
-              lastActiveDate: cloudData?.lastActiveDate || prev.lastActiveDate || getLocalDateString(),
-              hasSeenCertPopup: Boolean(prev.hasSeenCertPopup || cloudData?.hasSeenCertPopup),
-              hasDismissedOnboarding: Boolean(prev.hasDismissedOnboarding || cloudData?.hasDismissedOnboarding),
+              activeSection: basePrev.activeSection || 'overview',
+              lastActiveDate: cloudData?.lastActiveDate || basePrev.lastActiveDate || getLocalDateString(),
+              lastCompletedDate: cloudData?.lastCompletedDate || basePrev.lastCompletedDate || undefined,
+              hasSeenCertPopup: Boolean(basePrev.hasSeenCertPopup || cloudData?.hasSeenCertPopup),
+              hasDismissedOnboarding: Boolean(basePrev.hasDismissedOnboarding || cloudData?.hasDismissedOnboarding),
               userTier,
               tier: userTier,
               maxAllowedModuleId: maxAllowed,
@@ -583,30 +620,30 @@ export default function App() {
               hasTier2,
               adminOverrideAt: cloudData.adminOverrideAt || undefined,
               adminLimitCount: (cloudData as any).adminLimitCount || undefined,
-              certName: cloudData?.certName || user?.name || (isDifferentUser ? undefined : prev.certName),
-              certEmail: cloudData?.certEmail || user?.email || (isDifferentUser ? undefined : prev.certEmail),
-              certPhone: cloudData?.certPhone || (isDifferentUser ? undefined : prev.certPhone) || user?.phone || undefined,
-              certInstitution: cloudData?.certInstitution || (isDifferentUser ? undefined : prev.certInstitution) || user?.university || undefined,
-              userName: user?.name || cloudData?.userName || (isDifferentUser ? undefined : prev.userName),
-              userEmail: user?.email || cloudData?.userEmail || (isDifferentUser ? undefined : prev.userEmail),
-              userPhone: user?.phone || cloudData?.userPhone || (isDifferentUser ? undefined : prev.userPhone),
-              userInstitution: user?.university || cloudData?.userInstitution || (isDifferentUser ? undefined : prev.userInstitution),
-              packageName: sub?.package_name || prev.packageName || undefined,
+              certName: cloudData?.certName || user?.name || (isDifferentUser ? undefined : basePrev.certName),
+              certEmail: cloudData?.certEmail || user?.email || (isDifferentUser ? undefined : basePrev.certEmail),
+              certPhone: cloudData?.certPhone || (isDifferentUser ? undefined : basePrev.certPhone) || user?.phone || undefined,
+              certInstitution: cloudData?.certInstitution || (isDifferentUser ? undefined : basePrev.certInstitution) || user?.university || undefined,
+              userName: user?.name || cloudData?.userName || (isDifferentUser ? undefined : basePrev.userName),
+              userEmail: user?.email || cloudData?.userEmail || (isDifferentUser ? undefined : basePrev.userEmail),
+              userPhone: user?.phone || cloudData?.userPhone || (isDifferentUser ? undefined : basePrev.userPhone),
+              userInstitution: user?.university || cloudData?.userInstitution || (isDifferentUser ? undefined : basePrev.userInstitution),
+              packageName: sub?.package_name || basePrev.packageName || undefined,
               subscriptionExpiredAt: sub?.expired_at || null,
               isExpired: sub?.is_expired || false,
               expiredAt: sub?.expired_at || null,
               expiredDays: sub?.expired_days || null,
-              assignedMentorId: cloudData?.assignedMentorId || sub?.assigned_mentor_id || prev.assignedMentorId || null,
-              assignedMentorName: cloudData?.assignedMentorName || sub?.assigned_mentor_name || prev.assignedMentorName || null,
-              mentorAssignedAt: cloudData?.mentorAssignedAt || sub?.mentor_assigned_at || prev.mentorAssignedAt || null,
-              capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || (cloudData as any)?.capstoneSubmission?.title || prev.capstoneTitle || prev.capstoneSubmission?.title || null,
-              capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || (cloudData as any)?.capstoneSubmission?.capstoneUrl || prev.capstoneUrl || prev.capstoneSubmission?.capstoneUrl || null,
-              capstoneStatus: sub?.capstone_status || cloudData?.capstoneStatus || prev.capstoneStatus || null,
-              capstoneScore: (sub?.capstone_score !== undefined && sub?.capstone_score !== null) ? sub.capstone_score : (cloudData?.capstoneScore !== undefined ? cloudData.capstoneScore : (prev.capstoneScore ?? null)),
-              capstoneNotes: sub?.capstone_notes || cloudData?.capstoneNotes || prev.capstoneNotes || null,
-              capstoneReviewedAt: sub?.capstone_reviewed_at || cloudData?.capstoneReviewedAt || prev.capstoneReviewedAt || null,
-              capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || cloudData?.capstoneAssignedByMentor || prev.capstoneAssignedByMentor || null,
-              capstoneAssignedAt: sub?.capstone_assigned_at || cloudData?.capstoneAssignedAt || prev.capstoneAssignedAt || null,
+              assignedMentorId: cloudData?.assignedMentorId || sub?.assigned_mentor_id || basePrev.assignedMentorId || null,
+              assignedMentorName: cloudData?.assignedMentorName || sub?.assigned_mentor_name || basePrev.assignedMentorName || null,
+              mentorAssignedAt: cloudData?.mentorAssignedAt || sub?.mentor_assigned_at || basePrev.mentorAssignedAt || null,
+              capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || (cloudData as any)?.capstoneSubmission?.title || basePrev.capstoneTitle || basePrev.capstoneSubmission?.title || null,
+              capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || (cloudData as any)?.capstoneSubmission?.capstoneUrl || basePrev.capstoneUrl || basePrev.capstoneSubmission?.capstoneUrl || null,
+              capstoneStatus: sub?.capstone_status || cloudData?.capstoneStatus || basePrev.capstoneStatus || null,
+              capstoneScore: (sub?.capstone_score !== undefined && sub?.capstone_score !== null) ? sub.capstone_score : (cloudData?.capstoneScore !== undefined ? cloudData.capstoneScore : (basePrev.capstoneScore ?? null)),
+              capstoneNotes: sub?.capstone_notes || cloudData?.capstoneNotes || basePrev.capstoneNotes || null,
+              capstoneReviewedAt: sub?.capstone_reviewed_at || cloudData?.capstoneReviewedAt || basePrev.capstoneReviewedAt || null,
+              capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || cloudData?.capstoneAssignedByMentor || basePrev.capstoneAssignedByMentor || null,
+              capstoneAssignedAt: sub?.capstone_assigned_at || cloudData?.capstoneAssignedAt || basePrev.capstoneAssignedAt || null,
             };
           });
 
@@ -700,24 +737,6 @@ export default function App() {
         ...prev,
         unlockedBadges: [...(prev.unlockedBadges || []), ...newlyUnlockedIds],
       }));
-
-      // Trigger celebration for each newly unlocked badge
-      newlyUnlockedIds.forEach((id) => {
-        const badgeDef = BADGES_LIST.find((b) => b.id === id);
-        if (badgeDef) {
-          addFloatingXp(badgeDef.xpReward, `Lencana Terbuka: ${badgeDef.title}`, 'xp_milestone');
-          try {
-            confetti({
-              particleCount: 65,
-              spread: 80,
-              origin: { y: 0.6 },
-              colors: ['#f59e0b', '#a855f7', '#10b981', '#3b82f6'],
-            });
-          } catch (e) {
-            // Ignore if confetti fails
-          }
-        }
-      });
     }
   }, [
     progress.completedModules,
@@ -728,35 +747,35 @@ export default function App() {
     progress.dailyMinutesHistory,
   ]);
 
-  // Check and trigger certificate popup automatically if 100% completed
-  useEffect(() => {
-    if (isCertificateEligible(progress) && !progress.hasSeenCertPopup) {
-      const timer = setTimeout(() => {
-        try {
-          confetti({
-            particleCount: 100,
-            spread: 90,
-            origin: { y: 0.5 },
-            colors: ['#f59e0b', '#fbbf24', '#fcd34d'], // Gold confetti
-          });
-        } catch (e) {
-          // ignore
-        }
-        setCertificateOpen(true);
-        setProgress((prev) => ({ ...prev, hasSeenCertPopup: true }));
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [progress.completedModules, progress.userTier, progress.hasSeenCertPopup]);
+  const progressRef = useRef(progress);
+  progressRef.current = progress;
 
-  // Save progress to local storage & sync to cloud database (debounced 2s)
+  // Unload & visibility change listener: immediately flush progress to cloud when user leaves/switches tab
+  useEffect(() => {
+    const handleFlushSync = () => {
+      const token = typeof window !== 'undefined' ? localStorage.getItem('maxy_access_token') : null;
+      if (token && progressRef.current) {
+        saveCloudProgress(token, progressRef.current as unknown as Record<string, unknown>, true);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleFlushSync);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        handleFlushSync();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleFlushSync);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  // Save progress to local storage & sync to cloud database (debounced 500ms)
   useEffect(() => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('maxy_access_token') : null;
-
-    // Protection: Never overwrite localStorage with empty progress while cloud data is still loading
-    if (token && !isCloudProgressLoaded && (!progress.completedModules || progress.completedModules.length === 0)) {
-      return;
-    }
 
     try {
       const cleanLocal = { ...progress } as Record<string, unknown>;
@@ -771,29 +790,16 @@ export default function App() {
       delete cleanLocal.userName;
       delete cleanLocal.userEmail;
 
-      // Protection against race condition: don't overwrite non-empty storage with empty state during early initialization before cloud is loaded
-      if (!isCloudProgressLoaded) {
-        const existingSaved = localStorage.getItem(STORAGE_KEY);
-        if (existingSaved && (!progress.completedModules || progress.completedModules.length === 0) && (progress.xp === 0 || !progress.xp)) {
-          try {
-            const parsed = JSON.parse(existingSaved);
-            if (parsed && Array.isArray(parsed.completedModules) && parsed.completedModules.length > 0) {
-              cleanLocal.completedModules = parsed.completedModules;
-              cleanLocal.xp = parsed.xp || cleanLocal.xp;
-              cleanLocal.moduleScores = parsed.moduleScores || cleanLocal.moduleScores;
-              cleanLocal.unlockedBadges = parsed.unlockedBadges || cleanLocal.unlockedBadges;
-            }
-          } catch (_) { }
-        }
-      }
-
       localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanLocal));
+      if (Array.isArray(progress.completedModules) && progress.completedModules.length > 0) {
+        localStorage.setItem(BACKUP_KEY, JSON.stringify(cleanLocal));
+      }
     } catch (e: unknown) {
       const err = e as { name?: string; code?: number };
       if (err?.name === 'QuotaExceededError' || err?.code === 22) {
         try {
           // Prune older extraneous cache keys
-          const keysToPrune = ['notion_ai_state', 'ai_navigator_flashcards_confidence_v1', 'ai_navigator_opened_chests'];
+          const keysToPrune = ['notion_ai_state', 'ai_navigator_flashcards_confidence_v1'];
           keysToPrune.forEach(k => localStorage.removeItem(k));
 
           // Save essential only
@@ -807,20 +813,23 @@ export default function App() {
             hasSeenCertPopup: progress.hasSeenCertPopup,
           };
           localStorage.setItem(STORAGE_KEY, JSON.stringify(essential));
+          if (Array.isArray(progress.completedModules) && progress.completedModules.length > 0) {
+            localStorage.setItem(BACKUP_KEY, JSON.stringify(essential));
+          }
         } catch (_) {
           // Ignore fallback storage error
         }
       }
     }
 
-    if (!token || !isCloudProgressLoaded) return;
+    if (!token) return;
 
     const timer = setTimeout(() => {
       saveCloudProgress(token, progress as unknown as Record<string, unknown>);
-    }, 2000);
+    }, 500);
 
     return () => clearTimeout(timer);
-  }, [progress, isAuthValidating, isCloudProgressLoaded]);
+  }, [progress]);
 
   // Handle module selection from roadmap
   const handleSelectModule = useCallback((moduleId: number) => {
@@ -1428,24 +1437,38 @@ export default function App() {
     addFloatingXp(xpReward, `Peti: ${chestTitle}`, 'xp_milestone');
   }, []);
 
-  const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-  const isFreshTokenLogin = Boolean(urlParams?.get('token'));
-  const hasCachedModules = Boolean(progress.completedModules && progress.completedModules.length > 0);
-  const isInitialLoading = isFreshTokenLogin
-    ? !isCloudProgressLoaded
-    : (!hasCachedModules && (!isCloudProgressLoaded || isAuthValidating));
+  // Smart Loading Gate:
+  // Hold on loading screen UNTIL cloud progress is completely loaded into state,
+  // guaranteeing that when the map appears, it is ALREADY 100% populated with progress.
+  const hasToken = typeof window !== 'undefined' && Boolean(
+    new URLSearchParams(window.location.search).get('token') || localStorage.getItem('maxy_access_token')
+  );
 
-  if (isInitialLoading) {
+  const shouldShowInitialLoading = hasToken && !isCloudProgressLoaded;
+
+  if (shouldShowInitialLoading) {
     return (
-      <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-slate-100 dark:bg-slate-950 text-white'
-        }`}>
-        <div className="w-12 h-12 rounded-2xl bg-[#ffb034]/20 border border-[#ffb034]/40 flex items-center justify-center mb-4 animate-pulse shadow-lg shadow-[#ffb034]/10">
-          <Sparkles className="w-6 h-6 text-[#ffb034]" />
+      <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
+        theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-[#070b14] text-white'
+      }`}>
+        <div className="relative mb-6">
+          <div className="w-16 h-16 rounded-3xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shadow-xl shadow-amber-500/10 animate-pulse">
+            <Sparkles className="w-8 h-8 text-amber-400" />
+          </div>
+          <div className="absolute -inset-1 rounded-3xl bg-amber-400/20 blur-md -z-10 animate-pulse" />
         </div>
-        <div className={`flex items-center gap-2.5 text-xs font-bold ${theme === 'light' ? 'text-slate-600' : 'text-slate-600 dark:text-slate-300'
-          }`}>
-          <span className="w-4 h-4 border-2 border-[#ffb034] border-t-transparent rounded-full animate-spin" />
-          <span>Memuat Sesi &amp; Peta Belajar AI Navigator...</span>
+        <div className="text-center space-y-2 max-w-xs">
+          <h3 className="text-sm font-extrabold text-white tracking-wide">
+            Menyiapkan Peta Belajar AI Navigator...
+          </h3>
+          <p className="text-xs text-slate-400">
+            Memuat progress &amp; status belajar Anda
+          </p>
+        </div>
+        <div className="mt-5 flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '300ms' }} />
         </div>
       </div>
     );

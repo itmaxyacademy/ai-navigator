@@ -83,7 +83,13 @@ class ErrorBoundary extends React.Component<Props, State> {
               <button
                 onClick={() => {
                   try {
-                    localStorage.removeItem('ai_navigator_user_progress_v1');
+                    const current = localStorage.getItem('ai_navigator_user_progress_v1');
+                    if (current) {
+                      localStorage.setItem('ai_navigator_user_progress_backup', current);
+                    }
+                    // Clean only non-critical caches
+                    const keysToClean = ['notion_ai_state', 'ai_navigator_flashcards_confidence_v1'];
+                    keysToClean.forEach(k => localStorage.removeItem(k));
                   } catch (_) {}
                   window.location.reload();
                 }}
@@ -98,7 +104,7 @@ class ErrorBoundary extends React.Component<Props, State> {
                   cursor: 'pointer'
                 }}
               >
-                🧹 Bersihkan Cache Sesi & Masuk
+                🧹 Segarkan Sesi &amp; Lanjutkan
               </button>
             </div>
           </div>

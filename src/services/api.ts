@@ -26,7 +26,7 @@ export async function refreshAccessToken(): Promise<string | null> {
   }
 }
 
-async function fetchWithAuth(url: string, options: RequestInit = {}, customToken?: string): Promise<Response> {
+async function fetchWithAuth(url: string, options: RequestInit = {}, customToken?: string, timeoutMs: number = 4000): Promise<Response> {
   const token = customToken || (typeof window !== 'undefined' ? (new URLSearchParams(window.location.search).get('token') || localStorage.getItem('maxy_access_token')) : null);
   const headers = new Headers(options.headers || {});
   if (token) {
@@ -35,7 +35,7 @@ async function fetchWithAuth(url: string, options: RequestInit = {}, customToken
   options.headers = headers;
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout — resilient to mobile & server load
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
   options.signal = controller.signal;
 
   let res: Response;
@@ -52,7 +52,7 @@ async function fetchWithAuth(url: string, options: RequestInit = {}, customToken
       retryHeaders.set('Authorization', `Bearer ${newToken}`);
       options.headers = retryHeaders;
       const retryController = new AbortController();
-      const retryTimeoutId = setTimeout(() => retryController.abort(), 8000);
+      const retryTimeoutId = setTimeout(() => retryController.abort(), timeoutMs);
       options.signal = retryController.signal;
       try {
         res = await fetch(url, options);
@@ -116,7 +116,7 @@ export async function loadCloudProgress(token?: string): Promise<Record<string, 
   }
 }
 
-export async function saveCloudProgress(token: string, progress: Record<string, unknown>): Promise<void> {
+export async function saveCloudProgress(token: string, progress: Record<string, unknown>, keepalive: boolean = false): Promise<void> {
   try {
     const cleanProgress = { ...progress };
     delete cleanProgress.success;
@@ -138,7 +138,8 @@ export async function saveCloudProgress(token: string, progress: Record<string, 
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ progress: cleanProgress }),
-    });
+      keepalive,
+    }, token, keepalive ? 10000 : 4000);
     if (!res.ok && res.status !== 502) {
       console.warn(`[CloudSync] Background sync status: ${res.status}`);
     }

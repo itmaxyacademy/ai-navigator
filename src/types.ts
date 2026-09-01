@@ -130,6 +130,7 @@ export interface UserProgress {
   streakDays: number;
   unlockedBadges: string[];
   lastCompletedDate?: string;
+  lastActiveDate?: string;
   dailyXpHistory?: Record<string, number>;
   dailyGoalMinutes?: number; // e.g. 15 minutes default
   dailyMinutesHistory?: Record<string, number>; // dateStr -> minutes learned today
