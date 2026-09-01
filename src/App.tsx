@@ -388,27 +388,122 @@ export default function App() {
       return;
     }
 
-    // Safety fallback: jika koneksi lambat/502/overload, render dari cache lokal
-    const safetyDelayMs = 2500;
+    // Safety fallback: ensure loading screen clears within 2s even if network is offline
     const safetyTimeout = setTimeout(() => {
       setIsCloudProgressLoaded(true);
-      setIsAuthValidating((prev) => {
-        if (prev) {
-          console.warn('Auth validation timeout safety triggered — rendering app with cached progress.');
-        }
-        return false;
-      });
-    }, safetyDelayMs);
+      setIsAuthValidating(false);
+    }, 2000);
 
-    Promise.all([
-      fetchUserProfile(token),
-      loadCloudProgress(token).catch((err) => {
-        console.warn('loadCloudProgress failed, using local progress:', err);
-        return null;
-      }),
-    ])
-      .then(([res, cloudDataRaw]) => {
+    // 1. Fetch Cloud Progress independently & apply immediately
+    loadCloudProgress(token)
+      .then((cloudDataRaw) => {
+        if (!cloudDataRaw) return;
+
+        const cloudData = { ...(cloudDataRaw as unknown as UserProgress) };
+        delete (cloudData as Record<string, unknown>).userTier;
+        delete (cloudData as Record<string, unknown>).tier;
+        delete (cloudData as Record<string, unknown>).maxAllowedModuleId;
+        delete (cloudData as Record<string, unknown>).paidTiers;
+        delete (cloudData as Record<string, unknown>).hasTier1;
+        delete (cloudData as Record<string, unknown>).hasTier2;
+        delete (cloudData as Record<string, unknown>).packageName;
+        delete (cloudData as Record<string, unknown>).subscriptionExpiredAt;
+
+        setProgress((prev) => {
+          let cloudModules = Array.isArray(cloudData.completedModules) ? cloudData.completedModules : [];
+          const prevModules = Array.isArray(prev.completedModules) ? prev.completedModules : [];
+          const mergedCompletedModules = Array.from(new Set([...prevModules, ...cloudModules])).sort((a, b) => a - b);
+
+          const mergedUnlockedBadges = Array.from(new Set([
+            ...(Array.isArray(prev.unlockedBadges) ? prev.unlockedBadges : []),
+            ...(Array.isArray(cloudData.unlockedBadges) ? cloudData.unlockedBadges : [])
+          ]));
+
+          const cloudChests = Array.isArray(cloudData.openedChests) ? cloudData.openedChests : [];
+          const prevChests = Array.isArray(prev.openedChests) ? prev.openedChests : [];
+          let standaloneChests: number[] = [];
+          try {
+            const s = localStorage.getItem('ai_navigator_opened_chests');
+            if (s) {
+              const parsedS = JSON.parse(s);
+              if (Array.isArray(parsedS)) standaloneChests = parsedS;
+            }
+          } catch (_) {}
+          const mergedOpenedChests = Array.from(new Set([...cloudChests, ...prevChests, ...standaloneChests])).sort((a, b) => a - b);
+
+          const mergedCompletedCheckpoints = Array.from(new Set([
+            ...(Array.isArray(prev.completedCheckpoints) ? prev.completedCheckpoints : []),
+            ...(Array.isArray(cloudData.completedCheckpoints) ? cloudData.completedCheckpoints : [])
+          ]));
+
+          const mergedModuleScores: Record<number, number> = { ...(prev.moduleScores || {}) };
+          if (cloudData.moduleScores && typeof cloudData.moduleScores === 'object') {
+            for (const [k, v] of Object.entries(cloudData.moduleScores as Record<string, number>)) {
+              const modId = Number(k);
+              mergedModuleScores[modId] = Math.max(mergedModuleScores[modId] || 0, Number(v) || 0);
+            }
+          }
+
+          const mergedXp = Math.max(Number(prev.xp || 0), Number(cloudData.xp || 0));
+          const mergedStreakDays = Math.max(Number(prev.streakDays || 1), Number(cloudData.streakDays || 1));
+          const mergedCurrentModuleId = Math.max(Number(prev.currentModuleId || 1), Number(cloudData.currentModuleId || 1));
+
+          const mergedDailyXp: Record<string, number> = { ...(prev.dailyXpHistory || {}) };
+          if (cloudData.dailyXpHistory && typeof cloudData.dailyXpHistory === 'object') {
+            for (const [d, amount] of Object.entries(cloudData.dailyXpHistory as Record<string, number>)) {
+              mergedDailyXp[d] = Math.max(mergedDailyXp[d] || 0, Number(amount) || 0);
+            }
+          }
+
+          const mergedDailyMins: Record<string, number> = { ...(prev.dailyMinutesHistory || {}) };
+          if (cloudData.dailyMinutesHistory && typeof cloudData.dailyMinutesHistory === 'object') {
+            for (const [d, mins] of Object.entries(cloudData.dailyMinutesHistory as Record<string, number>)) {
+              mergedDailyMins[d] = Math.max(mergedDailyMins[d] || 0, Number(mins) || 0);
+            }
+          }
+
+          try {
+            const cleanToStore = {
+              ...prev,
+              completedModules: mergedCompletedModules,
+              unlockedBadges: mergedUnlockedBadges,
+              completedCheckpoints: mergedCompletedCheckpoints,
+              openedChests: mergedOpenedChests,
+              moduleScores: mergedModuleScores,
+              xp: mergedXp,
+              streakDays: mergedStreakDays,
+              currentModuleId: mergedCurrentModuleId,
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanToStore));
+            if (mergedCompletedModules.length > 0) {
+              localStorage.setItem(BACKUP_KEY, JSON.stringify(cleanToStore));
+            }
+          } catch (_) {}
+
+          return {
+            ...prev,
+            completedModules: mergedCompletedModules,
+            unlockedBadges: mergedUnlockedBadges,
+            completedCheckpoints: mergedCompletedCheckpoints,
+            openedChests: mergedOpenedChests,
+            moduleScores: mergedModuleScores,
+            dailyXpHistory: mergedDailyXp,
+            dailyMinutesHistory: mergedDailyMins,
+            xp: mergedXp,
+            streakDays: mergedStreakDays,
+            currentModuleId: mergedCurrentModuleId,
+          };
+        });
+      })
+      .catch((err) => console.warn('loadCloudProgress non-critical error:', err))
+      .finally(() => {
+        setIsCloudProgressLoaded(true);
         clearTimeout(safetyTimeout);
+      });
+
+    // 2. Fetch User Profile & Subscription in parallel
+    fetchUserProfile(token)
+      .then((res) => {
         if (res && res.success && res.data) {
           const sub = res.data.subscription;
           const user = res.data.user;
@@ -418,15 +513,6 @@ export default function App() {
           const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
           const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
           const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
-
-          const prevCachedEmail = localStorage.getItem('maxy_user_email');
-          const isDifferentUser = Boolean(prevCachedEmail && user?.email && prevCachedEmail.toLowerCase() !== user.email.toLowerCase());
-          if (isDifferentUser) {
-            try {
-              localStorage.removeItem(STORAGE_KEY);
-              localStorage.removeItem(BACKUP_KEY);
-            } catch (_) { }
-          }
 
           const resolvedName = user?.name || user?.nickname || user?.email || undefined;
           const resolvedEmail = user?.email || undefined;
@@ -447,225 +533,48 @@ export default function App() {
             localStorage.removeItem('maxy_package_name');
           }
 
-          const cloudData = cloudDataRaw ? { ...(cloudDataRaw as unknown as UserProgress) } : null;
-          if (cloudData) {
-            delete (cloudData as Record<string, unknown>).userTier;
-            delete (cloudData as Record<string, unknown>).tier;
-            delete (cloudData as Record<string, unknown>).maxAllowedModuleId;
-            delete (cloudData as Record<string, unknown>).paidTiers;
-            delete (cloudData as Record<string, unknown>).hasTier1;
-            delete (cloudData as Record<string, unknown>).hasTier2;
-            delete (cloudData as Record<string, unknown>).packageName;
-            delete (cloudData as Record<string, unknown>).subscriptionExpiredAt;
-          }
-
           setProgress((prev) => {
-            const basePrev = isDifferentUser ? defaultProgress : prev;
-            if (!cloudData) {
-              let fallbackModules: number[] = Array.isArray(basePrev.completedModules) ? basePrev.completedModules : [];
-              if (fallbackModules.length === 0 && res?.data?.progress && Number(res.data.progress.completed_modules) > 0) {
-                const cCount = Number(res.data.progress.completed_modules);
-                fallbackModules = Array.from({ length: cCount }, (_, i) => i + 1);
-              }
-
-              return {
-                ...defaultProgress,
-                ...basePrev,
-                completedModules: fallbackModules,
-                userTier,
-                tier: userTier,
-                maxAllowedModuleId: maxAllowed,
-                paidTiers,
-                hasTier1,
-                hasTier2,
-                userName: user?.name || basePrev.userName || undefined,
-                userEmail: user?.email || basePrev.userEmail || undefined,
-                packageName: sub?.package_name || prev.packageName || undefined,
-                subscriptionExpiredAt: sub?.expired_at || null,
-                isExpired: sub?.is_expired || false,
-                expiredAt: sub?.expired_at || null,
-                expiredDays: sub?.expired_days || null,
-                assignedMentorId: sub?.assigned_mentor_id || prev.assignedMentorId || null,
-                assignedMentorName: sub?.assigned_mentor_name || prev.assignedMentorName || null,
-                mentorAssignedAt: sub?.mentor_assigned_at || prev.mentorAssignedAt || null,
-                capstoneTitle: sub?.capstone_title || prev.capstoneTitle || null,
-                capstoneUrl: sub?.capstone_url || prev.capstoneUrl || null,
-                capstoneStatus: sub?.capstone_status || prev.capstoneStatus || null,
-                capstoneScore: sub?.capstone_score !== undefined ? sub.capstone_score : (prev.capstoneScore ?? null),
-                capstoneNotes: sub?.capstone_notes || prev.capstoneNotes || null,
-                capstoneReviewedAt: sub?.capstone_reviewed_at || prev.capstoneReviewedAt || null,
-                capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || prev.capstoneAssignedByMentor || null,
-                capstoneAssignedAt: sub?.capstone_assigned_at || prev.capstoneAssignedAt || null,
-              };
-            }
-
-            let cloudModules = Array.isArray(cloudData.completedModules) ? cloudData.completedModules : [];
-            if (cloudModules.length === 0 && res?.data?.progress && Number(res.data.progress.completed_modules) > 0) {
+            let fallbackModules = Array.isArray(prev.completedModules) ? prev.completedModules : [];
+            if (fallbackModules.length === 0 && res?.data?.progress && Number(res.data.progress.completed_modules) > 0) {
               const cCount = Number(res.data.progress.completed_modules);
-              cloudModules = Array.from({ length: cCount }, (_, i) => i + 1);
+              fallbackModules = Array.from({ length: cCount }, (_, i) => i + 1);
             }
-
-            // Union merge: combine local and cloud completed modules so no completed module is ever lost
-            const prevModules = Array.isArray(basePrev.completedModules) ? basePrev.completedModules : [];
-            const mergedCompletedModules = Array.from(new Set([...prevModules, ...cloudModules])).sort((a, b) => a - b);
-
-            const mergedUnlockedBadges = Array.from(new Set([
-              ...(Array.isArray(basePrev.unlockedBadges) ? basePrev.unlockedBadges : []),
-              ...(Array.isArray(cloudData.unlockedBadges) ? cloudData.unlockedBadges : [])
-            ]));
-
-            const cloudChests = Array.isArray(cloudData.openedChests) ? cloudData.openedChests : [];
-            const prevChests = Array.isArray(basePrev.openedChests) ? basePrev.openedChests : [];
-            let standaloneChests: number[] = [];
-            try {
-              const s = localStorage.getItem('ai_navigator_opened_chests');
-              if (s) {
-                const parsedS = JSON.parse(s);
-                if (Array.isArray(parsedS)) standaloneChests = parsedS;
-              }
-            } catch (_) {}
-            const mergedOpenedChests = Array.from(new Set([...cloudChests, ...prevChests, ...standaloneChests])).sort((a, b) => a - b);
-            try {
-              localStorage.setItem('ai_navigator_opened_chests', JSON.stringify(mergedOpenedChests));
-            } catch (_) {}
-
-            const mergedCompletedCheckpoints = Array.from(new Set([
-              ...(Array.isArray(basePrev.completedCheckpoints) ? basePrev.completedCheckpoints : []),
-              ...(Array.isArray(cloudData.completedCheckpoints) ? cloudData.completedCheckpoints : [])
-            ]));
-
-            // Merge module scores: keep highest score per module
-            const mergedModuleScores: Record<number, number> = { ...(basePrev.moduleScores || {}) };
-            if (cloudData.moduleScores && typeof cloudData.moduleScores === 'object') {
-              for (const [k, v] of Object.entries(cloudData.moduleScores as Record<string, number>)) {
-                const modId = Number(k);
-                mergedModuleScores[modId] = Math.max(mergedModuleScores[modId] || 0, Number(v) || 0);
-              }
-            }
-
-            // XP and Streak: keep highest
-            const mergedXp = Math.max(Number(basePrev.xp || 0), Number(cloudData.xp || 0));
-            const mergedStreakDays = Math.max(Number(basePrev.streakDays || 1), Number(cloudData.streakDays || 1));
-            const mergedCurrentModuleId = Math.max(Number(basePrev.currentModuleId || 1), Number(cloudData.currentModuleId || 1));
-
-            // Merge daily histories taking max values per date
-            const mergedDailyXp: Record<string, number> = { ...(basePrev.dailyXpHistory || {}) };
-            if (cloudData.dailyXpHistory && typeof cloudData.dailyXpHistory === 'object') {
-              for (const [d, amount] of Object.entries(cloudData.dailyXpHistory as Record<string, number>)) {
-                mergedDailyXp[d] = Math.max(mergedDailyXp[d] || 0, Number(amount) || 0);
-              }
-            }
-
-            const mergedDailyMins: Record<string, number> = { ...(basePrev.dailyMinutesHistory || {}) };
-            if (cloudData.dailyMinutesHistory && typeof cloudData.dailyMinutesHistory === 'object') {
-              for (const [d, mins] of Object.entries(cloudData.dailyMinutesHistory as Record<string, number>)) {
-                mergedDailyMins[d] = Math.max(mergedDailyMins[d] || 0, Number(mins) || 0);
-              }
-            }
-
-            try {
-              const cleanToStore = {
-                completedModules: mergedCompletedModules,
-                unlockedBadges: mergedUnlockedBadges,
-                completedCheckpoints: mergedCompletedCheckpoints,
-                openedChests: mergedOpenedChests,
-                moduleScores: mergedModuleScores,
-                xp: mergedXp,
-                streakDays: mergedStreakDays,
-                currentModuleId: mergedCurrentModuleId,
-                adminOverrideAt: cloudData.adminOverrideAt || undefined,
-                adminLimitCount: (cloudData as any).adminLimitCount || undefined,
-                certName: cloudData?.certName || user?.name || undefined,
-                certEmail: cloudData?.certEmail || user?.email || undefined,
-                certPhone: cloudData?.certPhone || user?.phone || undefined,
-                certInstitution: cloudData?.certInstitution || user?.university || undefined,
-                userPhone: cloudData?.userPhone || user?.phone || undefined,
-                userInstitution: cloudData?.userInstitution || user?.university || undefined,
-                capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || (cloudData as any)?.capstoneSubmission?.title || basePrev.capstoneTitle || basePrev.capstoneSubmission?.title || undefined,
-                capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || (cloudData as any)?.capstoneSubmission?.capstoneUrl || basePrev.capstoneUrl || basePrev.capstoneSubmission?.capstoneUrl || undefined,
-                capstoneStatus: sub?.capstone_status || cloudData?.capstoneStatus || basePrev.capstoneStatus || undefined,
-                capstoneScore: sub?.capstone_score !== undefined ? sub.capstone_score : (cloudData?.capstoneScore ?? basePrev.capstoneScore ?? undefined),
-                capstoneNotes: sub?.capstone_notes || cloudData?.capstoneNotes || basePrev.capstoneNotes || undefined,
-                capstoneSubmission: cloudData?.capstoneSubmission || basePrev.capstoneSubmission || undefined,
-                assignedMentorName: sub?.assigned_mentor_name || basePrev.assignedMentorName || undefined,
-                assignedMentorId: sub?.assigned_mentor_id || basePrev.assignedMentorId || undefined,
-              };
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanToStore));
-              if (mergedCompletedModules.length > 0) {
-                localStorage.setItem(BACKUP_KEY, JSON.stringify(cleanToStore));
-              }
-            } catch (_) { }
 
             return {
-              completedModules: mergedCompletedModules,
-              unlockedBadges: mergedUnlockedBadges,
-              completedCheckpoints: mergedCompletedCheckpoints,
-              openedChests: mergedOpenedChests,
-              moduleScores: mergedModuleScores,
-              dailyXpHistory: mergedDailyXp,
-              dailyMinutesHistory: mergedDailyMins,
-              xp: mergedXp,
-              streakDays: mergedStreakDays,
-              currentModuleId: mergedCurrentModuleId,
-              activeSection: basePrev.activeSection || 'overview',
-              lastActiveDate: cloudData?.lastActiveDate || basePrev.lastActiveDate || getLocalDateString(),
-              lastCompletedDate: cloudData?.lastCompletedDate || basePrev.lastCompletedDate || undefined,
-              hasSeenCertPopup: Boolean(basePrev.hasSeenCertPopup || cloudData?.hasSeenCertPopup),
-              hasDismissedOnboarding: Boolean(basePrev.hasDismissedOnboarding || cloudData?.hasDismissedOnboarding),
+              ...prev,
+              completedModules: fallbackModules,
               userTier,
               tier: userTier,
               maxAllowedModuleId: maxAllowed,
               paidTiers,
               hasTier1,
               hasTier2,
-              adminOverrideAt: cloudData.adminOverrideAt || undefined,
-              adminLimitCount: (cloudData as any).adminLimitCount || undefined,
-              certName: cloudData?.certName || user?.name || (isDifferentUser ? undefined : basePrev.certName),
-              certEmail: cloudData?.certEmail || user?.email || (isDifferentUser ? undefined : basePrev.certEmail),
-              certPhone: cloudData?.certPhone || (isDifferentUser ? undefined : basePrev.certPhone) || user?.phone || undefined,
-              certInstitution: cloudData?.certInstitution || (isDifferentUser ? undefined : basePrev.certInstitution) || user?.university || undefined,
-              userName: user?.name || cloudData?.userName || (isDifferentUser ? undefined : basePrev.userName),
-              userEmail: user?.email || cloudData?.userEmail || (isDifferentUser ? undefined : basePrev.userEmail),
-              userPhone: user?.phone || cloudData?.userPhone || (isDifferentUser ? undefined : basePrev.userPhone),
-              userInstitution: user?.university || cloudData?.userInstitution || (isDifferentUser ? undefined : basePrev.userInstitution),
-              packageName: sub?.package_name || basePrev.packageName || undefined,
+              userName: user?.name || prev.userName || undefined,
+              userEmail: user?.email || prev.userEmail || undefined,
+              packageName: sub?.package_name || prev.packageName || undefined,
               subscriptionExpiredAt: sub?.expired_at || null,
               isExpired: sub?.is_expired || false,
               expiredAt: sub?.expired_at || null,
               expiredDays: sub?.expired_days || null,
-              assignedMentorId: cloudData?.assignedMentorId || sub?.assigned_mentor_id || basePrev.assignedMentorId || null,
-              assignedMentorName: cloudData?.assignedMentorName || sub?.assigned_mentor_name || basePrev.assignedMentorName || null,
-              mentorAssignedAt: cloudData?.mentorAssignedAt || sub?.mentor_assigned_at || basePrev.mentorAssignedAt || null,
-              capstoneTitle: sub?.capstone_title || cloudData?.capstoneTitle || (cloudData as any)?.capstoneSubmission?.title || basePrev.capstoneTitle || basePrev.capstoneSubmission?.title || null,
-              capstoneUrl: sub?.capstone_url || cloudData?.capstoneUrl || (cloudData as any)?.capstoneSubmission?.capstoneUrl || basePrev.capstoneUrl || basePrev.capstoneSubmission?.capstoneUrl || null,
-              capstoneStatus: sub?.capstone_status || cloudData?.capstoneStatus || basePrev.capstoneStatus || null,
-              capstoneScore: (sub?.capstone_score !== undefined && sub?.capstone_score !== null) ? sub.capstone_score : (cloudData?.capstoneScore !== undefined ? cloudData.capstoneScore : (basePrev.capstoneScore ?? null)),
-              capstoneNotes: sub?.capstone_notes || cloudData?.capstoneNotes || basePrev.capstoneNotes || null,
-              capstoneReviewedAt: sub?.capstone_reviewed_at || cloudData?.capstoneReviewedAt || basePrev.capstoneReviewedAt || null,
-              capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || cloudData?.capstoneAssignedByMentor || basePrev.capstoneAssignedByMentor || null,
-              capstoneAssignedAt: sub?.capstone_assigned_at || cloudData?.capstoneAssignedAt || basePrev.capstoneAssignedAt || null,
+              assignedMentorId: sub?.assigned_mentor_id || prev.assignedMentorId || null,
+              assignedMentorName: sub?.assigned_mentor_name || prev.assignedMentorName || null,
+              mentorAssignedAt: sub?.mentor_assigned_at || prev.mentorAssignedAt || null,
+              capstoneTitle: sub?.capstone_title || prev.capstoneTitle || null,
+              capstoneUrl: sub?.capstone_url || prev.capstoneUrl || null,
+              capstoneStatus: sub?.capstone_status || prev.capstoneStatus || null,
+              capstoneScore: sub?.capstone_score !== undefined ? sub.capstone_score : (prev.capstoneScore ?? null),
+              capstoneNotes: sub?.capstone_notes || prev.capstoneNotes || null,
+              capstoneReviewedAt: sub?.capstone_reviewed_at || prev.capstoneReviewedAt || null,
+              capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || prev.capstoneAssignedByMentor || null,
+              capstoneAssignedAt: sub?.capstone_assigned_at || prev.capstoneAssignedAt || null,
             };
           });
-
-          setIsCloudProgressLoaded(true);
-          setIsAuthValidating(false);
-        } else {
-          // If server explicitly confirmed 401 Unauthorized (token invalid / revoked and refresh failed)
-          if (res?.status === 401) {
-            console.warn('Session expired or unauthorized (401), redirecting to login.');
-            redirectToLogin();
-          } else {
-            // Network error / Timeout / 502 / Offline -> keep user logged in using cached data
-            console.warn('Could not sync profile from server, continuing with local cached session:', res?.message);
-            setIsCloudProgressLoaded(true);
-            setIsAuthValidating(false);
-          }
+        } else if (res?.status === 401) {
+          redirectToLogin();
         }
       })
-      .catch((err) => {
-        clearTimeout(safetyTimeout);
-        console.warn('Network or server error during auth validation, using cached local progress:', err);
-        setIsCloudProgressLoaded(true);
+      .catch((err) => console.warn('fetchUserProfile non-critical error:', err))
+      .finally(() => {
         setIsAuthValidating(false);
       });
   }, []);
