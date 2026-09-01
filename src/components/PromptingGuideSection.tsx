@@ -39,7 +39,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
   }
 
   return (
-    <div className="space-y-8 animate-fadeIn text-slate-900">
+    <div className="space-y-8 animate-fadeIn text-slate-900 dark:text-slate-100">
       {/* Top Banner Header (Dark Navy matching Roadmap Group Banner) */}
       <div className="relative overflow-hidden rounded-3xl bg-[#0d1322] border border-slate-800 p-6 sm:p-8 shadow-xl text-white">
         <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/15 rounded-full blur-3xl -z-10" />
@@ -69,7 +69,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
 
       {/* Best Practices Cards Row */}
       <div className="space-y-4">
-        <h3 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2.5">
+        <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2.5">
           <Zap className="w-5 h-5 text-amber-500" />
           <span>Prinsip Utama Prompting {guide.llmName}</span>
         </h3>
@@ -77,12 +77,12 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
           {guide.bestPractices.map((practice, idx) => (
             <div
               key={idx}
-              className="p-5 rounded-3xl bg-white border border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all space-y-2.5 shadow-sm relative overflow-hidden flex flex-col justify-between"
+              className="p-5 rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 hover:shadow-md transition-all space-y-2.5 shadow-sm relative overflow-hidden flex flex-col justify-between"
             >
-              <div className="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-700 font-black text-xs">
+              <div className="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 flex items-center justify-center text-indigo-700 dark:text-indigo-300 font-black text-xs">
                 0{idx + 1}
               </div>
-              <p className="text-slate-600 text-xs font-medium leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-300 text-xs font-medium leading-relaxed">
                 {practice}
               </p>
             </div>
@@ -93,11 +93,11 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
       {/* Feature-Specific Prompting Tips List */}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2.5">
-            <Compass className="w-5 h-5 text-indigo-600" />
+          <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white flex items-center gap-2.5">
+            <Compass className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             <span>Tips & Contoh Formula Prompt {guide.llmName}</span>
           </h3>
-          <span className="text-xs font-bold text-slate-500">
+          <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
             {guide.tips.length} Teknik Tersedia
           </span>
         </div>
@@ -106,45 +106,45 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
           {guide.tips.map((tip, index) => (
             <div
               key={index}
-              className="rounded-3xl bg-white border border-slate-200 p-6 sm:p-7 space-y-5 hover:border-indigo-300 hover:shadow-md transition-all shadow-sm relative text-slate-900"
+              className="rounded-3xl bg-white dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 p-6 sm:p-7 space-y-5 hover:border-indigo-300 dark:hover:border-indigo-500 hover:shadow-md transition-all shadow-sm relative text-slate-900 dark:text-slate-100"
             >
               {/* Tip Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200">
+                    <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
                       {tip.featureName}
                     </span>
-                    <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                       {tip.badge}
                     </span>
                   </div>
-                  <h4 className="text-base sm:text-lg font-black text-slate-900 pt-1">
+                  <h4 className="text-base sm:text-lg font-black text-slate-900 dark:text-white pt-1">
                     {tip.title}
                   </h4>
                 </div>
               </div>
 
               {/* Explanation */}
-              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal">
+              <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed font-normal">
                 {tip.explanation}
               </p>
 
               {/* Copyable Prompt Example Card */}
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-500 px-1">
-                  <span className="flex items-center gap-1.5 text-indigo-600 font-bold">
-                    <Terminal className="w-4 h-4 text-indigo-600" />
+                <div className="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400 px-1">
+                  <span className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-bold">
+                    <Terminal className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     Contoh Formula Prompt Siap Pakai:
                   </span>
                   <button
                     onClick={() => handleCopy(tip.promptExample, index)}
-                    className="flex items-center gap-1.5 text-xs text-amber-800 hover:text-amber-900 bg-amber-50 hover:bg-amber-100 px-3.5 py-1.5 rounded-xl border border-amber-200 transition-all cursor-pointer font-bold shadow-xs"
+                    className="flex items-center gap-1.5 text-xs text-amber-800 dark:text-amber-300 hover:text-amber-900 dark:hover:text-amber-200 bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900/80 px-3.5 py-1.5 rounded-xl border border-amber-200 dark:border-amber-800 transition-all cursor-pointer font-bold shadow-xs"
                   >
                     {copiedIndex === index ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-emerald-600" />
-                        <span className="text-emerald-700">Tersalin!</span>
+                        <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                        <span className="text-emerald-700 dark:text-emerald-300">Tersalin!</span>
                       </>
                     ) : (
                       <>
@@ -161,11 +161,11 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
               </div>
 
               {/* Pro Tip Callout Box */}
-              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-start gap-3 shadow-xs">
-                <Lightbulb className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 flex items-start gap-3 shadow-xs">
+                <Lightbulb className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                 <div className="space-y-0.5 text-xs">
-                  <span className="font-black text-amber-900">Pro Tip Pakar: </span>
-                  <span className="text-amber-950/80 leading-relaxed font-medium">{tip.proTip}</span>
+                  <span className="font-black text-amber-900 dark:text-amber-300">Pro Tip Pakar: </span>
+                  <span className="text-amber-950/80 dark:text-amber-200/90 leading-relaxed font-medium">{tip.proTip}</span>
                 </div>
               </div>
             </div>
