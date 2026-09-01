@@ -349,6 +349,19 @@ export default function App() {
     const refreshTokenFromUrl = urlParams.get('refresh_token');
 
     if (tokenFromUrl) {
+      const oldToken = localStorage.getItem('maxy_access_token');
+      if (oldToken && oldToken !== tokenFromUrl) {
+        // Token changed to a new user account: clear previous user cache!
+        localStorage.removeItem('maxy_user_name');
+        localStorage.removeItem('maxy_user_email');
+        localStorage.removeItem('maxy_user_tier');
+        localStorage.removeItem('maxy_has_tier1');
+        localStorage.removeItem('maxy_has_tier2');
+        localStorage.removeItem('maxy_package_name');
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(BACKUP_KEY);
+        localStorage.removeItem('ai_navigator_opened_chests');
+      }
       localStorage.setItem('maxy_access_token', tokenFromUrl);
     }
     if (refreshTokenFromUrl) {
@@ -371,6 +384,15 @@ export default function App() {
       if (!isLocalDevEnv) {
         localStorage.removeItem('maxy_access_token');
         localStorage.removeItem('maxy_refresh_token');
+        localStorage.removeItem('maxy_user_name');
+        localStorage.removeItem('maxy_user_email');
+        localStorage.removeItem('maxy_user_tier');
+        localStorage.removeItem('maxy_has_tier1');
+        localStorage.removeItem('maxy_has_tier2');
+        localStorage.removeItem('maxy_package_name');
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(BACKUP_KEY);
+        localStorage.removeItem('ai_navigator_opened_chests');
         setIsAuthValidating(false);
         window.location.href = getLandingUrl();
       } else {
@@ -582,7 +604,17 @@ export default function App() {
   const handleLogout = () => {
     localStorage.removeItem('maxy_access_token');
     localStorage.removeItem('maxy_refresh_token');
+    localStorage.removeItem('maxy_user_name');
+    localStorage.removeItem('maxy_user_email');
+    localStorage.removeItem('maxy_user_tier');
+    localStorage.removeItem('maxy_has_tier1');
+    localStorage.removeItem('maxy_has_tier2');
+    localStorage.removeItem('maxy_package_name');
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(BACKUP_KEY);
+    localStorage.removeItem('ai_navigator_opened_chests');
+    sessionStorage.clear();
+
     const isLocalDev = typeof window !== 'undefined' && (
       window.location.hostname === 'localhost' ||
       window.location.hostname === '127.0.0.1' ||
