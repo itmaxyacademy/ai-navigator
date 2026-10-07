@@ -204,7 +204,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
 
           <button
             onClick={onClose}
-            className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-sm transition-all shadow-lg shadow-amber-500/20 cursor-pointer"
+            className="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition-all shadow-md cursor-pointer"
           >
             Lanjutkan Belajar Modul
           </button>
@@ -855,7 +855,7 @@ const CertificateModalComponent: React.FC<CertificateModalProps> = ({
                 className={`w-full py-3.5 rounded-2xl font-black text-xs sm:text-sm shadow-lg transition-all flex items-center justify-center gap-2 mt-3 ${
                   hasTier2 && certType === 'capstone' && progress.capstoneStatus !== 'approved'
                     ? 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed border border-slate-300 dark:border-slate-700'
-                    : 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 shadow-amber-500/25 cursor-pointer hover:scale-[1.01]'
+                    : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md cursor-pointer'
                 }`}
               >
                 <ShieldCheck className="w-4 h-4" />

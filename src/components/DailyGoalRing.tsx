@@ -145,8 +145,8 @@ export const DailyGoalRing: React.FC<DailyGoalRingProps> = ({
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
                     isGoalReached
-                      ? 'bg-gradient-to-r from-emerald-500 to-teal-400'
-                      : 'bg-gradient-to-r from-indigo-500 to-purple-500'
+                      ? 'bg-emerald-500'
+                      : 'bg-indigo-600'
                   }`}
                   style={{ width: `${percent}%` }}
                 />
@@ -154,7 +154,7 @@ export const DailyGoalRing: React.FC<DailyGoalRingProps> = ({
 
               <p className="text-[11px] opacity-90 leading-relaxed">
                 {isGoalReached
-                  ? '🎉 Luar biasa! Anda telah mencapai target belajar harian hari ini.'
+                  ? 'Luar biasa! Anda telah mencapai target belajar harian hari ini.'
                   : `Kurang ${Math.max(0, goalMinutes - minutesToday)} menit lagi untuk menyelesaikan target hari ini!`}
               </p>
             </div>

@@ -178,15 +178,10 @@ export const Achievements: React.FC<AchievementsProps> = ({
               onClick={() => setSelectedBadge(badge)}
               className={`relative rounded-2xl border p-4 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between group hover:scale-[1.02] ${
                 isUnlocked
-                  ? `bg-gradient-to-br ${badge.gradientBg} ${badge.borderColor} shadow-lg hover:shadow-indigo-500/10`
+                  ? `bg-white dark:bg-slate-900 ${badge.borderColor} shadow-md`
                   : 'bg-slate-100 dark:bg-slate-950/60 border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:border-slate-700 opacity-80 hover:opacity-100'
               }`}
             >
-              {/* Unlocked Shimmer Effect */}
-              {isUnlocked && (
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
-              )}
-
               {/* Card Header: Icon & XP Badge */}
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div
@@ -253,7 +248,7 @@ export const Achievements: React.FC<AchievementsProps> = ({
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       isUnlocked
-                        ? 'bg-gradient-to-r from-emerald-500 to-teal-400'
+                        ? 'bg-emerald-500'
                         : 'bg-indigo-600/70'
                     }`}
                     style={{ width: `${progressInfo.percent}%` }}
@@ -293,7 +288,7 @@ export const Achievements: React.FC<AchievementsProps> = ({
                 <div
                   className={`w-20 h-20 rounded-3xl border-2 mx-auto flex items-center justify-center shadow-2xl ${
                     selectedBadge.checkUnlocked(progress, totalModulesCount)
-                      ? `bg-gradient-to-br ${selectedBadge.gradientBg} ${selectedBadge.borderColor} shadow-indigo-500/20 animate-bounce`
+                      ? `bg-slate-900 ${selectedBadge.borderColor} shadow-xl animate-bounce`
                       : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600'
                   }`}
                   style={{ animationDuration: '3s' }}
@@ -339,8 +334,8 @@ export const Achievements: React.FC<AchievementsProps> = ({
                   }`}
                 >
                   {selectedBadge.checkUnlocked(progress, totalModulesCount)
-                    ? 'Terbuka 🎉'
-                    : 'Belum Terbuka 🔒'}
+                    ? 'Terbuka'
+                    : 'Belum Terbuka'}
                 </span>
               </div>
             </div>
@@ -348,9 +343,9 @@ export const Achievements: React.FC<AchievementsProps> = ({
             {selectedBadge.checkUnlocked(progress, totalModulesCount) && (
               <button
                 onClick={handleTestConfetti}
-                className="w-full py-2.5 bg-gradient-to-r from-amber-500 to-indigo-600 hover:opacity-90 text-slate-900 dark:text-white text-xs font-bold rounded-xl shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
               >
-                <Sparkles className="w-4 h-4" /> Rayakan Lencana Ini!
+                <Sparkles className="w-4 h-4" /> Rayakan Lencana Ini
               </button>
             )}
 

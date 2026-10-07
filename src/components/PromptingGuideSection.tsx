@@ -42,7 +42,6 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
     <div className="space-y-8 animate-fadeIn text-slate-900 dark:text-slate-100">
       {/* Top Banner Header (Dark Navy matching Roadmap Group Banner) */}
       <div className="relative overflow-hidden rounded-3xl bg-[#0d1322] border border-slate-800 p-6 sm:p-8 shadow-xl text-white">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/15 rounded-full blur-3xl -z-10" />
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 text-xs font-black shadow-sm">
@@ -59,7 +58,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
 
           <button
             onClick={onAdvanceToQuiz}
-            className="shrink-0 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xs flex items-center gap-2.5 shadow-xl shadow-indigo-600/30 transition-all hover:scale-105 cursor-pointer"
+            className="shrink-0 px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs flex items-center gap-2.5 shadow-md transition-all active:scale-95 cursor-pointer"
           >
             <span>Lanjut ke Kuis Akhir</span>
             <ArrowRight className="w-4 h-4" />
@@ -192,7 +191,7 @@ export const PromptingGuideSection: React.FC<PromptingGuideSectionProps> = ({
         </div>
         <button
           onClick={onAdvanceToQuiz}
-          className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xs sm:text-sm flex items-center gap-2.5 shadow-xl shadow-indigo-600/30 transition-all hover:scale-105 shrink-0 cursor-pointer"
+          className="px-8 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs sm:text-sm flex items-center gap-2.5 shadow-md transition-all active:scale-95 shrink-0 cursor-pointer"
         >
           <span>Mulai Kuis Sekarang</span>
           <ArrowRight className="w-4 h-4" />

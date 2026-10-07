@@ -50,7 +50,7 @@ export interface GroupData {
   subtitle: string;
   badge: string;
   moduleRange: [number, number];
-  themeGradient: string;
+  solidColor: string;
   borderColor: string;
   badgeBg: string;
   iconName: string;
@@ -59,55 +59,55 @@ export interface GroupData {
 export const PATH_GROUPS: GroupData[] = [
   {
     id: 1,
-    title: "KELOMPOK 1 — Pengenalan & Prompting Dasar",
+    title: "KELOMPOK 1: Pengenalan & Prompting Dasar",
     subtitle: "RCTF, ChatGPT, Claude, Gemini, Perplexity, Copilot, Meta AI, & DeepSeek",
     badge: "Fondasi Utama (Modul 1-8)",
     moduleRange: [1, 8],
-    themeGradient: "from-cyan-500 via-indigo-500 to-blue-600",
-    borderColor: "border-cyan-500/40",
-    badgeBg: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+    solidColor: "bg-blue-600",
+    borderColor: "border-blue-500/40",
+    badgeBg: "bg-blue-500/20 text-blue-300 border-blue-500/30",
     iconName: "Sparkles",
   },
   {
     id: 2,
-    title: "KELOMPOK 2 — AI Generatif Visual, Video & Riset Konten",
+    title: "KELOMPOK 2: AI Generatif Visual, Video & Riset Konten",
     subtitle: "NotebookLM, Google Flow, Leonardo.Ai, Stitch, Stable Diffusion, OpenArt, & Craiyon",
     badge: "Media & Riset (Modul 9-15)",
     moduleRange: [9, 15],
-    themeGradient: "from-purple-500 via-rose-500 to-pink-600",
+    solidColor: "bg-purple-600",
     borderColor: "border-purple-500/40",
     badgeBg: "bg-purple-500/20 text-purple-300 border-purple-500/30",
     iconName: "Video",
   },
   {
     id: 3,
-    title: "KELOMPOK 3 — AI Generatif Audio, Musik & Dev Environment",
+    title: "KELOMPOK 3: AI Generatif Audio, Musik & Dev Environment",
     subtitle: "ElevenLabs, Suno AI, Google AI Studio, & Sonauto / Treblo",
     badge: "Audio & Dev (Modul 16-19)",
     moduleRange: [16, 19],
-    themeGradient: "from-amber-500 via-orange-500 to-yellow-600",
+    solidColor: "bg-amber-500",
     borderColor: "border-amber-500/40",
     badgeBg: "bg-amber-500/20 text-amber-300 border-amber-500/30",
     iconName: "Music",
   },
   {
     id: 4,
-    title: "KELOMPOK 4 — AI Agent & Produktivitas Kustom",
+    title: "KELOMPOK 4: AI Agent & Produktivitas Kustom",
     subtitle: "Fathom Meeting Notetaker, Gemini Custom Gems, & Mistral Vibe Agent",
     badge: "Agent & Automation (Modul 20-22)",
     moduleRange: [20, 22],
-    themeGradient: "from-emerald-500 via-teal-500 to-cyan-600",
+    solidColor: "bg-emerald-600",
     borderColor: "border-emerald-500/40",
     badgeBg: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
     iconName: "Bot",
   },
   {
     id: 5,
-    title: "KELOMPOK 5 — Skill Automation & Fungsi Lanjutan Platform",
+    title: "KELOMPOK 5: Skill Automation & Fungsi Lanjutan Platform",
     subtitle: "Claude Artifacts, Kimi AI, Lumo, Lovable, Gamma, Manus, & Notion AI",
     badge: "Skill Lanjutan (Modul 23-29)",
     moduleRange: [23, 29],
-    themeGradient: "from-indigo-500 via-purple-500 to-amber-500",
+    solidColor: "bg-indigo-600",
     borderColor: "border-indigo-500/40",
     badgeBg: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
     iconName: "Terminal",
@@ -277,37 +277,32 @@ export interface CheckpointMilestone {
   title: string;
   levelBadge: string;
   message: string;
-  themeGradient: string;
 }
 
 export const CHECKPOINT_MILESTONES: CheckpointMilestone[] = [
   {
     afterModuleId: 8,
-    title: "🚀 Level Up: Master Prompting & Conversational AI!",
+    title: "Level Up: Master Prompting & Conversational AI",
     levelBadge: "Prompt Engineer Level 1",
     message: "Luar biasa! Anda telah menyelesaikan Kelompok 1: 8 modul dasar prompting & AI percakapan terpopuler!",
-    themeGradient: "from-cyan-500 to-blue-600",
   },
   {
     afterModuleId: 15,
-    title: "🎨 Level Up: Kreator Visual & Video AI!",
+    title: "Level Up: Kreator Visual & Video AI",
     levelBadge: "Visual AI Specialist",
     message: "Hebat! Anda telah menyelesaikan Kelompok 2: Alat-alat AI terkemuka untuk media visual, video, dan riset!",
-    themeGradient: "from-purple-500 to-rose-600",
   },
   {
     afterModuleId: 19,
-    title: "🎵 Level Up: Maestro Audio & Developer AI!",
+    title: "Level Up: Maestro Audio & Developer AI",
     levelBadge: "Audio & Dev Specialist",
     message: "Spektakuler! Anda telah menyelesaikan Kelompok 3: AI Voice, Suno Music Studio, dan Google AI Studio!",
-    themeGradient: "from-amber-500 to-orange-600",
   },
   {
     afterModuleId: 22,
-    title: "🤖 Level Up: Spesialis Agent & Produktivitas!",
+    title: "Level Up: Spesialis Agent & Produktivitas",
     levelBadge: "AI Productivity Architect",
     message: "Dahsyat! Anda telah menyelesaikan Kelompok 4: Fathom, Custom Gems, dan Mistral Vibe Agents!",
-    themeGradient: "from-emerald-500 to-teal-600",
   },
 ];
 
@@ -360,14 +355,13 @@ const NavigatorMascot = ({ moduleTitle }: { moduleTitle: string }) => {
       className="absolute -top-16 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-none w-60"
     >
       {/* Speech Bubble */}
-      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 text-white text-[11px] font-black px-3 py-1 rounded-2xl shadow-xl border border-indigo-300/60 text-center flex items-center gap-1.5 mb-1 whitespace-nowrap">
-        <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0 animate-pulse" />
-        <span>📍 Lanjutkan Belajar Di Sini</span>
+      <div className="bg-indigo-600 text-white text-[11px] font-bold px-3 py-1 rounded-xl shadow-lg border border-indigo-400/60 text-center flex items-center gap-1.5 mb-1 whitespace-nowrap">
+        <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+        <span>Lanjutkan Belajar Di Sini</span>
       </div>
 
       {/* Cyber Mascot Avatar */}
       <div className="relative w-11 h-11">
-        <div className="absolute inset-0 bg-indigo-500/40 rounded-full blur-md opacity-80 animate-pulse" />
         <div className="relative w-full h-full bg-slate-900 border-2 border-cyan-400 rounded-2xl p-0.5 shadow-xl flex items-center justify-center">
           <div className="relative flex flex-col items-center">
             <div className="w-7 h-5 bg-slate-950 rounded-lg border border-indigo-400 flex items-center justify-center relative overflow-hidden">
@@ -475,7 +469,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
     // Check prerequisite module completion
     const prereqCompleted = progress.completedModules.includes(chest.afterModuleId);
     if (!prereqCompleted) {
-      setLockedTooltip(`🔒 Selesaikan Modul ${chest.afterModuleId} terlebih dahulu untuk membuka ${chest.title}!`);
+      setLockedTooltip(`Selesaikan Modul ${chest.afterModuleId} terlebih dahulu untuk membuka ${chest.title}!`);
       setTimeout(() => setLockedTooltip(null), 3500);
       return;
     }
@@ -519,7 +513,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
 
   const handleGraduationClick = () => {
     if (completedCount < totalModules) {
-      setLockedTooltip(`🔒 Selesaikan seluruh ${totalModules} modul untuk membuka Puncak Kelulusan AI Master! (${completedCount}/${totalModules} Selesai)`);
+      setLockedTooltip(`Selesaikan seluruh ${totalModules} modul untuk membuka Puncak Kelulusan AI Master! (${completedCount}/${totalModules} Selesai)`);
       setTimeout(() => setLockedTooltip(null), 4000);
       return;
     }
@@ -552,10 +546,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
   return (
     <div className="space-y-6 sm:space-y-8 pb-16 min-h-screen p-2 sm:p-6 rounded-2xl sm:rounded-3xl font-sans text-slate-900 dark:text-slate-100 bg-slate-100/90 dark:bg-[#070b19]">
       {/* ---------------- TOP HERO BANNER ---------------- */}
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border border-slate-700/60 p-4 sm:p-6 md:p-8 shadow-2xl text-white">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none" />
-
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-[#0d1322] border border-slate-800 p-4 sm:p-6 md:p-8 shadow-xl text-white">
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-center">
           <div className="md:col-span-8 space-y-3">
             <div className="flex flex-wrap items-center gap-2">
@@ -564,7 +555,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold hover:scale-105 transition-transform cursor-pointer"
               >
                 <Flame className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                <span>🔥 {progress.streakDays} Hari Streak</span>
+                <span>{progress.streakDays} Hari Streak</span>
               </button>
 
               {progress.isExpired && (
@@ -577,13 +568,13 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 pt-1">
               <img
-                src="https://cms.maxy.academy/uploads/LogoMaxy.png"
-                alt="Maxy Academy Logo"
-                className="h-8 sm:h-11 w-auto object-contain shrink-0 self-start sm:self-auto"
+                src={`${import.meta.env.BASE_URL}logo-ai-navigator.svg`}
+                alt="AI Navigator"
+                className="h-9 w-9 sm:h-11 sm:w-11 object-contain shrink-0 self-start sm:self-auto"
               />
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
-                <span className="text-white font-extrabold">AI Navigator — </span>
-                <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent block sm:inline">Platform Pembelajaran LLM Interaktif</span>
+                <span className="text-white font-extrabold">AI Navigator: </span>
+                <span className="text-amber-400 font-extrabold block sm:inline">Platform Pembelajaran LLM Interaktif</span>
               </h1>
             </div>
             <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl font-medium">
@@ -591,17 +582,17 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
             </p>
 
             <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-stretch sm:items-center gap-2 sm:gap-2.5 text-xs">
-              <div className="flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3 py-2 rounded-2xl border border-slate-700/60 text-slate-200">
+              <div className="flex items-center gap-2 bg-slate-900 px-3 py-2 rounded-2xl border border-slate-800 text-slate-200">
                 <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
                 <span className="truncate">Progres: <strong className="text-amber-300">{completedCount}/{totalModules} Modul</strong> ({progressPercent}%)</span>
               </div>
-              <div className="flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3 py-2 rounded-2xl border border-slate-700/60 text-slate-200">
+              <div className="flex items-center gap-2 bg-slate-900 px-3 py-2 rounded-2xl border border-slate-800 text-slate-200">
                 <Clock className="w-4 h-4 text-indigo-400 shrink-0" />
                 <span className="truncate">Sisa Waktu: <strong className="text-indigo-300">{timeCalc.formattedText}</strong></span>
               </div>
               <button
                 onClick={onOpenStreakModal}
-                className="flex items-center gap-2 bg-indigo-950/80 hover:bg-indigo-900/90 px-3 py-2 rounded-2xl border border-indigo-700/60 text-slate-200 transition-all cursor-pointer"
+                className="flex items-center gap-2 bg-indigo-950/80 hover:bg-indigo-900/90 px-3 py-2 rounded-2xl border border-indigo-800 text-slate-200 transition-all cursor-pointer"
               >
                 <Award className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="truncate">Lvl {levelInfo.level} ({levelInfo.title}): <strong className="text-amber-400">{progress.xp} XP</strong></span>
@@ -609,7 +600,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
               {onOpenAchievements && (
                 <button
                   onClick={onOpenAchievements}
-                  className="flex items-center gap-2 bg-amber-950/80 hover:bg-amber-900/90 px-3 py-2 rounded-2xl border border-amber-700/60 text-amber-200 transition-all cursor-pointer hover:scale-105"
+                  className="flex items-center gap-2 bg-amber-950/80 hover:bg-amber-900/90 px-3 py-2 rounded-2xl border border-amber-800 text-amber-200 transition-all cursor-pointer hover:scale-105"
                 >
                   <Gift className="w-4 h-4 text-amber-400 shrink-0" />
                   <span className="truncate">Peti Unlocked ({allOpenedChestIds.length}/{TREASURE_CHESTS.length})</span>
@@ -619,14 +610,14 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
           </div>
 
           {/* Progress gauge card */}
-          <div className="md:col-span-4 bg-slate-900/90 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-700/60 text-center space-y-2.5 sm:space-y-3 shadow-xl">
+          <div className="md:col-span-4 bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-800 text-center space-y-2.5 sm:space-y-3 shadow-xl">
             <div className="flex justify-between items-center text-xs text-slate-300">
               <span className="font-bold text-slate-200">Progres Kelulusan</span>
               <span className="font-black text-amber-400 text-sm">{progressPercent}%</span>
             </div>
             <div className="w-full bg-slate-950 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-800">
               <div
-                className="bg-gradient-to-r from-amber-500 via-indigo-500 to-emerald-400 h-full rounded-full transition-all duration-700 shadow-md"
+                className="bg-amber-500 h-full rounded-full transition-all duration-700 shadow-sm"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
@@ -728,7 +719,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                 className="w-full rounded-2xl sm:rounded-3xl bg-white dark:bg-[#0c111d] border border-slate-200/90 dark:border-slate-800/90 shadow-lg shadow-slate-900/5 dark:shadow-black/30 overflow-hidden relative text-slate-900 dark:text-white animate-fadeIn scroll-mt-24"
               >
                 {/* Refined Top Accent Line */}
-                <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-amber-500/40 to-transparent dark:via-amber-400/30" />
+                <div className="h-[2px] w-full bg-amber-500/30" />
 
                 <div className="p-6 sm:p-7 space-y-5">
                   {/* Header Row */}
@@ -1034,14 +1025,6 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
           {/* ========================================================================= */}
           {viewMode === 'map' && (
             <div className="relative max-w-2xl mx-auto py-8 sm:py-12 px-2 sm:px-8 bg-slate-100 dark:bg-slate-950/80 rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-              {/* Dotted Grid Background */}
-              <div 
-                className="absolute inset-0 opacity-20 pointer-events-none"
-                style={{
-                  backgroundImage: `radial-gradient(circle at 1.5px 1.5px, #f59e0b 1.5px, transparent 0)`,
-                  backgroundSize: `28px 28px`
-                }}
-              />
 
               {/* Path Container */}
               <div className="relative flex flex-col items-center space-y-10 sm:space-y-12 z-10">
@@ -1073,7 +1056,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                       {/* GROUP HEADER BANNER (If module is first in group) */}
                       {groupStart && (
                         <div className="w-full my-6 sm:my-8 py-4 sm:py-5 px-4 sm:px-6 rounded-2xl sm:rounded-3xl bg-slate-900 border border-slate-700/90 shadow-2xl space-y-2 text-center relative overflow-hidden text-white">
-                          <div className={`absolute top-0 left-0 w-2.5 h-full bg-gradient-to-b ${groupStart.themeGradient}`} />
+                          <div className={`absolute top-0 left-0 w-2.5 h-full ${groupStart.solidColor}`} />
                           <div className="flex flex-wrap items-center justify-between gap-2">
                             <span className={`text-[11px] font-black px-3 py-1 rounded-full border shadow-sm ${groupStart.badgeBg}`}>
                               {groupStart.badge}
@@ -1111,18 +1094,18 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                           <button
                           onClick={() => {
                             if (progress.isExpired && userTier !== 'free') {
-                              setLockedTooltip(`🔒 Masa aktif akses modul telah berakhir (6 bulan). Sertifikat dan transkrip kelulusan Anda tetap berlaku seumur hidup dan dapat dicetak pada bagian bawah halaman.`);
+                              setLockedTooltip(`Masa aktif akses modul telah berakhir (6 bulan). Sertifikat dan transkrip kelulusan Anda tetap berlaku seumur hidup dan dapat dicetak pada bagian bawah halaman.`);
                               setTimeout(() => setLockedTooltip(null), 4500);
                             } else if (isFreeTrialLocked) {
                               if (onOpenUpgradeModal) {
                                 onOpenUpgradeModal(module.id);
                               } else {
-                                setLockedTooltip(`🔒 Status Free Trial dapat mengakses Modul 1 hingga Modul 3. Silakan upgrade ke Tier 1 atau Tier 2!`);
+                                setLockedTooltip(`Status Free Trial dapat mengakses Modul 1 hingga Modul 3. Silakan upgrade ke Tier 1 atau Tier 2!`);
                                 setTimeout(() => setLockedTooltip(null), 3500);
                               }
                             } else if (isLocked) {
                               const prevModule = modules[index - 1];
-                              setLockedTooltip(`🔒 Selesaikan Modul ${prevModule.id} (${prevModule.title}) terlebih dahulu!`);
+                              setLockedTooltip(`Selesaikan Modul ${prevModule.id} (${prevModule.title}) terlebih dahulu!`);
                               setTimeout(() => setLockedTooltip(null), 3500);
                             } else {
                               setSelectedNodeModule(module);
@@ -1132,20 +1115,15 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                             isCurrent ? 'z-20' : 'z-10'
                           }`}
                         >
-                          {/* Glowing halo for active node */}
-                          {isCurrent && (
-                            <div className="absolute inset-0 -m-3 rounded-full bg-amber-400/30 blur-md animate-pulse" />
-                          )}
-
                           {/* Node Circle Shape */}
                           <div
                             className={`w-20 h-20 sm:w-22 sm:h-22 rounded-3xl flex flex-col items-center justify-center relative shadow-xl transition-all border-4 ${
                               isCompleted
-                                ? 'bg-gradient-to-b from-emerald-500 via-emerald-600 to-emerald-800 border-emerald-300 text-white shadow-emerald-500/30'
+                                ? 'bg-emerald-600 border-emerald-400 text-white shadow-md'
                                 : isFreeTrialLocked
-                                ? 'bg-white dark:bg-slate-900 border-amber-500/50 text-amber-500 dark:text-amber-400 shadow-amber-500/10'
+                                ? 'bg-white dark:bg-slate-900 border-amber-500/50 text-amber-500 dark:text-amber-400 shadow-sm'
                                 : isCurrent
-                                ? 'bg-gradient-to-b from-amber-400 via-amber-600 to-yellow-700 border-amber-200 text-slate-950 shadow-amber-400/50 ring-4 ring-amber-500/40'
+                                ? 'bg-amber-500 border-amber-300 text-slate-950 shadow-md ring-4 ring-amber-400/30'
                                 : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-400 dark:text-slate-600 shadow-sm'
                             }`}
                           >
@@ -1236,9 +1214,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                               >
                                 <div className={`w-16 h-16 rounded-2xl flex items-center justify-center relative shadow-xl transition-all ${
                                   isOpened
-                                    ? 'bg-gradient-to-b from-emerald-600 to-emerald-900 border-2 border-emerald-400 shadow-emerald-500/20'
+                                    ? 'bg-emerald-700 border-2 border-emerald-400 shadow-md'
                                     : isPrereqDone
-                                    ? 'bg-gradient-to-b from-amber-400 via-orange-500 to-amber-700 border-2 border-amber-200 shadow-amber-500/40 ring-4 ring-amber-400/30'
+                                    ? 'bg-amber-500 border-2 border-amber-300 shadow-md ring-4 ring-amber-400/30'
                                     : 'bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 text-slate-600'
                                 }`}>
                                   <Gift className={`w-8 h-8 ${
@@ -1257,8 +1235,8 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                                   )}
 
                                   {isOpened && (
-                                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-emerald-400 rounded-full text-slate-950 flex items-center justify-center font-bold text-xs">
-                                      ✓
+                                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-emerald-400 rounded-full text-slate-950 flex items-center justify-center">
+                                      <Check className="w-3 h-3 stroke-[3]" />
                                     </div>
                                   )}
                                 </div>
@@ -1279,14 +1257,14 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                       {/* CHECKPOINT MILESTONE (Inter-Group Level Up)               */}
                       {/* ========================================================== */}
                       {milestoneAfter && (
-                        <div className="w-full my-4 py-3 px-4 rounded-2xl bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 border border-indigo-500/40 text-center space-y-1 shadow-lg z-10">
+                        <div className="w-full my-4 py-3 px-4 rounded-2xl bg-slate-900 border border-indigo-600/40 text-center space-y-1 shadow-lg z-10">
                           <button
                             onClick={() => handleCheckpointClick(milestoneAfter)}
                             className="w-full flex items-center justify-between text-left group cursor-pointer"
                           >
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center text-slate-950 font-bold shrink-0">
-                                🚀
+                              <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 font-bold shrink-0">
+                                <Sparkles className="w-5 h-5 text-slate-950" />
                               </div>
                               <div>
                                 <h4 className="text-xs sm:text-sm font-extrabold text-amber-300 group-hover:text-amber-200 transition-colors">
@@ -1315,7 +1293,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                   >
                     <div className={`w-24 h-24 rounded-3xl flex items-center justify-center relative shadow-2xl transition-all border-4 ${
                       completedCount === totalModules
-                        ? 'bg-gradient-to-b from-amber-300 via-amber-500 to-yellow-600 border-amber-200 shadow-amber-500/60 ring-8 ring-amber-400/30 animate-pulse'
+                        ? 'bg-amber-500 border-amber-300 shadow-xl ring-4 ring-amber-400/30'
                         : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600'
                     }`}>
                       <Crown className={`w-12 h-12 ${
@@ -1333,8 +1311,8 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                     </span>
                     <span className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5 font-medium">
                       {completedCount === totalModules
-                        ? '🎉 Klik untuk Mengklaim Sertifikat Kelulusan Resmi!'
-                        : `Terkunci — Selesaikan seluruh ${totalModules} modul untuk klaim sertifikat.`}
+                        ? 'Klik untuk Mengklaim Sertifikat Kelulusan Resmi!'
+                        : `Terkunci: Selesaikan seluruh ${totalModules} modul untuk klaim sertifikat.`}
                     </span>
                   </button>
                 </div>
@@ -1365,10 +1343,10 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                       isCurrent
                         ? 'bg-white dark:bg-slate-900 border-amber-500/80 shadow-xl shadow-amber-500/10'
                         : isFreeTrialLocked
-                        ? 'bg-white dark:bg-slate-50/80 dark:bg-slate-900/40 border-amber-500/30 hover:border-amber-500/60'
+                        ? 'bg-white dark:bg-slate-900/40 border-amber-500/30 hover:border-amber-500/60'
                         : isCompleted
-                        ? 'bg-white dark:bg-emerald-50/50 dark:bg-slate-900/80 border-emerald-500/40'
-                        : 'bg-white dark:bg-slate-50/80 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:border-slate-700'
+                        ? 'bg-white dark:bg-slate-900/80 border-emerald-500/40'
+                        : 'bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:border-slate-700'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -1402,16 +1380,16 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                     </div>
 
                     <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-2 font-medium">
-                      {module.subtitle} — {module.content.overview.tagline}
+                      {module.subtitle}: {module.content.overview.tagline}
                     </p>
 
                     {isCompleted && score !== undefined && (
-                      <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200 dark:border-slate-800/80 text-emerald-400 font-semibold">
+                      <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200 dark:border-slate-800/80 text-emerald-600 dark:text-emerald-400 font-semibold">
                         <span className="flex items-center gap-1">
                           <Check className="w-4 h-4" />
                           Selesai
                         </span>
-                        <span className="text-amber-400 font-bold">Skor Kuis: {score}/{module.content.quiz.length}</span>
+                        <span className="text-amber-600 dark:text-amber-400 font-bold">Skor Kuis: {score}/{module.content.quiz.length}</span>
                       </div>
                     )}
                   </div>
@@ -1424,64 +1402,64 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
         {/* Sidebar Column */}
         <div className="lg:col-span-5 xl:col-span-4 space-y-6 lg:sticky lg:top-24">
           {/* Sidebar Tab Controls Header */}
-          <div className="grid grid-cols-5 gap-1 p-1 bg-slate-100 dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm">
+          <div className="grid grid-cols-5 gap-1 p-1 bg-slate-100 dark:bg-[#0d1322] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xs">
             <button
               onClick={() => setSidebarTab('challenge')}
-              className={`flex items-center justify-center gap-1 py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
+              className={`flex items-center justify-center gap-1 py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
                 sidebarTab === 'challenge'
-                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
+                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow-xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
               }`}
             >
-              <Flame className={`w-3 h-3 shrink-0 ${sidebarTab === 'challenge' ? 'text-slate-950 fill-slate-950' : 'text-amber-500'}`} />
-              <span className="truncate">Tantangan</span>
+              <Flame className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'challenge' ? 'text-slate-950 fill-slate-950' : 'text-amber-500'}`} />
+              <span className="truncate">Harian</span>
             </button>
 
             <button
               onClick={() => setSidebarTab('flashcards')}
-              className={`flex items-center justify-center gap-1 py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
+              className={`flex items-center justify-center gap-1 py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
                 sidebarTab === 'flashcards'
-                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
+                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow-xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
               }`}
             >
-              <Layers className={`w-3 h-3 shrink-0 ${sidebarTab === 'flashcards' ? 'text-slate-950' : 'text-amber-500'}`} />
+              <Layers className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'flashcards' ? 'text-slate-950' : 'text-amber-500'}`} />
               <span className="truncate">Kartu</span>
             </button>
 
             <button
               onClick={() => setSidebarTab('skills')}
-              className={`flex items-center justify-center gap-1 py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
+              className={`flex items-center justify-center gap-1 py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
                 sidebarTab === 'skills'
-                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
+                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow-xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
               }`}
             >
-              <Compass className={`w-3 h-3 shrink-0 ${sidebarTab === 'skills' ? 'text-slate-950' : 'text-amber-500'}`} />
+              <Compass className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'skills' ? 'text-slate-950' : 'text-amber-500'}`} />
               <span className="truncate">Radar</span>
             </button>
 
             <button
               onClick={() => setSidebarTab('analytics')}
-              className={`flex items-center justify-center gap-1 py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
+              className={`flex items-center justify-center gap-1 py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
                 sidebarTab === 'analytics'
-                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
+                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow-xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
               }`}
             >
-              <Zap className={`w-3 h-3 shrink-0 ${sidebarTab === 'analytics' ? 'text-slate-950' : 'text-amber-500'}`} />
+              <Zap className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'analytics' ? 'text-slate-950' : 'text-amber-500'}`} />
               <span className="truncate">Analisis</span>
             </button>
 
             <button
               onClick={() => setSidebarTab('tips')}
-              className={`flex items-center justify-center gap-1 py-1.5 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
+              className={`flex items-center justify-center gap-1 py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap min-w-0 ${
                 sidebarTab === 'tips'
-                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow-md'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200/70 dark:hover:bg-slate-100 dark:bg-slate-800/50'
+                  ? 'bg-amber-500 text-slate-950 font-extrabold shadow-xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
               }`}
             >
-              <BookOpen className={`w-3 h-3 shrink-0 ${sidebarTab === 'tips' ? 'text-slate-950' : 'text-amber-500'}`} />
+              <BookOpen className={`w-3.5 h-3.5 shrink-0 ${sidebarTab === 'tips' ? 'text-slate-950' : 'text-amber-500'}`} />
               <span className="truncate">Tips</span>
             </button>
           </div>
@@ -1631,9 +1609,9 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                   {selectedNodeModule.content.overview.tagline}
                 </p>
                 <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-200 dark:border-slate-900 text-[11px] font-medium">
-                  <span>⏱ Estimasi: {selectedNodeModule.estimatedMinutes} Menit</span>
-                  <span>❓ Kuis: {selectedNodeModule.content.quiz.length} Soal</span>
-                  <span>✨ Hadiah: +100 XP</span>
+                  <span>Estimasi: {selectedNodeModule.estimatedMinutes} Menit</span>
+                  <span>Kuis: {selectedNodeModule.content.quiz.length} Soal</span>
+                  <span>Hadiah: +100 XP</span>
                 </div>
               </div>
 
@@ -1650,7 +1628,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                       onSelectModule(id);
                     }
                   }}
-                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-amber-500/30 transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
                 >
                   <Play className="w-4 h-4 fill-current" />
                   <span>
@@ -1688,15 +1666,15 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
 
                 <div className={`w-20 h-20 mx-auto rounded-3xl flex items-center justify-center shadow-2xl border-2 ${
                   isClaimed
-                    ? 'bg-gradient-to-b from-emerald-500 to-emerald-700 border-emerald-300 shadow-emerald-500/30'
-                    : 'bg-gradient-to-b from-amber-400 to-amber-600 border-amber-200 shadow-amber-500/50'
+                    ? 'bg-emerald-600 border-emerald-400 shadow-md'
+                    : 'bg-amber-500 border-amber-300 shadow-md'
                 }`}>
                   <Gift className={`w-10 h-10 ${isClaimed ? 'text-white' : 'text-slate-950 fill-amber-200'}`} />
                 </div>
 
                 <div className="space-y-1">
                   <span className={`text-[10px] font-black uppercase tracking-wider ${isClaimed ? 'text-emerald-400' : 'text-amber-400'}`}>
-                    {isClaimed ? '✓ Bonus Telah Diklaim' : '🎉 Bonus Peti Harta Karun!'}
+                    {isClaimed ? '✓ Bonus Telah Diklaim' : 'Bonus Peti Harta Karun'}
                   </span>
                   <h3 className="text-xl sm:text-2xl font-black text-amber-300">{unboxedChest.title}</h3>
                   <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
@@ -1707,7 +1685,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                 {/* Bonus Mini Tutorial Preview */}
                 <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-left space-y-3 text-xs">
                   <div className="font-extrabold text-amber-300 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
-                    <span>💡 Mini Tutorial: {unboxedChest.bonusToolName}</span>
+                    <span>Mini Tutorial: {unboxedChest.bonusToolName}</span>
                     <span className={`text-[10px] px-2 py-0.5 rounded-full border ${
                       isClaimed
                         ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
@@ -1744,13 +1722,13 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                       handleClaimChest(unboxedChest);
                     }
                   }}
-                  className={`w-full py-3.5 rounded-2xl font-black text-xs shadow-lg transition-all cursor-pointer ${
+                  className={`w-full py-3.5 rounded-2xl font-bold text-xs shadow-md transition-all cursor-pointer ${
                     isClaimed
                       ? 'bg-slate-800 hover:bg-slate-700 text-white'
-                      : 'bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 shadow-amber-500/20'
+                      : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/10'
                   }`}
                 >
-                  {isClaimed ? '✓ Peti Sudah Diklaim (Tutup Tutorial)' : `🎁 Buka Peti & Klaim (+${unboxedChest.xpReward} XP)`}
+                  {isClaimed ? '✓ Peti Sudah Diklaim (Tutup Tutorial)' : `Buka Peti & Klaim (+${unboxedChest.xpReward} XP)`}
                 </button>
               </motion.div>
             </div>
@@ -1777,8 +1755,8 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-3xl shadow-2xl shadow-indigo-500/50">
-                🚀
+              <div className="w-20 h-20 mx-auto rounded-3xl bg-indigo-600 flex items-center justify-center shadow-xl">
+                <Sparkles className="w-8 h-8 text-white" />
               </div>
 
               <div className="space-y-2">
@@ -1798,7 +1776,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
 
               <button
                 onClick={() => setActiveCheckpoint(null)}
-                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-slate-900 dark:text-white font-extrabold text-xs shadow-lg transition-all cursor-pointer"
+                className="w-full py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
               >
                 Lanjutkan ke Kelompok Berikutnya
               </button>
@@ -1827,8 +1805,7 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
               </button>
 
               {/* Certificate Canvas Preview */}
-              <div className="relative p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-4 border-amber-400/80 shadow-2xl space-y-4 text-center overflow-hidden">
-                <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="relative p-6 sm:p-8 rounded-2xl bg-slate-950 border-2 border-amber-400 shadow-2xl space-y-4 text-center overflow-hidden">
 
                 <div className="flex justify-between items-center border-b border-amber-500/30 pb-4">
                   <div className="flex items-center gap-2 text-left">

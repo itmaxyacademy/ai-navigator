@@ -3,6 +3,9 @@ import { Award, X, Send, Info, CheckCircle2, Link2, FileText, User, Mail, Clock,
 import { UserProgress, CapstoneSubmission } from '../types';
 import { CAPSTONE_BANK, CapstoneTopic } from '../data/capstoneBank';
 
+export const MAX_CAPSTONE_TITLE_LENGTH = 50;
+export const MIN_CAPSTONE_TITLE_LENGTH = 8;
+
 interface CapstoneModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -99,7 +102,7 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
     }
 
     if (!isProgress100) {
-      alert(`🔒 Pengumpulan Capstone Project Terkunci.\n\nAnda harus menyelesaikan seluruh 29 Modul Pembelajaran (100%) terlebih dahulu sebelum dapat mengumpulkan tugas Capstone.\n\nProgres belajar Anda saat ini: ${completedModulesCount}/29 modul.`);
+      alert(`Pengumpulan Capstone Project Terkunci.\n\nAnda harus menyelesaikan seluruh 29 Modul Pembelajaran (100%) terlebih dahulu sebelum dapat mengumpulkan tugas Capstone.\n\nProgres belajar Anda saat ini: ${completedModulesCount}/29 modul.`);
       return;
     }
 
@@ -111,7 +114,13 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
     } else if (!validateEmail(email.trim())) {
       newErrors.email = 'Format email tidak valid.';
     }
-    if (!title.trim()) newErrors.title = 'Judul Capstone Project wajib diisi.';
+    if (!title.trim()) {
+      newErrors.title = 'Judul Capstone Project wajib diisi.';
+    } else if (title.trim().length > MAX_CAPSTONE_TITLE_LENGTH) {
+      newErrors.title = `Judul Capstone maksimal ${MAX_CAPSTONE_TITLE_LENGTH} karakter (saat ini ${title.trim().length}).`;
+    } else if (title.trim().length < MIN_CAPSTONE_TITLE_LENGTH) {
+      newErrors.title = `Judul Capstone minimal ${MIN_CAPSTONE_TITLE_LENGTH} karakter.`;
+    }
     if (!capstoneUrl.trim()) newErrors.capstoneUrl = 'Link URL atau repositori Capstone wajib diisi.';
 
     if (Object.keys(newErrors).length > 0) {
@@ -140,10 +149,11 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
       <div className="relative bg-white dark:bg-slate-900 border border-amber-500/40 rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl my-8 text-slate-900 dark:text-white animate-fadeIn">
-        {/* Close Button */}
+        {/* Close Button (Min 44x44px touch target) */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
+          aria-label="Tutup Modal Capstone"
+          className="absolute top-4 right-4 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
@@ -152,11 +162,11 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
         <div className="text-center space-y-2">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-extrabold">
             <Award className="w-4 h-4 text-amber-400" />
-            <span>Sertifikasi CAAI™ &amp; Capstone Project — Tier 2 VIP Master</span>
+            <span>Sertifikasi CAAI™ &amp; Capstone Project: Tier 2 VIP Master</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            Pengajuan <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">Capstone Project</span>
+            Pengajuan <span className="text-amber-400">Capstone Project</span>
           </h2>
 
           <p className="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-lg mx-auto">
@@ -181,12 +191,12 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
             {isApproved ? (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-extrabold text-[11px]">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                Disetujui Mentor (Approved) {score !== undefined && score !== null ? `— Skor: ${score}/100` : ''}
+                Disetujui Mentor (Approved) {score !== undefined && score !== null ? `: Skor ${score}/100` : ''}
               </span>
             ) : isRevision ? (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 font-extrabold text-[11px]">
                 <AlertCircle className="w-3.5 h-3.5 text-rose-400" />
-                Perlu Revisi (Revision) {score !== undefined && score !== null ? `— Skor: ${score}/100` : ''}
+                Perlu Revisi (Revision) {score !== undefined && score !== null ? `: Skor ${score}/100` : ''}
               </span>
             ) : isInReview ? (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-extrabold text-[11px]">
@@ -374,13 +384,30 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
               </div>
               <input
                 type="text"
+                maxLength={MAX_CAPSTONE_TITLE_LENGTH}
                 disabled={!isProgress100 || isApproved}
                 value={title}
                 onChange={(e) => { setTitle(e.target.value); setErrors(prev => ({ ...prev, title: '' })); }}
-                placeholder="Contoh: Implementasi Multi-LLM Prompt Engineering untuk Sistem Otomasi Bisnis"
+                placeholder="Contoh: Chatbot RAG untuk CS Toko Online"
                 className={`w-full bg-slate-100 dark:bg-slate-950 border rounded-xl px-4 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none font-medium leading-relaxed ${!isProgress100 || isApproved ? 'opacity-70 cursor-not-allowed bg-slate-200 dark:bg-slate-800' : ''} ${errors.title ? 'border-rose-500 focus:border-rose-400' : 'border-slate-200 dark:border-slate-800 focus:border-amber-500'}`}
               />
-              {errors.title && <p className="text-rose-400 text-[10px] font-semibold">{errors.title}</p>}
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  {errors.title && <p className="text-rose-600 dark:text-rose-400 text-[10px] font-semibold">{errors.title}</p>}
+                </div>
+                <span
+                  aria-live="polite"
+                  className={`shrink-0 text-[10px] font-semibold tabular-nums ${
+                    title.length >= MAX_CAPSTONE_TITLE_LENGTH
+                      ? 'text-rose-600 dark:text-rose-400'
+                      : title.length >= 40
+                        ? 'text-amber-700 dark:text-amber-400'
+                        : 'text-slate-500 dark:text-slate-400'
+                  }`}
+                >
+                  {title.length}/{MAX_CAPSTONE_TITLE_LENGTH} karakter
+                </span>
+              </div>
             </div>
 
             {/* Capstone URL / Repository Link */}
@@ -426,7 +453,7 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
               ) : (
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-xl shadow-amber-500/20 hover:scale-[1.01] transition-all cursor-pointer"
+                  className="w-full py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                   <span>{isRevision ? 'Kirim Ulang Hasil Revisi Capstone' : isSubmitted ? 'Perbarui & Simpan Pengajuan Capstone' : 'Kirim Capstone & Ajukan Approval Mentor'}</span>
@@ -451,7 +478,7 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
                   <span className={`font-bold ${
                     isApproved ? 'text-emerald-600 dark:text-emerald-400' : isRevision ? 'text-rose-600 dark:text-rose-400' : isInReview ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'
                   }`}>
-                    {isApproved ? '✓ Disetujui Mentor' : isRevision ? '⚠️ Perlu Revisi' : isInReview ? '⏳ Sedang Direview' : 'Belum Dikumpulkan'}
+                    {isApproved ? 'Disetujui Mentor' : isRevision ? 'Perlu Revisi' : isInReview ? 'Sedang Direview' : 'Belum Dikumpulkan'}
                   </span>
                 </div>
 
@@ -576,7 +603,7 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] bg-slate-200/50 dark:bg-slate-900/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
                       <div>
-                        <span className="font-bold text-amber-400 block mb-0.5">🎯 Objektif Utama:</span>
+                        <span className="font-bold text-amber-400 block mb-0.5">Objektif Utama:</span>
                         <ul className="list-disc list-inside text-slate-600 dark:text-slate-300 space-y-0.5 text-[10.5px]">
                           {item.objectives.slice(0, 2).map((obj, i) => (
                             <li key={i} className="truncate">{obj}</li>
@@ -584,7 +611,7 @@ const CapstoneModalComponent: React.FC<CapstoneModalProps> = ({
                         </ul>
                       </div>
                       <div>
-                        <span className="font-bold text-cyan-400 block mb-0.5">🛠️ Rekomendasi Tools:</span>
+                        <span className="font-bold text-cyan-400 block mb-0.5">Rekomendasi Tools:</span>
                         <p className="text-slate-600 dark:text-slate-300 text-[10.5px]">
                           {item.recommendedTools.join(', ')}
                         </p>

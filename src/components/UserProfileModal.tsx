@@ -56,10 +56,11 @@ const UserProfileModalComponent: React.FC<UserProfileModalProps> = ({
         {/* Soft Background Accent Glow */}
         <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
-        {/* Close / Remind Me Later Button */}
+        {/* Close / Remind Me Later Button (Min 44x44px touch target) */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          aria-label="Tutup"
           title="Tutup"
         >
           <X className="w-5 h-5" />
@@ -151,7 +152,7 @@ const UserProfileModalComponent: React.FC<UserProfileModalProps> = ({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-amber-500/20 cursor-pointer disabled:opacity-60 mt-2"
+            className="w-full py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer disabled:opacity-60 mt-2"
           >
             <span>Simpan Profil &amp; Lanjutkan</span>
             <ArrowRight className="w-4 h-4" />

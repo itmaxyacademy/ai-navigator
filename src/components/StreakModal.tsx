@@ -59,7 +59,7 @@ const StreakModalComponent: React.FC<StreakModalProps> = ({
                 </span>
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
-                Streak {progress.streakDays} Hari Berturut-turut! 🔥
+                Streak {progress.streakDays} Hari Berturut-turut
               </h2>
             </div>
           </div>
@@ -85,8 +85,8 @@ const StreakModalComponent: React.FC<StreakModalProps> = ({
             <div className="text-xs space-y-0.5">
               <div className="font-extrabold text-sm">
                 {isCompletedToday
-                  ? 'Api Harian Aktif Hari Ini! 🎉'
-                  : 'Selesaikan 1 Modul Hari Ini! ⏳'}
+                  ? 'Api Harian Aktif Hari Ini'
+                  : 'Selesaikan 1 Modul Hari Ini'}
               </div>
               <p className="opacity-90 leading-relaxed">
                 {isCompletedToday

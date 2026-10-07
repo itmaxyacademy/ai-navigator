@@ -7,14 +7,23 @@
   color-scheme: dark;
 }
 
-html {
+html, html.dark, html:not(.light) {
   background-color: #070b14;
   color: #f1f5f9;
+  color-scheme: dark;
+}
+
+html.light {
+  background-color: #f8fafc;
+  color: #0f172a;
+  color-scheme: light;
 }
 
 body {
-  background-color: #070b14;
-  color: #f1f5f9;
+  background-color: inherit;
+  color: inherit;
+  min-height: 100vh;
+  touch-action: manipulation;
 }
 
 

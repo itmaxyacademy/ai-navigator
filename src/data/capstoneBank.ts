@@ -26,7 +26,7 @@ export const CAPSTONE_BANK: CapstoneTopic[] = [
   },
   {
     id: 'marketing-content-engine',
-    title: 'AI Marketing Omnichannel & Content Personalization Engine',
+    title: 'AI Marketing & Content Personalization Engine',
     category: 'Digital Marketing & Growth',
     difficulty: 'Beginner',
     description: 'Sistem pembuatan materi promosi omnichannel otomatis (copywriting Instagram, script video TikTok/Reels, subject & body email blast) dengan framework prompt RCTF dan gaya bahasa brand yang konsisten.',
@@ -40,7 +40,7 @@ export const CAPSTONE_BANK: CapstoneTopic[] = [
   },
   {
     id: 'financial-report-analyzer',
-    title: 'Automated Financial Report Analyzer & Executive Summary AI',
+    title: 'Automated Financial Report Analyzer & Summary AI',
     category: 'Finance & Corporate Strategy',
     difficulty: 'Advanced',
     description: 'Agen AI untuk menganalisis laporan keuangan triwulanan (PDF/Excel), mendeteksi anomali biaya operasional, membandingkan pertumbuhan YoY, dan menyusun ringkasan eksekutif siap presentasi.',
@@ -54,7 +54,7 @@ export const CAPSTONE_BANK: CapstoneTopic[] = [
   },
   {
     id: 'hr-resume-screening',
-    title: 'AI Resume Screening & Anti-Bias Candidate Shortlisting',
+    title: 'AI Resume Screening & Candidate Shortlisting',
     category: 'Human Resources & Talent',
     difficulty: 'Intermediate',
     description: 'Sistem pemeringkatan CV kandidat pelamar kerja berdasarkan Job Description dan kualifikasi teknis dengan penilaian berbasis kriteria objektif, anti-bias, dan output rubrik penilaian terstandarisasi.',
@@ -82,7 +82,7 @@ export const CAPSTONE_BANK: CapstoneTopic[] = [
   },
   {
     id: 'ai-code-reviewer',
-    title: 'AI-Powered Code Reviewer & Security Vulnerability Scanner',
+    title: 'AI Code Reviewer & Security Vulnerability Scanner',
     category: 'Software Engineering & DevOps',
     difficulty: 'Intermediate',
     description: 'Tool otomasi review Pull Request di GitHub/GitLab untuk menemukan potensi celah keamanan (OWASP Top 10), efisiensi algoritma (Big-O), dan kepatuhan clean code secara otomatis.',
@@ -96,7 +96,7 @@ export const CAPSTONE_BANK: CapstoneTopic[] = [
   },
   {
     id: 'smart-medical-summarizer',
-    title: 'Smart Clinical Notes & SOAP Medical Record Summarizer',
+    title: 'Smart Clinical Notes & SOAP Record Summarizer',
     category: 'Healthcare & Medical AI',
     difficulty: 'Intermediate',
     description: 'Ekstraksi catatan konsultasi dokter dan riwayat keluhan pasien ke dalam format ringkas standar medis SOAP (Subjective, Objective, Assessment, Plan) dengan tetap menjaga privasi data.',
@@ -110,7 +110,7 @@ export const CAPSTONE_BANK: CapstoneTopic[] = [
   },
   {
     id: 'adaptive-learning-tutor',
-    title: 'Adaptive AI Socratic Tutor & Dynamic Quiz Generator',
+    title: 'Adaptive AI Socratic Tutor & Quiz Generator',
     category: 'Education & EdTech',
     difficulty: 'Beginner',
     description: 'Tutor AI interaktif dengan metode Socratic yang tidak langsung memberikan jawaban, melainkan memandu logika siswa melalui pertanyaan kritis serta menghasilkan kuis adaptif bertingkat.',

@@ -385,7 +385,7 @@ export const KnowledgeHeatmap: React.FC<KnowledgeHeatmapProps> = ({
                 <div className="flex justify-between items-center">
                   <span className="text-slate-500 dark:text-slate-400">Rekomendasi Tindakan:</span>
                   <span className="font-bold text-indigo-300">
-                    {selectedHeatmapNode.score < 70 ? '⚠️ Ulangi Kuis Modul Ini' : '⭐ Pertahankan Mastery'}
+                    {selectedHeatmapNode.score < 70 ? 'Ulangi Kuis Modul Ini' : 'Pertahankan Mastery'}
                   </span>
                 </div>
               </div>

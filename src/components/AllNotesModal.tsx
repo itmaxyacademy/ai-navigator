@@ -117,14 +117,14 @@ const AllNotesModalComponent: React.FC<AllNotesModalProps> = ({
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
-    showToast(`📥 Semua catatan berhasil diekspor (${filename})`);
+    showToast(`Semua catatan berhasil diekspor (${filename})`);
   };
 
   // Copy single note
   const handleCopyNote = (item: SavedNoteItem) => {
     navigator.clipboard.writeText(item.text);
     setCopiedId(item.moduleId);
-    showToast(`📋 Catatan Modul ${item.moduleId} disalin!`);
+    showToast(`Catatan Modul ${item.moduleId} disalin.`);
     setTimeout(() => setCopiedId(null), 2000);
   };
 
@@ -132,7 +132,7 @@ const AllNotesModalComponent: React.FC<AllNotesModalProps> = ({
   const handleDeleteNote = (moduleId: number) => {
     localStorage.removeItem(`maxy_notes_module_${moduleId}`);
     loadAllNotes();
-    showToast(`🗑️ Catatan Modul ${moduleId} dihapus.`);
+    showToast(`Catatan Modul ${moduleId} dihapus.`);
   };
 
   return (

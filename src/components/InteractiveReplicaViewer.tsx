@@ -3,7 +3,7 @@ import confetti from 'canvas-confetti';
 import { generateWithGemini } from '../services/gemini';
 import { 
   Sparkles, Info, Send, Copy, Check, ChevronRight, RefreshCw,
-  Code2, Brain, Terminal, Eye, ExternalLink
+  Code2, Brain, Terminal, Eye, ExternalLink, Target
 } from 'lucide-react';
 import { CourseModule, RCTFState } from '../types';
 import { MiniQuizCheckpoint } from './MiniQuizCheckpoint';
@@ -257,36 +257,36 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
 
         <button
           onClick={onAdvanceToQuiz}
-          className="shrink-0 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs rounded-2xl shadow-xl shadow-emerald-600/20 flex items-center gap-2 transition-all cursor-pointer hover:scale-105"
+          className="shrink-0 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs rounded-2xl shadow-md flex items-center gap-2 transition-all cursor-pointer active:scale-95"
         >
           <span>Lanjut ke Panduan Prompting</span>
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>
 
-      {/* 🎯 Micro-Mission Banner */}
-      <div className="p-5 rounded-3xl bg-gradient-to-r from-purple-50 via-indigo-50 to-white border border-purple-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-slate-900">
+      {/* Micro-Mission Banner */}
+      <div className="p-5 rounded-3xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-slate-900 dark:text-white">
         <div className="flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-2xl bg-purple-100 border border-purple-200 flex items-center justify-center text-xl shrink-0 shadow-xs">
-            🎯
+          <div className="w-11 h-11 rounded-2xl bg-purple-100 dark:bg-purple-900/60 border border-purple-200 dark:border-purple-700 flex items-center justify-center shrink-0 shadow-xs">
+            <Target className="w-5 h-5 text-purple-700 dark:text-purple-300" />
           </div>
           <div className="space-y-0.5">
-            <span className="text-[10px] font-black text-purple-700 uppercase tracking-wider flex items-center gap-1">
+            <span className="text-[10px] font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider flex items-center gap-1">
               <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Misi Praktik Modul {module.id}
             </span>
-            <p className="text-xs sm:text-sm font-black text-slate-900 leading-snug">
+            <p className="text-xs sm:text-sm font-black text-slate-900 dark:text-white leading-snug">
               {getModulePracticeMission(module.id, module.title)}
             </p>
           </div>
         </div>
 
         {isPracticeVerified ? (
-          <span className="shrink-0 px-4 py-2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 text-xs font-black flex items-center gap-1.5 shadow-xs animate-fadeIn">
-            <Check className="w-4 h-4 text-emerald-600" /> Praktik Terverifikasi (+50 XP)
+          <span className="shrink-0 px-4 py-2 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 text-xs font-black flex items-center gap-1.5 shadow-xs animate-fadeIn">
+            <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> Praktik Terverifikasi (+50 XP)
           </span>
         ) : (
-          <span className="shrink-0 px-4 py-2 rounded-full bg-amber-50 text-amber-800 border border-amber-300 text-xs font-black shadow-xs">
-            ⚡ Klik / Uji Coba Simulator
+          <span className="shrink-0 px-4 py-2 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700 text-xs font-black shadow-xs">
+            Uji Coba Simulator
           </span>
         )}
       </div>
@@ -551,8 +551,8 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                         </span>
                       </div>
                       <div className="p-5 bg-white rounded-xl text-center flex items-center justify-center border border-slate-200">
-                        <button className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black rounded-xl shadow-md hover:scale-105 active:scale-95 transition-all text-xs cursor-pointer">
-                          ✨ Tombol Interaktif Claude
+                        <button className="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl shadow-md active:scale-95 transition-all text-xs cursor-pointer">
+                          Tombol Interaktif Claude
                         </button>
                       </div>
                     </div>
@@ -609,7 +609,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                     <button
                       onClick={handleExecutePrompt}
                       disabled={isLoading}
-                      className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-400 hover:to-indigo-500 text-white font-black text-xs rounded-xl flex items-center gap-2 transition-all shadow-md shadow-amber-500/20 cursor-pointer"
+                      className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs rounded-xl flex items-center gap-2 transition-all shadow-md cursor-pointer"
                     >
                       {isLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
                       Proses Ke Simulator
@@ -628,7 +628,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
                   <button
                     onClick={handleExecutePrompt}
                     disabled={isLoading}
-                    className="px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xs rounded-2xl flex items-center gap-2 transition-all shadow-md shadow-indigo-600/20 shrink-0 cursor-pointer"
+                    className="px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs rounded-2xl flex items-center gap-2 transition-all shadow-md shrink-0 cursor-pointer"
                   >
                     {isLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
                     Kirim
@@ -695,7 +695,7 @@ export const InteractiveReplicaViewer: React.FC<InteractiveReplicaViewerProps> =
             {/* Advance Button */}
             <button
               onClick={onAdvanceToQuiz}
-              className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm rounded-2xl shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.02]"
+              className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm rounded-2xl shadow-md flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-95"
             >
               <span>Saya Paham, Siap Uji Kuis Modul</span>
               <ChevronRight className="w-4 h-4" />

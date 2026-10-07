@@ -68,9 +68,9 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             className="flex items-center gap-2.5 cursor-pointer group shrink-0"
           >
             <img
-              src="https://cms.maxy.academy/uploads/LogoMaxy.png"
-              alt="Maxy Academy Logo"
-              className="h-8 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform"
+              src={`${import.meta.env.BASE_URL}logo-ai-navigator.svg`}
+              alt="AI Navigator"
+              className="h-8 w-8 object-contain shrink-0 group-hover:scale-105 transition-transform"
             />
             <div className="flex flex-col">
               <div className="flex items-center whitespace-nowrap">
@@ -168,18 +168,18 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   {progress.userEmail && (
                     <p className="text-[10px] text-slate-500">{progress.userEmail}</p>
                   )}
-                  <div className="border-t border-slate-200 pt-1 mt-1">
-                    <p className="text-[11px] text-slate-700 font-medium">
-                      📦 {(!progress.packageName || progress.packageName.trim().startsWith('{')) ? (userTier === 'free' ? 'Free Plan' : userTier === 'tier1' ? 'Tier 1 Plan' : 'Tier 2 VIP') : progress.packageName}
+                  <div className="border-t border-slate-200 dark:border-slate-800 pt-1 mt-1">
+                    <p className="text-[11px] text-slate-700 dark:text-slate-300 font-medium">
+                      Paket: {(!progress.packageName || progress.packageName.trim().startsWith('{')) ? (userTier === 'free' ? 'Free Plan' : userTier === 'tier1' ? 'Tier 1 Plan' : 'Tier 2 VIP') : progress.packageName}
                     </p>
                     {progress.subscriptionExpiredAt ? (
-                      <p className="text-[10px] text-emerald-600 mt-0.5 font-bold">
-                        ✅ Aktif s/d {new Date(progress.subscriptionExpiredAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-0.5 font-bold">
+                        Aktif s/d {new Date(progress.subscriptionExpiredAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
                       </p>
                     ) : userTier !== 'free' ? (
-                      <p className="text-[10px] text-emerald-600 mt-0.5 font-bold">✅ Akses Aktif</p>
+                      <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-0.5 font-bold">Akses Aktif</p>
                     ) : (
-                      <p className="text-[10px] text-amber-600 mt-0.5 font-bold">⚡ Free Trial (Modul 1-3)</p>
+                      <p className="text-[10px] text-amber-600 dark:text-amber-400 mt-0.5 font-bold">Free Trial (Modul 1-3)</p>
                     )}
                   </div>
                 </div>
@@ -188,25 +188,25 @@ const HeaderComponent: React.FC<HeaderProps> = ({
               {userTier === 'free' ? (
                 <button
                   onClick={onOpenUpgradeModal}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-amber-50 text-slate-700 hover:text-amber-900 border border-slate-200 hover:border-amber-300 font-bold text-xs transition-all cursor-pointer shadow-xs whitespace-nowrap"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900 hover:bg-amber-50 dark:hover:bg-amber-950/30 text-slate-700 dark:text-slate-200 hover:text-amber-900 dark:hover:text-amber-300 border border-slate-200 dark:border-slate-800 hover:border-amber-300 dark:hover:border-amber-700/60 font-bold text-xs transition-all cursor-pointer shadow-xs whitespace-nowrap"
                 >
-                  <Lock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                  <Lock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span>Free Trial • Upgrade</span>
                 </button>
               ) : userTier === 'tier1' ? (
                 <button
                   onClick={onOpenUpgradeModal}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-bold text-xs transition-all cursor-pointer shadow-xs whitespace-nowrap"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 font-bold text-xs transition-all cursor-pointer shadow-xs whitespace-nowrap"
                 >
-                  <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
                   <span>Tier 1 Pro</span>
                 </button>
               ) : (
                 <button
                   onClick={onOpenUpgradeModal}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 font-bold text-xs transition-all cursor-pointer shadow-xs whitespace-nowrap"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-700 font-bold text-xs transition-all cursor-pointer shadow-xs whitespace-nowrap"
                 >
-                  <Crown className="w-3.5 h-3.5 text-amber-600 fill-amber-500/20 shrink-0" />
+                  <Crown className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 fill-amber-500/20 shrink-0" />
                   <span>Tier 2 VIP</span>
                 </button>
               )}
@@ -215,10 +215,10 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             {/* Certificate Button (Always Accessible -> Scrolls to Certificate Section) */}
             <button
               onClick={onOpenCertificate}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-xs shadow-xs transition-all cursor-pointer whitespace-nowrap"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 font-bold text-xs shadow-xs transition-all cursor-pointer whitespace-nowrap"
               title="Lihat Bagian Sertifikasi & Kelulusan"
             >
-              <Award className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <Award className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
               <span>Sertifikat</span>
             </button>
 
@@ -232,13 +232,13 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                       <p className="text-[10px] text-slate-600 dark:text-slate-400">{progress.userEmail}</p>
                     )}
                     {progress.userPhone && (
-                      <p className="text-[10px] text-slate-400">📞 {progress.userPhone}</p>
+                      <p className="text-[10px] text-slate-400">Telp: {progress.userPhone}</p>
                     )}
                     {progress.userInstitution && (
-                      <p className="text-[10px] text-slate-400">🏢 {progress.userInstitution}</p>
+                      <p className="text-[10px] text-slate-400">Instansi: {progress.userInstitution}</p>
                     )}
                     <p className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold pt-1 border-t border-slate-200 dark:border-slate-800">
-                      ✏️ Klik untuk Edit Profil
+                      Klik untuk Edit Profil
                     </p>
                   </div>
                 }
@@ -247,7 +247,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   onClick={onOpenUserProfile}
                   className="hidden lg:flex items-center gap-2 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 transition-all shadow-xs cursor-pointer hover:border-slate-300"
                 >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-[10px] font-black text-white shrink-0 uppercase shadow-xs">
+                  <div className="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-[10px] font-black text-white shrink-0 uppercase shadow-xs">
                     {progress.userName.charAt(0)}
                   </div>
                   <span className="truncate max-w-[100px]">{progress.userName}</span>
@@ -350,13 +350,14 @@ const HeaderComponent: React.FC<HeaderProps> = ({
 
           </div>
 
-          {/* MOBILE MENU BUTTON */}
+          {/* MOBILE MENU BUTTON (Min 44x44px touch target) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`lg:hidden p-2 rounded-xl border shrink-0 ${
+            aria-label="Toggle navigation menu"
+            className={`lg:hidden p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl border shrink-0 cursor-pointer transition-colors ${
               theme === 'light'
-                ? 'bg-slate-100 border-slate-200 text-slate-800'
-                : 'bg-slate-900 border-slate-800 text-slate-200'
+                ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800'
+                : 'bg-slate-900 hover:bg-slate-800 border-slate-800 text-slate-200'
             }`}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -366,34 +367,55 @@ const HeaderComponent: React.FC<HeaderProps> = ({
 
       {/* MOBILE DRAWER */}
       {mobileMenuOpen && (
-        <div className={`lg:hidden border-b px-4 py-4 space-y-3 ${
+        <div className={`lg:hidden border-b px-4 py-4 space-y-3 animate-fadeIn ${
           theme === 'light' ? 'bg-white border-slate-200 text-slate-900 shadow-xl' : 'bg-[#0d1322] border-slate-800 text-white shadow-xl'
         }`}>
           {progress.userName && (
-            <div className={`flex items-center gap-3 p-3 rounded-2xl border ${
-              theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-900' : 'bg-slate-950 border-slate-800 text-white'
-            }`}>
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-amber-500 flex items-center justify-center text-xs font-black text-white shrink-0 uppercase">
+            <div 
+              onClick={() => {
+                if (onOpenUserProfile) onOpenUserProfile();
+                setMobileMenuOpen(false);
+              }}
+              className={`flex items-center gap-3 p-3 min-h-[44px] rounded-2xl border cursor-pointer hover:border-indigo-400 transition-colors ${
+                theme === 'light' ? 'bg-slate-100/90 border-slate-200 text-slate-900' : 'bg-slate-950 border-slate-800 text-white'
+              }`}
+            >
+              <div className="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center text-xs font-black text-white shrink-0 uppercase shadow-xs">
                 {progress.userName.charAt(0)}
               </div>
-              <div className="flex flex-col min-w-0">
+              <div className="flex flex-col min-w-0 flex-1">
                 <span className="text-xs font-extrabold truncate">{progress.userName}</span>
                 {progress.userEmail && (
                   <span className={`text-[10px] truncate ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>{progress.userEmail}</span>
                 )}
               </div>
+              <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400">Edit Profil</span>
             </div>
           )}
+
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => {
                 onSelectTab('path');
                 setMobileMenuOpen(false);
               }}
-              className="p-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 bg-indigo-600 text-white shadow-md"
+              className="p-2.5 min-h-[44px] rounded-xl text-xs font-bold flex items-center justify-center gap-2 bg-indigo-600 text-white shadow-xs cursor-pointer active:scale-95 transition-all"
             >
               <Compass className="w-4 h-4 shrink-0" />
               Peta Belajar
+            </button>
+
+            <button
+              onClick={() => {
+                onOpenCertificate();
+                setMobileMenuOpen(false);
+              }}
+              className={`p-2.5 min-h-[44px] rounded-xl text-xs font-bold flex items-center justify-center gap-2 border cursor-pointer active:scale-95 transition-all ${
+                theme === 'light' ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-300 text-emerald-800' : 'bg-emerald-950/40 hover:bg-emerald-900/50 border-emerald-700/60 text-emerald-300'
+              }`}
+            >
+              <Award className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              Sertifikat
             </button>
 
             {onOpenNotes && (
@@ -402,8 +424,8 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   onOpenNotes();
                   setMobileMenuOpen(false);
                 }}
-                className={`p-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border ${
-                  theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-800 text-slate-200'
+                className={`p-2.5 min-h-[44px] rounded-xl text-xs font-bold flex items-center justify-center gap-2 border cursor-pointer active:scale-95 transition-all ${
+                  theme === 'light' ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800' : 'bg-slate-950 hover:bg-slate-900 border-slate-800 text-slate-200'
                 }`}
               >
                 <StickyNote className="w-4 h-4 text-amber-500 shrink-0" />
@@ -417,8 +439,8 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   onOpenAchievements();
                   setMobileMenuOpen(false);
                 }}
-                className={`p-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border col-span-2 sm:col-span-1 ${
-                  theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-800 text-slate-200'
+                className={`p-2.5 min-h-[44px] rounded-xl text-xs font-bold flex items-center justify-center gap-2 border cursor-pointer active:scale-95 transition-all ${
+                  theme === 'light' ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800' : 'bg-slate-950 hover:bg-slate-900 border-slate-800 text-slate-200'
                 }`}
               >
                 <Award className="w-4 h-4 text-purple-500 shrink-0" />
@@ -432,7 +454,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
               if (onOpenStreakModal) onOpenStreakModal();
               setMobileMenuOpen(false);
             }}
-            className={`flex flex-col gap-3 p-3 rounded-2xl border cursor-pointer hover:scale-[1.01] transition-transform ${
+            className={`flex flex-col gap-3 p-3 min-h-[44px] rounded-2xl border cursor-pointer hover:scale-[1.01] transition-transform ${
             theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-900' : 'bg-slate-950 border-slate-800 text-white'
           }`}>
             <div className="flex items-center justify-between w-full">
@@ -451,18 +473,18 @@ const HeaderComponent: React.FC<HeaderProps> = ({
           <div className="grid grid-cols-3 gap-2">
             <button
               onClick={onToggleTheme}
-              className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
-                theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-950 border-slate-800 text-slate-200'
+              className={`p-2.5 min-h-[44px] rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border cursor-pointer active:scale-95 transition-all ${
+                theme === 'light' ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800' : 'bg-slate-950 hover:bg-slate-900 border-slate-800 text-slate-200'
               }`}
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-600" />}
               {theme === 'dark' ? 'Mode Terang' : 'Mode Gelap'}
             </button>
 
             <button
               onClick={() => setIsResetModalOpen(true)}
-              className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
-                theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200'
+              className={`p-2.5 min-h-[44px] rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border cursor-pointer active:scale-95 transition-all ${
+                theme === 'light' ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800' : 'bg-slate-950 hover:bg-slate-900 border-slate-800 text-slate-200'
               }`}
             >
               <RotateCcw className="w-4 h-4 text-amber-500" />
@@ -474,8 +496,8 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 onLogout();
                 setMobileMenuOpen(false);
               }}
-              className={`p-2.5 rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border ${
-                theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-800' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-rose-500 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30'
+              className={`p-2.5 min-h-[44px] rounded-xl text-[10px] font-bold flex flex-col items-center justify-center gap-1 border cursor-pointer active:scale-95 transition-all ${
+                theme === 'light' ? 'bg-slate-100 hover:bg-rose-50 border-slate-200 text-rose-600' : 'bg-slate-950 hover:bg-rose-950/30 border-slate-800 text-rose-400'
               }`}
             >
               <LogOut className="w-4 h-4 text-rose-500" />
@@ -489,7 +511,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 if (onOpenUpgradeModal) onOpenUpgradeModal();
                 setMobileMenuOpen(false);
               }}
-              className="w-full p-2.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2"
+              className="w-full p-3 min-h-[44px] rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md transition-colors"
             >
               <Lock className="w-4 h-4" />
               Upgrade ke Tier 1 / Tier 2
@@ -500,7 +522,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 if (onOpenUpgradeModal) onOpenUpgradeModal();
                 setMobileMenuOpen(false);
               }}
-              className="w-full p-2.5 rounded-xl bg-indigo-600 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-indigo-600/20"
+              className="w-full p-3 min-h-[44px] rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-indigo-600/20 cursor-pointer transition-colors"
             >
               <ShieldCheck className="w-4 h-4" />
               Tier 1 Full
@@ -511,7 +533,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 if (onOpenUpgradeModal) onOpenUpgradeModal();
                 setMobileMenuOpen(false);
               }}
-              className="w-full p-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-md shadow-amber-500/20"
+              className="w-full p-3 min-h-[44px] rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-sm cursor-pointer transition-colors"
             >
               <Crown className="w-4 h-4 fill-slate-950" />
               Tier 2 VIP

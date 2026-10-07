@@ -171,12 +171,13 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-100 dark:bg-slate-950/85 backdrop-blur-md overflow-y-auto p-4 sm:p-6 flex justify-center">
+    <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md overflow-y-auto p-4 sm:p-6 flex justify-center">
       <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-6xl w-full p-5 sm:p-8 space-y-4 shadow-2xl text-slate-900 dark:text-white animate-fadeIn m-auto">
-        {/* Close Button */}
+        {/* Close Button (Min 44x44px touch target) */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2.5 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer z-10"
+          aria-label="Tutup Modal Paket"
+          className="absolute top-4 right-4 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer z-10"
         >
           <X className="w-5 h-5" />
         </button>
@@ -244,7 +245,7 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
           )}
           {voucherError && (
             <div className="mt-2 text-xs text-rose-400 font-medium">
-              ⚠️ {voucherError}
+              {voucherError}
             </div>
           )}
         </div>
@@ -347,12 +348,12 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
                 </div>
                 {activeVoucher && isTier1VoucherEligible && tier1Discount > 0 && (
                   <div className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200 self-start">
-                    <span>✨ Diskon Voucher: -Rp {tier1Discount.toLocaleString('id-ID')}</span>
+                    <span>Diskon Voucher: -Rp {tier1Discount.toLocaleString('id-ID')}</span>
                   </div>
                 )}
                 {activeVoucher && !isTier1VoucherEligible && (
                   <div className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-medium text-amber-700 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200 self-start">
-                    <span>ℹ️ Voucher ini hanya berlaku untuk Tier 2</span>
+                    <span>Voucher ini hanya berlaku untuk Tier 2</span>
                   </div>
                 )}
               </div>
@@ -395,7 +396,7 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
               {loadingTier === 'tier1' ? (
                 <span>{finalTier1PriceNum === 0 ? 'Mengaktifkan Akses Gratis...' : 'Memproses Pembayaran Xendit...'}</span>
               ) : (
-                <span>{currentTier === 'tier1' ? 'Tier 1 Aktif' : finalTier1PriceNum === 0 ? '🎁 Klaim Gratis dengan Voucher (Rp 0)' : `Pilih Tier 1 (${tier1Price})`}</span>
+                <span>{currentTier === 'tier1' ? 'Tier 1 Aktif' : finalTier1PriceNum === 0 ? 'Klaim Gratis dengan Voucher (Rp 0)' : `Pilih Tier 1 (${tier1Price})`}</span>
               )}
             </button>
           </div>
@@ -437,12 +438,12 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
                 </div>
                 {activeVoucher && isTier2VoucherEligible && tier2Discount > 0 && (
                   <div className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-lg border border-emerald-500/40 self-start">
-                    <span>✨ Diskon Voucher: -Rp {tier2Discount.toLocaleString('id-ID')}</span>
+                    <span>Diskon Voucher: -Rp {tier2Discount.toLocaleString('id-ID')}</span>
                   </div>
                 )}
                 {activeVoucher && !isTier2VoucherEligible && (
                   <div className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-medium text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded-lg border border-amber-500/40 self-start">
-                    <span>ℹ️ Voucher ini hanya berlaku untuk Tier 1</span>
+                    <span>Voucher ini hanya berlaku untuk Tier 1</span>
                   </div>
                 )}
               </div>
@@ -501,7 +502,7 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
               {loadingTier === 'tier2' ? (
                 <span>{finalTier2PriceNum === 0 ? 'Mengaktifkan Akses Gratis...' : 'Memproses Pembayaran Xendit...'}</span>
               ) : (
-                <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : finalTier2PriceNum === 0 ? '🎁 Klaim Gratis dengan Voucher (Rp 0)' : `Pilih Tier 2 (${tier2Price})`}</span>
+                <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : finalTier2PriceNum === 0 ? 'Klaim Gratis dengan Voucher (Rp 0)' : `Pilih Tier 2 (${tier2Price})`}</span>
               )}
             </button>
           </div>
@@ -510,8 +511,9 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
 
         {/* Footer Note */}
         <div className="pt-2 text-center text-xs text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-200 dark:border-slate-800">
-          <span>
-            🔒 Pembayaran aman &amp; otomatis mengaktifkan modul secara instant.
+          <span className="flex items-center gap-1.5 justify-center sm:justify-start">
+            <Lock className="w-3.5 h-3.5" />
+            Pembayaran aman &amp; otomatis mengaktifkan modul secara instant.
           </span>
           <button
             onClick={onClose}

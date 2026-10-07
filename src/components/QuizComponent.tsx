@@ -217,7 +217,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
               <button
                 onClick={() => setCurrentQuestionIdx((prev) => prev + 1)}
                 disabled={!isAnsweredCurrent}
-                className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-40 text-white text-xs font-black rounded-xl flex items-center gap-2 shadow-md shadow-indigo-600/20 transition-all cursor-pointer disabled:cursor-not-allowed"
+                className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-md transition-all cursor-pointer disabled:cursor-not-allowed"
               >
                 <span>Pertanyaan Berikutnya</span>
                 <ArrowRight className="w-4 h-4" />
@@ -226,7 +226,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
               <button
                 onClick={handleSubmitQuiz}
                 disabled={Object.keys(selectedAnswers).length < quizQuestions.length}
-                className="px-7 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-40 text-white font-black text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-600/20 flex items-center gap-2 cursor-pointer disabled:cursor-not-allowed active:scale-95 transition-all"
+                className="px-7 py-3 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg flex items-center gap-2 cursor-pointer disabled:cursor-not-allowed active:scale-95 transition-all"
               >
                 <span>Selesaikan Kuis &amp; Kirim</span>
                 <Award className="w-4 h-4" />
@@ -243,7 +243,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
 
           <div>
             <h3 className="text-2xl font-black text-slate-900 dark:text-white">
-              {isPassed ? '🎉 Luar Biasa! Anda Lulus Kuis' : '💡 Tetap Semangat! Coba Ulangi Kuis'}
+              {isPassed ? 'Luar Biasa! Anda Lulus Kuis' : 'Tetap Semangat! Coba Ulangi Kuis'}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1">
               Skor Anda: <strong className="text-amber-600 dark:text-amber-400 text-base font-black">{score} / {quizQuestions.length}</strong> Benar ({Math.round((score / quizQuestions.length) * 100)}%)
@@ -284,7 +284,8 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
                       </div>
                     )}
                     <div className="text-[11px] text-slate-600 dark:text-slate-300 italic mt-2 bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 leading-relaxed shadow-xs">
-                      💡 {q.explanation}
+                      <span className="font-bold text-slate-800 dark:text-slate-200 not-italic">Penjelasan: </span>
+                      {q.explanation}
                     </div>
                   </div>
                 </div>
@@ -305,7 +306,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
             {isPassed && onNextModule && (
               <button
                 onClick={onNextModule}
-                className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm rounded-2xl shadow-xl shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02]"
+                className="w-full sm:w-auto px-8 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm rounded-2xl shadow-xl flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02]"
               >
                 <span>Lanjut ke Modul Berikutnya</span>
                 <ArrowRight className="w-4 h-4" />

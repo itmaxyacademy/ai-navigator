@@ -2,12 +2,38 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>AI Navigator by Maxy Academy</title>
-    <meta name="description" content="Learn Applied AI tools conveniently" />
-    <meta name="keywords" content="Indonesia LLM Simulator" />
+    <meta name="description" content="Platform Pembelajaran & Simulasi Applied AI Interaktif oleh Maxy Academy" />
+    <meta name="keywords" content="AI Navigator, Maxy Academy, LLM Simulator, AI Training Indonesia" />
     <meta name="author" content="Maxy Academy" />
-    <link rel="icon" href="https://cms.maxy.academy/uploads/LogoMaxy.png" type="image/png" />
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="AI Navigator" />
+    <link rel="icon" type="image/x-icon" href="/app/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/app/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/app/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/app/apple-touch-icon.png" />
+    <link rel="manifest" href="/app/manifest.json" />
+    <!-- Instant Theme Bootstrap (Default: Dark Mode) -->
+    <script>
+      (function() {
+        try {
+          var t = localStorage.getItem('ai_navigator_theme_v3');
+          if (t === 'light') {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+          } else {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+          }
+        } catch (e) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PSDJRKBJ15"></script>
     <script>
@@ -17,9 +43,18 @@
 
       gtag('config', 'G-PSDJRKBJ15');
     </script>
+    <!-- PWA Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' })
+            .catch(function(err) { console.warn('PWA SW registration:', err); });
+        });
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </head>
-  <body>
+  <body class="antialiased selection:bg-indigo-500 selection:text-white">
     <div id="root"></div>
   </body>
 </html>

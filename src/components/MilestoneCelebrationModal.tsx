@@ -40,10 +40,6 @@ const MilestoneCelebrationModalComponent: React.FC<MilestoneCelebrationModalProp
   return (
     <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fadeIn">
       <div className="bg-[#0f111a] border border-purple-500/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-6 shadow-2xl relative text-center overflow-hidden">
-        {/* Glowing Background Radial */}
-        <div className={`absolute -top-24 -left-24 w-64 h-64 rounded-full blur-3xl opacity-30 ${isTier2 ? 'bg-purple-600' : 'bg-emerald-600'}`} />
-        <div className={`absolute -bottom-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-30 ${isTier2 ? 'bg-amber-600' : 'bg-teal-600'}`} />
-
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -54,12 +50,12 @@ const MilestoneCelebrationModalComponent: React.FC<MilestoneCelebrationModalProp
 
         {/* Trophy Icon Badge */}
         <div className="relative z-10 space-y-3">
-          <div className={`w-20 h-20 mx-auto rounded-3xl flex items-center justify-center text-3xl shadow-2xl border ${
+          <div className={`w-20 h-20 mx-auto rounded-3xl flex items-center justify-center text-3xl shadow-lg border ${
             isTier2
-              ? 'bg-gradient-to-tr from-purple-600 via-indigo-600 to-amber-500 border-amber-400/50 shadow-purple-600/50'
-              : 'bg-gradient-to-tr from-emerald-600 to-teal-500 border-emerald-400/50 shadow-emerald-600/50'
+              ? 'bg-purple-700 border-purple-500'
+              : 'bg-emerald-600 border-emerald-400'
           }`}>
-            {isTier2 ? <Trophy className="w-10 h-10 text-amber-300 animate-bounce" /> : <Award className="w-10 h-10 text-white animate-bounce" />}
+            {isTier2 ? <Trophy className="w-10 h-10 text-amber-300" /> : <Award className="w-10 h-10 text-white" />}
           </div>
 
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-amber-400 text-xs font-bold shadow-xs">

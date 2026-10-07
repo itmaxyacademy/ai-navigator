@@ -298,26 +298,48 @@ export default function App() {
     const voucherParam = urlParams.get('voucher');
 
     if (upgradeParam === 'true') {
-      // Bersihkan query params
-      window.history.replaceState({}, document.title, window.location.pathname);
+      // Simpan niat klaim agar selamat dari redirect login (sessionStorage tidak ikut terhapus di redirectToLogin)
+      try {
+        sessionStorage.setItem('ai_navigator_pending_upgrade', JSON.stringify({
+          tier: tierParam === 'tier1' || tierParam === 'tier2' ? tierParam : null,
+          voucher: voucherParam || '',
+        }));
+      } catch (_) { /* storage penuh/diblokir: klaim manual lewat modal tetap bisa */ }
 
-      if (tierParam === 'tier1' || tierParam === 'tier2') {
-        setUpgradePrefilledTier(tierParam);
-      }
-      if (voucherParam) {
-        setUpgradePrefilledVoucher(voucherParam);
-      }
-      // Buka UpgradeModal setelah auth selesai (delay kecil supaya token sudah terbaca)
-      setTimeout(() => setUpgradeModalOpen(true), 800);
+      // Hapus HANYA param upgrade. token & refresh_token harus tetap ada sampai Auth Guard membacanya,
+      // kalau tidak user tanpa sesi tersimpan dilempar ke login dan konteks voucher hilang.
+      ['upgrade', 'tier', 'voucher'].forEach((k) => urlParams.delete(k));
+      const rest = urlParams.toString();
+      window.history.replaceState({}, document.title, window.location.pathname + (rest ? `?${rest}` : ''));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Buka UpgradeModal hanya setelah auth selesai DAN token ada. Saat redirectToLogin token sudah dihapus,
+  // jadi niat klaim tidak terpakai sebelum user kembali dari login.
+  useEffect(() => {
+    if (isAuthValidating) return;
+    if (!isLocalDevEnv && !localStorage.getItem('maxy_access_token')) return;
+
+    let pending: { tier: 'tier1' | 'tier2' | null; voucher: string } | null = null;
+    try {
+      const raw = sessionStorage.getItem('ai_navigator_pending_upgrade');
+      if (raw) pending = JSON.parse(raw);
+      sessionStorage.removeItem('ai_navigator_pending_upgrade');
+    } catch (_) { /* data korup: abaikan */ }
+    if (!pending) return;
+
+    setUpgradePrefilledTier(pending.tier);
+    setUpgradePrefilledVoucher(pending.voucher || '');
+    setUpgradeModalOpen(true);
+  }, [isAuthValidating]);
+
+
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     try {
-      const saved = localStorage.getItem('ai_navigator_theme_v1');
+      const saved = localStorage.getItem('ai_navigator_theme_v3');
       if (saved === 'light' || saved === 'dark') return saved;
-      return 'dark'; // Default to dark theme for consistent, futuristic aesthetic
+      return 'dark'; // Default to focused, eye-friendly dark theme
     } catch {
       return 'dark';
     }
@@ -325,7 +347,7 @@ export default function App() {
 
   useEffect(() => {
     try {
-      localStorage.setItem('ai_navigator_theme_v1', theme);
+      localStorage.setItem('ai_navigator_theme_v3', theme);
     } catch (e) {
       console.error('Failed to save theme preference', e);
     }
@@ -1276,8 +1298,12 @@ export default function App() {
   const handleOpenNotes = useCallback(() => setAllNotesOpen(true), []);
   const handleCloseNotes = useCallback(() => setAllNotesOpen(false), []);
 
-  const handleOpenUpgradeModal = useCallback((targetId?: number) => {
-    if (targetId !== undefined) setTargetUpgradeModuleId(targetId || null);
+  const handleOpenUpgradeModal = useCallback((targetId?: number | unknown) => {
+    if (typeof targetId === 'number' && targetId > 0) {
+      setTargetUpgradeModuleId(targetId);
+    } else {
+      setTargetUpgradeModuleId(null);
+    }
     setUpgradeModalOpen(true);
   }, []);
   const handleCloseUpgradeModal = useCallback(() => {
@@ -1290,7 +1316,7 @@ export default function App() {
     const completedCount = (progress.completedModules || []).length;
     const requiredCount = 29;
     if (completedCount < requiredCount) {
-      alert(`🔒 Pengumpulan Capstone Project Terkunci\n\nAnda harus menyelesaikan seluruh ${requiredCount} Modul Pembelajaran (100%) terlebih dahulu sebelum dapat mengumpulkan tugas Capstone.\n\nProgres belajar Anda saat ini: ${completedCount}/${requiredCount} modul (${Math.round((completedCount / requiredCount) * 100)}%).`);
+      alert(`Pengumpulan Capstone Project Terkunci\n\nAnda harus menyelesaikan seluruh ${requiredCount} Modul Pembelajaran (100%) terlebih dahulu sebelum dapat mengumpulkan tugas Capstone.\n\nProgres belajar Anda saat ini: ${completedCount}/${requiredCount} modul (${Math.round((completedCount / requiredCount) * 100)}%).`);
       return;
     }
     setCapstoneModalOpen(true);
@@ -1665,9 +1691,9 @@ export default function App() {
       {paymentVerifyStatus === 'success' && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[201] animate-fadeIn">
           <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-emerald-600 text-white shadow-2xl shadow-emerald-900/50 max-w-md">
-            <span className="text-2xl">🎉</span>
+            <Sparkles className="w-6 h-6 text-emerald-200 shrink-0" />
             <div className="flex-1">
-              <p className="font-black text-sm">Pembayaran Berhasil Dikonfirmasi!</p>
+              <p className="font-black text-sm">Pembayaran Berhasil Dikonfirmasi</p>
               <p className="text-xs text-emerald-100 mt-0.5">Akses modul Anda sudah aktif. Selamat belajar!</p>
             </div>
             <button
@@ -1684,7 +1710,7 @@ export default function App() {
       {paymentVerifyStatus === 'cancelled' && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[201] animate-fadeIn">
           <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-slate-700 text-white shadow-2xl max-w-sm">
-            <span className="text-2xl">↩️</span>
+            <X className="w-6 h-6 text-slate-300 shrink-0" />
             <div>
               <p className="font-black text-sm">Pembayaran Dibatalkan</p>
               <p className="text-xs text-slate-300 mt-0.5">Anda dapat memilih tier kapan saja dari menu upgrade.</p>
@@ -1697,7 +1723,7 @@ export default function App() {
       {paymentVerifyStatus === 'timeout' && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[201] animate-fadeIn">
           <div className="flex items-center gap-3 px-5 py-4 rounded-2xl bg-amber-600 text-white shadow-2xl shadow-amber-900/50 max-w-sm">
-            <span className="text-2xl">⏳</span>
+            <Clock className="w-6 h-6 text-amber-200 shrink-0 animate-spin" />
             <div>
               <p className="font-black text-sm">Pembayaran Masih Diproses</p>
               <p className="text-xs text-amber-100 mt-0.5">
@@ -1713,9 +1739,9 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div className="flex items-center gap-2.5">
             <img
-              src="https://cms.maxy.academy/uploads/LogoMaxy.png"
-              alt="Maxy Academy Logo"
-              className="h-6 w-auto object-contain"
+              src={`${import.meta.env.BASE_URL}logo-ai-navigator.svg`}
+              alt="AI Navigator"
+              className="h-6 w-6 object-contain"
             />
             <span className="font-bold text-slate-700 dark:text-slate-200">AI Navigator</span>
             <span>— Platform Pembelajaran LLM Interaktif Maxy Academy</span>

@@ -63,10 +63,10 @@ export const PersonalNotes: React.FC<PersonalNotesProps> = ({
       localStorage.setItem(storageKey, JSON.stringify(payload));
       setLastSaved(`Hari ini, ${timeStr}`);
       setIsSaved(true);
-      if (onShowToast) onShowToast('📝 Catatan pribadi berhasil disimpan ke browser!');
+      if (onShowToast) onShowToast('Catatan pribadi berhasil disimpan ke browser.');
     } catch (e) {
       console.error('Failed to save personal notes', e);
-      if (onShowToast) onShowToast('❌ Gagal menyimpan catatan.');
+      if (onShowToast) onShowToast('Gagal menyimpan catatan.');
     }
   };
 
@@ -90,7 +90,7 @@ export const PersonalNotes: React.FC<PersonalNotesProps> = ({
     if (!noteText.trim()) return;
     navigator.clipboard.writeText(noteText);
     setCopied(true);
-    if (onShowToast) onShowToast('📋 Catatan disalin ke clipboard!');
+    if (onShowToast) onShowToast('Catatan disalin ke clipboard.');
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -108,7 +108,7 @@ export const PersonalNotes: React.FC<PersonalNotesProps> = ({
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
-    if (onShowToast) onShowToast(`📥 Catatan diunduh sebagai ${filename}`);
+    if (onShowToast) onShowToast(`Catatan diunduh sebagai ${filename}`);
   };
 
   // Clear Note
@@ -118,7 +118,7 @@ export const PersonalNotes: React.FC<PersonalNotesProps> = ({
     setLastSaved(null);
     setIsSaved(true);
     setShowClearConfirm(false);
-    if (onShowToast) onShowToast('🗑️ Catatan pribadi modul ini telah dihapus.');
+    if (onShowToast) onShowToast('Catatan pribadi modul ini telah dihapus.');
   };
 
   // Calculate statistics
@@ -175,28 +175,28 @@ export const PersonalNotes: React.FC<PersonalNotesProps> = ({
               Sisip Templat:
             </span>
             <button
-              onClick={() => handleInsertTemplate('📌 Poin Penting:\n- ')}
+              onClick={() => handleInsertTemplate('Poin Penting:\n- ')}
               className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white text-[11px] font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
             >
               <Plus className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
               Poin Penting
             </button>
             <button
-              onClick={() => handleInsertTemplate('💡 Ringkasan & Wawasan:\n- ')}
+              onClick={() => handleInsertTemplate('Ringkasan & Wawasan:\n- ')}
               className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white text-[11px] font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
             >
               <Plus className="w-3 h-3 text-amber-600 dark:text-amber-400" />
               Ringkasan
             </button>
             <button
-              onClick={() => handleInsertTemplate('🚀 Draf Prompt Favorit:\n"..."')}
+              onClick={() => handleInsertTemplate('Draf Prompt Favorit:\n"..."')}
               className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white text-[11px] font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
             >
               <Plus className="w-3 h-3 text-purple-600 dark:text-purple-400" />
               Prompt Favorit
             </button>
             <button
-              onClick={() => handleInsertTemplate('❓ Pertanyaan & Catatan Diskusi:\n- ')}
+              onClick={() => handleInsertTemplate('Pertanyaan & Catatan Diskusi:\n- ')}
               className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white text-[11px] font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
             >
               <Plus className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />

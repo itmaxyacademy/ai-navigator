@@ -59,7 +59,7 @@ const renderAdvantageIcon = (iconName: string, themeColor: string) => {
 const CARD_THEMES = [
   {
     border: 'border-amber-200 dark:border-amber-800/60 hover:border-amber-300 dark:hover:border-amber-700',
-    bg: 'bg-gradient-to-br from-amber-50/70 via-white to-amber-50/30 dark:from-amber-950/30 dark:via-slate-900 dark:to-slate-900/90',
+    bg: 'bg-white dark:bg-[#0d1322]',
     iconBg: 'bg-amber-100 dark:bg-amber-950/60 border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-400',
     tagBg: 'bg-amber-100/70 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800',
     textColor: 'text-amber-700 dark:text-amber-400',
@@ -67,7 +67,7 @@ const CARD_THEMES = [
   },
   {
     border: 'border-sky-200 dark:border-sky-800/60 hover:border-sky-300 dark:hover:border-sky-700',
-    bg: 'bg-gradient-to-br from-sky-50/70 via-white to-sky-50/30 dark:from-sky-950/30 dark:via-slate-900 dark:to-slate-900/90',
+    bg: 'bg-white dark:bg-[#0d1322]',
     iconBg: 'bg-sky-100 dark:bg-sky-950/60 border-sky-200 dark:border-sky-800 text-sky-700 dark:text-sky-400',
     tagBg: 'bg-sky-100/70 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 border-sky-200 dark:border-sky-800',
     textColor: 'text-sky-700 dark:text-sky-400',
@@ -75,7 +75,7 @@ const CARD_THEMES = [
   },
   {
     border: 'border-emerald-200 dark:border-emerald-800/60 hover:border-emerald-300 dark:hover:border-emerald-700',
-    bg: 'bg-gradient-to-br from-emerald-50/70 via-white to-emerald-50/30 dark:from-emerald-950/30 dark:via-slate-900 dark:to-slate-900/90',
+    bg: 'bg-white dark:bg-[#0d1322]',
     iconBg: 'bg-emerald-100 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400',
     tagBg: 'bg-emerald-100/70 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
     textColor: 'text-emerald-700 dark:text-emerald-400',
@@ -83,7 +83,7 @@ const CARD_THEMES = [
   },
   {
     border: 'border-purple-200 dark:border-purple-800/60 hover:border-purple-300 dark:hover:border-purple-700',
-    bg: 'bg-gradient-to-br from-purple-50/70 via-white to-purple-50/30 dark:from-purple-950/30 dark:via-slate-900 dark:to-slate-900/90',
+    bg: 'bg-white dark:bg-[#0d1322]',
     iconBg: 'bg-purple-100 dark:bg-purple-950/60 border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-400',
     tagBg: 'bg-purple-100/70 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 border-purple-200 dark:border-purple-800',
     textColor: 'text-purple-700 dark:text-purple-400',
@@ -93,10 +93,10 @@ const CARD_THEMES = [
 
 // Special actionable examples for Module 1 (RCTF)
 const RCTF_EXAMPLES = [
-  '💡 Contoh: "Bertindaklah sebagai Senior Growth Marketing Consultant..."',
-  '💡 Contoh: "Untuk produk B2B SaaS dengan target 500 user pertama..."',
-  '💡 Contoh: "Susun 3 strategi akuisisi user organik yang paling efektif..."',
-  '💡 Contoh: "Sajikan dalam tabel 4 kolom (Strategi, Eksekusi, Waktu, KPI)..."',
+  'Contoh: "Bertindaklah sebagai Senior Growth Marketing Consultant..."',
+  'Contoh: "Untuk produk B2B SaaS dengan target 500 user pertama..."',
+  'Contoh: "Susun 3 strategi akuisisi user organik yang paling efektif..."',
+  'Contoh: "Sajikan dalam tabel 4 kolom (Strategi, Eksekusi, Waktu, KPI)..."',
 ];
 
 export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
@@ -113,7 +113,6 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
     <div className="space-y-8">
       {/* Hero Header Info Card (Dark Navy Pill matching Roadmap Group Banner) */}
       <div className="bg-[#0d1322] border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl relative overflow-hidden text-white">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
         
         {/* Top meta tags */}
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -275,7 +274,7 @@ export const ModuleOverview: React.FC<ModuleOverviewProps> = ({
       <div className="pt-4 flex justify-end">
         <button
           onClick={onAdvanceToReplica}
-          className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xs sm:text-sm rounded-2xl shadow-xl shadow-indigo-600/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer"
+          className="w-full sm:w-auto px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs sm:text-sm rounded-2xl shadow-md transition-all flex items-center justify-center gap-2.5 cursor-pointer active:scale-95"
         >
           <span>Lanjut ke Tampilan Interaktif Simulasi</span>
           <ArrowRight className="w-4 h-4" />
