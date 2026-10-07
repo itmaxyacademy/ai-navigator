@@ -180,135 +180,138 @@ export default function App() {
     });
   }, []);
 
-  // Deteksi return dari halaman Xendit — verifikasi status pembayaran sebelum update tier
-  useEffect(() => {
-    if (isLocalDevEnv) return; // Skip di local dev
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const paymentParam = urlParams.get('payment');
-    const orderId = urlParams.get('order_id');
-
-    // Bersihkan query params dari URL tanpa reload halaman
-    const cleanUrl = window.location.pathname;
-    if (paymentParam) {
-      window.history.replaceState({}, document.title, cleanUrl);
-    }
-
-    if (paymentParam === 'cancelled') {
-      // User balik tanpa bayar — tampilkan notifikasi singkat, tidak ubah tier
-      setPaymentVerifyStatus('cancelled');
-      setTimeout(() => setPaymentVerifyStatus(null), 5000);
-      return;
-    }
-
-    if (paymentParam === 'success' && orderId) {
-      // User balik setelah bayar — mulai polling untuk konfirmasi pembayaran dari webhook Xendit
-      setActiveInvoiceOrderId(orderId);
-      setIsVerifyingPayment(true);
-
-      const MAX_POLLS = 5;
-      const POLL_INTERVAL_MS = 2500;
-      let pollCount = 0;
-
-      const pollStatus = async () => {
-        pollCount++;
-        const result = await verifyPaymentOrder(orderId);
-
-        if (result.isPaid) {
-          // Pembayaran dikonfirmasi — refresh user profile untuk update tier
-          setIsVerifyingPayment(false);
-          setPaymentVerifyStatus('success');
-
-          const token = localStorage.getItem('maxy_access_token');
-          if (token) {
-            // Re-fetch profile agar tier ter-update dari backend
-            fetchUserProfile(token).then((res) => {
-              if (res.success && res.data) {
-                const sub = res.data.subscription;
-                const user = res.data.user;
-                const rawTier = sub?.active_tier || sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
-                const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
-                const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
-                const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
-                const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
-                const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
-
-                setProgress((prev) => ({
-                  ...prev,
-                  userTier,
-                  tier: userTier,
-                  maxAllowedModuleId: maxAllowed,
-                  paidTiers,
-                  hasTier1,
-                  hasTier2,
-                  userName: user?.name || prev.userName,
-                  userEmail: user?.email || prev.userEmail,
-                  packageName: sub?.package_name || prev.packageName,
-                  subscriptionExpiredAt: sub?.expired_at || null,
-                  isExpired: sub?.is_expired || false,
-                  expiredAt: sub?.expired_at || null,
-                  expiredDays: sub?.expired_days || null,
-                  assignedMentorId: sub?.assigned_mentor_id || prev.assignedMentorId || null,
-                  assignedMentorName: sub?.assigned_mentor_name || prev.assignedMentorName || null,
-                  mentorAssignedAt: sub?.mentor_assigned_at || prev.mentorAssignedAt || null,
-                  capstoneTitle: sub?.capstone_title || prev.capstoneTitle || null,
-                  capstoneUrl: sub?.capstone_url || prev.capstoneUrl || null,
-                  capstoneStatus: sub?.capstone_status || prev.capstoneStatus || null,
-                  capstoneNotes: sub?.capstone_notes || prev.capstoneNotes || null,
-                  capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || prev.capstoneAssignedByMentor || null,
-                }));
-
-                // Konfetti celebrasi pembayaran berhasil
-                try {
-                  confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 }, colors: ['#f59e0b', '#6366f1', '#10b981'] });
-                } catch (_) { /* ignore */ }
-              }
-            });
-          }
-
-          setTimeout(() => setPaymentVerifyStatus(null), 8000);
-          return;
-        }
-
-        if (pollCount < MAX_POLLS) {
-          // Coba lagi setelah interval — webhook mungkin belum tiba
-          setTimeout(pollStatus, POLL_INTERVAL_MS);
-        } else {
-          // Habis polling — belum ada konfirmasi, minta user untuk refresh manual
-          setIsVerifyingPayment(false);
-          setPaymentVerifyStatus('timeout');
-          setTimeout(() => setPaymentVerifyStatus(null), 15000);
-        }
-      };
-
-      // Mulai polling pertama setelah 1.5 detik (beri waktu webhook tiba)
-      setTimeout(pollStatus, 1500);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Deteksi redirect dari landing-navigator: ?upgrade=true&tier=tier1|tier2&voucher=XXXX
   const [upgradePrefilledVoucher, setUpgradePrefilledVoucher] = useState<string>('');
   const [upgradePrefilledTier, setUpgradePrefilledTier] = useState<'tier1' | 'tier2' | null>(null);
 
+  // Single-pass URL query parameter processing: prevents race conditions and multiple replaceState calls
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get('token');
+    const refreshTokenFromUrl = urlParams.get('refresh_token');
     const upgradeParam = urlParams.get('upgrade');
     const tierParam = urlParams.get('tier');
     const voucherParam = urlParams.get('voucher');
+    const paymentParam = urlParams.get('payment');
+    const orderId = urlParams.get('order_id');
 
+    // 1. Process Auth Tokens immediately into storage
+    if (tokenFromUrl) {
+      const oldToken = localStorage.getItem('maxy_access_token');
+      if (oldToken && oldToken !== tokenFromUrl) {
+        localStorage.removeItem('maxy_user_name');
+        localStorage.removeItem('maxy_user_email');
+        localStorage.removeItem('maxy_user_tier');
+        localStorage.removeItem('maxy_has_tier1');
+        localStorage.removeItem('maxy_has_tier2');
+        localStorage.removeItem('maxy_package_name');
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(BACKUP_KEY);
+        localStorage.removeItem('ai_navigator_opened_chests');
+      }
+      localStorage.setItem('maxy_access_token', tokenFromUrl);
+    }
+    if (refreshTokenFromUrl) {
+      localStorage.setItem('maxy_refresh_token', refreshTokenFromUrl);
+    }
+
+    // 2. Process Voucher / Upgrade Intent
     if (upgradeParam === 'true') {
-      // Simpan niat klaim agar selamat dari redirect login (sessionStorage tidak ikut terhapus di redirectToLogin)
       try {
         sessionStorage.setItem('ai_navigator_pending_upgrade', JSON.stringify({
           tier: tierParam === 'tier1' || tierParam === 'tier2' ? tierParam : null,
           voucher: voucherParam || '',
         }));
-      } catch (_) { /* storage penuh/diblokir: klaim manual lewat modal tetap bisa */ }
+      } catch (_) { /* storage penuh/diblokir */ }
+    }
 
-      // Hapus HANYA param upgrade. token & refresh_token harus tetap ada sampai Auth Guard membacanya,
-      // kalau tidak user tanpa sesi tersimpan dilempar ke login dan konteks voucher hilang.
-      ['upgrade', 'tier', 'voucher'].forEach((k) => urlParams.delete(k));
+    // 3. Process Payment Return Callback
+    if (paymentParam && !isLocalDevEnv) {
+      if (paymentParam === 'cancelled') {
+        setPaymentVerifyStatus('cancelled');
+        setTimeout(() => setPaymentVerifyStatus(null), 5000);
+      } else if (paymentParam === 'success' && orderId) {
+        setActiveInvoiceOrderId(orderId);
+        setIsVerifyingPayment(true);
+
+        const MAX_POLLS = 5;
+        const POLL_INTERVAL_MS = 2500;
+        let pollCount = 0;
+
+        const pollStatus = async () => {
+          pollCount++;
+          const result = await verifyPaymentOrder(orderId);
+
+          if (result.isPaid) {
+            setIsVerifyingPayment(false);
+            setPaymentVerifyStatus('success');
+
+            const token = localStorage.getItem('maxy_access_token');
+            if (token) {
+              fetchUserProfile(token).then((res) => {
+                if (res.success && res.data) {
+                  const sub = res.data.subscription;
+                  const user = res.data.user;
+                  const rawTier = sub?.active_tier || sub?.tier || (sub?.is_paid ? 'tier1' : 'free');
+                  const userTier: UserProgress['userTier'] = (rawTier === 'tier_2' || rawTier === 'tier2') ? 'tier2' : (rawTier === 'tier_1' || rawTier === 'tier1') ? 'tier1' : 'free';
+                  const maxAllowed = sub?.max_allowed_module_id || (userTier === 'tier2' ? 29 : userTier === 'tier1' ? 22 : 3);
+                  const paidTiers: UserProgress['paidTiers'] = sub?.paid_tiers ? (sub.paid_tiers.map((t: string) => (t === 'tier_2' ? 'tier2' : t === 'tier_1' ? 'tier1' : t))) : (userTier !== 'free' ? [userTier] : []);
+                  const hasTier1 = Boolean(sub?.has_tier1 || paidTiers.includes('tier1'));
+                  const hasTier2 = Boolean(sub?.has_tier2 || paidTiers.includes('tier2'));
+
+                  setProgress((prev) => ({
+                    ...prev,
+                    userTier,
+                    tier: userTier,
+                    maxAllowedModuleId: maxAllowed,
+                    paidTiers,
+                    hasTier1,
+                    hasTier2,
+                    userName: user?.name || prev.userName,
+                    userEmail: user?.email || prev.userEmail,
+                    packageName: sub?.package_name || prev.packageName,
+                    subscriptionExpiredAt: sub?.expired_at || null,
+                    isExpired: sub?.is_expired || false,
+                    expiredAt: sub?.expired_at || null,
+                    expiredDays: sub?.expired_days || null,
+                    assignedMentorId: sub?.assigned_mentor_id || prev.assignedMentorId || null,
+                    assignedMentorName: sub?.assigned_mentor_name || prev.assignedMentorName || null,
+                    mentorAssignedAt: sub?.mentor_assigned_at || prev.mentorAssignedAt || null,
+                    capstoneTitle: sub?.capstone_title || prev.capstoneTitle || null,
+                    capstoneUrl: sub?.capstone_url || prev.capstoneUrl || null,
+                    capstoneStatus: sub?.capstone_status || prev.capstoneStatus || null,
+                    capstoneNotes: sub?.capstone_notes || prev.capstoneNotes || null,
+                    capstoneAssignedByMentor: sub?.capstone_assigned_by_mentor || prev.capstoneAssignedByMentor || null,
+                  }));
+
+                  try {
+                    confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 }, colors: ['#f59e0b', '#6366f1', '#10b981'] });
+                  } catch (_) { /* ignore */ }
+                }
+              });
+            }
+
+            setTimeout(() => setPaymentVerifyStatus(null), 8000);
+            return;
+          }
+
+          if (pollCount < MAX_POLLS) {
+            setTimeout(pollStatus, POLL_INTERVAL_MS);
+          } else {
+            setIsVerifyingPayment(false);
+            setPaymentVerifyStatus('timeout');
+            setTimeout(() => setPaymentVerifyStatus(null), 15000);
+          }
+        };
+
+        setTimeout(pollStatus, 1500);
+      }
+    }
+
+    // 4. Single-pass URL cleanup: remove processed query parameters cleanly without reload
+    const hasHandledParams = Boolean(tokenFromUrl || refreshTokenFromUrl || upgradeParam || paymentParam);
+    if (hasHandledParams) {
+      ['token', 'refresh_token', 'upgrade', 'tier', 'voucher', 'payment', 'order_id'].forEach((k) => urlParams.delete(k));
       const rest = urlParams.toString();
       window.history.replaceState({}, document.title, window.location.pathname + (rest ? `?${rest}` : ''));
     }
@@ -366,40 +369,22 @@ export default function App() {
 
   // Auth Guard: Sync user profile & active tier subscription from API Gateway api.maxy.academy
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const tokenFromUrl = urlParams.get('token');
-    const refreshTokenFromUrl = urlParams.get('refresh_token');
-
-    if (tokenFromUrl) {
-      const oldToken = localStorage.getItem('maxy_access_token');
-      if (oldToken && oldToken !== tokenFromUrl) {
-        // Token changed to a new user account: clear previous user cache!
-        localStorage.removeItem('maxy_user_name');
-        localStorage.removeItem('maxy_user_email');
-        localStorage.removeItem('maxy_user_tier');
-        localStorage.removeItem('maxy_has_tier1');
-        localStorage.removeItem('maxy_has_tier2');
-        localStorage.removeItem('maxy_package_name');
-        localStorage.removeItem(STORAGE_KEY);
-        localStorage.removeItem(BACKUP_KEY);
-        localStorage.removeItem('ai_navigator_opened_chests');
-      }
-      localStorage.setItem('maxy_access_token', tokenFromUrl);
-    }
-    if (refreshTokenFromUrl) {
-      localStorage.setItem('maxy_refresh_token', refreshTokenFromUrl);
-    }
-
-    // Clean sensitive query parameters from URL bar without reload
-    if (tokenFromUrl || refreshTokenFromUrl) {
-      const cleanUrl = window.location.pathname;
-      window.history.replaceState({}, document.title, cleanUrl);
-    }
-
-    const token = tokenFromUrl || localStorage.getItem('maxy_access_token');
+    const token = localStorage.getItem('maxy_access_token');
 
     const getLandingUrl = () => {
-      return 'https://ainavigator.maxy.academy?login=true';
+      let returnUrl = window.location.href;
+      try {
+        const pending = sessionStorage.getItem('ai_navigator_pending_upgrade');
+        if (pending) {
+          const { tier, voucher } = JSON.parse(pending);
+          const u = new URL(window.location.href);
+          u.searchParams.set('upgrade', 'true');
+          if (tier) u.searchParams.set('tier', tier);
+          if (voucher) u.searchParams.set('voucher', voucher);
+          returnUrl = u.toString();
+        }
+      } catch (_) { /* ignore */ }
+      return `https://ainavigator.maxy.academy?login=true&redirect=${encodeURIComponent(returnUrl)}`;
     };
 
     const redirectToLogin = () => {
