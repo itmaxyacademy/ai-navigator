@@ -427,7 +427,7 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
                   Tier 2: Full Mentoring &amp; CAAI™ Certification
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 font-medium leading-relaxed">
-                  Akses 6 Bulan Penuh (29 Modul Lengkap + Mentoring &amp; Capstone) + Sertifikat CAAI™ Level 1 (28 JP)
+                  Akses 6 Bulan Penuh (29 Modul Lengkap + 7 Hari Pendampingan Mentor via Grup Chat &amp; Capstone) + Sertifikat CAAI™ Level 1 (28 JP)
                 </p>
               </div>
 
