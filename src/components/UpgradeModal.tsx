@@ -459,7 +459,7 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
                   <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3 h-3 text-amber-400" />
                   </div>
-                  <span>Penugasan Mentor Resmi &amp; Bimbingan Capstone</span>
+                  <span>7 Hari Pendampingan Mentor via Grup Chat</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
