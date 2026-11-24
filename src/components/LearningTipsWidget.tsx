@@ -108,15 +108,15 @@ export const LearningTipsWidget: React.FC<LearningTipsWidgetProps> = React.memo(
       {/* Widget Header */}
       <div className="relative z-10 flex items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="p-2 rounded-xl bg-indigo-500/10 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 shrink-0">
-            <Lightbulb className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+          <div className="p-2 rounded-xl bg-amber-500/10 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 text-amber-600 dark:text-amber-400 shrink-0">
+            <Lightbulb className="w-4 h-4 text-amber-500" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight break-words">Tips Belajar AI</h3>
               {isDailyTip && (
-                <span className="text-[10px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 px-2 py-0.5 rounded-md uppercase tracking-wider flex items-center gap-1 shrink-0">
-                  <Sparkles className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                <span className="text-[10px] font-extrabold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 px-2 py-0.5 rounded-md uppercase tracking-wider flex items-center gap-1 shrink-0">
+                  <Sparkles className="w-3 h-3 text-amber-500" />
                   Tip Hari Ini
                 </span>
               )}
@@ -129,21 +129,21 @@ export const LearningTipsWidget: React.FC<LearningTipsWidgetProps> = React.memo(
         <div className="flex items-center gap-1 shrink-0">
           <button
             onClick={handlePrev}
-            className="p-1.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:border-indigo-500 transition-all cursor-pointer"
+            className="p-1.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:border-amber-400 transition-all cursor-pointer"
             title="Tip Sebelumnya"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={handleRandom}
-            className="p-1.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-indigo-400 hover:text-slate-900 dark:text-white hover:border-indigo-500 transition-all cursor-pointer"
+            className="p-1.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-amber-500 hover:text-slate-900 dark:text-white hover:border-amber-400 transition-all cursor-pointer"
             title="Tip Acak"
           >
             <Shuffle className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={handleNext}
-            className="p-1.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:border-indigo-500 transition-all cursor-pointer"
+            className="p-1.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:border-amber-400 transition-all cursor-pointer"
             title="Tip Selanjutnya"
           >
             <ChevronRight className="w-4 h-4" />
@@ -152,11 +152,11 @@ export const LearningTipsWidget: React.FC<LearningTipsWidgetProps> = React.memo(
       </div>
 
       {/* Main Tip Box */}
-      <div className="relative z-10 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-3">
+      <div className="relative z-10 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-3">
         {/* Tip Title & Bookmark */}
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1 min-w-0">
-            <span className="text-[10px] font-extrabold text-indigo-400 uppercase tracking-wider block">
+            <span className="text-[10px] font-extrabold text-[#d98200] dark:text-amber-400 uppercase tracking-wider block">
               {currentTip.category} • {currentTip.level}
             </span>
             <h4 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white leading-snug break-words">
@@ -168,7 +168,7 @@ export const LearningTipsWidget: React.FC<LearningTipsWidgetProps> = React.memo(
             onClick={() => toggleBookmark(currentTip.id)}
             className={`p-2 rounded-xl border transition-all cursor-pointer shrink-0 ${
               isBookmarked
-                ? 'bg-indigo-950 border-indigo-800 text-indigo-400'
+                ? 'bg-amber-50 dark:bg-amber-950/60 border-amber-300 dark:border-amber-700 text-amber-600 dark:text-amber-400'
                 : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-600 dark:text-slate-300'
             }`}
             title={isBookmarked ? 'Simpan di Bookmark' : 'Tandai Bookmark'}
@@ -186,19 +186,19 @@ export const LearningTipsWidget: React.FC<LearningTipsWidgetProps> = React.memo(
         {currentTip.promptExample && (
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 space-y-2">
             <div className="flex items-center justify-between text-[11px]">
-              <span className="font-mono font-bold text-indigo-300">Contoh Implementasi Prompt:</span>
+              <span className="font-mono font-bold text-slate-800 dark:text-amber-300">Contoh Implementasi Prompt:</span>
               <button
                 onClick={() => handleCopyPrompt(currentTip.promptExample)}
                 className="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white flex items-center gap-1 transition-colors cursor-pointer"
               >
                 {copiedPrompt ? (
                   <>
-                    <Check className="w-3 h-3 text-emerald-400" />
-                    <span className="text-emerald-400">Tersalin!</span>
+                    <Check className="w-3 h-3 text-emerald-500" />
+                    <span className="text-emerald-500">Tersalin!</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3 h-3 text-indigo-400" />
+                    <Copy className="w-3 h-3 text-amber-500" />
                     <span>Salin Prompt</span>
                   </>
                 )}
@@ -219,20 +219,20 @@ export const LearningTipsWidget: React.FC<LearningTipsWidgetProps> = React.memo(
           <button
             onClick={handleMarkUnderstood}
             disabled={isUnderstood}
-            className={`px-3 py-1.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition-all ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
               isUnderstood
-                ? 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-emerald-400 cursor-default'
-                : 'bg-indigo-600 hover:bg-indigo-500 text-white cursor-pointer shadow-md'
+                ? 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-emerald-500 cursor-default'
+                : 'bg-slate-900 hover:bg-slate-800 text-white dark:bg-[#ffb034] dark:hover:bg-[#e09b2d] dark:text-slate-950 cursor-pointer shadow-xs'
             }`}
           >
             {isUnderstood ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <Check className="w-3.5 h-3.5 text-emerald-500" />
                 <span>Sudah Dipahami (+10 XP)</span>
               </>
             ) : (
               <>
-                <Sparkles className="w-3.5 h-3.5 text-slate-900 dark:text-white" />
+                <Sparkles className="w-3.5 h-3.5 text-amber-300 dark:text-slate-950" />
                 <span>Pahami Tip Ini (+10 XP)</span>
               </>
             )}

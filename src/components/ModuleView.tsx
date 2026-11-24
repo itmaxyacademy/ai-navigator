@@ -42,7 +42,7 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
     <div className="space-y-6 pb-12 relative">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-2xl bg-indigo-600 text-white font-bold text-xs shadow-2xl border border-indigo-400 flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4">
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs shadow-2xl border border-slate-700 flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4">
           <Sparkles className="w-4 h-4 text-amber-300" />
           <span>{toastMessage}</span>
         </div>
@@ -54,7 +54,7 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
           onClick={onBackToPath}
           className="px-4 py-2 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white text-xs font-bold flex items-center gap-2 border border-slate-200 dark:border-slate-700 transition-all cursor-pointer shrink-0 shadow-sm"
         >
-          <ArrowLeft className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Kembali <span className="hidden sm:inline">ke Peta Jalan</span>
+          <ArrowLeft className="w-4 h-4 text-slate-700 dark:text-slate-300" /> Kembali <span className="hidden sm:inline">ke Peta Jalan</span>
         </button>
 
         {/* Section Tabs Stepper */}
@@ -63,7 +63,7 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
             onClick={() => onSectionChange('overview')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition-all whitespace-nowrap cursor-pointer ${
               activeSection === 'overview'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                ? 'bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 font-bold shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
             }`}
           >
@@ -75,7 +75,7 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
             onClick={() => onSectionChange('replica')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition-all whitespace-nowrap cursor-pointer ${
               activeSection === 'replica'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                ? 'bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 font-bold shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
             }`}
           >
@@ -87,7 +87,7 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
             onClick={() => onSectionChange('prompting')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition-all whitespace-nowrap cursor-pointer ${
               activeSection === 'prompting'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                ? 'bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 font-bold shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
             }`}
           >
@@ -99,7 +99,7 @@ export const ModuleView: React.FC<ModuleViewProps> = ({
             onClick={() => onSectionChange('quiz')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition-all whitespace-nowrap cursor-pointer ${
               activeSection === 'quiz'
-                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
+                ? 'bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 font-bold shadow-xs'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
             }`}
           >

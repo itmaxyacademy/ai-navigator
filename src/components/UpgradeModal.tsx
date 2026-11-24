@@ -74,10 +74,18 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
   if (!isOpen) return null;
 
   const rawTier1Price = packages?.tier1?.price ?? 49500;
-  const tier1FakePrice = packages?.tier1?.fake_price ? `Rp ${packages.tier1.fake_price.toLocaleString('id-ID')}` : 'Rp 125.000';
+  const rawTier1FakePriceNum = packages?.tier1?.fake_price ?? 125000;
+  const tier1FakePrice = `Rp ${rawTier1FakePriceNum.toLocaleString('id-ID')}`;
+  const tier1DiscountPercent = rawTier1FakePriceNum > rawTier1Price
+    ? Math.round(((rawTier1FakePriceNum - rawTier1Price) / rawTier1FakePriceNum) * 100)
+    : 60;
 
   const rawTier2Price = packages?.tier2?.price ?? 299500;
-  const tier2FakePrice = packages?.tier2?.fake_price ? `Rp ${packages.tier2.fake_price.toLocaleString('id-ID')}` : 'Rp 750.000';
+  const rawTier2FakePriceNum = packages?.tier2?.fake_price ?? 899000;
+  const tier2FakePrice = `Rp ${rawTier2FakePriceNum.toLocaleString('id-ID')}`;
+  const tier2DiscountPercent = rawTier2FakePriceNum > rawTier2Price
+    ? Math.round(((rawTier2FakePriceNum - rawTier2Price) / rawTier2FakePriceNum) * 100)
+    : 67;
 
   // Dynamic prices after voucher discount per Tier
   let tier1Discount = 0;
@@ -184,8 +192,8 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
 
         {/* Header */}
         <div className="text-center space-y-2 max-w-2xl mx-auto pt-2">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold">
-            <Lock className="w-4 h-4 text-amber-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffb034]/20 border border-[#ffb034]/40 text-slate-900 dark:text-amber-300 text-xs font-bold">
+            <Lock className="w-4 h-4 text-amber-500" />
             <span>
               {targetModuleId
                 ? (currentTier === 'free' ? `Modul ${targetModuleId} Terkunci (Batas Free Trial)` : `Modul ${targetModuleId} Terkunci (Batas Paket)`)
@@ -194,26 +202,26 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
           </div>
 
           <h2 className="text-xl sm:text-3xl font-black tracking-tight text-slate-900 dark:text-white mt-3">
-            Upgrade Akses Pembelajaran <span className="text-amber-400">AI Navigator</span>
+            Upgrade Akses Pembelajaran <span className="text-[#d98200] dark:text-amber-400">AI Navigator</span>
           </h2>
 
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
             {targetModuleId ? (
               <>
-                Status Anda saat ini adalah <strong className="text-amber-400">{currentTier === 'free' ? 'Free Trial' : currentTier === 'tier1' ? 'Tier 1' : 'Tier 2'}</strong>{currentTier === 'free' ? ' (hanya dapat mengakses Modul 1 hingga Modul 3)' : ''}. Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-slate-900 dark:text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
+                Status Anda saat ini adalah <strong className="text-[#d98200] dark:text-amber-400">{currentTier === 'free' ? 'Free Trial' : currentTier === 'tier1' ? 'Tier 1' : 'Tier 2'}</strong>{currentTier === 'free' ? ' (hanya dapat mengakses Modul 1 hingga Modul 3)' : ''}. Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-slate-900 dark:text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
               </>
             ) : (
               <>
-                Status Anda saat ini adalah <strong className="text-amber-400">{currentTier === 'free' ? 'Free Trial' : currentTier === 'tier1' ? 'Tier 1' : 'Tier 2'}</strong>. Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-slate-900 dark:text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
+                Status Anda saat ini adalah <strong className="text-[#d98200] dark:text-amber-400">{currentTier === 'free' ? 'Free Trial' : currentTier === 'tier1' ? 'Tier 1' : 'Tier 2'}</strong>. Pilih paket di bawah untuk membuka akses ke seluruh <strong className="text-slate-900 dark:text-white">29 Modul Pembelajaran</strong> &amp; fitur sertifikasi!
               </>
             )}
           </p>
         </div>
 
         {/* Voucher Claim Section */}
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-3.5 max-w-xl mx-auto w-full">
-          <div className="flex items-center gap-2 mb-2 text-xs font-bold text-amber-400">
-            <Tag className="w-4 h-4 text-amber-400" />
+        <div className="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl p-3.5 max-w-xl mx-auto w-full">
+          <div className="flex items-center gap-2 mb-2 text-xs font-bold text-slate-800 dark:text-amber-300">
+            <Tag className="w-4 h-4 text-amber-500" />
             <span>Punya Kode Voucher / Promo? Klaim Di Sini</span>
           </div>
           <div className="flex gap-2">
@@ -221,13 +229,13 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
               type="text"
               value={voucherInput}
               onChange={(e) => setVoucherInput(e.target.value)}
-              placeholder="Masukkan kode voucher random..."
+              placeholder="Masukkan kode voucher..."
               className="flex-1 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2 text-xs font-mono uppercase text-slate-900 dark:text-white focus:outline-none focus:border-amber-400"
             />
             <button
               onClick={handleClaimVoucher}
               disabled={isVerifyingVoucher || !voucherInput.trim()}
-              className="px-4 py-2 bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-slate-950 font-bold text-xs rounded-xl transition-all cursor-pointer shadow-md"
+              className="px-4 py-2 bg-[#ffb034] hover:bg-[#e09b2d] disabled:opacity-50 text-slate-950 font-bold text-xs rounded-xl transition-all cursor-pointer shadow-xs"
             >
               {isVerifyingVoucher ? 'Memeriksa...' : 'Klaim Voucher'}
             </button>
@@ -250,102 +258,109 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
           )}
         </div>
 
-        {/* Pricing & Tier Options (3-Column Layout from Foto Pertama) */}
+        {/* Pricing & Tier Options (3-Column Layout identical to Landing Page) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2 items-stretch">
 
-          {/* CARD 1: FREE TRIAL / STARTER */}
-          <div className={`relative bg-white text-slate-900 border-2 rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
+          {/* CARD 1: FREE TRIAL */}
+          <div className={`p-6 sm:p-7 rounded-[2rem] bg-white text-slate-900 border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-6 relative overflow-hidden ${
             currentTier === 'free'
-              ? 'border-emerald-500 ring-2 ring-emerald-500/40 shadow-xl'
-              : 'border-emerald-500/60 hover:border-emerald-500 shadow-md'
+              ? 'ring-2 ring-emerald-500/40 border-emerald-500'
+              : ''
           }`}>
-            {/* Top Badge: PROMO SOFT LAUNCHING */}
-            <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-emerald-500 text-white font-black text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5" /> PROMO SOFT LAUNCHING
+            {/* Promo Soft Launching Tag */}
+            <div className="absolute top-0 right-0 bg-slate-900 text-[#ffb034] font-black text-[10px] px-3.5 py-1 rounded-bl-xl uppercase tracking-wider shadow-xs">
+              PROMO SOFT LAUNCHING
             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-center justify-between pt-1">
-                <span className="text-emerald-600 font-extrabold text-[11px] uppercase tracking-wider">
-                  FREE TRIAL
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold">
+            <div className="space-y-4 pt-2">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <span className="text-xs font-mono text-slate-500 font-black uppercase tracking-wider">
+                    FREE TRIAL
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">Free Tier: Pengenalan AI</h3>
+                </div>
+                <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-mono font-black shrink-0 shadow-xs">
                   3 MODUL
                 </span>
               </div>
 
-              <div>
-                <h3 className="text-xl font-black text-slate-900">Free Trial / Starter</h3>
-                <p className="text-xs text-slate-500 mt-1 font-medium leading-relaxed">
-                  Promo Soft Launching - Akses Uji Coba 3 Modul Dasar &amp; Pengenalan AI Navigator
-                </p>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Cocok untuk eksplorasi awal — coba 3 modul pengenalan AI tanpa biaya
+              </p>
+
+              <div className="pt-2">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-black tracking-wide">
+                    100% GRATIS
+                  </span>
+                </div>
+                <div className="text-3xl font-black text-slate-900 tracking-tight">Rp 0</div>
+                <div className="text-xs text-slate-500 font-medium mt-1">Akses coba 3 modul • Tanpa komitmen</div>
               </div>
 
-              <div className="py-3 border-y border-slate-100 flex flex-col">
-                <div className="text-2xl sm:text-3xl font-black text-slate-900">Gratis (Rp 0)</div>
-                <span className="text-xs text-slate-500 font-medium mt-0.5">Akses Coba Tanpa Komitmen</span>
-              </div>
-
-              <ul className="space-y-2.5 text-xs text-slate-700 font-medium">
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Akses 3 Modul Pengenalan AI &amp; Prompting</span>
+              <ul className="space-y-3 text-xs sm:text-sm text-slate-700 pt-4 border-t border-slate-100">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-600 shrink-0 mt-0.5" />
+                  <span>Akses 3 modul pengenalan AI</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Latihan Simulasi Prompt Engineering</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-600 shrink-0 mt-0.5" />
+                  <span>Latihan langsung pakai AI</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Pratinjau Kuis Pilihan Ganda</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-600 shrink-0 mt-0.5" />
+                  <span>Gabung komunitas belajar</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Akses Komunitas Komunitas Belajar</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Bisa Upgrade ke Tier 1 / Tier 2 Kapan Saja</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-600 shrink-0 mt-0.5" />
+                  <span>Upgrade kapan saja</span>
                 </li>
               </ul>
             </div>
 
             <button
               onClick={onClose}
-              className="w-full py-3.5 rounded-2xl font-black text-xs bg-white dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white shadow-md transition-all cursor-pointer hover:scale-[1.02]"
+              className="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs sm:text-sm transition-colors shadow-sm cursor-pointer"
             >
               Coba Gratis (3 Modul)
             </button>
           </div>
 
-          {/* CARD 2: TIER 1: SELF-PACED BASIC */}
-          <div className={`relative bg-white text-slate-900 border rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
+          {/* CARD 2: TIER 1: BELAJAR BASIC */}
+          <div className={`p-6 sm:p-7 rounded-[2rem] bg-white text-slate-900 border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-6 ${
             currentTier === 'tier1'
-              ? 'border-amber-500 ring-2 ring-amber-500/40 shadow-xl'
-              : 'border-slate-200 hover:border-slate-300 shadow-md'
+              ? 'ring-2 ring-amber-500/40 border-amber-500'
+              : ''
           }`}>
             <div className="space-y-4">
-              <div className="flex items-center justify-between pt-1">
-                <span className="text-amber-600 font-extrabold text-[11px] uppercase tracking-wider">
-                  BASIC TIER
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[11px] font-bold">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <span className="text-xs font-mono text-[#d98200] font-extrabold uppercase tracking-wider">
+                    BASIC TIER
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">Tier 1: Belajar Basic</h3>
+                </div>
+                <span className="px-3.5 py-1 rounded-full bg-[#ffb034]/20 border border-[#ffb034]/50 text-slate-900 text-xs font-mono font-black shrink-0 shadow-xs">
                   21 JP
                 </span>
               </div>
 
-              <div>
-                <h3 className="text-xl font-black text-slate-900">Tier 1: Self-Paced Basic</h3>
-                <p className="text-xs text-slate-500 mt-1 font-medium leading-relaxed">
-                  Akses 6 Bulan Modul Mandiri + Sertifikat Completion (21 JP)
-                </p>
-              </div>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                21 Hari pembelajaran mandiri untuk membangun dasar AI &amp; portfolio awal
+              </p>
 
-              <div className="py-3 border-y border-slate-100 flex flex-col">
-                <div className="text-2xl sm:text-3xl font-black text-slate-900">{tier1Price}</div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-medium line-through mt-0.5">
-                  Normal: {tier1FakePrice}
+              <div className="pt-2">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-sm sm:text-base font-semibold text-slate-400 line-through">
+                    {tier1FakePrice}
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-rose-50 border border-rose-200 text-rose-600 text-[11px] font-black tracking-wide">
+                    HEMAT {tier1DiscountPercent}%
+                  </span>
                 </div>
+                <div className="text-3xl font-black text-slate-900 tracking-tight">{tier1Price}</div>
+                <div className="text-xs text-slate-500 font-medium mt-1">Sekali bayar • Akses mandiri 21 hari</div>
                 {activeVoucher && isTier1VoucherEligible && tier1Discount > 0 && (
                   <div className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200 self-start">
                     <span>Diskon Voucher: -Rp {tier1Discount.toLocaleString('id-ID')}</span>
@@ -358,26 +373,26 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
                 )}
               </div>
 
-              <ul className="space-y-2.5 text-xs text-slate-700 font-medium">
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Akses 6 Bulan Penuh Modul Interaktif Self-Paced (22 Modul)</span>
+              <ul className="space-y-3.5 text-xs sm:text-sm text-slate-700 pt-4 border-t border-slate-100">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>21 modul belajar atur sendiri waktumu</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Kuis Pilihan Ganda &amp; Evaluasi Otomatis</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Evaluasi otomatis tiap modul</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Certificate of Completion (21 Jam Pelajaran / JP)</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Sertifikat Penyelesaian Program (21 JP)</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Akses Komunitas Belajar AI Navigator</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Akses komunitas AI Navigator</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                  <span>Bisa Di-upsell ke Tier 2 kapan saja</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-slate-700 shrink-0 mt-0.5" />
+                  <span>Upgrade kapan saja</span>
                 </li>
               </ul>
             </div>
@@ -385,12 +400,12 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
             <button
               onClick={() => handleSelect('tier1')}
               disabled={currentTier === 'tier1' || isLoading}
-              className={`w-full py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
+              className={`w-full py-4 rounded-xl font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 currentTier === 'tier1' || isLoading
                   ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
                   : finalTier1PriceNum === 0
                   ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-xl shadow-emerald-500/20 hover:scale-[1.02]'
-                  : 'bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-200 shadow-sm hover:scale-[1.02]'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-200 shadow-sm'
               }`}
             >
               {loadingTier === 'tier1' ? (
@@ -401,41 +416,46 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
             </button>
           </div>
 
-          {/* CARD 3: TIER 2: FULL MENTORING & CAAI™ CERTIFICATION */}
-          <div className={`relative bg-slate-100 dark:bg-slate-950 text-white border-2 rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all ${
+          {/* CARD 3: TIER 2: FULL MENTORING & CAAI™ CERTIFICATION (DARK SLEEK GOLD) */}
+          <div className={`p-6 sm:p-7 rounded-[2rem] bg-slate-900 text-white border-2 border-[#ffb034] shadow-2xl shadow-[#ffb034]/15 relative flex flex-col justify-between space-y-6 transition-all ${
             currentTier === 'tier2'
-              ? 'border-amber-400 ring-2 ring-amber-400/50 shadow-2xl shadow-amber-500/20'
-              : 'border-amber-500/60 hover:border-amber-400 shadow-xl'
+              ? 'ring-2 ring-[#ffb034]/70'
+              : ''
           }`}>
-            {/* Recommended Tag */}
-            <div className="absolute -top-3.5 right-6 px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-black text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
+            <div className="absolute -top-3.5 right-6 px-4 py-1 rounded-full bg-[#ffb034] text-slate-900 font-black text-[10px] uppercase tracking-wider shadow-md">
               RECOMMENDED CERTIFICATION
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between pt-1">
-                <span className="text-amber-400 font-extrabold text-[11px] uppercase tracking-wider">
-                  PRO CAAI™ TIER
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/30 text-[11px] font-bold">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <span className="text-xs font-mono text-[#ffb034] font-extrabold uppercase tracking-wider">
+                    PRO CAAI™ TIER
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-black text-white mt-0.5 leading-tight">
+                    Tier 2: Full Mentoring &amp; CAAI™ Certification
+                  </h3>
+                </div>
+                <span className="px-3.5 py-1 rounded-full bg-[#ffb034] text-slate-900 text-xs font-mono font-black shrink-0 shadow-md">
                   28 JP
                 </span>
               </div>
 
-              <div>
-                <h3 className="text-xl font-black text-slate-900 dark:text-white leading-tight">
-                  Tier 2: Full Mentoring &amp; CAAI™ Certification
-                </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 font-medium leading-relaxed">
-                  Akses 6 Bulan Penuh (29 Modul Lengkap + 7 Hari Pendampingan Mentor via Grup Chat &amp; Capstone) + Sertifikat CAAI™ Level 1 (28 JP)
-                </p>
-              </div>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                28 Hari lengkap dengan mentoring + capstone project untuk CV &amp; LinkedIn-mu
+              </p>
 
-              <div className="py-3 border-y border-slate-200 dark:border-slate-800 flex flex-col">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl sm:text-3xl font-black text-amber-400">{tier2Price}</span>
-                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium line-through">{tier2FakePrice}</span>
+              <div className="pt-2">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-sm sm:text-base font-semibold text-slate-400 line-through">
+                    {tier2FakePrice}
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-300 text-[11px] font-black tracking-wide flex items-center gap-1 shadow-sm">
+                    HEMAT {tier2DiscountPercent}%
+                  </span>
                 </div>
+                <div className="text-3xl font-black text-[#ffb034] tracking-tight">{tier2Price}</div>
+                <div className="text-xs text-slate-300 font-medium mt-1">Sekali bayar • Mentoring + Sertifikasi CAAI™</div>
                 {activeVoucher && isTier2VoucherEligible && tier2Discount > 0 && (
                   <div className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-lg border border-emerald-500/40 self-start">
                     <span>Diskon Voucher: -Rp {tier2Discount.toLocaleString('id-ID')}</span>
@@ -448,42 +468,26 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
                 )}
               </div>
 
-              <ul className="space-y-2.5 text-xs text-slate-700 dark:text-slate-200 font-medium">
-                <li className="flex items-start gap-2">
-                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 text-amber-400" />
-                  </div>
-                  <span>Akses 6 Bulan Penuh Semua 29 Modul Interaktif</span>
+              <ul className="space-y-3.5 text-xs sm:text-sm text-slate-200 pt-4 border-t border-slate-800">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-[#ffb034] shrink-0 mt-0.5" />
+                  <span>Semua akses Paket Basic</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 text-amber-400" />
-                  </div>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-[#ffb034] shrink-0 mt-0.5" />
                   <span>7 Hari Pendampingan Mentor via Grup Chat</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 text-amber-400" />
-                  </div>
-                  <span>Bimbingan 1-on-1 Penyusunan Capstone Project</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-[#ffb034] shrink-0 mt-0.5" />
+                  <span>Dibimbing membuat karya nyata pakai AI — step by step, dinilai mentor</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 text-amber-400" />
-                  </div>
-                  <span>Wajib Submit Project &amp; Review dari Mentor</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-[#ffb034] shrink-0 mt-0.5" />
+                  <span>Sertifikat Resmi Certified Applied AI™ Level 1 (28 JP)</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 text-amber-400" />
-                  </div>
-                  <span>Sertifikat Resmi CAAI™ Level 1 (28 JP) terhubung Accredify</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-4 h-4 rounded-full bg-amber-400/20 border border-amber-400/40 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 text-amber-400" />
-                  </div>
-                  <span>Digital Badge LinkedIn &amp; Verifikasi Kriptografis</span>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-[#ffb034] shrink-0 mt-0.5" />
+                  <span>Lencana digital terverifikasi — tambahkan ke CV dan LinkedIn</span>
                 </li>
               </ul>
             </div>
@@ -491,18 +495,18 @@ const UpgradeModalComponent: React.FC<UpgradeModalProps> = ({
             <button
               onClick={() => handleSelect('tier2')}
               disabled={currentTier === 'tier2' || isLoading}
-              className={`w-full py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
+              className={`w-full py-4 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 currentTier === 'tier2' || isLoading
-                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-500 cursor-not-allowed'
+                  ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
                   : finalTier2PriceNum === 0
                   ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-xl shadow-emerald-500/20 hover:scale-[1.02]'
-                  : 'bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-xl shadow-amber-400/20 hover:scale-[1.02]'
+                  : 'bg-[#ffb034] hover:bg-[#e59d2a] text-slate-900 shadow-lg shadow-[#ffb034]/25 hover:shadow-xl hover:shadow-[#ffb034]/35'
               }`}
             >
               {loadingTier === 'tier2' ? (
                 <span>{finalTier2PriceNum === 0 ? 'Mengaktifkan Akses Gratis...' : 'Memproses Pembayaran Xendit...'}</span>
               ) : (
-                <span>{currentTier === 'tier2' ? 'Tier 2 VIP Aktif' : finalTier2PriceNum === 0 ? 'Klaim Gratis dengan Voucher (Rp 0)' : `Pilih Tier 2 (${tier2Price})`}</span>
+                <span>{currentTier === 'tier2' ? 'Tier 2 Aktif' : finalTier2PriceNum === 0 ? 'Klaim Gratis dengan Voucher (Rp 0)' : `Pilih Tier 2 (${tier2Price})`}</span>
               )}
             </button>
           </div>

@@ -341,10 +341,10 @@ export default function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     try {
       const saved = localStorage.getItem('ai_navigator_theme_v3');
-      if (saved === 'light' || saved === 'dark') return saved;
-      return 'dark'; // Default to focused, eye-friendly dark theme
+      if (saved === 'dark' || saved === 'light') return saved;
+      return 'light'; // Default to clean, warm Maxy light theme matching landing
     } catch {
-      return 'dark';
+      return 'light';
     }
   });
 
@@ -1401,19 +1401,19 @@ export default function App() {
   if (shouldShowInitialLoading) {
     return (
       <div className={`min-h-screen flex flex-col items-center justify-center p-4 font-sans ${
-        theme === 'light' ? 'bg-slate-100 text-slate-900' : 'bg-[#070b14] text-white'
+        theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-[#0b0f19] text-white'
       }`}>
         <div className="relative mb-6">
           <div className="w-16 h-16 rounded-3xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shadow-xl shadow-amber-500/10 animate-pulse">
-            <Sparkles className="w-8 h-8 text-amber-400" />
+            <Sparkles className="w-8 h-8 text-amber-500" />
           </div>
           <div className="absolute -inset-1 rounded-3xl bg-amber-400/20 blur-md -z-10 animate-pulse" />
         </div>
         <div className="text-center space-y-2 max-w-xs">
-          <h3 className="text-sm font-extrabold text-white tracking-wide">
+          <h3 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-wide">
             Menyiapkan Peta Belajar AI Navigator...
           </h3>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Memuat progress &amp; status belajar Anda
           </p>
         </div>
@@ -1427,8 +1427,9 @@ export default function App() {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${theme === 'light' ? 'bg-slate-100/80 text-slate-900' : 'bg-[#070b14] text-slate-100'
-      } selection:bg-indigo-500 selection:text-white`}>
+    <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
+      theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-[#0b0f19] text-slate-100'
+    } selection:bg-[#ffb034] selection:text-slate-950`}>
       {/* Header */}
       <Header
         progress={progress}
@@ -1724,7 +1725,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div className="flex items-center gap-2.5">
             <img
-              src={`${import.meta.env.BASE_URL}logo-ai-navigator.svg`}
+              src="/logo-m.png"
               alt="AI Navigator"
               className="h-6 w-6 object-contain"
             />

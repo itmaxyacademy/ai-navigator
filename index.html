@@ -7,30 +7,32 @@
     <meta name="description" content="Platform Pembelajaran & Simulasi Applied AI Interaktif oleh Maxy Academy" />
     <meta name="keywords" content="AI Navigator, Maxy Academy, LLM Simulator, AI Training Indonesia" />
     <meta name="author" content="Maxy Academy" />
-    <meta name="theme-color" content="#4f46e5" />
+    <meta name="theme-color" content="#ffb034" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="AI Navigator" />
-    <link rel="icon" type="image/x-icon" href="/app/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/app/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/app/icon-192.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/app/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="/logo-m.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo-m.png" />
+    <link rel="apple-touch-icon" href="/logo-m.png" />
     <link rel="manifest" href="/app/manifest.json" />
-    <!-- Instant Theme Bootstrap (Default: Dark Mode) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <!-- Instant Theme Bootstrap (Default: Light Mode matching Landing) -->
     <script>
       (function() {
         try {
           var t = localStorage.getItem('ai_navigator_theme_v3');
-          if (t === 'light') {
-            document.documentElement.classList.add('light');
-            document.documentElement.classList.remove('dark');
-          } else {
+          if (t === 'dark') {
             document.documentElement.classList.add('dark');
             document.documentElement.classList.remove('light');
+          } else {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
           }
         } catch (e) {
-          document.documentElement.classList.add('dark');
+          document.documentElement.classList.add('light');
         }
       })();
     </script>
@@ -54,7 +56,7 @@
     </script>
     <script type="module" src="/src/main.tsx"></script>
   </head>
-  <body class="antialiased selection:bg-indigo-500 selection:text-white">
+  <body class="antialiased selection:bg-[#ffb034] selection:text-slate-950">
     <div id="root"></div>
   </body>
 </html>

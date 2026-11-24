@@ -79,7 +79,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center p-12 space-y-4 animate-pulse">
-        <RefreshCw className="w-10 h-10 text-indigo-500 animate-spin" />
+        <RefreshCw className="w-10 h-10 text-amber-500 animate-spin" />
         <p className="text-slate-500 dark:text-slate-400 font-semibold">Mempersiapkan Soal Kuis...</p>
       </div>
     );
@@ -182,15 +182,15 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
                   onClick={() => handleSelectOption(opt.id)}
                   className={`w-full text-left p-4 sm:p-4.5 rounded-2xl border text-xs sm:text-sm font-medium transition-all flex items-center justify-between min-h-[4rem] h-auto cursor-pointer ${
                     isSelected
-                      ? 'bg-indigo-50 dark:bg-indigo-950/70 border-indigo-500 dark:border-indigo-400 text-indigo-950 dark:text-indigo-200 ring-2 ring-indigo-400/40 shadow-sm font-bold'
-                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-indigo-300 dark:hover:border-indigo-500 hover:bg-slate-50/80 dark:hover:bg-slate-800/80'
+                      ? 'bg-amber-50 dark:bg-amber-950/60 border-amber-400 dark:border-amber-500 text-slate-900 dark:text-amber-200 ring-2 ring-amber-400/30 shadow-xs font-bold'
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-amber-300 dark:hover:border-amber-500 hover:bg-slate-50/80 dark:hover:bg-slate-800/80'
                   }`}
                 >
                   <span className="flex items-start gap-3.5 w-full">
                     <span
                       className={`w-7 h-7 rounded-xl font-black text-xs flex items-center justify-center shrink-0 border mt-0.5 shadow-xs ${
                         isSelected
-                          ? 'bg-indigo-600 text-white border-indigo-600'
+                          ? 'bg-[#ffb034] text-slate-950 border-[#ffb034]'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                       }`}
                     >
@@ -217,7 +217,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
               <button
                 onClick={() => setCurrentQuestionIdx((prev) => prev + 1)}
                 disabled={!isAnsweredCurrent}
-                className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-md transition-all cursor-pointer disabled:cursor-not-allowed"
+                className="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white dark:bg-[#ffb034] dark:hover:bg-[#e09b2d] dark:text-slate-950 disabled:opacity-40 text-xs font-bold rounded-xl flex items-center gap-2 shadow-xs transition-all cursor-pointer disabled:cursor-not-allowed"
               >
                 <span>Pertanyaan Berikutnya</span>
                 <ArrowRight className="w-4 h-4" />
@@ -299,7 +299,7 @@ export const QuizComponent: React.FC<QuizComponentProps> = ({
               onClick={handleRestart}
               className="w-full sm:w-auto px-6 py-3.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-2xl border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-2 cursor-pointer transition-all shadow-xs"
             >
-              <RotateCcw className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <RotateCcw className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <span>Ulangi Kuis Modul Ini</span>
             </button>
 

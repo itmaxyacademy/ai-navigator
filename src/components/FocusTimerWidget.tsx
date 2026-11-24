@@ -21,8 +21,8 @@ interface ModeConfig {
 }
 
 const TIMER_MODES: Record<TimerMode, ModeConfig> = {
-  focus25: { label: '25 Min Focus', minutes: 25, xpReward: 50, type: 'focus', color: 'from-indigo-500 to-purple-600' },
-  focus15: { label: '15 Min Quick', minutes: 15, xpReward: 30, type: 'focus', color: 'from-blue-500 to-indigo-600' },
+  focus25: { label: '25 Min Focus', minutes: 25, xpReward: 50, type: 'focus', color: 'from-amber-500 to-amber-600' },
+  focus15: { label: '15 Min Quick', minutes: 15, xpReward: 30, type: 'focus', color: 'from-slate-700 to-slate-900' },
   focus50: { label: '50 Min Deep', minutes: 50, xpReward: 120, type: 'focus', color: 'from-purple-600 to-rose-600' },
   shortBreak: { label: '5 Min Istirahat', minutes: 5, xpReward: 0, type: 'break', color: 'from-emerald-500 to-teal-600' },
   longBreak: { label: '15 Min Santai', minutes: 15, xpReward: 0, type: 'break', color: 'from-amber-500 to-orange-600' },
@@ -306,7 +306,7 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
                 <button
                   onClick={() => setIsRunning(!isRunning)}
                   className={`p-4 rounded-full shadow-2xl transition-transform hover:scale-105 cursor-pointer ${
-                    isRunning ? 'bg-amber-500 hover:bg-amber-400 text-slate-950' : 'bg-indigo-600 hover:bg-indigo-500 text-white'
+                    isRunning ? 'bg-amber-500 hover:bg-amber-400 text-slate-950' : 'bg-slate-900 hover:bg-slate-800 text-white dark:bg-[#ffb034] dark:hover:bg-[#e09b2d] dark:text-slate-950'
                   }`}
                 >
                   {isRunning ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8 ml-1" />}
@@ -427,7 +427,7 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
                         onClick={() => handleSelectMode(modeKey)}
                         className={`p-3 rounded-2xl border text-left font-bold transition-all cursor-pointer ${
                           isSel
-                            ? 'bg-indigo-50 dark:bg-indigo-950/70 border-indigo-400 dark:border-indigo-500 text-indigo-950 dark:text-indigo-200 shadow-sm ring-1 ring-indigo-400/50'
+                            ? 'bg-amber-50 dark:bg-amber-950/60 border-amber-400 dark:border-amber-500 text-slate-900 dark:text-amber-200 shadow-xs ring-1 ring-amber-400/30'
                             : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-800'
                         }`}
                       >
@@ -448,11 +448,11 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
                   onClick={() => setSoundEnabled(!soundEnabled)}
                   className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold border cursor-pointer transition-all ${
                     soundEnabled
-                      ? 'bg-indigo-50 dark:bg-indigo-950/60 border-indigo-300 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300'
+                      ? 'bg-amber-50 dark:bg-amber-950/60 border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300'
                       : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400'
                   }`}
                 >
-                  {soundEnabled ? <Volume2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> : <VolumeX className="w-4 h-4 text-slate-400" />}
+                  {soundEnabled ? <Volume2 className="w-4 h-4 text-amber-500" /> : <VolumeX className="w-4 h-4 text-slate-400" />}
                   <span>{soundEnabled ? 'Suara Lonceng Aktif' : 'Mute Lonceng'}</span>
                 </button>
 
@@ -468,7 +468,7 @@ export const FocusTimerWidget: React.FC<FocusTimerWidgetProps> = ({
                     </button>
                     <button
                       onClick={() => setAmbientSound('binaural')}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${ambientSound === 'binaural' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${ambientSound === 'binaural' ? 'bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 shadow-xs' : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'}`}
                     >
                       Binaural (Focus)
                     </button>

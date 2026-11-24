@@ -107,9 +107,9 @@ export const PATH_GROUPS: GroupData[] = [
     subtitle: "Claude Artifacts, Kimi AI, Lumo, Lovable, Gamma, Manus, & Notion AI",
     badge: "Skill Lanjutan (Modul 23-29)",
     moduleRange: [23, 29],
-    solidColor: "bg-indigo-600",
-    borderColor: "border-indigo-500/40",
-    badgeBg: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
+    solidColor: "bg-slate-700",
+    borderColor: "border-slate-500/40",
+    badgeBg: "bg-slate-100 text-slate-800 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700",
     iconName: "Terminal",
   },
 ];
@@ -355,8 +355,8 @@ const NavigatorMascot = ({ moduleTitle }: { moduleTitle: string }) => {
       className="absolute -top-16 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-none w-60"
     >
       {/* Speech Bubble */}
-      <div className="bg-indigo-600 text-white text-[11px] font-bold px-3 py-1 rounded-xl shadow-lg border border-indigo-400/60 text-center flex items-center gap-1.5 mb-1 whitespace-nowrap">
-        <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+      <div className="bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 text-[11px] font-bold px-3 py-1 rounded-xl shadow-lg border border-slate-700 dark:border-amber-400 text-center flex items-center gap-1.5 mb-1 whitespace-nowrap">
+        <Sparkles className="w-3.5 h-3.5 text-amber-300 dark:text-slate-950 shrink-0" />
         <span>Lanjutkan Belajar Di Sini</span>
       </div>
 
@@ -377,7 +377,7 @@ const NavigatorMascot = ({ moduleTitle }: { moduleTitle: string }) => {
       </div>
 
       {/* Down Triangle Arrow */}
-      <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[6px] border-t-purple-600 -mt-0.5" />
+      <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[6px] border-t-slate-900 dark:border-t-[#ffb034] -mt-0.5" />
     </motion.div>
   );
 };
@@ -544,23 +544,23 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8 pb-16 min-h-screen p-2 sm:p-6 rounded-2xl sm:rounded-3xl font-sans text-slate-900 dark:text-slate-100 bg-slate-100/90 dark:bg-[#070b19]">
+    <div className="space-y-6 sm:space-y-8 pb-16 min-h-screen p-2 sm:p-6 rounded-2xl sm:rounded-3xl font-sans text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-[#0b0f19]">
       {/* ---------------- TOP HERO BANNER ---------------- */}
-      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-[#0d1322] border border-slate-800 p-4 sm:p-6 md:p-8 shadow-xl text-white">
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-50/70 via-white to-slate-50 border border-slate-200 text-slate-900 shadow-sm dark:bg-[#0d1322] dark:from-[#0d1322] dark:to-[#0d1322] dark:border-slate-800 dark:text-white dark:shadow-xl p-4 sm:p-6 md:p-8">
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-center">
           <div className="md:col-span-8 space-y-3">
             <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={onOpenStreakModal}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold hover:scale-105 transition-transform cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-700 dark:text-amber-300 text-xs font-bold hover:scale-105 transition-transform cursor-pointer"
               >
-                <Flame className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                <Flame className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
                 <span>{progress.streakDays} Hari Streak</span>
               </button>
 
               {progress.isExpired && (
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold">
-                  <Clock className="w-3.5 h-3.5 text-amber-400" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-700 dark:text-amber-300 text-xs font-bold">
+                  <Clock className="w-3.5 h-3.5 text-amber-500" />
                   <span>Masa Aktif Selesai</span>
                 </div>
               )}
@@ -568,41 +568,41 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 pt-1">
               <img
-                src={`${import.meta.env.BASE_URL}logo-ai-navigator.svg`}
+                src="/logo-m.png"
                 alt="AI Navigator"
                 className="h-9 w-9 sm:h-11 sm:w-11 object-contain shrink-0 self-start sm:self-auto"
               />
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
-                <span className="text-white font-extrabold">AI Navigator: </span>
-                <span className="text-amber-400 font-extrabold block sm:inline">Platform Pembelajaran LLM Interaktif</span>
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                <span className="text-slate-900 dark:text-white font-extrabold">AI Navigator: </span>
+                <span className="text-[#d98200] dark:text-amber-400 font-extrabold block sm:inline">Platform Pembelajaran LLM Interaktif</span>
               </h1>
             </div>
-            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl font-medium">
+            <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl font-medium">
               Kuasai 29 modul LLM modern dari dasar hingga mahir! Lewati setiap node zig-zag, dapatkan 3 bintang kuis, dan buka 7 Peti Karun Spesial dengan bonus tools AI eksklusif.
             </p>
 
             <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-stretch sm:items-center gap-2 sm:gap-2.5 text-xs">
-              <div className="flex items-center gap-2 bg-slate-900 px-3 py-2 rounded-2xl border border-slate-800 text-slate-200">
-                <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
-                <span className="truncate">Progres: <strong className="text-amber-300">{completedCount}/{totalModules} Modul</strong> ({progressPercent}%)</span>
+              <div className="flex items-center gap-2 bg-white dark:bg-slate-900 px-3 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 shadow-xs">
+                <Trophy className="w-4 h-4 text-amber-500 shrink-0" />
+                <span className="truncate">Progres: <strong className="text-amber-600 dark:text-amber-300">{completedCount}/{totalModules} Modul</strong> ({progressPercent}%)</span>
               </div>
-              <div className="flex items-center gap-2 bg-slate-900 px-3 py-2 rounded-2xl border border-slate-800 text-slate-200">
-                <Clock className="w-4 h-4 text-indigo-400 shrink-0" />
-                <span className="truncate">Sisa Waktu: <strong className="text-indigo-300">{timeCalc.formattedText}</strong></span>
+              <div className="flex items-center gap-2 bg-white dark:bg-slate-900 px-3 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 shadow-xs">
+                <Clock className="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0" />
+                <span className="truncate">Sisa Waktu: <strong className="text-slate-900 dark:text-slate-100">{timeCalc.formattedText}</strong></span>
               </div>
               <button
                 onClick={onOpenStreakModal}
-                className="flex items-center gap-2 bg-indigo-950/80 hover:bg-indigo-900/90 px-3 py-2 rounded-2xl border border-indigo-800 text-slate-200 transition-all cursor-pointer"
+                className="flex items-center gap-2 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 px-3 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 shadow-xs transition-all cursor-pointer"
               >
-                <Award className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span className="truncate">Lvl {levelInfo.level} ({levelInfo.title}): <strong className="text-amber-400">{progress.xp} XP</strong></span>
+                <Award className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <span className="truncate">Lvl {levelInfo.level} ({levelInfo.title}): <strong className="text-amber-600 dark:text-amber-400">{progress.xp} XP</strong></span>
               </button>
               {onOpenAchievements && (
                 <button
                   onClick={onOpenAchievements}
-                  className="flex items-center gap-2 bg-amber-950/80 hover:bg-amber-900/90 px-3 py-2 rounded-2xl border border-amber-800 text-amber-200 transition-all cursor-pointer hover:scale-105"
+                  className="flex items-center gap-2 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 px-3 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 text-amber-700 dark:text-amber-300 shadow-xs transition-all cursor-pointer hover:scale-105"
                 >
-                  <Gift className="w-4 h-4 text-amber-400 shrink-0" />
+                  <Gift className="w-4 h-4 text-amber-500 shrink-0" />
                   <span className="truncate">Peti Unlocked ({allOpenedChestIds.length}/{TREASURE_CHESTS.length})</span>
                 </button>
               )}
@@ -610,18 +610,18 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
           </div>
 
           {/* Progress gauge card */}
-          <div className="md:col-span-4 bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-800 text-center space-y-2.5 sm:space-y-3 shadow-xl">
-            <div className="flex justify-between items-center text-xs text-slate-300">
-              <span className="font-bold text-slate-200">Progres Kelulusan</span>
-              <span className="font-black text-amber-400 text-sm">{progressPercent}%</span>
+          <div className="md:col-span-4 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 text-center space-y-2.5 sm:space-y-3 shadow-xs dark:shadow-xl">
+            <div className="flex justify-between items-center text-xs text-slate-600 dark:text-slate-300">
+              <span className="font-bold text-slate-700 dark:text-slate-200">Progres Kelulusan</span>
+              <span className="font-black text-[#d98200] dark:text-amber-400 text-sm">{progressPercent}%</span>
             </div>
-            <div className="w-full bg-slate-950 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-800">
+            <div className="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-3.5 overflow-hidden p-0.5 border border-slate-200 dark:border-slate-800">
               <div
-                className="bg-amber-500 h-full rounded-full transition-all duration-700 shadow-sm"
+                className="bg-[#ffb034] h-full rounded-full transition-all duration-700 shadow-xs"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <p className="text-[11px] text-slate-400 font-medium">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
               {completedCount === totalModules
                 ? 'Seluruh 29 modul telah diselesaikan. Sertifikat resmi dan transkrip akademik telah siap diunduh.'
                 : `Selesaikan ${totalModules - completedCount} modul tersisa untuk membuka sertifikasi kelulusan resmi.`}
@@ -643,8 +643,8 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
             onClick={() => setViewMode('map')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
               viewMode === 'map'
-                ? 'bg-amber-500 text-slate-950 shadow-md'
-                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
+                ? 'bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <MapIcon className="w-4 h-4" />
@@ -654,8 +654,8 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
             onClick={() => setViewMode('heatmap')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
               viewMode === 'heatmap'
-                ? 'bg-indigo-600 text-white shadow-md'
-                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
+                ? 'bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Flame className="w-4 h-4 text-amber-400" />
@@ -665,8 +665,8 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
             onClick={() => setViewMode('grid')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
               viewMode === 'grid'
-                ? 'bg-amber-500 text-slate-950 shadow-md'
-                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-200'
+                ? 'bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 shadow-xs'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -1055,20 +1055,20 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                     <React.Fragment key={module.id}>
                       {/* GROUP HEADER BANNER (If module is first in group) */}
                       {groupStart && (
-                        <div className="w-full my-6 sm:my-8 py-4 sm:py-5 px-4 sm:px-6 rounded-2xl sm:rounded-3xl bg-slate-900 border border-slate-700/90 shadow-2xl space-y-2 text-center relative overflow-hidden text-white">
+                        <div className="w-full my-6 sm:my-8 py-4 sm:py-5 px-4 sm:px-6 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2 text-center relative overflow-hidden text-slate-900 dark:text-white">
                           <div className={`absolute top-0 left-0 w-2.5 h-full ${groupStart.solidColor}`} />
                           <div className="flex flex-wrap items-center justify-between gap-2">
-                            <span className={`text-[11px] font-black px-3 py-1 rounded-full border shadow-sm ${groupStart.badgeBg}`}>
+                            <span className={`text-[11px] font-black px-3 py-1 rounded-full border shadow-xs ${groupStart.badgeBg}`}>
                               {groupStart.badge}
                             </span>
-                            <span className="text-[11px] font-bold text-slate-300 bg-slate-800 px-3 py-0.5 rounded-full border border-slate-700">
+                            <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
                               Modul {groupStart.moduleRange[0]} - {groupStart.moduleRange[1]}
                             </span>
                           </div>
-                          <h3 className="text-base sm:text-lg font-black text-white tracking-tight drop-shadow-sm">
+                          <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white tracking-tight">
                             {groupStart.title}
                           </h3>
-                          <p className="text-xs text-slate-300 font-medium leading-relaxed max-w-xl mx-auto">
+                          <p className="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed max-w-xl mx-auto">
                             {groupStart.subtitle}
                           </p>
                         </div>
@@ -1257,25 +1257,25 @@ export const LearningPathRoadmap: React.FC<LearningPathRoadmapProps> = React.mem
                       {/* CHECKPOINT MILESTONE (Inter-Group Level Up)               */}
                       {/* ========================================================== */}
                       {milestoneAfter && (
-                        <div className="w-full my-4 py-3 px-4 rounded-2xl bg-slate-900 border border-indigo-600/40 text-center space-y-1 shadow-lg z-10">
+                        <div className="w-full my-4 py-3 px-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-1 shadow-xs z-10">
                           <button
                             onClick={() => handleCheckpointClick(milestoneAfter)}
                             className="w-full flex items-center justify-between text-left group cursor-pointer"
                           >
                             <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 font-bold shrink-0">
+                              <div className="w-10 h-10 rounded-xl bg-[#ffb034] flex items-center justify-center text-slate-950 font-bold shrink-0">
                                 <Sparkles className="w-5 h-5 text-slate-950" />
                               </div>
                               <div>
-                                <h4 className="text-xs sm:text-sm font-extrabold text-amber-300 group-hover:text-amber-200 transition-colors">
+                                <h4 className="text-xs sm:text-sm font-extrabold text-[#d98200] dark:text-amber-400 group-hover:text-amber-500 transition-colors">
                                   {milestoneAfter.title}
                                 </h4>
-                                <p className="text-[11px] text-slate-300">
-                                  Lencana: <strong className="text-white font-bold">{milestoneAfter.levelBadge}</strong>
+                                <p className="text-[11px] text-slate-600 dark:text-slate-300">
+                                  Lencana: <strong className="text-slate-900 dark:text-white font-bold">{milestoneAfter.levelBadge}</strong>
                                 </p>
                               </div>
                             </div>
-                            <ChevronRight className="w-5 h-5 text-amber-400 group-hover:translate-x-1 transition-transform" />
+                            <ChevronRight className="w-5 h-5 text-amber-500 group-hover:translate-x-1 transition-transform" />
                           </button>
                         </div>
                       )}

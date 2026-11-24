@@ -68,7 +68,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             className="flex items-center gap-2.5 cursor-pointer group shrink-0"
           >
             <img
-              src={`${import.meta.env.BASE_URL}logo-ai-navigator.svg`}
+              src="/logo-m.png"
               alt="AI Navigator"
               className="h-8 w-8 object-contain shrink-0 group-hover:scale-105 transition-transform"
             />
@@ -90,7 +90,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
               onClick={() => onSelectTab('path')}
               className={`flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === 'path'
-                  ? 'bg-indigo-600 text-white shadow-xs'
+                  ? 'bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 font-bold shadow-xs'
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'
               }`}
             >
@@ -148,8 +148,8 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 <div className="h-3.5 w-px bg-slate-200 dark:bg-slate-700" />
 
                 {/* Level & XP */}
-                <div className="flex items-center gap-1 text-indigo-600 dark:text-indigo-400 font-extrabold whitespace-nowrap">
-                  <Sparkles className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-1 text-slate-700 dark:text-slate-200 font-extrabold whitespace-nowrap">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                   <span>Lvl {levelInfo.level} • {progress.xp}XP</span>
                 </div>
               </div>
@@ -196,10 +196,10 @@ const HeaderComponent: React.FC<HeaderProps> = ({
               ) : userTier === 'tier1' ? (
                 <button
                   onClick={onOpenUpgradeModal}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 font-bold text-xs transition-all cursor-pointer shadow-xs whitespace-nowrap"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-bold text-xs transition-all cursor-pointer shadow-xs whitespace-nowrap"
                 >
-                  <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
-                  <span>Tier 1 Pro</span>
+                  <ShieldCheck className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span>Tier 1 Basic</span>
                 </button>
               ) : (
                 <button
@@ -237,7 +237,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                     {progress.userInstitution && (
                       <p className="text-[10px] text-slate-400">Instansi: {progress.userInstitution}</p>
                     )}
-                    <p className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold pt-1 border-t border-slate-200 dark:border-slate-800">
+                    <p className="text-[10px] text-amber-600 dark:text-amber-400 font-semibold pt-1 border-t border-slate-200 dark:border-slate-800">
                       Klik untuk Edit Profil
                     </p>
                   </div>
@@ -247,7 +247,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   onClick={onOpenUserProfile}
                   className="hidden lg:flex items-center gap-2 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-200 transition-all shadow-xs cursor-pointer hover:border-slate-300"
                 >
-                  <div className="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-[10px] font-black text-white shrink-0 uppercase shadow-xs">
+                  <div className="w-6 h-6 rounded-full bg-[#ffb034] text-slate-950 flex items-center justify-center text-[10px] font-black shrink-0 uppercase shadow-xs">
                     {progress.userName.charAt(0)}
                   </div>
                   <span className="truncate max-w-[100px]">{progress.userName}</span>
@@ -269,7 +269,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   </>
                 ) : (
                   <>
-                    <Moon className="w-4 h-4 text-indigo-600 shrink-0" />
+                    <Moon className="w-4 h-4 text-slate-700 shrink-0" />
                     <span className="text-[11px] font-bold">Gelap</span>
                   </>
                 )}
@@ -380,7 +380,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 theme === 'light' ? 'bg-slate-100/90 border-slate-200 text-slate-900' : 'bg-slate-950 border-slate-800 text-white'
               }`}
             >
-              <div className="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center text-xs font-black text-white shrink-0 uppercase shadow-xs">
+              <div className="w-9 h-9 rounded-full bg-[#ffb034] text-slate-950 flex items-center justify-center text-xs font-black shrink-0 uppercase shadow-xs">
                 {progress.userName.charAt(0)}
               </div>
               <div className="flex flex-col min-w-0 flex-1">
@@ -389,7 +389,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                   <span className={`text-[10px] truncate ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>{progress.userEmail}</span>
                 )}
               </div>
-              <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400">Edit Profil</span>
+              <span className="text-[10px] font-bold text-amber-600 dark:text-amber-400">Edit Profil</span>
             </div>
           )}
 
@@ -399,7 +399,7 @@ const HeaderComponent: React.FC<HeaderProps> = ({
                 onSelectTab('path');
                 setMobileMenuOpen(false);
               }}
-              className="p-2.5 min-h-[44px] rounded-xl text-xs font-bold flex items-center justify-center gap-2 bg-indigo-600 text-white shadow-xs cursor-pointer active:scale-95 transition-all"
+              className="p-2.5 min-h-[44px] rounded-xl text-xs font-bold flex items-center justify-center gap-2 bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 shadow-xs cursor-pointer active:scale-95 transition-all"
             >
               <Compass className="w-4 h-4 shrink-0" />
               Peta Belajar

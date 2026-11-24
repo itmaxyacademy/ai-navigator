@@ -152,13 +152,13 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
       {/* Widget Header */}
       <div className="relative z-10 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="p-2.5 rounded-xl bg-indigo-500/10 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 shrink-0">
-            <Layers className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+          <div className="p-2.5 rounded-xl bg-amber-500/10 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 text-amber-600 dark:text-amber-400 shrink-0">
+            <Layers className="w-5 h-5 text-amber-500" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight break-words">Flashcard Konsep AI</h3>
-              <span className="text-[10px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 px-2 py-0.5 rounded-md uppercase tracking-wider shrink-0">
+              <span className="text-[10px] font-extrabold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 px-2 py-0.5 rounded-md uppercase tracking-wider shrink-0">
                 Kartu Istilah
               </span>
             </div>
@@ -170,8 +170,8 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
 
         {/* Mastered Counter Tag */}
         <div className="text-right shrink-0">
-          <span className="text-xs font-black text-indigo-300 flex items-center gap-1 justify-end">
-            <Award className="w-3.5 h-3.5 text-indigo-400" />
+          <span className="text-xs font-black text-amber-600 dark:text-amber-400 flex items-center gap-1 justify-end">
+            <Award className="w-3.5 h-3.5 text-amber-500" />
             <span>{masteredPct}% Mastered</span>
           </span>
           <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
@@ -188,8 +188,8 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
             onClick={() => handleSelectCategory(cat)}
             className={`px-3 py-1 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer border ${
               selectedCategory === cat
-                ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
-                : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white'
+                ? 'bg-slate-900 text-white dark:bg-[#ffb034] dark:text-slate-950 border-transparent shadow-xs'
+                : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             {cat}
@@ -209,14 +209,14 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
             onClick={() => !isDebounced && setIsFlipped(!isFlipped)}
             className={`w-full min-h-[250px] p-5 rounded-2xl border cursor-pointer select-none transition-all duration-300 relative flex flex-col justify-between shadow-lg ${
               isFlipped
-                ? 'bg-white dark:bg-slate-900 dark:bg-slate-950 border-indigo-500 text-slate-900 dark:text-white'
-                : 'bg-white dark:bg-slate-900 dark:bg-slate-950 border-slate-300 dark:border-slate-700 dark:border-slate-800 hover:border-indigo-500 text-slate-900 dark:text-white'
+                ? 'bg-white dark:bg-slate-900 border-amber-400 text-slate-900 dark:text-white'
+                : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-amber-400 text-slate-900 dark:text-white'
             }`}
           >
             {/* Card Header Tag */}
             <div className="flex items-center justify-between text-xs gap-2">
               <div className="flex items-center gap-2 min-w-0">
-                <span className="font-mono font-bold text-indigo-300 bg-indigo-950 border border-indigo-800 px-2.5 py-0.5 rounded-full text-[10px] truncate">
+                <span className="font-mono font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 px-2.5 py-0.5 rounded-full text-[10px] truncate">
                   {currentCard.category}
                 </span>
                 <span className="text-[10px] text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-2 py-0.5 rounded-full font-bold shrink-0">
@@ -251,7 +251,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
             {!isFlipped ? (
               /* FRONT SIDE */
               <div className="my-auto py-4 space-y-2 text-center min-w-0">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-indigo-400 block">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#d98200] dark:text-amber-400 block">
                   Istilah LLM #{safeIndex + 1}
                 </span>
                 <h4 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight break-words">
@@ -260,7 +260,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
                 <p className="text-xs text-slate-600 dark:text-slate-300 max-w-sm mx-auto leading-relaxed italic break-words">
                   "{currentCard.teaser}"
                 </p>
-                <div className="pt-2 flex items-center justify-center gap-1.5 text-xs text-indigo-300 font-bold">
+                <div className="pt-2 flex items-center justify-center gap-1.5 text-xs text-amber-600 dark:text-amber-400 font-bold">
                   <RotateCw className="w-3.5 h-3.5" />
                   <span>Klik kartu untuk melihat definisi &amp; contoh</span>
                 </div>
@@ -268,7 +268,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
             ) : (
               /* BACK SIDE */
               <div className="my-auto py-2 space-y-3 min-w-0">
-                <h5 className="text-sm sm:text-base font-extrabold text-indigo-300 border-b border-slate-200 dark:border-slate-800 pb-1.5 flex items-center justify-between gap-2">
+                <h5 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-amber-300 border-b border-slate-200 dark:border-slate-800 pb-1.5 flex items-center justify-between gap-2">
                   <span className="break-words min-w-0">{currentCard.term}</span>
                   <span className="text-[10px] font-mono font-normal text-slate-500 dark:text-slate-400 shrink-0">Penjelasan</span>
                 </h5>
@@ -279,13 +279,13 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
 
                 {currentCard.analogy && (
                   <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-2.5 rounded-xl text-xs text-slate-600 dark:text-slate-300 leading-relaxed break-words">
-                    💡 <strong className="text-indigo-300">Analogi:</strong> {currentCard.analogy}
+                    💡 <strong className="text-amber-600 dark:text-amber-400">Analogi:</strong> {currentCard.analogy}
                   </div>
                 )}
 
                 {currentCard.example && (
                   <div className="bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 font-mono leading-relaxed break-words">
-                    📝 <strong className="text-indigo-300 font-sans">Contoh:</strong> {currentCard.example}
+                    📝 <strong className="text-amber-600 dark:text-amber-400 font-sans">Contoh:</strong> {currentCard.example}
                   </div>
                 )}
               </div>
@@ -307,7 +307,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
                     className={`px-2.5 py-1 rounded-xl text-[10px] font-extrabold transition-all cursor-pointer border ${
                       currentConfidence === 'need_review'
                         ? 'bg-rose-600 text-white border-rose-400'
-                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-rose-300 hover:bg-slate-100 dark:bg-slate-800'
+                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-rose-500 dark:text-rose-300 hover:bg-slate-100 dark:bg-slate-800'
                     }`}
                   >
                     Belum Paham
@@ -318,7 +318,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
                     className={`px-2.5 py-1 rounded-xl text-[10px] font-extrabold transition-all cursor-pointer border ${
                       currentConfidence === 'medium'
                         ? 'bg-amber-600 text-white border-amber-400'
-                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-amber-300 hover:bg-slate-100 dark:bg-slate-800'
+                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-amber-600 dark:text-amber-300 hover:bg-slate-100 dark:bg-slate-800'
                     }`}
                   >
                     Ragu
@@ -329,7 +329,7 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
                     className={`px-2.5 py-1 rounded-xl text-[10px] font-extrabold transition-all cursor-pointer border ${
                       currentConfidence === 'mastered'
                         ? 'bg-emerald-600 text-white border-emerald-400'
-                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-emerald-300 hover:bg-slate-100 dark:bg-slate-800'
+                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-emerald-600 dark:text-emerald-300 hover:bg-slate-100 dark:bg-slate-800'
                     }`}
                   >
                     Paham {!awardedXpCardIds.includes(currentCard.id) ? '(+5 XP)' : ''}
@@ -351,21 +351,21 @@ export const ConceptFlashcardsWidget: React.FC<ConceptFlashcardsWidgetProps> = R
         <div className="flex items-center gap-1">
           <button
             onClick={handlePrev}
-            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:border-indigo-500 transition-all cursor-pointer"
+            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:border-amber-400 transition-all cursor-pointer"
             title="Kartu Sebelumnya"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={handleShuffle}
-            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-indigo-400 hover:text-slate-900 dark:text-white hover:border-indigo-500 transition-all cursor-pointer"
+            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-amber-500 hover:text-slate-900 dark:text-white hover:border-amber-400 transition-all cursor-pointer"
             title="Acak Kartu"
           >
             <Shuffle className="w-4 h-4" />
           </button>
           <button
             onClick={handleNext}
-            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:border-indigo-500 transition-all cursor-pointer"
+            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:border-amber-400 transition-all cursor-pointer"
             title="Kartu Selanjutnya"
           >
             <ChevronRight className="w-4 h-4" />
