@@ -10,7 +10,7 @@ import {
   Tooltip,
   CartesianGrid,
 } from 'recharts';
-import { TrendingUp, Sparkles, Zap, BarChart2, Activity } from 'lucide-react';
+import { TrendingUp, Award, BarChart2, Activity } from 'lucide-react';
 import { getLocalDateString } from '../lib/gamification';
 
 interface DailyXpTrendChartProps {
@@ -116,7 +116,7 @@ export const DailyXpTrendChart: React.FC<DailyXpTrendChartProps> = React.memo(({
       <div className="grid grid-cols-3 gap-3 text-xs">
         <div className="p-3 bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-0.5">
           <span className="text-slate-600 dark:text-slate-400 font-semibold text-[11px] flex items-center gap-1">
-            <Zap className="w-3.5 h-3.5 text-amber-500" /> Total 7 Hari
+            <Award className="w-3.5 h-3.5 text-amber-500" /> Total 7 Hari
           </span>
           <div className="text-base font-black text-amber-600 dark:text-amber-400">+{sum7Days} XP</div>
         </div>
@@ -130,7 +130,7 @@ export const DailyXpTrendChart: React.FC<DailyXpTrendChartProps> = React.memo(({
 
         <div className="p-3 bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-0.5">
           <span className="text-slate-600 dark:text-slate-400 font-semibold text-[11px] flex items-center gap-1">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-500" /> Peak Harian
+            <BarChart2 className="w-3.5 h-3.5 text-emerald-500" /> Peak Harian
           </span>
           <div className="text-base font-black text-emerald-600 dark:text-emerald-400">+{maxXpDay} XP</div>
         </div>
@@ -157,8 +157,8 @@ export const DailyXpTrendChart: React.FC<DailyXpTrendChartProps> = React.memo(({
                     return (
                       <div className="bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 p-3 rounded-xl shadow-xl text-xs space-y-1">
                         <div className="font-bold text-slate-600 dark:text-slate-300">{data.fullLabel}</div>
-                        <div className="text-amber-400 font-extrabold flex items-center gap-1">
-                          <Sparkles className="w-3.5 h-3.5" /> +{data.xp} XP Diperoleh
+                        <div className="text-amber-500 font-extrabold flex items-center gap-1">
+                          <Award className="w-3.5 h-3.5" /> +{data.xp} XP Diperoleh
                         </div>
                       </div>
                     );
@@ -187,8 +187,8 @@ export const DailyXpTrendChart: React.FC<DailyXpTrendChartProps> = React.memo(({
                     return (
                       <div className="bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 p-3 rounded-xl shadow-xl text-xs space-y-1">
                         <div className="font-bold text-slate-600 dark:text-slate-300">{data.fullLabel}</div>
-                        <div className="text-amber-400 font-extrabold flex items-center gap-1">
-                          <Sparkles className="w-3.5 h-3.5" /> +{data.xp} XP Diperoleh
+                        <div className="text-amber-500 font-extrabold flex items-center gap-1">
+                          <Award className="w-3.5 h-3.5" /> +{data.xp} XP Diperoleh
                         </div>
                       </div>
                     );

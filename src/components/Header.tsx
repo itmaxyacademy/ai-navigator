@@ -125,8 +125,8 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             <Tooltip
               content={
                 <div className="space-y-1 text-left min-w-[180px]">
-                  <div className="font-bold text-amber-400 text-xs flex items-center gap-1">
-                    <Trophy className="w-3.5 h-3.5" /> Status Belajar Anda
+                  <div className="font-bold text-amber-500 dark:text-amber-400 text-xs flex items-center gap-1">
+                    <Trophy className="w-3.5 h-3.5 text-amber-500" /> Status Belajar
                   </div>
                   <p className="text-[11px] text-slate-600 dark:text-slate-300">
                     Lvl {levelInfo.level} ({levelInfo.title}) • {progress.xp} XP • {progress.streakDays} Hari Streak
@@ -137,20 +137,20 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             >
               <div
                 onClick={onOpenStreakModal}
-                className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold transition-all cursor-pointer shadow-xs"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 transition-colors cursor-pointer shadow-xs"
               >
                 {/* Streak */}
-                <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400 font-extrabold whitespace-nowrap">
-                  <Flame className="w-3.5 h-3.5 fill-amber-500/20 text-amber-500" />
-                  <span>{progress.streakDays}d</span>
+                <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-200 font-semibold whitespace-nowrap">
+                  <Flame className="w-3.5 h-3.5 text-amber-500 stroke-[1.75]" />
+                  <span>{progress.streakDays} Hari Streak</span>
                 </div>
 
-                <div className="h-3.5 w-px bg-slate-200 dark:bg-slate-700" />
+                <div className="h-3.5 w-px bg-slate-200 dark:bg-slate-800" />
 
                 {/* Level & XP */}
-                <div className="flex items-center gap-1 text-slate-700 dark:text-slate-200 font-extrabold whitespace-nowrap">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Lvl {levelInfo.level} • {progress.xp}XP</span>
+                <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-200 font-semibold whitespace-nowrap">
+                  <Award className="w-3.5 h-3.5 text-amber-500 stroke-[1.75]" />
+                  <span>{progress.xp} XP</span>
                 </div>
               </div>
             </Tooltip>
@@ -458,13 +458,13 @@ const HeaderComponent: React.FC<HeaderProps> = ({
             theme === 'light' ? 'bg-slate-100 border-slate-200 text-slate-900' : 'bg-slate-950 border-slate-800 text-white'
           }`}>
             <div className="flex items-center justify-between w-full">
-              <div className="flex items-center gap-1.5 text-amber-500 font-extrabold">
-                <Flame className="w-4 h-4 fill-amber-500/20" />
+              <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200 font-semibold">
+                <Flame className="w-4 h-4 text-amber-500 stroke-[1.75]" />
                 <span className="text-xs">{progress.streakDays} Hari Streak</span>
               </div>
               <div className="h-4 w-px bg-slate-300 dark:bg-slate-700" />
-              <div className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-300 font-extrabold">
-                <Sparkles className="w-4 h-4" />
+              <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200 font-semibold">
+                <Award className="w-4 h-4 text-amber-500 stroke-[1.75]" />
                 <span className="text-xs">Lvl {levelInfo.level} • {progress.xp} XP</span>
               </div>
             </div>
